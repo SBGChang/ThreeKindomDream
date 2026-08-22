@@ -1,0 +1,48 @@
+// ID 家族。全部 branded — 禁止裸 string 當 ID 傳遞（00 §1）。
+declare const brand: unique symbol;
+export type Brand<T, B extends string> = T & { readonly [brand]: B };
+
+export type PackId = Brand<string, 'PackId'>;
+export type NotableId = Brand<string, 'NotableId'>;
+export type TalentId = Brand<string, 'TalentId'>;
+export type ChapterId = Brand<string, 'ChapterId'>;
+export type EventDefId = Brand<string, 'EventDefId'>;
+export type FactionId = Brand<string, 'FactionId'>;
+export type EndingId = Brand<string, 'EndingId'>;
+export type ShopItemId = Brand<string, 'ShopItemId'>;
+export type MajorCheckId = Brand<string, 'MajorCheckId'>;
+export type ParamPoolId = Brand<string, 'ParamPoolId'>;
+export type DcCurveId = Brand<string, 'DcCurveId'>;
+export type NotablePoolId = Brand<string, 'NotablePoolId'>;
+export type EffectId = Brand<number, 'EffectId'>;
+export type TargetId = Brand<string, 'TargetId'>;
+export type FlagId = Brand<string, 'FlagId'>;
+export type ChargeId = Brand<string, 'ChargeId'>;
+export type L10nKey = Brand<string, 'L10nKey'>;
+export type Seed = Brand<number, 'Seed'>;
+export type TurnIndex = Brand<number, 'TurnIndex'>;
+export type ChapterIndex = Brand<number, 'ChapterIndex'>;
+export type ModuleId = Brand<string, 'ModuleId'>;
+
+// 唯一的 branded 建構子。靜態掃描以此為錨點找出全部使用處。
+export const packId = (s: string): PackId => s as PackId;
+export const notableId = (s: string): NotableId => s as NotableId;
+export const talentId = (s: string): TalentId => s as TalentId;
+export const chapterId = (s: string): ChapterId => s as ChapterId;
+export const eventDefId = (s: string): EventDefId => s as EventDefId;
+export const factionId = (s: string): FactionId => s as FactionId;
+export const endingId = (s: string): EndingId => s as EndingId;
+export const shopItemId = (s: string): ShopItemId => s as ShopItemId;
+export const majorCheckId = (s: string): MajorCheckId => s as MajorCheckId;
+export const paramPoolId = (s: string): ParamPoolId => s as ParamPoolId;
+export const dcCurveId = (s: string): DcCurveId => s as DcCurveId;
+export const notablePoolId = (s: string): NotablePoolId => s as NotablePoolId;
+export const effectId = (n: number): EffectId => n as EffectId;
+export const targetId = (s: string): TargetId => s as TargetId;
+export const flagId = (s: string): FlagId => s as FlagId;
+export const chargeId = (s: string): ChargeId => s as ChargeId;
+export const l10n = (s: string): L10nKey => s as L10nKey;
+export const seed = (n: number): Seed => n as Seed;
+export const turnIndex = (n: number): TurnIndex => n as TurnIndex;
+export const chapterIndex = (n: number): ChapterIndex => n as ChapterIndex;
+export const moduleId = (s: string): ModuleId => s as ModuleId;

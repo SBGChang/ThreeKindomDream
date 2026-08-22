@@ -1,0 +1,292 @@
+{
+  "AffinityGrant": {
+    "5001": {
+      "amount": 15,
+      "condition": null,
+      "targetRule": "randomRoster",
+      "timing": "onDreamEnter"
+    },
+    "5002": {
+      "amount": 10,
+      "condition": null,
+      "targetRule": "allRoster",
+      "timing": "onDreamEnter"
+    }
+  },
+  "AffinityGrowth": {
+    "5101": {
+      "condition": null,
+      "mulPct": 0.15,
+      "scope": "allRoster"
+    },
+    "5102": {
+      "condition": null,
+      "mulPct": 0.5,
+      "scope": "self"
+    }
+  },
+  "CheckRetry": {
+    "6101": {
+      "condition": null,
+      "scope": "major",
+      "usesPerRun": 1
+    }
+  },
+  "CheckValueBonus": {
+    "6001": {
+      "add": 8,
+      "attr": "all",
+      "condition": null,
+      "scope": "major"
+    },
+    "6002": {
+      "add": 6,
+      "attr": "war",
+      "condition": null,
+      "scope": "both"
+    },
+    "6003": {
+      "add": 6,
+      "attr": "int",
+      "condition": null,
+      "scope": "both"
+    },
+    "6004": {
+      "add": 6,
+      "attr": "pol",
+      "condition": null,
+      "scope": "both"
+    },
+    "6005": {
+      "add": 6,
+      "attr": "cha",
+      "condition": null,
+      "scope": "both"
+    }
+  },
+  "CurrencyBonus": {
+    "7001": {
+      "condition": null,
+      "currency": "allFame",
+      "mulPct": 0.3
+    },
+    "7002": {
+      "condition": null,
+      "currency": "fame.moral",
+      "mulPct": 0.5
+    },
+    "7003": {
+      "condition": null,
+      "currency": "allMerit",
+      "mulPct": 0.2
+    }
+  },
+  "EventDrawModify": {
+    "2101": {
+      "condition": null,
+      "drawCountAdd": 1
+    }
+  },
+  "EventRewardBonus": {
+    "2001": {
+      "condition": null,
+      "eventKind": "all",
+      "mulPct": 0.2
+    },
+    "2002": {
+      "condition": null,
+      "eventKind": "resident",
+      "mulPct": 0.25
+    }
+  },
+  "GlowBaseWeight": {
+    "2901": {
+      "condition": null,
+      "scope": "war",
+      "tierShift": 1
+    }
+  },
+  "GlowUpgradeBonus": {
+    "3001": {
+      "chanceAdd": 0.15,
+      "condition": null,
+      "scope": "war"
+    },
+    "3002": {
+      "chanceAdd": 0.15,
+      "condition": null,
+      "scope": "int"
+    },
+    "3003": {
+      "chanceAdd": 0.15,
+      "condition": null,
+      "scope": "pol"
+    },
+    "3004": {
+      "chanceAdd": 0.15,
+      "condition": null,
+      "scope": "cha"
+    },
+    "3011": {
+      "chanceAdd": 0.08,
+      "condition": null,
+      "scope": "all"
+    },
+    "3101": {
+      "chanceAdd": 0.05,
+      "condition": null,
+      "scope": "all"
+    },
+    "3102": {
+      "chanceAdd": 0.1,
+      "condition": null,
+      "scope": "all"
+    },
+    "3103": {
+      "chanceAdd": 0.17,
+      "condition": null,
+      "scope": "all"
+    },
+    "3104": {
+      "chanceAdd": 0.25,
+      "condition": null,
+      "scope": "all"
+    },
+    "3201": {
+      "chanceAdd": 0.1,
+      "condition": null,
+      "scope": "all"
+    }
+  },
+  "RevealInfo": {
+    "6201": {
+      "condition": null,
+      "what": "checkBreakdown"
+    },
+    "6202": {
+      "condition": null,
+      "what": "nextTurnSlots"
+    }
+  },
+  "SlotBias": {
+    "4001": {
+      "attrWeights": {
+        "war": 1.6
+      },
+      "condition": null
+    },
+    "4002": {
+      "attrWeights": {
+        "int": 1.6
+      },
+      "condition": null
+    },
+    "4003": {
+      "attrWeights": {
+        "pol": 1.6
+      },
+      "condition": null
+    },
+    "4004": {
+      "attrWeights": {
+        "cha": 1.6
+      },
+      "condition": null
+    },
+    "4099": {
+      "attrWeights": {
+        "cha": 1,
+        "int": 1,
+        "pol": 1,
+        "war": 1
+      },
+      "condition": null
+    }
+  },
+  "StatModifier": {
+    "1001": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "training.exp.war",
+      "value": 0.2
+    },
+    "1002": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "training.exp.war",
+      "value": 0.4
+    },
+    "1011": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "training.exp.int",
+      "value": 0.2
+    },
+    "1012": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "training.exp.int",
+      "value": 0.4
+    },
+    "1021": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "training.exp.pol",
+      "value": 0.2
+    },
+    "1022": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "training.exp.pol",
+      "value": 0.4
+    },
+    "1031": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "training.exp.cha",
+      "value": 0.2
+    },
+    "1032": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "training.exp.cha",
+      "value": 0.4
+    },
+    "1101": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "training.exp.int",
+      "value": 0.2
+    },
+    "1102": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "training.exp.all",
+      "value": 0.08
+    },
+    "1103": {
+      "condition": null,
+      "op": "add",
+      "target": "training.noGlowBonus",
+      "value": 0.3
+    },
+    "1104": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "training.exp.war",
+      "value": 0.25
+    },
+    "1201": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "training.exp.all",
+      "value": 0.05
+    },
+    "1202": {
+      "condition": null,
+      "op": "add",
+      "target": "training.noGlowBonus",
+      "value": 0.3
+    }
+  }
+}

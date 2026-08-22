@@ -1,0 +1,67 @@
+export const endingTexts: Record<string, string> = {
+  'ending.pillar.title': '出將入相',
+  'ending.pillar.body': '文武皆極。朝堂上有你的位子，軍中也有你的旗。',
+  'ending.pillar.moral.good': '後世論你，說是社稷之器。',
+  'ending.pillar.moral.neutral': '後世論你，說是一時人傑。',
+  'ending.pillar.moral.evil': '後世論你，說是權傾朝野而終不可測。',
+
+  'ending.chancellor.title': '丞相',
+  'ending.chancellor.body': '案上文書堆到看不見窗。這座天下的細節都經過你的手。',
+  'ending.chancellor.moral.good': '人稱賢相。',
+  'ending.chancellor.moral.neutral': '人稱能臣。',
+  'ending.chancellor.moral.evil': '人稱權相。',
+
+  'ending.grand-general.title': '大將軍',
+  'ending.grand-general.body': '節鉞在手。你點過的兵，沒有一次不到。',
+  'ending.grand-general.moral.good': '軍中呼你忠武。',
+  'ending.grand-general.moral.neutral': '軍中呼你將軍。',
+  'ending.grand-general.moral.evil': '軍中呼你梟將。',
+
+  'ending.minister.title': '尚書',
+  'ending.minister.body': '你走到了台省。再往上，是另一種人才走的路。',
+  'ending.minister.moral.good': '循吏之名，不在功而在人。',
+  'ending.minister.moral.neutral': '一介文吏，做完了該做的事。',
+  'ending.minister.moral.evil': '有人說你的手不太乾淨。',
+
+  'ending.general.title': '四方將軍',
+  'ending.general.body': '前後左右，你居其一。旗號之下有你的部曲。',
+  'ending.general.moral.good': '所過之處，秋毫無犯。',
+  'ending.general.moral.neutral': '將職而已，並無虛名。',
+  'ending.general.moral.evil': '所過之處，人皆閉門。',
+
+  'ending.accomplished.title': '功成',
+  'ending.accomplished.body': '該打的仗都打完了。官位不高，但你在場。',
+  'ending.accomplished.moral.good': '無人記得你的名字，記得的是你做的事。',
+  'ending.accomplished.moral.neutral': '史書上只有一行。那一行是你。',
+  'ending.accomplished.moral.evil': '你活著看完了結局。那已經不容易。',
+
+  'ending.fallen.title': '戰歿',
+  'ending.fallen.body': '最後看見的是塵土。有人把你的旗撿了起來。',
+  'ending.fallen.moral.good': '軍中為你立了衣冠冢。',
+  'ending.fallen.moral.neutral': '陣亡名冊上，你在其中。',
+  'ending.fallen.moral.evil': '沒有人替你收屍。',
+
+  'ending.dismissed.title': '罷官',
+  'ending.dismissed.body': '文書下來得很簡短。你連辯解的機會都沒有。',
+  'ending.dismissed.moral.good': '後來有人替你上書。沒有回音。',
+  'ending.dismissed.moral.neutral': '你交出了印，走出了門。',
+  'ending.dismissed.moral.evil': '你走的那天，沒有人送。',
+
+  'ending.exiled.title': '流放',
+  'ending.exiled.body': '車押著你往南走。回頭看不見城了。',
+  'ending.exiled.moral.good': '罪名是假的。但那不重要了。',
+  'ending.exiled.moral.neutral': '罪名寫得很含糊。',
+  'ending.exiled.moral.evil': '罪名一條都不假。',
+
+  'ending.commoner.title': '布衣一夢',
+  'ending.commoner.body': '你還沒走到能被寫進書裡的地方，夢就到底了。',
+  'ending.commoner.moral.good': '不過村裡的人都說你是好人。',
+  'ending.commoner.moral.neutral': '不過你確實活過那幾年。',
+  'ending.commoner.moral.evil': '不過欠你的人也記得你。',
+
+  'ending.hermit.title': '在野',
+  'ending.hermit.body': '三家都沒有你的位子。你也就沒去。',
+  'ending.hermit.moral.good': '鄉里說你不慕榮利。',
+  'ending.hermit.moral.neutral': '你把那些年過完了。',
+  'ending.hermit.moral.evil': '也許是他們不要你。',
+};

@@ -1,0 +1,23 @@
+{
+  "packs": [
+    {
+      "defCount": 105,
+      "dir": "core",
+      "loadOrder": 0,
+      "packId": "pack:core",
+      "requiredPacks": [],
+      "version": "0.1.0"
+    },
+    {
+      "defCount": 21,
+      "dir": "wei",
+      "loadOrder": 10,
+      "packId": "pack:wei",
+      "requiredPacks": [
+        "pack:core"
+      ],
+      "version": "0.1.0"
+    }
+  ],
+  "runtimeVersion": "0.1.0"
+}

@@ -1,0 +1,31 @@
+{
+  "name": "three-kingdom-dream",
+  "private": true,
+  "type": "module",
+  "version": "0.0.1",
+  "description": "三國夢 — 輪迴養成 roguelite。灰盒 v0：南華村篇 + 魏線。",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "content:build": "tsx scripts/compile-content.ts",
+    "verify:content": "tsx scripts/verify-content.ts",
+    "verify:discipline": "tsx scripts/verify-discipline.ts",
+    "verify:modules": "tsx scripts/verify-modules.ts",
+    "verify": "npm run typecheck && npm run verify:discipline && npm run verify:content && npm run verify:modules",
+    "sim": "tsx scripts/simulate.ts",
+    "dev": "vite",
+    "build": "npm run content:build && tsc --noEmit -p tsconfig.json && vite build"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.7"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}

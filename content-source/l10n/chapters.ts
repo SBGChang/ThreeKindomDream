@@ -1,0 +1,40 @@
+export const chapterTexts: Record<string, string> = {
+  'chapter.nanhua.yellowturban.title': '黃巾之亂',
+  'chapter.nanhua.hulao.title': '虎牢關',
+  'chapter.wei.guandu.title': '官渡之戰',
+  'chapter.wei.hebei.title': '平定河北',
+
+  'check.yellowturban.brief.safe': '隨鄉勇守住村口便可。求穩，不求功。',
+  'check.yellowturban.brief.normal': '主動出擊，替鄉里奪回被劫的糧秣。',
+  'check.yellowturban.brief.hard': '直取渠帥大營。成則名動一方，敗則屍骨無存。',
+  'check.hulao.brief.safe': '列陣於後，只求不亂。',
+  'check.hulao.brief.normal': '隨諸侯合擊，於亂軍中掙一分功名。',
+  'check.hulao.brief.hard': '獨當關前那人。天下皆知此關前無人可擋。',
+  'check.wei.guandu.brief.safe': '守好糧道，不求奇功。',
+  'check.wei.guandu.brief.normal': '參與軍議，替主公謀一策。',
+  'check.wei.guandu.brief.hard': '獻上焚糧之計，並親自領兵夜襲烏巢。',
+  'check.wei.hebei.brief.safe': '隨大軍北上，掌後勤諸事。',
+  'check.wei.hebei.brief.normal': '獨領一部，平一郡之亂。',
+  'check.wei.hebei.brief.hard': '孤軍深入，逐二袁出塞。',
+
+  'faction.wei.name': '魏 · 曹操',
+  'faction.wei.reject': '曹公用人不問出身。此門不曾為你關過。',
+
+  'lord.wei.bond.0': '「你，過來。這三個人往後帶你。」',
+  'lord.wei.bond.1': '「你家與我曹家有些淵源。最後一位，你自己挑。」',
+  'lord.wei.bond.2': '「你家曾經於我曹家有恩。這兩位，你自己選。」',
+  'lord.wei.bond.3': '「我曹家組訓有說過，未來要是遇到某家後輩，可讓他自行安排他的道路。三位都給你自己定。」',
+
+  'nanhua.designate.random': '南華先生：「這幾個孩子，往後便與你作伴罷。」',
+  'nanhua.designate.choose': '南華先生：「我感覺你與某些人有特殊緣分——可要我遣先人帶他們前來？」',
+
+  'rejection.turn.not-ready': '本回合的鍛鍊還沒選。',
+  'rejection.slot.already-used': '這個槽位已經用過了。',
+  'rejection.threshold.not-met': '條件不足。',
+  'rejection.faction.not-eligible': '這個陣營現在不會收你。',
+  'rejection.capability.disabled': '這項功能尚未開放。',
+  'rejection.charge.exhausted': '次數已用盡。',
+  'rejection.content.version-mismatch': '存檔與目前的內容版本不相容。',
+  'rejection.already-settled': '這一輪已經結算過了。',
+  'rejection.invalid-index': '選擇無效。',
+};
