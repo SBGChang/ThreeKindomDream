@@ -1,0 +1,16 @@
+# 全庫一律 LF。
+#
+# 這不是風格偏好，而是門禁的正確性要求：`verify:content` 會把 content/ 的產物
+# 與重新編譯的結果【逐字元比對】（scripts/verify-content.ts）。編譯器以 LF 寫出，
+# 而 Windows 的 core.autocrlf=true 會在 checkout 時換成 CRLF ——
+# 於是 fresh clone 上門禁會報「產物與作者層不同步」，但作者層其實一個字都沒改。
+#
+# 影響的不只 JSON：discipline 門禁雖然是 CRLF-safe（split(/\r?\n/)），
+# 但沒有理由讓兩種行尾在同一個庫裡共存。
+* text=auto eol=lf
+
+# 二進位（目前沒有，先立好規則）
+*.png binary
+*.jpg binary
+*.ogg binary
+*.wav binary
