@@ -96,6 +96,21 @@ export function boonEffectSource(): EffectSource {
   };
 }
 
+/**
+ * 消耗一次充能。`charges[id]` 存的是【已用次數】，額度由效果現算 ——
+ * 因此這裡只要 +1，不必知道總額是多少（01 §8）。
+ *
+ * 放在 ① 是因為它擁有 `charges` slice；呼叫端（㉝ 的原地再起）
+ * 因此不必跨 slice 直寫。
+ */
+export function consumeCharge(charge: ChargeId, ctx: RunContext): RunState {
+  const key = String(charge);
+  return {
+    ...ctx.state,
+    charges: { ...ctx.state.charges, [key]: (ctx.state.charges[key] ?? 0) + 1 },
+  };
+}
+
 /** 授予一條當局增益。只有 ⑰ 在結算事件獎勵時呼叫。 */
 export function grantBoon(ref: EffectRefInput, ctx: RunContext): RunState {
   return { ...ctx.state, boons: [...ctx.state.boons, ref] };

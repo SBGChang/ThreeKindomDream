@@ -219,4 +219,21 @@ export const FX = {
   // ── 指名額度 ────────────────────────────────────
   designate1: 8001,
   designate3: 8002,
+
+  // ── 戰役（33）★ ─────────────────────────────────
+  // 特質全部走 StatModifier，落在 ㉝ 的五個 target 上 ——
+  // 不需要為戰役新增任何 FuncType，這是效果系統設計成功的第二次驗證。
+  battlePhys06: 9001,
+  battlePhys08: 9002,
+  battlePhys15: 9003,
+  battlePhys30: 9004,
+  battleMagic08: 9011,
+  battleMagic18: 9012,
+  battleMagic25: 9013,
+  battleTroops08: 9021,
+  battleTroops12: 9022,
+  battleSupply20: 9031,
+  battleHeal12: 9041,
+  battleHeal20: 9042,
+  battleHealDown20: 9043,
 } as const;

@@ -15,6 +15,7 @@ import type { EffectResolver } from './effect.js';
 import { careerService } from './career.js';
 import { distributeSlots, gainAffinity, trainingMultiplier } from './roster.js';
 import { rollCommissionFlag, rollEncounterFlag } from './commission.js';
+import { grantExp } from './growth.js';
 import { statQuery, type StatWriter } from './stats.js';
 
 const curve = (ctx: RunContext): TrainingCurveDef => ctx.defs.single('trainingCurve');
@@ -233,7 +234,9 @@ export function select(
   const gained = computeGain(slot.attr, finalTier, slot.notables, ctx, fx);
   const merit = computeMerit(slot.attr, ctx, fx);
 
-  let next = writer.grantAttr(slot.attr, gained, ctx);
+  // RFC-01 D32：產出是【經驗】，不是屬性點。屬性只能經 ㉜ 花經驗買 ——
+  // 這一行就是「玩家終於有一個分配決策」的全部技術內容。
+  let next = grantExp(slot.attr, gained, ctx);
   next = writer.grantMerit(merit.line, merit.amount, { state: next, defs: ctx.defs });
   next = gainAffinity(slot.notables, { state: next, defs: ctx.defs }, fx);
   // 留下的是【實際入帳】的數字，與卡面預覽同一個值。
@@ -245,7 +248,7 @@ export function select(
       ...next.turn,
       selected: index,
       training: {
-        finalGlow: finalTier, upgraded, attr: slot.attr, attrGained: gained,
+        finalGlow: finalTier, upgraded, attr: slot.attr, expGained: gained,
         meritGained: meritLogged,
       },
     },

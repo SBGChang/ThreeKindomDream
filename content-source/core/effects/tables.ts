@@ -49,6 +49,23 @@ export const effects: EffectTableInput = {
     [FX.expAllUp]: { target: T('training.exp.all'), op: 'mulPct', value: 0.08, condition: null },
     [FX.noGlowBonus]: { target: T('training.noGlowBonus'), op: 'add', value: 0.30, condition: null },
     [FX.expWarUp]: { target: T('training.exp.war'), op: 'mulPct', value: 0.25, condition: null },
+
+    // ── 戰役的五個 target（33 §5.2）★ ──────────────
+    // 特質只要指到這五個之一就會在戰役中生效，不必動任何程式。
+    [FX.battlePhys06]: { target: T('battle.damage.physical'), op: 'mulPct', value: 0.06, condition: null },
+    [FX.battlePhys08]: { target: T('battle.damage.physical'), op: 'mulPct', value: 0.08, condition: null },
+    [FX.battlePhys15]: { target: T('battle.damage.physical'), op: 'mulPct', value: 0.15, condition: null },
+    [FX.battlePhys30]: { target: T('battle.damage.physical'), op: 'mulPct', value: 0.30, condition: null },
+    [FX.battleMagic08]: { target: T('battle.damage.magic'), op: 'mulPct', value: 0.08, condition: null },
+    [FX.battleMagic18]: { target: T('battle.damage.magic'), op: 'mulPct', value: 0.18, condition: null },
+    [FX.battleMagic25]: { target: T('battle.damage.magic'), op: 'mulPct', value: 0.25, condition: null },
+    [FX.battleTroops08]: { target: T('battle.troopsMax'), op: 'mulPct', value: 0.08, condition: null },
+    [FX.battleTroops12]: { target: T('battle.troopsMax'), op: 'mulPct', value: 0.12, condition: null },
+    [FX.battleSupply20]: { target: T('battle.supplyMax'), op: 'mulPct', value: 0.20, condition: null },
+    [FX.battleHeal12]: { target: T('battle.heal'), op: 'mulPct', value: 0.12, condition: null },
+    [FX.battleHeal20]: { target: T('battle.heal'), op: 'mulPct', value: 0.20, condition: null },
+    // 剛愎的另一半。同一條特質同時有正負，取捨感就在這裡。
+    [FX.battleHealDown20]: { target: T('battle.heal'), op: 'mulPct', value: -0.20, condition: null },
   },
 
   GlowBaseWeight: {

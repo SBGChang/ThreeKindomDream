@@ -1,5 +1,31 @@
 [
   {
+    "abilities": {
+      "attrs": {
+        "int": 88,
+        "lead": 95,
+        "pol": 90,
+        "war": 72
+      },
+      "skills": [
+        {
+          "skillId": "skill:guwu",
+          "star": 0
+        },
+        {
+          "skillId": "skill:jiezhi",
+          "star": 2
+        },
+        {
+          "skillId": "skill:zhirong",
+          "star": 4
+        }
+      ],
+      "traits": [
+        "trait:chenyi",
+        "trait:linzhen"
+      ]
+    },
     "base": {
       "sortieBonus": 12,
       "specialty": "lead",
@@ -65,6 +91,32 @@
     ]
   },
   {
+    "abilities": {
+      "attrs": {
+        "int": 70,
+        "lead": 88,
+        "pol": 55,
+        "war": 92
+      },
+      "skills": [
+        {
+          "skillId": "skill:tuzhen",
+          "star": 0
+        },
+        {
+          "skillId": "skill:xianzhen",
+          "star": 2
+        },
+        {
+          "skillId": "skill:wanrenzhi",
+          "star": 4
+        }
+      ],
+      "traits": [
+        "trait:danshi",
+        "trait:linzhen"
+      ]
+    },
     "base": {
       "sortieBonus": 7,
       "specialty": "lead",
@@ -136,6 +188,27 @@
     ]
   },
   {
+    "abilities": {
+      "attrs": {
+        "int": 60,
+        "lead": 80,
+        "pol": 62,
+        "war": 78
+      },
+      "skills": [
+        {
+          "skillId": "skill:guwu",
+          "star": 0
+        },
+        {
+          "skillId": "skill:jiezhi",
+          "star": 3
+        }
+      ],
+      "traits": [
+        "trait:chenyi"
+      ]
+    },
     "base": {
       "sortieBonus": 2,
       "specialty": "lead",
@@ -201,6 +274,27 @@
     ]
   },
   {
+    "abilities": {
+      "attrs": {
+        "int": 55,
+        "lead": 78,
+        "pol": 50,
+        "war": 90
+      },
+      "skills": [
+        {
+          "skillId": "skill:tuzhen",
+          "star": 0
+        },
+        {
+          "skillId": "skill:xianzhen",
+          "star": 2
+        }
+      ],
+      "traits": [
+        "trait:danshi"
+      ]
+    },
     "base": {
       "sortieBonus": 5,
       "specialty": "war",
@@ -266,6 +360,28 @@
     ]
   },
   {
+    "abilities": {
+      "attrs": {
+        "int": 40,
+        "lead": 60,
+        "pol": 38,
+        "war": 94
+      },
+      "skills": [
+        {
+          "skillId": "skill:tuzhen",
+          "star": 0
+        },
+        {
+          "skillId": "skill:wanrenzhi",
+          "star": 3
+        }
+      ],
+      "traits": [
+        "trait:danshi",
+        "trait:wanrendi"
+      ]
+    },
     "base": {
       "sortieBonus": 6,
       "specialty": "war",
@@ -337,6 +453,23 @@
     ]
   },
   {
+    "abilities": {
+      "attrs": {
+        "int": 48,
+        "lead": 66,
+        "pol": 45,
+        "war": 76
+      },
+      "skills": [
+        {
+          "skillId": "skill:tuzhen",
+          "star": 0
+        }
+      ],
+      "traits": [
+        "trait:danshi"
+      ]
+    },
     "base": {
       "sortieBonus": 1,
       "specialty": "war",
@@ -402,6 +535,32 @@
     ]
   },
   {
+    "abilities": {
+      "attrs": {
+        "int": 96,
+        "lead": 62,
+        "pol": 68,
+        "war": 42
+      },
+      "skills": [
+        {
+          "skillId": "skill:huoji",
+          "star": 0
+        },
+        {
+          "skillId": "skill:shuiyan",
+          "star": 2
+        },
+        {
+          "skillId": "skill:lianhuan",
+          "star": 4
+        }
+      ],
+      "traits": [
+        "trait:jimin",
+        "trait:liaodi"
+      ]
+    },
     "base": {
       "sortieBonus": 5,
       "specialty": "int",
@@ -467,6 +626,28 @@
     ]
   },
   {
+    "abilities": {
+      "attrs": {
+        "int": 97,
+        "lead": 66,
+        "pol": 80,
+        "war": 45
+      },
+      "skills": [
+        {
+          "skillId": "skill:huoji",
+          "star": 0
+        },
+        {
+          "skillId": "skill:lianhuan",
+          "star": 2
+        }
+      ],
+      "traits": [
+        "trait:liaodi",
+        "trait:gangbi"
+      ]
+    },
     "base": {
       "sortieBonus": 4,
       "specialty": "int",
@@ -532,6 +713,27 @@
     ]
   },
   {
+    "abilities": {
+      "attrs": {
+        "int": 84,
+        "lead": 60,
+        "pol": 76,
+        "war": 52
+      },
+      "skills": [
+        {
+          "skillId": "skill:huoji",
+          "star": 0
+        },
+        {
+          "skillId": "skill:shuiyan",
+          "star": 3
+        }
+      ],
+      "traits": [
+        "trait:jimin"
+      ]
+    },
     "base": {
       "sortieBonus": 2,
       "specialty": "int",
@@ -597,6 +799,33 @@
     ]
   },
   {
+    "abilities": {
+      "attrs": {
+        "int": 95,
+        "lead": 70,
+        "pol": 92,
+        "war": 40
+      },
+      "skills": [
+        {
+          "skillId": "skill:fumin",
+          "star": 0
+        },
+        {
+          "skillId": "skill:tuntian",
+          "star": 2
+        },
+        {
+          "skillId": "skill:wangzuo",
+          "star": 4
+        }
+      ],
+      "traits": [
+        "trait:liande",
+        "trait:zhechong",
+        "trait:jingwei"
+      ]
+    },
     "base": {
       "sortieBonus": 8,
       "specialty": "pol",
@@ -662,6 +891,28 @@
     ]
   },
   {
+    "abilities": {
+      "attrs": {
+        "int": 82,
+        "lead": 58,
+        "pol": 90,
+        "war": 35
+      },
+      "skills": [
+        {
+          "skillId": "skill:fumin",
+          "star": 0
+        },
+        {
+          "skillId": "skill:tuntian",
+          "star": 3
+        }
+      ],
+      "traits": [
+        "trait:liande",
+        "trait:zhechong"
+      ]
+    },
     "base": {
       "sortieBonus": 3,
       "specialty": "pol",
@@ -727,6 +978,27 @@
     ]
   },
   {
+    "abilities": {
+      "attrs": {
+        "int": 74,
+        "lead": 55,
+        "pol": 82,
+        "war": 40
+      },
+      "skills": [
+        {
+          "skillId": "skill:fumin",
+          "star": 0
+        },
+        {
+          "skillId": "skill:tuntian",
+          "star": 3
+        }
+      ],
+      "traits": [
+        "trait:liande"
+      ]
+    },
     "base": {
       "sortieBonus": 2,
       "specialty": "pol",
@@ -5836,5 +6108,496 @@
     "kind": "chapterSequence",
     "packId": "pack:wei",
     "schemaVersion": 1
+  },
+  {
+    "attrs": {
+      "int": 45,
+      "lead": 70,
+      "pol": 30,
+      "war": 84
+    },
+    "enemyId": "enemy:huaxiong",
+    "id": "enemy:huaxiong",
+    "kind": "enemy",
+    "nameKey": "enemy.huaxiong.name",
+    "packId": "pack:wei",
+    "schemaVersion": 1,
+    "skillId": "skill:xianzhen"
+  },
+  {
+    "attrs": {
+      "int": 58,
+      "lead": 72,
+      "pol": 45,
+      "war": 78
+    },
+    "enemyId": "enemy:lijue",
+    "id": "enemy:lijue",
+    "kind": "enemy",
+    "nameKey": "enemy.lijue.name",
+    "packId": "pack:wei",
+    "schemaVersion": 1,
+    "skillId": "skill:tuzhen"
+  },
+  {
+    "attrs": {
+      "int": 40,
+      "lead": 78,
+      "pol": 25,
+      "war": 100
+    },
+    "enemyId": "enemy:lvbu",
+    "id": "enemy:lvbu",
+    "kind": "enemy",
+    "nameKey": "enemy.lvbu.name",
+    "packId": "pack:wei",
+    "schemaVersion": 1,
+    "skillId": "skill:wanrenzhi"
+  },
+  {
+    "attrs": {
+      "int": 48,
+      "lead": 74,
+      "pol": 40,
+      "war": 88
+    },
+    "enemyId": "enemy:yanliang",
+    "id": "enemy:yanliang",
+    "kind": "enemy",
+    "nameKey": "enemy.yanliang.name",
+    "packId": "pack:wei",
+    "schemaVersion": 1,
+    "skillId": "skill:xianzhen"
+  },
+  {
+    "attrs": {
+      "int": 80,
+      "lead": 55,
+      "pol": 72,
+      "war": 35
+    },
+    "enemyId": "enemy:guotu",
+    "id": "enemy:guotu",
+    "kind": "enemy",
+    "nameKey": "enemy.guotu.name",
+    "packId": "pack:wei",
+    "schemaVersion": 1,
+    "skillId": "skill:huoji"
+  },
+  {
+    "attrs": {
+      "int": 70,
+      "lead": 88,
+      "pol": 85,
+      "war": 62
+    },
+    "enemyId": "enemy:yuanshao",
+    "id": "enemy:yuanshao",
+    "kind": "enemy",
+    "nameKey": "enemy.yuanshao.name",
+    "packId": "pack:wei",
+    "schemaVersion": 1,
+    "skillId": "skill:shuiyan"
+  },
+  {
+    "attrs": {
+      "int": 58,
+      "lead": 70,
+      "pol": 55,
+      "war": 74
+    },
+    "enemyId": "enemy:yuantan",
+    "id": "enemy:yuantan",
+    "kind": "enemy",
+    "nameKey": "enemy.yuantan.name",
+    "packId": "pack:wei",
+    "schemaVersion": 1,
+    "skillId": "skill:tuzhen"
+  },
+  {
+    "attrs": {
+      "int": 86,
+      "lead": 68,
+      "pol": 80,
+      "war": 45
+    },
+    "enemyId": "enemy:shenpei",
+    "id": "enemy:shenpei",
+    "kind": "enemy",
+    "nameKey": "enemy.shenpei.name",
+    "packId": "pack:wei",
+    "schemaVersion": 1,
+    "skillId": "skill:shuiyan"
+  },
+  {
+    "attrs": {
+      "int": 44,
+      "lead": 82,
+      "pol": 35,
+      "war": 90
+    },
+    "enemyId": "enemy:tadun",
+    "id": "enemy:tadun",
+    "kind": "enemy",
+    "nameKey": "enemy.tadun.name",
+    "packId": "pack:wei",
+    "schemaVersion": 1,
+    "skillId": "skill:wanrenzhi"
+  },
+  {
+    "campaignId": "campaign:wei.hulao",
+    "chapterId": "ch:wei.hulao",
+    "enemyNotables": [],
+    "id": "campaign:wei.hulao",
+    "kind": "campaign",
+    "packId": "pack:wei",
+    "schemaVersion": 1,
+    "stages": [
+      {
+        "boss": null,
+        "briefKey": "campaign.wei.hulao.stage.0",
+        "damageMul": 0.6,
+        "rewards": [
+          {
+            "amount": 22,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "troopsMul": 0.55
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wei.hulao.stage.1",
+        "damageMul": 0.75,
+        "rewards": [
+          {
+            "amount": 35,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "troopsMul": 0.75
+      },
+      {
+        "boss": "enemy:lijue",
+        "briefKey": "campaign.wei.hulao.stage.2",
+        "damageMul": 0.9,
+        "rewards": [
+          {
+            "amount": 57,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "troopsMul": 1
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wei.hulao.stage.3",
+        "damageMul": 1.05,
+        "rewards": [
+          {
+            "amount": 92,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:chenyi"
+          }
+        ],
+        "troopsMul": 1.35
+      },
+      {
+        "boss": "enemy:huaxiong",
+        "briefKey": "campaign.wei.hulao.stage.4",
+        "damageMul": 1.25,
+        "rewards": [
+          {
+            "amount": 150,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:jiezhi",
+            "trait": null
+          }
+        ],
+        "troopsMul": 1.8
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wei.hulao.stage.5",
+        "damageMul": 1.5,
+        "rewards": [
+          {
+            "amount": 242,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "troopsMul": 2.4
+      },
+      {
+        "boss": "enemy:lvbu",
+        "briefKey": "campaign.wei.hulao.stage.6",
+        "damageMul": 1.8,
+        "rewards": [
+          {
+            "amount": 396,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:linzhen"
+          }
+        ],
+        "troopsMul": 3.2
+      }
+    ]
+  },
+  {
+    "campaignId": "campaign:wei.guandu",
+    "chapterId": "ch:wei.guandu",
+    "enemyNotables": [],
+    "id": "campaign:wei.guandu",
+    "kind": "campaign",
+    "packId": "pack:wei",
+    "schemaVersion": 1,
+    "stages": [
+      {
+        "boss": null,
+        "briefKey": "campaign.wei.guandu.stage.0",
+        "damageMul": 0.6,
+        "rewards": [
+          {
+            "amount": 40,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "troopsMul": 0.55
+      },
+      {
+        "boss": "enemy:guotu",
+        "briefKey": "campaign.wei.guandu.stage.1",
+        "damageMul": 0.75,
+        "rewards": [
+          {
+            "amount": 64,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "troopsMul": 0.75
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wei.guandu.stage.2",
+        "damageMul": 0.9,
+        "rewards": [
+          {
+            "amount": 104,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "troopsMul": 1
+      },
+      {
+        "boss": "enemy:yanliang",
+        "briefKey": "campaign.wei.guandu.stage.3",
+        "damageMul": 1.05,
+        "rewards": [
+          {
+            "amount": 168,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:shuiyan",
+            "trait": null
+          }
+        ],
+        "troopsMul": 1.35
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wei.guandu.stage.4",
+        "damageMul": 1.25,
+        "rewards": [
+          {
+            "amount": 272,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:liaodi"
+          }
+        ],
+        "troopsMul": 1.8
+      },
+      {
+        "boss": "enemy:shenpei",
+        "briefKey": "campaign.wei.guandu.stage.5",
+        "damageMul": 1.5,
+        "rewards": [
+          {
+            "amount": 440,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tuntian",
+            "trait": null
+          }
+        ],
+        "troopsMul": 2.4
+      },
+      {
+        "boss": "enemy:yuanshao",
+        "briefKey": "campaign.wei.guandu.stage.6",
+        "damageMul": 1.8,
+        "rewards": [
+          {
+            "amount": 720,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:zhechong"
+          }
+        ],
+        "troopsMul": 3.2
+      }
+    ]
+  },
+  {
+    "campaignId": "campaign:wei.hebei",
+    "chapterId": "ch:wei.hebei",
+    "enemyNotables": [],
+    "id": "campaign:wei.hebei",
+    "kind": "campaign",
+    "packId": "pack:wei",
+    "schemaVersion": 1,
+    "stages": [
+      {
+        "boss": null,
+        "briefKey": "campaign.wei.hebei.stage.0",
+        "damageMul": 0.6,
+        "rewards": [
+          {
+            "amount": 68,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "troopsMul": 0.55
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wei.hebei.stage.1",
+        "damageMul": 0.75,
+        "rewards": [
+          {
+            "amount": 109,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "troopsMul": 0.75
+      },
+      {
+        "boss": "enemy:yuantan",
+        "briefKey": "campaign.wei.hebei.stage.2",
+        "damageMul": 0.9,
+        "rewards": [
+          {
+            "amount": 177,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "troopsMul": 1
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wei.hebei.stage.3",
+        "damageMul": 1.05,
+        "rewards": [
+          {
+            "amount": 286,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "troopsMul": 1.35
+      },
+      {
+        "boss": "enemy:shenpei",
+        "briefKey": "campaign.wei.hebei.stage.4",
+        "damageMul": 1.25,
+        "rewards": [
+          {
+            "amount": 462,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:wanrendi"
+          }
+        ],
+        "troopsMul": 1.8
+      },
+      {
+        "boss": "enemy:tadun",
+        "briefKey": "campaign.wei.hebei.stage.5",
+        "damageMul": 1.5,
+        "rewards": [
+          {
+            "amount": 748,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:wanrenzhi",
+            "trait": null
+          }
+        ],
+        "troopsMul": 2.4
+      },
+      {
+        "boss": "enemy:tadun",
+        "briefKey": "campaign.wei.hebei.stage.6",
+        "damageMul": 1.8,
+        "rewards": [
+          {
+            "amount": 1224,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:zhirong",
+            "trait": null
+          }
+        ],
+        "troopsMul": 3.2
+      }
+    ]
   }
 ]

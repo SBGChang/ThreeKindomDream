@@ -103,6 +103,11 @@ const OWNS: Readonly<Record<string, readonly string[]>> = {
     'ending', 'roster', 'career', 'turn', 'attributes', 'currencies', 'actions',
   ],
   'check.ts': [],
+  // ㉜ 擁有 growth。它【寫】attributes 但一律經 ⑳ 的 StatWriter，因此不需要讀權。
+  'growth.ts': ['growth'],
+  'ability.ts': ['abilities'],
+  // ㉝ 擁有 campaign。career／attributes／roster 一律經各自的 Query。
+  'campaign.ts': ['campaign'],
 };
 const SLICE_READ = /(?:ctx|tc)\.state\.([a-zA-Z]+)/g;
 for (const f of files) {

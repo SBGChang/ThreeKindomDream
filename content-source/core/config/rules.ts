@@ -3,10 +3,20 @@ import type {
 } from '../../../src/contracts/core/definitions.js';
 import { coreDef } from '../pack-id.js';
 
-// GREYBOX：四維上限 999（ARCHITECTURE §9-1 標記為最優先待補數值）。
-// 反推依據：32 回合全押單維 ≈ 880，因此 999 讓專精流不會撞頂而失去意義。
+/**
+ * 四維上限 ＝ 100（RFC-01 D30）★
+ *
+ * 實況的規格，而它順帶帶來等級制：`growthRule.bands` 的七個價格帶
+ * 與七個等級 G–S 一對一，玩家看到「武 B」就知道下一階要付約 200 點。
+ *
+ * 舊值 999 的反推依據（「32 回合全押單維 ≈ 880」）連同它一起作廢 ——
+ * 鍛鍊產出的已經不是屬性點而是經驗，屬性只能經 ㉜ 買。
+ *
+ * 名士的能力表也在同一把尺上（0–100）。戰前配置畫面上四個人擺在一起
+ * 可以直接比 —— 驗收型的資訊層靠這個成立。
+ */
 export const attributeCap: AttributeCapDef = coreDef('attributeCap', 'cap:main', {
-  attrMax: 999,
+  attrMax: 100,
 });
 
 export const gameRules: GameRulesDef = coreDef('gameRules', 'rules:main', {
@@ -54,5 +64,7 @@ export const checkRule: CheckRuleDef = coreDef('checkRule', 'checkRule:main', {
   rollMax: 100,
   rollCenter: 50,
   rollSpread: 100,
-  baseFloor: 25,
+  // 0–100 尺度下的地板（原 25 是 999 尺度的）。它只防退化：
+  // 四維全 0 的玩家仍有一點機會，但那個機會小得看得出來。
+  baseFloor: 10,
 });

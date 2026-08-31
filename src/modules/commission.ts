@@ -19,7 +19,7 @@ import { targetId } from '../contracts/core/ids.js';
 import type { Attr, GlowTier, Rarity } from '../contracts/core/primitives.js';
 import { RARITIES } from '../contracts/core/primitives.js';
 import type {
-  AttrGain, EventOffer, EventResolution, ItemGain, MeritGain, OptionState, RunState,
+  ExpGain, EventOffer, EventResolution, ItemGain, MeritGain, OptionState, RunState,
 } from '../contracts/core/state.js';
 import { grantBoon, type EffectResolver } from './effect.js';
 import { evaluateCondition } from './effect-core.js';
@@ -27,6 +27,7 @@ import { acquire, canAcquire, poolCandidates } from './item.js';
 import { addAffinity, addAffinityAll, atLeastStage } from './roster.js';
 import { preview, resolveCheck, specForMinor } from './check.js';
 import { careerService } from './career.js';
+import { grantExp } from './growth.js';
 import { statQuery, type StatWriter } from './stats.js';
 
 const readStat = statQuery.read.bind(statQuery);
@@ -270,7 +271,7 @@ function castRarity(def: EventDef, ctx: RunContext): Rarity {
 export function practiceYield(
   practice: readonly EventPractice[], ratio: number, rarity: Rarity, tier: number,
   ctx: RunContext, fx: EffectResolver,
-): readonly AttrGain[] {
+): readonly ExpGain[] {
   const c = yieldCurve(ctx);
   const mul = tierScale(tier, ctx) * rarityMul(rarity, ctx);
   return practice.map((p) => {
@@ -327,7 +328,7 @@ export function optionStates(
     let rate: number | null = null;
     if (o.check !== null) {
       rate = preview(
-        specForMinor(o.check.attr, dcAt(String(o.check.dcCurveId), tier, ctx)), [], ctx, fx,
+        specForMinor(o.check.attr, dcAt(String(o.check.dcCurveId), tier, ctx)), ctx, fx,
       ).successRate;
     }
     return {
@@ -456,20 +457,21 @@ export function resolveHead(
   let passed = true;
   if (option.check !== null) {
     const dc = dcAt(String(option.check.dcCurveId), tier, ctx);
-    passed = resolveCheck(specForMinor(option.check.attr, dc), [], ctx, fx).passed;
+    passed = resolveCheck(specForMinor(option.check.attr, dc), ctx, fx).passed;
   }
 
   // 檢定失敗仍給四成（17 §6.3）。一回合只有這一次機會，若失敗＝顆粒無收，
   // 高 DC 的選項會沒人敢碰，「用哪個方法度過」就退化成只選最穩的那個。
   const ratio = passed ? 1 : yieldCurve(ctx).failRatio;
-  const practiceGained = practiceYield(option.practice, ratio, offer.rarity, tier, ctx, fx);
+  const practiceExp = practiceYield(option.practice, ratio, offer.rarity, tier, ctx, fx);
   const meritRaw = meritYield(option, ratio, offer.rarity, tier, ctx, fx);
   // 紀錄的是【實際入帳】的數字，不是交給 writer 之前的那個 —— 回合紀錄要與存摺一致。
   const meritGained = meritShown(meritRaw, ctx, fx);
 
   let state = ctx.state;
   const at = (): RunContext => ({ state, defs: ctx.defs });
-  for (const g of practiceGained) state = writer.grantAttr(g.attr, g.amount, at());
+  // 事上磨練也給【經驗】（D32）。做事會練到一點，只是比專心練少。
+  for (const g of practiceExp) state = grantExp(g.attr, g.amount, at());
   for (const m of meritRaw) state = writer.grantMerit(m.line, m.amount, at());
 
   // 劇情級的一次性獎勵：好感度與道具。四維與功績走上面的曲線，這裡只處理例外。
@@ -491,7 +493,7 @@ export function resolveHead(
   }
 
   const resolution: EventResolution = {
-    eventDefId: def.eventDefId, optionIndex, passed, practiceGained, meritGained, itemsGained,
+    eventDefId: def.eventDefId, optionIndex, passed, practiceExp, meritGained, itemsGained,
   };
   const seen: readonly EventDefId[] = def.unique
     ? [...state.turn.seenUniqueIds, def.eventDefId]

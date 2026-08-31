@@ -1,11 +1,13 @@
 import type {
-  ChapterId, ChargeId, EndingId, EventDefId, FactionId, ItemId, L10nKey,
-  NotableId, ParamPoolId, Seed, ShopItemId, TalentId, TurnIndex, ChapterIndex,
+  CampaignId, ChapterId, ChargeId, EndingId, EventDefId, FactionId, ItemId,
+  L10nKey, NotableId, ParamPoolId, Seed, ShopItemId, SkillId, TalentId, TraitId,
+  TurnIndex, ChapterIndex,
 } from './ids.js';
 import type { EffectRef } from './effects.js';
+import type { EventReward } from './definitions.js';
 import type {
   AffinityStage, AptitudeGrade, Attr, CareerLine, Difficulty,
-  GlowTier, MeritKind, OptionTier, Phase, Rarity, RngCursors, SlotIndex,
+  GlowTier, MeritKind, OptionTier, Phase, Rarity, RngCursors, SkillKind, SlotIndex,
 } from './primitives.js';
 
 // ── MetaState（跨 Run 持久）────────────────────────────
@@ -139,11 +141,15 @@ export interface TrainingResult {
   readonly finalGlow: GlowTier;
   readonly upgraded: boolean;
   readonly attr: Attr;
-  readonly attrGained: number;
+  readonly expGained: number;
   /** 固定事件自己的功績產出。走 attrLine 對應的那一條（16 §4.2）。 */
   readonly meritGained: MeritGain;
 }
-export interface AttrGain { readonly attr: Attr; readonly amount: number }
+/**
+ * 一筆經驗產出。RFC-01 D32 之後 ⑯ 與 ⑰ 產出的是【經驗】而不是屬性點 ——
+ * 屬性只能經 ㉜ 花經驗買。型別改名讓那件事在呼叫端就看得見。
+ */
+export interface ExpGain { readonly attr: Attr; readonly amount: number }
 
 export interface MeritGain { readonly line: CareerLine; readonly amount: number }
 
@@ -154,7 +160,7 @@ export interface OptionState {
   readonly blockedReasonKeys: readonly L10nKey[];
   readonly successRate: number | null;
   /** 事上磨練的預期產出（成功時）。 */
-  readonly practicePreview: readonly AttrGain[];
+  readonly practicePreview: readonly ExpGain[];
   /** 功績的預期產出（成功時）。委託是功績的主要來源，必須看得見。 */
   readonly meritPreview: readonly MeritGain[];
 }
@@ -181,7 +187,7 @@ export interface EventResolution {
   readonly eventDefId: EventDefId;
   readonly optionIndex: number;
   readonly passed: boolean;
-  readonly practiceGained: readonly AttrGain[];
+  readonly practiceExp: readonly ExpGain[];
   readonly meritGained: readonly MeritGain[];
   readonly itemsGained: readonly ItemGain[];
 }
@@ -239,6 +245,93 @@ export interface ItemRunState {
  */
 export type BoonState = readonly EffectRef[];
 
+// ── ㉜ 養成兌現（32 §2）★ ─────────────────────────────
+/**
+ * 四類經驗池 ＋ 本輪解鎖清單。
+ *
+ * 四類【不共用】—— 共用一個池會讓「這回合練哪一格」失去意義，
+ * 而那是回合制唯一的長期決策（32 §2.1）。
+ *
+ * 解鎖清單只在本輪有效。跨輪的預先解鎖若要做，走 ⑨ 天命商店（D37）。
+ */
+export interface GrowthState {
+  readonly exp: Readonly<Record<Attr, number>>;
+  readonly unlockedTraits: readonly TraitId[];
+  readonly unlockedSkills: readonly SkillId[];
+  /** 本輪累計花掉的經驗。用於斷言「產出 − 消耗 ＝ 餘額」（32 §9）。 */
+  readonly spent: Readonly<Record<Attr, number>>;
+}
+
+// ── ㉓ 特質與技能（23 §2.4）★ ─────────────────────────
+/** 只存 ID。效果、消耗、戰役行為全由 Definition 現算。 */
+export interface AbilityState {
+  readonly traits: readonly TraitId[];
+  readonly skills: readonly SkillId[];
+}
+
+// ── ㉝ 戰役（33 §2）★ ─────────────────────────────────
+export type CampaignPhase = 'configuring' | 'awaitingDecision' | 'resolved';
+
+export interface CommanderSlot {
+  readonly notableId: NotableId;
+  /** 從該名士星階已開放的池裡挑的那一招（33 §3）。 */
+  readonly skillId: SkillId;
+}
+export interface BattleLoadout {
+  readonly skills: readonly SkillId[];
+  readonly commanders: readonly CommanderSlot[];
+}
+
+/** 一條 buff／debuff。`remaining` 每回合遞減。 */
+export interface ActiveBuff {
+  readonly kind: 'buff' | 'debuff';
+  readonly mulPct: number;
+  readonly remaining: number;
+  readonly sourceKey: L10nKey;
+}
+
+/**
+ * 場上只有一支軍隊（33 §2.1）★
+ *
+ * 三位名士是傳令、不在場，所以【一條軍勢條是設定而非簡化】：
+ * 走留決策要一眼可讀 ——「軍勢剩三成，下一關是頭目」就是這個功能的核心畫面。
+ */
+export interface HostState {
+  readonly troops: number;
+  readonly troopsMax: number;
+  readonly supply: number;
+  readonly supplyMax: number;
+  readonly buffs: readonly ActiveBuff[];
+}
+
+export interface BattleLogEntry {
+  readonly turn: number;
+  readonly actor: 'host' | 'commander' | 'enemy';
+  readonly actorKey: L10nKey | null;
+  readonly skillKey: L10nKey | null;
+  readonly kind: SkillKind | null;
+  readonly amount: number;
+  /** 因果鏈摘要，一律可見（33 §7.1）。完整歸因需 flag。 */
+  readonly why: readonly string[];
+  readonly troopsAfter: number;
+  readonly supplyAfter: number;
+  readonly enemyAfter: number;
+}
+
+export interface CampaignState {
+  readonly campaignId: CampaignId;
+  readonly phase: CampaignPhase;
+  readonly loadout: BattleLoadout | null;
+  readonly host: HostState;
+  /** 已通過的關數。0 時收兵合法 ——【按兵不動】，沒有及格線（33 §6.2）。 */
+  readonly clearedStages: number;
+  /** 已保住的獎勵。戰敗時全部作廢（33 §11.3）。 */
+  readonly banked: readonly EventReward[];
+  /** 最後一關的戰報。只留一關 —— 玩家要讀的是「剛剛發生什麼」。 */
+  readonly log: readonly BattleLogEntry[];
+  readonly rallied: boolean;
+}
+
 export interface EndingOutcome {
   readonly endingId: EndingId;
   readonly titleKey: L10nKey;
@@ -259,6 +352,9 @@ export interface RunState {
   readonly currencies: CurrencyState;
   readonly career: CareerState;
   readonly roster: RosterState;
+  readonly growth: GrowthState;
+  readonly abilities: AbilityState;
+  readonly campaign: CampaignState | null;
   readonly items: ItemRunState;
   readonly boons: BoonState;
   readonly turn: TurnState;
@@ -300,6 +396,11 @@ export interface RunSummary {
   readonly actions: ActionTally;
   readonly glowResults: Readonly<Record<GlowTier, number>>;
   readonly attributes: AttributeState;
+  /** 本輪學過什麼。⑫ 收集圖鑑用（23 §7.5）。 */
+  readonly learnedTraits: readonly TraitId[];
+  readonly learnedSkills: readonly SkillId[];
+  /** 每場戰役打到第幾關。深度是這個設計的主要度量（33）。 */
+  readonly stagesCleared: number;
 }
 
 export type { ChargeId, ParamPoolId, ShopItemId, CareerLine };

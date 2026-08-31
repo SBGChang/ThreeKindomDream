@@ -1,7 +1,8 @@
 // 局內不變量：回合座標、門檻貨幣、supersedes、結局兜底、可重播、結算冪等。
 import {
   ATTRS, CHECK_CHOICES, SLOT_INDICES,
-  type Attr, type CareerLine, type CheckChoice, type SlotIndex,
+  TIER_COST_KINDS,
+  type Attr, type CareerLine, type SlotIndex,
 } from '../../src/contracts/core/primitives.js';
 import { careerService } from '../../src/modules/career.js';
 import { candidatesFor, failedByAttr } from '../../src/modules/ending.js';
@@ -12,16 +13,36 @@ import { progressOf, sequenceOf } from '../../src/modules/turn.js';
 import { describe, eq, it, near, ok, throws } from '../lib/tinytest.js';
 import type { Session } from '../../src/app/session.js';
 import type { NotableId } from '../../src/contracts/core/ids.js';
+import type { EventReward } from '../../src/contracts/core/definitions.js';
+import type { BattleLoadout } from '../../src/contracts/core/state.js';
 import { designateQuota, emptyDraft } from '../../src/modules/dream-entry.js';
 import { encounterPool, optionStates } from '../../src/modules/commission.js';
 import { preview as trainingPreview } from '../../src/modules/training.js';
 import { META, defs, newSession, wiring } from './harness.js';
 
-// 大檢定改成【文武兩路線 × 三難度】（18 §2.2）。這些測試固定走武路 ——
-// 它是灰盒四章裡三章的原生路線；換路線會連帶改變檢定值，
-// 那是平衡問題，不該混進不變量測試。
-const SAFE_MARTIAL: CheckChoice = { line: 'martial', difficulty: 'safe' };
-const HARD_MARTIAL: CheckChoice = { line: 'martial', difficulty: 'hard' };
+// 大檢定已改為七關戰役（RFC-01）。這些測試多數只是要「走到下一章」，
+// 因此一律用 passCampaign —— 配置後直接收兵。它拿不到獎勵但章節照過，
+// 那正是【沒有及格線】這條規格本身。
+/**
+ * 最保守的過章方式：配置之後【直接收兵】。
+ *
+ * 它拿不到任何獎勵，但章節照過 —— 這正是 RFC-01 D5：
+ * **沒有及格線，沒有任何一條路能殺死你，除了你自己按下「再打一關」。**
+ * 大多數測試只是要「走到下一章」，因此一律用它。
+ */
+const passCampaign = (s: Session): void => {
+  s.configureCampaign(loadoutFor(s));
+  s.withdraw();
+};
+
+/** 帶上目前學到的招與好感最高的三位指揮。學不到招時三格是空的（合法）。 */
+const loadoutFor = (s: Session): BattleLoadout => {
+  const commanders = s.eligibleCommanders().slice(0, 3).flatMap((id) => {
+    const pick = s.commanderSkills(id).at(-1);
+    return pick === undefined ? [] : [{ notableId: id, skillId: pick }];
+  });
+  return { skills: s.current.abilities.skills.slice(0, 3), commanders };
+};
 
 /**
  * 打完一個回合：投入固定事件，再清空它引出的事件佇列。
@@ -55,7 +76,7 @@ const drive = (sd: number): string => {
       continue;
     }
     if (s.needsSuperiors) { s.assignSuperiors([]); continue; }
-    if (s.needsMajorCheck) { s.attemptMajor(SAFE_MARTIAL, s.eligibleSortie().slice(0, 3)); continue; }
+    if (s.needsCampaign) { passCampaign(s); continue; }
     let best: SlotIndex = 0;
     let bg = -1;
     for (const i of SLOT_INDICES) {
@@ -135,10 +156,7 @@ export function run(): void {
       let guard = 0;
       while (!s.isOver && guard < 40 && !s.needsFactionChoice) {
         guard += 1;
-        if (s.needsMajorCheck) {
-          s.attemptMajor(SAFE_MARTIAL, s.eligibleSortie().slice(0, 3));
-          continue;
-        }
+        if (s.needsCampaign) { passCampaign(s); continue; }
         playTurn(s);
         s.advance();
       }
@@ -337,12 +355,12 @@ export function run(): void {
     it('推進到章末大檢定回合時，上一回合的行動不得殘留', () => {
       const s = newSession(4242);
       let guard = 0;
-      while (!s.isOver && guard < 40 && !s.needsMajorCheck) {
+      while (!s.isOver && guard < 40 && !s.needsCampaign) {
         guard += 1;
         playTurn(s);
         s.advance();
       }
-      ok(s.needsMajorCheck, '沒走到章末大檢定');
+      ok(s.needsCampaign, '沒走到章末大檢定');
       // 章末不重抽格子，但「本回合已行動」必須是 false
       ok(!s.hasActed, '大檢定回合不該被視為已行動');
       eq(s.pendingEvent, null);
@@ -352,7 +370,7 @@ export function run(): void {
     it('回合配比以維累加，總和等於已行動回合數', () => {
       const s = newSession(909);
       let acted = 0;
-      for (let i = 0; i < 5 && !s.needsMajorCheck && !s.isOver; i += 1) {
+      for (let i = 0; i < 5 && !s.needsCampaign && !s.isOver; i += 1) {
         playTurn(s, (i % 4) as SlotIndex);
         acted += 1;
         s.advance();
@@ -560,17 +578,19 @@ export function run(): void {
       if (offer === null) throw new Error('固定事件未引出委託');
       const preview = offer.optionStates[0]?.practicePreview ?? [];
       ok(preview.length > 0, '預覽的磨練值不該為空');
-      const before = { ...s.current.attributes.values };
+      // 磨練入的是【經驗池】，不是屬性（D32）。屬性只能經 ㉜ 花經驗買 ——
+      // 舊版這裡比對 attributes，那正是「產出直接寫進屬性」那條假設的殘留。
+      const before = { ...s.current.growth.exp };
       s.resolveEvent(0);
       const res = s.current.turn.resolved.at(-1);
       if (res === undefined) throw new Error('沒有結算紀錄');
-      for (const g of res.practiceGained) {
-        const delta = s.current.attributes.values[g.attr] - before[g.attr];
+      for (const g of res.practiceExp) {
+        const delta = s.current.growth.exp[g.attr] - before[g.attr];
         ok(delta >= g.amount, `${g.attr} 實際入帳 ${delta} 小於回報的 ${g.amount}`);
       }
-      if (res.passed) eq(res.practiceGained, preview);
+      if (res.passed) eq(res.practiceExp, preview);
       // failRatio > 0：一回合只有這一次機會，失敗也不該顆粒無收
-      ok(res.practiceGained.length > 0, '無論成敗都該有磨練產出');
+      ok(res.practiceExp.length > 0, '無論成敗都該有磨練產出');
     });
 
     it('委託的四維產出小於固定事件 —— 玩家的選擇才是主力（GDD §4.2）', () => {
@@ -612,7 +632,7 @@ export function run(): void {
             s.chooseFaction(o.factionId);
             continue;
           }
-          if (s.needsMajorCheck) { s.attemptMajor(SAFE_MARTIAL, s.eligibleSortie().slice(0, 3)); continue; }
+          if (s.needsCampaign) { passCampaign(s); continue; }
           playTurn(s, 0 as SlotIndex);
           s.advance();
         }
@@ -637,7 +657,7 @@ export function run(): void {
           s.chooseFaction(o.factionId);
           continue;
         }
-        if (s.needsMajorCheck) { s.attemptMajor(SAFE_MARTIAL, s.eligibleSortie().slice(0, 3)); continue; }
+        if (s.needsCampaign) { passCampaign(s); continue; }
         playTurn(s, 0 as SlotIndex);
         s.advance();
       }
@@ -837,112 +857,245 @@ export function run(): void {
     });
   });
 
-  describe('check · 文武兩路線 × 三難度（18 §2.2）', () => {
-    /** 推進到第一場大檢定。avoid 那一維不練 —— 用來造一個確定失敗的局。 */
-    const toFirstCheck = (sd: number, avoid: Attr | null) => {
+  describe('campaign · 七關戰役（33）', () => {
+    /** 推進到第一場戰役。 */
+    const toFirstCampaign = (sd: number) => {
       const s = newSession(sd);
       let guard = 0;
-      while (!s.isOver && guard < 30 && !s.needsMajorCheck) {
+      while (!s.isOver && guard < 30 && !s.needsCampaign) {
         guard += 1;
-        const idx = avoid === null
-          ? 0
-          : SLOT_INDICES.find((i) => s.current.turn.slots[i]?.attr !== avoid) ?? 0;
-        playTurn(s, idx as SlotIndex);
-        s.advance();
-      }
-      ok(s.needsMajorCheck, `seed ${sd} 未走到章末`);
-      return s;
-    };
-
-    it('每場大檢定都有六個選項，且兩路線的主屬性不同', () => {
-      eq(CHECK_CHOICES.length, 6);
-      for (const def of defs.reader('majorCheck').all()) {
-        const id = String(def.checkId);
-        // 主屬性相同的兩條路線，六個選項其實只是三個選項的兩種記帳方式
-        ok(def.routes.civil.primaryAttr !== def.routes.martial.primaryAttr,
-          `${id} 兩路線主屬性相同`);
-        for (const c of CHECK_CHOICES) {
-          ok(def.routes[c.line].tiers[c.difficulty].dc > 0,
-            `${id} 缺 ${c.line}/${c.difficulty}`);
-        }
-      }
-    });
-
-    it('第一場大檢定的六個選項全部可用（尚未有門檻）', () => {
-      eq(toFirstCheck(4242, null).availableChoices().length, 6);
-    });
-
-    it('官階加值只算所走的那一條線', () => {
-      const s = newSession(1234);
-      let guard = 0;
-      // 走到入朝之後，文武兩線的階級才有機會不同
-      while (!s.isOver && guard < 60 && s.current.faction === null) {
-        guard += 1;
-        if (s.needsFactionChoice) {
-          const o = s.factionOptions().filter((x) => x.eligible)[0];
-          if (o === undefined) { s.noFactionAvailable(); break; }
-          s.chooseFaction(o.factionId);
-          continue;
-        }
-        if (s.needsMajorCheck) {
-          s.attemptMajor(SAFE_MARTIAL, s.eligibleSortie().slice(0, 3));
-          continue;
-        }
         playTurn(s, 0 as SlotIndex);
         s.advance();
       }
-      if (s.current.faction === null) return;
-      const ctx = s.ctx;
-      const civil = careerService.rankOf('civil', ctx);
-      const martial = careerService.rankOf('martial', ctx);
-      eq(careerService.checkBonus('civil', ctx), civil.checkBonus);
-      eq(careerService.checkBonus('martial', ctx), martial.checkBonus);
-      // 舊版是兩線相加。若退回去，下面這條會抗議：
-      // 相加會讓「走文路還是武路」對加值毫無影響。
-      if (civil.checkBonus !== martial.checkBonus) {
-        ok(careerService.checkBonus('civil', ctx) !== careerService.checkBonus('martial', ctx),
-          '兩條線的官階加值不應相同');
+      ok(s.needsCampaign, `seed ${sd} 未走到章末`);
+      return s;
+    };
+
+    it('每場戰役恰好七關，且敵方強度與獎勵沿關卡嚴格遞增', () => {
+      const all = defs.reader('campaign').all();
+      ok(all.length > 0, '沒有任何戰役');
+      for (const c of all) {
+        const id = String(c.campaignId);
+        eq(c.stages.length, 7);
+        const val = (st: { readonly rewards: readonly EventReward[] }): number => st.rewards
+          .reduce((n, r) => n + (r.kind === 'merit' ? r.amount : 0), 0);
+        for (let i = 1; i < c.stages.length; i += 1) {
+          const prev = c.stages[i - 1];
+          const cur = c.stages[i];
+          if (prev === undefined || cur === undefined) continue;
+          ok(cur.troopsMul > prev.troopsMul, `${id} 第 ${i} 關兵力沒有遞增`);
+          ok(cur.damageMul > prev.damageMul, `${id} 第 ${i} 關輸出沒有遞增`);
+          ok(val(cur) > val(prev), `${id} 第 ${i} 關獎勵沒有遞增`);
+        }
       }
     });
 
-    it('失敗的結局由所走路線的主屬性決定', () => {
-      // 【為什麼不強制 0%】：新制每個回合都會結算一則委託，而委託的事上磨練
-      // 會散到其他維。因此「不練那一維」已經不足以把檢定值壓到 0 ——
-      // 改成掃幾個 seed、只檢查【真的失敗的那些】，斷言不會因平衡調整而假綠。
-      const seen = new Map<CareerLine, Set<string>>();
-      let failures = 0;
+    it('每場戰役至少有一關給唯一掉落 —— 否則玩家算得出「夠了就停」', () => {
+      for (const c of defs.reader('campaign').all()) {
+        const unlocks = c.stages.filter(
+          (st) => st.rewards.some((r) => r.kind === 'unlock'),
+        );
+        ok(unlocks.length > 0, `${String(c.campaignId)} 沒有任何唯一掉落`);
+      }
+    });
 
-      for (const line of ['martial', 'civil'] as const) {
-        for (const sd of [4242, 77, 909, 1234, 31337]) {
-          const probe = toFirstCheck(sd, null);
-          const primary = probe.majorCheck().routes[line].primaryAttr;
-          const run = toFirstCheck(sd, primary);
-          const choice: CheckChoice = { line, difficulty: 'hard' };
-          const before = run.ctx;
-          const expected = candidatesFor(failedByAttr(primary), before)[0];
-          const passed = run.attemptMajor(choice, []);
-
-          eq(run.current.lastMajorCheck?.line, line);
-          if (passed) continue;
-          failures += 1;
-          // 不寫死結局 ID —— 那是內容。測試釘的是接線：路線 → 主屬性 → 結局。
-          eq(String(run.current.ending?.endingId), String(expected?.ending));
-          const bucket = seen.get(line) ?? new Set<string>();
-          bucket.add(String(run.current.ending?.endingId));
-          seen.set(line, bucket);
+    it('每個唯一掉落引用的特質或技能都存在', () => {
+      for (const c of defs.reader('campaign').all()) {
+        for (const st of c.stages) {
+          for (const r of st.rewards) {
+            if (r.kind !== 'unlock') continue;
+            if (r.trait !== null) defs.reader('trait').get(String(r.trait));
+            if (r.skill !== null) defs.reader('skill').get(String(r.skill));
+          }
         }
       }
+    });
 
-      ok(failures > 0, '沒有任何一次失敗 —— 這個測試什麼都沒驗到');
-      const m = [...(seen.get('martial') ?? [])];
-      const cv = [...(seen.get('civil') ?? [])];
-      if (m.length > 0 && cv.length > 0) {
-        ok(m.every((x) => !cv.includes(x)),
-          `兩條路線失敗後導向了同一個結局：武 ${m.join(',')} / 文 ${cv.join(',')}`);
+    it('沒有及格線：一關都不打就收兵，章節照過（D5）', () => {
+      const s = toFirstCampaign(4242);
+      const before = s.current.progress.chaptersPassed;
+      passCampaign(s);
+      ok(!s.isOver || s.current.ending?.isFullDream === true, '按兵不動不該導向中止結局');
+      ok(s.current.progress.chaptersPassed > before, '收兵之後章節沒有推進');
+    });
+
+    it('保底一招：castChances 第一項必須是 1', () => {
+      const r = defs.single('battleRule');
+      eq(r.castChances[0], 1);
+      eq(r.castChances.length, 3);
+      for (let i = 1; i < r.castChances.length; i += 1) {
+        const c = r.castChances[i] ?? 0;
+        ok(c > 0 && c < 1, `第 ${i + 1} 招的機率 ${c} 不在 (0,1)`);
+      }
+    });
+
+    it('資源跨關累積、不回滿 —— 這是整個設計的樞紐（D10）', () => {
+      const s = toFirstCampaign(4242);
+      s.configureCampaign(loadoutFor(s));
+      const full = s.current.campaign?.host.troopsMax ?? 0;
+      ok(full > 0, '兵量上限為 0');
+
+      // 第一關可能【毫髮無傷】—— 我軍先手，敵人被清空就沒機會還手。
+      // 那是「前段是碾過去的」在數字上的樣子，不是 bug。
+      // 要驗的是【不回滿】：連打幾關之後，軍勢必須是一路遞減的。
+      let prev = full;
+      let dropped = false;
+      for (let i = 0; i < 4; i += 1) {
+        const st = s.current.campaign;
+        if (st === null || st.clearedStages >= s.stageCount()) break;
+        const out = s.engage();
+        ok(out.log.length > 0, '戰報是空的 —— 戰報是玩家唯一的資訊來源');
+        ok(out.host.troops <= prev, `第 ${i + 1} 關之後軍勢回升了：${prev} → ${out.host.troops}`);
+        if (out.host.troops < prev) dropped = true;
+        prev = out.host.troops;
+        if (out.defeated) break;
+        eq(s.current.campaign?.host.troops, out.host.troops);
+      }
+      ok(dropped, '連打四關軍勢完全沒掉 —— 跨關累積沒有生效');
+    });
+
+    it('兵量與糧量的形狀：武官階抬兵量、文官階抬糧量（33 §5.1）', () => {
+      const r = defs.single('battleRule');
+      const ranks = defs.reader('careerRank').all();
+      const at = (line: 'civil' | 'martial', lv: number): number => {
+        const hit = ranks.find((x) => x.line === line && x.level === lv);
+        if (hit === undefined) throw new Error(`官階不存在 ${line}.${lv}`);
+        return hit.hostScale;
+      };
+      const troops = (m: number, c: number): number =>
+        at('martial', m) + r.crossLineRatio * at('civil', c);
+      const supply = (m: number, c: number): number =>
+        r.crossLineRatio * at('martial', m) + at('civil', c);
+      // 純武 7/1 對純文 1/7：兵量與糧量剛好對調 —— 形狀之爭，不是強弱之爭。
+      ok(troops(7, 1) > troops(1, 7), '純武的兵量沒有高於純文');
+      ok(supply(1, 7) > supply(7, 1), '純文的糧量沒有高於純武');
+      const a = troops(7, 1) + supply(7, 1);
+      const b = troops(1, 7) + supply(1, 7);
+      ok(Math.abs(a - b) < 1e-9, `兩條純線的總量不相等：${a} vs ${b}`);
+    });
+
+    it('hostScale 沿官階嚴格遞增', () => {
+      for (const line of ['civil', 'martial'] as const) {
+        const rs = defs.reader('careerRank').all()
+          .filter((x) => x.line === line).slice().sort((a, b) => a.level - b.level);
+        for (let i = 1; i < rs.length; i += 1) {
+          const prev = rs[i - 1];
+          const cur = rs[i];
+          if (prev === undefined || cur === undefined) continue;
+          ok(cur.hostScale > prev.hostScale, `${line} 第 ${cur.level} 階沒有遞增`);
+        }
       }
     });
   });
 
+  describe('growth · 養成兌現（32）', () => {
+    it('七個價格帶對齊七個等級，且每點成本遞增', () => {
+      const g = defs.single('growthRule');
+      const cap = defs.single('attributeCap').attrMax;
+      eq(cap, 100);
+      const bands = g.bands.slice().sort((a, b) => a.min - b.min);
+      eq(bands[0]?.min, 0);
+      eq(bands.at(-1)?.max, cap);
+      for (let i = 1; i < bands.length; i += 1) {
+        const prev = bands[i - 1];
+        const cur = bands[i];
+        if (prev === undefined || cur === undefined) continue;
+        eq(cur.min, prev.max + 1);
+        ok(cur.costPerPoint >= prev.costPerPoint, `第 ${i} 帶的單價沒有遞增`);
+      }
+      eq(new Set(bands.map((b) => b.grade)).size, bands.length);
+    });
+
+    it('混合消耗的類數必須等於階 —— 常 1、良 2、絕 3', () => {
+      const count = (c: Readonly<Partial<Record<Attr, number>>>): number =>
+        ATTRS.filter((a) => (c[a] ?? 0) > 0).length;
+      for (const tr of defs.reader('trait').all()) {
+        eq(count(tr.cost), TIER_COST_KINDS[tr.tier]);
+      }
+      for (const sk of defs.reader('skill').all()) {
+        eq(count(sk.cost), TIER_COST_KINDS[sk.tier]);
+      }
+    });
+
+    it('絕階一律三類混合 —— 那是純專精買不到它的原因（32 §4.1）', () => {
+      const peerless = [
+        ...defs.reader('trait').all().map((x) => ({ id: x.id, tier: x.tier, cost: x.cost })),
+        ...defs.reader('skill').all().map((x) => ({ id: x.id, tier: x.tier, cost: x.cost })),
+      ].filter((x) => x.tier === 'peerless');
+      ok(peerless.length > 0, '沒有任何絕階能力');
+      for (const x of peerless) {
+        eq(ATTRS.filter((a) => (x.cost[a] ?? 0) > 0).length, 3);
+      }
+    });
+
+    it('鍛鍊產出的是經驗，不是屬性（D32）', () => {
+      const s = newSession(4242);
+      const beforeAttr = { ...s.current.attributes.values };
+      playTurn(s, 0 as SlotIndex);
+      const r = s.current.turn.training;
+      ok(r !== null && r.expGained > 0, '固定事件沒有產出經驗');
+      if (r === null) return;
+      ok(s.current.growth.exp[r.attr] > 0, '經驗池沒有增加');
+      // 屬性【一點都不該動】—— 它只能經 ㉜ 花經驗買。
+      for (const a of ATTRS) eq(s.current.attributes.values[a], beforeAttr[a]);
+    });
+
+    it('學習會扣款，而且重複學是拒絕不是靜默 no-op（23 §4.1）', () => {
+      const s = newSession(4242);
+      for (let i = 0; i < 12 && !s.needsCampaign; i += 1) {
+        playTurn(s, 0 as SlotIndex);
+        s.advance();
+      }
+      const offer = s.skillOffers().find((o) => o.state === 'learnable');
+      if (offer === undefined) return;
+      const attr = ATTRS.find((a) => (offer.cost[a] ?? 0) > 0);
+      if (attr === undefined) return;
+      const before = s.expOf(attr);
+      ok(s.learnSkill(offer.def.skillId).ok, '第一次學習應該成功');
+      ok(s.expOf(attr) < before, '學習沒有扣款');
+      const again = s.learnSkill(offer.def.skillId);
+      eq(again.ok, false);
+      if (!again.ok) eq(again.reason, 'already-learned');
+    });
+
+    it('名士的能力表是合法的 —— 它同時是教學表（32 §5.1）', () => {
+      for (const n of defs.reader('notable').all()) {
+        for (const tid of n.abilities.traits) defs.reader('trait').get(String(tid));
+        for (const row of n.abilities.skills) {
+          defs.reader('skill').get(String(row.skillId));
+          ok(row.star >= 0, `${String(n.notableId)} 的招 star 為負`);
+        }
+        for (const a of ATTRS) {
+          const v = n.abilities.attrs[a];
+          ok(v >= 0 && v <= 100, `${String(n.notableId)} 的 ${a} = ${v} 不在 0–100`);
+        }
+      }
+    });
+
+    it('每個特質與技能至少有一個解鎖來源 —— 否則玩家永遠學不到', () => {
+      const taughtTraits = new Set<string>();
+      const taughtSkills = new Set<string>();
+      for (const n of defs.reader('notable').all()) {
+        for (const tid of n.abilities.traits) taughtTraits.add(String(tid));
+        for (const row of n.abilities.skills) taughtSkills.add(String(row.skillId));
+      }
+      for (const c of defs.reader('campaign').all()) {
+        for (const st of c.stages) {
+          for (const r of st.rewards) {
+            if (r.kind !== 'unlock') continue;
+            if (r.trait !== null) taughtTraits.add(String(r.trait));
+            if (r.skill !== null) taughtSkills.add(String(r.skill));
+          }
+        }
+      }
+      for (const tr of defs.reader('trait').all()) {
+        ok(taughtTraits.has(String(tr.traitId)), `特質 ${String(tr.traitId)} 沒有任何來源`);
+      }
+      for (const sk of defs.reader('skill').all()) {
+        ok(taughtSkills.has(String(sk.skillId)), `技能 ${String(sk.skillId)} 沒有任何來源`);
+      }
+    });
+  });
 
   describe('replay · 可重播（03 §6 不變量 4）', () => {
     it('同 seed 同指令序列產生逐欄位相同的狀態', () => {
@@ -961,7 +1114,7 @@ export function run(): void {
         guard += 1;
         if (s.needsFactionChoice) { s.noFactionAvailable(); continue; }
         if (s.needsSuperiors) { s.assignSuperiors([]); continue; }
-        if (s.needsMajorCheck) { s.attemptMajor(HARD_MARTIAL, []); continue; }
+        if (s.needsCampaign) { passCampaign(s); continue; }
         playTurn(s, 0 as SlotIndex);
         s.advance();
       }

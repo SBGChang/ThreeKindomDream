@@ -45,6 +45,9 @@ export function summarize(run: RunState, defs: DefinitionRegistry): RunSummary {
     actions: run.actions,
     glowResults: run.metaSnapshot.stats.glowResults,
     attributes: run.attributes,
+    learnedTraits: run.abilities.traits,
+    learnedSkills: run.abilities.skills,
+    stagesCleared: run.campaign?.clearedStages ?? 0,
   };
 }
 

@@ -25,6 +25,7 @@ import type { FuncType } from '../../src/contracts/core/effects.js';
 import { effectId, notableId, notablePoolId } from '../../src/contracts/core/ids.js';
 import { asKey } from '../authoring.js';
 import { notableBase } from '../core/config/notable-base.js';
+import { WEI_ABILITIES } from './abilities.js';
 import { FX } from '../core/effects/ids.js';
 import { WEI_F, weiDef } from './pack-id.js';
 
@@ -51,6 +52,7 @@ export const weiNotables: readonly NotableDef[] = [
     notableId: notableId('notable:caocao'), rarity: 5, factionId: WEI_F,
     nameKey: k('notable.caocao.name'),
     base: notableBase(5, 'lead', { sortieBonus: 12 }),
+    abilities: WEI_ABILITIES.caocao,
     unlocks: [
       row('caocao', 0, 0, 'LinkBonus', FX.linkAll10),
       row('caocao', 1, 0, 'CurrencyBonus', FX.meritMartial10),
@@ -71,6 +73,7 @@ export const weiNotables: readonly NotableDef[] = [
     notableId: notableId('notable:zhangliao'), rarity: 4, factionId: WEI_F,
     nameKey: k('notable.zhangliao.name'),
     base: notableBase(4, 'lead', { sortieBonus: 7 }),
+    abilities: WEI_ABILITIES.zhangliao,
     unlocks: [
       row('zhangliao', 0, 0, 'LinkBonus', FX.linkAll10),
       row('zhangliao', 1, 0, 'CurrencyBonus', FX.meritMartial10),
@@ -93,6 +96,7 @@ export const weiNotables: readonly NotableDef[] = [
     notableId: notableId('notable:yujin'), rarity: 2, factionId: WEI_F,
     nameKey: k('notable.yujin.name'),
     base: notableBase(2, 'lead'),
+    abilities: WEI_ABILITIES.yujin,
     unlocks: [
       row('yujin', 0, 0, 'LinkBonus', FX.linkAll10),
       row('yujin', 1, 0, 'CurrencyBonus', FX.meritMartial10),
@@ -114,6 +118,7 @@ export const weiNotables: readonly NotableDef[] = [
     notableId: notableId('notable:xiahoudun'), rarity: 4, factionId: WEI_F,
     nameKey: k('notable.xiahoudun.name'),
     base: notableBase(4, 'war'),
+    abilities: WEI_ABILITIES.xiahoudun,
     unlocks: [
       row('xiahoudun', 0, 0, 'LinkBonus', FX.linkAll10),
       row('xiahoudun', 1, 0, 'CurrencyBonus', FX.meritMartial10),
@@ -135,6 +140,7 @@ export const weiNotables: readonly NotableDef[] = [
     notableId: notableId('notable:dianwei'), rarity: 3, factionId: WEI_F,
     nameKey: k('notable.dianwei.name'),
     base: notableBase(3, 'war', { sortieBonus: 6 }),
+    abilities: WEI_ABILITIES.dianwei,
     unlocks: [
       row('dianwei', 0, 0, 'AffinityGrant', FX.startSelf20),
       row('dianwei', 1, 0, 'LinkBonus', FX.linkAll10),
@@ -157,6 +163,7 @@ export const weiNotables: readonly NotableDef[] = [
     notableId: notableId('notable:lejin'), rarity: 1, factionId: WEI_F,
     nameKey: k('notable.lejin.name'),
     base: notableBase(1, 'war'),
+    abilities: WEI_ABILITIES.lejin,
     unlocks: [
       row('lejin', 0, 0, 'LinkBonus', FX.linkAll12),
       row('lejin', 1, 0, 'CurrencyBonus', FX.meritMartial10),
@@ -179,6 +186,7 @@ export const weiNotables: readonly NotableDef[] = [
     notableId: notableId('notable:guojia'), rarity: 5, factionId: WEI_F,
     nameKey: k('notable.guojia.name'),
     base: notableBase(5, 'int', { sortieBonus: 5 }),
+    abilities: WEI_ABILITIES.guojia,
     unlocks: [
       row('guojia', 0, 0, 'LinkBonus', FX.linkAll10),
       row('guojia', 1, 0, 'CurrencyBonus', FX.meritCivil10),
@@ -200,6 +208,7 @@ export const weiNotables: readonly NotableDef[] = [
     notableId: notableId('notable:jiaxu'), rarity: 4, factionId: WEI_F,
     nameKey: k('notable.jiaxu.name'),
     base: notableBase(4, 'int', { sortieBonus: 4 }),
+    abilities: WEI_ABILITIES.jiaxu,
     unlocks: [
       row('jiaxu', 0, 0, 'LinkBonus', FX.linkAll10),
       row('jiaxu', 1, 0, 'CurrencyBonus', FX.meritCivil10),
@@ -217,6 +226,7 @@ export const weiNotables: readonly NotableDef[] = [
     notableId: notableId('notable:chengyu'), rarity: 2, factionId: WEI_F,
     nameKey: k('notable.chengyu.name'),
     base: notableBase(2, 'int'),
+    abilities: WEI_ABILITIES.chengyu,
     unlocks: [
       row('chengyu', 0, 0, 'LinkBonus', FX.linkAll10),
       row('chengyu', 1, 0, 'CurrencyBonus', FX.meritCivil15),
@@ -244,6 +254,7 @@ export const weiNotables: readonly NotableDef[] = [
     notableId: notableId('notable:xunyu'), rarity: 5, factionId: WEI_F,
     nameKey: k('notable.xunyu.name'),
     base: notableBase(5, 'pol'),
+    abilities: WEI_ABILITIES.xunyu,
     unlocks: [
       row('xunyu', 0, 0, 'LinkBonus', FX.linkAll10),
       row('xunyu', 1, 0, 'CurrencyBonus', FX.meritCivil20),
@@ -265,6 +276,7 @@ export const weiNotables: readonly NotableDef[] = [
     notableId: notableId('notable:chenqun'), rarity: 3, factionId: WEI_F,
     nameKey: k('notable.chenqun.name'),
     base: notableBase(3, 'pol'),
+    abilities: WEI_ABILITIES.chenqun,
     unlocks: [
       row('chenqun', 0, 0, 'LinkBonus', FX.linkAll10),
       row('chenqun', 1, 0, 'CurrencyBonus', FX.meritCivil10),
@@ -286,6 +298,7 @@ export const weiNotables: readonly NotableDef[] = [
     notableId: notableId('notable:maojie'), rarity: 2, factionId: WEI_F,
     nameKey: k('notable.maojie.name'),
     base: notableBase(2, 'pol'),
+    abilities: WEI_ABILITIES.maojie,
     unlocks: [
       row('maojie', 0, 0, 'LinkBonus', FX.linkAll10),
       row('maojie', 1, 0, 'CurrencyBonus', FX.meritCivil10),

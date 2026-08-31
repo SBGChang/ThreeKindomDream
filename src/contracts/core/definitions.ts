@@ -1,11 +1,11 @@
 import type {
-  ChapterId, DcCurveId, EndingId, EventChainId, EventDefId, FactionId, ItemId,
-  ItemPoolId, L10nKey, MajorCheckId, NotableId, NotablePoolId, PackId, ParamPoolId,
-  ShopItemId, TalentId,
+  CampaignId, ChapterId, DcCurveId, EndingId, EnemyId, EventChainId, EventDefId,
+  FactionId, ItemId, ItemPoolId, L10nKey, MajorCheckId, NotableId, NotablePoolId,
+  PackId, ParamPoolId, ShopItemId, SkillId, TalentId, TraitId,
 } from './ids.js';
 import type {
-  AffinityStage, AptitudeGrade, Attr, CareerLine, Difficulty,
-  GlowTier, MeritKind, OptionTier, Phase, Rarity,
+  AbilityTier, AffinityStage, AptitudeGrade, Attr, AttrGrade, CareerLine, Difficulty,
+  GlowTier, MeritKind, OptionTier, Phase, Rarity, SkillKind,
 } from './primitives.js';
 import type { Condition, EffectRef } from './effects.js';
 
@@ -18,7 +18,10 @@ export type DefinitionKind =
   | 'chapter' | 'chapterSequence' | 'majorCheck'
   | 'careerRank' | 'faction' | 'ending'
   | 'item' | 'itemPool'
-  | 'shopItem' | 'settlementFormula' | 'gameRules';
+  | 'shopItem' | 'settlementFormula' | 'gameRules'
+  // ── ㉜ 養成兌現 ／ ㉓ 特質與技能 ／ ㉝ 戰役（RFC-01）★ ──
+  | 'growthRule' | 'trait' | 'skill'
+  | 'battleRule' | 'enemy' | 'campaign';
 
 export interface DefHeader {
   readonly id: string;
@@ -269,6 +272,27 @@ export interface NotableBaseDef {
   readonly sortieBonus: number;
 }
 
+/**
+ * 名士的能力表（33 §3）★
+ *
+ * `attrs` 與玩家同尺（0–100）—— 戰前配置畫面上四個人擺在一起可以直接比，
+ * 這是驗收型的資訊層唯一成立的方式。
+ *
+ * `skills` 逐條帶 `star`：**星階決定他有幾招可選**，玩家從已開放的裡面挑一招帶。
+ * 好感則決定他【多常傳令】（33 §4.3）。兩條現成的軸各一個職責，都不碰他的數值。
+ */
+export interface NotableAbilityDef {
+  readonly attrs: Readonly<Record<Attr, number>>;
+  /** 他身上的特質。玩家好感達標即可向他學（32 §5）。 */
+  readonly traits: readonly TraitId[];
+  readonly skills: readonly NotableSkillRow[];
+}
+export interface NotableSkillRow {
+  /** 幾星開放這一招。0 ＝ 一開始就能帶。 */
+  readonly star: number;
+  readonly skillId: SkillId;
+}
+
 export interface NotableDef extends DefHeader {
   readonly kind: 'notable';
   readonly notableId: NotableId;
@@ -277,6 +301,12 @@ export interface NotableDef extends DefHeader {
   readonly nameKey: L10nKey;
   /** 基底。取代了原本的 `role` —— 那個欄位沒有任何程式讀它，是假裝成資料的註解。 */
   readonly base: NotableBaseDef;
+  /**
+   * 他的能力表（33 §3.1）★ 同時是他的【教學表】——
+   * 他能教你的，就是他自己表上有的（32 §5.1）。不另立一張「誰能教什麼」，
+   * 否則同一件事會有兩份可能互相漂移的資料。
+   */
+  readonly abilities: NotableAbilityDef;
   readonly unlocks: readonly UnlockRow[];
   // 事件鏈【不在這裡】：由 EventDef.trigger 的 notable 分支反查（19 §6）。
   // 兩邊都存會有兩份可能不一致的真相 —— 舊版就是那樣。
@@ -324,7 +354,14 @@ export type EventReward =
    * 與道具的分工 —— 遺物帶得走，當局獎勵只在這一輪。它因此能做道具做不到的事：
    * 一次性改寫本輪的規則（賈詡的「★1／★2 委託直接升為 ★3」）。
    */
-  | { readonly kind: 'boon'; readonly ref: EffectRef };
+  | { readonly kind: 'boon'; readonly ref: EffectRef }
+  /**
+   * 讓一項特質或技能進入【可學清單】（32 §5）★
+   *
+   * 舊制的 `skill` 獎勵是白給的；RFC-01 D35 之後一切都要先解鎖再花經驗學。
+   * 於是「你能學什麼」與「你買不買得起」是兩道獨立的門。
+   */
+  | { readonly kind: 'unlock'; readonly trait: TraitId | null; readonly skill: SkillId | null };
 
 /**
  * 事上磨練：本選項會鍛鍊到哪些維度、各佔多少權重。
@@ -529,7 +566,18 @@ export interface CareerRankDef extends DefHeader {
   readonly level: number;
   readonly nameKey: L10nKey;
   readonly requiredMerit: number;
-  readonly checkBonus: number;
+  /**
+   * 兵量／糧量的係數（33 5.1）★ 取代 checkBonus 的職責 ——
+   * 大檢定不再是單次判定，官階的產出改為【規模】。
+   *
+   * 兩線各給一個，由 33 依 1.0 / 0.5 的交叉比例組合：
+   *   兵量 = 1.0 x hostScale[武階] + 0.5 x hostScale[文階]
+   *   糧量 = 0.5 x hostScale[武階] + 1.0 x hostScale[文階]
+   *
+   * 0.5 那一項自帶防退化底線：純武官的糧量有近八成來自他自己的武官階，
+   * 因此零糧秣不可能出現，不需要另加基底常數。
+   */
+  readonly hostScale: number;
   /**
    * 官階抬高【該線所屬四維】固定事件的基礎值（16 §4.3、21 §3）★
    *
@@ -661,6 +709,131 @@ export interface ItemPoolDef extends DefHeader {
   readonly entries: readonly { readonly itemId: ItemId; readonly weight: number }[];
 }
 
+// ── ㉜ 養成兌現（32）★ ────────────────────────────────
+/**
+ * 一個價格帶 ＝ 一個等級（32 §3.1）。
+ *
+ * 邊界對齊是刻意的：玩家看到「武 B」就知道下一階要付約多少，
+ * 不必在 UI 另外解釋一條成本曲線。
+ */
+export interface AttrCostBand {
+  readonly grade: AttrGrade;
+  readonly min: number;
+  readonly max: number;
+  readonly costPerPoint: number;
+}
+export interface GrowthRuleDef extends DefHeader {
+  readonly kind: 'growthRule';
+  /** 依 min 遞增、無洞無重疊、覆蓋 0..attrMax。由載入期驗證強制。 */
+  readonly bands: readonly AttrCostBand[];
+  /** 向名士學該階能力所需的好感階（32 §5）。階越高，要越熟。 */
+  readonly teachStage: Readonly<Record<AbilityTier, AffinityStage>>;
+}
+
+// ── ㉓ 特質與技能（23）★ ──────────────────────────────
+/** 混合消耗。類數必須等於 `TIER_COST_KINDS[tier]`（23 §2.2）。 */
+export type AbilityCost = Readonly<Partial<Record<Attr, number>>>;
+
+export interface TraitDef extends DefHeader {
+  readonly kind: 'trait';
+  readonly traitId: TraitId;
+  readonly tier: AbilityTier;
+  readonly nameKey: L10nKey;
+  readonly descKey: L10nKey;
+  readonly cost: AbilityCost;
+  readonly polarity: 'positive' | 'negative';
+  readonly effects: readonly EffectRef[];
+}
+
+/**
+ * 戰役中的一次施放（23 §2.1）★
+ *
+ * `actorAttr` 一個欄位同時服務主角與名士：主角施放時讀主角的那一維，
+ * 名士傳令時讀該名士的。**同一個欄位，兩種施術者，不需要分岔** ——
+ * 這也是四職能可以只寫在資料裡、而不是寫成程式分支的原因。
+ */
+export interface SkillActionDef {
+  readonly kind: SkillKind;
+  readonly actorAttr: Attr;
+  /** 兵量上限的比例（33 §5.2）。傷害、恢復、Buff 幅度都走它。 */
+  readonly ratio: number;
+  /** buff / debuff 的持續回合。其餘種類為 0。 */
+  readonly duration: number;
+}
+export interface SkillDef extends DefHeader {
+  readonly kind: 'skill';
+  readonly skillId: SkillId;
+  readonly tier: AbilityTier;
+  readonly nameKey: L10nKey;
+  readonly descKey: L10nKey;
+  readonly cost: AbilityCost;
+  readonly action: SkillActionDef;
+}
+
+// ── ㉝ 戰役（33）★ ────────────────────────────────────
+export interface BattleRuleDef extends DefHeader {
+  readonly kind: 'battleRule';
+  /**
+   * 主角每回合的施放機率，index ＝ 第幾招（33 §4.1）。
+   * 第一項必須是 1 —— **保底一招**是機制本體，由驗證強制。
+   */
+  readonly castChances: readonly number[];
+  /** 指揮傳令的機率（33 §4.3）。取代舊的 `linkBonus.checkBonusByStage`。 */
+  readonly commandChanceByStage: Readonly<Record<AffinityStage, number>>;
+  /** 兵量／糧量的基底。係數由 ㉑ 依官階給（33 §5.1）。 */
+  readonly troopsBase: number;
+  readonly supplyBase: number;
+  /** 另一條官階線的折算比例。沿用 `trainingCurve.crossLineRatio` 的形狀。 */
+  readonly crossLineRatio: number;
+  /** 施術者係數的分母：`attr / divisor`。0–100 尺度下 50 ＝ ×1.0。 */
+  readonly actorDivisor: number;
+  /** 敵方兵力基準，index ＝ 官階階級 − 1（33 §5.2，D25：索引官階不索引章節）。 */
+  readonly enemyTroopsByRank: readonly number[];
+  /** 敵方每回合輸出 ＝ 敵方兵力 × 這個比例 × 該關的 damageMul。 */
+  readonly enemyDamageRatio: number;
+  /** 恢復 1 點軍勢消耗幾點糧秣。1 ＝ 糧量就是「你能補回多少軍勢」（33 §5.3）。 */
+  readonly supplyPerTroop: number;
+  /** 天賦〈天命所歸〉原地再起時回復的軍勢比例。 */
+  readonly rallyRatio: number;
+  /**
+   * 一關的回合上限。**不是玩法上的回合上限**（D9 明確不做那個）——
+   * 它是安全閥：若玩家一招輸出都沒有，戰鬥不能無限跑。
+   * 撞到它視為未能取勝，與軍勢歸零同樣處理。
+   */
+  readonly maxTurns: number;
+}
+
+export interface EnemyDef extends DefHeader {
+  readonly kind: 'enemy';
+  readonly enemyId: EnemyId;
+  readonly nameKey: L10nKey;
+  readonly attrs: Readonly<Record<Attr, number>>;
+  /** 關底敵將每回合施放的那一招。 */
+  readonly skillId: SkillId;
+}
+
+/**
+ * 一關（33 §6.1）。
+ *
+ * 內容準則：每三關安排一位有名有姓的關底敵將，其餘填雜兵 ——
+ * 否則名士對戰的戲沒了，呂布與顏良不會出現在對面。
+ */
+export interface CampaignStageDef {
+  readonly briefKey: L10nKey;
+  readonly troopsMul: number;
+  readonly damageMul: number;
+  readonly boss: EnemyId | null;
+  readonly rewards: readonly EventReward[];
+}
+export interface CampaignDef extends DefHeader {
+  readonly kind: 'campaign';
+  readonly campaignId: CampaignId;
+  readonly chapterId: ChapterId;
+  /** 屬敵方、不可派為指揮（沿用 18 §4 的規則）。 */
+  readonly enemyNotables: readonly NotableId[];
+  readonly stages: readonly CampaignStageDef[];
+}
+
 /** Definition kind → 型別對照。Registry 以此提供型別安全的 Reader。 */
 export interface DefByKind {
   glowTier: GlowTierDef; aptitudeGrade: AptitudeGradeDef;
@@ -677,4 +850,6 @@ export interface DefByKind {
   faction: FactionDef; ending: EndingDef;
   item: ItemDef; itemPool: ItemPoolDef;
   shopItem: ShopItemDef; settlementFormula: SettlementFormulaDef;
+  growthRule: GrowthRuleDef; trait: TraitDef; skill: SkillDef;
+  battleRule: BattleRuleDef; enemy: EnemyDef; campaign: CampaignDef;
 }

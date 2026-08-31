@@ -14,12 +14,16 @@ import { aptitudeCost, aptitudeGrades } from './core/config/aptitude.js';
 import { affinityCurve, affinityStages, linkBonus } from './core/config/affinity.js';
 import { notableStar } from './core/config/notable-star.js';
 import { glowTiers } from './core/config/glow-tiers.js';
+import { battleRule } from './core/config/battle.js';
+import { growthRule } from './core/config/growth.js';
 import { attributeCap, checkRule, gameRules } from './core/config/rules.js';
 import {
   attrLine, eventYieldCurve, trainingActions, trainingCurve,
 } from './core/config/training.js';
 import { effects as coreEffects } from './core/effects/tables.js';
 import { careerRanks } from './core/career/ranks.js';
+import { coreSkills, coreTraits } from './core/abilities/index.js';
+import { campCampaigns, campEnemies } from './core/campaigns/camp.js';
 import { campChapters, campChecks, campSequence } from './core/chapters/camp.js';
 import { coreEndings } from './core/endings/index.js';
 import { coreCommissions } from './core/events/commissions.js';
@@ -34,6 +38,7 @@ import { weiCommissions, weiNotableCommissions } from './wei/commissions.js';
 import { weiChapters, weiChecks, weiSequence } from './wei/chapters.js';
 import { weiFaction } from './wei/faction.js';
 import { weiNotableEvents } from './wei/notable-events.js';
+import { weiCampaigns, weiEnemies } from './wei/campaigns.js';
 import { weiNotables, weiSuperiorPool } from './wei/notables.js';
 
 import { zhTW } from './l10n/index.js';
@@ -47,7 +52,9 @@ const corePack: AuthoredPack = {
     ...glowTiers, ...aptitudeGrades, aptitudeCost,
     ...trainingActions, trainingCurve, eventYieldCurve, attrLine,
     ...affinityStages, affinityCurve, linkBonus, notableStar,
-    attributeCap, gameRules, checkRule,
+    attributeCap, gameRules, checkRule, growthRule, battleRule,
+    ...coreTraits, ...coreSkills,
+    ...campEnemies, ...campCampaigns,
     ...talents, ...shopItems, settlementFormula,
     ...paramPools, ...dcCurves,
     ...coreItems, ...coreItemPools,
@@ -71,6 +78,7 @@ const weiPack: AuthoredPack = {
     weiFaction,
     ...weiCommissions, ...weiNotableCommissions, ...weiNotableEvents,
     ...weiChecks, ...weiChapters, weiSequence,
+    ...weiEnemies, ...weiCampaigns,
   ],
   effects: {},
   texts: {},

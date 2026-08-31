@@ -9,7 +9,7 @@ import { seed as mkSeed } from '../src/contracts/core/ids.js';
 import type { Attr, GlowTier, Rarity } from '../src/contracts/core/primitives.js';
 import { ATTRS, RARITIES } from '../src/contracts/core/primitives.js';
 import type { MetaState } from '../src/contracts/core/state.js';
-import { POLICIES, type AgentPolicy } from './lib/policies.js';
+import { POLICIES, playCampaign, type AgentPolicy } from './lib/policies.js';
 
 const loaded = loadContent(diskRepository());
 if (!loaded.ok) {
@@ -40,6 +40,17 @@ interface RunRecord {
   readonly totalTurns: number;
   /** 新制的核心度量：這一輪把回合投在哪幾維。 */
   readonly byAttr: Record<string, number>;
+  /**
+   * 戰役的深度（33）★ 新制的核心度量。
+   *
+   * 舊制量「大檢定過不過」，那是二元的。現在要量的是【走了多深】——
+   * 那是玩家的貪心與他的配置一起決定的，也是獎勵曲線該不該再陡的依據。
+   */
+  readonly stagesCleared: number;
+  readonly campaigns: number;
+  /** 本輪學了幾條特質、幾招技能。經驗分配那條新軸線的直接度量。 */
+  readonly traits: number;
+  readonly skills: number;
   readonly failedAt: string | null;
 }
 
@@ -50,6 +61,8 @@ function runOnce(policy: AgentPolicy, runSeed: number, meta: MetaState): RunReco
   const rarity: Record<string, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
   let notableEvents = 0;
   let totalTurns = 0;
+  let stagesCleared = 0;
+  let campaigns = 0;
   let failedAt: string | null = null;
   let guard = 0;
 
@@ -68,13 +81,12 @@ function runOnce(policy: AgentPolicy, runSeed: number, meta: MetaState): RunReco
       s.assignSuperiors(s.superiorCandidates().slice(0, quota));
       continue;
     }
-    if (s.needsMajorCheck) {
-      const c = policy.chooseCheck(s);
-      const sortie = s.eligibleSortie().slice(0, defs.single('gameRules').maxSortie);
-      const passed = s.attemptMajor(c, sortie);
-      if (!passed) {
-        failedAt = `${String(s.current.progress.chapterId)}/${c.line}.${c.difficulty}`;
-      }
+    if (s.needsCampaign) {
+      const chapterId = String(s.current.progress.chapterId);
+      const cleared = playCampaign(s, policy);
+      stagesCleared += cleared;
+      campaigns += 1;
+      if (s.isOver) failedAt = `${chapterId}/第${cleared + 1}關`;
       continue;
     }
 
@@ -121,6 +133,10 @@ function runOnce(policy: AgentPolicy, runSeed: number, meta: MetaState): RunReco
     commissionHits,
     totalTurns,
     byAttr: { ...st.actions },
+    stagesCleared,
+    campaigns,
+    traits: st.abilities.traits.length,
+    skills: st.abilities.skills.length,
     failedAt,
   };
 }
@@ -203,6 +219,13 @@ for (const policy of POLICIES) {
     + `　道具 ${avg(recs.map((r) => Object.values(r.items).reduce((a, b) => a + b, 0))).toFixed(2)} 件/輪`
     + `（碎片 ${avg(recs.map((r) => r.itemFragments)).toFixed(2)}）`);
   if (itemLine !== '') console.log(`  最常掉 ${itemLine}`);
+
+  console.log(`  戰役深度 平均 ${avg(recs.map((r) => (r.campaigns === 0 ? 0
+    : r.stagesCleared / r.campaigns))).toFixed(2)} 關/場`
+    + `　（共 ${avg(recs.map((r) => r.stagesCleared)).toFixed(1)} 關 / `
+    + `${avg(recs.map((r) => r.campaigns)).toFixed(1)} 場）`
+    + `　特質 ${avg(recs.map((r) => r.traits)).toFixed(1)}`
+    + ` 技能 ${avg(recs.map((r) => r.skills)).toFixed(1)}`);
 
   const top = [...byEnding.entries()].sort((a, b) => b[1] - a[1]).slice(0, 4);
   console.log(`  結局 ${top.map(([k, v]) => `${k.replace('ending:', '')} ${pct(v, recs.length)}`).join('  ')}`);

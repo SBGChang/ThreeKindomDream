@@ -1263,6 +1263,84 @@
       "op": "mulPct",
       "target": "training.exp.war",
       "value": 0.25
+    },
+    "9001": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "battle.damage.physical",
+      "value": 0.06
+    },
+    "9002": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "battle.damage.physical",
+      "value": 0.08
+    },
+    "9003": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "battle.damage.physical",
+      "value": 0.15
+    },
+    "9004": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "battle.damage.physical",
+      "value": 0.3
+    },
+    "9011": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "battle.damage.magic",
+      "value": 0.08
+    },
+    "9012": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "battle.damage.magic",
+      "value": 0.18
+    },
+    "9013": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "battle.damage.magic",
+      "value": 0.25
+    },
+    "9021": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "battle.troopsMax",
+      "value": 0.08
+    },
+    "9022": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "battle.troopsMax",
+      "value": 0.12
+    },
+    "9031": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "battle.supplyMax",
+      "value": 0.2
+    },
+    "9041": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "battle.heal",
+      "value": 0.12
+    },
+    "9042": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "battle.heal",
+      "value": 0.2
+    },
+    "9043": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "battle.heal",
+      "value": -0.2
     }
   }
 }

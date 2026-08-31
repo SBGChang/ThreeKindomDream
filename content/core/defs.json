@@ -464,7 +464,7 @@
     ]
   },
   {
-    "attrMax": 999,
+    "attrMax": 100,
     "id": "cap:main",
     "kind": "attributeCap",
     "packId": "pack:core",
@@ -484,7 +484,7 @@
     "superiorCount": 3
   },
   {
-    "baseFloor": 25,
+    "baseFloor": 10,
     "id": "checkRule:main",
     "kind": "checkRule",
     "packId": "pack:core",
@@ -494,6 +494,728 @@
     "rollSpread": 100,
     "schemaVersion": 1,
     "secondaryWeight": 0.5
+  },
+  {
+    "bands": [
+      {
+        "costPerPoint": 1,
+        "grade": "G",
+        "max": 0,
+        "min": 0
+      },
+      {
+        "costPerPoint": 1,
+        "grade": "F",
+        "max": 19,
+        "min": 1
+      },
+      {
+        "costPerPoint": 2,
+        "grade": "E",
+        "max": 39,
+        "min": 20
+      },
+      {
+        "costPerPoint": 4,
+        "grade": "D",
+        "max": 59,
+        "min": 40
+      },
+      {
+        "costPerPoint": 7,
+        "grade": "C",
+        "max": 74,
+        "min": 60
+      },
+      {
+        "costPerPoint": 12,
+        "grade": "B",
+        "max": 84,
+        "min": 75
+      },
+      {
+        "costPerPoint": 20,
+        "grade": "A",
+        "max": 94,
+        "min": 85
+      },
+      {
+        "costPerPoint": 35,
+        "grade": "S",
+        "max": 100,
+        "min": 95
+      }
+    ],
+    "id": "growth:main",
+    "kind": "growthRule",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "teachStage": {
+      "common": "acquainted",
+      "fine": "friendly",
+      "peerless": "close"
+    }
+  },
+  {
+    "actorDivisor": 50,
+    "castChances": [
+      1,
+      0.6,
+      0.3
+    ],
+    "commandChanceByStage": {
+      "acquainted": 0.15,
+      "close": 0.5,
+      "friendly": 0.3,
+      "stranger": 0,
+      "sworn": 0.7
+    },
+    "crossLineRatio": 0.5,
+    "enemyDamageRatio": 0.06,
+    "enemyTroopsByRank": [
+      180,
+      260,
+      380,
+      540,
+      760,
+      1050,
+      1450,
+      1980,
+      2680,
+      3600,
+      4800,
+      6300
+    ],
+    "id": "battle:main",
+    "kind": "battleRule",
+    "maxTurns": 40,
+    "packId": "pack:core",
+    "rallyRatio": 0.35,
+    "schemaVersion": 1,
+    "supplyBase": 120,
+    "supplyPerTroop": 1,
+    "troopsBase": 120
+  },
+  {
+    "cost": {
+      "war": 40
+    },
+    "descKey": "trait.danshi.desc",
+    "effects": [
+      {
+        "funcType": "StatModifier",
+        "referId": 9002
+      }
+    ],
+    "id": "trait:danshi",
+    "kind": "trait",
+    "nameKey": "trait.danshi.name",
+    "packId": "pack:core",
+    "polarity": "positive",
+    "schemaVersion": 1,
+    "tier": "common",
+    "traitId": "trait:danshi"
+  },
+  {
+    "cost": {
+      "lead": 40
+    },
+    "descKey": "trait.chenyi.desc",
+    "effects": [
+      {
+        "funcType": "StatModifier",
+        "referId": 9021
+      }
+    ],
+    "id": "trait:chenyi",
+    "kind": "trait",
+    "nameKey": "trait.chenyi.name",
+    "packId": "pack:core",
+    "polarity": "positive",
+    "schemaVersion": 1,
+    "tier": "common",
+    "traitId": "trait:chenyi"
+  },
+  {
+    "cost": {
+      "pol": 40
+    },
+    "descKey": "trait.liande.desc",
+    "effects": [
+      {
+        "funcType": "StatModifier",
+        "referId": 9041
+      }
+    ],
+    "id": "trait:liande",
+    "kind": "trait",
+    "nameKey": "trait.liande.name",
+    "packId": "pack:core",
+    "polarity": "positive",
+    "schemaVersion": 1,
+    "tier": "common",
+    "traitId": "trait:liande"
+  },
+  {
+    "cost": {
+      "int": 40
+    },
+    "descKey": "trait.jimin.desc",
+    "effects": [
+      {
+        "funcType": "StatModifier",
+        "referId": 9011
+      }
+    ],
+    "id": "trait:jimin",
+    "kind": "trait",
+    "nameKey": "trait.jimin.name",
+    "packId": "pack:core",
+    "polarity": "positive",
+    "schemaVersion": 1,
+    "tier": "common",
+    "traitId": "trait:jimin"
+  },
+  {
+    "cost": {
+      "lead": 40,
+      "war": 60
+    },
+    "descKey": "trait.linzhen.desc",
+    "effects": [
+      {
+        "funcType": "StatModifier",
+        "referId": 9022
+      },
+      {
+        "funcType": "StatModifier",
+        "referId": 9001
+      }
+    ],
+    "id": "trait:linzhen",
+    "kind": "trait",
+    "nameKey": "trait.linzhen.name",
+    "packId": "pack:core",
+    "polarity": "positive",
+    "schemaVersion": 1,
+    "tier": "fine",
+    "traitId": "trait:linzhen"
+  },
+  {
+    "cost": {
+      "int": 40,
+      "pol": 60
+    },
+    "descKey": "trait.zhechong.desc",
+    "effects": [
+      {
+        "funcType": "StatModifier",
+        "referId": 9031
+      }
+    ],
+    "id": "trait:zhechong",
+    "kind": "trait",
+    "nameKey": "trait.zhechong.name",
+    "packId": "pack:core",
+    "polarity": "positive",
+    "schemaVersion": 1,
+    "tier": "fine",
+    "traitId": "trait:zhechong"
+  },
+  {
+    "cost": {
+      "int": 60,
+      "pol": 40
+    },
+    "descKey": "trait.liaodi.desc",
+    "effects": [
+      {
+        "funcType": "StatModifier",
+        "referId": 9012
+      }
+    ],
+    "id": "trait:liaodi",
+    "kind": "trait",
+    "nameKey": "trait.liaodi.name",
+    "packId": "pack:core",
+    "polarity": "positive",
+    "schemaVersion": 1,
+    "tier": "fine",
+    "traitId": "trait:liaodi"
+  },
+  {
+    "cost": {
+      "int": 40,
+      "lead": 60,
+      "war": 80
+    },
+    "descKey": "trait.wanrendi.desc",
+    "effects": [
+      {
+        "funcType": "StatModifier",
+        "referId": 9004
+      }
+    ],
+    "id": "trait:wanrendi",
+    "kind": "trait",
+    "nameKey": "trait.wanrendi.name",
+    "packId": "pack:core",
+    "polarity": "positive",
+    "schemaVersion": 1,
+    "tier": "peerless",
+    "traitId": "trait:wanrendi"
+  },
+  {
+    "cost": {
+      "int": 80,
+      "lead": 40,
+      "pol": 60
+    },
+    "descKey": "trait.jingwei.desc",
+    "effects": [
+      {
+        "funcType": "StatModifier",
+        "referId": 9013
+      },
+      {
+        "funcType": "StatModifier",
+        "referId": 9042
+      }
+    ],
+    "id": "trait:jingwei",
+    "kind": "trait",
+    "nameKey": "trait.jingwei.name",
+    "packId": "pack:core",
+    "polarity": "positive",
+    "schemaVersion": 1,
+    "tier": "peerless",
+    "traitId": "trait:jingwei"
+  },
+  {
+    "cost": {
+      "war": 40
+    },
+    "descKey": "trait.gangbi.desc",
+    "effects": [
+      {
+        "funcType": "StatModifier",
+        "referId": 9003
+      },
+      {
+        "funcType": "StatModifier",
+        "referId": 9043
+      }
+    ],
+    "id": "trait:gangbi",
+    "kind": "trait",
+    "nameKey": "trait.gangbi.name",
+    "packId": "pack:core",
+    "polarity": "negative",
+    "schemaVersion": 1,
+    "tier": "common",
+    "traitId": "trait:gangbi"
+  },
+  {
+    "action": {
+      "actorAttr": "war",
+      "duration": 0,
+      "kind": "physical",
+      "ratio": 0.3
+    },
+    "cost": {
+      "war": 55
+    },
+    "descKey": "skill.tuzhen.desc",
+    "id": "skill:tuzhen",
+    "kind": "skill",
+    "nameKey": "skill.tuzhen.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tuzhen",
+    "tier": "common"
+  },
+  {
+    "action": {
+      "actorAttr": "war",
+      "duration": 0,
+      "kind": "physical",
+      "ratio": 0.5
+    },
+    "cost": {
+      "lead": 55,
+      "war": 75
+    },
+    "descKey": "skill.xianzhen.desc",
+    "id": "skill:xianzhen",
+    "kind": "skill",
+    "nameKey": "skill.xianzhen.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:xianzhen",
+    "tier": "fine"
+  },
+  {
+    "action": {
+      "actorAttr": "war",
+      "duration": 0,
+      "kind": "physical",
+      "ratio": 0.85
+    },
+    "cost": {
+      "int": 55,
+      "lead": 75,
+      "war": 100
+    },
+    "descKey": "skill.wanrenzhi.desc",
+    "id": "skill:wanrenzhi",
+    "kind": "skill",
+    "nameKey": "skill.wanrenzhi.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:wanrenzhi",
+    "tier": "peerless"
+  },
+  {
+    "action": {
+      "actorAttr": "int",
+      "duration": 0,
+      "kind": "magic",
+      "ratio": 0.32
+    },
+    "cost": {
+      "int": 55
+    },
+    "descKey": "skill.huoji.desc",
+    "id": "skill:huoji",
+    "kind": "skill",
+    "nameKey": "skill.huoji.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:huoji",
+    "tier": "common"
+  },
+  {
+    "action": {
+      "actorAttr": "int",
+      "duration": 0,
+      "kind": "magic",
+      "ratio": 0.52
+    },
+    "cost": {
+      "int": 75,
+      "pol": 55
+    },
+    "descKey": "skill.shuiyan.desc",
+    "id": "skill:shuiyan",
+    "kind": "skill",
+    "nameKey": "skill.shuiyan.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:shuiyan",
+    "tier": "fine"
+  },
+  {
+    "action": {
+      "actorAttr": "int",
+      "duration": 0,
+      "kind": "magic",
+      "ratio": 0.88
+    },
+    "cost": {
+      "int": 100,
+      "lead": 55,
+      "pol": 75
+    },
+    "descKey": "skill.lianhuan.desc",
+    "id": "skill:lianhuan",
+    "kind": "skill",
+    "nameKey": "skill.lianhuan.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:lianhuan",
+    "tier": "peerless"
+  },
+  {
+    "action": {
+      "actorAttr": "pol",
+      "duration": 0,
+      "kind": "heal",
+      "ratio": 0.28
+    },
+    "cost": {
+      "pol": 55
+    },
+    "descKey": "skill.fumin.desc",
+    "id": "skill:fumin",
+    "kind": "skill",
+    "nameKey": "skill.fumin.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:fumin",
+    "tier": "common"
+  },
+  {
+    "action": {
+      "actorAttr": "pol",
+      "duration": 0,
+      "kind": "heal",
+      "ratio": 0.46
+    },
+    "cost": {
+      "int": 55,
+      "pol": 75
+    },
+    "descKey": "skill.tuntian.desc",
+    "id": "skill:tuntian",
+    "kind": "skill",
+    "nameKey": "skill.tuntian.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tuntian",
+    "tier": "fine"
+  },
+  {
+    "action": {
+      "actorAttr": "pol",
+      "duration": 0,
+      "kind": "heal",
+      "ratio": 0.75
+    },
+    "cost": {
+      "int": 75,
+      "lead": 55,
+      "pol": 100
+    },
+    "descKey": "skill.wangzuo.desc",
+    "id": "skill:wangzuo",
+    "kind": "skill",
+    "nameKey": "skill.wangzuo.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:wangzuo",
+    "tier": "peerless"
+  },
+  {
+    "action": {
+      "actorAttr": "lead",
+      "duration": 3,
+      "kind": "buff",
+      "ratio": 0.18
+    },
+    "cost": {
+      "lead": 55
+    },
+    "descKey": "skill.guwu.desc",
+    "id": "skill:guwu",
+    "kind": "skill",
+    "nameKey": "skill.guwu.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:guwu",
+    "tier": "common"
+  },
+  {
+    "action": {
+      "actorAttr": "lead",
+      "duration": 3,
+      "kind": "debuff",
+      "ratio": 0.22
+    },
+    "cost": {
+      "lead": 75,
+      "war": 55
+    },
+    "descKey": "skill.jiezhi.desc",
+    "id": "skill:jiezhi",
+    "kind": "skill",
+    "nameKey": "skill.jiezhi.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:jiezhi",
+    "tier": "fine"
+  },
+  {
+    "action": {
+      "actorAttr": "lead",
+      "duration": 4,
+      "kind": "buff",
+      "ratio": 0.35
+    },
+    "cost": {
+      "lead": 100,
+      "pol": 55,
+      "war": 75
+    },
+    "descKey": "skill.zhirong.desc",
+    "id": "skill:zhirong",
+    "kind": "skill",
+    "nameKey": "skill.zhirong.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:zhirong",
+    "tier": "peerless"
+  },
+  {
+    "attrs": {
+      "int": 40,
+      "lead": 58,
+      "pol": 30,
+      "war": 62
+    },
+    "enemyId": "enemy:bocai",
+    "id": "enemy:bocai",
+    "kind": "enemy",
+    "nameKey": "enemy.bocai.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tuzhen"
+  },
+  {
+    "attrs": {
+      "int": 52,
+      "lead": 64,
+      "pol": 35,
+      "war": 70
+    },
+    "enemyId": "enemy:zhangliang",
+    "id": "enemy:zhangliang",
+    "kind": "enemy",
+    "nameKey": "enemy.zhangliang.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tuzhen"
+  },
+  {
+    "attrs": {
+      "int": 84,
+      "lead": 72,
+      "pol": 60,
+      "war": 45
+    },
+    "enemyId": "enemy:zhangjiao",
+    "id": "enemy:zhangjiao",
+    "kind": "enemy",
+    "nameKey": "enemy.zhangjiao.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:huoji"
+  },
+  {
+    "campaignId": "campaign:yellowturban",
+    "chapterId": "ch:camp.yellowturban",
+    "enemyNotables": [],
+    "id": "campaign:yellowturban",
+    "kind": "campaign",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "stages": [
+      {
+        "boss": null,
+        "briefKey": "campaign.yellowturban.stage.0",
+        "damageMul": 0.6,
+        "rewards": [
+          {
+            "amount": 10,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "troopsMul": 0.55
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.yellowturban.stage.1",
+        "damageMul": 0.75,
+        "rewards": [
+          {
+            "amount": 16,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "troopsMul": 0.75
+      },
+      {
+        "boss": "enemy:bocai",
+        "briefKey": "campaign.yellowturban.stage.2",
+        "damageMul": 0.9,
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "troopsMul": 1
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.yellowturban.stage.3",
+        "damageMul": 1.05,
+        "rewards": [
+          {
+            "amount": 42,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "troopsMul": 1.35
+      },
+      {
+        "boss": "enemy:zhangliang",
+        "briefKey": "campaign.yellowturban.stage.4",
+        "damageMul": 1.25,
+        "rewards": [
+          {
+            "amount": 68,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:guwu",
+            "trait": null
+          }
+        ],
+        "troopsMul": 1.8
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.yellowturban.stage.5",
+        "damageMul": 1.5,
+        "rewards": [
+          {
+            "amount": 110,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:danshi"
+          }
+        ],
+        "troopsMul": 2.4
+      },
+      {
+        "boss": "enemy:zhangjiao",
+        "briefKey": "campaign.yellowturban.stage.6",
+        "damageMul": 1.8,
+        "rewards": [
+          {
+            "amount": 180,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:xianzhen",
+            "trait": null
+          }
+        ],
+        "troopsMul": 3.2
+      }
+    ]
   },
   {
     "cost": 2,
@@ -1204,18 +1926,18 @@
   },
   {
     "byTier": [
-      22,
-      58,
-      108,
-      180,
-      274,
-      389,
-      526,
-      684,
-      864,
-      1066,
-      1289,
-      1534
+      9,
+      16,
+      24,
+      32,
+      40,
+      45,
+      50,
+      55,
+      59,
+      63,
+      66,
+      69
     ],
     "curveId": "dc:easy",
     "id": "dc:easy",
@@ -1225,18 +1947,18 @@
   },
   {
     "byTier": [
-      30,
-      80,
-      150,
-      250,
-      380,
-      540,
-      730,
-      950,
-      1200,
-      1480,
-      1790,
-      2130
+      12,
+      22,
+      33,
+      45,
+      55,
+      63,
+      70,
+      76,
+      82,
+      87,
+      92,
+      96
     ],
     "curveId": "dc:normal",
     "id": "dc:normal",
@@ -1246,18 +1968,18 @@
   },
   {
     "byTier": [
-      38,
-      101,
-      189,
-      315,
-      479,
-      680,
-      920,
-      1197,
-      1512,
-      1865,
-      2255,
-      2684
+      15,
+      28,
+      42,
+      57,
+      69,
+      79,
+      88,
+      96,
+      103,
+      110,
+      116,
+      121
     ],
     "curveId": "dc:hard",
     "id": "dc:hard",
@@ -4251,7 +4973,7 @@
     "schemaVersion": 1
   },
   {
-    "checkBonus": 0,
+    "hostScale": 1,
     "id": "rank:civil.1",
     "kind": "careerRank",
     "level": 1,
@@ -4263,7 +4985,7 @@
     "trainingBaseAdd": 0
   },
   {
-    "checkBonus": 6,
+    "hostScale": 1.5,
     "id": "rank:civil.2",
     "kind": "careerRank",
     "level": 2,
@@ -4275,7 +4997,7 @@
     "trainingBaseAdd": 1
   },
   {
-    "checkBonus": 13,
+    "hostScale": 2.2,
     "id": "rank:civil.3",
     "kind": "careerRank",
     "level": 3,
@@ -4287,7 +5009,7 @@
     "trainingBaseAdd": 2
   },
   {
-    "checkBonus": 22,
+    "hostScale": 3.1,
     "id": "rank:civil.4",
     "kind": "careerRank",
     "level": 4,
@@ -4299,7 +5021,7 @@
     "trainingBaseAdd": 3
   },
   {
-    "checkBonus": 34,
+    "hostScale": 4.2,
     "id": "rank:civil.5",
     "kind": "careerRank",
     "level": 5,
@@ -4311,7 +5033,7 @@
     "trainingBaseAdd": 4
   },
   {
-    "checkBonus": 50,
+    "hostScale": 5.6,
     "id": "rank:civil.6",
     "kind": "careerRank",
     "level": 6,
@@ -4323,7 +5045,7 @@
     "trainingBaseAdd": 5
   },
   {
-    "checkBonus": 70,
+    "hostScale": 7.2,
     "id": "rank:civil.7",
     "kind": "careerRank",
     "level": 7,
@@ -4335,7 +5057,7 @@
     "trainingBaseAdd": 6
   },
   {
-    "checkBonus": 95,
+    "hostScale": 9.1,
     "id": "rank:civil.8",
     "kind": "careerRank",
     "level": 8,
@@ -4347,7 +5069,7 @@
     "trainingBaseAdd": 7
   },
   {
-    "checkBonus": 126,
+    "hostScale": 11.3,
     "id": "rank:civil.9",
     "kind": "careerRank",
     "level": 9,
@@ -4359,7 +5081,7 @@
     "trainingBaseAdd": 8
   },
   {
-    "checkBonus": 165,
+    "hostScale": 13.8,
     "id": "rank:civil.10",
     "kind": "careerRank",
     "level": 10,
@@ -4371,7 +5093,7 @@
     "trainingBaseAdd": 9
   },
   {
-    "checkBonus": 213,
+    "hostScale": 16.6,
     "id": "rank:civil.11",
     "kind": "careerRank",
     "level": 11,
@@ -4383,7 +5105,7 @@
     "trainingBaseAdd": 10
   },
   {
-    "checkBonus": 271,
+    "hostScale": 19.8,
     "id": "rank:civil.12",
     "kind": "careerRank",
     "level": 12,
@@ -4395,7 +5117,7 @@
     "trainingBaseAdd": 11
   },
   {
-    "checkBonus": 0,
+    "hostScale": 1,
     "id": "rank:martial.1",
     "kind": "careerRank",
     "level": 1,
@@ -4407,7 +5129,7 @@
     "trainingBaseAdd": 0
   },
   {
-    "checkBonus": 6,
+    "hostScale": 1.5,
     "id": "rank:martial.2",
     "kind": "careerRank",
     "level": 2,
@@ -4419,7 +5141,7 @@
     "trainingBaseAdd": 1
   },
   {
-    "checkBonus": 13,
+    "hostScale": 2.2,
     "id": "rank:martial.3",
     "kind": "careerRank",
     "level": 3,
@@ -4431,7 +5153,7 @@
     "trainingBaseAdd": 2
   },
   {
-    "checkBonus": 22,
+    "hostScale": 3.1,
     "id": "rank:martial.4",
     "kind": "careerRank",
     "level": 4,
@@ -4443,7 +5165,7 @@
     "trainingBaseAdd": 3
   },
   {
-    "checkBonus": 34,
+    "hostScale": 4.2,
     "id": "rank:martial.5",
     "kind": "careerRank",
     "level": 5,
@@ -4455,7 +5177,7 @@
     "trainingBaseAdd": 4
   },
   {
-    "checkBonus": 50,
+    "hostScale": 5.6,
     "id": "rank:martial.6",
     "kind": "careerRank",
     "level": 6,
@@ -4467,7 +5189,7 @@
     "trainingBaseAdd": 5
   },
   {
-    "checkBonus": 70,
+    "hostScale": 7.2,
     "id": "rank:martial.7",
     "kind": "careerRank",
     "level": 7,
@@ -4479,7 +5201,7 @@
     "trainingBaseAdd": 6
   },
   {
-    "checkBonus": 95,
+    "hostScale": 9.1,
     "id": "rank:martial.8",
     "kind": "careerRank",
     "level": 8,
@@ -4491,7 +5213,7 @@
     "trainingBaseAdd": 7
   },
   {
-    "checkBonus": 126,
+    "hostScale": 11.3,
     "id": "rank:martial.9",
     "kind": "careerRank",
     "level": 9,
@@ -4503,7 +5225,7 @@
     "trainingBaseAdd": 8
   },
   {
-    "checkBonus": 165,
+    "hostScale": 13.8,
     "id": "rank:martial.10",
     "kind": "careerRank",
     "level": 10,
@@ -4515,7 +5237,7 @@
     "trainingBaseAdd": 9
   },
   {
-    "checkBonus": 213,
+    "hostScale": 16.6,
     "id": "rank:martial.11",
     "kind": "careerRank",
     "level": 11,
@@ -4527,7 +5249,7 @@
     "trainingBaseAdd": 10
   },
   {
-    "checkBonus": 271,
+    "hostScale": 19.8,
     "id": "rank:martial.12",
     "kind": "careerRank",
     "level": 12,

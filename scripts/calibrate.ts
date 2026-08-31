@@ -1,15 +1,22 @@
-// 量出各章大檢定的實際檢定值分佈，供 DC 校準。
-// 這是「數值合理再交手感」的前置步驟（31 §1）。
+// 量出各章戰役的實際深度分佈，供敵方曲線與獎勵階梯校準（31 §1、RFC-01 §6）。
+//
+// ── 舊版量的是什麼、為什麼作廢 ──────────────────────
+// 舊版量「大檢定的檢定值（base+bonus）」，用來反推三檔 DC。
+// 大檢定改成七關戰役之後那個數字不存在了 —— 現在要校準的是三件事：
+//
+//   1. 玩家在該章的【兵量與糧量】（＝官階曲線對不對）
+//   2. 照著玩能打到【第幾關】（＝ enemyTroopsByRank 對不對）
+//   3. 貪心閾值不同的人差多少（＝獎勵階梯該不該再陡）
+//
+// 第 3 點是新制真正的問題。它由 `--greed` 的兩組取樣給出答案。
 import { compose } from '../src/app/composition.js';
 import { Session } from '../src/app/session.js';
 import { loadContent } from '../src/data-runtime/loader.js';
 import { diskRepository } from '../src/platform/content-repository.js';
 import { emptyDraft, emptyMeta } from '../src/modules/dream-entry.js';
 import { seed as mkSeed } from '../src/contracts/core/ids.js';
-import {
-  CAREER_LINES, SLOT_INDICES,
-  type CareerLine, type CheckChoice, type SlotIndex,
-} from '../src/contracts/core/primitives.js';
+import { ATTRS, type Attr } from '../src/contracts/core/primitives.js';
+import { POLICIES, playCampaign, type AgentPolicy } from './lib/policies.js';
 
 const loaded = loadContent(diskRepository());
 if (!loaded.ok) { console.error(loaded.report); process.exit(1); }
@@ -17,12 +24,16 @@ const defs = loaded.registry;
 const w = compose(defs);
 const t = (k: unknown): string => defs.text(String(k));
 
-type Mode = 'focused' | 'spread';
-const samples = new Map<string, number[]>();
+interface Sample {
+  readonly troops: number;
+  readonly supply: number;
+  readonly cleared: number;
+  readonly attrs: Readonly<Record<Attr, number>>;
+  readonly died: boolean;
+}
+const samples = new Map<string, Sample[]>();
 
-// 六選項制之後，同一章有文武兩條路線、各自的屬性組與 DC。
-// 取樣必須分路線 —— 兩條合在一起平均出來的數字不對應任何一種打法。
-function run(runSeed: number, mode: Mode, line: CareerLine): void {
+function run(runSeed: number, policy: AgentPolicy): void {
   const meta = emptyMeta();
   const s = Session.start(w, meta, emptyDraft(meta, defs), mkSeed(runSeed));
   let guard = 0;
@@ -35,81 +46,79 @@ function run(runSeed: number, mode: Mode, line: CareerLine): void {
       s.chooseFaction(opt.factionId);
       continue;
     }
-    if (s.needsSuperiors) { s.assignSuperiors(s.superiorCandidates().slice(0, s.bondQuota())); continue; }
-    if (s.needsMajorCheck) {
-      const chId = String(s.current.progress.chapterId);
-      const sortie = s.eligibleSortie().slice(0, defs.single('gameRules').maxSortie);
-      const choice: CheckChoice = { line, difficulty: 'safe' };
-      const pv = s.previewMajor(choice, sortie);
-      const key = `${chId}|${mode}|${line}`;
-      const arr = samples.get(key) ?? [];
-      arr.push(pv.base + pv.bonus);
-      samples.set(key, arr);
-      // 一律強制通過（我們要量後面章節的值，不是量死亡率）
-      s.attemptMajor(choice, sortie);
-      if (s.isOver) break;
+    if (s.needsSuperiors) {
+      s.assignSuperiors(s.superiorCandidates().slice(0, s.bondQuota()));
       continue;
     }
-    const primary = s.needsMajorCheck ? null : s.majorCheck().routes[line].primaryAttr;
-    let best: SlotIndex = 0;
-    let score = -Infinity;
-    for (const i of SLOT_INDICES) {
-      const slot = s.current.turn.slots[i];
-      if (slot === undefined) continue;
-      const gain = s.previewTraining(i).expectedGain;
-      const v = mode === 'focused' && slot.attr === primary ? gain + 100000 : gain;
-      if (v > score) { score = v; best = i; }
+    if (s.needsCampaign) {
+      const chId = String(s.current.progress.chapterId);
+      // 配置前先量兩條資源上限 —— 那是官階曲線的直接產物。
+      const lim = s.hostLimits();
+      const attrs = { ...s.current.attributes.values };
+      const cleared = playCampaign(s, policy);
+      const key = `${chId}|${policy.name}`;
+      const arr = samples.get(key) ?? [];
+      arr.push({
+        troops: lim.troopsMax, supply: lim.supplyMax, cleared, attrs, died: s.isOver,
+      });
+      samples.set(key, arr);
+      continue;
     }
-    // 一個回合兩拍。委託一律選成功率最高的選項 —— DC 校準要量的是
-    // 「照著玩會長到多少」，不是「賭運氣能長到多少」（18 §3）。
-    s.selectSlot(best);
+
+    s.selectSlot(policy.chooseSlot(s));
     for (;;) {
       const offer = s.pendingEvent;
       if (offer === null) break;
-      const on = offer.optionStates.map((o, i) => ({ i, o })).filter((x) => x.o.enabled);
-      const first = on[0];
-      if (first === undefined) throw new Error('事件無可選項');
-      const pick = on.reduce(
-        (b, x) => ((x.o.successRate ?? 1) > (b.o.successRate ?? 1) ? x : b), first,
-      );
-      s.resolveEvent(pick.i);
+      s.resolveEvent(policy.chooseOption(s, offer));
     }
     s.advance();
   }
 }
 
-const N = Number(process.argv[2] ?? 200);
+/**
+ * 兩個對照組：**同樣的打法，只有貪心閾值不同。**
+ *   risk-averse   軍勢剩六成就收兵
+ *   risk-seeking  剩一成二才收兵
+ * 兩者的深度差與死亡率差，就是「貪心的定價」那個問題的實測答案。
+ */
+const PICKED = ['risk-averse', 'focus-martial', 'risk-seeking'];
+const chosen = POLICIES.filter((p) => PICKED.includes(p.name));
+
+const N = Number(process.argv[2] ?? 150);
 for (let i = 0; i < N; i += 1) {
-  for (const line of CAREER_LINES) {
-    run(3000 + i, 'focused', line);
-    run(7000 + i, 'spread', line);
-  }
+  for (const p of chosen) run(3000 + i, p);
 }
 
 const q = (xs: readonly number[], p: number): number => {
   const s2 = [...xs].sort((a, b) => a - b);
   return s2[Math.min(s2.length - 1, Math.floor(s2.length * p))] ?? 0;
 };
-const avg = (xs: readonly number[]): number => xs.reduce((a, b) => a + b, 0) / Math.max(1, xs.length);
+const avg = (xs: readonly number[]): number =>
+  xs.reduce((a, b) => a + b, 0) / Math.max(1, xs.length);
 
-console.log('各章大檢定的檢定值（base+bonus）分佈　n=' + N);
+console.log(`各章戰役的深度與資源分佈　n=${N}`);
 console.log('');
-console.log('章節'.padEnd(20) + '路線 流派    p10    p50    p90   平均 │ 建議 DC 穩/進/險');
+console.log('章節'.padEnd(12) + '策略'.padEnd(16)
+  + '兵量   糧量 │ 深度 p10/p50/p90  平均 │ 陣亡率 │ 四維');
 for (const chId of defs.reader('chapterSequence').all()
   .flatMap((s2) => s2.chapters).map(String)) {
   const ch = defs.reader('chapter').get(chId);
-  for (const line of CAREER_LINES) {
-    for (const mode of ['focused', 'spread'] as const) {
-      const xs = samples.get(`${chId}|${mode}|${line}`) ?? [];
-      if (xs.length === 0) continue;
-      const mid = q(xs, 0.5);
-      const label = mode === 'focused' ? '專精' : '均衡';
-      const dcs = `${Math.round(mid * 0.75)}/${Math.round(mid * 1.05)}/${Math.round(mid * 1.35)}`;
-      console.log(
-        `${t(ch.titleKey).padEnd(10)}${' '.repeat(4)}${t(`careerLine.${line}`)}   ${label}  `
-        + `${String(q(xs, 0.1)).padStart(5)}  ${String(mid).padStart(5)}  `
-        + `${String(q(xs, 0.9)).padStart(5)}  ${avg(xs).toFixed(0).padStart(5)} │ ${dcs}`,
-      );
-    }
+  for (const p of chosen) {
+    const xs = samples.get(`${chId}|${p.name}`) ?? [];
+    if (xs.length === 0) continue;
+    const cl = xs.map((x) => x.cleared);
+    const attrLine = ATTRS
+      .map((a) => `${t(`attr.${a}.short`)}${avg(xs.map((x) => x.attrs[a])).toFixed(0)}`)
+      .join(' ');
+    console.log(
+      `${t(ch.titleKey).padEnd(8)}${p.name.padEnd(16)}`
+      + `${avg(xs.map((x) => x.troops)).toFixed(0).padStart(5)}`
+      + `${avg(xs.map((x) => x.supply)).toFixed(0).padStart(7)} │ `
+      + `${String(q(cl, 0.1)).padStart(2)}/${String(q(cl, 0.5)).padStart(2)}`
+      + `/${String(q(cl, 0.9)).padStart(2)}`
+      + `  ${avg(cl).toFixed(2).padStart(5)} │ `
+      + `${((xs.filter((x) => x.died).length / xs.length) * 100).toFixed(1).padStart(5)}% │ `
+      + attrLine,
+    );
   }
 }

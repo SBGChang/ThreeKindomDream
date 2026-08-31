@@ -224,6 +224,14 @@ const SKELETON = (meta: MetaState, config: DreamEntryConfig, seed: Seed): RunSta
   currencies: { merit: { civil: 0, martial: 0 } },
   career: { civil: 1, martial: 1 },
   roster: { members: [] },
+  // 四類經驗池與解鎖清單（32 §2）。屬性從 0 開始，只能花經驗買。
+  growth: {
+    exp: { lead: 0, war: 0, int: 0, pol: 0 },
+    unlockedTraits: [], unlockedSkills: [],
+    spent: { lead: 0, war: 0, int: 0, pol: 0 },
+  },
+  abilities: { traits: [], skills: [] },
+  campaign: null,
   items: { count: {} },
   boons: [],
   turn: {

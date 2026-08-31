@@ -5,6 +5,7 @@ import { configEffectSource } from '../modules/dream-entry.js';
 import {
   boonEffectSource, createEffectResolver, type EffectResolver, type EffectSource,
 } from '../modules/effect.js';
+import { traitEffectSource } from '../modules/ability.js';
 import { itemEffectSource } from '../modules/item.js';
 import { notableEffectSource } from '../modules/notable-codex.js';
 import { shopEffectSource } from '../modules/shop.js';
@@ -32,6 +33,9 @@ export function compose(defs: DefinitionRegistry): Wiring {
     // 道具與名士共用同一套 FuncType，但【不吃好感門檻】——
     // 名士那層要七到十個回合才打得開，道具那層第一回合就開（23 §1）。
     itemEffectSource(),
+    // 只有【特質】進來。技能不進 —— 它的效果只在戰役中、由 ㉝ 施放時才發生，
+    // 混進來會讓「我的物理傷害是多少」在戰役外也算出一個沒有意義的數字（23 §5）。
+    traitEffectSource(),
     boonEffectSource(),
     configEffectSource(),
     shopEffectSource(),

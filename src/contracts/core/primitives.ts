@@ -13,6 +13,35 @@ export const ATTRS: readonly Attr[] = ['lead', 'war', 'int', 'pol'];
 export type GlowTier = 'none' | 'silver' | 'gold' | 'red';
 export const GLOW_TIERS: readonly GlowTier[] = ['none', 'silver', 'gold', 'red'];
 
+/**
+ * 四維的等級（32 §3.1）。**七個價格帶對齊七個等級** ——
+ * 玩家看到「武 B」就知道下一階要付多少，不需要另外解釋成本曲線。
+ *
+ * 與 `AptitudeGrade` 不是同一把尺：資質是入夢前買的天生偏向（F–S，七階），
+ * 這裡是局內練出來的實力（G–S，八階，G ＝ 尚未開始）。
+ */
+export type AttrGrade = 'G' | 'F' | 'E' | 'D' | 'C' | 'B' | 'A' | 'S';
+export const ATTR_GRADES: readonly AttrGrade[] =
+  ['G', 'F', 'E', 'D', 'C', 'B', 'A', 'S'];
+
+/**
+ * 特質與技能的三階（23 §2）。階決定混合消耗的【類數】——
+ * 常 1 類、良 2 類、絕 3 類，由載入期驗證強制。
+ *
+ * 這條就是「純專精買不起絕階」的機制本體：他沒有另外兩類的經驗。
+ */
+export type AbilityTier = 'common' | 'fine' | 'peerless';
+export const ABILITY_TIERS: readonly AbilityTier[] = ['common', 'fine', 'peerless'];
+/** 階 → 混合消耗的類數。驗證用；不是可調數值，是 §4.1 的機制定義。 */
+export const TIER_COST_KINDS: Readonly<Record<AbilityTier, number>> = {
+  common: 1, fine: 2, peerless: 3,
+};
+
+/** 戰役中一次施放的種類（33 §5.2）。 */
+export type SkillKind = 'physical' | 'magic' | 'heal' | 'buff' | 'debuff';
+export const SKILL_KINDS: readonly SkillKind[] =
+  ['physical', 'magic', 'heal', 'buff', 'debuff'];
+
 export type AptitudeGrade = 'F' | 'E' | 'D' | 'C' | 'B' | 'A' | 'S';
 export const APTITUDE_GRADES: readonly AptitudeGrade[] = ['F', 'E', 'D', 'C', 'B', 'A', 'S'];
 
@@ -139,12 +168,21 @@ export type RngStream =
    * 擲骰序，重播就對不上。
    */
   | 'slot.flag'
-  | 'item.drop';
+  | 'item.drop'
+  // ── 戰役（33 §9）★ ────────────────────────────────
+  // 四條分流，順序固定為 33 §4 的四步。合流的話「這回合主角放了幾招」
+  // 會改變指揮的擲骰序，重播就對不上。
+  | 'battle.cast'        // 主角施放次數（每回合兩擲）
+  | 'battle.pick'        // 從三招中不重複抽取
+  | 'battle.command'     // 每位指揮各一擲
+  | 'battle.enemy'       // 敵方行動
+  | 'battle.drop';       // 關卡獎勵掉落
 
 export const RNG_STREAMS: readonly RngStream[] = [
   'glow.base', 'glow.upgrade', 'notable.slot', 'notable.roster',
   'event.rarity', 'event.draw', 'event.params', 'event.notable',
   'check.roll', 'slot.flag', 'item.drop',
+  'battle.cast', 'battle.pick', 'battle.command', 'battle.enemy', 'battle.drop',
 ];
 
 export type RngCursors = Readonly<Record<RngStream, number>>;

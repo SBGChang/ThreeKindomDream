@@ -1,5 +1,5 @@
 import type { Session } from '../app/session.js';
-import type { AttrGain, EventOffer, MeritGain } from '../contracts/core/state.js';
+import type { ExpGain, EventOffer, MeritGain } from '../contracts/core/state.js';
 import type { SlotIndex } from '../contracts/core/primitives.js';
 import { SLOT_INDICES } from '../contracts/core/primitives.js';
 import { baseOf, defs, stageOf, t } from '../app/bootstrap.js';
@@ -15,7 +15,7 @@ interface Props {
 const fill = (body: string, params: Readonly<Record<string, unknown>>): string =>
   body.replace(/\{(\w+)\}/g, (_, k: string) => t(params[k]));
 
-const gains = (list: readonly AttrGain[]): string => (list.length === 0 ? '—'
+const gains = (list: readonly ExpGain[]): string => (list.length === 0 ? '—'
   : list.map((g) => `${t(`attr.${g.attr}.short`)}+${g.amount}`).join(' '));
 
 const merits = (list: readonly MeritGain[]): string => (list.length === 0 ? ''
@@ -65,7 +65,7 @@ export function ScreenRun({ s, bump, log, onLog }: Props): React.ReactElement {
     if (r !== null) {
       stamp(`【${t(`attr.${r.attr}.${st.progress.phase}.label`)}】`
         + `${t(`glow.${r.finalGlow}`)}${r.upgraded ? '⬆' : ''}`
-        + ` ${t(`attr.${r.attr}.short`)}+${r.attrGained}`
+        + ` ${t(`attr.${r.attr}.short`)}+${r.expGained}`
         + `　${t(`merit.${r.meritGained.line}`)}+${r.meritGained.amount}`);
     }
     settle();
@@ -81,7 +81,7 @@ export function ScreenRun({ s, bump, log, onLog }: Props): React.ReactElement {
         (g) => `${t(defs.reader('item').get(String(g.itemId)).nameKey)}${g.duplicate ? '°' : ''}`,
       ).join(' ')}`;
       stamp(`${title}·${label} ${r.passed ? '成' : '敗'}`
-        + `　${gains(r.practiceGained)}　${merits(r.meritGained)}${loot}`);
+        + `　${gains(r.practiceExp)}　${merits(r.meritGained)}${loot}`);
     }
     void offer;
     settle();

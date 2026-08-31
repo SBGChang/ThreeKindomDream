@@ -6,10 +6,13 @@ import { loadContent } from '../src/data-runtime/loader.js';
 import { diskRepository } from '../src/platform/content-repository.js';
 import { emptyDraft, emptyMeta } from '../src/modules/dream-entry.js';
 import { seed as mkSeed } from '../src/contracts/core/ids.js';
-import {
-  ATTRS, CHECK_CHOICES, SLOT_INDICES, type CheckChoice, type SlotIndex,
-} from '../src/contracts/core/primitives.js';
+import { ATTRS } from '../src/contracts/core/primitives.js';
 import { stageOf } from '../src/modules/roster-query.js';
+import { POLICIES } from './lib/policies.js';
+
+/** 替身玩家 ＝ 專精武路那條策略。與模擬器共用同一份行為，不另寫一套。 */
+const policy = POLICIES.find((x) => x.name === 'focus-martial') ?? POLICIES[0];
+if (policy === undefined) throw new Error('沒有可用的策略');
 
 const loaded = loadContent(diskRepository());
 if (!loaded.ok) { console.error(loaded.report); process.exit(1); }
@@ -44,49 +47,55 @@ while (!s.isOver && guard < 200) {
     console.log(`     官階 文${s.current.career.civil} 武${s.current.career.martial}\n`);
     continue;
   }
-  if (s.needsMajorCheck) {
+  if (s.needsCampaign) {
     const ch = defs.reader('chapter').get(String(s.current.progress.chapterId));
-    const sortie = s.eligibleSortie().slice(0, defs.single('gameRules').maxSortie);
-    const avail = s.availableChoices();
-    const isAvail = (c: CheckChoice): boolean =>
-      avail.some((a) => a.line === c.line && a.difficulty === c.difficulty);
-    // 六個都列出來，門檻不足的標「鎖」——
-    // 只列可用的會讓 debug 工具讀起來像「選項本來就不存在」（18 §2.1）。
-    const rows = CHECK_CHOICES.map((c) => {
-      const pv = s.previewMajor(c, sortie);
-      return `${t(`careerLine.${c.line}`)}${t(`difficulty.${c.difficulty}`)}`
-        + ` DC${pv.dc} 值${pv.base}+${pv.bonus} ${(pv.successRate * 100).toFixed(0)}%`
-        + `${isAvail(c) ? '' : ' 鎖'}`;
-    });
-    // 六個選項裡挑成功率 >= 70% 的最高 DC —— 路線也一起挑（18 §2.2）
-    let pick: CheckChoice = avail[0] ?? { line: 'martial', difficulty: 'safe' };
-    let bestDc = -Infinity;
-    for (const c of avail) {
-      const pv = s.previewMajor(c, sortie);
-      if (pv.successRate >= 0.7 && pv.dc > bestDc) { bestDc = pv.dc; pick = c; }
+    // 先花經驗、再配置、然後一關一關打。走留的判準只有一條：軍勢還剩幾成。
+    policy.spend(s);
+    const lo = policy.chooseLoadout(s);
+    s.configureCampaign(lo);
+    const lim = s.hostLimits();
+    console.log(`【戰役 ${t(ch.titleKey)}】兵量 ${lim.troopsMax}　糧量 ${lim.supplyMax}`);
+    console.log(`  四維 ${ATTRS.map((a) => `${t(`attr.${a}.short`)}${s.current.attributes.values[a]}`
+      + `(${s.gradeOf(a)})`).join(' ')}`);
+    console.log(`  帶招 ${lo.skills.map((x) => t(defs.reader('skill').get(String(x)).nameKey)).join('／') || '無'}`);
+    console.log(`  特質 ${s.current.abilities.traits
+      .map((x) => t(defs.reader('trait').get(String(x)).nameKey)).join('／') || '無'}`);
+    console.log(`  指揮 ${lo.commanders.map((c) => {
+      const nd = defs.reader('notable').get(String(c.notableId));
+      return `${t(nd.nameKey)}(${stageOf(c.notableId, s.ctx)}·`
+        + `${t(defs.reader('skill').get(String(c.skillId)).nameKey)})`;
+    }).join('　') || '無'}`);
+
+    for (let k = 0; k < 12; k += 1) {
+      const nx = s.nextStage();
+      if (nx === null || !policy.chooseEngage(s)) break;
+      const bossName = nx.boss === null ? '雜兵' : t(nx.boss.nameKey);
+      const out = s.engage();
+      const st = s.current.campaign;
+      console.log(`  第${nx.index + 1}關 ${bossName}`
+        + ` 敵 ${nx.enemyTroops}／輸出 ${nx.enemyDamage}`
+        + ` → ${out.cleared ? '通過' : '敗'}`
+        + ` 軍勢 ${out.host.troops}/${out.host.troopsMax}`
+        + ` 糧 ${out.host.supply}　${out.log.length} 條戰報`);
+      if (out.defeated) break;
+      void st;
     }
-    console.log(`\n【大檢定 ${t(ch.titleKey)}】\n  ${rows.join('\n  ')}`);
-    const ok = s.attemptMajor(pick, sortie);
-    const log = s.current.lastMajorCheck;
-    console.log(`  選 ${t(`careerLine.${pick.line}`)}路 ${t(`difficulty.${pick.difficulty}`)}`
-      + ` → ${ok ? '通過' : '失敗'}`
-      + `（${log?.base}+${log?.bonus}+骰${log?.roll}=${log?.total} vs DC${log?.dc}）\n`);
+    if (!s.isOver) {
+      const cleared = s.current.campaign?.clearedStages ?? 0;
+      s.withdraw();
+      console.log(`  收兵 —— 保住 ${cleared} 關的獎勵`
+        + `　官階 文${s.current.career.civil} 武${s.current.career.martial}`);
+      console.log('');
+    } else {
+      console.log('  夢醒。');
+    }
     continue;
   }
 
   // 一個回合兩拍（15 §2）：投入固定事件 → 清空它引出的事件佇列。
   // 替身玩家專精【武路的主屬性】，委託一律選期望值最高的選項。
   const turn = String(s.current.progress.turn).padStart(2, ' ');
-  const primary = s.majorCheck().routes.martial.primaryAttr;
-
-  let best: SlotIndex = 0;
-  let bestGain = -Infinity;
-  for (const i of SLOT_INDICES) {
-    const cand = s.current.turn.slots[i];
-    if (cand === undefined) continue;
-    const g = (cand.attr === primary ? 100000 : 0) + s.previewTraining(i).expectedGain;
-    if (g > bestGain) { bestGain = g; best = i; }
-  }
+  const best = policy.chooseSlot(s);
   const slot = s.current.turn.slots[best];
   // 四項全中是那一回合的高光：雙驚嘆號 ＋ 金光以上 ＋ 有人站（15 §3.3）
   const pv = s.previewTraining(best);
@@ -99,7 +108,7 @@ while (!s.isOver && guard < 200) {
   const r = s.current.turn.training;
   console.log(`R${turn} 【${t(slot?.labelKey)}】${t(`glow.${slot?.baseGlow}`)}`
     + `${r?.upgraded === true ? '⬆' : ' '}→${t(`glow.${r?.finalGlow}`)}`
-    + ` ${t(`attr.${r?.attr}.short`)}+${r?.attrGained}`
+    + ` ${t(`attr.${r?.attr}.short`)}+${r?.expGained}`
     + ` ${t(`merit.${r?.meritGained.line}`)}+${r?.meritGained.amount}${burst}`);
 
   // 佇列可能有兩則：委託，以及同台名士追加的武將事件。
@@ -119,7 +128,7 @@ while (!s.isOver && guard < 200) {
     const tag = def.trigger.kind === 'notable' ? '名士' : `★${offer.rarity}`;
     s.resolveEvent(pick.i);
     const res = s.current.turn.resolved.at(-1);
-    const gained = (res?.practiceGained ?? [])
+    const gained = (res?.practiceExp ?? [])
       .map((g) => `${t(`attr.${g.attr}.short`)}+${g.amount}`).join(' ');
     const got = (res?.meritGained ?? [])
       .map((m) => `${t(`merit.${m.line}`)}+${m.amount}`).join(' ');

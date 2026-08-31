@@ -2,19 +2,25 @@
 import type { RunContext, TurnContext } from '../contracts/core/context.js';
 import type { FactionId, NotableId, Seed } from '../contracts/core/ids.js';
 import { turnIndex } from '../contracts/core/ids.js';
-import type { CheckChoice, SlotIndex } from '../contracts/core/primitives.js';
+import type { NotableId as NId, SkillId, TraitId } from '../contracts/core/ids.js';
 import type {
-  DreamEntryConfig, EventOffer, MetaState, RunState, RunSummary,
+  AffinityStage, Attr, AttrGrade, SlotIndex,
+} from '../contracts/core/primitives.js';
+import type { CampaignDef, EventReward } from '../contracts/core/definitions.js';
+import type {
+  BattleLoadout, DreamEntryConfig, EventOffer, MetaState, RunState, RunSummary,
 } from '../contracts/core/state.js';
 import { createRng, type DeterministicRng } from '../kernel/rng.js';
 import { careerService } from '../modules/career.js';
-import * as check from '../modules/check.js';
+import * as campaign from '../modules/campaign.js';
+import * as growth from '../modules/growth.js';
 import * as commission from '../modules/commission.js';
 import { createRunState } from '../modules/dream-entry.js';
 import * as item from '../modules/item.js';
 import * as ending from '../modules/ending.js';
 import * as faction from '../modules/faction.js';
 import * as roster from '../modules/roster.js';
+import { stageOf as rosterStageOf } from '../modules/roster-query.js';
 import { settle, summarize, type SettlementResult } from '../modules/settlement.js';
 import * as training from '../modules/training.js';
 import * as turn from '../modules/turn.js';
@@ -42,7 +48,7 @@ export class Session {
   get isOver(): boolean { return this.state.ending !== null; }
   get needsFactionChoice(): boolean { return this.state.progress.pendingFactionChoice; }
   get needsSuperiors(): boolean { return this.state.progress.pendingSuperiorAssign; }
-  get needsMajorCheck(): boolean { return this.state.progress.pendingMajorCheck; }
+  get needsCampaign(): boolean { return this.state.progress.pendingMajorCheck; }
 
   /** 本回合已投入固定事件。 */
   get hasActed(): boolean { return turn.hasActed(this.ctx); }
@@ -146,80 +152,150 @@ export class Session {
       throw new Error('本回合尚未完成（未投入固定事件，或還有待處理事件）');
     }
     this.stepTurn();
-    if (!this.state.progress.pendingMajorCheck) this.refreshSlots();
+    if (this.state.progress.pendingMajorCheck) {
+      // 章末不再進入判定，而是開一場戰役（15 → ㉝）。
+      this.mutate((tc) => campaign.begin(tc.state.progress.chapterId, tc, this.w.fx));
+    } else {
+      this.refreshSlots();
+    }
   }
 
-  // ── 大檢定 ───────────────────────────────────────
-  majorCheck() {
-    const chapter = turn.currentChapter(this.ctx);
-    return this.w.defs.reader('majorCheck').get(String(chapter.majorCheckId));
+  // ── 戰役（㉝）★ ──────────────────────────────────
+  //
+  // 取代舊的大檢定判定。四條規格：玩家不操作、跨關不回滿、每關都可以走、
+  // 不顯示勝率。沒有及格線 ——【沒有任何一條路能殺死你，除了你自己按下
+  // 「再打一關」】（RFC-01 D5）。
+
+  campaignDef(): CampaignDef { return campaign.currentCampaign(this.ctx); }
+  campaignState() { return this.state.campaign; }
+  hostLimits(): campaign.HostLimits { return campaign.hostLimits(this.ctx, this.w.fx); }
+  /** 我軍每回合的期望輸出。不是勝率 —— 是玩家自己也讀得出來的那個數字。 */
+  hostPower(): number { return campaign.hostPower(this.ctx, this.w.fx); }
+  /** 糧秣實際換得回多少軍勢。沒帶恢復招的人是 0。 */
+  hostSustain(): number { return campaign.hostSustain(this.ctx, this.w.fx); }
+  stageCount(): number { return campaign.stageCount(this.ctx); }
+  nextStage(): campaign.StagePreview | null { return campaign.nextStagePreview(this.ctx); }
+  eligibleCommanders(): readonly NotableId[] { return campaign.eligibleCommanders(this.ctx); }
+
+  commanderSkills(id: NotableId): readonly SkillId[] {
+    return campaign.skillOptionsFor(id, this.ctx);
   }
 
-  previewMajor(choice: CheckChoice, sortie: readonly NotableId[]): check.CheckPreview {
-    return check.preview(
-      check.specForMajor(this.majorCheck(), choice), sortie, this.ctx, this.w.fx,
-    );
+  /** 好感階 ＝ 他多常傳令（33 §4.3）。UI 要把它寫在名字旁邊。 */
+  commanderStage(id: NotableId): AffinityStage {
+    return rosterStageOf(id, this.ctx);
   }
 
-  /** 六個選項（文武各三檔）。門檻不足者不在其中，但 UI 仍應把它畫出來（18 §2.1）。 */
-  availableChoices(): readonly CheckChoice[] {
-    return check.availableChoices(this.majorCheck(), this.ctx);
+  configureCampaign(loadout: BattleLoadout): void {
+    this.mutate((tc) => campaign.configure(loadout, tc));
   }
 
-  eligibleSortie(): readonly NotableId[] {
-    return roster.eligibleForSortie(this.majorCheck(), this.ctx);
+  /** 打下一關。回傳結果供呈現層播戰報 —— 戰報是玩家唯一的資訊來源（33 §7）。 */
+  engage(): campaign.StageOutcome {
+    const box: { value: campaign.StageOutcome | null } = { value: null };
+    this.mutate((tc) => {
+      const r = campaign.engage(tc, this.w.fx);
+      box.value = r.outcome;
+      return r.state;
+    });
+    const outcome = box.value;
+    if (outcome === null) throw new Error('戰役結算未回傳結果');
+    if (outcome.defeated) this.abortByDefeat();
+    return outcome;
   }
 
   /**
-   * 走哪一條路線由玩家決定，因此【失敗的結局也由路線決定】：
-   * 走武路敗了是戰歿，走文路敗了是罷官。用 def 上的單一主屬性推不出這件事。
+   * 收兵。`clearedStages === 0` 時合法 ——【按兵不動】。
+   * 它拿不到任何獎勵，但章節照過；膽小的懲罰是難看的結局，不是死亡（D7）。
    */
-  attemptMajor(choice: CheckChoice, sortie: readonly NotableId[]): boolean {
-    const def = this.majorCheck();
-    const route = check.routeOf(def, choice);
-    const spec = check.specForMajor(def, choice);
-    let passed = false;
-
+  withdraw(): void {
+    const banked = campaign.bankedOf(this.ctx);
+    this.mutate((tc) => campaign.withdraw(tc));
+    this.mutate((tc) => this.applyRewards(banked, tc.state, tc));
+    this.mutate((tc) => careerService.reevaluate({ state: tc.state, defs: tc.defs }));
     this.mutate((tc) => {
-      const out = check.resolveCheck(spec, sortie, tc, this.w.fx);
-      passed = out.passed;
-      let s: RunState = {
-        ...tc.state,
-        lastMajorCheck: {
-          chapterId: tc.state.progress.chapterId,
-          line: choice.line, difficulty: choice.difficulty,
-          base: out.base, bonus: out.bonus, dc: out.dc,
-          roll: out.roll, total: out.total, passed: out.passed,
-        },
-      };
-      if (!passed) {
-        return ending.reachEnding(
-          ending.failedByAttr(route.primaryAttr), { state: s, defs: tc.defs },
-        );
-      }
-      for (const r of check.tierOf(def, choice).rewards) {
-        const c: RunContext = { state: s, defs: tc.defs };
-        if (r.kind === 'merit') s = this.w.writer.grantMerit(r.merit, r.amount, c);
-        else if (r.kind === 'attr') s = this.w.writer.grantAttr(r.attr, r.amount, c);
-        else if (r.kind === 'affinity' && r.notableId !== null) {
-          s = roster.addAffinity(r.notableId, r.amount, c);
-        }
-      }
-      s = careerService.reevaluate({ state: s, defs: tc.defs });
-      const chapter = turn.currentChapter({ state: s, defs: tc.defs });
+      const chapter = turn.currentChapter(tc);
       return {
-        ...s,
+        ...campaign.clear(tc),
         progress: {
-          ...s.progress,
-          chaptersPassed: s.progress.chaptersPassed + 1,
+          ...tc.state.progress,
+          chaptersPassed: tc.state.progress.chaptersPassed + 1,
           pendingMajorCheck: false,
           pendingFactionChoice: chapter.onPass === 'chooseFaction',
         },
       };
     });
+    this.afterChapterPassed();
+  }
 
-    if (passed) this.afterChapterPassed();
-    return passed;
+  /**
+   * 戰敗 → 中止類結局。
+   *
+   * 走哪一條官途決定結局的性質：武系敗了是戰歿，文系敗了是罷官。
+   * 這與舊制「由檢定路線決定」是同一個判準 —— 只是路線不再是當場選的，
+   * 而是你這一輪爬的那條官階。
+   */
+  private abortByDefeat(): void {
+    this.mutate((tc) => {
+      const martial = tc.state.career.martial >= tc.state.career.civil;
+      return ending.reachEnding(
+        ending.failedByAttr(martial ? 'war' : 'int'), { state: tc.state, defs: tc.defs },
+      );
+    });
+  }
+
+  /** 已保住的獎勵入帳。戰敗時不會走到這裡 —— `banked` 全部作廢（33 §11.3）。 */
+  private applyRewards(
+    rewards: readonly EventReward[], from: RunState, tc: TurnContext,
+  ): RunState {
+    let s = from;
+    const at = (): RunContext => ({ state: s, defs: tc.defs });
+    for (const r of rewards) {
+      if (r.kind === 'merit') s = this.w.writer.grantMerit(r.merit, r.amount, at());
+      else if (r.kind === 'attr') s = this.w.writer.grantAttr(r.attr, r.amount, at());
+      else if (r.kind === 'affinity' && r.notableId !== null) {
+        s = roster.addAffinity(r.notableId, r.amount, at());
+      } else if (r.kind === 'unlock') {
+        s = growth.grantUnlock(r.trait, r.skill, at());
+      } else if (r.kind === 'item') {
+        const out = item.acquire(r.itemId, { ...tc, state: s });
+        s = out.state;
+      }
+    }
+    return s;
+  }
+
+  // ── 養成兌現（㉜）★ ──────────────────────────────
+  //
+  // 學習不佔行動、隨時可做（32 §7.3）：它不是行動決策，而且數值會擋事件門檻，
+  // 玩家有理由早花。三個 learn* 都不消耗 RNG —— 兌換不得引入隨機。
+
+  expOf(attr: Attr): number { return growth.expOf(attr, this.ctx); }
+  gradeOf(attr: Attr): AttrGrade { return growth.gradeOf(attr, this.ctx); }
+  nextGrade(attr: Attr): growth.NextGrade | null {
+    return growth.nextGrade(attr, this.ctx, this.w.fx);
+  }
+  traitOffers(): readonly growth.TraitOffer[] {
+    return growth.learnableTraits(this.ctx, this.w.fx);
+  }
+  skillOffers(): readonly growth.SkillOffer[] {
+    return growth.learnableSkills(this.ctx, this.w.fx);
+  }
+
+  learnAttr(attr: Attr, target: number): growth.LearnResult {
+    const r = growth.learnAttr(attr, target, this.ctx, this.w.fx, this.w.writer);
+    if (r.ok) this.state = r.state;
+    return r;
+  }
+  learnTrait(id: TraitId): growth.LearnResult {
+    const r = growth.learnTrait(id, this.ctx, this.w.fx);
+    if (r.ok) this.state = r.state;
+    return r;
+  }
+  learnSkill(id: SkillId): growth.LearnResult {
+    const r = growth.learnSkill(id, this.ctx, this.w.fx);
+    if (r.ok) this.state = r.state;
+    return r;
   }
 
   private afterChapterPassed(): void {

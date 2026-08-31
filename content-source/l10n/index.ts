@@ -1,3 +1,4 @@
+import { abilityTexts } from './abilities.js';
 import { attrTexts, phaseTexts } from './attrs.js';
 import { careerTalentTexts } from './career-talents.js';
 import { chapterTexts } from './chapters.js';
@@ -18,6 +19,7 @@ export const zhTW: Readonly<Record<string, string>> = {
   ...eventTexts,
   ...notableEventTexts,
   ...itemTexts,
+  ...abilityTexts,
   ...careerTalentTexts,
   ...endingTexts,
 };

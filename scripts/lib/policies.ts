@@ -10,11 +10,12 @@
 //   1. 投哪一維（＝爬哪一條官階、練哪一維、承受哪種光階運氣）
 //   2. 委託怎麼處理（穩穩收下，還是賭高報酬的那個選項）
 import type { Session } from '../../src/app/session.js';
-import type {
-  Attr, CareerLine, CheckChoice, SlotIndex,
-} from '../../src/contracts/core/primitives.js';
+import type { NotableId } from '../../src/contracts/core/ids.js';
+import type { Attr, CareerLine, SlotIndex } from '../../src/contracts/core/primitives.js';
 import { ATTRS, SLOT_INDICES } from '../../src/contracts/core/primitives.js';
-import type { EventOffer } from '../../src/contracts/core/state.js';
+import type {
+  BattleLoadout, CommanderSlot, EventOffer,
+} from '../../src/contracts/core/state.js';
 
 export interface AgentPolicy {
   readonly name: string;
@@ -22,12 +23,25 @@ export interface AgentPolicy {
   chooseSlot(s: Session): SlotIndex;
   /** 回合的第二個決定：待處理事件用哪個方法度過。 */
   chooseOption(s: Session, offer: EventOffer): number;
-  /** 章末大檢定的六個選項擇一（18 §2.2）。 */
-  chooseCheck(s: Session): CheckChoice;
+  /**
+   * 經驗怎麼花（32）★ 新軸線之一。
+   *
+   * 舊制沒有這個決定 —— 鍛鍊直接寫進屬性。現在玩家要在
+   * 【數值 vs 特質 vs 技能】之間分配，而混合消耗讓純專精買不起絕階。
+   */
+  spend(s: Session): void;
+  /** 戰役配置（33 §3）：三招 ＋ 三位指揮各一招。 */
+  chooseLoadout(s: Session): BattleLoadout;
+  /**
+   * 走還留（33 §6）★ **這是新制真正要量的東西：貪心的定價。**
+   *
+   * 舊制的軸線是「六個難度選項挑哪個」，那是一次性的。
+   * 現在同一個問題要問七次，而每次的資訊都不同（你剩多少血、下一關是誰）。
+   */
+  chooseEngage(s: Session): boolean;
 }
 
 const GLOW_ORDER = { none: 0, silver: 1, gold: 2, red: 3 } as const;
-const FALLBACK: CheckChoice = { line: 'martial', difficulty: 'safe' };
 
 const bestSlot = (s: Session, score: (i: SlotIndex) => number): SlotIndex => {
   let best: SlotIndex = 0;
@@ -42,9 +56,11 @@ const bestSlot = (s: Session, score: (i: SlotIndex) => number): SlotIndex => {
 const slotAttr = (s: Session, i: SlotIndex): Attr | null =>
   s.current.turn.slots[i]?.attr ?? null;
 
-/** 該路線本章的主屬性。六選項制下「主檢定屬性」不再唯一，必須先指定路線。 */
-const primaryOf = (s: Session, line: CareerLine): Attr =>
-  s.majorCheck().routes[line].primaryAttr;
+/**
+ * 該官階線在戰役裡的主輸出維（33 §5.3）。
+ * 武系＝物理（武）、文系＝法術（智）—— 兩線各有自己的贏法。
+ */
+const LINE_ATTR: Readonly<Record<CareerLine, Attr>> = { martial: 'war', civil: 'int' };
 
 /** 專精某一維：那一格永遠優先，同維時再比期望值。 */
 const focus = (s: Session, attr: Attr): SlotIndex => bestSlot(s, (i) => {
@@ -81,53 +97,141 @@ const expected = (offer: EventOffer): number => {
   return on.reduce((best, i) => (ev(i) > ev(best) ? i : best), on[0] ?? 0);
 };
 
-// ── 大檢定 ──────────────────────────────────────────
+// ── 戰役（㉝）★ ─────────────────────────────────────
+//
+// 三個新方法一起構成一種「戰役性格」。它們由兩個參數推導：
+//   bias   經驗優先投哪一維（＝這一輪的主輸出）
+//   margin 走還留要的餘裕倍數 —— 見 engageIf
+//
+// **margin 是這一版策略組的主軸線。** 舊制量的是「事件佔比」，
+// 新制要量的是【貪心的定價對不對】：1.05 的人算得剛剛好就上，
+// 2.4 的人要有兩倍餘裕才敢打。兩者的點數差就是獎勵曲線該不該再陡的答案。
 
-/** 只在指定路線內挑難度。專精者不會臨時換跑道 —— 他沒有另一條線的四維。 */
-const pickCheck = (
-  s: Session, prefer: 'low' | 'high' | 'rate', line: CareerLine,
-): CheckChoice => {
-  const avail = s.availableChoices().filter((c) => c.line === line);
-  if (avail.length === 0) return { line, difficulty: 'safe' };
-  if (prefer === 'low') return avail[0] ?? FALLBACK;
-  if (prefer === 'high') return avail[avail.length - 1] ?? FALLBACK;
-  const sortie = s.eligibleSortie().slice(0, 3);
-  let chosen: CheckChoice = avail[0] ?? FALLBACK;
-  for (const c of avail) {
-    if (s.previewMajor(c, sortie).successRate >= 0.75) chosen = c;
-  }
-  return chosen;
-};
+const cheapestFirst = <T extends { readonly cost: Readonly<Partial<Record<Attr, number>>> }>(
+  offers: readonly T[],
+): readonly T[] => offers.slice().sort(
+  (a, b) => ATTRS.reduce((n, x) => n + (a.cost[x] ?? 0), 0)
+    - ATTRS.reduce((n, x) => n + (b.cost[x] ?? 0), 0),
+);
+
+const slotCap = (s: Session): number => s.current.abilities.skills.length;
 
 /**
- * 不挑路線，六個選項裡挑成功率過關的最高 DC。
- *
- * 它度量的是【路線自選值多少】：舊制只有一條路線，主屬性在章節間變化本身
- * 就是對純專精的懲罰。六選項制把那個懲罰拿掉了，這個策略量出差額。
+ * 貪心的學習迴圈。順序刻意是【先技能、再數值、最後特質】：
+ *   沒有技能就打不出傷害（三格空著的隊伍連第一關都過不了）
+ *   數值是所有技能的倍率，先抬它比多學一招划算
+ *   特質是餘裕
  */
-const flexibleCheck = (s: Session): CheckChoice => {
-  const avail = s.availableChoices();
-  const sortie = s.eligibleSortie().slice(0, 3);
-  let byDc: CheckChoice | null = null;
-  let bestDc = -Infinity;
-  let byRate: CheckChoice | null = null;
-  let bestRate = -Infinity;
-  for (const c of avail) {
-    const pv = s.previewMajor(c, sortie);
-    if (pv.successRate > bestRate) { bestRate = pv.successRate; byRate = c; }
-    if (pv.successRate >= 0.75 && pv.dc > bestDc) { bestDc = pv.dc; byDc = c; }
+const spendGreedy = (bias: Attr) => (s: Session): void => {
+  for (let guard = 0; guard < 60; guard += 1) {
+    let acted = false;
+
+    if (slotCap(s) < 3) {
+      const pick = cheapestFirst(s.skillOffers().filter((o) => o.state === 'learnable'))[0];
+      if (pick !== undefined && s.learnSkill(pick.def.skillId).ok) acted = true;
+    }
+
+    const ng = s.nextGrade(bias);
+    if (!acted && ng !== null && s.expOf(bias) >= ng.cost) {
+      if (s.learnAttr(bias, ng.at).ok) acted = true;
+    }
+
+    if (!acted) {
+      const pick = cheapestFirst(s.traitOffers().filter((o) => o.state === 'learnable'))[0];
+      if (pick !== undefined && s.learnTrait(pick.def.traitId).ok) acted = true;
+    }
+
+    if (!acted) {
+      // 沒有可學的了 —— 把剩下的經驗全部倒進主維，一次一點。
+      const cur = s.current.attributes.values[bias];
+      if (cur < 100 && s.learnAttr(bias, cur + 1).ok) acted = true;
+    }
+    if (!acted) break;
   }
-  return byDc ?? byRate ?? FALLBACK;
 };
+
+/** 好感最高的三位當指揮，各帶星階開放的【最後一招】（通常也是最強的那招）。 */
+const loadoutOf = (s: Session): BattleLoadout => {
+  const skills = s.current.abilities.skills.slice(0, 3);
+  const ranked = s.eligibleCommanders().slice().sort(
+    (a, b) => affinityOf(s, b) - affinityOf(s, a),
+  );
+  const commanders: CommanderSlot[] = [];
+  for (const id of ranked) {
+    if (commanders.length >= 3) break;
+    const opts = s.commanderSkills(id);
+    const pick = opts.at(-1);
+    if (pick !== undefined) commanders.push({ notableId: id, skillId: pick });
+  }
+  return { skills, commanders };
+};
+
+const affinityOf = (s: Session, id: NotableId): number =>
+  s.current.roster.members.find((m) => m.notableId === id)?.affinity ?? 0;
+
+/**
+ * 走還留的判斷 —— **這是替身玩家最重要的一段程式。**
+ *
+ * 舊版只看「軍勢還剩幾成」，那不是人在做的判斷：實測下來它會在
+ * 「剩四成七、對面每回合打三成二」的時候按下再打一關，然後死掉。
+ *
+ * 人讀的是螢幕上那兩個數字：**我撐得住幾回合，對面要打幾回合。**
+ *
+ *   turnsToDie  = 軍勢 ／ 敵方每回合輸出
+ *   turnsToKill = 敵方兵力 ／ 我每回合輸出
+ *
+ * `margin` 就是貪心閾值：1.1 是「算得剛剛好就上」，2.0 是「要有兩倍餘裕」。
+ * **它是這一版策略組的主軸線** —— 兩端的點數差就是獎勵曲線該不該再陡的答案。
+ */
+const engageIf = (margin: number) => (s: Session): boolean => {
+  const st = s.current.campaign;
+  if (st === null || st.loadout === null) return false;
+  const nx = s.nextStage();
+  if (nx === null) return false;
+
+  const power = s.hostPower();
+  if (power <= 0) return false;              // 一招輸出都沒有 —— 上去也只是送死
+  const turnsToKill = nx.enemyTroops / power;
+  const turnsToDie = st.host.troops / Math.max(1, nx.enemyDamage);
+  // 糧秣能多換幾回合 —— **只有帶了恢復招的人算得到**。
+  // 舊版無條件把糧量算進來，於是純武系（糧秣一點都用不到）
+  // 誤以為自己還能撐五回合，然後死在第五關。
+  const healed = s.hostSustain() / Math.max(1, nx.enemyDamage);
+  return (turnsToDie + healed) >= turnsToKill * margin;
+};
+
+const campaignOf = (bias: Attr, margin: number) => ({
+  spend: spendGreedy(bias),
+  chooseLoadout: loadoutOf,
+  chooseEngage: engageIf(margin),
+});
+
+/**
+ * 跑完一場戰役。配置 → 反覆（打一關 → 問走留）→ 收兵。
+ * 三個腳本（模擬器、smoke、校準）共用它 —— 流程只有一份。
+ */
+export function playCampaign(s: Session, policy: AgentPolicy): number {
+  policy.spend(s);
+  s.configureCampaign(policy.chooseLoadout(s));
+  let cleared = 0;
+  for (let guard = 0; guard < 12; guard += 1) {
+    if (!policy.chooseEngage(s)) break;
+    const out = s.engage();
+    if (out.defeated) return cleared;
+    cleared += 1;
+  }
+  s.withdraw();
+  return cleared;
+}
 
 // ── 策略組 ──────────────────────────────────────────
 
 /** 專精單線：固定投該路線的主屬性格。這是「純養成」的參照點。 */
 const lineFocused = (name: string, line: CareerLine): AgentPolicy => ({
   name,
-  chooseSlot: (s) => focus(s, primaryOf(s, line)),
+  chooseSlot: (s) => focus(s, LINE_ATTR[line]),
   chooseOption: (s, offer) => expected(offer),
-  chooseCheck: (s) => pickCheck(s, 'rate', line),
+  ...campaignOf(LINE_ATTR[line], 1.5),
 });
 
 export const POLICIES: readonly AgentPolicy[] = [
@@ -143,7 +247,7 @@ export const POLICIES: readonly AgentPolicy[] = [
     name: 'greedy-gain',
     chooseSlot: (s) => bestSlot(s, (i) => s.previewTraining(i).expectedGain),
     chooseOption: (s, offer) => expected(offer),
-    chooseCheck: flexibleCheck,
+    ...campaignOf('war', 1.5),
   },
   {
     /**
@@ -159,7 +263,7 @@ export const POLICIES: readonly AgentPolicy[] = [
       return GLOW_ORDER[slot.baseGlow] * 1000 + s.previewTraining(i).expectedGain;
     }),
     chooseOption: (s, offer) => richest(offer),
-    chooseCheck: flexibleCheck,
+    ...campaignOf('war', 1.5),
   },
   {
     /**
@@ -175,7 +279,7 @@ export const POLICIES: readonly AgentPolicy[] = [
       return slot.notables.length * 1000 + s.previewTraining(i).expectedGain;
     }),
     chooseOption: (s, offer) => expected(offer),
-    chooseCheck: flexibleCheck,
+    ...campaignOf('war', 1.5),
   },
   {
     /**
@@ -194,7 +298,7 @@ export const POLICIES: readonly AgentPolicy[] = [
       return (pv.hasCommission ? 2000 : 0) + (pv.hasEncounter ? 1000 : 0) + pv.expectedGain;
     }),
     chooseOption: (s, offer) => expected(offer),
-    chooseCheck: flexibleCheck,
+    ...campaignOf('war', 1.5),
   },
   {
     /**
@@ -207,7 +311,7 @@ export const POLICIES: readonly AgentPolicy[] = [
       return (pv.hasEncounter ? 2000 : 0) + pv.notableCount * 100 + pv.expectedGain;
     }),
     chooseOption: (s, offer) => expected(offer),
-    chooseCheck: flexibleCheck,
+    ...campaignOf('war', 1.5),
   },
   {
     // 平均分配四維：輪流投。四維上限與大檢定副屬性的價值由它量出來。
@@ -217,34 +321,34 @@ export const POLICIES: readonly AgentPolicy[] = [
       return want === undefined ? 0 : focus(s, want);
     },
     chooseOption: (s, offer) => expected(offer),
-    chooseCheck: flexibleCheck,
+    ...campaignOf('war', 1.5),
   },
   {
     // 專精武，委託一律選最穩的 —— 功績少但幾乎不失敗。
     name: 'option-safe',
-    chooseSlot: (s) => focus(s, primaryOf(s, 'martial')),
+    chooseSlot: (s) => focus(s, LINE_ATTR.martial),
     chooseOption: (s, offer) => safest(offer),
-    chooseCheck: (s) => pickCheck(s, 'rate', 'martial'),
+    ...campaignOf('war', 1.5),
   },
   {
     // 專精武，委託一律選功績最高的 —— 常失敗，但失敗仍給四成。
     // 與 option-safe 的差額就是「賭委託」值不值得。
     name: 'option-greedy',
-    chooseSlot: (s) => focus(s, primaryOf(s, 'martial')),
+    chooseSlot: (s) => focus(s, LINE_ATTR.martial),
     chooseOption: (s, offer) => richest(offer),
-    chooseCheck: (s) => pickCheck(s, 'rate', 'martial'),
+    ...campaignOf('war', 1.5),
   },
   {
     name: 'risk-averse',
-    chooseSlot: (s) => focus(s, primaryOf(s, 'martial')),
+    chooseSlot: (s) => focus(s, LINE_ATTR.martial),
     chooseOption: (s, offer) => safest(offer),
-    chooseCheck: (s) => pickCheck(s, 'low', 'martial'),
+    ...campaignOf('war', 2.4),
   },
   {
     name: 'risk-seeking',
-    chooseSlot: (s) => focus(s, primaryOf(s, 'martial')),
+    chooseSlot: (s) => focus(s, LINE_ATTR.martial),
     chooseOption: (s, offer) => richest(offer),
-    chooseCheck: (s) => pickCheck(s, 'high', 'martial'),
+    ...campaignOf('war', 1.05),
   },
   {
     name: 'random',
@@ -259,6 +363,6 @@ export const POLICIES: readonly AgentPolicy[] = [
       const r = Math.abs(Math.sin(turn * 78.233) * 43758.5453) % 1;
       return on[Math.floor(r * on.length) % Math.max(1, on.length)] ?? 0;
     },
-    chooseCheck: (s) => pickCheck(s, 'low', 'martial'),
+    ...campaignOf('war', 2.4),
   },
 ];
