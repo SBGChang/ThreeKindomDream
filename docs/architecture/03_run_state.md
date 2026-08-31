@@ -27,10 +27,16 @@
 | `career` | `CareerState` | 21 官階系統 |
 | `roster` | `RosterState` | 19 名士局內狀態 |
 | `treasures` | `RunTreasureState` | 24 寶物局內狀態 |
-| `skills` | `RunSkillState` | 23 技能系統 |
+| `abilities` 🔧 | `AbilityState` | 23 特質與技能（**RFC-01 由 `skills` 更名**，改為同時持有特質） |
+| `growth` 🆕 | `GrowthState` | 32 養成兌現（RFC-01 提案：四類經驗池 ＋ 本輪解鎖清單） |
+| `campaign` 🆕 | `CampaignState \| null` | 33 戰役（RFC-01 提案：軍勢、糧秣、關卡進度、已保住的獎勵） |
 | `slots` | `SlotState` | 16 鍛鍊槽 ＋ 17 事件槽（各寫自己那半；二者互斥，見 15 §2） |
 | `actions` | `ActionTally` | 15 章節回合（本輪練了幾回合、辦事幾回合） |
 | `ending` | `EndingOutcome \| null` | 25 結局判定 |
+
+> 🔧 **[RFC-01](../RFC-01-campaign-rework.md) 影響本表三列。** 其中 `attributes` 的獨占寫入者
+> 從 20 改為 **32** —— 16 鍛鍊槽不再直寫屬性，改為產出經驗。
+> 存檔格式（[07](07_save.md)）因此需要一次 migration；HANDOFF 記錄現階段尚無 migration 機制。
 
 ### 1.1 `metaSnapshot` 與 `config` 是不可變的
 

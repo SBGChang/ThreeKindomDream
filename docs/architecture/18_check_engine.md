@@ -10,6 +10,13 @@
 > | **emits** | `chapter.passed` / `chapter.failed` / `check.resolved` |
 > | **ownsDefinitions** | `majorCheck`、`checkRule` |
 
+> ✂️ **[RFC-01](../RFC-01-campaign-rework.md) 縮編**：**大檢定的職責整體移交
+> [33 戰役](33_campaign.md)**，本模組只保留小檢定。
+> 隨之作廢：`majorCheck` / `checkRule.maxSortie` 定義、難度自選、出戰名士、
+> `check.majorValue`、`careerService.checkBonus` 的加值路徑、§5 的失敗處理鏈、
+> §3.2 對「大檢定成功率一律可見」的承諾（戰役改為 D8：不顯示勝率、只給情報）。
+> **保留不動**：§3 的算式、§3.1 的封閉式、`specForMinor`、`preview` / `resolve` 的型別分層。
+
 ---
 
 ## 1. 兩種檢定，一套算式

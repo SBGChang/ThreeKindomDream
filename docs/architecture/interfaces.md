@@ -1,6 +1,8 @@
 # 介面全表（public surface）
 
-> **定位**：31 個模組的完整對外函式，以及模組間的持有關係。
+> **定位**：33 個模組的完整對外函式，以及模組間的持有關係。
+>
+> 🔧 **㉜㉝ 為 [RFC-01](../RFC-01-campaign-rework.md) 提案中；㉓ 已重寫、⑱ 待縮編。**
 > 每個模組只從 `public.ts` 匯出這些；其餘一律 internal。
 > **不含實作**。簽章是契約，不是指定寫法。
 
@@ -581,17 +583,22 @@ export interface FactionOption {
 
 `selectable` 回**全部已安裝陣營**（含不合格者，附 `blockedBy`）—— 讓玩家看得到「我這輪惡名太高所以蜀漢不收」。未安裝 pack 的完全不出現在陣列裡。
 
-### ㉓ 技能系統 — `modules/skill/public.ts`
+### ㉓ 特質與技能 — `modules/ability/public.ts`
 
 ```ts
-export interface SkillService {
-  learned(ctx: RunContext): readonly SkillId[];
-  has(id: SkillId, ctx: RunContext): boolean;
-  learn(id: SkillId, ctx: RunContext): CommandOutcome<RunState>;   // 重複習得為冪等 no-op
+export interface AbilityService {
+  traits(ctx: RunContext): readonly TraitId[];
+  skills(ctx: RunContext): readonly SkillId[];
+  hasTrait(id: TraitId, ctx: RunContext): boolean;
+  hasSkill(id: SkillId, ctx: RunContext): boolean;
+  actionOf(id: SkillId, ctx: RunContext): SkillAction;      // 33 消費
 }
 
-export function skillEffectSource(learned: readonly SkillId[]): EffectSource;
+export function traitEffectSource(traits: readonly TraitId[]): EffectSource;
 ```
+
+> 🔧 **RFC-01**：舊版的 `learn(id)` 已移除 —— 學習的唯一入口在 ㉜。
+> 技能**不進** `EffectSource`（23 §5）：它的效果只在戰役中發生。
 
 ### ㉔ 寶物局內狀態 — `modules/treasure-run/public.ts`
 
@@ -615,6 +622,40 @@ export interface TreasureDisplay {
 **`displayFor` 在本模組算，不在 UI 算。** 這讓「玩家在二選一事件裡看不看得到自己放棄了碎片」成為一條可測試的規則，而不是 UI 的自由心證。
 
 ---
+
+### ㉜ 養成兌現 — `modules/growth/public.ts` 🆕
+
+```ts
+export interface GrowthQuery {
+  exp(attr: Attr, ctx: RunContext): number;
+  gradeOf(attr: Attr, ctx: RunContext): AttrGrade;
+  attrCost(attr: Attr, target: number, ctx: RunContext): number;
+  nextGrade(attr: Attr, ctx: RunContext): NextGrade | null;
+  learnableTraits(ctx: RunContext): readonly TraitOffer[];
+  learnableSkills(ctx: RunContext): readonly SkillOffer[];
+}
+
+export interface GrowthService {
+  learnAttr(attr: Attr, target: number, ctx: RunContext): CommandOutcome<RunState>;
+  learnTrait(id: TraitId, ctx: RunContext): CommandOutcome<RunState>;
+  learnSkill(id: SkillId, ctx: RunContext): CommandOutcome<RunState>;
+}
+```
+
+三個 `learn*` 全部收 `RunContext` —— **兌換不得引入隨機**，由型別保證（32 §7.1）。
+
+### ㉝ 戰役 — `modules/campaign/public.ts` 🆕
+
+```ts
+export interface CampaignService {
+  configure(loadout: BattleLoadout, ctx: RunContext): CommandOutcome<RunState>;
+  preview(ctx: RunContext): CampaignPreview;          // 四人能力表，0–100 同尺
+  engage(ctx: TurnContext): StageOutcome;             // 打下一關
+  withdraw(ctx: RunContext): CommandOutcome<RunState>;
+}
+```
+
+`engage` 是本模組唯一收 `TurnContext` 的方法。`preview` 不含勝率（33 §8.1）。
 
 ## 6. 結束層
 
@@ -729,6 +770,17 @@ export type PolicyName =
 
 `AgentPolicy` 的四個方法**恰好對應玩家在一個回合裡的全部決策**。若日後新增第五種決策，這個介面會強制被檢視 —— 那正是「模擬器有沒有跟上遊戲」的提醒機制。
 
+> 🔧 **[RFC-01](../RFC-01-campaign-rework.md) 正是那個時刻。** 它移除 `chooseDifficulty` 與
+> `chooseSortie`，新增三種決策：
+>
+> ```ts
+> chooseExpSpend(q: GrowthQuery, ctx: RunContext): readonly LearnAction[];
+> chooseLoadout(pv: CampaignPreview, ctx: RunContext): BattleLoadout;
+> chooseEngage(outcome: StageOutcome, ctx: RunContext): boolean;   // 留 or 走
+> ```
+>
+> `chooseEngage` 的閾值是新的策略軸線 —— 七策略要量的東西從「事件佔比」變成**貪心的定價**。
+
 ---
 
 ## 8. 跨 slice 讀取規則 ★
@@ -838,7 +890,13 @@ UI 只能送出這些，且**一律以序號指定，不含核心 ID**。
 | `event.select` | ⑰ | `{ offerIndex, optionIndex }` |
 | `event.reroll` | ⑰ | `{}` |
 | `turn.advance` | ⑮ | `{}` |
-| `majorCheck.attempt` | ⑱ | `{ difficulty, sortieIndices }` |
+| `majorCheck.attempt` | ⑱ | `{ difficulty, sortieIndices }` ✂️ **RFC-01 移除** |
+| `learn.attr` 🆕 | ㉜ | `{ attrIndex, target }` |
+| `learn.trait` 🆕 | ㉜ | `{ offerIndex }` |
+| `learn.skill` 🆕 | ㉜ | `{ offerIndex }` |
+| `campaign.configure` 🆕 | ㉝ | `{ skillIndices, commanderIndices, commanderSkillIndices }` |
+| `campaign.engage` 🆕 | ㉝ | `{}` |
+| `campaign.withdraw` 🆕 | ㉝ | `{}` |
 | `faction.choose` | ㉒ | `{ optionIndex }` |
 | `roster.assignSuperiors` | ⑲ | `{ candidateIndices }` |
 | `run.retire` | ㉕ | `{}` |

@@ -10,6 +10,13 @@
 > | **emits** | `attribute.gained` / `currency.gained` |
 > | **ownsDefinitions** | `attributeCap` |
 
+> 🔧 **[RFC-01](../RFC-01-campaign-rework.md) 改動**：
+> `attributeCap.attrMax` **999 → 100**（七個價格帶對齊七個等級 G–S，見 32 §3.1）。
+> 本模組**不再由 16 直接寫入** —— `attributes` 的唯一寫入者變成
+> [32 養成兌現](32_growth_conversion.md)。四類經驗池歸 32 的 `growth` slice，不在這裡。
+> 所有引用四維的門檻（事件選項、委託、小檢定 DC）都要重新標定到 0–100 尺度。
+> §2 那條「GDD 尚未定義四維上限」的待補註記可以關閉。
+
 ---
 
 ## 1. State

@@ -1,6 +1,9 @@
 # 模組結構圖（UML）
 
-> **定位**：31 個模組的依賴關係、狀態組成、介面骨架。細節見各模組契約。
+> **定位**：33 個模組的依賴關係、狀態組成、介面骨架。細節見各模組契約。
+>
+> 🔧 **㉜㉝ 為 [RFC-01](../RFC-01-campaign-rework.md) 提案中的新模組，圖尚未納入。**
+> 下方 §4 §5 兩張圖描述的是**現行實作**，RFC-01 落地後兩張都要重畫。
 > 圖以 mermaid 撰寫，在 GitHub 與 VS Code 預覽中會渲染。
 
 ---
@@ -216,6 +219,10 @@ sequenceDiagram
 ---
 
 ## 5. 章節與檢定的職責切分
+
+> ✂️ **[RFC-01](../RFC-01-campaign-rework.md)：本節的狀態圖整體作廢。**
+> 大檢定的三檔難度自選、降級重判、重擲全部移除，換成 ㉝ 的七關推進與走留決策。
+> 15 改發 `campaign.due`，章節通過與失敗由 ㉝ 發出。
 
 15 只宣告「大檢定到期」，18 才執行判定。這讓「回合怎麼走」與「檢定怎麼算」可獨立實作與測試。
 
@@ -512,7 +519,7 @@ classDiagram
 | ⑳ | 屬性貨幣 | 局內 | `attributes`・`currencies` | [20](20_attributes_currency.md) |
 | ㉑ | 官階系統 | 局內 | `career` | [21](21_career_rank.md) |
 | ㉒ | 陣營系統 | 局內 | `faction` | [22](22_faction.md) |
-| ㉓ | 技能系統 | 局內 | `skills` | [23](23_skill.md) |
+| ㉓ | 特質與技能 ♻️ | 局內 | `abilities` | [23](23_skill.md) |
 | ㉔ | 寶物局內 | 局內 | `treasures` | [24](24_treasure_runtime.md) |
 | ㉕ | 結局判定 | 結束 | `ending` | [25](25_ending.md) |
 | ㉖ | 結算產出 | 結束 | — | [26](26_settlement.md) |
@@ -521,3 +528,5 @@ classDiagram
 | ㉙ | 音效音樂 | 呈現 | — | [29](29_audio.md) |
 | ㉚ | 內容編譯器 | 工具 | — | [30](30_content_compiler.md) |
 | ㉛ | 平衡模擬器 | 工具 | — | [31](31_balance_simulator.md) |
+| **㉜** | **養成兌現** 🆕 | 局內 | `growth` | [32](32_growth_conversion.md) |
+| **㉝** | **戰役** 🆕 | 局內 | `campaign` | [33](33_campaign.md) |

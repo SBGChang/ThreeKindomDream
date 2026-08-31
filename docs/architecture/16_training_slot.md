@@ -10,6 +10,12 @@
 > | **emits** | `training.slotsGenerated` / `training.selected` / `glow.resolved` / `attribute.gained` |
 > | **ownsDefinitions** | `trainingAction`、`glowTier`、`trainingCurve`、`aptitudeGrade` |
 
+> 🔧 **[RFC-01](../RFC-01-campaign-rework.md) 改動**：產出從屬性點改為**四類經驗值**。
+> `attr.grant` → **`exp.grant`**（收方由 20 改為 [32 養成兌現](32_growth_conversion.md)）；
+> `attribute.gained` → `exp.gained`。
+> `trainingCurve.baseByAttr` 的**數值可照用、語意改變**（產出是經驗不是屬性）。
+> 本模組因此**不再寫入 `RunState.attributes`** —— 那成為 32 的專屬寫入權。
+
 ---
 
 ## 1. Data Schema

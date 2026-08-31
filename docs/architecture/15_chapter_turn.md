@@ -10,6 +10,11 @@
 > | **emits** | `turn.advanced` / `chapter.entered` / `majorCheck.due` |
 > | **ownsDefinitions** | `chapter`、`chapterSequence` |
 
+> 🔧 **[RFC-01](../RFC-01-campaign-rework.md) 改動**：章末不再進入大檢定判定，而是進入
+> [33 戰役](33_campaign.md)。`majorCheck.due` → **`campaign.due`**；
+> 章節通過與失敗改由 33 發出（`chapter.passed` / `chapter.failed`）。
+> `reads` 的「18 檢定引擎」改為「33 戰役」。
+
 ---
 
 ## 1. Data Schema
