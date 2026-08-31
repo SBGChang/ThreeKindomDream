@@ -328,7 +328,10 @@ export const effects: EffectTableInput = {
   },
 
   RevealInfo: {
-    [FX.revealCheck]: { what: 'checkBreakdown', condition: null },
+    // 〈慧眼識人〉買到的是【戰報的完整歸因】（33 §7.1）。
+    // 因果摘要（`why`）一律可見 —— 那是玩家改配置的依據，不能鎖；
+    // 這一條開的是每一條加成各自的來源與數值。
+    [FX.revealBattleTrace]: { what: 'battleTrace', condition: null },
     [FX.revealSlots]: { what: 'nextTurnSlots', condition: null },
   },
 

@@ -25,9 +25,9 @@ export const careerTalentTexts: Record<string, string> = {
   'talent.usurper.name': '梟雄之姿',
   'talent.usurper.desc': '功績獲得量 +20%（與〈忠義之心〉互斥）',
   'talent.destined.name': '天命所歸',
-  'talent.destined.desc': '每輪一次，大檢定失敗時可重擲',
+  'talent.destined.desc': '每輪一次，戰役中軍勢歸零時原地再起',
   'talent.keen-eye.name': '慧眼識人',
-  'talent.keen-eye.desc': '大檢定可查看檢定值組成明細',
+  'talent.keen-eye.desc': '戰報顯示每一條加成的來源與數值',
 
   'talent.noble-house.name': '世家門閥',
   'talent.noble-house.desc': '入伍時可自行指定一位同伴，其餘由皇甫嵩指派',

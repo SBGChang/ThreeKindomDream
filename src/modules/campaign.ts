@@ -10,7 +10,8 @@ import type { RunContext, TurnContext } from '../contracts/core/context.js';
 import type {
   BattleRuleDef, CampaignDef, CampaignStageDef, EnemyDef, EventReward, SkillDef,
 } from '../contracts/core/definitions.js';
-import { CHARGES } from '../contracts/core/effects.js';
+import type { EffectTrace } from '../contracts/core/effects.js';
+import { CHARGES, FLAGS } from '../contracts/core/effects.js';
 import type { ChapterId, L10nKey, NotableId, SkillId } from '../contracts/core/ids.js';
 import { targetId } from '../contracts/core/ids.js';
 import type { Attr } from '../contracts/core/primitives.js';
@@ -296,6 +297,23 @@ function pickDistinct(
   return out;
 }
 
+/**
+ * 這一擊吃到了哪些效果、各是多少（〈慧眼識人〉買到的東西）。
+ *
+ * 沒有那個天賦就回空陣列 —— 而不是「算好了但不顯示」：
+ * 型別上為空與 UI 上不畫是同一件事，中間不需要第二個判斷。
+ */
+function traceFor(
+  kind: SkillDef['action']['kind'], ctx: RunContext, fx: EffectResolver,
+): readonly EffectTrace[] {
+  if (!fx.hasFlag(FLAGS.battleTrace, ctx)) return [];
+  if (kind === 'physical' || kind === 'magic') {
+    return fx.explain(targetId(`battle.damage.${kind}`), ctx);
+  }
+  if (kind === 'heal') return fx.explain(targetId('battle.heal'), ctx);
+  return [];
+}
+
 function applyCast(
   sim: Sim, def: SkillDef, attrs: Readonly<Record<Attr, number>>,
   actor: BattleLogEntry['actor'], actorKey: L10nKey | null,
@@ -340,6 +358,9 @@ function applyCast(
 
   sim.log.push({
     turn, actor, actorKey, skillKey: def.nameKey, kind: a.kind, amount, why,
+    // 完整歸因需 flag（33 §7.1）。因果摘要（`why`）一律可見 ——
+    // 它不是進階資訊，它是玩家改配置的依據；這一條開的是每一條加成的來源。
+    trace: fromHost ? traceFor(a.kind, ctx, fx) : [],
     troopsAfter: Math.round(sim.troops), supplyAfter: Math.round(sim.supply),
     enemyAfter: Math.round(sim.enemy),
   });
@@ -405,7 +426,7 @@ export function engage(
     sim.troops = Math.max(0, sim.troops - dealt);
     sim.log.push({
       turn, actor: 'enemy', actorKey: boss?.nameKey ?? null, skillKey: null,
-      kind: null, amount: dealt,
+      kind: null, amount: dealt, trace: [],
       why: reduce > 0 ? [`削弱 −${Math.round(reduce * 100)}%`] : [],
       troopsAfter: Math.round(sim.troops), supplyAfter: Math.round(sim.supply),
       enemyAfter: Math.round(sim.enemy),
@@ -420,7 +441,7 @@ export function engage(
       sim.troops = Math.max(0, sim.troops - hit);
       sim.log.push({
         turn, actor: 'enemy', actorKey: boss.nameKey, skillKey: bd.nameKey,
-        kind: bd.action.kind, amount: hit, why: [],
+        kind: bd.action.kind, amount: hit, why: [], trace: [],
         troopsAfter: Math.round(sim.troops), supplyAfter: Math.round(sim.supply),
         enemyAfter: Math.round(sim.enemy),
       });
@@ -432,7 +453,7 @@ export function engage(
       sim.rallied = true;
       sim.log.push({
         turn, actor: 'host', actorKey: null, skillKey: null, kind: null,
-        amount: sim.troops, why: ['天命所歸：原地再起'],
+        amount: sim.troops, why: ['天命所歸：原地再起'], trace: [],
         troopsAfter: sim.troops, supplyAfter: Math.round(sim.supply),
         enemyAfter: Math.round(sim.enemy),
       });
@@ -477,6 +498,26 @@ export function withdraw(ctx: RunContext): RunState {
   const st = ctx.state.campaign;
   if (st === null || st.phase === 'resolved') throw new Error('戰役已結束');
   return { ...ctx.state, campaign: { ...st, phase: 'resolved' } };
+}
+
+/**
+ * 這一關「不需要想」嗎（D15）★
+ *
+ * 掃蕩的判準用玩家自己會做的那個心算：
+ *   撐得住幾回合 ／ 對面要打幾回合 ≥ sweepMargin
+ *
+ * 七場自動戰鬥第一輪好看、第五輪是阻礙。掃蕩吃掉前面那幾關，
+ * 讓玩家真正在讀的是後段 —— 而它停手的那一刻，就是決定回到他手上的那一刻。
+ */
+export function isOverwhelming(ctx: RunContext, fx: EffectResolver): boolean {
+  const st = ctx.state.campaign;
+  const nx = nextStagePreview(ctx);
+  if (st === null || st.loadout === null || nx === null) return false;
+  const power = hostPower(ctx, fx);
+  if (power <= 0) return false;
+  const turnsToKill = nx.enemyTroops / power;
+  const turnsToDie = (st.host.troops + hostSustain(ctx, fx)) / Math.max(1, nx.enemyDamage);
+  return turnsToDie >= turnsToKill * rule(ctx).sweepMargin;
 }
 
 export const bankedOf = (ctx: RunContext): readonly EventReward[] =>

@@ -194,7 +194,7 @@ export const FX = {
   majorWar60: 6014,
   retryMajor1: 6101,
   retryMinor1: 6102,
-  revealCheck: 6201,
+  revealBattleTrace: 6201,
   revealSlots: 6202,
   checkReward10: 6501,
   checkReward15: 6502,

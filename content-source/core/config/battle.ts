@@ -71,4 +71,7 @@ export const battleRule: BattleRuleDef = coreDef('battleRule', 'battle:main', {
   // 安全閥，不是玩法上的回合上限（D9 明確不做那個）：
   // 若玩家一招輸出都沒有，戰鬥不能無限跑。
   maxTurns: 40,
+  // 掃蕩只吃「不需要想的那幾關」。4 倍餘裕 ≈ 前三關 ——
+  // 七場自動戰鬥第一輪好看、第五輪是阻礙，這條就是為那件事存在的。
+  sweepMargin: 4,
 });

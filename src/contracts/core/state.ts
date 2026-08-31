@@ -3,7 +3,7 @@ import type {
   L10nKey, NotableId, ParamPoolId, Seed, ShopItemId, SkillId, TalentId, TraitId,
   TurnIndex, ChapterIndex,
 } from './ids.js';
-import type { EffectRef } from './effects.js';
+import type { EffectRef, EffectTrace } from './effects.js';
 import type { EventReward } from './definitions.js';
 import type {
   AffinityStage, AptitudeGrade, Attr, CareerLine, Difficulty,
@@ -311,8 +311,15 @@ export interface BattleLogEntry {
   readonly skillKey: L10nKey | null;
   readonly kind: SkillKind | null;
   readonly amount: number;
-  /** 因果鏈摘要，一律可見（33 §7.1）。完整歸因需 flag。 */
+  /** 因果鏈摘要，一律可見（33 §7.1）—— 它是玩家改配置的依據，不能鎖。 */
   readonly why: readonly string[];
+  /**
+   * 完整歸因：每一條加成的來源與數值。需 `flag.battleTrace`（天賦〈慧眼識人〉）。
+   *
+   * 沒有那個天賦時是【空陣列】而不是「算好了不顯示」——
+   * 型別上為空與畫面上不畫是同一件事，中間不需要第二個判斷。
+   */
+  readonly trace: readonly EffectTrace[];
   readonly troopsAfter: number;
   readonly supplyAfter: number;
   readonly enemyAfter: number;

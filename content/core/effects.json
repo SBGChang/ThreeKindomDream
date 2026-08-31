@@ -877,7 +877,7 @@
   "RevealInfo": {
     "6201": {
       "condition": null,
-      "what": "checkBreakdown"
+      "what": "battleTrace"
     },
     "6202": {
       "condition": null,

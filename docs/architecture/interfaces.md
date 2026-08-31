@@ -2,7 +2,8 @@
 
 > **定位**：33 個模組的完整對外函式，以及模組間的持有關係。
 >
-> 🔧 **㉜㉝ 為 [RFC-01](../RFC-01-campaign-rework.md) 提案中；㉓ 已重寫、⑱ 待縮編。**
+> ✅ **㉜㉝ 已實作、㉓ 已重寫、⑱ 已縮編**（[RFC-01](../RFC-01-campaign-rework.md) 階段 A–C）。
+> ㉝ 另有 `hostPower` / `hostSustain` / `sweep`，本表尚未補上。
 > 每個模組只從 `public.ts` 匯出這些；其餘一律 internal。
 > **不含實作**。簽章是契約，不是指定寫法。
 

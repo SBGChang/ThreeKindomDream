@@ -13,6 +13,7 @@ import { progressOf, sequenceOf } from '../../src/modules/turn.js';
 import { describe, eq, it, near, ok, throws } from '../lib/tinytest.js';
 import type { Session } from '../../src/app/session.js';
 import type { NotableId } from '../../src/contracts/core/ids.js';
+import { FLAGS } from '../../src/contracts/core/effects.js';
 import type { EventReward } from '../../src/contracts/core/definitions.js';
 import type { BattleLoadout } from '../../src/contracts/core/state.js';
 import { designateQuota, emptyDraft } from '../../src/modules/dream-entry.js';
@@ -952,6 +953,50 @@ export function run(): void {
         eq(s.current.campaign?.host.troops, out.host.troops);
       }
       ok(dropped, '連打四關軍勢完全沒掉 —— 跨關累積沒有生效');
+    });
+
+    it('掃蕩不繞過任何規則，而且停在「開始需要想」的那一關（D15）', () => {
+      const s = toFirstCampaign(4242);
+      s.configureCampaign(loadoutFor(s));
+      const before = s.current.campaign?.clearedStages ?? 0;
+      const out = s.sweep();
+      const after = s.current.campaign?.clearedStages ?? 0;
+      // 掃蕩每一關都真的跑過 —— 通過數的增量必須等於它回報的關數。
+      eq(after - before, out.cleared);
+      if (out.stopped === 'threat') {
+        ok(!s.canSweep(), '掃蕩說是因為吃緊才停，但下一關仍在可掃範圍內');
+      }
+      if (out.stopped === 'done') eq(s.nextStage(), null);
+    });
+
+    it('掃蕩的判準比策略的貪心閾值嚴格 —— 它只該吃掉不需要想的那幾關', () => {
+      const r = defs.single('battleRule');
+      ok(r.sweepMargin > 2, `sweepMargin ${r.sweepMargin} 太鬆，掃蕩會吃掉該由玩家決定的關`);
+    });
+
+    it('沒有〈慧眼識人〉時，戰報的完整歸因【一律為空】（33 §7.1）', () => {
+      const s = toFirstCampaign(4242);
+      s.configureCampaign(loadoutFor(s));
+      const out = s.engage();
+      ok(out.log.length > 0, '戰報是空的');
+      for (const e of out.log) {
+        eq(e.trace.length, 0);
+        // 因果摘要不受任何 flag 影響 —— 它是玩家改配置的依據，不能鎖。
+        ok(Array.isArray(e.why), 'why 必須存在');
+      }
+    });
+
+    it('〈慧眼識人〉授予的旗標就是戰報歸因 —— 它不是死欄位', () => {
+      const talent = defs.reader('talent').all()
+        .find((x) => String(x.talentId).endsWith('keen-eye'));
+      ok(talent !== undefined, '找不到〈慧眼識人〉');
+      if (talent === undefined) return;
+      const reveal = talent.effects.filter((e) => e.funcType === 'RevealInfo');
+      ok(reveal.length > 0, '〈慧眼識人〉沒有任何 RevealInfo 效果');
+      for (const ref of reveal) {
+        const def = defs.effect('RevealInfo', ref.referId) as { what: string };
+        eq(`flag.${def.what}`, String(FLAGS.battleTrace));
+      }
     });
 
     it('兵量與糧量的形狀：武官階抬兵量、文官階抬糧量（33 §5.1）', () => {

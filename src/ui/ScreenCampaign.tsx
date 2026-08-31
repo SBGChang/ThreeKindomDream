@@ -33,6 +33,9 @@ function Bar({ label, now, max, tone }: {
 }
 
 export function ScreenCampaign({ s, bump }: Props): React.ReactElement {
+  // 戰報預設收起（D15）：七場自動戰鬥第一輪好看、第五輪是阻礙。
+  // 玩家真正在讀的是「軍勢剩幾成」與「下一關是誰」。
+  const [showLog, setShowLog] = useState(false);
   const st = s.current.campaign;
   const chapter = defs.reader('chapter').get(String(s.current.progress.chapterId));
   const learned = s.current.abilities.skills;
@@ -183,21 +186,41 @@ export function ScreenCampaign({ s, bump }: Props): React.ReactElement {
 
       {st.log.length === 0 ? null : (
         <>
-          <h2>戰報</h2>
-          <div style={{ maxHeight: 260, overflowY: 'auto', fontSize: 13 }}>
-            {st.log.map((e, i) => (
-              <div key={`${e.turn}-${i}`} className="mono">
-                {`R${e.turn} `}
-                {e.actor === 'enemy' ? '敵 ' : (e.actor === 'commander' ? '令 ' : '我 ')}
-                {e.actorKey === null ? '' : `${t(e.actorKey)} `}
-                {e.skillKey === null ? '' : `〈${t(e.skillKey)}〉`}
-                {e.kind === null ? '' : ` ${t(`skillKind.${e.kind}`)}`}
-                {` ${e.amount}`}
-                {e.why.length === 0 ? '' : `　（${e.why.join('・')}）`}
-                {`　軍勢 ${e.troopsAfter}　敵 ${e.enemyAfter}`}
-              </div>
-            ))}
-          </div>
+          <h2>
+            {`上一關的戰報（${st.log.length} 條）`}
+            <button onClick={() => { setShowLog((v) => !v); }} style={{ marginLeft: 8 }}>
+              {showLog ? '收起' : '展開'}
+            </button>
+          </h2>
+          {!showLog ? null : (
+            <div style={{ maxHeight: 300, overflowY: 'auto', fontSize: 13 }}>
+              {st.log.map((e, i) => (
+                <div key={`${e.turn}-${i}`}>
+                  <div className="mono">
+                    {`R${e.turn} `}
+                    {e.actor === 'enemy' ? '敵 ' : (e.actor === 'commander' ? '令 ' : '我 ')}
+                    {e.actorKey === null ? '' : `${t(e.actorKey)} `}
+                    {e.skillKey === null ? '' : `〈${t(e.skillKey)}〉`}
+                    {e.kind === null ? '' : ` ${t(`skillKind.${e.kind}`)}`}
+                    {` ${e.amount}`}
+                    {e.why.length === 0 ? '' : `　（${e.why.join('・')}）`}
+                    {`　軍勢 ${e.troopsAfter}　敵 ${e.enemyAfter}`}
+                  </div>
+                  {/* 完整歸因只有〈慧眼識人〉看得到（33 §7.1）。沒有它時是空陣列。 */}
+                  {e.trace.length === 0 ? null : (
+                    <div className="sub mono" style={{ paddingLeft: 24, fontSize: 12 }}>
+                      {e.trace.map((x, j) => (
+                        <span key={`${x.sourceId}-${j}`} style={{ marginRight: 10 }}>
+                          {`${x.sourceId} ${x.op} ${x.value}`}
+                          {x.applied ? '' : '（未生效）'}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </>
       )}
 
@@ -219,6 +242,16 @@ export function ScreenCampaign({ s, bump }: Props): React.ReactElement {
         {done ? null : (
           <button className="primary" onClick={() => { s.engage(); bump(); }}>
             再打一關
+          </button>
+        )}
+        {/*
+          掃蕩（D15）：一路打到「開始需要想」為止。
+          它不繞過任何規則 —— 每一關都真的跑一次，只是不停下來問你。
+          按鈕只在戰力明顯超過時出現，所以它的消失本身就是一個訊號。
+        */}
+        {done || !s.canSweep() ? null : (
+          <button onClick={() => { s.sweep(); bump(); }}>
+            掃蕩（打到吃緊為止）
           </button>
         )}
         {/*

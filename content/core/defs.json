@@ -594,6 +594,7 @@
     "schemaVersion": 1,
     "supplyBase": 120,
     "supplyPerTroop": 1,
+    "sweepMargin": 4,
     "troopsBase": 120
   },
   {

@@ -205,6 +205,30 @@ export class Session {
   }
 
   /**
+   * 掃蕩（D15）：一路打到「開始需要想」為止。
+   *
+   * 它【不繞過任何規則】—— 每一關都真的跑一次 `engage`，
+   * 只是不停下來問玩家。判準在 ㉝（`isOverwhelming`），
+   * 因此「什麼叫戰力明顯超過」只有一個定義。
+   */
+  sweep(): { readonly cleared: number; readonly stopped: 'threat' | 'done' | 'defeat' } {
+    let cleared = 0;
+    for (let guard = 0; guard < this.stageCount(); guard += 1) {
+      if (this.nextStage() === null) return { cleared, stopped: 'done' };
+      if (!campaign.isOverwhelming(this.ctx, this.w.fx)) {
+        return { cleared, stopped: 'threat' };
+      }
+      const out = this.engage();
+      if (out.defeated) return { cleared, stopped: 'defeat' };
+      cleared += 1;
+    }
+    return { cleared, stopped: 'done' };
+  }
+
+  /** 下一關是否還在「不需要想」的範圍內。UI 用它決定要不要顯示掃蕩鈕。 */
+  canSweep(): boolean { return campaign.isOverwhelming(this.ctx, this.w.fx); }
+
+  /**
    * 收兵。`clearedStages === 0` 時合法 ——【按兵不動】。
    * 它拿不到任何獎勵，但章節照過；膽小的懲罰是難看的結局，不是死亡（D7）。
    */

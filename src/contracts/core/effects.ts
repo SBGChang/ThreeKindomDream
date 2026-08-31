@@ -145,7 +145,17 @@ export interface AffinityGrantDef { readonly timing: 'onDreamEnter' | 'onChapter
 export interface AffinityGrowthDef { readonly target: NotableTarget; readonly mulPct: number; readonly condition: Condition | null }
 export interface CheckValueBonusDef { readonly attr: Attr | 'all'; readonly scope: 'minor' | 'major' | 'both'; readonly add: number; readonly condition: Condition | null }
 export interface CheckRetryDef { readonly scope: 'minor' | 'major'; readonly usesPerRun: number; readonly condition: Condition | null }
-export interface RevealInfoDef { readonly what: 'nextTurnSlots' | 'checkBreakdown'; readonly condition: Condition | null }
+/**
+ * 揭示某一層資訊。`what` 直接推導出 FlagId（`flag.<what>`），
+ * 因此新增一種揭示只要加一個字面值，不必動 `hasFlag`。
+ *
+ * `checkBreakdown` 已退場 —— 大檢定改為戰役之後沒有「檢定值組成」可看了。
+ * 取代它的是 `battleTrace`：戰報的完整傷害歸因（33 §7.1）。
+ */
+export interface RevealInfoDef {
+  readonly what: 'nextTurnSlots' | 'battleTrace';
+  readonly condition: Condition | null;
+}
 export interface CurrencyBonusDef { readonly currency: StatPath | 'allMerit'; readonly mulPct: number; readonly condition: Condition | null }
 export interface DesignateSlotsDef { readonly slots: number; readonly condition: null }
 
@@ -293,7 +303,7 @@ export function notableOfSource(sourceId: string): string | null {
 
 export const FLAGS = {
   nextTurnSlots: 'flag.nextTurnSlots' as FlagId,
-  checkBreakdown: 'flag.checkBreakdown' as FlagId,
+  battleTrace: 'flag.battleTrace' as FlagId,
 } as const;
 
 export const CHARGES = {

@@ -11,7 +11,7 @@
 > | **emits** | `trait.learned` / `skill.learned` |
 > | **ownsDefinitions** | `trait`、`skill` |
 
-> ♻️ **本文件已依 [RFC-01](../RFC-01-campaign-rework.md) 重寫。**
+> ♻️ **本文件已依 [RFC-01](../RFC-01-campaign-rework.md) 重寫，並且已實作。**
 > 舊版的「刻意不做」第三條寫著「不做主動使用技能（全部為被動與分支解鎖）」——
 > 那一條被 D17 推翻：技能現在是**戰役裡每回合的行動**。
 > 舊版的 State slice 名為 `skills`，現改為 `abilities`（它同時持有特質）。

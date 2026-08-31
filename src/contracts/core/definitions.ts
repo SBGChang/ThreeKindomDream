@@ -801,6 +801,17 @@ export interface BattleRuleDef extends DefHeader {
    * 撞到它視為未能取勝，與軍勢歸零同樣處理。
    */
   readonly maxTurns: number;
+  /**
+   * 掃蕩的判準（D15）★ 「戰力明顯超過」要有一個明確的定義。
+   *
+   * 沿用玩家自己會做的那個心算：**我撐得住幾回合 ／ 對面要打幾回合**。
+   * 比值超過這個倍數就是「碾過去」，掃蕩會一路打下去；
+   * 掉到以下就停手，把決定交回玩家。
+   *
+   * 它比替身策略的 `margin`（1.05–2.4）刻意訂得高很多 ——
+   * 掃蕩只該吃掉【不需要想的那幾關】。
+   */
+  readonly sweepMargin: number;
 }
 
 export interface EnemyDef extends DefHeader {
