@@ -275,6 +275,36 @@ export function run(): void {
       ok(sawEmpty > 0, '每一格都亮旗標 —— 委託又變回必定觸發了');
     });
 
+    it('沒有旗標的回合：選完就結束，而且真的收得掉（15 §3.4）', () => {
+      // 這一條釘的是【呈現層依賴的契約】。委託改成機率觸發之後，一個回合
+      // 可能在「選完固定事件」那一刻就結束 —— 那條路徑完全不經過
+      // 「選處理方式」那個進入點，而舊版只在那裡推進回合。
+      //
+      // 症狀：選完沒有推進，畫面看起來完全沒變（同一批格子、同一個回合數），
+      // 下一次點擊撞上 assertActable 丟例外，整個凍住。連續兩次選到沒有
+      // 旗標的格子就會遇到 —— 第一次沒反應，第二次才卡死。
+      let covered = 0;
+      for (const sd of [1, 7, 77, 909, 4242, 31337]) {
+        const s = newSession(sd);
+        const idx = SLOT_INDICES.find((i) => {
+          const sl = s.current.turn.slots[i];
+          return sl !== undefined && !sl.hasCommission && !sl.hasEncounter;
+        });
+        if (idx === undefined) continue;
+        covered += 1;
+        const before = s.current.progress.turn;
+        s.selectSlot(idx);
+        eq(s.pendingEvent, null);
+        ok(s.canAdvance(), `seed ${sd}：沒有旗標的回合選完就該可以推進`);
+        s.advance();
+        eq(s.current.progress.turn, before + 1);
+        ok(!s.hasActed, '推進之後不該還算已行動');
+        // 下一回合必須真的能再選 —— 卡住的症狀就是這裡丟例外
+        s.selectSlot(0);
+      }
+      ok(covered > 0, '沒有任何 seed 出現「四格皆無旗標」，這條測試沒測到東西');
+    });
+
     it('人物事件的旗標只在可抽池非空時才會為真（15 §3.2）', () => {
       // 【旗標不能說謊】。開局好感 20，多數人物事件的門檻還沒到 ——
       // 若旗標仍會亮，玩家會為了那個驚嘆號放棄一格紅光，然後什麼都沒發生。

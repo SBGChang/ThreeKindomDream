@@ -39,17 +39,36 @@ export function ScreenRun({ s, bump, log, onLog }: Props): React.ReactElement {
 
   const stamp = (line: string): void => { onLog(`R${String(turnNo).padStart(2, ' ')} ${line}`); };
 
+  /**
+   * 每一個動作的收尾（15 §3.4）★
+   *
+   * 【兩個進入點都必須經過它】。委託改成機率觸發之後，一個回合可能在
+   * 「選完固定事件」那一刻就結束了 —— 那條路徑完全不經過 pickOption。
+   *
+   * 舊版只在 pickOption 裡推進，因為舊制的委託必定觸發，選完格子一定
+   * 還有事要處理。改成機率之後那個假設不成立了：沒有旗標的回合會停在
+   * 「已行動但沒推進」，畫面看起來完全沒變（同一批格子、同一個回合數），
+   * 而下一次點擊會撞上 assertActable 丟例外，整個凍住。
+   *
+   * 抽成一個函式而不是在兩處各寫一行：這條規則只有一份，就不會再漏掉第三處。
+   */
+  const settle = (): void => {
+    if (s.canAdvance()) s.advance();
+    bump();
+  };
+
   /** 拍一：選固定事件。旗標為真的那幾拍會依序跳出來，因此畫面可能換兩次。 */
   const pickSlot = (i: SlotIndex): void => {
     s.selectSlot(i);
     const r = s.current.turn.training;
+    // 先讀結果再推進 —— advance 會清掉 turn.training。
     if (r !== null) {
       stamp(`【${t(`attr.${r.attr}.${st.progress.phase}.label`)}】`
         + `${t(`glow.${r.finalGlow}`)}${r.upgraded ? '⬆' : ''}`
         + ` ${t(`attr.${r.attr}.short`)}+${r.attrGained}`
         + `　${t(`merit.${r.meritGained.line}`)}+${r.meritGained.amount}`);
     }
-    bump();
+    settle();
   };
 
   /** 拍二／拍三：選處理方式。佇列可能還有下一拍，所以推進要問 canAdvance。 */
@@ -65,8 +84,7 @@ export function ScreenRun({ s, bump, log, onLog }: Props): React.ReactElement {
         + `　${gains(r.practiceGained)}　${merits(r.meritGained)}${loot}`);
     }
     void offer;
-    if (s.canAdvance()) s.advance();
-    bump();
+    settle();
   };
 
   return (
