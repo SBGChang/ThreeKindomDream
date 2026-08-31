@@ -11,14 +11,6 @@ export function validateEndings(c: Ctx): void {
     if (c.n(d['pointsMultiplier']) <= 0) {
       c.push('rule', 'endings', 'pointsMultiplier', id, 'pointsMultiplier 必須 > 0');
     }
-    const mv = (d['moralVariants'] ?? {}) as Record<string, unknown>;
-    for (const band of ['veryEvil', 'neutral', 'veryGood'] as const) {
-      if (mv[band] === undefined) {
-        c.push('schema', 'endings', `moralVariants.${band}`, id, `缺少 ${band}`);
-      } else {
-        c.text(mv[band], 'endings', `moralVariants.${band}`, id);
-      }
-    }
     const trig = (d['trigger'] ?? {}) as Rec;
     if (d['endingKind'] === 'fullDream' && trig['kind'] !== 'sequenceCompleted') {
       c.push('rule', 'endings', 'endingKind', id, 'fullDream 只能由 sequenceCompleted 觸發');

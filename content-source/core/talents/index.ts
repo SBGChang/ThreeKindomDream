@@ -29,6 +29,18 @@ export const talents: readonly TalentDef[] = [
     nameKey: k('talent.sudden-fame.name'), descKey: k('talent.sudden-fame.desc'),
     effects: [ref('GlowUpgradeBonus', 3201)],
   }),
+  // 「世家門閥」買的是【選擇權】而不是數值：皇甫嵩本來要替你指派三名，
+  // 有門第的人可以自己挑。兩階互斥 —— 挑一位與挑三位是同一件事的兩個價位。
+  coreDef('talent', 'talent:noble-house', {
+    talentId: talentId('talent:noble-house'), cost: 2, exclusiveGroup: 'designate',
+    nameKey: k('talent.noble-house.name'), descKey: k('talent.noble-house.desc'),
+    effects: [ref('DesignateSlots', 8001)],
+  }),
+  coreDef('talent', 'talent:great-clan', {
+    talentId: talentId('talent:great-clan'), cost: 5, exclusiveGroup: 'designate',
+    nameKey: k('talent.great-clan.name'), descKey: k('talent.great-clan.desc'),
+    effects: [ref('DesignateSlots', 8002)],
+  }),
   coreDef('talent', 'talent:precocious', {
     talentId: talentId('talent:precocious'), cost: 1, exclusiveGroup: null,
     nameKey: k('talent.precocious.name'), descKey: k('talent.precocious.desc'),
@@ -39,14 +51,10 @@ export const talents: readonly TalentDef[] = [
     nameKey: k('talent.wide-circle.name'), descKey: k('talent.wide-circle.desc'),
     effects: [ref('AffinityGrant', 5002), ref('AffinityGrowth', 5101)],
   }),
-  // 互斥組：同時配帶會互相抵銷成無意義狀態（14 §2.2）
-  coreDef('talent', 'talent:loyal-heart', {
-    talentId: talentId('talent:loyal-heart'), cost: 1, exclusiveGroup: 'moral',
-    nameKey: k('talent.loyal-heart.name'), descKey: k('talent.loyal-heart.desc'),
-    effects: [ref('CurrencyBonus', 7002)],
-  }),
   coreDef('talent', 'talent:usurper', {
-    talentId: talentId('talent:usurper'), cost: 1, exclusiveGroup: 'moral',
+    // 善惡名退場後「忠義之心」（善惡名變動 +50%）失去功能，已刪除。
+    // 這個互斥組因此只剩一人 —— 留一個單人互斥組是假的約束，改為 null。
+    talentId: talentId('talent:usurper'), cost: 1, exclusiveGroup: null,
     nameKey: k('talent.usurper.name'), descKey: k('talent.usurper.desc'),
     effects: [ref('CurrencyBonus', 7003)],
   }),

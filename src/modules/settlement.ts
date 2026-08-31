@@ -2,7 +2,9 @@
 import type { DefinitionRegistry } from '../data-runtime/registry.js';
 import type { NotableId } from '../contracts/core/ids.js';
 import type { AffinityStage } from '../contracts/core/primitives.js';
+import { ATTRS } from '../contracts/core/primitives.js';
 import type { MetaState, RunState, RunSummary } from '../contracts/core/state.js';
+import { awardItemFragments } from './item.js';
 import { awardNotableFragments } from './notable-codex.js';
 import { stageForValue } from './roster-query.js';
 
@@ -10,7 +12,11 @@ export interface SettlementResult {
   readonly meta: MetaState;
   readonly pointsGained: number;
   readonly notableFragments: Readonly<Record<string, number>>;
-  readonly affinityRaised: Readonly<Record<string, number>>;
+  /** 本次結算升了幾星。碎片自動換升星（10 §2）—— 不再是初始好感的點數。 */
+  readonly starRaised: Readonly<Record<string, number>>;
+  /** 道具碎片。【第二次以後才算】—— 首次獲得換到的是圖鑑登錄（23 §7）。 */
+  readonly itemFragments: Readonly<Record<string, number>>;
+  readonly itemTierRaised: Readonly<Record<string, number>>;
 }
 
 /** 只收摘要，不收整個 RunState —— 讓「結算需要什麼」成為明確契約（26 §3）。 */
@@ -34,7 +40,8 @@ export function summarize(run: RunState, defs: DefinitionRegistry): RunSummary {
     turnsPlayed: run.progress.turn,
     factionId: run.faction,
     notables,
-    seenUniqueEvents: run.slots.event.seenUniqueIds,
+    seenUniqueEvents: run.turn.seenUniqueIds,
+    itemsAcquired: run.items.count,
     actions: run.actions,
     glowResults: run.metaSnapshot.stats.glowResults,
     attributes: run.attributes,
@@ -57,36 +64,41 @@ export function settle(
   summary: RunSummary, meta: MetaState, defs: DefinitionRegistry,
 ): SettlementResult {
   if (meta.settledSeeds.includes(summary.seed)) {
-    return { meta, pointsGained: 0, notableFragments: {}, affinityRaised: {} };
+    return {
+      meta, pointsGained: 0, notableFragments: {}, starRaised: {},
+      itemFragments: {}, itemTierRaised: {},
+    };
   }
 
   const points = computeSettlementPoints(summary, defs);
   const frag = awardNotableFragments(summary.notables, summary.isFullDream, meta, defs);
+  const items = awardItemFragments(summary.itemsAcquired, frag.meta, defs);
 
   const seenEvents = [...new Set([
-    ...frag.meta.collection.seenEvents.map(String),
+    ...items.meta.collection.seenEvents.map(String),
     ...summary.seenUniqueEvents.map(String),
-  ])] as unknown as typeof frag.meta.collection.seenEvents;
+  ])] as unknown as typeof items.meta.collection.seenEvents;
   const reachedEndings = [...new Set([
-    ...frag.meta.collection.reachedEndings.map(String),
+    ...items.meta.collection.reachedEndings.map(String),
     String(summary.endingId),
-  ])] as unknown as typeof frag.meta.collection.reachedEndings;
+  ])] as unknown as typeof items.meta.collection.reachedEndings;
 
   const nextMeta: MetaState = {
-    ...frag.meta,
-    points: frag.meta.points + points,
-    runIndex: frag.meta.runIndex + 1,
-    settledSeeds: [...frag.meta.settledSeeds, summary.seed],
+    ...items.meta,
+    points: items.meta.points + points,
+    runIndex: items.meta.runIndex + 1,
+    settledSeeds: [...items.meta.settledSeeds, summary.seed],
     collection: { seenEvents, reachedEndings },
     stats: {
-      ...frag.meta.stats,
-      runsStarted: frag.meta.stats.runsStarted,
-      runsFullDream: frag.meta.stats.runsFullDream + (summary.isFullDream ? 1 : 0),
-      chaptersPassed: frag.meta.stats.chaptersPassed + summary.chaptersPassed,
-      turnsPlayed: frag.meta.stats.turnsPlayed + summary.turnsPlayed,
-      actionsTraining: frag.meta.stats.actionsTraining + summary.actions.training,
-      actionsEvent: frag.meta.stats.actionsEvent + summary.actions.event,
-      pointsEarnedTotal: frag.meta.stats.pointsEarnedTotal + points,
+      ...items.meta.stats,
+      runsStarted: items.meta.stats.runsStarted,
+      runsFullDream: items.meta.stats.runsFullDream + (summary.isFullDream ? 1 : 0),
+      chaptersPassed: items.meta.stats.chaptersPassed + summary.chaptersPassed,
+      turnsPlayed: items.meta.stats.turnsPlayed + summary.turnsPlayed,
+      actionsByAttr: Object.fromEntries(ATTRS.map((at) => [
+        at, (items.meta.stats.actionsByAttr[at] ?? 0) + summary.actions[at],
+      ])) as MetaState['stats']['actionsByAttr'],
+      pointsEarnedTotal: items.meta.stats.pointsEarnedTotal + points,
     },
   };
 
@@ -94,6 +106,8 @@ export function settle(
     meta: nextMeta,
     pointsGained: points,
     notableFragments: frag.gained,
-    affinityRaised: frag.raised,
+    starRaised: frag.raised,
+    itemFragments: items.gained,
+    itemTierRaised: items.raised,
   };
 }

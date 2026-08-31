@@ -23,7 +23,7 @@ const aptCap = (attr: Attr): ShopItemDef =>
   });
 
 export const shopItems: readonly ShopItemDef[] = [
-  aptCap('war'), aptCap('int'), aptCap('pol'), aptCap('cha'),
+  aptCap('lead'), aptCap('war'), aptCap('int'), aptCap('pol'),
   coreDef('shopItem', 'shop:aptPoints', {
     item: shopItemId('shop:aptPoints'), category: 'aptitude',
     nameKey: k('shop.aptPoints.name'), descKey: k('shop.aptPoints.desc'),

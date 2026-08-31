@@ -1,24 +1,35 @@
 // 模擬器的決策策略。策略是程式碼不是資料 —— 它是分析工具的一部分（31 §3.2）。
 //
-// 單動作回合制之後，策略的核心不再是「練哪一格」，而是
-// 【這一回合要練，還是要去做事】。整組策略因此改以這個抉擇為軸線鋪開：
-// 從「只練不做事」到「只做事不練」，中間放幾種混合，用來校準
-// eventYieldCurve 與 trainingCurve 的比值（見 core/config/training.ts）。
+// ── 為什麼整組策略換掉了 ────────────────────────────
+//
+// 舊制的軸線是「這一回合要練還是要辦事」，因此策略組以【事件佔比】鋪開。
+// 新制每個回合都先做固定事件、再處理它引出的委託 —— 那個比值恆為 1:1，
+// 拿它當軸線會量出一整排相同的數字。
+//
+// 新制玩家真正在決定的是兩件事，策略組因此改以這兩件事鋪開：
+//   1. 投哪一維（＝爬哪一條官階、練哪一維、承受哪種光階運氣）
+//   2. 委託怎麼處理（穩穩收下，還是賭高報酬的那個選項）
 import type { Session } from '../../src/app/session.js';
-import type { Difficulty, SlotIndex } from '../../src/contracts/core/primitives.js';
-import { DIFFICULTIES, SLOT_INDICES } from '../../src/contracts/core/primitives.js';
-import type { TurnAction } from '../../src/contracts/core/state.js';
+import type {
+  Attr, CareerLine, CheckChoice, SlotIndex,
+} from '../../src/contracts/core/primitives.js';
+import { ATTRS, SLOT_INDICES } from '../../src/contracts/core/primitives.js';
+import type { EventOffer } from '../../src/contracts/core/state.js';
 
 export interface AgentPolicy {
   readonly name: string;
-  /** 一回合恰好一個動作 —— 策略介面直接反映這條規則（15 §2）。 */
-  chooseAction(s: Session): TurnAction;
-  chooseDifficulty(s: Session): Difficulty;
+  /** 回合的第一個決定：四個固定事件擇一（15 §2）。 */
+  chooseSlot(s: Session): SlotIndex;
+  /** 回合的第二個決定：待處理事件用哪個方法度過。 */
+  chooseOption(s: Session, offer: EventOffer): number;
+  /** 章末大檢定的六個選項擇一（18 §2.2）。 */
+  chooseCheck(s: Session): CheckChoice;
 }
 
 const GLOW_ORDER = { none: 0, silver: 1, gold: 2, red: 3 } as const;
+const FALLBACK: CheckChoice = { line: 'martial', difficulty: 'safe' };
 
-const bestBy = (s: Session, score: (i: SlotIndex) => number): SlotIndex => {
+const bestSlot = (s: Session, score: (i: SlotIndex) => number): SlotIndex => {
   let best: SlotIndex = 0;
   let bestScore = -Infinity;
   for (const i of SLOT_INDICES) {
@@ -28,173 +39,226 @@ const bestBy = (s: Session, score: (i: SlotIndex) => number): SlotIndex => {
   return best;
 };
 
-const train = (s: Session, score: (i: SlotIndex) => number): TurnAction =>
-  ({ kind: 'training', index: bestBy(s, score) });
+const slotAttr = (s: Session, i: SlotIndex): Attr | null =>
+  s.current.turn.slots[i]?.attr ?? null;
 
-const byExpectedGain = (s: Session) => (i: SlotIndex): number => s.previewTraining(i).expectedGain;
+/** 該路線本章的主屬性。六選項制下「主檢定屬性」不再唯一，必須先指定路線。 */
+const primaryOf = (s: Session, line: CareerLine): Attr =>
+  s.majorCheck().routes[line].primaryAttr;
 
-/** 事件：成功率 ≥ 門檻且啟用的選項中挑最高者。沒有合格的就回 null。 */
-const bestEvent = (s: Session, minRate: number): TurnAction | null => {
-  interface Pick { offerIndex: number; optionIndex: number; rate: number }
-  const picks: Pick[] = [];
-  s.current.slots.event.offers.forEach((o, oi) => {
-    o.optionStates.forEach((st, ii) => {
-      if (!st.enabled) return;
-      const rate = st.successRate ?? 1;
-      if (rate < minRate) return;
-      picks.push({ offerIndex: oi, optionIndex: ii, rate });
-    });
-  });
-  const best = picks.sort((a, b) => b.rate - a.rate)[0];
-  return best === undefined
-    ? null
-    : { kind: 'event', offerIndex: best.offerIndex, optionIndex: best.optionIndex };
+/** 專精某一維：那一格永遠優先，同維時再比期望值。 */
+const focus = (s: Session, attr: Attr): SlotIndex => bestSlot(s, (i) => {
+  const bonus = slotAttr(s, i) === attr ? 10000 : 0;
+  return bonus + s.previewTraining(i).expectedGain;
+});
+
+// ── 選項策略 ────────────────────────────────────────
+
+const enabledIndices = (offer: EventOffer): readonly number[] =>
+  offer.optionStates.map((_, i) => i).filter((i) => offer.optionStates[i]?.enabled === true);
+
+const meritOf = (offer: EventOffer, i: number): number =>
+  (offer.optionStates[i]?.meritPreview ?? []).reduce((a, m) => a + m.amount, 0);
+
+const rateOf = (offer: EventOffer, i: number): number => offer.optionStates[i]?.successRate ?? 1;
+
+/** 穩：成功率最高的那個。 */
+const safest = (offer: EventOffer): number => {
+  const on = enabledIndices(offer);
+  return on.reduce((best, i) => (rateOf(offer, i) > rateOf(offer, best) ? i : best), on[0] ?? 0);
 };
 
-/** 事件優先，抽不到合格事件才退回鍛鍊。 */
-const eventFirst = (s: Session, minRate: number): TurnAction =>
-  bestEvent(s, minRate) ?? train(s, byExpectedGain(s));
+/** 貪：功績最高的那個，不看成功率。失敗仍給四成，所以這不是純自殺。 */
+const richest = (offer: EventOffer): number => {
+  const on = enabledIndices(offer);
+  return on.reduce((best, i) => (meritOf(offer, i) > meritOf(offer, best) ? i : best), on[0] ?? 0);
+};
 
-const pickDifficulty = (s: Session, prefer: 'low' | 'high' | 'rate'): Difficulty => {
-  const avail = s.availableDifficulties();
-  if (avail.length === 0) return 'safe';
-  if (prefer === 'low') return avail[0] ?? 'safe';
-  if (prefer === 'high') return avail[avail.length - 1] ?? 'safe';
-  // rate：挑成功率 >= 0.75 的最高難度
+/** 期望值：功績 × 成功率（失敗仍有四成，所以下限不是 0）。 */
+const expected = (offer: EventOffer): number => {
+  const on = enabledIndices(offer);
+  const ev = (i: number): number => meritOf(offer, i) * (0.4 + 0.6 * rateOf(offer, i));
+  return on.reduce((best, i) => (ev(i) > ev(best) ? i : best), on[0] ?? 0);
+};
+
+// ── 大檢定 ──────────────────────────────────────────
+
+/** 只在指定路線內挑難度。專精者不會臨時換跑道 —— 他沒有另一條線的四維。 */
+const pickCheck = (
+  s: Session, prefer: 'low' | 'high' | 'rate', line: CareerLine,
+): CheckChoice => {
+  const avail = s.availableChoices().filter((c) => c.line === line);
+  if (avail.length === 0) return { line, difficulty: 'safe' };
+  if (prefer === 'low') return avail[0] ?? FALLBACK;
+  if (prefer === 'high') return avail[avail.length - 1] ?? FALLBACK;
   const sortie = s.eligibleSortie().slice(0, 3);
-  let chosen: Difficulty = avail[0] ?? 'safe';
-  for (const d of DIFFICULTIES) {
-    if (!avail.includes(d)) continue;
-    if (s.previewMajor(d, sortie).successRate >= 0.75) chosen = d;
+  let chosen: CheckChoice = avail[0] ?? FALLBACK;
+  for (const c of avail) {
+    if (s.previewMajor(c, sortie).successRate >= 0.75) chosen = c;
   }
   return chosen;
 };
 
 /**
- * 專精主檢定屬性。校準「事件佔比」時，訓練的挑格方式必須固定 ——
- * 否則「押單維 vs 平均分配」的差距會蓋掉事件佔比的影響，兩個變數混在一起就讀不出結論。
+ * 不挑路線，六個選項裡挑成功率過關的最高 DC。
+ *
+ * 它度量的是【路線自選值多少】：舊制只有一條路線，主屬性在章節間變化本身
+ * 就是對純專精的懲罰。六選項制把那個懲罰拿掉了，這個策略量出差額。
  */
-const focusedTraining = (s: Session): TurnAction => {
-  const primary = s.majorCheck().primaryAttr;
-  return train(s, (i) => {
-    const slot = s.current.slots.training.slots[i];
-    if (slot === undefined) return -1;
-    const bonus = slot.attr === primary ? 10000 : 0;
-    return bonus + s.previewTraining(i).expectedGain;
-  });
+const flexibleCheck = (s: Session): CheckChoice => {
+  const avail = s.availableChoices();
+  const sortie = s.eligibleSortie().slice(0, 3);
+  let byDc: CheckChoice | null = null;
+  let bestDc = -Infinity;
+  let byRate: CheckChoice | null = null;
+  let bestRate = -Infinity;
+  for (const c of avail) {
+    const pv = s.previewMajor(c, sortie);
+    if (pv.successRate > bestRate) { bestRate = pv.successRate; byRate = c; }
+    if (pv.successRate >= 0.75 && pv.dc > bestDc) { bestDc = pv.dc; byDc = c; }
+  }
+  return byDc ?? byRate ?? FALLBACK;
 };
 
-/** 固定比例的事件胃口：每 period 回合拿 take 回合去做事，其餘專精鍛鍊。 */
-const mixed = (name: string, take: number, period: number): AgentPolicy => ({
+// ── 策略組 ──────────────────────────────────────────
+
+/** 專精單線：固定投該路線的主屬性格。這是「純養成」的參照點。 */
+const lineFocused = (name: string, line: CareerLine): AgentPolicy => ({
   name,
-  chooseAction: (s) => {
-    const wantsEvent = s.current.progress.turn % period < take;
-    if (wantsEvent) {
-      const ev = bestEvent(s, 0.4);
-      if (ev !== null) return ev;
-    }
-    return focusedTraining(s);
-  },
-  chooseDifficulty: (s) => pickDifficulty(s, 'rate'),
+  chooseSlot: (s) => focus(s, primaryOf(s, line)),
+  chooseOption: (s, offer) => expected(offer),
+  chooseCheck: (s) => pickCheck(s, 'rate', line),
 });
 
 export const POLICIES: readonly AgentPolicy[] = [
+  lineFocused('focus-martial', 'martial'),
+  lineFocused('focus-civil', 'civil'),
   {
-    // 只上課，不打工。四維最大化，但名聲功績永遠是 0 起跳 ——
-    // 官階上不去，圓夢也只拿到兜底稱號。這是「純養成」的上界。
-    name: 'train-only',
-    chooseAction: focusedTraining,
-    chooseDifficulty: (s) => pickDifficulty(s, 'rate'),
-  },
-  mixed('mix-25', 1, 4),
-  mixed('mix-50', 1, 2),
-  mixed('mix-75', 3, 4),
-  {
-    // 只打工，不上課。四維全靠事上磨練 —— 用來看 practice 的下限。
-    name: 'event-only',
-    chooseAction: (s) => eventFirst(s, 0),
-    chooseDifficulty: (s) => pickDifficulty(s, 'rate'),
+    /**
+     * 追期望值：永遠投期望四維最高的那一格，不管是哪一維。
+     *
+     * 名士相乘之後「全員擠在統御格但我需要武」是真兩難。四維會被打散，
+     * 因此它的大檢定走 flexibleCheck —— 分散的人最受益於路線自選。
+     */
+    name: 'greedy-gain',
+    chooseSlot: (s) => bestSlot(s, (i) => s.previewTraining(i).expectedGain),
+    chooseOption: (s, offer) => expected(offer),
+    chooseCheck: flexibleCheck,
   },
   {
     /**
-     * 機會主義：只在【這一回合的主維格值得】的時候練，否則去辦事。
+     * 追光階：永遠投保底光階最高的那一格。
      *
-     * 「值得」＝ 主維格有金光以上，或有名士站著。兩者都在選擇前可見
-     * （兩層 RNG 的第一層 ＋ 名士基底），所以這是玩家真的做得出來的判斷。
-     *
-     * 它存在的目的是回答一個設計問題：
-     * 【逐回合看情況決定】會不會贏過【固定比例】？
-     * 若不會，那「這格有誰站著、光階多少」就沒有轉化成決策價值。
+     * 新制下光階同時決定委託稀有度，所以這個策略在問一個新問題：
+     * 【為了大委託而放棄專精，值得嗎】？舊制沒有這個抉擇。
      */
-    name: 'opportunistic',
-    chooseAction: (s) => {
-      const primary = s.majorCheck().primaryAttr;
-      const idx = SLOT_INDICES.find((i) => s.current.slots.training.slots[i]?.attr === primary);
-      const slot = idx === undefined ? undefined : s.current.slots.training.slots[idx];
-      if (idx !== undefined && slot !== undefined) {
-        const goodGlow = GLOW_ORDER[slot.baseGlow] >= GLOW_ORDER.gold;
-        if (goodGlow || slot.notables.length > 0) return { kind: 'training', index: idx };
-      }
-      return bestEvent(s, 0.4) ?? focusedTraining(s);
-    },
-    chooseDifficulty: (s) => pickDifficulty(s, 'rate'),
+    name: 'rarity-chaser',
+    chooseSlot: (s) => bestSlot(s, (i) => {
+      const slot = s.current.turn.slots[i];
+      if (slot === undefined) return -1;
+      return GLOW_ORDER[slot.baseGlow] * 1000 + s.previewTraining(i).expectedGain;
+    }),
+    chooseOption: (s, offer) => richest(offer),
+    chooseCheck: flexibleCheck,
   },
   {
     /**
-     * 追爆發：永遠練期望值最高的那一格，不管它是哪一維。
+     * 追名士：永遠投站著人最多的那一格。
      *
-     * 名士相乘之後，「全員擠在交遊格但我需要武」成了真正的兩難。
-     * 這個策略選擇追爆發並放棄專精 —— 它與 mix-* 的差別就是
-     * 【爽感 vs 效率】的答案。舊版（加法制）追期望值明顯輸給專精，
-     * 因為四維分散過不了大檢定；乘法制把賭注加大，值得重測。
+     * 同台是武將事件的唯一條件，因此這個策略量的是
+     * 【名士事件實際觸發得到嗎】—— 舊制那條線實測 0.13–0.45 次/輪，等於不存在。
      */
-    name: 'jackpot-chaser',
-    chooseAction: (s) => {
-      if (s.current.progress.turn % 4 === 0) {
-        const ev = bestEvent(s, 0.4);
-        if (ev !== null) return ev;
-      }
-      return train(s, byExpectedGain(s));
-    },
-    chooseDifficulty: (s) => pickDifficulty(s, 'rate'),
+    name: 'notable-chaser',
+    chooseSlot: (s) => bestSlot(s, (i) => {
+      const slot = s.current.turn.slots[i];
+      if (slot === undefined) return -1;
+      return slot.notables.length * 1000 + s.previewTraining(i).expectedGain;
+    }),
+    chooseOption: (s, offer) => expected(offer),
+    chooseCheck: flexibleCheck,
   },
   {
-    // 名士站位優先：有人站就練（養好感度），沒人站才去做事。
-    name: 'notable-gated',
-    chooseAction: (s) => {
-      const best = bestBy(s, (i) => {
-        const slot = s.current.slots.training.slots[i];
-        return slot === undefined ? -1 : slot.notables.length;
-      });
-      const slot = s.current.slots.training.slots[best];
-      if (slot !== undefined && slot.notables.length > 0) return { kind: 'training', index: best };
-      return bestEvent(s, 0.4) ?? focusedTraining(s);
+    /**
+     * 追驚嘆號：永遠投【有委託旗標】的那一格（15 §3）★
+     *
+     * 它與 rarity-chaser 是這一版的核心對照組。委託改成每格獨立 50%
+     * 之後，【功績收入變成玩家可調的旋鈕】：
+     *   一路追驚嘆號  有效觸發率 1−(1−0.5)^4 ≈ 93.8%
+     *   一路追光階    只有 50%
+     * 兩邊的點數差就是【選高光階 vs 選有委託的格】這個取捨的價碼。
+     * 差太多就表示有一邊是陷阱，那就不是取捨。
+     */
+    name: 'flag-chaser',
+    chooseSlot: (s) => bestSlot(s, (i) => {
+      const pv = s.previewTraining(i);
+      return (pv.hasCommission ? 2000 : 0) + (pv.hasEncounter ? 1000 : 0) + pv.expectedGain;
+    }),
+    chooseOption: (s, offer) => expected(offer),
+    chooseCheck: flexibleCheck,
+  },
+  {
+    /**
+     * 追人物事件旗標。量的是【人物事件真的碰得到嗎】——
+     * 它们全都卡在好感門檻上，而好感又要靠同格養。
+     */
+    name: 'encounter-chaser',
+    chooseSlot: (s) => bestSlot(s, (i) => {
+      const pv = s.previewTraining(i);
+      return (pv.hasEncounter ? 2000 : 0) + pv.notableCount * 100 + pv.expectedGain;
+    }),
+    chooseOption: (s, offer) => expected(offer),
+    chooseCheck: flexibleCheck,
+  },
+  {
+    // 平均分配四維：輪流投。四維上限與大檢定副屬性的價值由它量出來。
+    name: 'balanced',
+    chooseSlot: (s) => {
+      const want = ATTRS[s.current.progress.turn % ATTRS.length];
+      return want === undefined ? 0 : focus(s, want);
     },
-    chooseDifficulty: (s) => pickDifficulty(s, 'rate'),
+    chooseOption: (s, offer) => expected(offer),
+    chooseCheck: flexibleCheck,
+  },
+  {
+    // 專精武，委託一律選最穩的 —— 功績少但幾乎不失敗。
+    name: 'option-safe',
+    chooseSlot: (s) => focus(s, primaryOf(s, 'martial')),
+    chooseOption: (s, offer) => safest(offer),
+    chooseCheck: (s) => pickCheck(s, 'rate', 'martial'),
+  },
+  {
+    // 專精武，委託一律選功績最高的 —— 常失敗，但失敗仍給四成。
+    // 與 option-safe 的差額就是「賭委託」值不值得。
+    name: 'option-greedy',
+    chooseSlot: (s) => focus(s, primaryOf(s, 'martial')),
+    chooseOption: (s, offer) => richest(offer),
+    chooseCheck: (s) => pickCheck(s, 'rate', 'martial'),
   },
   {
     name: 'risk-averse',
-    chooseAction: (s) => (bestEvent(s, 0.85) ?? focusedTraining(s)),
-    chooseDifficulty: (s) => pickDifficulty(s, 'low'),
+    chooseSlot: (s) => focus(s, primaryOf(s, 'martial')),
+    chooseOption: (s, offer) => safest(offer),
+    chooseCheck: (s) => pickCheck(s, 'low', 'martial'),
   },
   {
     name: 'risk-seeking',
-    chooseAction: (s) => eventFirst(s, 0.2),
-    chooseDifficulty: (s) => pickDifficulty(s, 'high'),
+    chooseSlot: (s) => focus(s, primaryOf(s, 'martial')),
+    chooseOption: (s, offer) => richest(offer),
+    chooseCheck: (s) => pickCheck(s, 'high', 'martial'),
   },
   {
     name: 'random',
-    chooseAction: (s) => {
+    chooseSlot: (s) => {
       const turn = s.current.progress.turn;
       const r = Math.abs(Math.sin(turn * 12.9898) * 43758.5453) % 1;
-      if (r < 0.5) {
-        const ev = bestEvent(s, 0);
-        if (ev !== null) return ev;
-      }
-      const n = s.current.slots.training.slots.length;
-      const idx = Math.floor(r * n) % Math.max(1, n);
-      return { kind: 'training', index: (idx as SlotIndex) };
+      return (Math.floor(r * SLOT_INDICES.length) % SLOT_INDICES.length) as SlotIndex;
     },
-    chooseDifficulty: (s) => pickDifficulty(s, 'low'),
+    chooseOption: (s, offer) => {
+      const on = enabledIndices(offer);
+      const turn = s.current.progress.turn;
+      const r = Math.abs(Math.sin(turn * 78.233) * 43758.5453) % 1;
+      return on[Math.floor(r * on.length) % Math.max(1, on.length)] ?? 0;
+    },
+    chooseCheck: (s) => pickCheck(s, 'low', 'martial'),
   },
 ];

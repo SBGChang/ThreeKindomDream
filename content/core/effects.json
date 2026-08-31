@@ -1,15 +1,81 @@
 {
   "AffinityGrant": {
     "5001": {
-      "amount": 15,
+      "amount": 20,
       "condition": null,
-      "targetRule": "randomRoster",
+      "target": {
+        "kind": "self"
+      },
       "timing": "onDreamEnter"
     },
     "5002": {
+      "amount": 8,
+      "condition": null,
+      "target": {
+        "kind": "all"
+      },
+      "timing": "onDreamEnter"
+    },
+    "5003": {
       "amount": 10,
       "condition": null,
-      "targetRule": "allRoster",
+      "target": {
+        "kind": "all"
+      },
+      "timing": "onDreamEnter"
+    },
+    "5011": {
+      "amount": 20,
+      "condition": null,
+      "target": {
+        "kind": "named",
+        "notableId": "notable:caocao"
+      },
+      "timing": "onDreamEnter"
+    },
+    "5012": {
+      "amount": 20,
+      "condition": null,
+      "target": {
+        "kind": "named",
+        "notableId": "notable:guojia"
+      },
+      "timing": "onDreamEnter"
+    },
+    "5013": {
+      "amount": 20,
+      "condition": null,
+      "target": {
+        "kind": "named",
+        "notableId": "notable:xunyu"
+      },
+      "timing": "onDreamEnter"
+    },
+    "5014": {
+      "amount": 30,
+      "condition": null,
+      "target": {
+        "kind": "named",
+        "notableId": "notable:zhangliao"
+      },
+      "timing": "onDreamEnter"
+    },
+    "5015": {
+      "amount": 30,
+      "condition": null,
+      "target": {
+        "kind": "named",
+        "notableId": "notable:yujin"
+      },
+      "timing": "onDreamEnter"
+    },
+    "5016": {
+      "amount": 30,
+      "condition": null,
+      "target": {
+        "kind": "named",
+        "notableId": "notable:lejin"
+      },
       "timing": "onDreamEnter"
     }
   },
@@ -17,12 +83,103 @@
     "5101": {
       "condition": null,
       "mulPct": 0.15,
-      "scope": "allRoster"
+      "target": {
+        "kind": "all"
+      }
     },
     "5102": {
       "condition": null,
       "mulPct": 0.5,
-      "scope": "self"
+      "target": {
+        "kind": "self"
+      }
+    },
+    "5103": {
+      "condition": null,
+      "mulPct": 0.2,
+      "target": {
+        "kind": "all"
+      }
+    },
+    "5104": {
+      "condition": null,
+      "mulPct": 0.25,
+      "target": {
+        "attr": "war",
+        "kind": "specialty"
+      }
+    },
+    "5105": {
+      "condition": null,
+      "mulPct": 0.25,
+      "target": {
+        "attr": "pol",
+        "kind": "specialty"
+      }
+    },
+    "5111": {
+      "condition": null,
+      "mulPct": 0.8,
+      "target": {
+        "kind": "named",
+        "notableId": "notable:caocao"
+      }
+    },
+    "5112": {
+      "condition": null,
+      "mulPct": 0.8,
+      "target": {
+        "kind": "named",
+        "notableId": "notable:dianwei"
+      }
+    },
+    "5113": {
+      "condition": null,
+      "mulPct": 0.8,
+      "target": {
+        "kind": "named",
+        "notableId": "notable:guojia"
+      }
+    },
+    "5114": {
+      "condition": null,
+      "mulPct": 0.8,
+      "target": {
+        "kind": "named",
+        "notableId": "notable:xunyu"
+      }
+    },
+    "5115": {
+      "condition": null,
+      "mulPct": 0.8,
+      "target": {
+        "kind": "named",
+        "notableId": "notable:zhangliao"
+      }
+    },
+    "5116": {
+      "condition": null,
+      "mulPct": 0.6,
+      "target": {
+        "kind": "named",
+        "notableId": "notable:zhangliao"
+      }
+    },
+    "5117": {
+      "condition": null,
+      "mulPct": 0.6,
+      "target": {
+        "kind": "named",
+        "notableId": "notable:yujin"
+      }
+    },
+    "5118": {
+      "condition": null,
+      "mulPct": 0.6,
+      "target": {
+        "kind": "named",
+        "notableId": "notable:lejin"
+      }
     }
   },
   "CheckRetry": {
@@ -30,6 +187,43 @@
       "condition": null,
       "scope": "major",
       "usesPerRun": 1
+    },
+    "6102": {
+      "condition": null,
+      "scope": "minor",
+      "usesPerRun": 1
+    }
+  },
+  "CheckRewardBonus": {
+    "6501": {
+      "condition": null,
+      "mulPct": 0.1
+    },
+    "6502": {
+      "condition": null,
+      "mulPct": 0.15
+    },
+    "6503": {
+      "condition": null,
+      "mulPct": 0.2
+    },
+    "6504": {
+      "condition": null,
+      "mulPct": 0.25
+    },
+    "6511": {
+      "condition": {
+        "type": "difficulty",
+        "value": "hard"
+      },
+      "mulPct": 0.25
+    },
+    "6512": {
+      "condition": {
+        "type": "difficulty",
+        "value": "hard"
+      },
+      "mulPct": 0.3
     }
   },
   "CheckValueBonus": {
@@ -59,44 +253,321 @@
     },
     "6005": {
       "add": 6,
-      "attr": "cha",
+      "attr": "lead",
       "condition": null,
       "scope": "both"
+    },
+    "6006": {
+      "add": 6,
+      "attr": "all",
+      "condition": null,
+      "scope": "major"
+    },
+    "6007": {
+      "add": 10,
+      "attr": "all",
+      "condition": null,
+      "scope": "major"
+    },
+    "6008": {
+      "add": 16,
+      "attr": "all",
+      "condition": null,
+      "scope": "major"
+    },
+    "6011": {
+      "add": 40,
+      "attr": "all",
+      "condition": {
+        "type": "difficulty",
+        "value": "hard"
+      },
+      "scope": "major"
+    },
+    "6012": {
+      "add": 30,
+      "attr": "war",
+      "condition": null,
+      "scope": "major"
+    },
+    "6013": {
+      "add": 45,
+      "attr": "int",
+      "condition": null,
+      "scope": "major"
+    },
+    "6014": {
+      "add": 60,
+      "attr": "war",
+      "condition": null,
+      "scope": "major"
+    }
+  },
+  "CommissionChance": {
+    "4501": {
+      "addPct": 0.15,
+      "condition": null,
+      "guarantee": false,
+      "scope": "all",
+      "standing": {
+        "kind": "self"
+      }
+    },
+    "4502": {
+      "addPct": 0,
+      "condition": null,
+      "guarantee": true,
+      "scope": "all",
+      "standing": {
+        "kind": "self"
+      }
+    },
+    "4503": {
+      "addPct": 0.1,
+      "condition": null,
+      "guarantee": false,
+      "scope": "all",
+      "standing": {
+        "kind": "none"
+      }
+    },
+    "4504": {
+      "addPct": 0.08,
+      "condition": null,
+      "guarantee": false,
+      "scope": "all",
+      "standing": {
+        "kind": "none"
+      }
+    },
+    "4505": {
+      "addPct": 0,
+      "condition": null,
+      "guarantee": true,
+      "scope": "war",
+      "standing": {
+        "kind": "none"
+      }
+    },
+    "4506": {
+      "addPct": 0,
+      "condition": null,
+      "guarantee": true,
+      "scope": "all",
+      "standing": {
+        "kind": "named",
+        "notableId": "notable:zhangliao"
+      }
+    },
+    "4507": {
+      "addPct": 0,
+      "condition": null,
+      "guarantee": true,
+      "scope": "all",
+      "standing": {
+        "kind": "named",
+        "notableId": "notable:yujin"
+      }
+    },
+    "4508": {
+      "addPct": 0,
+      "condition": null,
+      "guarantee": true,
+      "scope": "all",
+      "standing": {
+        "kind": "named",
+        "notableId": "notable:lejin"
+      }
     }
   },
   "CurrencyBonus": {
     "7001": {
       "condition": null,
-      "currency": "allFame",
+      "currency": "allMerit",
       "mulPct": 0.3
-    },
-    "7002": {
-      "condition": null,
-      "currency": "fame.moral",
-      "mulPct": 0.5
     },
     "7003": {
       "condition": null,
       "currency": "allMerit",
       "mulPct": 0.2
-    }
-  },
-  "EventDrawModify": {
-    "2101": {
+    },
+    "7011": {
       "condition": null,
-      "drawCountAdd": 1
-    }
-  },
-  "EventRewardBonus": {
-    "2001": {
+      "currency": "merit.martial",
+      "mulPct": 0.1
+    },
+    "7012": {
       "condition": null,
-      "eventKind": "all",
+      "currency": "merit.civil",
+      "mulPct": 0.1
+    },
+    "7013": {
+      "condition": null,
+      "currency": "merit.civil",
+      "mulPct": 0.15
+    },
+    "7014": {
+      "condition": null,
+      "currency": "merit.civil",
       "mulPct": 0.2
     },
-    "2002": {
+    "7015": {
       "condition": null,
-      "eventKind": "resident",
-      "mulPct": 0.25
+      "currency": "merit.civil",
+      "mulPct": 0.08
+    },
+    "7016": {
+      "condition": null,
+      "currency": "merit.martial",
+      "mulPct": 0.15
+    },
+    "7017": {
+      "condition": null,
+      "currency": "merit.martial",
+      "mulPct": 0.2
+    },
+    "7018": {
+      "condition": null,
+      "currency": "merit.civil",
+      "mulPct": 0.05
+    },
+    "7019": {
+      "condition": null,
+      "currency": "merit.martial",
+      "mulPct": 0.05
+    }
+  },
+  "DesignateSlots": {
+    "8001": {
+      "condition": null,
+      "slots": 1
+    },
+    "8002": {
+      "condition": null,
+      "slots": 3
+    }
+  },
+  "EncounterChance": {
+    "4601": {
+      "addPct": 0.2,
+      "condition": null,
+      "guarantee": false,
+      "scope": "all",
+      "standing": {
+        "kind": "self"
+      }
+    },
+    "4602": {
+      "addPct": 0.15,
+      "condition": null,
+      "guarantee": false,
+      "scope": "all",
+      "standing": {
+        "kind": "self"
+      }
+    },
+    "4603": {
+      "addPct": 0.12,
+      "condition": null,
+      "guarantee": false,
+      "scope": "all",
+      "standing": {
+        "kind": "none"
+      }
+    },
+    "4604": {
+      "addPct": 0.2,
+      "condition": null,
+      "guarantee": false,
+      "scope": "all",
+      "standing": {
+        "kind": "none"
+      }
+    },
+    "4605": {
+      "addPct": 0.25,
+      "condition": null,
+      "guarantee": false,
+      "scope": "all",
+      "standing": {
+        "kind": "none"
+      }
+    },
+    "4606": {
+      "addPct": 0,
+      "condition": null,
+      "guarantee": true,
+      "scope": "all",
+      "standing": {
+        "kind": "named",
+        "notableId": "notable:dianwei"
+      }
+    },
+    "4607": {
+      "addPct": 0,
+      "condition": null,
+      "guarantee": true,
+      "scope": "int",
+      "standing": {
+        "kind": "none"
+      }
+    }
+  },
+  "GainMultiplier": {
+    "4901": {
+      "condition": null,
+      "mulPct": 0.08,
+      "scope": "int"
+    },
+    "4902": {
+      "condition": null,
+      "mulPct": 0.15,
+      "scope": "int"
+    },
+    "4903": {
+      "condition": null,
+      "mulPct": 0.08,
+      "scope": "war"
+    },
+    "4904": {
+      "condition": null,
+      "mulPct": 0.15,
+      "scope": "war"
+    },
+    "4905": {
+      "condition": null,
+      "mulPct": 0.1,
+      "scope": "war"
+    },
+    "4906": {
+      "condition": null,
+      "mulPct": 0.2,
+      "scope": "war"
+    },
+    "4907": {
+      "condition": null,
+      "mulPct": 0.15,
+      "scope": "lead"
+    },
+    "4908": {
+      "condition": null,
+      "mulPct": 0.2,
+      "scope": "lead"
+    },
+    "4909": {
+      "condition": null,
+      "mulPct": 0.15,
+      "scope": "pol"
+    },
+    "4910": {
+      "condition": null,
+      "mulPct": 0.08,
+      "scope": "all"
+    },
+    "4911": {
+      "condition": null,
+      "mulPct": 0.1,
+      "scope": "all"
     }
   },
   "GlowBaseWeight": {
@@ -104,33 +575,48 @@
       "condition": null,
       "scope": "war",
       "tierShift": 1
+    },
+    "2902": {
+      "condition": null,
+      "scope": "lead",
+      "tierShift": 1
+    },
+    "2903": {
+      "condition": null,
+      "scope": "pol",
+      "tierShift": 1
+    },
+    "2904": {
+      "condition": null,
+      "scope": "int",
+      "tierShift": 1
+    },
+    "2905": {
+      "condition": null,
+      "scope": "all",
+      "tierShift": 1
     }
   },
   "GlowUpgradeBonus": {
-    "3001": {
-      "chanceAdd": 0.15,
-      "condition": null,
-      "scope": "war"
-    },
-    "3002": {
-      "chanceAdd": 0.15,
-      "condition": null,
-      "scope": "int"
-    },
-    "3003": {
-      "chanceAdd": 0.15,
-      "condition": null,
-      "scope": "pol"
-    },
-    "3004": {
-      "chanceAdd": 0.15,
-      "condition": null,
-      "scope": "cha"
-    },
     "3011": {
       "chanceAdd": 0.08,
       "condition": null,
       "scope": "all"
+    },
+    "3012": {
+      "chanceAdd": 0.1,
+      "condition": null,
+      "scope": "all"
+    },
+    "3013": {
+      "chanceAdd": 0.12,
+      "condition": null,
+      "scope": "all"
+    },
+    "3014": {
+      "chanceAdd": 0.1,
+      "condition": null,
+      "scope": "war"
     },
     "3101": {
       "chanceAdd": 0.05,
@@ -158,6 +644,236 @@
       "scope": "all"
     }
   },
+  "LinkAmplify": {
+    "4201": {
+      "condition": null,
+      "mulPct": 0.15,
+      "standing": {
+        "kind": "self"
+      },
+      "target": {
+        "kind": "all"
+      }
+    },
+    "4202": {
+      "condition": null,
+      "mulPct": 0.2,
+      "standing": {
+        "kind": "self"
+      },
+      "target": {
+        "kind": "all"
+      }
+    },
+    "4203": {
+      "condition": null,
+      "mulPct": 0.12,
+      "standing": {
+        "kind": "none"
+      },
+      "target": {
+        "kind": "all"
+      }
+    },
+    "4211": {
+      "condition": null,
+      "mulPct": 0.25,
+      "standing": {
+        "kind": "none"
+      },
+      "target": {
+        "kind": "named",
+        "notableId": "notable:caocao"
+      }
+    },
+    "4212": {
+      "condition": null,
+      "mulPct": 0.25,
+      "standing": {
+        "kind": "none"
+      },
+      "target": {
+        "kind": "named",
+        "notableId": "notable:dianwei"
+      }
+    },
+    "4213": {
+      "condition": null,
+      "mulPct": 0.25,
+      "standing": {
+        "kind": "none"
+      },
+      "target": {
+        "kind": "named",
+        "notableId": "notable:guojia"
+      }
+    },
+    "4214": {
+      "condition": null,
+      "mulPct": 0.25,
+      "standing": {
+        "kind": "none"
+      },
+      "target": {
+        "kind": "named",
+        "notableId": "notable:zhangliao"
+      }
+    },
+    "4215": {
+      "condition": null,
+      "mulPct": 0.2,
+      "standing": {
+        "kind": "none"
+      },
+      "target": {
+        "kind": "named",
+        "notableId": "notable:zhangliao"
+      }
+    },
+    "4216": {
+      "condition": null,
+      "mulPct": 0.2,
+      "standing": {
+        "kind": "none"
+      },
+      "target": {
+        "kind": "named",
+        "notableId": "notable:yujin"
+      }
+    },
+    "4217": {
+      "condition": null,
+      "mulPct": 0.2,
+      "standing": {
+        "kind": "none"
+      },
+      "target": {
+        "kind": "named",
+        "notableId": "notable:lejin"
+      }
+    },
+    "4218": {
+      "condition": null,
+      "mulPct": 0.1,
+      "standing": {
+        "kind": "none"
+      },
+      "target": {
+        "attr": "war",
+        "kind": "specialty"
+      }
+    }
+  },
+  "LinkBonus": {
+    "4101": {
+      "condition": null,
+      "mulPct": 0.1,
+      "scope": "all",
+      "standing": {
+        "kind": "self"
+      }
+    },
+    "4102": {
+      "condition": null,
+      "mulPct": 0.12,
+      "scope": "all",
+      "standing": {
+        "kind": "self"
+      }
+    },
+    "4103": {
+      "condition": null,
+      "mulPct": 0.08,
+      "scope": "all",
+      "standing": {
+        "kind": "self"
+      }
+    },
+    "4111": {
+      "condition": null,
+      "mulPct": 0.15,
+      "scope": "lead",
+      "standing": {
+        "kind": "self"
+      }
+    },
+    "4112": {
+      "condition": null,
+      "mulPct": 0.2,
+      "scope": "lead",
+      "standing": {
+        "kind": "self"
+      }
+    },
+    "4113": {
+      "condition": null,
+      "mulPct": 0.15,
+      "scope": "war",
+      "standing": {
+        "kind": "self"
+      }
+    },
+    "4114": {
+      "condition": null,
+      "mulPct": 0.2,
+      "scope": "war",
+      "standing": {
+        "kind": "self"
+      }
+    },
+    "4115": {
+      "condition": null,
+      "mulPct": 0.1,
+      "scope": "war",
+      "standing": {
+        "kind": "self"
+      }
+    },
+    "4116": {
+      "condition": null,
+      "mulPct": 0.15,
+      "scope": "int",
+      "standing": {
+        "kind": "self"
+      }
+    },
+    "4117": {
+      "condition": null,
+      "mulPct": 0.15,
+      "scope": "pol",
+      "standing": {
+        "kind": "self"
+      }
+    }
+  },
+  "RarityFloor": {
+    "4801": {
+      "condition": null,
+      "min": 3
+    }
+  },
+  "RarityWeight": {
+    "4701": {
+      "condition": null,
+      "shift": 0.3
+    },
+    "4702": {
+      "condition": null,
+      "shift": 0.4
+    },
+    "4703": {
+      "condition": null,
+      "shift": 0.2
+    },
+    "4704": {
+      "condition": null,
+      "shift": 0.5
+    },
+    "4705": {
+      "condition": null,
+      "shift": 0.6
+    }
+  },
   "RevealInfo": {
     "6201": {
       "condition": null,
@@ -168,90 +884,362 @@
       "what": "nextTurnSlots"
     }
   },
+  "SlotBaseAdd": {
+    "4301": {
+      "add": 5,
+      "condition": null,
+      "scope": "lead",
+      "standing": {
+        "kind": "self"
+      }
+    },
+    "4302": {
+      "add": 3,
+      "condition": null,
+      "scope": "lead",
+      "standing": {
+        "kind": "self"
+      }
+    },
+    "4303": {
+      "add": 4,
+      "condition": null,
+      "scope": "lead",
+      "standing": {
+        "kind": "self"
+      }
+    },
+    "4311": {
+      "add": 4,
+      "condition": null,
+      "scope": "war",
+      "standing": {
+        "kind": "self"
+      }
+    },
+    "4321": {
+      "add": 3,
+      "condition": null,
+      "scope": "int",
+      "standing": {
+        "kind": "self"
+      }
+    },
+    "4331": {
+      "add": 5,
+      "condition": null,
+      "scope": "pol",
+      "standing": {
+        "kind": "self"
+      }
+    },
+    "4332": {
+      "add": 3,
+      "condition": null,
+      "scope": "pol",
+      "standing": {
+        "kind": "self"
+      }
+    },
+    "4333": {
+      "add": 4,
+      "condition": null,
+      "scope": "pol",
+      "standing": {
+        "kind": "self"
+      }
+    },
+    "4341": {
+      "add": 5,
+      "condition": null,
+      "scope": "all",
+      "standing": {
+        "kind": "self"
+      }
+    },
+    "4342": {
+      "add": 2,
+      "condition": null,
+      "scope": "all",
+      "standing": {
+        "kind": "self"
+      }
+    },
+    "4343": {
+      "add": 3,
+      "condition": null,
+      "scope": "all",
+      "standing": {
+        "kind": "self"
+      }
+    },
+    "4351": {
+      "add": 2,
+      "condition": null,
+      "scope": "int",
+      "standing": {
+        "kind": "none"
+      }
+    },
+    "4352": {
+      "add": 3,
+      "condition": null,
+      "scope": "int",
+      "standing": {
+        "kind": "none"
+      }
+    },
+    "4353": {
+      "add": 2,
+      "condition": null,
+      "scope": "war",
+      "standing": {
+        "kind": "none"
+      }
+    },
+    "4354": {
+      "add": 3,
+      "condition": null,
+      "scope": "war",
+      "standing": {
+        "kind": "none"
+      }
+    },
+    "4355": {
+      "add": 4,
+      "condition": null,
+      "scope": "war",
+      "standing": {
+        "kind": "none"
+      }
+    },
+    "4356": {
+      "add": 5,
+      "condition": null,
+      "scope": "war",
+      "standing": {
+        "kind": "none"
+      }
+    },
+    "4357": {
+      "add": 2,
+      "condition": null,
+      "scope": "pol",
+      "standing": {
+        "kind": "none"
+      }
+    },
+    "4358": {
+      "add": 4,
+      "condition": null,
+      "scope": "lead",
+      "standing": {
+        "kind": "none"
+      }
+    },
+    "4359": {
+      "add": 2,
+      "condition": null,
+      "scope": "all",
+      "standing": {
+        "kind": "none"
+      }
+    }
+  },
   "SlotBias": {
     "4001": {
       "attrWeights": {
-        "war": 1.6
+        "lead": 1.5
       },
-      "condition": null
+      "condition": null,
+      "target": {
+        "kind": "self"
+      }
     },
     "4002": {
       "attrWeights": {
-        "int": 1.6
+        "war": 1.5
       },
-      "condition": null
+      "condition": null,
+      "target": {
+        "kind": "self"
+      }
     },
     "4003": {
       "attrWeights": {
-        "pol": 1.6
+        "int": 1.8
       },
-      "condition": null
+      "condition": null,
+      "target": {
+        "kind": "self"
+      }
     },
     "4004": {
       "attrWeights": {
-        "cha": 1.6
+        "pol": 1.6
       },
-      "condition": null
+      "condition": null,
+      "target": {
+        "kind": "self"
+      }
     },
-    "4099": {
+    "4011": {
       "attrWeights": {
-        "cha": 1,
-        "int": 1,
-        "pol": 1,
-        "war": 1
+        "war": 1.3
       },
-      "condition": null
+      "condition": null,
+      "target": {
+        "attr": "war",
+        "kind": "specialty"
+      }
+    },
+    "4012": {
+      "attrWeights": {
+        "war": 1.6
+      },
+      "condition": null,
+      "target": {
+        "attr": "war",
+        "kind": "specialty"
+      }
+    },
+    "4013": {
+      "attrWeights": {
+        "int": 1.3
+      },
+      "condition": null,
+      "target": {
+        "attr": "int",
+        "kind": "specialty"
+      }
+    },
+    "4014": {
+      "attrWeights": {
+        "pol": 1.3
+      },
+      "condition": null,
+      "target": {
+        "attr": "pol",
+        "kind": "specialty"
+      }
+    },
+    "4021": {
+      "attrWeights": {
+        "lead": 1.8
+      },
+      "condition": null,
+      "target": {
+        "kind": "named",
+        "notableId": "notable:caocao"
+      }
+    },
+    "4022": {
+      "attrWeights": {
+        "int": 1.6,
+        "lead": 1.6,
+        "pol": 1.6,
+        "war": 1.6
+      },
+      "condition": null,
+      "target": {
+        "kind": "named",
+        "notableId": "notable:dianwei"
+      }
+    },
+    "4023": {
+      "attrWeights": {
+        "int": 1.8
+      },
+      "condition": null,
+      "target": {
+        "kind": "named",
+        "notableId": "notable:guojia"
+      }
+    },
+    "4024": {
+      "attrWeights": {
+        "int": 1.6,
+        "lead": 1.6,
+        "pol": 1.6,
+        "war": 1.6
+      },
+      "condition": null,
+      "target": {
+        "kind": "named",
+        "notableId": "notable:xunyu"
+      }
+    },
+    "4025": {
+      "attrWeights": {
+        "lead": 1.8
+      },
+      "condition": null,
+      "target": {
+        "kind": "named",
+        "notableId": "notable:zhangliao"
+      }
+    },
+    "4026": {
+      "attrWeights": {
+        "int": 1.8,
+        "lead": 1.8,
+        "pol": 1.8,
+        "war": 1.8
+      },
+      "condition": null,
+      "target": {
+        "kind": "named",
+        "notableId": "notable:zhangliao"
+      }
+    },
+    "4027": {
+      "attrWeights": {
+        "int": 1.8,
+        "lead": 1.8,
+        "pol": 1.8,
+        "war": 1.8
+      },
+      "condition": null,
+      "target": {
+        "kind": "named",
+        "notableId": "notable:yujin"
+      }
+    },
+    "4028": {
+      "attrWeights": {
+        "int": 1.8,
+        "lead": 1.8,
+        "pol": 1.8,
+        "war": 1.8
+      },
+      "condition": null,
+      "target": {
+        "kind": "named",
+        "notableId": "notable:lejin"
+      }
+    }
+  },
+  "SlotSizeBonus": {
+    "4401": {
+      "condition": null,
+      "maxNotables": 1,
+      "minNotables": 1,
+      "mulPct": 0.2,
+      "standing": {
+        "kind": "none"
+      }
+    },
+    "4402": {
+      "condition": null,
+      "maxNotables": 1,
+      "minNotables": 1,
+      "mulPct": 0.4,
+      "standing": {
+        "kind": "none"
+      }
     }
   },
   "StatModifier": {
-    "1001": {
-      "condition": null,
-      "op": "mulPct",
-      "target": "training.exp.war",
-      "value": 0.2
-    },
-    "1002": {
-      "condition": null,
-      "op": "mulPct",
-      "target": "training.exp.war",
-      "value": 0.4
-    },
-    "1011": {
-      "condition": null,
-      "op": "mulPct",
-      "target": "training.exp.int",
-      "value": 0.2
-    },
-    "1012": {
-      "condition": null,
-      "op": "mulPct",
-      "target": "training.exp.int",
-      "value": 0.4
-    },
-    "1021": {
-      "condition": null,
-      "op": "mulPct",
-      "target": "training.exp.pol",
-      "value": 0.2
-    },
-    "1022": {
-      "condition": null,
-      "op": "mulPct",
-      "target": "training.exp.pol",
-      "value": 0.4
-    },
-    "1031": {
-      "condition": null,
-      "op": "mulPct",
-      "target": "training.exp.cha",
-      "value": 0.2
-    },
-    "1032": {
-      "condition": null,
-      "op": "mulPct",
-      "target": "training.exp.cha",
-      "value": 0.4
-    },
     "1101": {
       "condition": null,
       "op": "mulPct",
@@ -275,18 +1263,6 @@
       "op": "mulPct",
       "target": "training.exp.war",
       "value": 0.25
-    },
-    "1201": {
-      "condition": null,
-      "op": "mulPct",
-      "target": "training.exp.all",
-      "value": 0.05
-    },
-    "1202": {
-      "condition": null,
-      "op": "add",
-      "target": "training.noGlowBonus",
-      "value": 0.3
     }
   }
 }

@@ -63,6 +63,18 @@ h3.lane { color: var(--accent); font-size: 12px; letter-spacing: .06em;
 .log div + div { margin-top: 2px; }
 /* 專長對位：名士站在自己的專長格上。這是基底加成最大的情況（19 §5.1）。 */
 .peo .fit { color: var(--accent); }
-/* 名士相乘的總倍率。越高越搶眼 —— 爆發時刻要看得見（19 §5.2）。 */
-.card .mul { font-size: 12px; color: var(--accent); margin-top: 2px; }
-.card .mul.big { font-size: 15px; font-weight: 700; color: var(--glow-gold); letter-spacing: .04em; }
+/*
+ * 格子卡的【主數字】（15 §3.3）★
+ *
+ * 它已經是名士倍率算完的結果 —— 舊版另外印一個 ×N.NN 把同一件事
+ * 說了兩遍，那個元素已經拿掉。升階率也不印：它是選完之後的驚喜。
+ */
+.card .rate.big { font-size: 16px; font-weight: 700; color: var(--ink); letter-spacing: .02em; }
+
+/*
+ * 兩種驚嘆號：一個給委託、一個給人物事件（兩段抽取的第一段）。
+ * 沒亮的時候也要佔位子 —— 四張卡的高度不一致就難以一眼讀完。
+ */
+.card .flags { display: flex; gap: 8px; margin-top: 3px; min-height: 16px; font-size: 12px; }
+.card .flags .f-comm { color: var(--glow-gold); font-weight: 700; }
+.card .flags .f-enc { color: var(--accent); font-weight: 700; }

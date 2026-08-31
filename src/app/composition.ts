@@ -2,7 +2,10 @@
 import type { RunContext } from '../contracts/core/context.js';
 import type { DefinitionRegistry } from '../data-runtime/registry.js';
 import { configEffectSource } from '../modules/dream-entry.js';
-import { createEffectResolver, type EffectResolver, type EffectSource } from '../modules/effect.js';
+import {
+  boonEffectSource, createEffectResolver, type EffectResolver, type EffectSource,
+} from '../modules/effect.js';
+import { itemEffectSource } from '../modules/item.js';
 import { notableEffectSource } from '../modules/notable-codex.js';
 import { shopEffectSource } from '../modules/shop.js';
 import { createStatWriter, statQuery, type StatWriter } from '../modules/stats.js';
@@ -26,6 +29,10 @@ export function compose(defs: DefinitionRegistry): Wiring {
 
   const sources: readonly EffectSource[] = [
     dynamicRoster,
+    // 道具與名士共用同一套 FuncType，但【不吃好感門檻】——
+    // 名士那層要七到十個回合才打得開，道具那層第一回合就開（23 §1）。
+    itemEffectSource(),
+    boonEffectSource(),
     configEffectSource(),
     shopEffectSource(),
   ];

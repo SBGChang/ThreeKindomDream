@@ -1,16 +1,31 @@
 // ① 效果系統。所有加成的唯一表述與結算路徑（01）。
 import type { RunContext } from '../contracts/core/context.js';
 import type {
-  Condition, Contribution, EffectDef, EffectTrace, FuncType, Op,
-  ResolvedEffectRef, StatModifierDef,
+  ChanceModifierDef, Condition, Contribution, EffectDef, EffectTrace, FuncType,
+  NotableTarget, Op, ResolvedEffectRef, StandingReq, StatModifierDef,
 } from '../contracts/core/effects.js';
-import type { ChargeId, FlagId, TargetId } from '../contracts/core/ids.js';
-import type { Attr, StatPath } from '../contracts/core/primitives.js';
+import { notableOfSource, standingOf } from '../contracts/core/effects.js';
+import type { EffectRef as EffectRefInput } from '../contracts/core/effects.js';
+import type { ChargeId, FlagId, NotableId, TargetId } from '../contracts/core/ids.js';
+import type { RunState } from '../contracts/core/state.js';
+import type { Attr, Rarity, StatPath } from '../contracts/core/primitives.js';
 import { applyResolveOrder, evaluateCondition, type StatReader } from './effect-core.js';
 
 export interface EffectSource {
-  /** 已完成 supersedes 過濾（01 §6）。 */
+  /** 已完成門檻過濾（01 §6）。名士的站位效果在來源端就擋掉好感不足者。 */
   collect(ctx: RunContext): readonly ResolvedEffectRef[];
+}
+
+export interface AffinityGrantOutcome {
+  readonly target: NotableTarget;
+  readonly amount: number;
+  readonly owner: NotableId | null;
+}
+
+/** 委託／人物事件旗標的一次擲骰參數（15 §3）。 */
+export interface ChanceOutcome {
+  readonly chance: number;
+  readonly guaranteed: boolean;
 }
 
 export interface EffectResolver {
@@ -20,13 +35,34 @@ export interface EffectResolver {
   explain(target: TargetId, ctx: RunContext): readonly EffectTrace[];
   glowUpgradeChance(attr: Attr, ctx: RunContext): number;
   glowTierShift(attr: Attr, ctx: RunContext): number;
-  slotBias(sourceIdPrefix: string, attr: Attr, ctx: RunContext): number;
+  /** 站位分配的權重倍率。不吃好感門檻 —— 好感正是靠同格養出來的（19 §4）。 */
+  slotBias(subject: NotableId, attr: Attr, ctx: RunContext): number;
   eventRewardMul(eventKind: string, ctx: RunContext): number;
-  eventDrawAdd(ctx: RunContext): number;
-  affinityGrowthMul(ctx: RunContext): number;
+  affinityGrowthMul(subject: NotableId, ctx: RunContext): number;
   checkValueAdd(attr: Attr, scope: 'minor' | 'major', ctx: RunContext): number;
+  checkRewardMul(ctx: RunContext): number;
   currencyMul(path: StatPath, ctx: RunContext): number;
-  startAffinityGrants(ctx: RunContext): readonly { rule: string; amount: number }[];
+  /**
+   * 入夢時的好感補正（10 §2）。`owner` 是效果的來源名士 —— `target: self`
+   * 要靠它才知道「自己」是誰；道具與天賦的來源為 null。
+   */
+  startAffinityGrants(ctx: RunContext): readonly AffinityGrantOutcome[];
+  // ── 站位層（全部吃好感門檻，過濾在 EffectSource）★ ────
+  /** 某位名士站在某格時，他自己的加成加成率。 */
+  linkBonusPct(subject: NotableId, attr: Attr, standing: readonly NotableId[], ctx: RunContext): number;
+  /** 同格【其他人】對 subject 的放大率。陳群的九品官人法（19 §5.5）。 */
+  linkAmplifyPct(subject: NotableId, standing: readonly NotableId[], ctx: RunContext): number;
+  /** 依同格人數的整格倍率。逍遙津令的獨行流走這條（23 §4）。 */
+  slotSizeMul(count: number, standing: readonly NotableId[], ctx: RunContext): number;
+  /** 同框時抬高的基礎值。加法、落在乘法鏈之前。 */
+  slotBaseAdd(attr: Attr, standing: readonly NotableId[], ctx: RunContext): number;
+  // ── 機會層 ──────────────────────────────────────
+  commissionChance(attr: Attr, standing: readonly NotableId[], ctx: RunContext): ChanceOutcome;
+  encounterChance(attr: Attr, standing: readonly NotableId[], ctx: RunContext): ChanceOutcome;
+  rarityShift(ctx: RunContext): number;
+  rarityFloor(ctx: RunContext): Rarity;
+  // ── 產出層 ──────────────────────────────────────
+  gainMul(attr: Attr, ctx: RunContext): number;
 }
 
 interface Bound { readonly ref: ResolvedEffectRef; readonly def: EffectDef }
@@ -34,15 +70,36 @@ interface Bound { readonly ref: ResolvedEffectRef; readonly def: EffectDef }
 /**
  * `<prefix>.all` 對該前綴下的每個 target 都生效
  * —— training.exp.all 涵蓋 training.exp.war，event.practice.all 涵蓋 event.practice.war。
- * 寫成通則而非逐個列舉，新增一族 target 時不必再回來改這裡。
  */
 const WILDCARD = 'all';
 const matchesTarget = (defTarget: string, wanted: string): boolean => {
   if (defTarget === wanted) return true;
   if (!defTarget.endsWith(`.${WILDCARD}`)) return false;
-  // 去掉 'all' 但留下那個點：training.exp.all → training.exp.
   return wanted.startsWith(defTarget.slice(0, defTarget.length - WILDCARD.length));
 };
+
+/** 效果的來源名士。不是名士來源（道具、天賦）時為 null。 */
+const ownerOf = (b: Bound): NotableId | null =>
+  notableOfSource(b.ref.sourceId) as NotableId | null;
+
+/**
+ * 當局獎勵的效果來源（23 §8）。
+ *
+ * 它與名士、道具共用同一套 FuncType，因此加一種新的當局獎勵不必動程式 ——
+ * 只要在事件的 rewards 裡指一條既有的效果。
+ */
+export function boonEffectSource(): EffectSource {
+  return {
+    collect: (ctx: RunContext): readonly ResolvedEffectRef[] => ctx.state.boons.map(
+      (ref, i) => ({ ...ref, sourceId: `boon/${i}` }),
+    ),
+  };
+}
+
+/** 授予一條當局增益。只有 ⑰ 在結算事件獎勵時呼叫。 */
+export function grantBoon(ref: EffectRefInput, ctx: RunContext): RunState {
+  return { ...ctx.state, boons: [...ctx.state.boons, ref] };
+}
 
 export function createEffectResolver(
   sources: readonly EffectSource[], readStat: StatReader,
@@ -64,6 +121,38 @@ export function createEffectResolver(
       return cond === null || cond === undefined || evaluateCondition(cond, ctx, readStat);
     });
 
+  /**
+   * 這條效果的「誰必須站著」有沒有滿足（effects.ts §StandingReq）。
+   *
+   * 只有一處實作 —— 加新的站位型 FuncType 時帶上 `standing` 欄位即可，
+   * 不必回來補判斷。
+   */
+  const standingOk = (
+    b: Bound, standing: readonly NotableId[],
+  ): boolean => {
+    const req: StandingReq = standingOf(b.def);
+    if (req.kind === 'none') return true;
+    if (req.kind === 'named') return standing.includes(req.notableId);
+    const owner = ownerOf(b);
+    return owner !== null && standing.includes(owner);
+  };
+
+  /**
+   * 效果的作用對象範圍。這是【限制越窄效果越強】那條規則的求值處：
+   * named 只中一個人、specialty 中一維、all 中全部。
+   */
+  const targetHits = (
+    target: NotableTarget, subject: NotableId, owner: NotableId | null, ctx: RunContext,
+  ): boolean => {
+    switch (target.kind) {
+      case 'all': return true;
+      case 'self': return owner !== null && owner === subject;
+      case 'named': return target.notableId === subject;
+      case 'specialty':
+        return ctx.defs.reader('notable').get(String(subject)).base.specialty === target.attr;
+    }
+  };
+
   const sumBy = <T>(
     ft: FuncType, ctx: RunContext, pick: (d: T, sourceId: string) => number,
   ): number => active(ctx, ft)
@@ -74,6 +163,22 @@ export function createEffectResolver(
       .map((b) => ({ src: b.ref.sourceId, d: b.def as StatModifierDef }))
       .filter(({ d }) => matchesTarget(String(d.target), String(target)))
       .map(({ src, d }) => ({ target, op: d.op as Op, value: d.value, sourceId: src }));
+
+  /** 委託／人物事件旗標共用同一段求值 —— 兩者的定義形狀相同。 */
+  const chanceOf = (
+    ft: FuncType, attr: Attr, standing: readonly NotableId[], ctx: RunContext,
+  ): ChanceOutcome => {
+    let add = 0;
+    let guaranteed = false;
+    for (const b of active(ctx, ft)) {
+      if (!standingOk(b, standing)) continue;
+      const d = b.def as ChanceModifierDef;
+      if (d.scope !== 'all' && d.scope !== attr) continue;
+      add += d.addPct;
+      if (d.guarantee) guaranteed = true;
+    }
+    return { chance: add, guaranteed };
+  };
 
   return {
     resolve: (target, base, ctx) => applyResolveOrder(base, contributions(target, ctx)),
@@ -104,11 +209,11 @@ export function createEffectResolver(
       'GlowBaseWeight', ctx, (d) => (d.scope === 'all' || d.scope === attr ? d.tierShift : 0),
     ),
 
-    slotBias: (prefix, attr, ctx) => active(ctx, 'SlotBias')
-      .filter((b) => b.ref.sourceId.startsWith(prefix))
+    slotBias: (subject, attr, ctx) => active(ctx, 'SlotBias')
       .reduce((acc, b) => {
-        const weights = (b.def as { attrWeights: Partial<Record<Attr, number>> }).attrWeights;
-        return acc * (weights[attr] ?? 1);
+        const d = b.def as { target: NotableTarget; attrWeights: Partial<Record<Attr, number>> };
+        if (!targetHits(d.target, subject, ownerOf(b), ctx)) return acc;
+        return acc * (d.attrWeights[attr] ?? 1);
       }, 1),
 
     eventRewardMul: (eventKind, ctx) => 1 + sumBy<{ eventKind: string; mulPct: number }>(
@@ -116,13 +221,11 @@ export function createEffectResolver(
       (d) => (d.eventKind === 'all' || d.eventKind === eventKind ? d.mulPct : 0),
     ),
 
-    eventDrawAdd: (ctx) => sumBy<{ drawCountAdd: number }>(
-      'EventDrawModify', ctx, (d) => d.drawCountAdd,
-    ),
-
-    affinityGrowthMul: (ctx) => 1 + sumBy<{ scope: string; mulPct: number }>(
-      'AffinityGrowth', ctx, (d) => d.mulPct,
-    ),
+    affinityGrowthMul: (subject, ctx) => 1 + active(ctx, 'AffinityGrowth')
+      .reduce((acc, b) => {
+        const d = b.def as { target: NotableTarget; mulPct: number };
+        return targetHits(d.target, subject, ownerOf(b), ctx) ? acc + d.mulPct : acc;
+      }, 0),
 
     checkValueAdd: (attr, scope, ctx) => sumBy<
       { attr: Attr | 'all'; scope: 'minor' | 'major' | 'both'; add: number }
@@ -132,19 +235,76 @@ export function createEffectResolver(
       return attrOk && scopeOk ? d.add : 0;
     }),
 
+    checkRewardMul: (ctx) => 1 + sumBy<{ mulPct: number }>(
+      'CheckRewardBonus', ctx, (d) => d.mulPct,
+    ),
+
     currencyMul: (path, ctx) => 1 + sumBy<{ currency: string; mulPct: number }>(
       'CurrencyBonus', ctx, (d) => {
         if (d.currency === path) return d.mulPct;
-        if (d.currency === 'allFame' && String(path).startsWith('fame.')) return d.mulPct;
         if (d.currency === 'allMerit' && String(path).startsWith('merit.')) return d.mulPct;
         return 0;
       },
     ),
 
     startAffinityGrants: (ctx) => active(ctx, 'AffinityGrant')
-      .map((b) => b.def as { timing: string; targetRule: string; amount: number })
-      .filter((d) => d.timing === 'onDreamEnter')
-      .map((d) => ({ rule: d.targetRule, amount: d.amount })),
+      .map((b) => ({
+        owner: ownerOf(b),
+        d: b.def as { timing: string; target: NotableTarget; amount: number },
+      }))
+      .filter(({ d }) => d.timing === 'onDreamEnter')
+      .map(({ owner, d }) => ({ target: d.target, amount: d.amount, owner })),
+
+    // ── 站位層 ──────────────────────────────────────
+    linkBonusPct: (subject, attr, standing, ctx) => active(ctx, 'LinkBonus')
+      .reduce((acc, b) => {
+        if (ownerOf(b) !== subject) return acc;
+        if (!standingOk(b, standing)) return acc;
+        const d = b.def as { scope: Attr | 'all'; mulPct: number };
+        return d.scope === 'all' || d.scope === attr ? acc + d.mulPct : acc;
+      }, 0),
+
+    linkAmplifyPct: (subject, standing, ctx) => active(ctx, 'LinkAmplify')
+      .reduce((acc, b) => {
+        const owner = ownerOf(b);
+        // 「放大同框【其他】人」—— 放大自己會變成 LinkBonus 的重複表述。
+        if (owner !== null && owner === subject) return acc;
+        if (!standingOk(b, standing)) return acc;
+        const d = b.def as { target: NotableTarget; mulPct: number };
+        return targetHits(d.target, subject, owner, ctx) ? acc + d.mulPct : acc;
+      }, 0),
+
+    slotSizeMul: (count, standing, ctx) => active(ctx, 'SlotSizeBonus')
+      .reduce((acc, b) => {
+        if (!standingOk(b, standing)) return acc;
+        const d = b.def as { minNotables: number; maxNotables: number; mulPct: number };
+        if (count < d.minNotables || count > d.maxNotables) return acc;
+        return acc * (1 + d.mulPct);
+      }, 1),
+
+    slotBaseAdd: (attr, standing, ctx) => active(ctx, 'SlotBaseAdd')
+      .reduce((acc, b) => {
+        if (!standingOk(b, standing)) return acc;
+        const d = b.def as { scope: Attr | 'all'; add: number };
+        return d.scope === 'all' || d.scope === attr ? acc + d.add : acc;
+      }, 0),
+
+    // ── 機會層 ──────────────────────────────────────
+    commissionChance: (attr, standing, ctx) => chanceOf('CommissionChance', attr, standing, ctx),
+    encounterChance: (attr, standing, ctx) => chanceOf('EncounterChance', attr, standing, ctx),
+
+    rarityShift: (ctx) => sumBy<{ shift: number }>('RarityWeight', ctx, (d) => d.shift),
+
+    rarityFloor: (ctx) => active(ctx, 'RarityFloor')
+      .reduce<Rarity>((acc, b) => {
+        const min = (b.def as { min: Rarity }).min;
+        return min > acc ? min : acc;
+      }, 1),
+
+    // ── 產出層 ──────────────────────────────────────
+    gainMul: (attr, ctx) => 1 + sumBy<{ scope: Attr | 'all'; mulPct: number }>(
+      'GainMultiplier', ctx, (d) => (d.scope === 'all' || d.scope === attr ? d.mulPct : 0),
+    ),
   };
 }
 

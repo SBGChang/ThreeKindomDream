@@ -23,7 +23,8 @@ export function ScreenEnd({ s, meta, onSettled }: Props): React.ReactElement {
         <div className="body">{t(ending.bodyKey)}</div>
         {st.lastMajorCheck !== null && !st.lastMajorCheck.passed && (
           <p className="mono warn" style={{ margin: 0 }}>
-            {`最後的檢定：${t(`difficulty.${st.lastMajorCheck.difficulty}`)}`}
+            {`最後的檢定：${t(`careerLine.${st.lastMajorCheck.line}`)}路 `}
+            {`${t(`difficulty.${st.lastMajorCheck.difficulty}`)}`}
             {`　${st.lastMajorCheck.base}+${st.lastMajorCheck.bonus}+骰${st.lastMajorCheck.roll}`}
             {`＝${st.lastMajorCheck.total} < DC ${st.lastMajorCheck.dc}`}
           </p>
@@ -53,12 +54,12 @@ export function ScreenEnd({ s, meta, onSettled }: Props): React.ReactElement {
             <tbody>
               {frags.map(([id, n]) => {
                 const nd = defs.reader('notable').get(id);
-                const raised = result.affinityRaised[id] ?? 0;
+                const raised = result.starRaised[id] ?? 0;
                 return (
                   <tr key={id}>
                     <td>{t(nd.nameKey)}</td>
                     <td className="n mono">{`+${n}`}</td>
-                    <td className="n mono ok">{raised > 0 ? `初始好感 +${raised}` : ''}</td>
+                    <td className="n mono ok">{raised > 0 ? `升星 +${raised}` : ''}</td>
                   </tr>
                 );
               })}

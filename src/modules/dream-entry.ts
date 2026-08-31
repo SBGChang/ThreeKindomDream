@@ -1,7 +1,7 @@
 // ⑭ 入夢配置。Meta 與 Run 的唯一橋樑（14 §1）。
 import type { DefinitionRegistry } from '../data-runtime/registry.js';
 import type { EffectRef, ResolvedEffectRef } from '../contracts/core/effects.js';
-import type { NotableId, Seed, TalentId } from '../contracts/core/ids.js';
+import type { ItemId, NotableId, Seed, TalentId } from '../contracts/core/ids.js';
 import { chapterIndex, turnIndex } from '../contracts/core/ids.js';
 import type { AptitudeGrade, Attr } from '../contracts/core/primitives.js';
 import { APTITUDE_GRADES, ATTRS, GLOW_TIERS } from '../contracts/core/primitives.js';
@@ -10,6 +10,7 @@ import type {
 } from '../contracts/core/state.js';
 import { emptyCursors } from '../kernel/rng.js';
 import type { EffectSource } from './effect.js';
+import { itemCodex } from './item.js';
 import { notableCodex } from './notable-codex.js';
 import { shopLimits } from './shop.js';
 import { sequenceOf } from './turn.js';
@@ -21,7 +22,11 @@ export interface ConfigLimits {
   readonly unlockedTalents: readonly TalentId[];
   readonly designatable: readonly NotableId[];
   readonly factionBonds: Readonly<Record<string, number>>;
+  /** 陣容裡的玩伴席次。皇甫嵩會把它填滿（19 §2）。 */
   readonly companionSlots: number;
+  /** 可攜帶的道具。高階道具不帶就永遠拿不到碎片（23 §5）。 */
+  readonly carriableItems: readonly ItemId[];
+  readonly carrySlots: number;
 }
 
 /** 組裝 ⑨＋⑩ 的上限。全部現算（14 §4.1）。 */
@@ -35,7 +40,33 @@ export function limits(meta: MetaState, defs: DefinitionRegistry): ConfigLimits 
     designatable: notableCodex.designatable(meta, defs),
     factionBonds: shop.factionBonds,
     companionSlots: defs.single('gameRules').companionCount,
+    carriableItems: itemCodex.known(meta, defs),
+    carrySlots: defs.single('gameRules').carrySlots,
   };
+}
+
+/**
+ * 可自行指定的玩伴人數（14 §3）。
+ *
+ * 【吃草稿而不是吃 meta】：額度來自本次選的天賦，而天賦是草稿的一部分。
+ * 因此它不能放進 `limits(meta, defs)` —— 那個函式看不到草稿。
+ *
+ * 直接讀效果表而不經 EffectResolver：配置階段沒有 RunState，
+ * 而 resolver 的簽章要求 RunContext。這是 §1 的合法例外，不是繞過。
+ */
+export function designateQuota(
+  draft: DreamEntryConfig, defs: DefinitionRegistry,
+): number {
+  const base = defs.single('gameRules').designateBase;
+  let extra = 0;
+  for (const id of draft.talents) {
+    for (const ref of defs.reader('talent').get(String(id)).effects) {
+      if (ref.funcType !== 'DesignateSlots') continue;
+      const def = defs.effect(ref.funcType, ref.referId) as { slots: number };
+      extra += def.slots;
+    }
+  }
+  return Math.min(base + extra, defs.single('gameRules').companionCount);
 }
 
 export function emptyDraft(meta: MetaState, defs: DefinitionRegistry): DreamEntryConfig {
@@ -47,6 +78,7 @@ export function emptyDraft(meta: MetaState, defs: DefinitionRegistry): DreamEntr
     aptitudes: aptitudes as Record<Attr, AptitudeGrade>,
     talents: [],
     designatedCompanions: [],
+    carriedItems: [],
   };
 }
 
@@ -105,8 +137,22 @@ export function validate(
       groups.set(def.exclusiveGroup, String(t));
     }
   }
-  if (draft.designatedCompanions.length > lim.companionSlots) {
-    out.push(`兒時玩伴超過 ${lim.companionSlots} 位`);
+  const carry = defs.single('gameRules').carrySlots;
+  if (draft.carriedItems.length > carry) {
+    out.push(`可攜帶 ${carry} 件道具，實填 ${draft.carriedItems.length} 件`);
+  }
+  const owned = new Set(itemCodex.known(meta, defs).map(String));
+  for (const i of draft.carriedItems) {
+    if (!owned.has(String(i))) out.push(`道具 ${String(i)} 尚未入圖鑑`);
+  }
+  if (new Set(draft.carriedItems.map(String)).size !== draft.carriedItems.length) {
+    out.push('攜帶的道具有重複');
+  }
+
+  const quota = designateQuota(draft, defs);
+  if (draft.designatedCompanions.length > quota) {
+    out.push(`可自行指定 ${quota} 位，實填 ${draft.designatedCompanions.length} 位`
+      + '（其餘由皇甫嵩指派）');
   }
   const desig = new Set(lim.designatable.map(String));
   for (const n of draft.designatedCompanions) {
@@ -143,7 +189,7 @@ export function createRunState(
   void glow;
   const seq = sequenceOf(null, { state: SKELETON(meta, draft, seed), defs });
   const first = seq[0];
-  if (first === undefined) throw new Error('南華村篇序列為空');
+  if (first === undefined) throw new Error('無陣營序列為空');
 
   return {
     ...SKELETON(meta, draft, seed),
@@ -152,7 +198,7 @@ export function createRunState(
       chapter: chapterIndex(1),
       chapterId: first,
       turnInChapter: 1,
-      phase: 'nanhua',
+      phase: 'camp',
       chaptersPassed: 0,
       pendingMajorCheck: false,
       pendingFactionChoice: false,
@@ -170,19 +216,21 @@ const SKELETON = (meta: MetaState, config: DreamEntryConfig, seed: Seed): RunSta
   progress: {
     turn: turnIndex(1), chapter: chapterIndex(1),
     chapterId: '' as RunState['progress']['chapterId'],
-    turnInChapter: 1, phase: 'nanhua', chaptersPassed: 0,
+    turnInChapter: 1, phase: 'camp', chaptersPassed: 0,
     pendingMajorCheck: false, pendingFactionChoice: false, pendingSuperiorAssign: false,
   },
   faction: null,
-  attributes: { values: { war: 0, int: 0, pol: 0, cha: 0 } },
-  currencies: { fame: { civil: 0, martial: 0, moral: 0 }, merit: { civil: 0, martial: 0 } },
+  attributes: { values: { lead: 0, war: 0, int: 0, pol: 0 } },
+  currencies: { merit: { civil: 0, martial: 0 } },
   career: { civil: 1, martial: 1 },
   roster: { members: [] },
-  slots: {
-    training: { slots: [], selected: null, result: null },
-    event: { offers: [], resolved: null, seenUniqueIds: [] },
+  items: { count: {} },
+  boons: [],
+  turn: {
+    slots: [], selected: null, training: null,
+    pending: [], resolved: [], seenUniqueIds: [],
   },
-  actions: { training: 0, event: 0 },
+  actions: { lead: 0, war: 0, int: 0, pol: 0 },
   charges: {},
   ending: null,
   lastMajorCheck: null,
@@ -192,12 +240,13 @@ export const emptyMeta = (): MetaState => ({
   schemaVersion: 1,
   points: 0,
   notableCodex: {},
+  itemCodex: {},
   shop: { purchased: {} },
   collection: { seenEvents: [], reachedEndings: [] },
   stats: {
     runsStarted: 0, runsFullDream: 0, chaptersPassed: 0, turnsPlayed: 0,
     glowResults: { none: 0, silver: 0, gold: 0, red: 0 },
-    actionsTraining: 0, actionsEvent: 0,
+    actionsByAttr: { lead: 0, war: 0, int: 0, pol: 0 },
     pointsEarnedTotal: 0, pointsSpentTotal: 0,
   },
   runIndex: 0,

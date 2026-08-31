@@ -36,13 +36,20 @@ export function selectable(ctx: RunContext): readonly FactionOption[] {
 }
 
 export function choose(id: FactionId, ctx: RunContext): RunState {
-  // 切換序列：南華村篇的章節不進入陣營序列，兩者是接續（15 §1.2）
+  // 切換序列：黃巾之亂不進入陣營序列，兩者是接續（15 §1.2）。
+  // `progressOf` 的第一個參數是【序列內的本地回合】，因此傳 1；
+  // 但全域回合序號必須沿用 —— 它是這一輪活了幾回合，不隨序列重來。
+  // 舊版讓它跟著歸 1，於是結算的 turnsPlayed 少算了整個前段。
   const passed = ctx.state.progress.chaptersPassed;
   const next: RunState = { ...ctx.state, faction: id };
   const progress = progressOf(1, id, passed, { state: next, defs: ctx.defs });
   return {
     ...next,
-    progress: { ...progress, pendingSuperiorAssign: true },
+    progress: {
+      ...progress,
+      turn: ctx.state.progress.turn,
+      pendingSuperiorAssign: true,
+    },
   };
 }
 

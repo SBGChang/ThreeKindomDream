@@ -6,7 +6,9 @@ import { loadContent } from '../src/data-runtime/loader.js';
 import { diskRepository } from '../src/platform/content-repository.js';
 import { emptyDraft, emptyMeta } from '../src/modules/dream-entry.js';
 import { seed as mkSeed } from '../src/contracts/core/ids.js';
-import { SLOT_INDICES, type SlotIndex } from '../src/contracts/core/primitives.js';
+import {
+  ATTRS, CHECK_CHOICES, SLOT_INDICES, type CheckChoice, type SlotIndex,
+} from '../src/contracts/core/primitives.js';
 import { stageOf } from '../src/modules/roster-query.js';
 
 const loaded = loadContent(diskRepository());
@@ -45,75 +47,97 @@ while (!s.isOver && guard < 200) {
   if (s.needsMajorCheck) {
     const ch = defs.reader('chapter').get(String(s.current.progress.chapterId));
     const sortie = s.eligibleSortie().slice(0, defs.single('gameRules').maxSortie);
-    const avail = s.availableDifficulties();
-    const rows = avail.map((d) => {
-      const pv = s.previewMajor(d, sortie);
-      return `${t(`difficulty.${d}`)} DC${pv.dc} 值${pv.base}+${pv.bonus} ${(pv.successRate * 100).toFixed(0)}%`;
+    const avail = s.availableChoices();
+    const isAvail = (c: CheckChoice): boolean =>
+      avail.some((a) => a.line === c.line && a.difficulty === c.difficulty);
+    // 六個都列出來，門檻不足的標「鎖」——
+    // 只列可用的會讓 debug 工具讀起來像「選項本來就不存在」（18 §2.1）。
+    const rows = CHECK_CHOICES.map((c) => {
+      const pv = s.previewMajor(c, sortie);
+      return `${t(`careerLine.${c.line}`)}${t(`difficulty.${c.difficulty}`)}`
+        + ` DC${pv.dc} 值${pv.base}+${pv.bonus} ${(pv.successRate * 100).toFixed(0)}%`
+        + `${isAvail(c) ? '' : ' 鎖'}`;
     });
-    // 選成功率 >= 70% 的最高難度
-    let pick = avail[0] ?? 'safe';
-    for (const d of avail) if (s.previewMajor(d, sortie).successRate >= 0.7) pick = d;
-    console.log(`\n【大檢定 ${t(ch.titleKey)}】 ${rows.join('　│　')}`);
+    // 六個選項裡挑成功率 >= 70% 的最高 DC —— 路線也一起挑（18 §2.2）
+    let pick: CheckChoice = avail[0] ?? { line: 'martial', difficulty: 'safe' };
+    let bestDc = -Infinity;
+    for (const c of avail) {
+      const pv = s.previewMajor(c, sortie);
+      if (pv.successRate >= 0.7 && pv.dc > bestDc) { bestDc = pv.dc; pick = c; }
+    }
+    console.log(`\n【大檢定 ${t(ch.titleKey)}】\n  ${rows.join('\n  ')}`);
     const ok = s.attemptMajor(pick, sortie);
     const log = s.current.lastMajorCheck;
-    console.log(`  選 ${t(`difficulty.${pick}`)} → ${ok ? '通過' : '失敗'}`
+    console.log(`  選 ${t(`careerLine.${pick.line}`)}路 ${t(`difficulty.${pick.difficulty}`)}`
+      + ` → ${ok ? '通過' : '失敗'}`
       + `（${log?.base}+${log?.bonus}+骰${log?.roll}=${log?.total} vs DC${log?.dc}）\n`);
     continue;
   }
 
-  // 一回合恰好一個動作（15 §2）。這裡的替身玩家走【校準出來的參考打法】：
-  // 約四回合拿一回合去做事，其餘專精主檢定屬性 —— 平衡掃描顯示這一帶點數最高。
-  // 別把門檻設成「有好事件就做」：事件的成功率在早期比鍛鍊穩，
-  // 那條規則會退化成「從不鍛鍊」，然後在第一場大檢定原地陣亡。
-  const offers = s.current.slots.event.offers;
-  const wantsEvent = s.current.progress.turn % 4 === 0;
-  const cand = !wantsEvent ? undefined : offers.flatMap((o, oi) => o.optionStates
-    .map((st, ii) => ({ oi, ii, rate: st.successRate ?? 1, on: st.enabled })))
-    .filter((x) => x.on && x.rate >= 0.5).sort((a, b) => b.rate - a.rate)[0];
-
+  // 一個回合兩拍（15 §2）：投入固定事件 → 清空它引出的事件佇列。
+  // 替身玩家專精【武路的主屬性】，委託一律選期望值最高的選項。
   const turn = String(s.current.progress.turn).padStart(2, ' ');
-  if (cand === undefined) {
-    const primary = s.majorCheck().primaryAttr;
-    let best: SlotIndex = 0;
-    let bestGain = -Infinity;
-    for (const i of SLOT_INDICES) {
-      const slotAt = s.current.slots.training.slots[i];
-      if (slotAt === undefined) continue;
-      const g = (slotAt.attr === primary ? 100000 : 0) + s.previewTraining(i).expectedGain;
-      if (g > bestGain) { bestGain = g; best = i; }
-    }
-    const slot = s.current.slots.training.slots[best];
-    // 名士相乘的爆發時刻要看得見（19 §5.2）—— 全員擠一格是本作的高光
-    const mul = s.previewTraining(best).notableMultiplier;
-    const pile = slot?.notables.length ?? 0;
-    const burst = pile > 2 ? `　★${pile} 人同格 ×${mul.toFixed(2)}★` : '';
-    s.selectTraining(best);
-    const r = s.current.slots.training.result;
-    console.log(`R${turn} 【練】${t(slot?.labelKey)} ${t(`glow.${slot?.baseGlow}`)}`
-      + `${r?.upgraded === true ? '⬆' : ' '}→${t(`glow.${r?.finalGlow}`)}`
-      + ` ${t(`attr.${r?.attr}.short`)}+${r?.attrGained}`
-      + `${burst}　│ 事件 ${offers.length} 個未取`);
-  } else {
-    const def = defs.reader('event').get(String(offers[cand.oi]?.eventDefId));
-    const out = s.selectEvent(cand.oi, cand.ii);
-    const gained = out.practiceGained
-      .map((g) => `${t(`attr.${g.attr}.short`)}+${g.amount}`).join(' ');
-    console.log(`R${turn} 【辦】${t(def.titleKey)}·${t(def.options[cand.ii]?.labelKey)}`
-      + ` ${out.passed ? '成' : '敗'}　磨練 ${gained === '' ? '—' : gained}`);
+  const primary = s.majorCheck().routes.martial.primaryAttr;
+
+  let best: SlotIndex = 0;
+  let bestGain = -Infinity;
+  for (const i of SLOT_INDICES) {
+    const cand = s.current.turn.slots[i];
+    if (cand === undefined) continue;
+    const g = (cand.attr === primary ? 100000 : 0) + s.previewTraining(i).expectedGain;
+    if (g > bestGain) { bestGain = g; best = i; }
   }
+  const slot = s.current.turn.slots[best];
+  // 四項全中是那一回合的高光：雙驚嘆號 ＋ 金光以上 ＋ 有人站（15 §3.3）
+  const pv = s.previewTraining(best);
+  const pile = slot?.notables.length ?? 0;
+  const flags = `${pv.hasCommission ? '!' : ''}${pv.hasEncounter ? '?' : ''}`;
+  const burst = pv.hasCommission && pv.hasEncounter && pile > 0
+    ? `　★${pile} 人同格 ${flags}★` : (flags === '' ? '' : `　${flags}`);
+
+  s.selectSlot(best);
+  const r = s.current.turn.training;
+  console.log(`R${turn} 【${t(slot?.labelKey)}】${t(`glow.${slot?.baseGlow}`)}`
+    + `${r?.upgraded === true ? '⬆' : ' '}→${t(`glow.${r?.finalGlow}`)}`
+    + ` ${t(`attr.${r?.attr}.short`)}+${r?.attrGained}`
+    + ` ${t(`merit.${r?.meritGained.line}`)}+${r?.meritGained.amount}${burst}`);
+
+  // 佇列可能有兩則：委託，以及同台名士追加的武將事件。
+  for (;;) {
+    const offer = s.pendingEvent;
+    if (offer === null) break;
+    const def = defs.reader('event').get(String(offer.eventDefId));
+    const on = offer.optionStates
+      .map((o, i) => ({ i, o }))
+      .filter((x) => x.o.enabled);
+    const ev = (x: typeof on[number]): number =>
+      x.o.meritPreview.reduce((a, m) => a + m.amount, 0)
+      * (0.4 + 0.6 * (x.o.successRate ?? 1));
+    const first = on[0];
+    if (first === undefined) throw new Error('事件無可選項');
+    const pick = on.reduce((b, x) => (ev(x) > ev(b) ? x : b), first);
+    const tag = def.trigger.kind === 'notable' ? '名士' : `★${offer.rarity}`;
+    s.resolveEvent(pick.i);
+    const res = s.current.turn.resolved.at(-1);
+    const gained = (res?.practiceGained ?? [])
+      .map((g) => `${t(`attr.${g.attr}.short`)}+${g.amount}`).join(' ');
+    const got = (res?.meritGained ?? [])
+      .map((m) => `${t(`merit.${m.line}`)}+${m.amount}`).join(' ');
+    console.log(`      └ [${tag}] ${t(def.titleKey)}·${t(def.options[pick.i]?.labelKey)}`
+      + ` ${res?.passed === true ? '成' : '敗'}`
+      + `　${got === '' ? '—' : got}　磨練 ${gained === '' ? '—' : gained}`);
+  }
+
   s.advance();
 }
 
 const st = s.current;
 console.log('');
 console.log(`【${t(st.ending?.titleKey)}】${t(st.ending?.bodyKey)}`);
-console.log(`  四維 武${st.attributes.values.war} 智${st.attributes.values.int}`
-  + ` 政${st.attributes.values.pol} 魅${st.attributes.values.cha}`);
-console.log(`  名聲 文${st.currencies.fame.civil} 武${st.currencies.fame.martial}`
-  + ` 善惡${st.currencies.fame.moral}`
-  + `　功績 文${st.currencies.merit.civil} 武${st.currencies.merit.martial}`);
+console.log('  四維 ' + ATTRS.map((a) => `${t(`attr.${a}.short`)}${st.attributes.values[a]}`).join(' '));
+console.log(`  功績 文${st.currencies.merit.civil} 武${st.currencies.merit.martial}`);
 console.log(`  官階 文${st.career.civil} 武${st.career.martial}　通過章節 ${st.progress.chaptersPassed}`);
-console.log(`  回合配比 練 ${st.actions.training} ／ 辦事 ${st.actions.event}`);
+console.log('  回合配比 ' + ATTRS.map((a) => `${t(`attr.${a}.short`)} ${st.actions[a]}`).join(' ／ '));
 console.log('  好感：' + st.roster.members
   .map((m) => `${t(defs.reader('notable').get(String(m.notableId)).nameKey)} ${t(`stage.${stageOf(m.notableId, s.ctx)}`)}(${m.affinity})`)
   .join('　'));
@@ -122,5 +146,5 @@ console.log(`  輪迴點數 +${res.pointsGained}`);
 console.log('  碎片：' + (Object.entries(res.notableFragments).length === 0 ? '無'
   : Object.entries(res.notableFragments)
     .map(([id, n]) => `${t(defs.reader('notable').get(id).nameKey)} ${n}`
-      + (res.affinityRaised[id] === undefined ? '' : ` (初始好感+${res.affinityRaised[id]})`))
+      + (res.starRaised[id] === undefined ? '' : ` (升星+${res.starRaised[id]})`))
     .join('　')));

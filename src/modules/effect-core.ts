@@ -30,7 +30,7 @@ export function evaluateCondition(
     case 'chapterGte': return ctx.state.progress.chapter >= c.value;
     case 'statGte': return readStat(c.stat, ctx) >= c.value;
     case 'statLte': return readStat(c.stat, ctx) <= c.value;
-    case 'glowTier': return ctx.state.slots.training.result?.finalGlow === c.value;
+    case 'glowTier': return ctx.state.turn.training?.finalGlow === c.value;
     case 'difficulty': return ctx.state.lastMajorCheck?.difficulty === c.value;
     case 'and': return c.all.every((x) => evaluateCondition(x, ctx, readStat));
     case 'or': return c.any.some((x) => evaluateCondition(x, ctx, readStat));

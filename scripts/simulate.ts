@@ -6,7 +6,8 @@ import { loadContent } from '../src/data-runtime/loader.js';
 import { diskRepository } from '../src/platform/content-repository.js';
 import { emptyMeta, emptyDraft } from '../src/modules/dream-entry.js';
 import { seed as mkSeed } from '../src/contracts/core/ids.js';
-import type { GlowTier } from '../src/contracts/core/primitives.js';
+import type { Attr, GlowTier, Rarity } from '../src/contracts/core/primitives.js';
+import { ATTRS, RARITIES } from '../src/contracts/core/primitives.js';
 import type { MetaState } from '../src/contracts/core/state.js';
 import { POLICIES, type AgentPolicy } from './lib/policies.js';
 
@@ -25,21 +26,29 @@ interface RunRecord {
   readonly points: number;
   readonly attrs: Record<string, number>;
   readonly career: { civil: number; martial: number };
-  readonly fame: number;
-  readonly moral: number;
+  readonly merit: { civil: number; martial: number };
   readonly glow: Record<string, number>;
-  readonly offerCounts: readonly number[];
+  /** 抽出的委託稀有度分佈。光階是否真的換到「更大的事」，看這裡。 */
+  readonly rarity: Record<string, number>;
+  /** 武將事件的觸發次數。舊制實測 0.13–0.45 次/輪，等於不存在。 */
+  readonly notableEvents: number;
+  /** 本輪各道具獲得次數。第二次以後才是碎片 —— 兩個數字都要看得到。 */
+  readonly items: Readonly<Record<string, number>>;
+  readonly itemFragments: number;
+  /** 委託旗標亮起的比例。它是「功績收入由玩家決定」的直接度量。 */
+  readonly commissionHits: number;
   readonly totalTurns: number;
-  /** 單動作回合的核心度量：這一輪把回合花在哪一邊。 */
-  readonly trainTurns: number;
-  readonly eventTurns: number;
+  /** 新制的核心度量：這一輪把回合投在哪幾維。 */
+  readonly byAttr: Record<string, number>;
   readonly failedAt: string | null;
 }
 
 function runOnce(policy: AgentPolicy, runSeed: number, meta: MetaState): RunRecord {
   const s = Session.start(w, meta, emptyDraft(meta, defs), mkSeed(runSeed));
+  let commissionHits = 0;
   const glow: Record<string, number> = { none: 0, silver: 0, gold: 0, red: 0 };
-  const offerCounts: number[] = [];
+  const rarity: Record<string, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+  let notableEvents = 0;
   let totalTurns = 0;
   let failedAt: string | null = null;
   let guard = 0;
@@ -60,24 +69,34 @@ function runOnce(policy: AgentPolicy, runSeed: number, meta: MetaState): RunReco
       continue;
     }
     if (s.needsMajorCheck) {
-      const d = policy.chooseDifficulty(s);
+      const c = policy.chooseCheck(s);
       const sortie = s.eligibleSortie().slice(0, defs.single('gameRules').maxSortie);
-      const passed = s.attemptMajor(d, sortie);
-      if (!passed) failedAt = `${String(s.current.progress.chapterId)}/${d}`;
+      const passed = s.attemptMajor(c, sortie);
+      if (!passed) {
+        failedAt = `${String(s.current.progress.chapterId)}/${c.line}.${c.difficulty}`;
+      }
       continue;
     }
 
     totalTurns += 1;
-    offerCounts.push(s.current.slots.event.offers.length);
 
-    // 一回合恰好一個動作。策略回哪一種，這裡就只執行那一種。
-    const action = policy.chooseAction(s);
-    if (action.kind === 'training') {
-      s.selectTraining(action.index);
-      const result = s.current.slots.training.result;
-      if (result !== null) glow[result.finalGlow] = (glow[result.finalGlow] ?? 0) + 1;
-    } else {
-      s.selectEvent(action.offerIndex, action.optionIndex);
+    // 一個回合三拍：固定事件 → 委託（旗標為真才有）→ 人物事件（同理）。
+    const pick = policy.chooseSlot(s);
+    if (s.current.turn.slots[pick]?.hasCommission === true) commissionHits += 1;
+    s.selectSlot(pick);
+    const result = s.current.turn.training;
+    if (result !== null) glow[result.finalGlow] = (glow[result.finalGlow] ?? 0) + 1;
+
+    let inner = 0;
+    for (;;) {
+      const offer = s.pendingEvent;
+      if (offer === null) break;
+      inner += 1;
+      if (inner > 8) throw new Error('事件佇列未收斂 —— 追加事件可能形成環');
+      const def = defs.reader('event').get(String(offer.eventDefId));
+      if (def.trigger.kind === 'notable') notableEvents += 1;
+      else rarity[String(offer.rarity)] = (rarity[String(offer.rarity)] ?? 0) + 1;
+      s.resolveEvent(policy.chooseOption(s, offer));
     }
 
     s.advance();
@@ -92,13 +111,16 @@ function runOnce(policy: AgentPolicy, runSeed: number, meta: MetaState): RunReco
     points: settled?.pointsGained ?? 0,
     attrs: { ...st.attributes.values },
     career: st.career,
-    fame: st.currencies.fame.civil + st.currencies.fame.martial,
-    moral: st.currencies.fame.moral,
+    merit: { civil: st.currencies.merit.civil, martial: st.currencies.merit.martial },
     glow,
-    offerCounts,
+    rarity,
+    notableEvents,
+    items: { ...st.items.count },
+    itemFragments: Object.values(st.items.count)
+      .reduce((sum, n) => sum + Math.max(0, n - 1), 0),
+    commissionHits,
     totalTurns,
-    trainTurns: st.actions.training,
-    eventTurns: st.actions.event,
+    byAttr: { ...st.actions },
     failedAt,
   };
 }
@@ -133,11 +155,18 @@ for (const policy of POLICIES) {
     glowTotal[k] = (glowTotal[k] ?? 0) + (r.glow[k] ?? 0);
   }
   const glowSum = Object.values(glowTotal).reduce((a, b) => a + b, 0);
-  const allOffers = recs.flatMap((r) => r.offerCounts);
-  const fullSlots = allOffers.filter((n) => n >= 3).length;
-  const emptySlots = allOffers.filter((n) => n === 0).length;
-  const eventShare = avg(recs.map((r) => r.eventTurns / Math.max(1, r.trainTurns + r.eventTurns)));
+  const rarTotal: Record<string, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+  for (const r of recs) for (const k of Object.keys(rarTotal)) {
+    rarTotal[k] = (rarTotal[k] ?? 0) + (r.rarity[k] ?? 0);
+  }
+  const rarSum = Object.values(rarTotal).reduce((a, b) => a + b, 0);
 
+  const itemTotal = new Map<string, number>();
+  for (const r of recs) {
+    for (const [k, v] of Object.entries(r.items)) {
+      itemTotal.set(k, (itemTotal.get(k) ?? 0) + v);
+    }
+  }
   const byEnding = new Map<string, number>();
   for (const r of recs) byEnding.set(r.endingId, (byEnding.get(r.endingId) ?? 0) + 1);
 
@@ -147,20 +176,34 @@ for (const policy of POLICIES) {
   console.log(`  輪迴點數 平均 ${avg(recs.map((r) => r.points)).toFixed(0)}`
     + `　官階 文 ${avg(recs.map((r) => r.career.civil)).toFixed(1)}`
     + ` 武 ${avg(recs.map((r) => r.career.martial)).toFixed(1)}`);
-  console.log(`  四維終值 武 ${avg(recs.map((r) => r.attrs['war'] ?? 0)).toFixed(0)}`
-    + ` 智 ${avg(recs.map((r) => r.attrs['int'] ?? 0)).toFixed(0)}`
-    + ` 政 ${avg(recs.map((r) => r.attrs['pol'] ?? 0)).toFixed(0)}`
-    + ` 魅 ${avg(recs.map((r) => r.attrs['cha'] ?? 0)).toFixed(0)}`
-    + `　總名聲 ${avg(recs.map((r) => r.fame)).toFixed(0)}`
-    + `　善惡 ${avg(recs.map((r) => r.moral)).toFixed(0)}`);
+  console.log(`  四維終值 ${ATTRS.map((a: Attr) => `${defs.text(`attr.${a}.short`)} `
+    + `${avg(recs.map((r) => r.attrs[a] ?? 0)).toFixed(0)}`).join(' ')}`
+    + `　功績 文 ${avg(recs.map((r) => r.merit.civil)).toFixed(0)}`
+    + ` 武 ${avg(recs.map((r) => r.merit.martial)).toFixed(0)}`
+);
   console.log(`  光階分佈 ${(['none', 'silver', 'gold', 'red'] as GlowTier[])
     .map((g) => `${g} ${pct(glowTotal[g] ?? 0, glowSum)}`).join('  ')}`);
-  console.log(`  事件槽 平均 ${avg(allOffers).toFixed(2)} 個`
-    + `　滿 3 個 ${pct(fullSlots, allOffers.length)}`
-    + `　完全空 ${pct(emptySlots, allOffers.length)}`);
-  console.log(`  回合配比 練 ${avg(recs.map((r) => r.trainTurns)).toFixed(1)}`
-    + ` ／ 辦事 ${avg(recs.map((r) => r.eventTurns)).toFixed(1)}`
-    + `　事件佔比 ${(eventShare * 100).toFixed(1)}%`);
+  console.log(`  委託稀有度 ${RARITIES.filter((r: Rarity) => (rarTotal[String(r)] ?? 0) > 0)
+    .map((r: Rarity) => `★${r} ${pct(rarTotal[String(r)] ?? 0, rarSum)}`).join('  ')}`);
+  console.log(`  回合配比 ${ATTRS.map((a: Attr) => `${defs.text(`attr.${a}.short`)} `
+    + `${avg(recs.map((r) => r.byAttr[a] ?? 0)).toFixed(1)}`).join(' ／ ')}`
+    + `　武將事件 ${avg(recs.map((r) => r.notableEvents)).toFixed(2)} 次/輪`);
+  /**
+   * 道具那一行 ★
+   *
+   * 【獲得次數】與【碎片】必須分開看：碎片＝第二次以後的獲得。
+   * 高階道具一輪一次，因此它的碎片只可能來自攜帶進場 ——
+   * 這一行為 0 就代表攜帶格的取捨在實際產出上不存在。
+   */
+  const itemLine = [...itemTotal.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5)
+    .map(([k, v]) => `${defs.text(defs.reader('item').get(k).nameKey)} ${(v / recs.length).toFixed(2)}`)
+    .join('  ');
+  console.log(`  委託命中 ${pct(recs.reduce((a, r) => a + r.commissionHits, 0),
+    recs.reduce((a, r) => a + r.totalTurns, 0))}`
+    + `　道具 ${avg(recs.map((r) => Object.values(r.items).reduce((a, b) => a + b, 0))).toFixed(2)} 件/輪`
+    + `（碎片 ${avg(recs.map((r) => r.itemFragments)).toFixed(2)}）`);
+  if (itemLine !== '') console.log(`  最常掉 ${itemLine}`);
+
   const top = [...byEnding.entries()].sort((a, b) => b[1] - a[1]).slice(0, 4);
   console.log(`  結局 ${top.map(([k, v]) => `${k.replace('ending:', '')} ${pct(v, recs.length)}`).join('  ')}`);
   console.log('');

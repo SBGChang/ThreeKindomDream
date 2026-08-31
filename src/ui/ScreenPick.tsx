@@ -5,13 +5,17 @@ import { defs, t } from '../app/bootstrap.js';
 
 interface Props { readonly s: Session; readonly bump: () => void }
 
-/** 虎牢關通過後：選陣營。不合格者列出但標示原因（22 §2.1）。 */
+/**
+ * 黃巾平定後：袁紹問你要往哪一路去（GDD §4.1）。
+ * 不合格者列出但標示原因（22 §2.1）。
+ */
 export function ScreenFaction({ s, bump }: Props): React.ReactElement {
   const options = s.factionOptions();
   return (
     <>
       <h1>投於何人</h1>
-      <p className="sub">虎牢關已過。天下三分，你走哪一條？</p>
+      <p className="body">{t('opening.faction.yuanshao')}</p>
+      <p className="sub">選定之後，討董那一戰你就是站在他那一邊了。</p>
       {options.map((o) => (
         <div className="card" key={String(o.factionId)} style={{ marginBottom: 10 }}>
           <h3>{t(o.nameKey)}</h3>

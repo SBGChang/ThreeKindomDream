@@ -1,9 +1,11 @@
 // ⑱ 檢定引擎。小檢定與大檢定共用一套算式，差別只在加值來源與失敗後果（18 §1）。
 import type { RunContext, TurnContext } from '../contracts/core/context.js';
-import type { CheckRuleDef, MajorCheckDef } from '../contracts/core/definitions.js';
+import type {
+  CheckRuleDef, MajorCheckDef, MajorCheckRoute, MajorCheckTier,
+} from '../contracts/core/definitions.js';
 import type { NotableId } from '../contracts/core/ids.js';
-import type { Attr, Difficulty } from '../contracts/core/primitives.js';
-import { DIFFICULTIES } from '../contracts/core/primitives.js';
+import type { Attr, CareerLine, CheckChoice } from '../contracts/core/primitives.js';
+import { CHECK_CHOICES } from '../contracts/core/primitives.js';
 import { careerService } from './career.js';
 import type { EffectResolver } from './effect.js';
 import { evaluateCondition } from './effect-core.js';
@@ -12,12 +14,27 @@ import { statQuery } from './stats.js';
 
 const rule = (ctx: RunContext): CheckRuleDef => ctx.defs.single('checkRule');
 
-export interface CheckSpec {
-  readonly primaryAttr: Attr;
-  readonly secondaryAttr: Attr | null;
-  readonly dc: number;
-  readonly scope: 'minor' | 'major';
-}
+/**
+ * 小檢定與大檢定共用同一條算式，差別只在【加值來源】：
+ * 大檢定吃官階與出戰名士，小檢定兩者都不吃。
+ *
+ * 因此 line 只出現在 major 這一支 —— 用型別而非 null 檢查來保證
+ * 「大檢定一定有路線」，與 RunContext／TurnContext 的分法同一個理由（03 §2）。
+ */
+export type CheckSpec =
+  | {
+    readonly scope: 'minor';
+    readonly primaryAttr: Attr;
+    readonly secondaryAttr: null;
+    readonly dc: number;
+  }
+  | {
+    readonly scope: 'major';
+    readonly primaryAttr: Attr;
+    readonly secondaryAttr: Attr | null;
+    readonly line: CareerLine;
+    readonly dc: number;
+  };
 
 export interface CheckValueParts {
   readonly base: number;
@@ -48,7 +65,7 @@ export function checkValue(
 
   let bonus = fx.checkValueAdd(spec.primaryAttr, spec.scope, ctx);
   if (spec.scope === 'major') {
-    bonus += careerService.checkBonus(ctx);
+    bonus += careerService.checkBonus(spec.line, ctx);
     bonus += sortieBonus(sortie, ctx);
   }
   return { base: Math.max(r.baseFloor, Math.round(base)), bonus: Math.round(bonus) };
@@ -92,29 +109,40 @@ export function resolveCheck(
   return { passed: total >= spec.dc, roll, total, base, bonus, dc: spec.dc };
 }
 
-/** 難度可用性：功績不足時鎖定但仍顯示所需條件（18 §2.1）。 */
-export function availableDifficulties(
+export const routeOf = (
+  check: MajorCheckDef, choice: CheckChoice,
+): MajorCheckRoute => check.routes[choice.line];
+
+export const tierOf = (
+  check: MajorCheckDef, choice: CheckChoice,
+): MajorCheckTier => routeOf(check, choice).tiers[choice.difficulty];
+
+/**
+ * 六個選項的可用性：門檻不足時鎖定，但仍然顯示（18 §2.1）。
+ * 【不過濾掉】—— 看不見的選項不會讓玩家想去達成它的門檻。
+ */
+export function availableChoices(
   check: MajorCheckDef, ctx: RunContext,
-): readonly Difficulty[] {
+): readonly CheckChoice[] {
   const read = (path: Parameters<typeof statQuery.read>[0], c: RunContext): number =>
     statQuery.read(path, c);
-  return DIFFICULTIES.filter((d) => {
-    const tier = check.tiers[d];
-    return tier.requirements.every((cond) => evaluateCondition(cond, ctx, read));
-  });
+  return CHECK_CHOICES.filter((choice) => tierOf(check, choice).requirements
+    .every((cond) => evaluateCondition(cond, ctx, read)));
 }
 
-export function specForMajor(check: MajorCheckDef, difficulty: Difficulty): CheckSpec {
+export function specForMajor(check: MajorCheckDef, choice: CheckChoice): CheckSpec {
+  const route = routeOf(check, choice);
   return {
-    primaryAttr: check.primaryAttr,
-    secondaryAttr: check.secondaryAttr,
-    dc: check.tiers[difficulty].dc,
     scope: 'major',
+    primaryAttr: route.primaryAttr,
+    secondaryAttr: route.secondaryAttr,
+    line: choice.line,
+    dc: route.tiers[choice.difficulty].dc,
   };
 }
 
 export function specForMinor(attr: Attr, dc: number): CheckSpec {
-  return { primaryAttr: attr, secondaryAttr: null, dc, scope: 'minor' };
+  return { scope: 'minor', primaryAttr: attr, secondaryAttr: null, dc };
 }
 
 export const checkRuleOf = rule;

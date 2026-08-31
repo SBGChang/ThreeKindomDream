@@ -1,15 +1,52 @@
 // ⑲ 名士局內狀態 · 變更操作（需要 RNG 者收 TurnContext）。
 import type { RunContext, TurnContext } from '../contracts/core/context.js';
 import type { NotableId } from '../contracts/core/ids.js';
-import type { AffinityStage } from '../contracts/core/primitives.js';
+import type { NotableTarget } from '../contracts/core/effects.js';
 import type { RosterMember, RunState } from '../contracts/core/state.js';
-import type { EffectResolver } from './effect.js';
-import { notableCodex } from './notable-codex.js';
+import type { AffinityGrantOutcome, EffectResolver } from './effect.js';
+import { ATTRS } from '../contracts/core/primitives.js';
 import {
-  ATTR_ORDER, baseOf, companionCandidates, link, maxAffinity, rosterIds, withRoster,
+  baseOf, companionCandidates, link, maxAffinity, rosterIds, withRoster,
 } from './roster-query.js';
 
 export * from './roster-query.js';
+
+/**
+ * 入夢時的起始好感（10 §2）★
+ *
+ * 底線是全體共通的一個值，逐人的差異由星階解鎖條的 `AffinityGrant` 相加。
+ * 舊版由一張全域星階表推導，於是「典韋二星就到 60、曹操二星才 40」
+ * 這種逐人設計在資料上無法表達 —— 同一階只能給同一個值。
+ */
+const seedAffinity = (ctx: RunContext): number =>
+  ctx.defs.single('affinityCurve').baseStartAffinity;
+
+/** 這條好感補正打不打得到某位名士。與效果系統的 `NotableTarget` 同一套語意。 */
+function grantHits(
+  g: AffinityGrantOutcome, id: NotableId, ctx: RunContext,
+): boolean {
+  switch (g.target.kind) {
+    case 'all': return true;
+    case 'self': return g.owner !== null && g.owner === id;
+    case 'named': return g.target.notableId === id;
+    case 'specialty': return baseOf(id, ctx).specialty === g.target.attr;
+  }
+}
+
+/** 把一組補正套到一份陣容上。玩伴與上司兩處共用 —— 規則只有一份。 */
+function applyGrants(
+  built: readonly RosterMember[], ctx: RunContext, fx: EffectResolver,
+): readonly RosterMember[] {
+  const cap = maxAffinity(ctx);
+  const staged: RunContext = { state: withRoster(ctx, built), defs: ctx.defs };
+  const grants = fx.startAffinityGrants(staged);
+  return built.map((m) => {
+    const add = grants
+      .filter((g) => grantHits(g, m.notableId, staged))
+      .reduce((sum, g) => sum + g.amount, 0);
+    return { ...m, affinity: Math.min(cap, m.affinity + add) };
+  });
+}
 
 export function assembleCompanions(ctx: TurnContext, fx: EffectResolver): RunState {
   const rules = ctx.defs.single('gameRules');
@@ -21,26 +58,11 @@ export function assembleCompanions(ctx: TurnContext, fx: EffectResolver): RunSta
     remaining = remaining.filter((x) => x !== chosen);
   }
 
-  const cap = maxAffinity(ctx);
-  let built: RosterMember[] = picked.map((id) => ({
-    notableId: id,
-    affinity: Math.min(cap, notableCodex.startAffinity(id, ctx.state.metaSnapshot)),
-    origin: 'companion',
-    firedStages: [],
+  const seed = seedAffinity(ctx);
+  const built: RosterMember[] = picked.map((id) => ({
+    notableId: id, affinity: seed, origin: 'companion',
   }));
-
-  // AffinityGrant（timing=onDreamEnter）：天賦與名士的開局好感補正
-  const staged: RunContext = { state: withRoster(ctx, built), defs: ctx.defs };
-  for (const g of fx.startAffinityGrants(staged)) {
-    if (g.rule === 'allRoster') {
-      built = built.map((m) => ({ ...m, affinity: Math.min(cap, m.affinity + g.amount) }));
-    } else if (g.rule === 'randomRoster' && built.length > 0) {
-      const target = ctx.rng.pick('notable.roster', built.map((m) => m.notableId));
-      built = built.map((m) => (m.notableId === target
-        ? { ...m, affinity: Math.min(cap, m.affinity + g.amount) } : m));
-    }
-  }
-  return withRoster(ctx, built);
+  return withRoster(ctx, applyGrants(built, ctx, fx));
 }
 
 /**
@@ -49,14 +71,10 @@ export function assembleCompanions(ctx: TurnContext, fx: EffectResolver): RunSta
  * 兒時玩伴與陣營上司來自同一批名士，因此上司抽補必須排除【已在陣容中的人】。
  * 少了這條，同一個人會在一輪裡出現兩次 —— 好感度分裂成兩筆、站位分配把他算兩次、
  * 事件鏈也會重複觸發。
- *
- * 排除來源刻意用 `roster.members` 現算，不另存一份「已抽過名單」：
- * 陣容成員只增不減，它本身就是完整的答案（同 15 §2.1 的理由）。
- *
- * 池若被玩伴掏空，上司會少於 `superiorCount` —— 由 02 的規則驗證擋在載入期
- * （池的成員數必須 ≥ companionCount ＋ superiorCount）。
  */
-export function assignSuperiors(chosen: readonly NotableId[], ctx: TurnContext): RunState {
+export function assignSuperiors(
+  chosen: readonly NotableId[], ctx: TurnContext, fx: EffectResolver,
+): RunState {
   if (ctx.state.faction === null) throw new Error('未入陣營，不可分配上司');
   const rules = ctx.defs.single('gameRules');
   const faction = ctx.defs.reader('faction').get(String(ctx.state.faction));
@@ -72,34 +90,39 @@ export function assignSuperiors(chosen: readonly NotableId[], ctx: TurnContext):
     remaining = remaining.filter((x) => x.notableId !== e.notableId);
   }
 
-  const cap = maxAffinity(ctx);
+  const seed = seedAffinity(ctx);
   const added: RosterMember[] = picked.map((id) => ({
-    notableId: id,
-    affinity: Math.min(cap, notableCodex.startAffinity(id, ctx.state.metaSnapshot)),
-    origin: 'superior',
-    firedStages: [],
+    notableId: id, affinity: seed, origin: 'superior',
   }));
-  return withRoster(ctx, [...ctx.state.roster.members, ...added]);
+  // 補正只套在【新加入的人】身上 —— 已在陣容者早就套過，再套一次是重複發放。
+  return withRoster(ctx, [...ctx.state.roster.members, ...applyGrants(added, ctx, fx)]);
 }
 
-/** 每回合把陣容分配到四個行動格。順序固定 —— 改動即破壞可重播（19 §4.1）。 */
+/**
+ * 每回合把陣容分配到四個行動格。順序固定 —— 改動即破壞可重播（19 §4.1）。
+ *
+ * 四格的基礎權重相同（`slotBaseWeight`），偏好完全由 `SlotBias` 疊上去 ——
+ * 於是「統系名士更常站統御格」是星階或道具買來的，不是與生俱來的。
+ * 這是【權重】不是限制：任何名士仍可能站到任何一格，否則格子就固定了。
+ */
 export function distributeSlots(
   ctx: TurnContext, fx: EffectResolver,
 ): readonly (readonly NotableId[])[] {
-  const cap = link(ctx).maxPerSlot;
+  const lb = link(ctx);
   const slots: NotableId[][] = [[], [], [], []];
   for (const m of ctx.state.roster.members) {
-    const open = slots.map((s, i) => ({ i, ok: s.length < cap })).filter((x) => x.ok);
+    const open = slots.map((s, i) => ({ i, ok: s.length < lb.maxPerSlot }))
+      .filter((x) => x.ok);
     if (open.length === 0) continue;
     const base = baseOf(m.notableId, ctx);
     const entries = open.map((o) => {
-      const attr = ATTR_ORDER[o.i];
+      const attr = ATTRS[o.i];
       if (attr === undefined) throw new Error('unreachable');
-      // 基底的專長傾向從第一回合就生效；SlotBias 效果是解鎖條再疊上去的（19 §4）。
-      // 這是【權重】不是限制 —— 任何名士仍可能站到任何一格，否則格子就固定了，
-      // 「紅光但沒人站 vs 無光但他站著」的糾結會消失。
       const specialty = base.specialty === attr ? base.specialtyWeight : 1;
-      return { item: o.i, weight: specialty * fx.slotBias(String(m.notableId), attr, ctx) };
+      return {
+        item: o.i,
+        weight: lb.slotBaseWeight * specialty * fx.slotBias(m.notableId, attr, ctx),
+      };
     });
     const idx = ctx.rng.weighted('notable.slot', entries);
     slots[idx]?.push(m.notableId);
@@ -107,14 +130,22 @@ export function distributeSlots(
   return slots;
 }
 
+/**
+ * 同框帶來的好感成長（19 §5.2）★
+ *
+ * 成長率【逐人】計算：道具與天命可以指名某位（或某一類）加速，
+ * 而站位效果全部卡在好感 60 —— 加快成長＝提早解鎖整個站位層。
+ */
 export function gainAffinity(
   ids: readonly NotableId[], ctx: RunContext, fx: EffectResolver,
 ): RunState {
-  const gain = Math.round(link(ctx).gainPerTraining * fx.affinityGrowthMul(ctx));
+  const perTraining = link(ctx).gainPerTraining;
   const cap = maxAffinity(ctx);
-  return withRoster(ctx, ctx.state.roster.members.map((m) => (
-    ids.includes(m.notableId) ? { ...m, affinity: Math.min(cap, m.affinity + gain) } : m
-  )));
+  return withRoster(ctx, ctx.state.roster.members.map((m) => {
+    if (!ids.includes(m.notableId)) return m;
+    const gain = Math.round(perTraining * fx.affinityGrowthMul(m.notableId, ctx));
+    return { ...m, affinity: Math.min(cap, m.affinity + gain) };
+  }));
 }
 
 export function addAffinity(id: NotableId, amount: number, ctx: RunContext): RunState {
@@ -124,10 +155,12 @@ export function addAffinity(id: NotableId, amount: number, ctx: RunContext): Run
   )));
 }
 
-export function markChainFired(
-  id: NotableId, stage: AffinityStage, ctx: RunContext,
-): RunState {
-  return withRoster(ctx, ctx.state.roster.members.map((m) => (
-    m.notableId === id ? { ...m, firedStages: [...m.firedStages, stage] } : m
-  )));
+/** 全員加好感。陳群〈定品〉那種【當局獎勵】走這條（23 §8）。 */
+export function addAffinityAll(amount: number, ctx: RunContext): RunState {
+  const cap = maxAffinity(ctx);
+  return withRoster(ctx, ctx.state.roster.members.map(
+    (m) => ({ ...m, affinity: Math.min(cap, m.affinity + amount) }),
+  ));
 }
+
+export type { NotableTarget };

@@ -14,3 +14,14 @@
 *.jpg binary
 *.ogg binary
 *.wav binary
+
+# 例外：Windows 批次檔必須是 CRLF，且必須純 ASCII。
+#
+# 上面那條全庫 eol=lf 會讓 fresh clone 拿到 LF-only 的 .bat ——
+# cmd.exe 對 LF-only 批次檔的行為不可靠（label 與括號區塊在某些情況會誤判），
+# 於是「已經修好的 start.bat」在下一次 clone 又壞掉一次。
+#
+# 這條例外不影響 verify:content：它逐字元比對的是 content/ 的 JSON 產物，
+# 與 .bat 無關（見上方說明）。
+*.bat text eol=crlf
+*.cmd text eol=crlf

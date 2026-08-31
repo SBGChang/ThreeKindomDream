@@ -1,4 +1,4 @@
-import { ATTRS, GLOW_TIERS } from '../../contracts/core/primitives.js';
+import { ATTRS, GLOW_TIERS, PHASES, RARITIES } from '../../contracts/core/primitives.js';
 import type { Ctx } from './types.js';
 
 export function validateCareer(c: Ctx): void {
@@ -8,7 +8,27 @@ export function validateCareer(c: Ctx): void {
     if (ranks.length === 0) {
       c.push('rule', 'career', line, null, `${line} 線沒有任何階級`);
       continue;
+      // 三張表都必須隨階級單調不減。任一張倒退就會出現「升官反而變弱」，
+  // 那種缺陷不會讓任何測試失敗，只會讓玩家覺得數值有鬼。
+  for (const line of ['civil', 'martial'] as const) {
+    const rows = c.rows('careerRank')
+      .filter((d) => c.s(d['line']) === line)
+      .slice()
+      .sort((a, b) => c.n(a['level']) - c.n(b['level']));
+    for (const field of ['requiredMerit', 'checkBonus', 'trainingBaseAdd'] as const) {
+      let prev = -Infinity;
+      for (const d of rows) {
+        const v = c.n(d[field]);
+        if (v < prev) {
+          c.push('rule', 'careerRanks', field, c.s(d['id']),
+            `${field} 隨階級倒退（前 ${prev}，本 ${v}）`,
+            '升官不該讓任何一項變差');
+        }
+        prev = v;
+      }
     }
+  }
+}
     ranks.forEach((r, i) => {
       const id = c.s(r['id']);
       c.text(r['nameKey'], 'career', 'nameKey', id);
@@ -90,8 +110,10 @@ export function validateTrainingActions(c: Ctx): void {
     seen.add(key);
   }
   // 兩階段 × 四維必須齊全，否則某格生不出來
-  for (const phase of ['nanhua', 'faction'] as const) {
-    for (const attr of ['war', 'int', 'pol', 'cha'] as const) {
+  for (const phase of PHASES) {
+    // 用 ATTRS 而不是寫死四個字串：加減一維時這裡會自動跟上，
+    // 而寫死的那份會靜靜地少檢查一維。
+    for (const attr of ATTRS) {
       if (!seen.has(`${phase}/${attr}`)) {
         c.push('rule', 'trainingActions', `${phase}/${attr}`, null,
           `缺少 ${phase} 階段的 ${attr} 行動`, '四維 × 兩階段共 8 筆必須齊全');
@@ -104,7 +126,7 @@ export function validateTrainingActions(c: Ctx): void {
  * 成長曲線（鍛鍊與事件各一張）。
  *
  * 兩張表的形狀刻意相同：`progress.chapter` 是跨序列累積的全域章序，
- * 所以兩張表都必須長到蓋住「南華村篇 ＋ 最長陣營線」的總章數，
+ * 所以兩張表都必須長到蓋住「帳下 ＋ 最長陣營線」的總章數，
  * 否則後段章節會靜靜落回 fallback 值 —— 玩得到但數值是錯的，測試抓不到。
  *
  * 「上課 vs 工作」的差距就是這兩張 baseByAttr 的比值（GDD §4.2）。
@@ -117,9 +139,16 @@ export function validateYieldCurves(c: Ctx): void {
   const factionLens = seqs.filter((r) => r['factionId'] !== null).map(lenOf);
   const maxChapters = shared + Math.max(0, ...factionLens);
 
+  // 官階數 —— 委託的產出與 DC 都以它為索引（17 §4）。
+  const rankLevels = new Set(c.rows('careerRank').map((r) => c.n(r['level'])));
+  const maxRank = Math.max(1, ...rankLevels);
+
+  // 兩張表的索引【不一樣】，這是刻意的（見 core/config/training.ts）：
+  //   trainingCurve.chapterMultiplier  跟著章節長（世界變大了）
+  //   eventYieldCurve.tierMultiplier   跟著官階長（朝廷按身分派事）
   const curveKinds = [
-    { kind: 'trainingCurve' as const, file: 'trainingCurve' },
-    { kind: 'eventYieldCurve' as const, file: 'eventYieldCurve' },
+    { kind: 'trainingCurve' as const, file: 'trainingCurve', field: 'chapterMultiplier', need: maxChapters, unit: '章' },
+    { kind: 'eventYieldCurve' as const, file: 'eventYieldCurve', field: 'tierMultiplier', need: maxRank, unit: '階' },
   ];
 
   for (const spec of curveKinds) {
@@ -132,20 +161,20 @@ export function validateYieldCurves(c: Ctx): void {
     }
     for (const d of rows) {
       const id = c.s(d['id']);
-      const mul = c.list(d['chapterMultiplier']).map(c.n);
-      if (mul.length < maxChapters) {
-        c.push('rule', spec.file, 'chapterMultiplier', id,
-          `長度 ${mul.length} 不足最長序列的 ${maxChapters} 章`,
-          '補齊到總章數，否則後段章節會落回 fallback 值');
+      const mul = c.list(d[spec.field]).map(c.n);
+      if (mul.length < spec.need) {
+        c.push('rule', spec.file, spec.field, id,
+          `長度 ${mul.length} 不足 ${spec.need} ${spec.unit}`,
+          '補齊，否則後段會落回 fallback 值');
       }
       mul.forEach((v, i) => {
         if (v <= 0) {
-          c.push('rule', spec.file, `chapterMultiplier[${i}]`, id, '倍率必須 > 0');
+          c.push('rule', spec.file, `${spec.field}[${i}]`, id, '倍率必須 > 0');
         }
         const prev = mul[i - 1];
         if (prev !== undefined && v < prev) {
-          c.push('rule', spec.file, `chapterMultiplier[${i}]`, id,
-            `倍率必須單調不減（前 ${prev}，本 ${v}）`, '否則升章會變成減益');
+          c.push('rule', spec.file, `${spec.field}[${i}]`, id,
+            `倍率必須單調不減（前 ${prev}，本 ${v}）`, '否則往上走會變成減益');
         }
       });
 
@@ -161,6 +190,19 @@ export function validateYieldCurves(c: Ctx): void {
   }
 
   for (const d of c.rows('eventYieldCurve')) {
+    const rar = c.list(d['rarityMultiplier']).map(c.n);
+    if (rar.length < RARITIES.length) {
+      c.push('rule', 'eventYieldCurve', 'rarityMultiplier', c.s(d['id']),
+        `長度 ${rar.length} 不足 ${RARITIES.length} 個稀有度`);
+    }
+    rar.forEach((v, i) => {
+      const prev = rar[i - 1];
+      if (prev !== undefined && v < prev) {
+        c.push('rule', 'eventYieldCurve', `rarityMultiplier[${i}]`, c.s(d['id']),
+          `稀有度倍率倒退（前 ${prev}，本 ${v}）`, '★4 不該比 ★1 值錢得少');
+      }
+    });
+
     const ratio = c.n(d['failRatio']);
     if (ratio < 0 || ratio > 1) {
       c.push('rule', 'eventYieldCurve', 'failRatio', c.s(d['id']),
@@ -203,19 +245,70 @@ export function validateLinkBonus(c: Ctx): void {
     // 階段加成必須單調不減 —— 否則養好感度會變成減益
     const stages = c.rows('affinityStage').slice()
       .sort((a, b) => c.n(a['min']) - c.n(b['min'])).map((r) => c.s(r['stage']));
-    const table = (d['trainingBonusByStage'] ?? {}) as Record<string, unknown>;
+    // 出戰加值仍隨局內好感單調不減。站位連動【已不吃好感】（19 §5.1），
+    // 因此這裡只剩一張表要檢查。
+    const table = (d['checkBonusByStage'] ?? {}) as Record<string, unknown>;
     let prev = -Infinity;
     for (const st of stages) {
       if (table[st] === undefined) {
-        c.push('schema', 'linkBonus', `trainingBonusByStage.${st}`, id, `缺少階段 ${st}`);
+        c.push('schema', 'linkBonus', `checkBonusByStage.${st}`, id, `缺少階段 ${st}`);
         continue;
       }
       const v = c.n(table[st]);
       if (v < prev) {
-        c.push('rule', 'linkBonus', `trainingBonusByStage.${st}`, id,
-          `階段加成必須單調不減（前 ${prev}，本 ${v}）`, '否則養好感度會變成減益');
+        c.push('rule', 'linkBonus', `checkBonusByStage.${st}`, id,
+          `階段加值必須單調不減（前 ${prev}，本 ${v}）`, '否則養好感度會變成減益');
       }
       prev = v;
     }
   }
+
+  validateStarLadder(c);
+}
+
+/**
+ * 升星階梯（19 §5.3）。三欄都必須隨星階單調不減，且 star 欄必須是 0..N 連續 ——
+ * 缺一階會讓 `tierAt` 夾到別的列，玩家買到的東西與畫面顯示的不一致。
+ */
+function validateStarLadder(c: Ctx): void {
+  const rows = c.rows('notableStar');
+  if (rows.length !== 1) {
+    c.push('rule', 'notableStar', 'count', null, `notableStar 必須恰好一筆，實得 ${rows.length} 筆`);
+    return;
+  }
+  const d = rows[0];
+  if (d === undefined) return;
+  const id = c.s(d['id']);
+  const tiers = c.arr(d['tiers']);
+  if (tiers.length < 2) {
+    c.push('rule', 'notableStar', 'tiers', id, '至少要有兩階（未升星 ＋ 一階），否則升星是死機制');
+    return;
+  }
+  const first = tiers[0];
+  if (first !== undefined && c.n(first['fragmentCost']) !== 0) {
+    c.push('rule', 'notableStar', 'tiers[0].fragmentCost', id, '第 0 階（未升星）的成本必須為 0');
+  }
+  let prevMul = -Infinity;
+  let prevAff = -Infinity;
+  tiers.forEach((row, i) => {
+    if (c.n(row['star']) !== i) {
+      c.push('rule', 'notableStar', `tiers[${i}].star`, id,
+        `star 必須等於索引（實得 ${c.n(row['star'])}）`, 'tierAt 以索引取列，跳號會取到別人');
+    }
+    const mul = c.n(row['linkMultiplier']);
+    if (mul < prevMul) {
+      c.push('rule', 'notableStar', `tiers[${i}].linkMultiplier`, id,
+        `連動倍率倒退（前 ${prevMul}，本 ${mul}）`, '升星不該讓站位變弱');
+    }
+    prevMul = mul;
+    const aff = c.n(row['startAffinity']);
+    if (aff < prevAff) {
+      c.push('rule', 'notableStar', `tiers[${i}].startAffinity`, id,
+        `初始好感倒退（前 ${prevAff}，本 ${aff}）`, '否則升星會弄丟已解鎖的條目');
+    }
+    prevAff = aff;
+    if (i > 0 && c.n(row['fragmentCost']) <= 0) {
+      c.push('rule', 'notableStar', `tiers[${i}].fragmentCost`, id, '升星成本必須 > 0');
+    }
+  });
 }

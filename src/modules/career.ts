@@ -7,8 +7,8 @@ import { statQuery } from './stats.js';
 
 export interface CareerService {
   rankOf(line: CareerLine, ctx: RunContext): CareerRankDef;
-  checkBonus(ctx: RunContext): number;
-  initializeOnJoin(ctx: RunContext): RunState;
+  /** 大檢定的官階加值。只算【所走路線】那一條（18 §2.2）。 */
+  checkBonus(line: CareerLine, ctx: RunContext): number;
   /** 訂閱功績變動。用 while 而非 if —— 單次獎勵可能一次跨兩階（21 §2.2）。 */
   reevaluate(ctx: RunContext): RunState;
   maxLevel(line: CareerLine, ctx: RunContext): number;
@@ -26,19 +26,13 @@ export const careerService: CareerService = {
     return r;
   },
 
-  checkBonus(ctx) {
-    return this.rankOf('civil', ctx).checkBonus + this.rankOf('martial', ctx).checkBonus;
-  },
-
-  initializeOnJoin(ctx) {
-    const init = ctx.defs.single('careerInit');
-    const total = statQuery.totalFame(ctx);
-    const tier = [...init.byTotalFame]
-      .sort((a, b) => a.minTotalFame - b.minTotalFame)
-      .filter((t) => t.minTotalFame <= total)
-      .at(-1);
-    if (tier === undefined) throw new Error('careerInit 缺少 minTotalFame=0 的項');
-    return { ...ctx.state, career: { civil: tier.civilLevel, martial: tier.martialLevel } };
+  /**
+   * 舊版把文武兩線相加。文武各三檔的六選項制之後那是錯的：
+   * 相加會讓「走文路還是武路」對加值毫無影響，文武雙軌在檢定上等於單軌，
+   * 而「爬哪一條官階」也就不再是決策。
+   */
+  checkBonus(line, ctx) {
+    return this.rankOf(line, ctx).checkBonus;
   },
 
   reevaluate(ctx) {

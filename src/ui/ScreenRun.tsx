@@ -1,8 +1,8 @@
 import type { Session } from '../app/session.js';
-import type { AttrGain } from '../contracts/core/state.js';
+import type { AttrGain, EventOffer, MeritGain } from '../contracts/core/state.js';
 import type { SlotIndex } from '../contracts/core/primitives.js';
 import { SLOT_INDICES } from '../contracts/core/primitives.js';
-import { baseOf, defs, notableSlotBonus, stageOf, t } from '../app/bootstrap.js';
+import { baseOf, defs, stageOf, t } from '../app/bootstrap.js';
 import { StatusBar } from './StatusBar.js';
 
 interface Props {
@@ -18,39 +18,55 @@ const fill = (body: string, params: Readonly<Record<string, unknown>>): string =
 const gains = (list: readonly AttrGain[]): string => (list.length === 0 ? '—'
   : list.map((g) => `${t(`attr.${g.attr}.short`)}+${g.amount}`).join(' '));
 
+const merits = (list: readonly MeritGain[]): string => (list.length === 0 ? ''
+  : list.map((m) => `${t(`merit.${m.line}`)}+${m.amount}`).join(' '));
+
+const stars = (n: number): string => '★'.repeat(n);
+
 /**
- * 單動作回合：鍛鍊四格與事件排在同一個選單裡，點一下即結算並推進（15 §2）。
+ * 一個回合三拍，畫面只問一個問題（15 §3）：
  *
- * 「選完就跳」讓上一回合的結果沒有畫面可以停留，所以結果改寫進回合紀錄
- * 由 App 持有 —— 那樣它能跨過大檢定畫面存活，玩家不會漏掉最後一次行動的收穫。
+ *   pendingEvent === null → 四個固定事件，玩家選一個
+ *   pendingEvent !== null → 那一則事件，玩家選怎麼度過
+ *
+ * 委託與人物事件共用同一段呈現 —— 追加一種事件來源不需要在這裡多長一個分支。
  */
 export function ScreenRun({ s, bump, log, onLog }: Props): React.ReactElement {
   const st = s.current;
   const chapter = defs.reader('chapter').get(String(st.progress.chapterId));
   const turnNo = st.progress.turn;
+  const pending = s.pendingEvent;
 
-  /** 行動 → 記錄 → 推進。三步綁在一起，因為它們就是「一個回合」。 */
-  const act = (run: () => string): void => {
-    onLog(`R${String(turnNo).padStart(2, ' ')} ${run()}`);
-    s.advance();
+  const stamp = (line: string): void => { onLog(`R${String(turnNo).padStart(2, ' ')} ${line}`); };
+
+  /** 拍一：選固定事件。旗標為真的那幾拍會依序跳出來，因此畫面可能換兩次。 */
+  const pickSlot = (i: SlotIndex): void => {
+    s.selectSlot(i);
+    const r = s.current.turn.training;
+    if (r !== null) {
+      stamp(`【${t(`attr.${r.attr}.${st.progress.phase}.label`)}】`
+        + `${t(`glow.${r.finalGlow}`)}${r.upgraded ? '⬆' : ''}`
+        + ` ${t(`attr.${r.attr}.short`)}+${r.attrGained}`
+        + `　${t(`merit.${r.meritGained.line}`)}+${r.meritGained.amount}`);
+    }
     bump();
   };
 
-  const doTraining = (i: SlotIndex): void => {
-    act(() => {
-      s.selectTraining(i);
-      const r = s.current.slots.training.result;
-      if (r === null) return '鍛鍊';
-      return `${t(`glow.${r.finalGlow}`)}${r.upgraded ? '⬆' : ''}`
-        + ` ${t(`attr.${r.attr}.short`)}+${r.attrGained}`;
-    });
-  };
-
-  const doEvent = (oi: number, ii: number, title: string, label: string): void => {
-    act(() => {
-      const out = s.selectEvent(oi, ii);
-      return `${title}·${label} ${out.passed ? '成' : '敗'}　${gains(out.practiceGained)}`;
-    });
+  /** 拍二／拍三：選處理方式。佇列可能還有下一拍，所以推進要問 canAdvance。 */
+  const pickOption = (offer: EventOffer, optionIndex: number, title: string, label: string): void => {
+    s.resolveEvent(optionIndex);
+    const r = s.current.turn.resolved.at(-1);
+    if (r !== undefined) {
+      // 道具用 ◆ 標，重複獲得再加一個 ° —— 重複才產碎片（23 §5）。
+      const loot = r.itemsGained.length === 0 ? '' : `　◆${r.itemsGained.map(
+        (g) => `${t(defs.reader('item').get(String(g.itemId)).nameKey)}${g.duplicate ? '°' : ''}`,
+      ).join(' ')}`;
+      stamp(`${title}·${label} ${r.passed ? '成' : '敗'}`
+        + `　${gains(r.practiceGained)}　${merits(r.meritGained)}${loot}`);
+    }
+    void offer;
+    if (s.canAdvance()) s.advance();
+    bump();
   };
 
   return (
@@ -58,55 +74,51 @@ export function ScreenRun({ s, bump, log, onLog }: Props): React.ReactElement {
       <h1>{t(chapter.titleKey)}</h1>
       <p className="sub mono">
         {`第 ${turnNo} 回合　章內 ${st.progress.turnInChapter}/${chapter.length}`}
-        {st.faction === null ? '　南華村篇' : `　${t(defs.reader('faction').get(String(st.faction)).nameKey)}`}
-        {`　已練 ${st.actions.training} ／ 已辦 ${st.actions.event}`}
+        {`　${st.faction === null
+          ? t(`phase.${st.progress.phase}`)
+          : t(defs.reader('faction').get(String(st.faction)).nameKey)}`}
       </p>
       <StatusBar s={s} />
 
-      <h2>本回合行動 · 擇一</h2>
-      <p className="sub" style={{ margin: '-4px 0 12px' }}>
-        鍛鍊與事件共用同一個回合。選了任一項，本回合即結束。
-      </p>
-
-      <div className="grid2">
-        <div>
-          <h3 className="lane">鍛鍊 · 練得多，但只長能力</h3>
+      {pending === null ? (
+        <>
+          <h2>本回合 · 四選一</h2>
+          <p className="sub" style={{ margin: '-4px 0 12px' }}>
+            四件事一起讀：光階、誰站在這格、有沒有委託❗、有沒有人物事件❕。
+            數字是【保底】—— 升階是選完之後的事。
+          </p>
           <div className="grid4">
             {SLOT_INDICES.map((i) => {
-              const slot = st.slots.training.slots[i];
+              const slot = st.turn.slots[i];
               if (slot === undefined) return null;
               const pv = s.previewTraining(i);
               return (
-                <button
-                  key={i}
-                  className="card"
-                  onClick={() => { doTraining(i); }}
-                >
+                <button key={i} className="card" onClick={() => { pickSlot(i); }}>
                   <h3>{t(slot.labelKey)}</h3>
+                  <div className="sub">{t(slot.subtitleKey)}</div>
                   <div className={`glow g-${slot.baseGlow}`}>{t(`glow.${slot.baseGlow}`)}</div>
-                  <div className="rate mono">
-                    {`${t(`attr.${slot.attr}.short`)}≈${pv.expectedGain}`}
-                    {`　升階 ${(pv.upgradeChance * 100).toFixed(0)}%`}
+                  {/* 【直接寫最後給的數值】—— 名士倍率已經算進去了。再寫一個
+                      ×N.NN 只是把同一件事說兩遍；升階率也不顯示 —— 它是選完之後
+                      的那一下驚喜，先講機率反而把它變成一個要計算的東西。 */}
+                  <div className="rate mono big">
+                    {`${t(`attr.${slot.attr}.short`)} +${pv.expectedGain}`}
                   </div>
-                  {/* 名士相乘的總倍率。全員擠進一格是本作的爆發時刻 ——
-                      看不到的爆發不是爆發，所以倍率越高就越搶眼（19 §5.2）。 */}
-                  {pv.notableMultiplier > 1 && (
-                    <div className={`mul mono${pv.notableMultiplier >= 2 ? ' big' : ''}`}>
-                      {`×${pv.notableMultiplier.toFixed(2)}`}
-                      {slot.notables.length > 2 ? `　${slot.notables.length} 人同格！` : ''}
-                    </div>
-                  )}
+                  <div className="rate mono">
+                    {`${t(`merit.${pv.meritGain.line}`)}+${pv.meritGain.amount}`}
+                  </div>
+                  {/* 兩種驚嘆號：一個給委託、一個給人物事件。兩個都亮、又是金光
+                      以上、還有人站 —— 那就是那一回合的高光（15 §3.3）。 */}
+                  <div className="flags mono">
+                    {pv.hasCommission ? <span className="f-comm">❗委託</span> : null}
+                    {pv.hasEncounter ? <span className="f-enc">❕人物</span> : null}
+                  </div>
                   <div className="peo">
                     {slot.notables.length === 0 ? '—' : slot.notables.map((n) => {
                       const nd = defs.reader('notable').get(String(n));
                       const base = baseOf(n, s.ctx);
-                      const pct = notableSlotBonus(n, slot.attr, s.ctx) * 100;
-                      // 名字 · 專長 · 交情 ＋ 這一格他實際加了多少。
-                      // 少了最後那個數字，玩家仍然不知道「他站這裡」值多少（19 §5.1）。
                       return (
                         <span key={String(n)} className={base.specialty === slot.attr ? 'fit' : ''}>
-                          {`${t(nd.nameKey)}·${t(`attr.${base.specialty}.short`)}`}
-                          {`·${t(`stage.${stageOf(n, s.ctx)}`)} +${pct.toFixed(0)}%　`}
+                          {`👤${t(nd.nameKey)}·${t(`stage.${stageOf(n, s.ctx)}`)}　`}
                         </span>
                       );
                     })}
@@ -115,45 +127,10 @@ export function ScreenRun({ s, bump, log, onLog }: Props): React.ReactElement {
               );
             })}
           </div>
-        </div>
-
-        <div>
-          <h3 className="lane">{`事件 · 名聲功績為主，順帶磨練（${st.slots.event.offers.length}）`}</h3>
-          {st.slots.event.offers.length === 0 && (
-            <p className="sub">沒有事件。名聲不足，還沒有人來找你 —— 本回合只能鍛鍊。</p>
-          )}
-          {st.slots.event.offers.map((o, oi) => {
-            const def = defs.reader('event').get(String(o.eventDefId));
-            const title = t(def.titleKey);
-            return (
-              <div className="card" key={String(o.eventDefId)} style={{ marginBottom: 8 }}>
-                <h3>{title}</h3>
-                <div className="body">{fill(t(def.bodyKey), o.params)}</div>
-                <div className="row">
-                  {def.options.map((opt, ii) => {
-                    const stt = o.optionStates[ii];
-                    if (stt === undefined) return null;
-                    const label = t(opt.labelKey);
-                    return (
-                      <button
-                        key={ii}
-                        disabled={!stt.enabled}
-                        onClick={() => { doEvent(oi, ii, title, label); }}
-                      >
-                        {label}
-                        <span className="rate mono">
-                          {stt.successRate !== null && ` ${(stt.successRate * 100).toFixed(0)}%`}
-                          {` ${gains(stt.practicePreview)}`}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+        </>
+      ) : (
+        <PendingPanel s={s} offer={pending} onPick={pickOption} />
+      )}
 
       <h2>回合紀錄</h2>
       {log.length === 0
@@ -163,6 +140,59 @@ export function ScreenRun({ s, bump, log, onLog }: Props): React.ReactElement {
             {log.map((line, i) => <div key={`${line}#${i}`} className={i === 0 ? 'ok' : ''}>{line}</div>)}
           </div>
         )}
+    </>
+  );
+}
+
+interface PendingProps {
+  readonly s: Session;
+  readonly offer: EventOffer;
+  readonly onPick: (offer: EventOffer, optionIndex: number, title: string, label: string) => void;
+}
+
+function PendingPanel({ s, offer, onPick }: PendingProps): React.ReactElement {
+  const def = defs.reader('event').get(String(offer.eventDefId));
+  const title = t(def.titleKey);
+  const isNotable = def.trigger.kind === 'notable';
+  const remaining = s.current.turn.pending.length;
+
+  return (
+    <>
+      <h2>{isNotable ? '人物事件 · 擇一應對' : '委託 · 擇一應對'}</h2>
+      <p className="sub" style={{ margin: '-4px 0 12px' }}>
+        {`稀有度 ${stars(offer.rarity)}`}
+        {remaining > 1 ? `　（本回合還有 ${remaining - 1} 件待處理）` : ''}
+      </p>
+      <div className="card">
+        <h3>{title}</h3>
+        <div className="body">{fill(t(def.bodyKey), offer.params)}</div>
+        {/* 三檔照 low → mid → high 排。檔次標籤直接印出來 ——
+            「高條件高報酬」是設計承諾，玩家得看得到它才成立（17 §5）。 */}
+        <div className="row">
+          {def.options.map((opt, ii) => {
+            const stt = offer.optionStates[ii];
+            if (stt === undefined) return null;
+            const label = t(opt.labelKey);
+            return (
+              <button
+                key={ii}
+                className={stt.tier === 'high' ? 'sel' : ''}
+                disabled={!stt.enabled}
+                onClick={() => { onPick(offer, ii, title, label); }}
+              >
+                {stt.tier === 'story' ? label : `[${t(`optionTier.${stt.tier}`)}] ${label}`}
+                <span className="rate mono">
+                  {stt.enabled
+                    ? `${stt.successRate === null ? '' : ` ${(stt.successRate * 100).toFixed(0)}%`}`
+                      + `${merits(stt.meritPreview) === '' ? '' : ` ${merits(stt.meritPreview)}`}`
+                      + ` ${gains(stt.practicePreview)}`
+                    : ' 官階不足'}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
     </>
   );
 }

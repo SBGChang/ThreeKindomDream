@@ -1,4 +1,4 @@
-import type { CareerInitDef, CareerRankDef } from '../../../src/contracts/core/definitions.js';
+import type { CareerRankDef } from '../../../src/contracts/core/definitions.js';
 import type { CareerLine } from '../../../src/contracts/core/primitives.js';
 import { asKey } from '../../authoring.js';
 import { coreDef } from '../pack-id.js';
@@ -7,19 +7,41 @@ const k = asKey;
 
 // GREYBOX：全部階級都是軍閥可自封的職務（GDD §12.1）。
 // 不含三公、九卿、尚書、侍中 —— 那些是結局稱號，不是局內可爬的階級。
-const REQUIRED = [0, 30, 70, 130, 210, 320, 460, 640, 860, 1130, 1450, 1830];
+//
+// ── 三張表全部照新制重訂（實測 200 輪）★ ──────────────
+//
+// 新制的功績流量比舊制大一個數量級：每個回合都給（固定事件 6 ／ 委託 22–30，
+// 再乘章節與稀有度倍率），實測單線 32 回合累積約 2200。舊表頂端 1830
+// 在灰盒中段就爬完了，整條階梯失去意義。
+//
+// requiredMerit：按「九章走完剛好爬到頂」反推。
+//   單線總量 ≈ 8 回合 × 約 34 ／回合 × Σ章節倍率 28.2 ≈ 7700
+//   因此頂端訂在 6400 —— 專精單線者走完全程摸得到，兼顧兩線者摸不到。
+//   灰盒（四章、約 2200）落在 rank 8 附近，仍有頭上空間。
+const REQUIRED = [0, 105, 245, 455, 735, 1120, 1610, 2240, 3010, 3955, 5075, 6405];
 
-// checkBonus 是【門檻貨幣換成檢定力】的唯一管道（18 §2、21 §3）。
+// checkBonus：舊值（頂端 1030）在新制下會【蓋過四維】——
+// 實測 rank 12 的加值 1030 對照四維 990，檢定值一半來自官階，
+// 那會讓「練哪一維」失去意義。縮到約四維的一成，作為次要貢獻。
 //
-// 舊值 [0,2,4,7,…,82] 是雙槽制的遺物：那時事件不花回合，功績純屬白賺，
-// 所以加值多小都無所謂。單動作回合制下，做事要用掉一個鍛鍊回合 ——
-// 若功績換不到檢定力，事件就被鍛鍊完全支配，門檻貨幣淪為純懲罰。
+// 官階的主要回報不在這裡，而在 trainingBaseAdd（見下）。
+const BONUS = [0, 6, 13, 22, 34, 50, 70, 95, 126, 165, 213, 271];
+
+// trainingBaseAdd：官階的主要回報 —— 抬高該線四維的固定事件基礎值。
 //
-// 新值的訂法：在玩家【自然會持有該階】的那一章，加值約為其四維檢定值的兩成。
-//   參考檢定值（專精、三成回合做事）ch3 ≈ 400 / ch4 ≈ 620
-//   該階自然出現的章節         rank 3 → ch3 ／ rank 5 → ch4
-// 兩成夠讓升官有感，又不足以取代鍛鍊 —— 檢定值的主體仍必須靠練。
-const BONUS = [0, 25, 50, 85, 130, 190, 265, 360, 480, 630, 810, 1030];
+// ── 已從凸曲線攤平為線性 ★ ────────────────────────
+// 舊值 [0,1,2,3,5,7,9,12,15,19,23,28] 在後段加速（rank 12 → ×3.8），
+// 疊上 chapterMultiplier 6.2 之後後期成長幅度過高；更糟的是它讓
+// 「轉換道路」的代價隨階級擴大 —— 高階武官想改練文政時落差最大。
+//
+// 線性 ＋ `trainingCurve.crossLineRatio` 兩件事一起解：
+//   rank 4  → 10+3 = 13（×1.3）
+//   rank 8  → 10+7 = 17（×1.7）
+//   rank 12 → 10+11 = 21（×2.1）
+// 而另一線的官階再算一半進來，換路不再是從新兵重來。
+//
+// 這是【相加】不是相乘：名士單格已可到 ×8，再乘一層官階會在後段爆掉。
+const BASE_ADD = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
 const line = (l: CareerLine): readonly CareerRankDef[] =>
   REQUIRED.map((requiredMerit, i) =>
@@ -29,25 +51,11 @@ const line = (l: CareerLine): readonly CareerRankDef[] =>
       nameKey: k(`career.${l}.${i + 1}`),
       requiredMerit,
       checkBonus: BONUS[i] ?? 0,
+      trainingBaseAdd: BASE_ADD[i] ?? 0,
     }));
 
 export const careerRanks: readonly CareerRankDef[] = [...line('civil'), ...line('martial')];
 
-// 入朝初始階級由南華村篇的總名聲決定（GDD §12.1 / 21 §2.1）。
-//
-// 舊門檻（100/200/320/460）反推自「16 回合都做居民委託」—— 雙槽制下事件不花回合，
-// 16 回合就是 16 則委託。單動作回合制下要練也要做事，南華村篇實際只做得到
-// 6–8 則，最高階永遠碰不到，整張表等於只有第一列有效。
-//
-// 新門檻反推自：8 則居民委託 × 約 14 名聲 × 章節倍率 1.15 ≈ 130，
-// 加上兩場大檢定的名聲獎勵 ≈ 60 → 五成回合做事者約 190。
-// 於是「一半回合拿去做事」剛好換到文三武三入朝，全押鍛鍊者則是白身起步。
-export const careerInit: CareerInitDef = coreDef('careerInit', 'careerInit:main', {
-  byTotalFame: [
-    { minTotalFame: 0, civilLevel: 1, martialLevel: 1 },
-    { minTotalFame: 50, civilLevel: 2, martialLevel: 1 },
-    { minTotalFame: 100, civilLevel: 2, martialLevel: 2 },
-    { minTotalFame: 160, civilLevel: 3, martialLevel: 3 },
-    { minTotalFame: 230, civilLevel: 4, martialLevel: 4 },
-  ],
-});
+// careerInit 已刪除：名聲退場之後，官階從第一回合起就只由功績決定（21 §2.1）。
+// 舊制在入朝那一刻讀一次總名聲來定起始階級 —— 那是名聲唯一的消費端，
+// 也是「前十六回合的事件報酬看不出作用」的根源。

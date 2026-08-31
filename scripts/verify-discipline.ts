@@ -79,8 +79,10 @@ const UNIVERSAL: readonly string[] = [
   'progress', 'faction', 'config', 'metaSnapshot', 'seed', 'rngCursors', 'schemaVersion',
 ];
 const OWNS: Readonly<Record<string, readonly string[]>> = {
-  'training.ts': ['slots'],
-  'event-slot.ts': ['slots'],
+  // ⑯ 與 ⑰ 共同擁有 `turn`：一個回合就是「固定事件 ＋ 它引出的事件」，
+  // 硬把它切成兩個 slice 會讓「本回合做了什麼」需要兩處對帳（15 §2）。
+  'training.ts': ['turn'],
+  'commission.ts': ['turn'],
   'roster.ts': ['roster'],
   'roster-query.ts': ['roster'],
   'stats.ts': ['attributes', 'currencies', 'career'],
@@ -91,12 +93,14 @@ const OWNS: Readonly<Record<string, readonly string[]>> = {
   'ending.ts': ['ending'],
   'shop.ts': [],
   'notable-codex.ts': ['roster'],
+  // ⑩ 擁有局內道具持有。效果來源要讀 metaSnapshot（座標型，全域可讀）。
+  'item.ts': ['items'],
   'dream-entry.ts': [],
-  'effect.ts': ['charges', 'slots', 'lastMajorCheck'],
-  'effect-core.ts': ['slots', 'lastMajorCheck'],
+  'effect.ts': ['charges', 'turn', 'lastMajorCheck', 'boons'],
+  'effect-core.ts': ['turn', 'lastMajorCheck'],
   // ㉖ 結算是唯一可以讀全部的地方 —— 它的職責就是把整輪彙總（26 §3）
   'settlement.ts': [
-    'ending', 'roster', 'career', 'slots', 'attributes', 'currencies', 'actions',
+    'ending', 'roster', 'career', 'turn', 'attributes', 'currencies', 'actions',
   ],
   'check.ts': [],
 };

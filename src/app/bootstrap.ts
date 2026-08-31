@@ -6,7 +6,7 @@ import { loadContent } from '../data-runtime/loader.js';
 import type { DefinitionRegistry } from '../data-runtime/registry.js';
 import { seed as mkSeed } from '../contracts/core/ids.js';
 import type { MetaState } from '../contracts/core/state.js';
-import { emptyDraft, emptyMeta } from '../modules/dream-entry.js';
+import { designateQuota, emptyDraft, emptyMeta } from '../modules/dream-entry.js';
 import { browserRepository } from '../platform/browser-repository.js';
 
 const loaded = loadContent(browserRepository);
@@ -40,9 +40,12 @@ export function startRun(meta: MetaState, config = emptyDraft(meta, defs)): Sess
   return Session.start(wiring, meta, config, mkSeed(Date.now() % 2_000_000_000));
 }
 
-export { emptyDraft, emptyMeta };
+export { designateQuota, emptyDraft, emptyMeta };
 
 // UI 需要的唯讀 Query 與元層操作，經此層轉出（ui/ 不直接 import modules/）。
 export { catalog, purchase } from '../modules/shop.js';
 export { careerService } from '../modules/career.js';
 export { baseOf, notableSlotBonus, stageOf } from '../modules/roster-query.js';
+// ⑩ 只轉出唯讀查詢。`awardNotableFragments` 是寫入函式，只有 ㉖ 可呼叫，
+// 因此不從這裡出去 —— UI 拿不到它才是這道轉出的意義。
+export { notableCodex } from '../modules/notable-codex.js';

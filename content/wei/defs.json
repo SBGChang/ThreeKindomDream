@@ -2,17 +2,9 @@
   {
     "base": {
       "sortieBonus": 12,
-      "specialty": "cha",
-      "specialtyBonus": 0.18,
-      "specialtyWeight": 1.6,
-      "trainingBonus": 0.14
+      "specialty": "lead",
+      "specialtyWeight": 1
     },
-    "eventChain": [
-      {
-        "eventDefId": "event:notable.caocao.trust",
-        "stage": "friendly"
-      }
-    ],
     "factionId": "faction:wei",
     "id": "notable:caocao",
     "kind": "notable",
@@ -23,277 +15,132 @@
     "schemaVersion": 1,
     "unlocks": [
       {
-        "affinity": 20,
-        "descKey": "notable.caocao.unlock.20",
-        "funcType": "StatModifier",
-        "referId": 1031,
-        "supersedes": []
+        "descKey": "notable.caocao.kit.0",
+        "funcType": "LinkBonus",
+        "referId": 4101,
+        "star": 0
       },
       {
-        "affinity": 30,
-        "descKey": "notable.caocao.unlock.30",
-        "funcType": "EventRewardBonus",
-        "referId": 2001,
-        "supersedes": []
-      },
-      {
-        "affinity": 40,
-        "descKey": "notable.caocao.unlock.40",
+        "descKey": "notable.caocao.kit.1",
         "funcType": "CurrencyBonus",
-        "referId": 7003,
-        "supersedes": []
+        "referId": 7011,
+        "star": 0
       },
       {
-        "affinity": 50,
-        "descKey": "notable.caocao.unlock.50",
-        "funcType": "CheckValueBonus",
-        "referId": 6001,
-        "supersedes": []
+        "descKey": "notable.caocao.kit.2",
+        "funcType": "SlotBaseAdd",
+        "referId": 4301,
+        "star": 0
       },
       {
-        "affinity": 60,
-        "descKey": "notable.caocao.unlock.60",
-        "funcType": "StatModifier",
-        "referId": 1032,
-        "supersedes": [
-          20
-        ]
+        "descKey": "notable.caocao.kit.3",
+        "funcType": "LinkBonus",
+        "referId": 4111,
+        "star": 1
+      },
+      {
+        "descKey": "notable.caocao.kit.4",
+        "funcType": "AffinityGrant",
+        "referId": 5001,
+        "star": 2
+      },
+      {
+        "descKey": "notable.caocao.kit.5",
+        "funcType": "LinkBonus",
+        "referId": 4111,
+        "star": 3
+      },
+      {
+        "descKey": "notable.caocao.kit.6",
+        "funcType": "SlotBias",
+        "referId": 4001,
+        "star": 4
+      },
+      {
+        "descKey": "notable.caocao.kit.7",
+        "funcType": "LinkBonus",
+        "referId": 4112,
+        "star": 5
       }
     ]
   },
   {
     "base": {
-      "sortieBonus": 8,
-      "specialty": "pol",
-      "specialtyBonus": 0.18,
-      "specialtyWeight": 2.6,
-      "trainingBonus": 0.14
+      "sortieBonus": 7,
+      "specialty": "lead",
+      "specialtyWeight": 1
     },
-    "eventChain": [
-      {
-        "eventDefId": "event:notable.xunyu.counsel",
-        "stage": "friendly"
-      }
-    ],
     "factionId": "faction:wei",
-    "id": "notable:xunyu",
+    "id": "notable:zhangliao",
     "kind": "notable",
-    "nameKey": "notable.xunyu.name",
-    "notableId": "notable:xunyu",
-    "packId": "pack:wei",
-    "rarity": 5,
-    "schemaVersion": 1,
-    "unlocks": [
-      {
-        "affinity": 20,
-        "descKey": "notable.xunyu.unlock.20",
-        "funcType": "StatModifier",
-        "referId": 1021,
-        "supersedes": []
-      },
-      {
-        "affinity": 30,
-        "descKey": "notable.xunyu.unlock.30",
-        "funcType": "EventDrawModify",
-        "referId": 2101,
-        "supersedes": []
-      },
-      {
-        "affinity": 40,
-        "descKey": "notable.xunyu.unlock.40",
-        "funcType": "CheckValueBonus",
-        "referId": 6004,
-        "supersedes": []
-      },
-      {
-        "affinity": 50,
-        "descKey": "notable.xunyu.unlock.50",
-        "funcType": "RevealInfo",
-        "referId": 6201,
-        "supersedes": []
-      },
-      {
-        "affinity": 60,
-        "descKey": "notable.xunyu.unlock.60",
-        "funcType": "StatModifier",
-        "referId": 1022,
-        "supersedes": [
-          20
-        ]
-      }
-    ]
-  },
-  {
-    "base": {
-      "sortieBonus": 5,
-      "specialty": "int",
-      "specialtyBonus": 0.25,
-      "specialtyWeight": 2.2,
-      "trainingBonus": 0.09
-    },
-    "eventChain": [
-      {
-        "eventDefId": "event:notable.guojia.gambit",
-        "stage": "friendly"
-      }
-    ],
-    "factionId": "faction:wei",
-    "id": "notable:guojia",
-    "kind": "notable",
-    "nameKey": "notable.guojia.name",
-    "notableId": "notable:guojia",
-    "packId": "pack:wei",
-    "rarity": 5,
-    "schemaVersion": 1,
-    "unlocks": [
-      {
-        "affinity": 20,
-        "descKey": "notable.guojia.unlock.20",
-        "funcType": "StatModifier",
-        "referId": 1011,
-        "supersedes": []
-      },
-      {
-        "affinity": 30,
-        "descKey": "notable.guojia.unlock.30",
-        "funcType": "GlowUpgradeBonus",
-        "referId": 3011,
-        "supersedes": []
-      },
-      {
-        "affinity": 40,
-        "descKey": "notable.guojia.unlock.40",
-        "funcType": "CheckValueBonus",
-        "referId": 6003,
-        "supersedes": []
-      },
-      {
-        "affinity": 50,
-        "descKey": "notable.guojia.unlock.50",
-        "funcType": "RevealInfo",
-        "referId": 6201,
-        "supersedes": []
-      },
-      {
-        "affinity": 60,
-        "descKey": "notable.guojia.unlock.60",
-        "funcType": "StatModifier",
-        "referId": 1012,
-        "supersedes": [
-          20
-        ]
-      }
-    ]
-  },
-  {
-    "base": {
-      "sortieBonus": 5,
-      "specialty": "war",
-      "specialtyBonus": 0.14,
-      "specialtyWeight": 2,
-      "trainingBonus": 0.11
-    },
-    "eventChain": [],
-    "factionId": "faction:wei",
-    "id": "notable:xiahoudun",
-    "kind": "notable",
-    "nameKey": "notable.xiahoudun.name",
-    "notableId": "notable:xiahoudun",
+    "nameKey": "notable.zhangliao.name",
+    "notableId": "notable:zhangliao",
     "packId": "pack:wei",
     "rarity": 4,
     "schemaVersion": 1,
     "unlocks": [
       {
-        "affinity": 20,
-        "descKey": "notable.xiahoudun.unlock.20",
-        "funcType": "StatModifier",
-        "referId": 1001,
-        "supersedes": []
+        "descKey": "notable.zhangliao.kit.0",
+        "funcType": "LinkBonus",
+        "referId": 4101,
+        "star": 0
       },
       {
-        "affinity": 30,
-        "descKey": "notable.xiahoudun.unlock.30",
-        "funcType": "GlowUpgradeBonus",
-        "referId": 3001,
-        "supersedes": []
+        "descKey": "notable.zhangliao.kit.1",
+        "funcType": "CurrencyBonus",
+        "referId": 7011,
+        "star": 0
       },
       {
-        "affinity": 40,
-        "descKey": "notable.xiahoudun.unlock.40",
+        "descKey": "notable.zhangliao.kit.2",
         "funcType": "CheckValueBonus",
-        "referId": 6002,
-        "supersedes": []
+        "referId": 6001,
+        "star": 0
       },
       {
-        "affinity": 50,
-        "descKey": "notable.xiahoudun.unlock.50",
-        "funcType": "SlotBias",
-        "referId": 4001,
-        "supersedes": []
+        "descKey": "notable.zhangliao.kit.3",
+        "funcType": "CommissionChance",
+        "referId": 4501,
+        "star": 1
       },
       {
-        "affinity": 60,
-        "descKey": "notable.xiahoudun.unlock.60",
-        "funcType": "StatModifier",
-        "referId": 1002,
-        "supersedes": [
-          20
-        ]
-      }
-    ]
-  },
-  {
-    "base": {
-      "sortieBonus": 6,
-      "specialty": "war",
-      "specialtyBonus": 0.1,
-      "specialtyWeight": 2.4,
-      "trainingBonus": 0.08
-    },
-    "eventChain": [],
-    "factionId": "faction:wei",
-    "id": "notable:dianwei",
-    "kind": "notable",
-    "nameKey": "notable.dianwei.name",
-    "notableId": "notable:dianwei",
-    "packId": "pack:wei",
-    "rarity": 3,
-    "schemaVersion": 1,
-    "unlocks": [
-      {
-        "affinity": 20,
-        "descKey": "notable.dianwei.unlock.20",
-        "funcType": "StatModifier",
-        "referId": 1001,
-        "supersedes": []
+        "descKey": "notable.zhangliao.kit.4",
+        "funcType": "CheckRewardBonus",
+        "referId": 6503,
+        "star": 2
       },
       {
-        "affinity": 40,
-        "descKey": "notable.dianwei.unlock.40",
-        "funcType": "SlotBias",
-        "referId": 4001,
-        "supersedes": []
+        "descKey": "notable.zhangliao.kit.5",
+        "funcType": "AffinityGrant",
+        "referId": 5001,
+        "star": 3
       },
       {
-        "affinity": 60,
-        "descKey": "notable.dianwei.unlock.60",
-        "funcType": "StatModifier",
-        "referId": 1002,
-        "supersedes": [
-          20
-        ]
+        "descKey": "notable.zhangliao.kit.6",
+        "funcType": "LinkBonus",
+        "referId": 4111,
+        "star": 4
+      },
+      {
+        "descKey": "notable.zhangliao.kit.7",
+        "funcType": "CheckValueBonus",
+        "referId": 6008,
+        "star": 5
+      },
+      {
+        "descKey": "notable.zhangliao.kit.8",
+        "funcType": "CheckRewardBonus",
+        "referId": 6511,
+        "star": 5
       }
     ]
   },
   {
     "base": {
       "sortieBonus": 2,
-      "specialty": "pol",
-      "specialtyBonus": 0.07,
-      "specialtyWeight": 1.6,
-      "trainingBonus": 0.06
+      "specialty": "lead",
+      "specialtyWeight": 1
     },
-    "eventChain": [],
     "factionId": "faction:wei",
     "id": "notable:yujin",
     "kind": "notable",
@@ -304,52 +151,188 @@
     "schemaVersion": 1,
     "unlocks": [
       {
-        "affinity": 20,
-        "descKey": "notable.yujin.unlock.20",
-        "funcType": "StatModifier",
-        "referId": 1021,
-        "supersedes": []
+        "descKey": "notable.yujin.kit.0",
+        "funcType": "LinkBonus",
+        "referId": 4101,
+        "star": 0
       },
       {
-        "affinity": 40,
-        "descKey": "notable.yujin.unlock.40",
-        "funcType": "GlowUpgradeBonus",
-        "referId": 3003,
-        "supersedes": []
+        "descKey": "notable.yujin.kit.1",
+        "funcType": "CurrencyBonus",
+        "referId": 7011,
+        "star": 0
+      },
+      {
+        "descKey": "notable.yujin.kit.2",
+        "funcType": "SlotBaseAdd",
+        "referId": 4302,
+        "star": 0
+      },
+      {
+        "descKey": "notable.yujin.kit.3",
+        "funcType": "SlotBaseAdd",
+        "referId": 4302,
+        "star": 1
+      },
+      {
+        "descKey": "notable.yujin.kit.4",
+        "funcType": "AffinityGrant",
+        "referId": 5001,
+        "star": 2
+      },
+      {
+        "descKey": "notable.yujin.kit.5",
+        "funcType": "GlowBaseWeight",
+        "referId": 2902,
+        "star": 3
+      },
+      {
+        "descKey": "notable.yujin.kit.6",
+        "funcType": "SlotBaseAdd",
+        "referId": 4303,
+        "star": 4
+      },
+      {
+        "descKey": "notable.yujin.kit.7",
+        "funcType": "LinkBonus",
+        "referId": 4111,
+        "star": 5
       }
     ]
   },
   {
     "base": {
-      "sortieBonus": 2,
-      "specialty": "int",
-      "specialtyBonus": 0.07,
-      "specialtyWeight": 1.6,
-      "trainingBonus": 0.06
+      "sortieBonus": 5,
+      "specialty": "war",
+      "specialtyWeight": 1
     },
-    "eventChain": [],
     "factionId": "faction:wei",
-    "id": "notable:chengyu",
+    "id": "notable:xiahoudun",
     "kind": "notable",
-    "nameKey": "notable.chengyu.name",
-    "notableId": "notable:chengyu",
+    "nameKey": "notable.xiahoudun.name",
+    "notableId": "notable:xiahoudun",
     "packId": "pack:wei",
-    "rarity": 2,
+    "rarity": 4,
     "schemaVersion": 1,
     "unlocks": [
       {
-        "affinity": 20,
-        "descKey": "notable.chengyu.unlock.20",
-        "funcType": "StatModifier",
-        "referId": 1011,
-        "supersedes": []
+        "descKey": "notable.xiahoudun.kit.0",
+        "funcType": "LinkBonus",
+        "referId": 4101,
+        "star": 0
       },
       {
-        "affinity": 40,
-        "descKey": "notable.chengyu.unlock.40",
-        "funcType": "EventRewardBonus",
-        "referId": 2002,
-        "supersedes": []
+        "descKey": "notable.xiahoudun.kit.1",
+        "funcType": "CurrencyBonus",
+        "referId": 7011,
+        "star": 0
+      },
+      {
+        "descKey": "notable.xiahoudun.kit.2",
+        "funcType": "SlotBaseAdd",
+        "referId": 4311,
+        "star": 0
+      },
+      {
+        "descKey": "notable.xiahoudun.kit.3",
+        "funcType": "LinkBonus",
+        "referId": 4113,
+        "star": 1
+      },
+      {
+        "descKey": "notable.xiahoudun.kit.4",
+        "funcType": "SlotBias",
+        "referId": 4002,
+        "star": 2
+      },
+      {
+        "descKey": "notable.xiahoudun.kit.5",
+        "funcType": "LinkBonus",
+        "referId": 4113,
+        "star": 3
+      },
+      {
+        "descKey": "notable.xiahoudun.kit.6",
+        "funcType": "AffinityGrant",
+        "referId": 5001,
+        "star": 4
+      },
+      {
+        "descKey": "notable.xiahoudun.kit.7",
+        "funcType": "LinkBonus",
+        "referId": 4114,
+        "star": 5
+      }
+    ]
+  },
+  {
+    "base": {
+      "sortieBonus": 6,
+      "specialty": "war",
+      "specialtyWeight": 1
+    },
+    "factionId": "faction:wei",
+    "id": "notable:dianwei",
+    "kind": "notable",
+    "nameKey": "notable.dianwei.name",
+    "notableId": "notable:dianwei",
+    "packId": "pack:wei",
+    "rarity": 3,
+    "schemaVersion": 1,
+    "unlocks": [
+      {
+        "descKey": "notable.dianwei.kit.0",
+        "funcType": "AffinityGrant",
+        "referId": 5001,
+        "star": 0
+      },
+      {
+        "descKey": "notable.dianwei.kit.1",
+        "funcType": "LinkBonus",
+        "referId": 4101,
+        "star": 0
+      },
+      {
+        "descKey": "notable.dianwei.kit.2",
+        "funcType": "CurrencyBonus",
+        "referId": 7011,
+        "star": 0
+      },
+      {
+        "descKey": "notable.dianwei.kit.3",
+        "funcType": "CheckValueBonus",
+        "referId": 6006,
+        "star": 0
+      },
+      {
+        "descKey": "notable.dianwei.kit.4",
+        "funcType": "LinkBonus",
+        "referId": 4103,
+        "star": 1
+      },
+      {
+        "descKey": "notable.dianwei.kit.5",
+        "funcType": "AffinityGrant",
+        "referId": 5001,
+        "star": 2
+      },
+      {
+        "descKey": "notable.dianwei.kit.6",
+        "funcType": "CheckValueBonus",
+        "referId": 6007,
+        "star": 3
+      },
+      {
+        "descKey": "notable.dianwei.kit.7",
+        "funcType": "LinkBonus",
+        "referId": 4113,
+        "star": 4
+      },
+      {
+        "descKey": "notable.dianwei.kit.8",
+        "funcType": "SlotBaseAdd",
+        "referId": 4341,
+        "star": 5
       }
     ]
   },
@@ -357,11 +340,8 @@
     "base": {
       "sortieBonus": 1,
       "specialty": "war",
-      "specialtyBonus": 0.02,
-      "specialtyWeight": 1,
-      "trainingBonus": 0.06
+      "specialtyWeight": 1
     },
-    "eventChain": [],
     "factionId": "faction:wei",
     "id": "notable:lejin",
     "kind": "notable",
@@ -372,25 +352,442 @@
     "schemaVersion": 1,
     "unlocks": [
       {
-        "affinity": 20,
-        "descKey": "notable.lejin.unlock.20",
-        "funcType": "StatModifier",
-        "referId": 1201,
-        "supersedes": []
+        "descKey": "notable.lejin.kit.0",
+        "funcType": "LinkBonus",
+        "referId": 4102,
+        "star": 0
       },
       {
-        "affinity": 30,
-        "descKey": "notable.lejin.unlock.30",
-        "funcType": "StatModifier",
-        "referId": 1202,
-        "supersedes": []
+        "descKey": "notable.lejin.kit.1",
+        "funcType": "CurrencyBonus",
+        "referId": 7011,
+        "star": 0
       },
       {
-        "affinity": 40,
-        "descKey": "notable.lejin.unlock.40",
-        "funcType": "SlotBias",
-        "referId": 4099,
-        "supersedes": []
+        "descKey": "notable.lejin.kit.2",
+        "funcType": "SlotBaseAdd",
+        "referId": 4342,
+        "star": 0
+      },
+      {
+        "descKey": "notable.lejin.kit.3",
+        "funcType": "LinkBonus",
+        "referId": 4103,
+        "star": 1
+      },
+      {
+        "descKey": "notable.lejin.kit.4",
+        "funcType": "AffinityGrant",
+        "referId": 5001,
+        "star": 2
+      },
+      {
+        "descKey": "notable.lejin.kit.5",
+        "funcType": "LinkBonus",
+        "referId": 4103,
+        "star": 3
+      },
+      {
+        "descKey": "notable.lejin.kit.6",
+        "funcType": "SlotBaseAdd",
+        "referId": 4343,
+        "star": 4
+      },
+      {
+        "descKey": "notable.lejin.kit.7",
+        "funcType": "LinkBonus",
+        "referId": 4101,
+        "star": 5
+      }
+    ]
+  },
+  {
+    "base": {
+      "sortieBonus": 5,
+      "specialty": "int",
+      "specialtyWeight": 1
+    },
+    "factionId": "faction:wei",
+    "id": "notable:guojia",
+    "kind": "notable",
+    "nameKey": "notable.guojia.name",
+    "notableId": "notable:guojia",
+    "packId": "pack:wei",
+    "rarity": 5,
+    "schemaVersion": 1,
+    "unlocks": [
+      {
+        "descKey": "notable.guojia.kit.0",
+        "funcType": "LinkBonus",
+        "referId": 4101,
+        "star": 0
+      },
+      {
+        "descKey": "notable.guojia.kit.1",
+        "funcType": "CurrencyBonus",
+        "referId": 7012,
+        "star": 0
+      },
+      {
+        "descKey": "notable.guojia.kit.2",
+        "funcType": "RarityWeight",
+        "referId": 4701,
+        "star": 0
+      },
+      {
+        "descKey": "notable.guojia.kit.3",
+        "funcType": "EncounterChance",
+        "referId": 4601,
+        "star": 1
+      },
+      {
+        "descKey": "notable.guojia.kit.4",
+        "funcType": "RarityWeight",
+        "referId": 4701,
+        "star": 2
+      },
+      {
+        "descKey": "notable.guojia.kit.5",
+        "funcType": "AffinityGrant",
+        "referId": 5001,
+        "star": 3
+      },
+      {
+        "descKey": "notable.guojia.kit.6",
+        "funcType": "CheckRetry",
+        "referId": 6102,
+        "star": 4
+      },
+      {
+        "descKey": "notable.guojia.kit.7",
+        "funcType": "RarityWeight",
+        "referId": 4702,
+        "star": 5
+      }
+    ]
+  },
+  {
+    "base": {
+      "sortieBonus": 4,
+      "specialty": "int",
+      "specialtyWeight": 1
+    },
+    "factionId": "faction:wei",
+    "id": "notable:jiaxu",
+    "kind": "notable",
+    "nameKey": "notable.jiaxu.name",
+    "notableId": "notable:jiaxu",
+    "packId": "pack:wei",
+    "rarity": 4,
+    "schemaVersion": 1,
+    "unlocks": [
+      {
+        "descKey": "notable.jiaxu.kit.0",
+        "funcType": "LinkBonus",
+        "referId": 4101,
+        "star": 0
+      },
+      {
+        "descKey": "notable.jiaxu.kit.1",
+        "funcType": "CurrencyBonus",
+        "referId": 7012,
+        "star": 0
+      },
+      {
+        "descKey": "notable.jiaxu.kit.2",
+        "funcType": "CheckRewardBonus",
+        "referId": 6501,
+        "star": 0
+      },
+      {
+        "descKey": "notable.jiaxu.kit.3",
+        "funcType": "RarityWeight",
+        "referId": 4701,
+        "star": 1
+      },
+      {
+        "descKey": "notable.jiaxu.kit.4",
+        "funcType": "AffinityGrant",
+        "referId": 5001,
+        "star": 2
+      },
+      {
+        "descKey": "notable.jiaxu.kit.5",
+        "funcType": "LinkBonus",
+        "referId": 4116,
+        "star": 3
+      },
+      {
+        "descKey": "notable.jiaxu.kit.6",
+        "funcType": "CheckRewardBonus",
+        "referId": 6503,
+        "star": 4
+      },
+      {
+        "descKey": "notable.jiaxu.kit.7",
+        "funcType": "CheckValueBonus",
+        "referId": 6011,
+        "star": 5
+      }
+    ]
+  },
+  {
+    "base": {
+      "sortieBonus": 2,
+      "specialty": "int",
+      "specialtyWeight": 1
+    },
+    "factionId": "faction:wei",
+    "id": "notable:chengyu",
+    "kind": "notable",
+    "nameKey": "notable.chengyu.name",
+    "notableId": "notable:chengyu",
+    "packId": "pack:wei",
+    "rarity": 2,
+    "schemaVersion": 1,
+    "unlocks": [
+      {
+        "descKey": "notable.chengyu.kit.0",
+        "funcType": "LinkBonus",
+        "referId": 4101,
+        "star": 0
+      },
+      {
+        "descKey": "notable.chengyu.kit.1",
+        "funcType": "CurrencyBonus",
+        "referId": 7013,
+        "star": 0
+      },
+      {
+        "descKey": "notable.chengyu.kit.2",
+        "funcType": "SlotBaseAdd",
+        "referId": 4321,
+        "star": 0
+      },
+      {
+        "descKey": "notable.chengyu.kit.3",
+        "funcType": "CurrencyBonus",
+        "referId": 7012,
+        "star": 1
+      },
+      {
+        "descKey": "notable.chengyu.kit.4",
+        "funcType": "SlotBaseAdd",
+        "referId": 4321,
+        "star": 2
+      },
+      {
+        "descKey": "notable.chengyu.kit.5",
+        "funcType": "AffinityGrant",
+        "referId": 5001,
+        "star": 3
+      },
+      {
+        "descKey": "notable.chengyu.kit.6",
+        "funcType": "GlowUpgradeBonus",
+        "referId": 3011,
+        "star": 4
+      },
+      {
+        "descKey": "notable.chengyu.kit.7",
+        "funcType": "LinkBonus",
+        "referId": 4116,
+        "star": 5
+      }
+    ]
+  },
+  {
+    "base": {
+      "sortieBonus": 8,
+      "specialty": "pol",
+      "specialtyWeight": 1
+    },
+    "factionId": "faction:wei",
+    "id": "notable:xunyu",
+    "kind": "notable",
+    "nameKey": "notable.xunyu.name",
+    "notableId": "notable:xunyu",
+    "packId": "pack:wei",
+    "rarity": 5,
+    "schemaVersion": 1,
+    "unlocks": [
+      {
+        "descKey": "notable.xunyu.kit.0",
+        "funcType": "LinkBonus",
+        "referId": 4101,
+        "star": 0
+      },
+      {
+        "descKey": "notable.xunyu.kit.1",
+        "funcType": "CurrencyBonus",
+        "referId": 7014,
+        "star": 0
+      },
+      {
+        "descKey": "notable.xunyu.kit.2",
+        "funcType": "CheckRewardBonus",
+        "referId": 6501,
+        "star": 0
+      },
+      {
+        "descKey": "notable.xunyu.kit.3",
+        "funcType": "CurrencyBonus",
+        "referId": 7014,
+        "star": 1
+      },
+      {
+        "descKey": "notable.xunyu.kit.4",
+        "funcType": "AffinityGrant",
+        "referId": 5001,
+        "star": 2
+      },
+      {
+        "descKey": "notable.xunyu.kit.5",
+        "funcType": "CheckRewardBonus",
+        "referId": 6503,
+        "star": 3
+      },
+      {
+        "descKey": "notable.xunyu.kit.6",
+        "funcType": "CommissionChance",
+        "referId": 4502,
+        "star": 4
+      },
+      {
+        "descKey": "notable.xunyu.kit.7",
+        "funcType": "CheckRewardBonus",
+        "referId": 6503,
+        "star": 5
+      }
+    ]
+  },
+  {
+    "base": {
+      "sortieBonus": 3,
+      "specialty": "pol",
+      "specialtyWeight": 1
+    },
+    "factionId": "faction:wei",
+    "id": "notable:chenqun",
+    "kind": "notable",
+    "nameKey": "notable.chenqun.name",
+    "notableId": "notable:chenqun",
+    "packId": "pack:wei",
+    "rarity": 3,
+    "schemaVersion": 1,
+    "unlocks": [
+      {
+        "descKey": "notable.chenqun.kit.0",
+        "funcType": "LinkBonus",
+        "referId": 4101,
+        "star": 0
+      },
+      {
+        "descKey": "notable.chenqun.kit.1",
+        "funcType": "CurrencyBonus",
+        "referId": 7012,
+        "star": 0
+      },
+      {
+        "descKey": "notable.chenqun.kit.2",
+        "funcType": "LinkAmplify",
+        "referId": 4201,
+        "star": 0
+      },
+      {
+        "descKey": "notable.chenqun.kit.3",
+        "funcType": "CommissionChance",
+        "referId": 4501,
+        "star": 1
+      },
+      {
+        "descKey": "notable.chenqun.kit.4",
+        "funcType": "AffinityGrant",
+        "referId": 5001,
+        "star": 2
+      },
+      {
+        "descKey": "notable.chenqun.kit.5",
+        "funcType": "LinkAmplify",
+        "referId": 4201,
+        "star": 3
+      },
+      {
+        "descKey": "notable.chenqun.kit.6",
+        "funcType": "SlotBaseAdd",
+        "referId": 4331,
+        "star": 4
+      },
+      {
+        "descKey": "notable.chenqun.kit.7",
+        "funcType": "LinkAmplify",
+        "referId": 4202,
+        "star": 5
+      }
+    ]
+  },
+  {
+    "base": {
+      "sortieBonus": 2,
+      "specialty": "pol",
+      "specialtyWeight": 1
+    },
+    "factionId": "faction:wei",
+    "id": "notable:maojie",
+    "kind": "notable",
+    "nameKey": "notable.maojie.name",
+    "notableId": "notable:maojie",
+    "packId": "pack:wei",
+    "rarity": 2,
+    "schemaVersion": 1,
+    "unlocks": [
+      {
+        "descKey": "notable.maojie.kit.0",
+        "funcType": "LinkBonus",
+        "referId": 4101,
+        "star": 0
+      },
+      {
+        "descKey": "notable.maojie.kit.1",
+        "funcType": "CurrencyBonus",
+        "referId": 7012,
+        "star": 0
+      },
+      {
+        "descKey": "notable.maojie.kit.2",
+        "funcType": "EncounterChance",
+        "referId": 4602,
+        "star": 0
+      },
+      {
+        "descKey": "notable.maojie.kit.3",
+        "funcType": "SlotBaseAdd",
+        "referId": 4332,
+        "star": 1
+      },
+      {
+        "descKey": "notable.maojie.kit.4",
+        "funcType": "AffinityGrant",
+        "referId": 5001,
+        "star": 2
+      },
+      {
+        "descKey": "notable.maojie.kit.5",
+        "funcType": "EncounterChance",
+        "referId": 4602,
+        "star": 3
+      },
+      {
+        "descKey": "notable.maojie.kit.6",
+        "funcType": "SlotBaseAdd",
+        "referId": 4333,
+        "star": 4
+      },
+      {
+        "descKey": "notable.maojie.kit.7",
+        "funcType": "LinkBonus",
+        "referId": 4117,
+        "star": 5
       }
     ]
   },
@@ -412,6 +809,16 @@
         "weight": 12
       },
       {
+        "notableId": "notable:zhangliao",
+        "requirements": [],
+        "weight": 16
+      },
+      {
+        "notableId": "notable:jiaxu",
+        "requirements": [],
+        "weight": 16
+      },
+      {
         "notableId": "notable:xiahoudun",
         "requirements": [],
         "weight": 18
@@ -422,12 +829,22 @@
         "weight": 20
       },
       {
+        "notableId": "notable:chenqun",
+        "requirements": [],
+        "weight": 20
+      },
+      {
         "notableId": "notable:yujin",
         "requirements": [],
         "weight": 22
       },
       {
         "notableId": "notable:chengyu",
+        "requirements": [],
+        "weight": 22
+      },
+      {
+        "notableId": "notable:maojie",
         "requirements": [],
         "weight": 22
       },
@@ -463,75 +880,212 @@
     "superiorPoolId": "pool:wei.superiors"
   },
   {
+    "bodyKey": "event.wei.review.body",
+    "collectible": false,
+    "eventDefId": "event:wei.review",
+    "id": "event:wei.review",
+    "kind": "event",
+    "options": [
+      {
+        "check": {
+          "attr": "lead",
+          "dcCurveId": "dc:easy"
+        },
+        "labelKey": "event.wei.review.opt.borrow",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 0.8
+          },
+          {
+            "attr": "pol",
+            "weight": 0.3
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 12,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "lead",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.wei.review.opt.drill",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1.1
+          },
+          {
+            "attr": "war",
+            "weight": 0.4
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 20,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": {
+          "attr": "lead",
+          "dcCurveId": "dc:hard"
+        },
+        "labelKey": "event.wei.review.opt.contest",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1.4
+          },
+          {
+            "attr": "war",
+            "weight": 0.5
+          }
+        ],
+        "requirements": [
+          {
+            "stat": "career.martial",
+            "type": "statGte",
+            "value": 3
+          }
+        ],
+        "rewards": [
+          {
+            "amount": 32,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [
+      {
+        "name": "patron",
+        "poolId": "pool:patron"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.review.title",
+    "trigger": {
+      "attr": "lead",
+      "kind": "commission",
+      "rarity": 2
+    },
+    "unique": false,
+    "weight": 34
+  },
+  {
     "bodyKey": "event.wei.subdue.body",
     "collectible": false,
-    "commissionKind": "subdue",
     "eventDefId": "event:wei.subdue",
-    "eventKind": "faction",
     "id": "event:wei.subdue",
     "kind": "event",
     "options": [
       {
         "check": {
           "attr": "war",
-          "dcCurveId": "dc:normal"
+          "dcCurveId": "dc:easy"
         },
-        "labelKey": "event.wei.subdue.opt.strike",
-        "moralDelta": 0,
+        "labelKey": "event.wei.subdue.opt.pacify",
         "practice": [
           {
             "attr": "war",
-            "weight": 1.2
+            "weight": 0.8
+          },
+          {
+            "attr": "lead",
+            "weight": 0.3
           }
         ],
         "requirements": [],
         "rewards": [
           {
-            "amount": 22,
+            "amount": 12,
             "kind": "merit",
             "merit": "martial"
           }
-        ]
+        ],
+        "tier": "low"
       },
       {
         "check": {
-          "attr": "cha",
+          "attr": "war",
           "dcCurveId": "dc:normal"
         },
-        "labelKey": "event.wei.subdue.opt.pacify",
-        "moralDelta": 5,
+        "labelKey": "event.wei.subdue.opt.strike",
         "practice": [
           {
-            "attr": "cha",
-            "weight": 1
+            "attr": "war",
+            "weight": 1.1
           },
           {
-            "attr": "pol",
+            "attr": "lead",
+            "weight": 0.4
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 20,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": {
+          "attr": "war",
+          "dcCurveId": "dc:hard"
+        },
+        "labelKey": "event.wei.subdue.opt.capture",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1.4
+          },
+          {
+            "attr": "lead",
             "weight": 0.5
           }
         ],
         "requirements": [
           {
-            "stat": "attr.cha",
+            "stat": "career.martial",
             "type": "statGte",
-            "value": 45
+            "value": 3
           }
         ],
         "rewards": [
           {
-            "amount": 14,
+            "amount": 32,
             "kind": "merit",
             "merit": "martial"
-          },
-          {
-            "amount": 12,
-            "fame": "civil",
-            "kind": "fame"
           }
-        ]
+        ],
+        "tier": "high"
       }
     ],
-    "ownerNotable": null,
     "packId": "pack:wei",
     "paramSlots": [
       {
@@ -555,29 +1109,61 @@
     ],
     "schemaVersion": 1,
     "titleKey": "event.wei.subdue.title",
+    "trigger": {
+      "attr": "war",
+      "kind": "commission",
+      "rarity": 2
+    },
     "unique": false,
-    "weight": 30
+    "weight": 34
   },
   {
     "bodyKey": "event.wei.procure.body",
     "collectible": false,
-    "commissionKind": "procure",
     "eventDefId": "event:wei.procure",
-    "eventKind": "faction",
     "id": "event:wei.procure",
     "kind": "event",
     "options": [
       {
         "check": {
           "attr": "int",
-          "dcCurveId": "dc:normal"
+          "dcCurveId": "dc:easy"
         },
-        "labelKey": "event.wei.procure.opt.buy",
-        "moralDelta": 0,
+        "labelKey": "event.wei.procure.opt.requisition",
         "practice": [
           {
             "attr": "int",
-            "weight": 1.2
+            "weight": 0.8
+          },
+          {
+            "attr": "pol",
+            "weight": 0.3
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 12,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "int",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.wei.procure.opt.buy",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1.1
+          },
+          {
+            "attr": "pol",
+            "weight": 0.4
           }
         ],
         "requirements": [],
@@ -587,32 +1173,42 @@
             "kind": "merit",
             "merit": "civil"
           }
-        ]
+        ],
+        "tier": "mid"
       },
       {
         "check": {
-          "attr": "pol",
-          "dcCurveId": "dc:easy"
+          "attr": "int",
+          "dcCurveId": "dc:hard"
         },
-        "labelKey": "event.wei.procure.opt.requisition",
-        "moralDelta": -9,
+        "labelKey": "event.wei.procure.opt.route",
         "practice": [
           {
+            "attr": "int",
+            "weight": 1.4
+          },
+          {
             "attr": "pol",
-            "weight": 0.8
+            "weight": 0.5
           }
         ],
-        "requirements": [],
+        "requirements": [
+          {
+            "stat": "career.civil",
+            "type": "statGte",
+            "value": 3
+          }
+        ],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 32,
             "kind": "merit",
             "merit": "civil"
           }
-        ]
+        ],
+        "tier": "high"
       }
     ],
-    "ownerNotable": null,
     "packId": "pack:wei",
     "paramSlots": [
       {
@@ -632,29 +1228,57 @@
     ],
     "schemaVersion": 1,
     "titleKey": "event.wei.procure.title",
+    "trigger": {
+      "attr": "int",
+      "kind": "commission",
+      "rarity": 2
+    },
     "unique": false,
-    "weight": 28
+    "weight": 34
   },
   {
     "bodyKey": "event.wei.reclaim.body",
     "collectible": false,
-    "commissionKind": "reclaim",
     "eventDefId": "event:wei.reclaim",
-    "eventKind": "faction",
     "id": "event:wei.reclaim",
     "kind": "event",
     "options": [
       {
         "check": {
           "attr": "pol",
-          "dcCurveId": "dc:normal"
+          "dcCurveId": "dc:easy"
         },
-        "labelKey": "event.wei.reclaim.opt.settle",
-        "moralDelta": 3,
+        "labelKey": "event.wei.reclaim.opt.conscript",
         "practice": [
           {
             "attr": "pol",
-            "weight": 1.2
+            "weight": 0.8
+          },
+          {
+            "attr": "lead",
+            "weight": 0.3
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 12,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "pol",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.wei.reclaim.opt.settle",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1.1
           },
           {
             "attr": "int",
@@ -664,45 +1288,46 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 18,
+            "amount": 20,
             "kind": "merit",
             "merit": "civil"
-          },
-          {
-            "amount": 8,
-            "fame": "civil",
-            "kind": "fame"
           }
-        ]
+        ],
+        "tier": "mid"
       },
       {
         "check": {
-          "attr": "war",
-          "dcCurveId": "dc:easy"
+          "attr": "pol",
+          "dcCurveId": "dc:hard"
         },
-        "labelKey": "event.wei.reclaim.opt.conscript",
-        "moralDelta": -7,
+        "labelKey": "event.wei.reclaim.opt.office",
         "practice": [
           {
-            "attr": "war",
-            "weight": 0.8
+            "attr": "pol",
+            "weight": 1.4
           },
           {
-            "attr": "pol",
-            "weight": 0.6
+            "attr": "int",
+            "weight": 0.5
           }
         ],
-        "requirements": [],
+        "requirements": [
+          {
+            "stat": "career.civil",
+            "type": "statGte",
+            "value": 4
+          }
+        ],
         "rewards": [
           {
-            "amount": 16,
+            "amount": 32,
             "kind": "merit",
-            "merit": "martial"
+            "merit": "civil"
           }
-        ]
+        ],
+        "tier": "high"
       }
     ],
-    "ownerNotable": null,
     "packId": "pack:wei",
     "paramSlots": [
       {
@@ -727,134 +1352,1139 @@
     ],
     "schemaVersion": 1,
     "titleKey": "event.wei.reclaim.title",
+    "trigger": {
+      "attr": "pol",
+      "kind": "commission",
+      "rarity": 3
+    },
     "unique": false,
-    "weight": 26
+    "weight": 30
   },
   {
-    "bodyKey": "event.notable.caocao.trust.body",
+    "bodyKey": "event.wei.nc.edict.body",
     "collectible": true,
-    "commissionKind": null,
-    "eventDefId": "event:notable.caocao.trust",
-    "eventKind": "notable",
-    "id": "event:notable.caocao.trust",
+    "eventDefId": "event:wei.nc.edict",
+    "id": "event:wei.nc.edict",
     "kind": "event",
     "options": [
       {
         "check": {
-          "attr": "pol",
-          "dcCurveId": "dc:hard"
+          "attr": "lead",
+          "dcCurveId": "dc:easy"
         },
-        "labelKey": "event.notable.caocao.trust.opt.loyal",
-        "moralDelta": 8,
+        "labelKey": "event.wei.nc.edict.opt.low",
         "practice": [
           {
+            "attr": "lead",
+            "weight": 0.8
+          },
+          {
             "attr": "pol",
-            "weight": 1.5
+            "weight": 0.3
           }
         ],
         "requirements": [],
         "rewards": [
           {
-            "amount": 40,
+            "amount": 12,
             "kind": "merit",
-            "merit": "civil"
-          },
-          {
-            "amount": 18,
-            "kind": "affinity",
-            "notableId": "notable:caocao"
+            "merit": "martial"
           }
-        ]
+        ],
+        "tier": "low"
       },
       {
         "check": {
-          "attr": "int",
-          "dcCurveId": "dc:hard"
+          "attr": "lead",
+          "dcCurveId": "dc:normal"
         },
-        "labelKey": "event.notable.caocao.trust.opt.ambitious",
-        "moralDelta": -12,
+        "labelKey": "event.wei.nc.edict.opt.mid",
         "practice": [
           {
-            "attr": "int",
-            "weight": 1.5
+            "attr": "lead",
+            "weight": 1.1
+          },
+          {
+            "attr": "pol",
+            "weight": 0.4
           }
         ],
         "requirements": [],
         "rewards": [
           {
-            "amount": 34,
+            "amount": 20,
             "kind": "merit",
-            "merit": "civil"
+            "merit": "martial"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": {
+          "attr": "lead",
+          "dcCurveId": "dc:hard"
+        },
+        "labelKey": "event.wei.nc.edict.opt.high",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1.4
           },
           {
-            "amount": 15,
             "attr": "pol",
-            "kind": "attr"
+            "weight": 0.5
           }
-        ]
+        ],
+        "requirements": [
+          {
+            "stat": "career.martial",
+            "type": "statGte",
+            "value": 5
+          }
+        ],
+        "rewards": [
+          {
+            "amount": 32,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 0.35,
+            "itemId": "item:mengde",
+            "kind": "item"
+          }
+        ],
+        "tier": "high"
       }
     ],
-    "ownerNotable": "notable:caocao",
     "packId": "pack:wei",
     "paramSlots": [],
     "requirements": [
       {
         "type": "faction",
         "value": "faction:wei"
+      },
+      {
+        "stat": "affinity.notable:caocao",
+        "type": "statGte",
+        "value": 40
       }
     ],
     "schemaVersion": 1,
-    "titleKey": "event.notable.caocao.trust.title",
+    "titleKey": "event.wei.nc.edict.title",
+    "trigger": {
+      "attr": "lead",
+      "kind": "commission",
+      "rarity": 4
+    },
     "unique": true,
-    "weight": 100
+    "weight": 26
   },
   {
-    "bodyKey": "event.notable.xunyu.counsel.body",
+    "bodyKey": "event.wei.nc.liaocomes.body",
     "collectible": true,
-    "commissionKind": null,
-    "eventDefId": "event:notable.xunyu.counsel",
-    "eventKind": "notable",
-    "id": "event:notable.xunyu.counsel",
+    "eventDefId": "event:wei.nc.liaocomes",
+    "id": "event:wei.nc.liaocomes",
     "kind": "event",
     "options": [
       {
         "check": {
-          "attr": "int",
-          "dcCurveId": "dc:normal"
+          "attr": "lead",
+          "dcCurveId": "dc:easy"
         },
-        "labelKey": "event.notable.xunyu.counsel.opt.accept",
-        "moralDelta": 4,
+        "labelKey": "event.wei.nc.liaocomes.opt.low",
         "practice": [
           {
-            "attr": "int",
-            "weight": 1.6
+            "attr": "lead",
+            "weight": 0.8
+          },
+          {
+            "attr": "war",
+            "weight": 0.3
           }
         ],
         "requirements": [],
         "rewards": [
           {
-            "amount": 18,
-            "attr": "int",
-            "kind": "attr"
+            "amount": 12,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "lead",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.wei.nc.liaocomes.opt.mid",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1.1
           },
           {
-            "amount": 16,
-            "kind": "affinity",
-            "notableId": "notable:xunyu"
+            "attr": "war",
+            "weight": 0.4
           }
-        ]
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 20,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": {
+          "attr": "lead",
+          "dcCurveId": "dc:hard"
+        },
+        "labelKey": "event.wei.nc.liaocomes.opt.high",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1.4
+          },
+          {
+            "attr": "war",
+            "weight": 0.5
+          }
+        ],
+        "requirements": [
+          {
+            "stat": "career.martial",
+            "type": "statGte",
+            "value": 5
+          }
+        ],
+        "rewards": [
+          {
+            "amount": 32,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 0.35,
+            "itemId": "item:xiaoyaojin",
+            "kind": "item"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      },
+      {
+        "stat": "affinity.notable:zhangliao",
+        "type": "statGte",
+        "value": 40
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.nc.liaocomes.title",
+    "trigger": {
+      "attr": "lead",
+      "kind": "commission",
+      "rarity": 4
+    },
+    "unique": true,
+    "weight": 26
+  },
+  {
+    "bodyKey": "event.wei.nc.stockade.body",
+    "collectible": true,
+    "eventDefId": "event:wei.nc.stockade",
+    "id": "event:wei.nc.stockade",
+    "kind": "event",
+    "options": [
+      {
+        "check": {
+          "attr": "lead",
+          "dcCurveId": "dc:easy"
+        },
+        "labelKey": "event.wei.nc.stockade.opt.low",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 0.8
+          },
+          {
+            "attr": "pol",
+            "weight": 0.3
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 12,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "lead",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.wei.nc.stockade.opt.mid",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1.1
+          },
+          {
+            "attr": "pol",
+            "weight": 0.4
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 20,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": {
+          "attr": "lead",
+          "dcCurveId": "dc:hard"
+        },
+        "labelKey": "event.wei.nc.stockade.opt.high",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1.4
+          },
+          {
+            "attr": "pol",
+            "weight": 0.5
+          }
+        ],
+        "requirements": [
+          {
+            "stat": "career.martial",
+            "type": "statGte",
+            "value": 4
+          }
+        ],
+        "rewards": [
+          {
+            "amount": 32,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 0.5,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      },
+      {
+        "stat": "affinity.notable:yujin",
+        "type": "statGte",
+        "value": 40
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.nc.stockade.title",
+    "trigger": {
+      "attr": "lead",
+      "kind": "commission",
+      "rarity": 3
+    },
+    "unique": true,
+    "weight": 26
+  },
+  {
+    "bodyKey": "event.wei.nc.oversee.body",
+    "collectible": true,
+    "eventDefId": "event:wei.nc.oversee",
+    "id": "event:wei.nc.oversee",
+    "kind": "event",
+    "options": [
+      {
+        "check": {
+          "attr": "war",
+          "dcCurveId": "dc:easy"
+        },
+        "labelKey": "event.wei.nc.oversee.opt.low",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 0.8
+          },
+          {
+            "attr": "lead",
+            "weight": 0.3
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 12,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "war",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.wei.nc.oversee.opt.mid",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1.1
+          },
+          {
+            "attr": "lead",
+            "weight": 0.4
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 20,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": {
+          "attr": "war",
+          "dcCurveId": "dc:hard"
+        },
+        "labelKey": "event.wei.nc.oversee.opt.high",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1.4
+          },
+          {
+            "attr": "lead",
+            "weight": 0.5
+          }
+        ],
+        "requirements": [
+          {
+            "stat": "career.martial",
+            "type": "statGte",
+            "value": 5
+          }
+        ],
+        "rewards": [
+          {
+            "amount": 32,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 0.35,
+            "itemId": "item:qinggang",
+            "kind": "item"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      },
+      {
+        "stat": "affinity.notable:xiahoudun",
+        "type": "statGte",
+        "value": 40
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.nc.oversee.title",
+    "trigger": {
+      "attr": "war",
+      "kind": "commission",
+      "rarity": 4
+    },
+    "unique": true,
+    "weight": 26
+  },
+  {
+    "bodyKey": "event.wei.nc.nightguard.body",
+    "collectible": true,
+    "eventDefId": "event:wei.nc.nightguard",
+    "id": "event:wei.nc.nightguard",
+    "kind": "event",
+    "options": [
+      {
+        "check": {
+          "attr": "war",
+          "dcCurveId": "dc:easy"
+        },
+        "labelKey": "event.wei.nc.nightguard.opt.low",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 0.8
+          },
+          {
+            "attr": "lead",
+            "weight": 0.3
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 12,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "war",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.wei.nc.nightguard.opt.mid",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1.1
+          },
+          {
+            "attr": "lead",
+            "weight": 0.4
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 20,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": {
+          "attr": "war",
+          "dcCurveId": "dc:hard"
+        },
+        "labelKey": "event.wei.nc.nightguard.opt.high",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1.4
+          },
+          {
+            "attr": "lead",
+            "weight": 0.5
+          }
+        ],
+        "requirements": [
+          {
+            "stat": "career.martial",
+            "type": "statGte",
+            "value": 4
+          }
+        ],
+        "rewards": [
+          {
+            "amount": 32,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 0.4,
+            "itemId": "item:halberd",
+            "kind": "item"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      },
+      {
+        "stat": "affinity.notable:dianwei",
+        "type": "statGte",
+        "value": 40
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.nc.nightguard.title",
+    "trigger": {
+      "attr": "war",
+      "kind": "commission",
+      "rarity": 3
+    },
+    "unique": true,
+    "weight": 26
+  },
+  {
+    "bodyKey": "event.wei.nc.breach.body",
+    "collectible": true,
+    "eventDefId": "event:wei.nc.breach",
+    "id": "event:wei.nc.breach",
+    "kind": "event",
+    "options": [
+      {
+        "check": {
+          "attr": "war",
+          "dcCurveId": "dc:easy"
+        },
+        "labelKey": "event.wei.nc.breach.opt.low",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 0.8
+          },
+          {
+            "attr": "lead",
+            "weight": 0.3
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 12,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "war",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.wei.nc.breach.opt.mid",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1.1
+          },
+          {
+            "attr": "lead",
+            "weight": 0.4
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 20,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": {
+          "attr": "war",
+          "dcCurveId": "dc:hard"
+        },
+        "labelKey": "event.wei.nc.breach.opt.high",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1.4
+          },
+          {
+            "attr": "lead",
+            "weight": 0.5
+          }
+        ],
+        "requirements": [
+          {
+            "stat": "career.martial",
+            "type": "statGte",
+            "value": 3
+          }
+        ],
+        "rewards": [
+          {
+            "amount": 32,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 0.5,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      },
+      {
+        "stat": "affinity.notable:lejin",
+        "type": "statGte",
+        "value": 40
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.nc.breach.title",
+    "trigger": {
+      "attr": "war",
+      "kind": "commission",
+      "rarity": 2
+    },
+    "unique": true,
+    "weight": 26
+  },
+  {
+    "bodyKey": "event.wei.nc.foresee.body",
+    "collectible": true,
+    "eventDefId": "event:wei.nc.foresee",
+    "id": "event:wei.nc.foresee",
+    "kind": "event",
+    "options": [
+      {
+        "check": {
+          "attr": "int",
+          "dcCurveId": "dc:easy"
+        },
+        "labelKey": "event.wei.nc.foresee.opt.low",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 0.8
+          },
+          {
+            "attr": "pol",
+            "weight": 0.3
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 12,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "int",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.wei.nc.foresee.opt.mid",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1.1
+          },
+          {
+            "attr": "pol",
+            "weight": 0.4
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 20,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": {
+          "attr": "int",
+          "dcCurveId": "dc:hard"
+        },
+        "labelKey": "event.wei.nc.foresee.opt.high",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1.4
+          },
+          {
+            "attr": "pol",
+            "weight": 0.5
+          }
+        ],
+        "requirements": [
+          {
+            "stat": "career.civil",
+            "type": "statGte",
+            "value": 5
+          }
+        ],
+        "rewards": [
+          {
+            "amount": 32,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "chance": 0.35,
+            "itemId": "item:fengxiao",
+            "kind": "item"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      },
+      {
+        "stat": "affinity.notable:guojia",
+        "type": "statGte",
+        "value": 40
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.nc.foresee.title",
+    "trigger": {
+      "attr": "int",
+      "kind": "commission",
+      "rarity": 4
+    },
+    "unique": true,
+    "weight": 26
+  },
+  {
+    "bodyKey": "event.wei.nc.counsel.body",
+    "collectible": true,
+    "eventDefId": "event:wei.nc.counsel",
+    "id": "event:wei.nc.counsel",
+    "kind": "event",
+    "options": [
+      {
+        "check": {
+          "attr": "int",
+          "dcCurveId": "dc:easy"
+        },
+        "labelKey": "event.wei.nc.counsel.opt.low",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 0.8
+          },
+          {
+            "attr": "war",
+            "weight": 0.3
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 12,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "int",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.wei.nc.counsel.opt.mid",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1.1
+          },
+          {
+            "attr": "war",
+            "weight": 0.4
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 20,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": {
+          "attr": "int",
+          "dcCurveId": "dc:hard"
+        },
+        "labelKey": "event.wei.nc.counsel.opt.high",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1.4
+          },
+          {
+            "attr": "war",
+            "weight": 0.5
+          }
+        ],
+        "requirements": [
+          {
+            "stat": "career.civil",
+            "type": "statGte",
+            "value": 5
+          }
+        ],
+        "rewards": [
+          {
+            "amount": 32,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "kind": "boon",
+            "ref": {
+              "funcType": "RarityFloor",
+              "referId": 4801
+            }
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      },
+      {
+        "stat": "affinity.notable:jiaxu",
+        "type": "statGte",
+        "value": 40
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.nc.counsel.title",
+    "trigger": {
+      "attr": "int",
+      "kind": "commission",
+      "rarity": 4
+    },
+    "unique": true,
+    "weight": 26
+  },
+  {
+    "bodyKey": "event.wei.nc.scout.body",
+    "collectible": true,
+    "eventDefId": "event:wei.nc.scout",
+    "id": "event:wei.nc.scout",
+    "kind": "event",
+    "options": [
+      {
+        "check": {
+          "attr": "int",
+          "dcCurveId": "dc:easy"
+        },
+        "labelKey": "event.wei.nc.scout.opt.low",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 0.8
+          },
+          {
+            "attr": "pol",
+            "weight": 0.3
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 12,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "int",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.wei.nc.scout.opt.mid",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1.1
+          },
+          {
+            "attr": "pol",
+            "weight": 0.4
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 20,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": {
+          "attr": "int",
+          "dcCurveId": "dc:hard"
+        },
+        "labelKey": "event.wei.nc.scout.opt.high",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1.4
+          },
+          {
+            "attr": "pol",
+            "weight": 0.5
+          }
+        ],
+        "requirements": [
+          {
+            "stat": "career.civil",
+            "type": "statGte",
+            "value": 4
+          }
+        ],
+        "rewards": [
+          {
+            "amount": 32,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "chance": 0.5,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      },
+      {
+        "stat": "affinity.notable:chengyu",
+        "type": "statGte",
+        "value": 40
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.nc.scout.title",
+    "trigger": {
+      "attr": "int",
+      "kind": "commission",
+      "rarity": 3
+    },
+    "unique": true,
+    "weight": 26
+  },
+  {
+    "bodyKey": "event.wei.nc.recommend.body",
+    "collectible": true,
+    "eventDefId": "event:wei.nc.recommend",
+    "id": "event:wei.nc.recommend",
+    "kind": "event",
+    "options": [
+      {
+        "check": {
+          "attr": "pol",
+          "dcCurveId": "dc:easy"
+        },
+        "labelKey": "event.wei.nc.recommend.opt.low",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 0.8
+          },
+          {
+            "attr": "int",
+            "weight": 0.3
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 12,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "low"
       },
       {
         "check": {
           "attr": "pol",
-          "dcCurveId": "dc:hard"
+          "dcCurveId": "dc:normal"
         },
-        "labelKey": "event.notable.xunyu.counsel.opt.dissent",
-        "moralDelta": -4,
+        "labelKey": "event.wei.nc.recommend.opt.mid",
         "practice": [
           {
             "attr": "pol",
-            "weight": 1.4
+            "weight": 1.1
           },
           {
             "attr": "int",
@@ -864,19 +2494,368 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 30,
+            "amount": 20,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": {
+          "attr": "pol",
+          "dcCurveId": "dc:hard"
+        },
+        "labelKey": "event.wei.nc.recommend.opt.high",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1.4
+          },
+          {
+            "attr": "int",
+            "weight": 0.5
+          }
+        ],
+        "requirements": [
+          {
+            "stat": "career.civil",
+            "type": "statGte",
+            "value": 5
+          }
+        ],
+        "rewards": [
+          {
+            "amount": 32,
             "kind": "merit",
             "merit": "civil"
           },
           {
-            "amount": 14,
-            "fame": "civil",
-            "kind": "fame"
+            "chance": 0.35,
+            "itemId": "item:wangzuo",
+            "kind": "item"
           }
-        ]
+        ],
+        "tier": "high"
       }
     ],
-    "ownerNotable": "notable:xunyu",
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      },
+      {
+        "stat": "affinity.notable:xunyu",
+        "type": "statGte",
+        "value": 40
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.nc.recommend.title",
+    "trigger": {
+      "attr": "pol",
+      "kind": "commission",
+      "rarity": 4
+    },
+    "unique": true,
+    "weight": 26
+  },
+  {
+    "bodyKey": "event.wei.nc.rank.body",
+    "collectible": true,
+    "eventDefId": "event:wei.nc.rank",
+    "id": "event:wei.nc.rank",
+    "kind": "event",
+    "options": [
+      {
+        "check": {
+          "attr": "pol",
+          "dcCurveId": "dc:easy"
+        },
+        "labelKey": "event.wei.nc.rank.opt.low",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 0.8
+          },
+          {
+            "attr": "int",
+            "weight": 0.3
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 12,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "pol",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.wei.nc.rank.opt.mid",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1.1
+          },
+          {
+            "attr": "int",
+            "weight": 0.4
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 20,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": {
+          "attr": "pol",
+          "dcCurveId": "dc:hard"
+        },
+        "labelKey": "event.wei.nc.rank.opt.high",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1.4
+          },
+          {
+            "attr": "int",
+            "weight": 0.5
+          }
+        ],
+        "requirements": [
+          {
+            "stat": "career.civil",
+            "type": "statGte",
+            "value": 4
+          }
+        ],
+        "rewards": [
+          {
+            "amount": 32,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 20,
+            "kind": "affinity",
+            "notableId": null
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      },
+      {
+        "stat": "affinity.notable:chenqun",
+        "type": "statGte",
+        "value": 40
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.nc.rank.title",
+    "trigger": {
+      "attr": "pol",
+      "kind": "commission",
+      "rarity": 3
+    },
+    "unique": true,
+    "weight": 26
+  },
+  {
+    "bodyKey": "event.wei.nc.select.body",
+    "collectible": true,
+    "eventDefId": "event:wei.nc.select",
+    "id": "event:wei.nc.select",
+    "kind": "event",
+    "options": [
+      {
+        "check": {
+          "attr": "pol",
+          "dcCurveId": "dc:easy"
+        },
+        "labelKey": "event.wei.nc.select.opt.low",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 0.8
+          },
+          {
+            "attr": "int",
+            "weight": 0.3
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 12,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "pol",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.wei.nc.select.opt.mid",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1.1
+          },
+          {
+            "attr": "int",
+            "weight": 0.4
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 20,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": {
+          "attr": "pol",
+          "dcCurveId": "dc:hard"
+        },
+        "labelKey": "event.wei.nc.select.opt.high",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1.4
+          },
+          {
+            "attr": "int",
+            "weight": 0.5
+          }
+        ],
+        "requirements": [
+          {
+            "stat": "career.civil",
+            "type": "statGte",
+            "value": 4
+          }
+        ],
+        "rewards": [
+          {
+            "amount": 32,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "chance": 0.5,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      },
+      {
+        "stat": "affinity.notable:maojie",
+        "type": "statGte",
+        "value": 40
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.nc.select.title",
+    "trigger": {
+      "attr": "pol",
+      "kind": "commission",
+      "rarity": 3
+    },
+    "unique": true,
+    "weight": 26
+  },
+  {
+    "bodyKey": "event.wei.caocao-summon.body",
+    "collectible": true,
+    "eventDefId": "event:wei.caocao-summon",
+    "id": "event:wei.caocao-summon",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.caocao-summon.opt.a",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1.4
+          },
+          {
+            "attr": "pol",
+            "weight": 0.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.caocao-summon.opt.b",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          },
+          {
+            "attr": "int",
+            "weight": 0.9
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
     "packId": "pack:wei",
     "paramSlots": [],
     "requirements": [
@@ -886,30 +2865,35 @@
       }
     ],
     "schemaVersion": 1,
-    "titleKey": "event.notable.xunyu.counsel.title",
+    "titleKey": "event.wei.caocao-summon.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "friendly",
+          "notableId": "notable:caocao"
+        }
+      ],
+      "chainId": "chain:caocao",
+      "kind": "notable",
+      "step": 0
+    },
     "unique": true,
     "weight": 100
   },
   {
-    "bodyKey": "event.notable.guojia.gambit.body",
+    "bodyKey": "event.wei.zhangliao-eight-hundred.body",
     "collectible": true,
-    "commissionKind": null,
-    "eventDefId": "event:notable.guojia.gambit",
-    "eventKind": "notable",
-    "id": "event:notable.guojia.gambit",
+    "eventDefId": "event:wei.zhangliao-eight-hundred",
+    "id": "event:wei.zhangliao-eight-hundred",
     "kind": "event",
     "options": [
       {
-        "check": {
-          "attr": "int",
-          "dcCurveId": "dc:hard"
-        },
-        "labelKey": "event.notable.guojia.gambit.opt.gamble",
-        "moralDelta": 0,
+        "check": null,
+        "labelKey": "event.wei.zhangliao-eight-hundred.opt.a",
         "practice": [
           {
-            "attr": "int",
-            "weight": 1.6
+            "attr": "lead",
+            "weight": 1.4
           },
           {
             "attr": "war",
@@ -920,31 +2904,724 @@
         "rewards": [
           {
             "amount": 26,
-            "attr": "int",
-            "kind": "attr"
-          },
-          {
-            "amount": 24,
             "kind": "merit",
             "merit": "martial"
-          },
-          {
-            "amount": 20,
-            "kind": "affinity",
-            "notableId": "notable:guojia"
           }
-        ]
+        ],
+        "tier": "story"
       },
       {
-        "check": {
-          "attr": "pol",
-          "dcCurveId": "dc:easy"
-        },
-        "labelKey": "event.notable.guojia.gambit.opt.safe",
-        "moralDelta": 0,
+        "check": null,
+        "labelKey": "event.wei.zhangliao-eight-hundred.opt.b",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1.2
+          },
+          {
+            "attr": "lead",
+            "weight": 0.7
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.zhangliao-eight-hundred.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "friendly",
+          "notableId": "notable:zhangliao"
+        }
+      ],
+      "chainId": "chain:zhangliao",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.yujin-camp.body",
+    "collectible": true,
+    "eventDefId": "event:wei.yujin-camp",
+    "id": "event:wei.yujin-camp",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.yujin-camp.opt.a",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          },
+          {
+            "attr": "pol",
+            "weight": 0.4
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 12,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.yujin-camp.opt.b",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 0.7
+          },
+          {
+            "attr": "war",
+            "weight": 0.7
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 12,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.yujin-camp.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:yujin"
+        }
+      ],
+      "chainId": "chain:yujin",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.xiahoudun-arrow.body",
+    "collectible": true,
+    "eventDefId": "event:wei.xiahoudun-arrow",
+    "id": "event:wei.xiahoudun-arrow",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.xiahoudun-arrow.opt.a",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1.4
+          },
+          {
+            "attr": "lead",
+            "weight": 0.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.xiahoudun-arrow.opt.b",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1.1
+          },
+          {
+            "attr": "pol",
+            "weight": 0.8
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.xiahoudun-arrow.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "friendly",
+          "notableId": "notable:xiahoudun"
+        }
+      ],
+      "chainId": "chain:xiahoudun",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.dianwei-halberds.body",
+    "collectible": true,
+    "eventDefId": "event:wei.dianwei-halberds",
+    "id": "event:wei.dianwei-halberds",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.dianwei-halberds.opt.a",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1.1
+          },
+          {
+            "attr": "lead",
+            "weight": 0.3
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 12,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.dianwei-halberds.opt.b",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 0.8
+          },
+          {
+            "attr": "int",
+            "weight": 0.6
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 12,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.dianwei-halberds.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:dianwei"
+        }
+      ],
+      "chainId": "chain:dianwei",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.lejin-vanguard.body",
+    "collectible": true,
+    "eventDefId": "event:wei.lejin-vanguard",
+    "id": "event:wei.lejin-vanguard",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.lejin-vanguard.opt.a",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1.1
+          },
+          {
+            "attr": "lead",
+            "weight": 0.3
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 12,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.lejin-vanguard.opt.b",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 0.9
+          },
+          {
+            "attr": "war",
+            "weight": 0.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 12,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.lejin-vanguard.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:lejin"
+        }
+      ],
+      "chainId": "chain:lejin",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.guojia-wager.body",
+    "collectible": true,
+    "eventDefId": "event:wei.guojia-wager",
+    "id": "event:wei.guojia-wager",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.guojia-wager.opt.a",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1.4
+          },
+          {
+            "attr": "pol",
+            "weight": 0.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.guojia-wager.opt.b",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          },
+          {
+            "attr": "lead",
+            "weight": 0.9
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.guojia-wager.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "friendly",
+          "notableId": "notable:guojia"
+        }
+      ],
+      "chainId": "chain:guojia",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.jiaxu-one-word.body",
+    "collectible": true,
+    "eventDefId": "event:wei.jiaxu-one-word",
+    "id": "event:wei.jiaxu-one-word",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.jiaxu-one-word.opt.a",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1.4
+          },
+          {
+            "attr": "pol",
+            "weight": 0.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.jiaxu-one-word.opt.b",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1.1
+          },
+          {
+            "attr": "war",
+            "weight": 0.8
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.jiaxu-one-word.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "friendly",
+          "notableId": "notable:jiaxu"
+        }
+      ],
+      "chainId": "chain:jiaxu",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.chengyu-three-days.body",
+    "collectible": true,
+    "eventDefId": "event:wei.chengyu-three-days",
+    "id": "event:wei.chengyu-three-days",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.chengyu-three-days.opt.a",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          },
+          {
+            "attr": "pol",
+            "weight": 0.4
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 12,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.chengyu-three-days.opt.b",
         "practice": [
           {
             "attr": "pol",
+            "weight": 0.9
+          },
+          {
+            "attr": "int",
+            "weight": 0.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 12,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.chengyu-three-days.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:chengyu"
+        }
+      ],
+      "chainId": "chain:chengyu",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.xunyu-night.body",
+    "collectible": true,
+    "eventDefId": "event:wei.xunyu-night",
+    "id": "event:wei.xunyu-night",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.xunyu-night.opt.a",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1.4
+          },
+          {
+            "attr": "int",
+            "weight": 0.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.xunyu-night.opt.b",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          },
+          {
+            "attr": "lead",
+            "weight": 0.9
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.xunyu-night.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "friendly",
+          "notableId": "notable:xunyu"
+        }
+      ],
+      "chainId": "chain:xunyu",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.chenqun-grading.body",
+    "collectible": true,
+    "eventDefId": "event:wei.chenqun-grading",
+    "id": "event:wei.chenqun-grading",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.chenqun-grading.opt.a",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          },
+          {
+            "attr": "int",
+            "weight": 0.4
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 12,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.chenqun-grading.opt.b",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 0.7
+          },
+          {
+            "attr": "lead",
             "weight": 0.7
           }
         ],
@@ -955,10 +3632,10 @@
             "kind": "merit",
             "merit": "civil"
           }
-        ]
+        ],
+        "tier": "story"
       }
     ],
-    "ownerNotable": "notable:guojia",
     "packId": "pack:wei",
     "paramSlots": [],
     "requirements": [
@@ -968,9 +3645,1874 @@
       }
     ],
     "schemaVersion": 1,
-    "titleKey": "event.notable.guojia.gambit.title",
+    "titleKey": "event.wei.chenqun-grading.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:chenqun"
+        }
+      ],
+      "chainId": "chain:chenqun",
+      "kind": "notable",
+      "step": 0
+    },
     "unique": true,
     "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.maojie-recommend.body",
+    "collectible": true,
+    "eventDefId": "event:wei.maojie-recommend",
+    "id": "event:wei.maojie-recommend",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.maojie-recommend.opt.a",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          },
+          {
+            "attr": "int",
+            "weight": 0.4
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 12,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.maojie-recommend.opt.b",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 0.8
+          },
+          {
+            "attr": "pol",
+            "weight": 0.6
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 12,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.maojie-recommend.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:maojie"
+        }
+      ],
+      "chainId": "chain:maojie",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.zhangliao-persuade.body",
+    "collectible": true,
+    "eventDefId": "event:wei.zhangliao-persuade",
+    "id": "event:wei.zhangliao-persuade",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.zhangliao-persuade.opt.a",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1.6
+          },
+          {
+            "attr": "int",
+            "weight": 0.6
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:bow",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.zhangliao-persuade.opt.b",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1.2
+          },
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:bow",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.zhangliao-persuade.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "close",
+          "notableId": "notable:zhangliao"
+        }
+      ],
+      "chainId": "chain:zhangliao",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.yujin-changxi.body",
+    "collectible": true,
+    "eventDefId": "event:wei.yujin-changxi",
+    "id": "event:wei.yujin-changxi",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.yujin-changxi.opt.a",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1.6
+          },
+          {
+            "attr": "pol",
+            "weight": 0.6
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:seal",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.yujin-changxi.opt.b",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1.2
+          },
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:seal",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.yujin-changxi.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "close",
+          "notableId": "notable:yujin"
+        }
+      ],
+      "chainId": "chain:yujin",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.xiahoudun-farmland.body",
+    "collectible": true,
+    "eventDefId": "event:wei.xiahoudun-farmland",
+    "id": "event:wei.xiahoudun-farmland",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.xiahoudun-farmland.opt.a",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1.6
+          },
+          {
+            "attr": "pol",
+            "weight": 0.6
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:spear",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.xiahoudun-farmland.opt.b",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1.3
+          },
+          {
+            "attr": "war",
+            "weight": 0.9
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:spear",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.xiahoudun-farmland.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "close",
+          "notableId": "notable:xiahoudun"
+        }
+      ],
+      "chainId": "chain:xiahoudun",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.lejin-no-boast.body",
+    "collectible": true,
+    "eventDefId": "event:wei.lejin-no-boast",
+    "id": "event:wei.lejin-no-boast",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.lejin-no-boast.opt.a",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1.6
+          },
+          {
+            "attr": "lead",
+            "weight": 0.6
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:bow",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.lejin-no-boast.opt.b",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1.3
+          },
+          {
+            "attr": "war",
+            "weight": 0.9
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:bow",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.lejin-no-boast.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "close",
+          "notableId": "notable:lejin"
+        }
+      ],
+      "chainId": "chain:lejin",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.chengyu-hundred-thousand.body",
+    "collectible": true,
+    "eventDefId": "event:wei.chengyu-hundred-thousand",
+    "id": "event:wei.chengyu-hundred-thousand",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.chengyu-hundred-thousand.opt.a",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1.6
+          },
+          {
+            "attr": "pol",
+            "weight": 0.6
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:bamboo",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.chengyu-hundred-thousand.opt.b",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1.3
+          },
+          {
+            "attr": "int",
+            "weight": 0.9
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:bamboo",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.chengyu-hundred-thousand.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "close",
+          "notableId": "notable:chengyu"
+        }
+      ],
+      "chainId": "chain:chengyu",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.chenqun-nine-ranks.body",
+    "collectible": true,
+    "eventDefId": "event:wei.chenqun-nine-ranks",
+    "id": "event:wei.chenqun-nine-ranks",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.chenqun-nine-ranks.opt.a",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1.6
+          },
+          {
+            "attr": "int",
+            "weight": 0.6
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:seal",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.chenqun-nine-ranks.opt.b",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1.3
+          },
+          {
+            "attr": "pol",
+            "weight": 0.9
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:seal",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.chenqun-nine-ranks.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "close",
+          "notableId": "notable:chenqun"
+        }
+      ],
+      "chainId": "chain:chenqun",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.maojie-pure-talk.body",
+    "collectible": true,
+    "eventDefId": "event:wei.maojie-pure-talk",
+    "id": "event:wei.maojie-pure-talk",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.maojie-pure-talk.opt.a",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1.6
+          },
+          {
+            "attr": "int",
+            "weight": 0.6
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:bamboo",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.maojie-pure-talk.opt.b",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1.3
+          },
+          {
+            "attr": "pol",
+            "weight": 0.9
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 26,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:bamboo",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.maojie-pure-talk.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "close",
+          "notableId": "notable:maojie"
+        }
+      ],
+      "chainId": "chain:maojie",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.caocao-green-plum.body",
+    "collectible": true,
+    "eventDefId": "event:wei.caocao-green-plum",
+    "id": "event:wei.caocao-green-plum",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.caocao-green-plum.opt.a",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 2
+          },
+          {
+            "attr": "int",
+            "weight": 0.8
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 48,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.caocao-green-plum.opt.b",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1.6
+          },
+          {
+            "attr": "lead",
+            "weight": 1.2
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 48,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.caocao-green-plum.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "close",
+          "notableId": "notable:caocao"
+        }
+      ],
+      "chainId": "chain:caocao",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.caocao-merit-only.body",
+    "collectible": true,
+    "eventDefId": "event:wei.caocao-merit-only",
+    "id": "event:wei.caocao-merit-only",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.caocao-merit-only.opt.a",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 2.4
+          },
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 48,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:mengde",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.caocao-merit-only.opt.b",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 2
+          },
+          {
+            "attr": "lead",
+            "weight": 1.4
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 48,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:mengde",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.caocao-merit-only.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "sworn",
+          "notableId": "notable:caocao"
+        }
+      ],
+      "chainId": "chain:caocao",
+      "kind": "notable",
+      "step": 2
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.guojia-ten-wins.body",
+    "collectible": true,
+    "eventDefId": "event:wei.guojia-ten-wins",
+    "id": "event:wei.guojia-ten-wins",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.guojia-ten-wins.opt.a",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 2
+          },
+          {
+            "attr": "lead",
+            "weight": 0.8
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 48,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.guojia-ten-wins.opt.b",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1.6
+          },
+          {
+            "attr": "pol",
+            "weight": 1.2
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 48,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.guojia-ten-wins.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "close",
+          "notableId": "notable:guojia"
+        }
+      ],
+      "chainId": "chain:guojia",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.guojia-last-plan.body",
+    "collectible": true,
+    "eventDefId": "event:wei.guojia-last-plan",
+    "id": "event:wei.guojia-last-plan",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.guojia-last-plan.opt.a",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 2.4
+          },
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 48,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:fengxiao",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.guojia-last-plan.opt.b",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 2
+          },
+          {
+            "attr": "war",
+            "weight": 1.4
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 48,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:fengxiao",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.guojia-last-plan.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "sworn",
+          "notableId": "notable:guojia"
+        }
+      ],
+      "chainId": "chain:guojia",
+      "kind": "notable",
+      "step": 2
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.xunyu-deep-root.body",
+    "collectible": true,
+    "eventDefId": "event:wei.xunyu-deep-root",
+    "id": "event:wei.xunyu-deep-root",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.xunyu-deep-root.opt.a",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 2
+          },
+          {
+            "attr": "int",
+            "weight": 0.8
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 48,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.xunyu-deep-root.opt.b",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1.6
+          },
+          {
+            "attr": "lead",
+            "weight": 1.2
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 48,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.xunyu-deep-root.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "close",
+          "notableId": "notable:xunyu"
+        }
+      ],
+      "chainId": "chain:xunyu",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.xunyu-empty-box.body",
+    "collectible": true,
+    "eventDefId": "event:wei.xunyu-empty-box",
+    "id": "event:wei.xunyu-empty-box",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.xunyu-empty-box.opt.a",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 2.4
+          },
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 48,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:wangzuo",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.xunyu-empty-box.opt.b",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 2
+          },
+          {
+            "attr": "pol",
+            "weight": 1.4
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 48,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:wangzuo",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.xunyu-empty-box.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "sworn",
+          "notableId": "notable:xunyu"
+        }
+      ],
+      "chainId": "chain:xunyu",
+      "kind": "notable",
+      "step": 2
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.xiahoudun-one-eye.body",
+    "collectible": true,
+    "eventDefId": "event:wei.xiahoudun-one-eye",
+    "id": "event:wei.xiahoudun-one-eye",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.xiahoudun-one-eye.opt.a",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 2.4
+          },
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 48,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:qinggang",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.xiahoudun-one-eye.opt.b",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 2
+          },
+          {
+            "attr": "war",
+            "weight": 1.4
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 48,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:qinggang",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.xiahoudun-one-eye.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "sworn",
+          "notableId": "notable:xiahoudun"
+        }
+      ],
+      "chainId": "chain:xiahoudun",
+      "kind": "notable",
+      "step": 2
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.zhangliao-hefei.body",
+    "collectible": true,
+    "eventDefId": "event:wei.zhangliao-hefei",
+    "id": "event:wei.zhangliao-hefei",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.zhangliao-hefei.opt.a",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 2.4
+          },
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 48,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:xiaoyaojin",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.zhangliao-hefei.opt.b",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 2
+          },
+          {
+            "attr": "lead",
+            "weight": 1.4
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 48,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:xiaoyaojin",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.zhangliao-hefei.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "sworn",
+          "notableId": "notable:zhangliao"
+        }
+      ],
+      "chainId": "chain:zhangliao",
+      "kind": "notable",
+      "step": 2
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.wancheng-gate.body",
+    "collectible": true,
+    "eventDefId": "event:wei.wancheng-gate",
+    "id": "event:wei.wancheng-gate",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.wancheng-gate.opt.a",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 2
+          },
+          {
+            "attr": "lead",
+            "weight": 1.2
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 48,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.wancheng-gate.opt.b",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1.8
+          },
+          {
+            "attr": "war",
+            "weight": 1.4
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 48,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.wancheng-gate.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "close",
+          "notableId": "notable:caocao"
+        },
+        {
+          "minStage": "close",
+          "notableId": "notable:dianwei"
+        }
+      ],
+      "chainId": "chain:wancheng",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.wancheng-halberds.body",
+    "collectible": true,
+    "eventDefId": "event:wei.wancheng-halberds",
+    "id": "event:wei.wancheng-halberds",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.wancheng-halberds.opt.a",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 2.6
+          },
+          {
+            "attr": "lead",
+            "weight": 1.4
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 48,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:halberd",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.wancheng-halberds.opt.b",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 2.2
+          },
+          {
+            "attr": "war",
+            "weight": 1.8
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 48,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:halberd",
+            "kind": "item"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.wancheng-halberds.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "sworn",
+          "notableId": "notable:caocao"
+        },
+        {
+          "minStage": "sworn",
+          "notableId": "notable:dianwei"
+        }
+      ],
+      "chainId": "chain:wancheng",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.two-reckonings.body",
+    "collectible": true,
+    "eventDefId": "event:wei.two-reckonings",
+    "id": "event:wei.two-reckonings",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.two-reckonings.opt.a",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 2
+          },
+          {
+            "attr": "int",
+            "weight": 1.2
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 48,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.two-reckonings.opt.b",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 2
+          },
+          {
+            "attr": "pol",
+            "weight": 1.2
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 48,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.two-reckonings.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "close",
+          "notableId": "notable:xunyu"
+        },
+        {
+          "minStage": "close",
+          "notableId": "notable:jiaxu"
+        }
+      ],
+      "chainId": "chain:two-reckonings",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.five-generals.body",
+    "collectible": true,
+    "eventDefId": "event:wei.five-generals",
+    "id": "event:wei.five-generals",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.five-generals.opt.a",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 2.8
+          },
+          {
+            "attr": "war",
+            "weight": 1.6
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 48,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:wuzi",
+            "kind": "item"
+          },
+          {
+            "amount": 10,
+            "kind": "affinity",
+            "notableId": null
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.five-generals.opt.b",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 2.8
+          },
+          {
+            "attr": "lead",
+            "weight": 1.6
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 48,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 1,
+            "itemId": "item:wuzi",
+            "kind": "item"
+          },
+          {
+            "amount": 10,
+            "kind": "affinity",
+            "notableId": null
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wei"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.five-generals.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "sworn",
+          "notableId": "notable:zhangliao"
+        },
+        {
+          "minStage": "sworn",
+          "notableId": "notable:yujin"
+        },
+        {
+          "minStage": "sworn",
+          "notableId": "notable:lejin"
+        }
+      ],
+      "chainId": "chain:wuzi",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "checkId": "check:wei.hulao",
+    "enemyNotables": [],
+    "id": "check:wei.hulao",
+    "kind": "majorCheck",
+    "packId": "pack:wei",
+    "routes": {
+      "civil": {
+        "primaryAttr": "int",
+        "secondaryAttr": "pol",
+        "tiers": {
+          "hard": {
+            "briefKey": "check.wei.hulao.civil.brief.hard",
+            "dc": 330,
+            "requirements": [],
+            "rewards": [
+              {
+                "amount": 110,
+                "kind": "merit",
+                "merit": "civil"
+              },
+              {
+                "amount": 25,
+                "kind": "merit",
+                "merit": "martial"
+              },
+              {
+                "amount": 40,
+                "attr": "int",
+                "kind": "attr"
+              }
+            ]
+          },
+          "normal": {
+            "briefKey": "check.wei.hulao.civil.brief.normal",
+            "dc": 240,
+            "requirements": [],
+            "rewards": [
+              {
+                "amount": 65,
+                "kind": "merit",
+                "merit": "civil"
+              },
+              {
+                "amount": 18,
+                "attr": "int",
+                "kind": "attr"
+              }
+            ]
+          },
+          "safe": {
+            "briefKey": "check.wei.hulao.civil.brief.safe",
+            "dc": 155,
+            "requirements": [],
+            "rewards": [
+              {
+                "amount": 35,
+                "kind": "merit",
+                "merit": "civil"
+              }
+            ]
+          }
+        }
+      },
+      "martial": {
+        "primaryAttr": "war",
+        "secondaryAttr": "int",
+        "tiers": {
+          "hard": {
+            "briefKey": "check.wei.hulao.martial.brief.hard",
+            "dc": 330,
+            "requirements": [],
+            "rewards": [
+              {
+                "amount": 55,
+                "kind": "merit",
+                "merit": "martial"
+              },
+              {
+                "amount": 12,
+                "kind": "merit",
+                "merit": "civil"
+              },
+              {
+                "amount": 40,
+                "attr": "war",
+                "kind": "attr"
+              }
+            ]
+          },
+          "normal": {
+            "briefKey": "check.wei.hulao.martial.brief.normal",
+            "dc": 240,
+            "requirements": [],
+            "rewards": [
+              {
+                "amount": 32,
+                "kind": "merit",
+                "merit": "martial"
+              },
+              {
+                "amount": 18,
+                "attr": "war",
+                "kind": "attr"
+              }
+            ]
+          },
+          "safe": {
+            "briefKey": "check.wei.hulao.martial.brief.safe",
+            "dc": 155,
+            "requirements": [],
+            "rewards": [
+              {
+                "amount": 16,
+                "kind": "merit",
+                "merit": "martial"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "schemaVersion": 1
   },
   {
     "checkId": "check:wei.guandu",
@@ -978,68 +5520,135 @@
     "id": "check:wei.guandu",
     "kind": "majorCheck",
     "packId": "pack:wei",
-    "primaryAttr": "int",
-    "schemaVersion": 1,
-    "secondaryAttr": "pol",
-    "tiers": {
-      "hard": {
-        "briefKey": "check.wei.guandu.brief.hard",
-        "dc": 305,
-        "requirements": [
-          {
-            "stat": "career.civil",
-            "type": "statGte",
-            "value": 2
-          }
-        ],
-        "rewards": [
-          {
-            "amount": 50,
-            "kind": "merit",
-            "merit": "martial"
+    "routes": {
+      "civil": {
+        "primaryAttr": "int",
+        "secondaryAttr": "pol",
+        "tiers": {
+          "hard": {
+            "briefKey": "check.wei.guandu.civil.brief.hard",
+            "dc": 305,
+            "requirements": [
+              {
+                "stat": "career.civil",
+                "type": "statGte",
+                "value": 2
+              }
+            ],
+            "rewards": [
+              {
+                "amount": 50,
+                "kind": "merit",
+                "merit": "civil"
+              },
+              {
+                "amount": 18,
+                "kind": "merit",
+                "merit": "martial"
+              },
+              {
+                "amount": 40,
+                "attr": "int",
+                "kind": "attr"
+              }
+            ]
           },
-          {
-            "amount": 18,
-            "kind": "merit",
-            "merit": "civil"
+          "normal": {
+            "briefKey": "check.wei.guandu.civil.brief.normal",
+            "dc": 224,
+            "requirements": [],
+            "rewards": [
+              {
+                "amount": 30,
+                "kind": "merit",
+                "merit": "civil"
+              },
+              {
+                "amount": 20,
+                "attr": "int",
+                "kind": "attr"
+              }
+            ]
           },
-          {
-            "amount": 40,
-            "attr": "int",
-            "kind": "attr"
+          "safe": {
+            "briefKey": "check.wei.guandu.civil.brief.safe",
+            "dc": 142,
+            "requirements": [],
+            "rewards": [
+              {
+                "amount": 15,
+                "kind": "merit",
+                "merit": "civil"
+              }
+            ]
           }
-        ]
+        }
       },
-      "normal": {
-        "briefKey": "check.wei.guandu.brief.normal",
-        "dc": 224,
-        "requirements": [],
-        "rewards": [
-          {
-            "amount": 30,
-            "kind": "merit",
-            "merit": "martial"
+      "martial": {
+        "primaryAttr": "war",
+        "secondaryAttr": "pol",
+        "tiers": {
+          "hard": {
+            "briefKey": "check.wei.guandu.martial.brief.hard",
+            "dc": 305,
+            "requirements": [
+              {
+                "stat": "career.martial",
+                "type": "statGte",
+                "value": 2
+              }
+            ],
+            "rewards": [
+              {
+                "amount": 50,
+                "kind": "merit",
+                "merit": "martial"
+              },
+              {
+                "amount": 18,
+                "kind": "merit",
+                "merit": "civil"
+              },
+              {
+                "amount": 40,
+                "attr": "war",
+                "kind": "attr"
+              }
+            ]
           },
-          {
-            "amount": 20,
-            "attr": "int",
-            "kind": "attr"
+          "normal": {
+            "briefKey": "check.wei.guandu.martial.brief.normal",
+            "dc": 224,
+            "requirements": [],
+            "rewards": [
+              {
+                "amount": 30,
+                "kind": "merit",
+                "merit": "martial"
+              },
+              {
+                "amount": 20,
+                "attr": "war",
+                "kind": "attr"
+              }
+            ]
+          },
+          "safe": {
+            "briefKey": "check.wei.guandu.martial.brief.safe",
+            "dc": 142,
+            "requirements": [],
+            "rewards": [
+              {
+                "amount": 15,
+                "kind": "merit",
+                "merit": "martial"
+              }
+            ]
           }
-        ]
-      },
-      "safe": {
-        "briefKey": "check.wei.guandu.brief.safe",
-        "dc": 142,
-        "requirements": [],
-        "rewards": [
-          {
-            "amount": 15,
-            "kind": "merit",
-            "merit": "martial"
-          }
-        ]
+        }
       }
-    }
+    },
+    "schemaVersion": 1
   },
   {
     "checkId": "check:wei.hebei",
@@ -1047,68 +5656,148 @@
     "id": "check:wei.hebei",
     "kind": "majorCheck",
     "packId": "pack:wei",
-    "primaryAttr": "war",
-    "schemaVersion": 1,
-    "secondaryAttr": "pol",
-    "tiers": {
-      "hard": {
-        "briefKey": "check.wei.hebei.brief.hard",
-        "dc": 865,
-        "requirements": [
-          {
-            "stat": "career.martial",
-            "type": "statGte",
-            "value": 3
-          }
-        ],
-        "rewards": [
-          {
-            "amount": 70,
-            "kind": "merit",
-            "merit": "martial"
+    "routes": {
+      "civil": {
+        "primaryAttr": "int",
+        "secondaryAttr": "pol",
+        "tiers": {
+          "hard": {
+            "briefKey": "check.wei.hebei.civil.brief.hard",
+            "dc": 865,
+            "requirements": [
+              {
+                "stat": "career.civil",
+                "type": "statGte",
+                "value": 3
+              }
+            ],
+            "rewards": [
+              {
+                "amount": 70,
+                "kind": "merit",
+                "merit": "civil"
+              },
+              {
+                "amount": 25,
+                "kind": "merit",
+                "merit": "martial"
+              },
+              {
+                "amount": 50,
+                "attr": "int",
+                "kind": "attr"
+              }
+            ]
           },
-          {
-            "amount": 25,
-            "kind": "merit",
-            "merit": "civil"
+          "normal": {
+            "briefKey": "check.wei.hebei.civil.brief.normal",
+            "dc": 634,
+            "requirements": [],
+            "rewards": [
+              {
+                "amount": 40,
+                "kind": "merit",
+                "merit": "civil"
+              },
+              {
+                "amount": 25,
+                "attr": "int",
+                "kind": "attr"
+              }
+            ]
           },
-          {
-            "amount": 50,
-            "attr": "war",
-            "kind": "attr"
+          "safe": {
+            "briefKey": "check.wei.hebei.civil.brief.safe",
+            "dc": 403,
+            "requirements": [],
+            "rewards": [
+              {
+                "amount": 20,
+                "kind": "merit",
+                "merit": "civil"
+              }
+            ]
           }
-        ]
+        }
       },
-      "normal": {
-        "briefKey": "check.wei.hebei.brief.normal",
-        "dc": 634,
-        "requirements": [],
-        "rewards": [
-          {
-            "amount": 40,
-            "kind": "merit",
-            "merit": "martial"
+      "martial": {
+        "primaryAttr": "war",
+        "secondaryAttr": "pol",
+        "tiers": {
+          "hard": {
+            "briefKey": "check.wei.hebei.martial.brief.hard",
+            "dc": 865,
+            "requirements": [
+              {
+                "stat": "career.martial",
+                "type": "statGte",
+                "value": 3
+              }
+            ],
+            "rewards": [
+              {
+                "amount": 70,
+                "kind": "merit",
+                "merit": "martial"
+              },
+              {
+                "amount": 25,
+                "kind": "merit",
+                "merit": "civil"
+              },
+              {
+                "amount": 50,
+                "attr": "war",
+                "kind": "attr"
+              }
+            ]
           },
-          {
-            "amount": 25,
-            "attr": "war",
-            "kind": "attr"
+          "normal": {
+            "briefKey": "check.wei.hebei.martial.brief.normal",
+            "dc": 634,
+            "requirements": [],
+            "rewards": [
+              {
+                "amount": 40,
+                "kind": "merit",
+                "merit": "martial"
+              },
+              {
+                "amount": 25,
+                "attr": "war",
+                "kind": "attr"
+              }
+            ]
+          },
+          "safe": {
+            "briefKey": "check.wei.hebei.martial.brief.safe",
+            "dc": 403,
+            "requirements": [],
+            "rewards": [
+              {
+                "amount": 20,
+                "kind": "merit",
+                "merit": "martial"
+              }
+            ]
           }
-        ]
-      },
-      "safe": {
-        "briefKey": "check.wei.hebei.brief.safe",
-        "dc": 403,
-        "requirements": [],
-        "rewards": [
-          {
-            "amount": 20,
-            "kind": "merit",
-            "merit": "martial"
-          }
-        ]
+        }
       }
-    }
+    },
+    "schemaVersion": 1
+  },
+  {
+    "chapterId": "ch:wei.hulao",
+    "factionId": "faction:wei",
+    "id": "ch:wei.hulao",
+    "kind": "chapter",
+    "length": 8,
+    "majorCheckId": "check:wei.hulao",
+    "onPass": null,
+    "order": 1,
+    "packId": "pack:wei",
+    "schemaVersion": 1,
+    "titleKey": "chapter.wei.hulao.title"
   },
   {
     "chapterId": "ch:wei.guandu",
@@ -1118,7 +5807,7 @@
     "length": 8,
     "majorCheckId": "check:wei.guandu",
     "onPass": null,
-    "order": 1,
+    "order": 2,
     "packId": "pack:wei",
     "schemaVersion": 1,
     "titleKey": "chapter.wei.guandu.title"
@@ -1131,13 +5820,14 @@
     "length": 8,
     "majorCheckId": "check:wei.hebei",
     "onPass": null,
-    "order": 2,
+    "order": 3,
     "packId": "pack:wei",
     "schemaVersion": 1,
     "titleKey": "chapter.wei.hebei.title"
   },
   {
     "chapters": [
+      "ch:wei.hulao",
       "ch:wei.guandu",
       "ch:wei.hebei"
     ],

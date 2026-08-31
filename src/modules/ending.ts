@@ -1,19 +1,12 @@
 // ㉕ 結局判定。結局是夢裡真正發生的事，達成之後才夢醒（25 §1）。
 import type { RunContext } from '../contracts/core/context.js';
 import type { EndingDef, EndingTrigger } from '../contracts/core/definitions.js';
-import type { Attr, MoralBand } from '../contracts/core/primitives.js';
+import type { Attr } from '../contracts/core/primitives.js';
 import type { EndingOutcome, RunState } from '../contracts/core/state.js';
 import { evaluateCondition } from './effect-core.js';
 import { statQuery } from './stats.js';
 
 const readStat = statQuery.read.bind(statQuery);
-
-export function moralBandOf(ctx: RunContext): MoralBand {
-  const value = statQuery.fame('moral', ctx);
-  const bands = ctx.defs.single('gameRules').moralBands;
-  const found = bands.find((b) => value >= b.min && value <= b.max);
-  return found?.band ?? 'neutral';
-}
 
 const triggerMatches = (def: EndingDef, t: EndingTrigger): boolean => {
   if (def.trigger.kind !== t.kind) return false;
@@ -44,12 +37,10 @@ export function resolveEnding(trigger: EndingTrigger, ctx: RunContext): EndingOu
       + '這代表內容驗證的兜底規則被繞過了（25 §3.1）。',
     );
   }
-  const band = moralBandOf(ctx);
   return {
     endingId: best.ending,
-    moralBand: band,
     titleKey: best.titleKey,
-    bodyKey: best.moralVariants[band],
+    bodyKey: best.bodyKey,
     pointsMultiplier: best.pointsMultiplier,
     isFullDream: best.endingKind === 'fullDream',
   };

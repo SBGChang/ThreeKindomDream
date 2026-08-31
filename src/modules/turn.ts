@@ -3,9 +3,10 @@ import type { RunContext } from '../contracts/core/context.js';
 import type { ChapterDef } from '../contracts/core/definitions.js';
 import type { ChapterId, FactionId } from '../contracts/core/ids.js';
 import { chapterIndex, turnIndex } from '../contracts/core/ids.js';
-import type { ActionTally, RunState, TurnAction, TurnProgress } from '../contracts/core/state.js';
-import { selectedAction } from './training.js';
-import { resolvedAction } from './event-slot.js';
+import type { Attr } from '../contracts/core/primitives.js';
+import type { ActionTally, RunState, TurnProgress } from '../contracts/core/state.js';
+import { hasSelected } from './training.js';
+import { isClear } from './commission.js';
 
 export const sequenceOf = (
   faction: FactionId | null, ctx: RunContext,
@@ -38,7 +39,7 @@ export function progressOf(
         chapter: chapterIndex(chaptersPassed + i + 1),
         chapterId: cid,
         turnInChapter: turn - consumed,
-        phase: faction === null ? 'nanhua' : 'faction',
+        phase: faction === null ? 'camp' : 'faction',
         chaptersPassed,
         pendingMajorCheck: turn === consumed + ch.length,
         pendingFactionChoice: false,
@@ -55,7 +56,7 @@ export function progressOf(
     chapter: chapterIndex(chaptersPassed + seq.length),
     chapterId: last,
     turnInChapter: chapterAt(last, ctx).length,
-    phase: faction === null ? 'nanhua' : 'faction',
+    phase: faction === null ? 'camp' : 'faction',
     chaptersPassed,
     pendingMajorCheck: false,
     pendingFactionChoice: false,
@@ -64,39 +65,39 @@ export function progressOf(
 }
 
 /**
- * 本回合已投入的動作。
+ * 本回合是否已投入固定事件。
  *
- * 【不另存一份】。兩個槽各自已經記了自己的結果（training.selected／event.resolved），
- * 互斥性讓「其中恰有一個非 null」本身就是完整資訊 —— 再加一個 committed 欄位
- * 只會多出一個可能與兩者不一致的真相來源。
- * 15 的職責是【組合這兩個查詢並宣告規則】，不是再存一次。
+ * 【不另存一份】：⑯ 已經記了 `turn.selected`，再加一個 committed 欄位
+ * 只會多出一個可能不一致的真相來源。15 的職責是【組合兩個擁有者的查詢
+ * 並宣告規則】，不是再存一次，也不是繞過擁有者直接讀他們的 slice。
  */
-export const actionOf = (ctx: RunContext): TurnAction | null =>
-  selectedAction(ctx) ?? resolvedAction(ctx);
-
-export const hasActed = (ctx: RunContext): boolean => actionOf(ctx) !== null;
+export const hasActed = (ctx: RunContext): boolean => hasSelected(ctx);
 
 /**
- * 互斥的唯一守門處（15 §2）。選了鍛鍊就不能再做事件，反之亦然。
- * 寫在這裡而不是兩個槽各寫一次 —— 否則規則會有兩份，且各自只看得到自己那半。
+ * 唯一的守門處（15 §2）。一回合恰好投入一個固定事件。
+ *
+ * 委託【不經這道門】—— 它不是玩家投入的動作，是投入之後發生的事。
+ * 委託的守門是「佇列非空」，見 canAdvance。
  */
 export function assertActable(ctx: RunContext): void {
-  const acted = actionOf(ctx);
-  if (acted !== null) {
-    throw new Error(`本回合已行動（${acted.kind}），一回合只能投入一個動作`);
+  if (hasActed(ctx)) {
+    throw new Error('本回合已投入固定事件，一回合只能投入一個');
   }
 }
 
-/** 記帳。行動配比是單動作回合制的核心度量，因此必須留下紀錄（15 §2.2）。 */
-export function tally(action: TurnAction, ctx: RunContext): RunState {
-  const next: ActionTally = {
-    ...ctx.state.actions,
-    [action.kind]: ctx.state.actions[action.kind] + 1,
-  };
+/** 記帳。「回合花在哪一維」是新制的核心度量，因此必須留下紀錄（15 §2.2）。 */
+export function tally(attr: Attr, ctx: RunContext): RunState {
+  const next: ActionTally = { ...ctx.state.actions, [attr]: ctx.state.actions[attr] + 1 };
   return { ...ctx.state, actions: next };
 }
 
-export const canAdvance = (ctx: RunContext): boolean => hasActed(ctx);
+/**
+ * 可推進 ⟺ 已投入固定事件【且】待處理佇列已清空（15 §2）。
+ *
+ * 兩個條件是同一條規則的兩半：一個回合＝一個固定事件，加上它引發的全部事件。
+ * 因此追加武將事件不需要在這裡多一個分支 —— 它只是讓佇列又非空了。
+ */
+export const canAdvance = (ctx: RunContext): boolean => hasSelected(ctx) && isClear(ctx);
 
 export const currentChapter = (ctx: RunContext): ChapterDef =>
   chapterAt(ctx.state.progress.chapterId, ctx);

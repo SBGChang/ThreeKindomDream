@@ -7,93 +7,207 @@ import { WEI_F, weiDef } from './pack-id.js';
 
 const k = asKey;
 
-// ── 大檢定 DC 反推（單動作回合制）────────────────────
-// 舊值反推自「每回合都鍛鍊」的成長模型 —— 雙槽制下事件不花回合，所以那是唯一的成長速度。
-// 單動作回合制把事件的代價變成一整個鍛鍊回合，於是【任何參與事件的玩家】
-// 都達不到舊模型的檢定值，大檢定會變成「做事就等於死」。
+// ── 大檢定：文武各三檔（18 §2.2）────────────────────
 //
-// 新值不再用手算的成長模型，而是【量出來的】：以「三成回合做事、專精主檢定屬性」
-// 的參考打法跑 150 輪，記下各章「穩」檔的實際檢定值（見 HANDOFF 的掃描表）：
+// DC 與獎勵線的訂法見 core/chapters/nanhua.ts 的長註解。
+// 兩條路線目前同 DC，是【明確的占位值】而非校準結果。
 //
-//   黃巾 104 ／ 虎牢 252 ／ 官渡 233 ／ 平定河北 660
-//
-// 官渡低於虎牢不是筆誤 —— 它的主屬性換成【智】，玩家等於從第 3 章才開始練那一維。
-// 各檢定的 DC 只能跟同一個主屬性的成長比，不能跨章橫向比較。
-//
-// 三檔各取參考值的 0.61 ／ 0.96 ／ 1.31 倍
-// （＝穩約九成、進約五成半、險約兩成的成功率；比例骰的封閉式見 18 §8.2）。
-// 全押鍛鍊者的檢定值遠高於參考值，「進」對他們是可賭的 —— 難度自選才繼續是決策。
-//   本檔：官渡＝ch3（主屬性換成智）、平定河北＝ch4
+// 這裡有一個要特別留意的後果：官渡原本是【智為主】，而 HANDOFF 記過一個
+// 意外的好性質 ——「主屬性在章節間變化本身就是對純專精的懲罰」。
+// 六選項制把那個懲罰拿掉了：追武的玩家現在可以走官渡的武路，
+// 永遠不必面對自己沒練的那一維。純專精的反制需要新的來源（見 HANDOFF）。
+//   本檔：虎牢＝ch2（討董，自 core 移入）、官渡＝ch3、平定河北＝ch4
 export const weiChecks: readonly MajorCheckDef[] = [
+  weiDef('majorCheck', 'check:wei.hulao', {
+    checkId: majorCheckId('check:wei.hulao'),
+    enemyNotables: [],
+    routes: {
+      martial: {
+        primaryAttr: 'war', secondaryAttr: 'int',
+        tiers: {
+          safe: {
+            dc: 155, requirements: [], briefKey: k('check.wei.hulao.martial.brief.safe'),
+            rewards: [{ kind: 'merit', merit: 'martial', amount: 16 }],
+          },
+          normal: {
+            dc: 240, requirements: [], briefKey: k('check.wei.hulao.martial.brief.normal'),
+            rewards: [
+              { kind: 'merit', merit: 'martial', amount: 32 },
+              { kind: 'attr', attr: 'war', amount: 18 },
+            ],
+          },
+          hard: {
+            dc: 330, requirements: [], briefKey: k('check.wei.hulao.martial.brief.hard'),
+            rewards: [
+              { kind: 'merit', merit: 'martial', amount: 55 },
+              { kind: 'merit', merit: 'civil', amount: 12 },
+              { kind: 'attr', attr: 'war', amount: 40 },
+            ],
+          },
+        },
+      },
+      civil: {
+        primaryAttr: 'int', secondaryAttr: 'pol',
+        tiers: {
+          safe: {
+            dc: 155, requirements: [], briefKey: k('check.wei.hulao.civil.brief.safe'),
+            rewards: [{ kind: 'merit', merit: 'civil', amount: 35 }],
+          },
+          normal: {
+            dc: 240, requirements: [], briefKey: k('check.wei.hulao.civil.brief.normal'),
+            rewards: [
+              { kind: 'merit', merit: 'civil', amount: 65 },
+              { kind: 'attr', attr: 'int', amount: 18 },
+            ],
+          },
+          hard: {
+            dc: 330, requirements: [], briefKey: k('check.wei.hulao.civil.brief.hard'),
+            rewards: [
+              { kind: 'merit', merit: 'civil', amount: 110 },
+              { kind: 'merit', merit: 'martial', amount: 25 },
+              { kind: 'attr', attr: 'int', amount: 40 },
+            ],
+          },
+        },
+      },
+    },
+  }),
   weiDef('majorCheck', 'check:wei.guandu', {
     checkId: majorCheckId('check:wei.guandu'),
-    primaryAttr: 'int', secondaryAttr: 'pol',
     enemyNotables: [],
-    tiers: {
-      safe: {
-        dc: 142, requirements: [], briefKey: k('check.wei.guandu.brief.safe'),
-        rewards: [{ kind: 'merit', merit: 'martial', amount: 15 }],
+    routes: {
+      martial: {
+        primaryAttr: 'war', secondaryAttr: 'pol',
+        tiers: {
+          safe: {
+            dc: 142, requirements: [], briefKey: k('check.wei.guandu.martial.brief.safe'),
+            rewards: [{ kind: 'merit', merit: 'martial', amount: 15 }],
+          },
+          normal: {
+            dc: 224, requirements: [], briefKey: k('check.wei.guandu.martial.brief.normal'),
+            rewards: [
+              { kind: 'merit', merit: 'martial', amount: 30 },
+              { kind: 'attr', attr: 'war', amount: 20 },
+            ],
+          },
+          hard: {
+            dc: 305,
+            requirements: [{ type: 'statGte', stat: 'career.martial', value: 2 }],
+            briefKey: k('check.wei.guandu.martial.brief.hard'),
+            rewards: [
+              { kind: 'merit', merit: 'martial', amount: 50 },
+              { kind: 'merit', merit: 'civil', amount: 18 },
+              { kind: 'attr', attr: 'war', amount: 40 },
+            ],
+          },
+        },
       },
-      normal: {
-        dc: 224, requirements: [], briefKey: k('check.wei.guandu.brief.normal'),
-        rewards: [
-          { kind: 'merit', merit: 'martial', amount: 30 },
-          { kind: 'attr', attr: 'int', amount: 20 },
-        ],
-      },
-      hard: {
-        dc: 305,
-        requirements: [{ type: 'statGte', stat: 'career.civil', value: 2 }],
-        briefKey: k('check.wei.guandu.brief.hard'),
-        rewards: [
-          { kind: 'merit', merit: 'martial', amount: 50 },
-          { kind: 'merit', merit: 'civil', amount: 18 },
-          { kind: 'attr', attr: 'int', amount: 40 },
-        ],
+      civil: {
+        primaryAttr: 'int', secondaryAttr: 'pol',
+        tiers: {
+          safe: {
+            dc: 142, requirements: [], briefKey: k('check.wei.guandu.civil.brief.safe'),
+            rewards: [{ kind: 'merit', merit: 'civil', amount: 15 }],
+          },
+          normal: {
+            dc: 224, requirements: [], briefKey: k('check.wei.guandu.civil.brief.normal'),
+            rewards: [
+              { kind: 'merit', merit: 'civil', amount: 30 },
+              { kind: 'attr', attr: 'int', amount: 20 },
+            ],
+          },
+          hard: {
+            dc: 305,
+            requirements: [{ type: 'statGte', stat: 'career.civil', value: 2 }],
+            briefKey: k('check.wei.guandu.civil.brief.hard'),
+            rewards: [
+              { kind: 'merit', merit: 'civil', amount: 50 },
+              { kind: 'merit', merit: 'martial', amount: 18 },
+              { kind: 'attr', attr: 'int', amount: 40 },
+            ],
+          },
+        },
       },
     },
   }),
   weiDef('majorCheck', 'check:wei.hebei', {
     checkId: majorCheckId('check:wei.hebei'),
-    primaryAttr: 'war', secondaryAttr: 'pol',
     enemyNotables: [],
-    tiers: {
-      safe: {
-        dc: 403, requirements: [], briefKey: k('check.wei.hebei.brief.safe'),
-        rewards: [{ kind: 'merit', merit: 'martial', amount: 20 }],
+    routes: {
+      martial: {
+        primaryAttr: 'war', secondaryAttr: 'pol',
+        tiers: {
+          safe: {
+            dc: 403, requirements: [], briefKey: k('check.wei.hebei.martial.brief.safe'),
+            rewards: [{ kind: 'merit', merit: 'martial', amount: 20 }],
+          },
+          normal: {
+            dc: 634, requirements: [], briefKey: k('check.wei.hebei.martial.brief.normal'),
+            rewards: [
+              { kind: 'merit', merit: 'martial', amount: 40 },
+              { kind: 'attr', attr: 'war', amount: 25 },
+            ],
+          },
+          hard: {
+            dc: 865,
+            requirements: [{ type: 'statGte', stat: 'career.martial', value: 3 }],
+            briefKey: k('check.wei.hebei.martial.brief.hard'),
+            rewards: [
+              { kind: 'merit', merit: 'martial', amount: 70 },
+              { kind: 'merit', merit: 'civil', amount: 25 },
+              { kind: 'attr', attr: 'war', amount: 50 },
+            ],
+          },
+        },
       },
-      normal: {
-        dc: 634, requirements: [], briefKey: k('check.wei.hebei.brief.normal'),
-        rewards: [
-          { kind: 'merit', merit: 'martial', amount: 40 },
-          { kind: 'attr', attr: 'war', amount: 25 },
-        ],
-      },
-      hard: {
-        dc: 865,
-        requirements: [{ type: 'statGte', stat: 'career.martial', value: 3 }],
-        briefKey: k('check.wei.hebei.brief.hard'),
-        rewards: [
-          { kind: 'merit', merit: 'martial', amount: 70 },
-          { kind: 'merit', merit: 'civil', amount: 25 },
-          { kind: 'attr', attr: 'war', amount: 50 },
-        ],
+      civil: {
+        primaryAttr: 'int', secondaryAttr: 'pol',
+        tiers: {
+          safe: {
+            dc: 403, requirements: [], briefKey: k('check.wei.hebei.civil.brief.safe'),
+            rewards: [{ kind: 'merit', merit: 'civil', amount: 20 }],
+          },
+          normal: {
+            dc: 634, requirements: [], briefKey: k('check.wei.hebei.civil.brief.normal'),
+            rewards: [
+              { kind: 'merit', merit: 'civil', amount: 40 },
+              { kind: 'attr', attr: 'int', amount: 25 },
+            ],
+          },
+          hard: {
+            dc: 865,
+            requirements: [{ type: 'statGte', stat: 'career.civil', value: 3 }],
+            briefKey: k('check.wei.hebei.civil.brief.hard'),
+            rewards: [
+              { kind: 'merit', merit: 'civil', amount: 70 },
+              { kind: 'merit', merit: 'martial', amount: 25 },
+              { kind: 'attr', attr: 'int', amount: 50 },
+            ],
+          },
+        },
       },
     },
   }),
 ];
 
 export const weiChapters: readonly ChapterDef[] = [
+  weiDef('chapter', 'ch:wei.hulao', {
+    chapterId: chapterId('ch:wei.hulao'),
+    factionId: WEI_F, order: 1, length: 8,
+    titleKey: k('chapter.wei.hulao.title'),
+    majorCheckId: majorCheckId('check:wei.hulao'),
+    onPass: null,
+  }),
   weiDef('chapter', 'ch:wei.guandu', {
     chapterId: chapterId('ch:wei.guandu'),
-    factionId: WEI_F, order: 1, length: 8,
+    factionId: WEI_F, order: 2, length: 8,
     titleKey: k('chapter.wei.guandu.title'),
     majorCheckId: majorCheckId('check:wei.guandu'),
     onPass: null,
   }),
   weiDef('chapter', 'ch:wei.hebei', {
     chapterId: chapterId('ch:wei.hebei'),
-    factionId: WEI_F, order: 2, length: 8,
+    factionId: WEI_F, order: 3, length: 8,
     titleKey: k('chapter.wei.hebei.title'),
     majorCheckId: majorCheckId('check:wei.hebei'),
     onPass: null,
@@ -102,5 +216,9 @@ export const weiChapters: readonly ChapterDef[] = [
 
 export const weiSequence: ChapterSequenceDef = weiDef('chapterSequence', 'seq:wei', {
   factionId: WEI_F,
-  chapters: [chapterId('ch:wei.guandu'), chapterId('ch:wei.hebei')],
+  chapters: [
+    chapterId('ch:wei.hulao'),
+    chapterId('ch:wei.guandu'),
+    chapterId('ch:wei.hebei'),
+  ],
 });
