@@ -151,6 +151,7 @@ export type RngStream =
    */
   | 'slot.flag'
   | 'item.drop'
+  | 'attr.start'        // 入夢時的起始四維（15–30）
   // ── 戰役（33 §9）★ ────────────────────────────────
   // 四條分流，順序固定為 33 §4 的四步。合流的話「這回合主角放了幾招」
   // 會改變指揮的擲骰序，重播就對不上。
@@ -163,7 +164,7 @@ export type RngStream =
 export const RNG_STREAMS: readonly RngStream[] = [
   'glow.base', 'glow.upgrade', 'notable.slot', 'notable.roster',
   'event.rarity', 'event.draw', 'event.params', 'event.notable',
-  'check.roll', 'slot.flag', 'item.drop',
+  'check.roll', 'slot.flag', 'item.drop', 'attr.start',
   'battle.cast', 'battle.pick', 'battle.command', 'battle.enemy', 'battle.drop',
 ];
 

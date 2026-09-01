@@ -5851,6 +5851,16 @@
             "amount": 22,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "amount": 7,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 7,
+            "attr": "lead",
+            "kind": "exp"
           }
         ],
         "troopsMul": 0.55
@@ -5864,6 +5874,16 @@
             "amount": 40,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "amount": 11,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 11,
+            "attr": "lead",
+            "kind": "exp"
           }
         ],
         "troopsMul": 0.75
@@ -5877,6 +5897,16 @@
             "amount": 70,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "amount": 15,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 15,
+            "attr": "lead",
+            "kind": "exp"
           }
         ],
         "troopsMul": 1
@@ -5890,6 +5920,16 @@
             "amount": 132,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "amount": 19,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 19,
+            "attr": "lead",
+            "kind": "exp"
           },
           {
             "kind": "unlock",
@@ -5910,6 +5950,16 @@
             "merit": "martial"
           },
           {
+            "amount": 22,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 22,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
             "kind": "unlock",
             "skill": "skill:jiezhi",
             "trait": null
@@ -5926,6 +5976,16 @@
             "amount": 484,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "amount": 26,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 26,
+            "attr": "lead",
+            "kind": "exp"
           }
         ],
         "troopsMul": 2.4
@@ -5939,6 +5999,16 @@
             "amount": 990,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "amount": 30,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 30,
+            "attr": "lead",
+            "kind": "exp"
           },
           {
             "kind": "unlock",
@@ -5968,6 +6038,16 @@
             "amount": 40,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "amount": 9,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 9,
+            "attr": "lead",
+            "kind": "exp"
           }
         ],
         "troopsMul": 0.55
@@ -5981,6 +6061,16 @@
             "amount": 72,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "amount": 14,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 14,
+            "attr": "lead",
+            "kind": "exp"
           }
         ],
         "troopsMul": 0.75
@@ -5994,6 +6084,16 @@
             "amount": 128,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "amount": 19,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 19,
+            "attr": "lead",
+            "kind": "exp"
           }
         ],
         "troopsMul": 1
@@ -6007,6 +6107,16 @@
             "amount": 240,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "amount": 24,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 24,
+            "attr": "lead",
+            "kind": "exp"
           },
           {
             "kind": "unlock",
@@ -6027,6 +6137,16 @@
             "merit": "martial"
           },
           {
+            "amount": 29,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 29,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
             "kind": "unlock",
             "skill": null,
             "trait": "trait:liaodi"
@@ -6045,6 +6165,16 @@
             "merit": "martial"
           },
           {
+            "amount": 34,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 34,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
             "kind": "unlock",
             "skill": "skill:tuntian",
             "trait": null
@@ -6061,6 +6191,16 @@
             "amount": 1800,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "amount": 39,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 39,
+            "attr": "lead",
+            "kind": "exp"
           },
           {
             "kind": "unlock",
@@ -6090,6 +6230,16 @@
             "amount": 68,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "amount": 11,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 11,
+            "attr": "lead",
+            "kind": "exp"
           }
         ],
         "troopsMul": 0.55
@@ -6103,6 +6253,16 @@
             "amount": 122,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "amount": 17,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 17,
+            "attr": "lead",
+            "kind": "exp"
           }
         ],
         "troopsMul": 0.75
@@ -6116,6 +6276,16 @@
             "amount": 218,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "amount": 23,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 23,
+            "attr": "lead",
+            "kind": "exp"
           }
         ],
         "troopsMul": 1
@@ -6129,6 +6299,16 @@
             "amount": 408,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "amount": 29,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 29,
+            "attr": "lead",
+            "kind": "exp"
           }
         ],
         "troopsMul": 1.35
@@ -6142,6 +6322,16 @@
             "amount": 748,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "amount": 35,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 35,
+            "attr": "lead",
+            "kind": "exp"
           },
           {
             "kind": "unlock",
@@ -6162,6 +6352,16 @@
             "merit": "martial"
           },
           {
+            "amount": 41,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 41,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
             "kind": "unlock",
             "skill": "skill:wanrenzhi",
             "trait": null
@@ -6178,6 +6378,16 @@
             "amount": 3060,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "amount": 47,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 47,
+            "attr": "lead",
+            "kind": "exp"
           },
           {
             "kind": "unlock",

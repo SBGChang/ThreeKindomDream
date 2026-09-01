@@ -81,6 +81,9 @@ export const weiCampaigns: readonly CampaignDef[] = [
       ],
       baseMerit: 22,
       meritKind: 'martial',
+      // 打仗長的是帶兵的本事 —— 武與統各一半。
+      baseExp: 14,
+      expAttrs: ['war', 'lead'],
       deepUnlocks: [
         null, null, null,
         { kind: 'unlock', trait: traitId('trait:chenyi'), skill: null },
@@ -102,6 +105,9 @@ export const weiCampaigns: readonly CampaignDef[] = [
       ],
       baseMerit: 40,
       meritKind: 'martial',
+      // 打仗長的是帶兵的本事 —— 武與統各一半。
+      baseExp: 18,
+      expAttrs: ['war', 'lead'],
       deepUnlocks: [
         null, null, null,
         { kind: 'unlock', trait: null, skill: skillId('skill:shuiyan') },
@@ -123,6 +129,9 @@ export const weiCampaigns: readonly CampaignDef[] = [
       ],
       baseMerit: 68,
       meritKind: 'martial',
+      // 打仗長的是帶兵的本事 —— 武與統各一半。
+      baseExp: 22,
+      expAttrs: ['war', 'lead'],
       /**
        * 三個絕階全部在這一場的最後三關 ★
        *

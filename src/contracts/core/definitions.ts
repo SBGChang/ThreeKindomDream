@@ -338,7 +338,13 @@ export interface AptitudeCostDef extends DefHeader {
 // ── 事件 ──────────────────────────────────────────────
 export type EventReward =
   | { readonly kind: 'merit'; readonly merit: MeritKind; readonly amount: number }
+  /**
+   * 劇情級的一次性【屬性】躍升。手寫、不縮放 —— 極少用。
+   * 一般的成長獎勵請用 `exp`：屬性該是玩家花經驗買的（32）。
+   */
   | { readonly kind: 'attr'; readonly attr: Attr; readonly amount: number }
+  /** 經驗獎勵。戰役與事件的成長產出都走這條（32 §2）。 */
+  | { readonly kind: 'exp'; readonly attr: Attr; readonly amount: number }
   | { readonly kind: 'affinity'; readonly notableId: NotableId | null; readonly amount: number }
   /** 指名一件道具。`chance` ＝ 1 為保證（鏈末事件），< 1 為機率（人物委託）。 */
   | { readonly kind: 'item'; readonly itemId: ItemId; readonly chance: number }
@@ -464,6 +470,21 @@ export interface EventYieldCurveDef extends DefHeader {
   readonly tierMultiplier: readonly number[];
   /** 檢定失敗時仍給的比例。事情辦砸了，但人還是走過那一趟（17 §6.3）。 */
   readonly failRatio: number;
+  /**
+   * 事上磨練（經驗）的縮放【與功績分開】★
+   *
+   * 功績要追得上官階門檻（最高 6405），所以它吃 `tierMultiplier`（→19.8）
+   * 與 `rarityMultiplier`（→9.0）—— 兩者相乘可以到 178 倍。
+   *
+   * 經驗不能吃那條鏈：四維只有 0–100，一輪的總經驗約 900。
+   * 一則 ★4 人物事件若乘上 178 倍，一次就給 97 點經驗 ——
+   * 那是一整個等級，而玩家還沒選過任何東西。
+   *
+   * 因此經驗走【自己的兩條平緩曲線】。這是舊制（產出即屬性、上限 999）
+   * 留下來的尺度錯誤，不是平衡微調。
+   */
+  readonly practiceTierMul: readonly number[];
+  readonly practiceRarityMul: readonly number[];
   /**
    * 稀有度倍率，index ＝ rarity − 1（17 §6.5）。
    *
@@ -698,6 +719,18 @@ export interface GrowthRuleDef extends DefHeader {
   readonly bands: readonly AttrCostBand[];
   /** 向名士學該階能力所需的好感階（32 §5）。階越高，要越熟。 */
   readonly teachStage: Readonly<Record<AbilityTier, AffinityStage>>;
+  /**
+   * 入夢時的起始四維範圍（逐維獨立擲）★
+   *
+   * **不是 0。** 全 0 開局有三個問題：第一場戰役打不出任何傷害、
+   * 等級表上四個 G 看不出角色性格、而 F 帶（每點 1 經驗）便宜到
+   * 前 20 點根本不構成決定。
+   *
+   * 15–30 讓玩家一開始就是【一個有底子但沒專精的人】，
+   * 而四維各自不同也讓「這一輪我是誰」從第一個畫面就成立。
+   */
+  readonly startMin: number;
+  readonly startMax: number;
 }
 
 // ── ㉓ 特質與技能（23）★ ──────────────────────────────

@@ -8,7 +8,7 @@
 > | **reads** | 01 效果系統、20 屬性與貨幣、23 特質與技能 |
 > | **handles** | `exp.grant`（內部，來自 16／17）／`learn.attr`／`learn.trait`／`learn.skill`／`unlock.grant`（內部） |
 > | **emits** | `exp.gained` / `attr.learned` / `trait.learned` / `skill.learned` / `unlock.granted` |
-> | **ownsDefinitions** | `attrCostCurve` |
+> | **ownsDefinitions** | `growthRule` |
 
 > 決議來源見 [RFC-01](../RFC-01-campaign-rework.md) D30–D40。
 
@@ -56,9 +56,12 @@ interface GrowthState {
 ```ts
 type AttrGrade = 'G' | 'F' | 'E' | 'D' | 'C' | 'B' | 'A' | 'S';
 
-interface AttrCostCurveDefinition extends DefinitionHeader {
-  readonly kind: 'attrCostCurve';
+interface GrowthRuleDefinition extends DefinitionHeader {
+  readonly kind: 'growthRule';
   readonly bands: readonly AttrCostBand[];      // 依 min 遞增，無洞無重疊，覆蓋 0..attrMax
+  readonly teachStage: Readonly<Record<AbilityTier, AffinityStage>>;   // 向名士學的好感門檻
+  readonly startMin: number;                    // 入夢時的起始四維範圍
+  readonly startMax: number;
 }
 
 interface AttrCostBand {
@@ -95,7 +98,23 @@ interface AttrCostBand {
 > 專精者集中在單一類約 650–700 →
 > **S 級（565）需近乎全押、A 級（365）留得下約 300 給特質。**
 > 這個「S 級空手 對 A 級帶特質」就是這張表要產出的決策。
-> **總經驗量本身未實測**，校準時先驗證它。
+>
+> 實測（30 輪／策略）：專精者主維落在 **89–98**，其餘三維停在起始值附近
+> （22–24）。也就是說「全押一維」現在真的買得到 S ——
+> 而那正是「S 級空手」那一端該長的樣子。
+
+### 3.2 起始四維是 15–30，不是 0 ★
+
+逐維獨立擲（`growthRule.startMin` / `startMax`）。全 0 開局有三個問題：
+
+1. 第一場戰役**打不出任何傷害** —— 傷害 = 兵量 × ratio × (attr/50)，attr 為 0 就是 0
+2. 等級表上四個 **G 看不出角色性格**
+3. F 帶每點 1 經驗，**前 20 點便宜到根本不構成決定**
+
+四維各自不同，於是「這一輪我是誰」從第一個畫面就成立 ——
+玩家因此有理由順著抽到的底子走，而不是每輪照同一套練。
+
+（`checkRule.baseFloor` 的存在感也因此下降：它本來是在遮全 0 開局的洞。）
 
 ---
 
@@ -125,7 +144,8 @@ interface AttrCostBand {
 **這條軸線是兩張表自己夾出來的，不是額外規則。** 它同時修掉一個現存問題：
 GDD §5.4 實測「追爆發明顯最差」，也就是專精目前是無條件正解。
 
-> ⚠️ **這會翻轉既有的平衡結論**，因此階段 D 必須重跑模擬器確認新差距可接受。
+實測（30 輪／策略）：專精者主維 89–98、絕階特質 3.9–7.0 條 ——
+「S 級空手」與「A 級帶特質」兩端都真的走得通。
 
 ### 4.2 機會成本的驗算
 
@@ -150,12 +170,16 @@ GDD §5.4 實測「追爆發明顯最差」，也就是專精目前是無條件�
 
 **一切都要先解鎖，含常階。** 這是與實況的分野（實況除金特外可直接以經驗點購買）。
 
-| 來源 | 規則 |
-|---|---|
-| **名士傳授** | **他能教的，就是他自己表上有的**（19 §5）。好感達該項門檻 → 進入可學清單 |
-| **道具** | `UnlockGrant` 效果。〈孟德新書〉→〈兵法〉（GDD §9.3 已是這個形狀） |
-| **事件／委託** | `EventReward.unlock` |
-| **官階** | 升階時授予對應線的項 |
+| 來源 | 規則 | 狀態 |
+|---|---|---|
+| **名士傳授** | **他能教的，就是他自己表上有的**（19 §5）。好感達該項門檻 → 進入可學清單 | ✅ |
+| **道具** | `UnlockGrant` 效果。〈孟德新書〉→〈節制〉、〈奉孝遺書〉→〈料敵〉 | ✅ |
+| **戰役的深關** | `EventReward.unlock`，只在第 4 關之後 | ✅ |
+| **事件／委託** | `EventReward.unlock` | ⬜ 尚無內容用它 |
+| **官階** | 升階時授予對應線的項 | ⬜ 未做 |
+
+**名士傳授是主要來源**，其餘三條是它的補充 —— 道具那條的意義是
+**時機**：名士那層要七到十個回合才打得開，道具第一回合就開。
 
 ### 5.1 不需要「誰能教什麼」這張表 ★
 
@@ -179,13 +203,17 @@ GDD §5.4 實測「追爆發明顯最差」，也就是專精目前是無條件�
 
 ## 6. 道具的三種降耗
 
-三種都走既有的效果系統，不新增機制（RFC-01 D39）。
+三種裡有兩種**完全不需要新機制** —— 它們是既有 `StatModifier` 指到新的 target
+（RFC-01 D39）。只有「直接解鎖」需要一個新的 FuncType，因為它給的不是數值。
 
-| 類型 | FuncType | 作用 |
+| 類型 | 機制 | 作用 |
 |---|---|---|
-| **折扣** | `LearnCostDiscount` | `resolve('learn.cost.<attr>', base)` |
-| **直接解鎖** | `UnlockGrant` | 讓某項進入可學清單（**不含學習費**） |
-| **階梯緩和** | `AttrBandShift` | 計價時把現值往下移 N 帶（300–399 按 200–299 算） |
+| **折扣** | `StatModifier` → `learn.cost.<attr>` | 某一類經驗的學費打折 |
+| **階梯緩和** | `StatModifier` → `learn.bandShift` | 計價時把現值往下移一帶（B 帶按 C 帶算） |
+| **直接解鎖** | `UnlockGrant`（新） | 讓某項進入可學清單（**不含學習費**） |
+
+**我們沒有會消耗的道具** —— 三種全部是買斷型的常駐效果，
+與 GDD §9.1「寶物 ＝ 買斷型 Buff」一致。
 
 **「直接解鎖」不含學習費是刻意的**：否則道具會同時繞過兩道門，
 而 §5.2 的兩道門是這套設計的核心。
@@ -206,10 +234,12 @@ interface GrowthQuery {
 }
 
 interface TraitOffer {
-  readonly traitId: TraitId;
+  readonly def: TraitDefinition;
+  readonly tier: AbilityTier;
   readonly cost: Readonly<Partial<Record<Attr, number>>>;   // 已含折扣
   readonly state: 'learnable' | 'locked' | 'unaffordable' | 'learned';
-  readonly unlockSources: readonly UnlockSourceRef[];        // locked 時填入
+  /** 誰能教這一項、以及他現在教不教得動。locked 時 UI 要把它顯示出來。 */
+  readonly teachers: readonly { notableId: NotableId; ready: boolean }[];
 }
 
 interface GrowthService {

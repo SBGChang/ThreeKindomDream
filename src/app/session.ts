@@ -14,8 +14,9 @@ import { createRng, type DeterministicRng } from '../kernel/rng.js';
 import { careerService } from '../modules/career.js';
 import * as campaign from '../modules/campaign.js';
 import * as growth from '../modules/growth.js';
+import type { RunContext as RC } from '../contracts/core/context.js';
 import * as commission from '../modules/commission.js';
-import { createRunState } from '../modules/dream-entry.js';
+import { createRunState, rollStartAttrs } from '../modules/dream-entry.js';
 import * as item from '../modules/item.js';
 import * as ending from '../modules/ending.js';
 import * as faction from '../modules/faction.js';
@@ -25,6 +26,8 @@ import { settle, summarize, type SettlementResult } from '../modules/settlement.
 import * as training from '../modules/training.js';
 import * as turn from '../modules/turn.js';
 import type { Wiring } from './composition.js';
+
+const defsAttrMax = (ctx: RC): number => ctx.defs.single('attributeCap').attrMax;
 
 export class Session {
   private state: RunState;
@@ -37,6 +40,8 @@ export class Session {
     const s = new Session(w, createRunState(config, meta, seed, w.defs));
     // 順序重要：先種道具（它们的效果不吃門檻，包括好感補正），
     // 再組陣容（起始好感要把道具的補正一併算進去），最後才抽格子。
+    // 順序重要：先擲起始四維（15–30），道具的效果才有東西可以乘。
+    s.mutate((tc) => rollStartAttrs(tc));
     s.mutate((tc) => item.seedCarried(tc));
     s.mutate((tc) => roster.assembleCompanions(tc, w.fx));
     s.refreshSlots();
@@ -279,6 +284,8 @@ export class Session {
       else if (r.kind === 'attr') s = this.w.writer.grantAttr(r.attr, r.amount, at());
       else if (r.kind === 'affinity' && r.notableId !== null) {
         s = roster.addAffinity(r.notableId, r.amount, at());
+      } else if (r.kind === 'exp') {
+        s = growth.grantExp(r.attr, r.amount, at());
       } else if (r.kind === 'unlock') {
         s = growth.grantUnlock(r.trait, r.skill, at());
       } else if (r.kind === 'item') {
@@ -299,6 +306,13 @@ export class Session {
   nextGrade(attr: Attr): growth.NextGrade | null {
     return growth.nextGrade(attr, this.ctx, this.w.fx);
   }
+
+  /** 從現值買到 target 的總價。UI 用它標「+1 要多少、+10 要多少」。 */
+  attrCost(attr: Attr, target: number): number {
+    return growth.attrCost(attr, target, this.ctx, this.w.fx);
+  }
+
+  attrMax(): number { return defsAttrMax(this.ctx); }
   traitOffers(): readonly growth.TraitOffer[] {
     return growth.learnableTraits(this.ctx, this.w.fx);
   }

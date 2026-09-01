@@ -268,12 +268,20 @@ function castRarity(def: EventDef, ctx: RunContext): Rarity {
 
 // ── 產出 ────────────────────────────────────────────
 
+/**
+ * 事上磨練的產出 ★ **它吃的是經驗那兩條平緩曲線，不是功績那兩條。**
+ *
+ * 功績要追得上官階門檻（最高 6405），所以它可以乘到 178 倍；
+ * 經驗對照的是 0–100 的四維與一輪約 900 的總量，乘 178 倍會讓
+ * 一則事件就給掉一整個等級。兩者【必須用不同的縮放】——
+ * 舊版共用一條，那是「產出即屬性、上限 999」時代留下來的尺度錯誤。
+ */
 export function practiceYield(
   practice: readonly EventPractice[], ratio: number, rarity: Rarity, tier: number,
   ctx: RunContext, fx: EffectResolver,
 ): readonly ExpGain[] {
   const c = yieldCurve(ctx);
-  const mul = tierScale(tier, ctx) * rarityMul(rarity, ctx);
+  const mul = practiceTierMul(tier, ctx) * practiceRarityMul(rarity, ctx);
   return practice.map((p) => {
     const raw = (c.baseByAttr[p.attr] ?? 0) * mul * p.weight * ratio * fx.gainMul(p.attr, ctx);
     return {
@@ -285,6 +293,15 @@ export function practiceYield(
 
 const rarityMul = (rarity: Rarity, ctx: RunContext): number =>
   yieldCurve(ctx).rarityMultiplier[rarity - 1] ?? 1;
+
+/** 經驗的官階縮放。與功績的 `tierScale` 是兩條不同的曲線（見 practiceYield）。 */
+const practiceTierMul = (tier: number, ctx: RunContext): number => {
+  const curve = yieldCurve(ctx).practiceTierMul;
+  return curve[Math.max(0, tier - 1)] ?? curve.at(-1) ?? 1;
+};
+
+const practiceRarityMul = (rarity: Rarity, ctx: RunContext): number =>
+  yieldCurve(ctx).practiceRarityMul[rarity - 1] ?? 1;
 
 /**
  * 選項的功績產出【交給 writer 之前】的值。

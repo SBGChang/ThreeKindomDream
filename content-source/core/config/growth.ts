@@ -46,4 +46,8 @@ export const growthRule: GrowthRuleDef = coreDef('growthRule', 'growth:main', {
    * 玩家只要記一個數字。
    */
   teachStage: { common: 'acquainted', fine: 'friendly', peerless: 'close' },
+  // 起始四維：逐維獨立擲 15–30。不是 0 ——
+  // 全 0 開局的第一場戰役打不出任何傷害，而四個 G 也看不出角色性格。
+  startMin: 15,
+  startMax: 30,
 });

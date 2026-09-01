@@ -14,6 +14,7 @@
 // 在數字上的樣子（D10）。
 import type { CampaignStageDef, EventReward } from '../../../src/contracts/core/definitions.js';
 import type { EnemyId, L10nKey } from '../../../src/contracts/core/ids.js';
+import type { Attr } from '../../../src/contracts/core/primitives.js';
 import { asKey } from '../../authoring.js';
 
 const TROOPS_MUL = [0.55, 0.75, 1.00, 1.35, 1.80, 2.40, 3.20];
@@ -61,6 +62,18 @@ export interface StageSpec {
   readonly baseMerit: number;
   readonly meritKind: 'civil' | 'martial';
   /**
+   * 第 1 關的經驗量級，以及分給哪幾維 ★
+   *
+   * **打仗長的是帶兵的本事。** 一場武系戰役給的是武與統的經驗 ——
+   * 文系玩家照樣拿得到，只是拿到的不是他主練的那一維，
+   * 那正是「這一場對我值不值得深入」的一部分。
+   *
+   * 經驗的曲線比功績平緩得多（REWARD_MUL 只套在功績上）：
+   * 功績要追官階門檻，經驗對照的是 0–100 的四維。
+   */
+  readonly baseExp: number;
+  readonly expAttrs: readonly Attr[];
+  /**
    * 深處的唯一掉落（D12）★
    *
    * 純數量的獎勵會讓玩家算出「我需要 X 功績」然後在剛好夠的那一關收手 ——
@@ -76,13 +89,21 @@ export function buildStages(spec: StageSpec): readonly CampaignStageDef[] {
       merit: spec.meritKind,
       amount: Math.round(spec.baseMerit * (REWARD_MUL[i] ?? 1)),
     };
+    // 經驗走【平緩】曲線：深關給得多，但不像功績那樣拉到 45 倍。
+    // 四維只有 0–100，一輪總經驗約 900 —— 一關就給掉一整級是壞事。
+    const expMul = 1 + i * 0.55;
+    const exp: readonly EventReward[] = spec.expAttrs.map((attr) => ({
+      kind: 'exp' as const,
+      attr,
+      amount: Math.round(spec.baseExp * expMul / spec.expAttrs.length),
+    }));
     const extra = spec.deepUnlocks[i] ?? null;
     return {
       briefKey: asKey(`campaign.${spec.slug}.stage.${i}`) as L10nKey,
       troopsMul,
       damageMul: DAMAGE_MUL[i] ?? 1,
       boss: spec.bosses[i] ?? null,
-      rewards: extra === null ? [merit] : [merit, extra],
+      rewards: extra === null ? [merit, ...exp] : [merit, ...exp, extra],
     };
   });
 }

@@ -24,9 +24,23 @@ export function StatusBar({ s }: { readonly s: Session }): React.ReactElement {
   return (
     <>
       <div className="bar mono">
-        {ATTRS.map((a) => (
-          <span key={a}>{t(`attr.${a}.short`)} <b>{st.attributes.values[a]}</b></span>
-        ))}
+        {/*
+          四維要【三個數字一起看】：現值、等級、還沒花的經驗（32 §3.1）。
+          少了經驗那一欄，玩家不知道自己手上有多少可花的東西 ——
+          而那是這個系統唯一的貨幣。
+        */}
+        {ATTRS.map((a) => {
+          const exp = s.expOf(a);
+          return (
+            <span key={a}>
+              {t(`attr.${a}.short`)}
+              {' '}
+              <b>{st.attributes.values[a]}</b>
+              <span className="sub">{`(${s.gradeOf(a)})`}</span>
+              {exp > 0 ? <span className="ok">{` +${exp}`}</span> : ''}
+            </span>
+          );
+        })}
         {/* 功績與官階從第一回合就顯示。名聲退場之後這是唯一的門檻貨幣，
             而它從第一回合就在動 —— 藏起來玩家就看不出自己在爬哪一條。 */}
         <span>文功 <b>{st.currencies.merit.civil}</b></span>

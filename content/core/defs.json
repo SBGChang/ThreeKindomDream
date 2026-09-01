@@ -301,27 +301,48 @@
     "id": "curve:eventYield",
     "kind": "eventYieldCurve",
     "packId": "pack:core",
+    "practiceRarityMul": [
+      1,
+      1.2,
+      1.5,
+      1.9,
+      2.4
+    ],
+    "practiceTierMul": [
+      1,
+      1.15,
+      1.3,
+      1.45,
+      1.6,
+      1.75,
+      1.9,
+      2.05,
+      2.2,
+      2.35,
+      2.5,
+      2.65
+    ],
     "rarityMultiplier": [
       1,
+      1.3,
       1.7,
-      2.9,
-      5.6,
-      9
+      2.2,
+      2.8
     ],
     "schemaVersion": 1,
     "tierMultiplier": [
       1,
-      1.5,
-      2.2,
-      3.1,
-      4.2,
-      5.6,
-      7.2,
+      1.4,
+      1.9,
+      2.5,
+      3.2,
+      4.1,
+      5.1,
+      6.3,
+      7.6,
       9.1,
-      11.3,
-      13.8,
-      16.6,
-      19.8
+      10.7,
+      12.5
     ]
   },
   {
@@ -542,6 +563,8 @@
     "kind": "growthRule",
     "packId": "pack:core",
     "schemaVersion": 1,
+    "startMax": 30,
+    "startMin": 15,
     "teachStage": {
       "common": "acquainted",
       "fine": "friendly",
@@ -1124,6 +1147,16 @@
             "amount": 10,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 5,
+            "attr": "lead",
+            "kind": "exp"
           }
         ],
         "troopsMul": 0.55
@@ -1137,6 +1170,16 @@
             "amount": 18,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "amount": 8,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 8,
+            "attr": "lead",
+            "kind": "exp"
           }
         ],
         "troopsMul": 0.75
@@ -1150,6 +1193,16 @@
             "amount": 32,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "amount": 11,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 11,
+            "attr": "lead",
+            "kind": "exp"
           }
         ],
         "troopsMul": 1
@@ -1163,6 +1216,16 @@
             "amount": 60,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "amount": 13,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 13,
+            "attr": "lead",
+            "kind": "exp"
           }
         ],
         "troopsMul": 1.35
@@ -1176,6 +1239,16 @@
             "amount": 110,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "amount": 16,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 16,
+            "attr": "lead",
+            "kind": "exp"
           },
           {
             "kind": "unlock",
@@ -1196,6 +1269,16 @@
             "merit": "martial"
           },
           {
+            "amount": 19,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 19,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
             "kind": "unlock",
             "skill": null,
             "trait": "trait:danshi"
@@ -1212,6 +1295,16 @@
             "amount": 450,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "amount": 22,
+            "attr": "war",
+            "kind": "exp"
+          },
+          {
+            "amount": 22,
+            "attr": "lead",
+            "kind": "exp"
           },
           {
             "kind": "unlock",

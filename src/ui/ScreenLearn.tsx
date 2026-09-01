@@ -48,37 +48,69 @@ export function ScreenLearn({ s, bump, onBack }: Props): React.ReactElement {
       <table>
         <thead>
           <tr>
-            <th>維</th><th>現值</th><th>評</th>
-            <th className="n">經驗</th><th>下一級</th><th className="n">價碼</th><th />
+            <th>維</th><th className="n">現值</th><th>評</th>
+            <th className="n">經驗</th><th>下一級</th><th>加點</th>
           </tr>
         </thead>
         <tbody>
           {ATTRS.map((a: Attr) => {
-            const ng = s.nextGrade(a);
+            const cur = s.current.attributes.values[a];
             const exp = s.expOf(a);
-            const afford = ng !== null && exp >= ng.cost;
+            const ng = s.nextGrade(a);
+            const cap = s.attrMax();
+            /*
+              **一點一點加**，不是一次跳一整級。
+              階梯計價的重點就是「下一點多少錢」——
+              只給「升一級」會把那個階梯藏起來，玩家看不到自己正踩在哪一帶。
+              升一級留著，因為它是最常用的那一步。
+            */
+            const step = (n: number): React.ReactElement | null => {
+              const target = Math.min(cap, cur + n);
+              if (target <= cur) return null;
+              const cost = s.attrCost(a, target);
+              return (
+                <button
+                  key={n}
+                  disabled={exp < cost}
+                  onClick={() => { s.learnAttr(a, target); bump(); }}
+                >
+                  {`+${target - cur}（${cost}）`}
+                </button>
+              );
+            };
             return (
               <tr key={a}>
                 <td><b>{t(`attr.${a}.short`)}</b></td>
-                <td className="n mono">{s.current.attributes.values[a]}</td>
+                <td className="n mono">{cur}</td>
                 <td className="mono"><b>{s.gradeOf(a)}</b></td>
-                <td className="n mono">{exp}</td>
-                <td className="mono">{ng === null ? '已達頂' : `${ng.grade}（${ng.at}）`}</td>
-                <td className={`n mono ${afford ? 'ok' : 'warn'}`}>{ng?.cost ?? '—'}</td>
+                <td className={`n mono ${exp > 0 ? 'ok' : ''}`}>{exp}</td>
+                <td className="mono">
+                  {ng === null ? '已達頂' : `${ng.grade} @${ng.at}`}
+                </td>
                 <td>
-                  <button
-                    className="primary"
-                    disabled={ng === null || !afford}
-                    onClick={() => { if (ng !== null) { s.learnAttr(a, ng.at); bump(); } }}
-                  >
-                    升一級
-                  </button>
+                  <div className="row">
+                    {step(1)}
+                    {step(5)}
+                    {ng === null ? null : (
+                      <button
+                        className="primary"
+                        disabled={exp < ng.cost}
+                        onClick={() => { s.learnAttr(a, ng.at); bump(); }}
+                      >
+                        {`升到 ${ng.grade}（${ng.cost}）`}
+                      </button>
+                    )}
+                  </div>
                 </td>
               </tr>
             );
           })}
         </tbody>
       </table>
+      <p className="sub">
+        每一點的價碼隨等級帶上升（F 帶 1／點 → S 帶 35／點）。
+        <b>七個價格帶就是七個等級</b> —— 看到「武 B」就知道下一階要付多少。
+      </p>
 
       <h2>{`技能（戰役中的行動 · 已學 ${learnedSkills}，帶 3 招上場）`}</h2>
       <table>

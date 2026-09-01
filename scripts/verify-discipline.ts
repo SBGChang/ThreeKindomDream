@@ -95,7 +95,9 @@ const OWNS: Readonly<Record<string, readonly string[]>> = {
   'notable-codex.ts': ['roster'],
   // ⑩ 擁有局內道具持有。效果來源要讀 metaSnapshot（座標型，全域可讀）。
   'item.ts': ['items'],
-  'dream-entry.ts': [],
+  // ⑭ 是 RunState 的【建構子】—— 它把整份初始狀態拼出來，包含起始四維。
+  // 那不是「跨 slice 讀取別人的累積值」，而是「還沒有人擁有它之前先寫上去」。
+  'dream-entry.ts': ['attributes'],
   'effect.ts': ['charges', 'turn', 'lastMajorCheck', 'boons'],
   'effect-core.ts': ['turn', 'lastMajorCheck'],
   // ㉖ 結算是唯一可以讀全部的地方 —— 它的職責就是把整輪彙總（26 §3）

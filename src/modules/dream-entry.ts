@@ -1,3 +1,4 @@
+import type { TurnContext } from '../contracts/core/context.js';
 // ⑭ 入夢配置。Meta 與 Run 的唯一橋樑（14 §1）。
 import type { DefinitionRegistry } from '../data-runtime/registry.js';
 import type { EffectRef, ResolvedEffectRef } from '../contracts/core/effects.js';
@@ -207,6 +208,25 @@ export function createRunState(
   };
 }
 
+/**
+ * 入夢時擲起始四維（15–30，逐維獨立）★
+ *
+ * **不是 0。** 全 0 開局有三個問題：第一場戰役打不出任何傷害、
+ * 等級表上四個 G 看不出角色性格、而 F 帶（每點 1 經驗）便宜到
+ * 前 20 點根本不構成決定。
+ *
+ * 逐維獨立擲，所以「這一輪我是誰」從第一個畫面就成立 ——
+ * 那也讓玩家有理由順著自己抽到的底子走，而不是每輪都照同一套練。
+ */
+export function rollStartAttrs(ctx: TurnContext): RunState {
+  const g = ctx.defs.single('growthRule');
+  const values = { ...ctx.state.attributes.values };
+  for (const a of ATTRS) {
+    values[a] = ctx.rng.int('attr.start', g.startMin, g.startMax + 1);
+  }
+  return { ...ctx.state, attributes: { values } };
+}
+
 const SKELETON = (meta: MetaState, config: DreamEntryConfig, seed: Seed): RunState => ({
   schemaVersion: 1,
   seed,
@@ -220,6 +240,7 @@ const SKELETON = (meta: MetaState, config: DreamEntryConfig, seed: Seed): RunSta
     pendingCampaign: false, pendingFactionChoice: false, pendingSuperiorAssign: false,
   },
   faction: null,
+  // 起始四維在 `rollStartAttrs` 擲（需要 RNG，SKELETON 沒有）。
   attributes: { values: { lead: 0, war: 0, int: 0, pol: 0 } },
   currencies: { merit: { civil: 0, martial: 0 } },
   career: { civil: 1, martial: 1 },
