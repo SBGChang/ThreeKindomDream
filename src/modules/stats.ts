@@ -20,7 +20,7 @@ export interface StatQuery {
   /**
    * 該維算哪一條官階線（20 §1.3）：統與武算武功，智與政算文功。
    *
-   * 對照表在資料裡（`attrLine`），這裡只負責查。功績結算、大檢定路線、UI
+   * 對照表在資料裡（`attrLine`），這裡只負責查。功績結算、兵量係數、UI
    * 三處都經這個入口 —— 否則「政算哪一條」會有三份各自為政的答案。
    */
   lineOf(a: Attr, ctx: RunContext): CareerLine;

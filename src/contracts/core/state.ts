@@ -6,7 +6,7 @@ import type {
 import type { EffectRef, EffectTrace } from './effects.js';
 import type { EventReward } from './definitions.js';
 import type {
-  AffinityStage, AptitudeGrade, Attr, CareerLine, Difficulty,
+  AffinityStage, AptitudeGrade, Attr, CareerLine,
   GlowTier, MeritKind, OptionTier, Phase, Rarity, RngCursors, SkillKind, SlotIndex,
 } from './primitives.js';
 
@@ -83,7 +83,7 @@ export interface TurnProgress {
   readonly turnInChapter: number;
   readonly phase: Phase;
   readonly chaptersPassed: number;
-  readonly pendingMajorCheck: boolean;
+  readonly pendingCampaign: boolean;
   readonly pendingFactionChoice: boolean;
   readonly pendingSuperiorAssign: boolean;
 }
@@ -368,20 +368,6 @@ export interface RunState {
   readonly actions: ActionTally;
   readonly charges: Readonly<Record<string, number>>;
   readonly ending: EndingOutcome | null;
-  readonly lastMajorCheck: MajorCheckLog | null;
-}
-
-export interface MajorCheckLog {
-  readonly chapterId: ChapterId;
-  /** 走的是哪一條路線。失敗的結局由該路線的主屬性決定，因此必須留下紀錄。 */
-  readonly line: CareerLine;
-  readonly difficulty: Difficulty;
-  readonly base: number;
-  readonly bonus: number;
-  readonly dc: number;
-  readonly roll: number;
-  readonly total: number;
-  readonly passed: boolean;
 }
 
 export type SliceKey = keyof RunState;

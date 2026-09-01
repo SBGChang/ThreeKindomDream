@@ -21,14 +21,6 @@ export function ScreenEnd({ s, meta, onSettled }: Props): React.ReactElement {
       <p className="sub">{ending.isFullDream ? '圓夢' : '中止'}　·　夢醒</p>
       <div className="card" style={{ marginBottom: 20 }}>
         <div className="body">{t(ending.bodyKey)}</div>
-        {st.lastMajorCheck !== null && !st.lastMajorCheck.passed && (
-          <p className="mono warn" style={{ margin: 0 }}>
-            {`最後的檢定：${t(`careerLine.${st.lastMajorCheck.line}`)}路 `}
-            {`${t(`difficulty.${st.lastMajorCheck.difficulty}`)}`}
-            {`　${st.lastMajorCheck.base}+${st.lastMajorCheck.bonus}+骰${st.lastMajorCheck.roll}`}
-            {`＝${st.lastMajorCheck.total} < DC ${st.lastMajorCheck.dc}`}
-          </p>
-        )}
       </div>
 
       <h2>結算</h2>

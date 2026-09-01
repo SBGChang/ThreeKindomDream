@@ -1,10 +1,10 @@
 import type {
   CampaignId, ChapterId, DcCurveId, EndingId, EnemyId, EventChainId, EventDefId,
-  FactionId, ItemId, ItemPoolId, L10nKey, MajorCheckId, NotableId, NotablePoolId,
+  FactionId, ItemId, ItemPoolId, L10nKey, NotableId, NotablePoolId,
   PackId, ParamPoolId, ShopItemId, SkillId, TalentId, TraitId,
 } from './ids.js';
 import type {
-  AbilityTier, AffinityStage, AptitudeGrade, Attr, AttrGrade, CareerLine, Difficulty,
+  AbilityTier, AffinityStage, AptitudeGrade, Attr, AttrGrade, CareerLine,
   GlowTier, MeritKind, OptionTier, Phase, Rarity, SkillKind,
 } from './primitives.js';
 import type { Condition, EffectRef } from './effects.js';
@@ -15,7 +15,7 @@ export type DefinitionKind =
   | 'affinityStage' | 'affinityCurve' | 'linkBonus' | 'attributeCap' | 'notableStar'
   | 'notable' | 'notablePool' | 'talent' | 'aptitudeCost'
   | 'event' | 'paramPool' | 'dcCurve' | 'checkRule'
-  | 'chapter' | 'chapterSequence' | 'majorCheck'
+  | 'chapter' | 'chapterSequence'
   | 'careerRank' | 'faction' | 'ending'
   | 'item' | 'itemPool'
   | 'shopItem' | 'settlementFormula' | 'gameRules'
@@ -94,7 +94,7 @@ export interface TrainingCurveDef extends DefHeader {
  *
  * 統與武算武功、智與政算文功。這是【資料】而不是程式裡的 switch：
  * 換一份平衡包時「政要不要算武功」是可能改的，而寫在程式裡的話
- * 那個決定會散落在功績結算、大檢定路線、UI 三個地方。
+ * 那個決定會散落在功績結算、戰役的兵量係數、UI 三個地方。
  */
 export interface AttrLineDef extends DefHeader {
   readonly kind: 'attrLine';
@@ -167,9 +167,9 @@ export interface LinkBonusDef extends DefHeader {
    * 【已移除 trainingBonusByStage】。站位連動不再隨局內好感變動 ——
    * 它由 `NotableBaseDef` 的基底乘上星階倍率決定（19 §5.1）。
    *
-   * 局內好感度剩下的三個作用：出戰加值、名士事件的階段門檻、結算碎片。
+   * 局內好感度剩下的三個作用：**戰役中他多常傳令**（`battleRule.commandChanceByStage`）、
+   * 名士事件的階段門檻、結算碎片。
    */
-  readonly checkBonusByStage: Readonly<Record<AffinityStage, number>>;
   /**
    * 站位效果的好感門檻（19 §5.1）★
    *
@@ -213,7 +213,6 @@ export interface AttributeCapDef extends DefHeader {
 }
 export interface GameRulesDef extends DefHeader {
   readonly kind: 'gameRules';
-  readonly maxSortie: number;
   readonly companionCount: number;
   /** 開局可自行指定的玩伴人數。其餘由皇甫嵩指派（14 §3）。 */
   readonly designateBase: number;
@@ -261,15 +260,12 @@ export interface UnlockRow extends EffectRef {
  * 剩下的三個欄位都不是加成：
  *   specialty       他屬於哪一維。站位分配與 `NotableTarget.specialty` 都靠它
  *   specialtyWeight 專長格的站位權重倍率（機率，不是收益）
- *   sortieBonus     大檢定出戰的基底加值（那是另一套系統）
  */
 export interface NotableBaseDef {
   /** 專長維。決定他更常被分配到哪一格，也決定「某類名士」指的是誰。 */
   readonly specialty: Attr;
   /** 專長格的站位權重倍率。> 1 ＝ 更常站在專長格；不是硬性限制（19 §4）。 */
   readonly specialtyWeight: number;
-  /** 大檢定出戰的基底加值（與階段加值相加）。 */
-  readonly sortieBonus: number;
 }
 
 /**
@@ -501,30 +497,6 @@ export interface DcCurveDef extends DefHeader {
 }
 
 // ── 章節與檢定 ────────────────────────────────────────
-export interface MajorCheckTier {
-  readonly dc: number;
-  readonly requirements: readonly Condition[];
-  readonly rewards: readonly EventReward[];
-  readonly briefKey: L10nKey;
-}
-/**
- * 一條路線＝一種通關方式（18 §2.2）。同一個大事件，文武各有自己的屬性組與 DC：
- * 黃巾之亂可以陣前破賊（武），也可以安民斷糧（文）。
- *
- * 屬性組放在路線上而不是檢定上 —— 否則「兩條路線」只是同一場檢定的兩種記帳方式，
- * 玩家的六個選項實際上仍然只有三個。
- */
-export interface MajorCheckRoute {
-  readonly primaryAttr: Attr;
-  readonly secondaryAttr: Attr | null;
-  readonly tiers: Readonly<Record<Difficulty, MajorCheckTier>>;
-}
-export interface MajorCheckDef extends DefHeader {
-  readonly kind: 'majorCheck';
-  readonly checkId: MajorCheckId;
-  readonly routes: Readonly<Record<CareerLine, MajorCheckRoute>>;
-  readonly enemyNotables: readonly NotableId[];
-}
 export interface ChapterDef extends DefHeader {
   readonly kind: 'chapter';
   readonly chapterId: ChapterId;
@@ -532,7 +504,6 @@ export interface ChapterDef extends DefHeader {
   readonly order: number;
   readonly length: number;
   readonly titleKey: L10nKey;
-  readonly majorCheckId: MajorCheckId;
   readonly onPass: 'chooseFaction' | null;
 }
 export interface ChapterSequenceDef extends DefHeader {
@@ -567,8 +538,7 @@ export interface CareerRankDef extends DefHeader {
   readonly nameKey: L10nKey;
   readonly requiredMerit: number;
   /**
-   * 兵量／糧量的係數（33 5.1）★ 取代 checkBonus 的職責 ——
-   * 大檢定不再是單次判定，官階的產出改為【規模】。
+   * 兵量／糧量的係數（33 5.1）★ 官階的產出是【規模】。
    *
    * 兩線各給一個，由 33 依 1.0 / 0.5 的交叉比例組合：
    *   兵量 = 1.0 x hostScale[武階] + 0.5 x hostScale[文階]
@@ -778,7 +748,13 @@ export interface BattleRuleDef extends DefHeader {
    * 第一項必須是 1 —— **保底一招**是機制本體，由驗證強制。
    */
   readonly castChances: readonly number[];
-  /** 指揮傳令的機率（33 §4.3）。取代舊的 `linkBonus.checkBonusByStage`。 */
+  /**
+   * 指揮傳令的機率，依好感階（33 §4.3）★
+   *
+   * 從相識到莫逆，三人的期望從 0.45 升到 2.10 —— 加上主角的 1.9，
+   * **一回合的行動數幾乎翻倍，而且過半數的行動來自別人。**
+   * 好感因此不是一個百分比加成，而是「你的軍隊每回合能做幾件事」。
+   */
   readonly commandChanceByStage: Readonly<Record<AffinityStage, number>>;
   /** 兵量／糧量的基底。係數由 ㉑ 依官階給（33 §5.1）。 */
   readonly troopsBase: number;
@@ -787,10 +763,20 @@ export interface BattleRuleDef extends DefHeader {
   readonly crossLineRatio: number;
   /** 施術者係數的分母：`attr / divisor`。0–100 尺度下 50 ＝ ×1.0。 */
   readonly actorDivisor: number;
-  /** 敵方兵力基準，index ＝ 官階階級 − 1（33 §5.2，D25：索引官階不索引章節）。 */
+  /**
+   * 敵方兵力基準，index ＝ 官階階級 − 1（D25：索引官階不索引章節）。
+   *
+   * 它決定的是**一關要打幾回合** —— 兵力 ÷ 我方每回合輸出。
+   */
   readonly enemyTroopsByRank: readonly number[];
-  /** 敵方每回合輸出 ＝ 敵方兵力 × 這個比例 × 該關的 damageMul。 */
-  readonly enemyDamageRatio: number;
+  /**
+   * 敵方每回合輸出的基準，index 同上。**與兵力是兩條獨立的曲線。**
+   *
+   * 這兩件事必須分開訂，否則「一關打多久」與「一關掉多少血」會被綁死：
+   * 想讓仗更長就必然更痛，而那正好是把深關做成暴斃的做法。
+   * 分開之後，長度由兵力訂、代價由這條訂，兩個旋鈕互不干涉。
+   */
+  readonly enemyDamageByRank: readonly number[];
   /** 恢復 1 點軍勢消耗幾點糧秣。1 ＝ 糧量就是「你能補回多少軍勢」（33 §5.3）。 */
   readonly supplyPerTroop: number;
   /** 天賦〈天命所歸〉原地再起時回復的軍勢比例。 */
@@ -856,7 +842,7 @@ export interface DefByKind {
   talent: TalentDef; aptitudeCost: AptitudeCostDef;
   event: EventDef; paramPool: ParamPoolDef; dcCurve: DcCurveDef; checkRule: CheckRuleDef;
   eventYieldCurve: EventYieldCurveDef; attrLine: AttrLineDef;
-  chapter: ChapterDef; chapterSequence: ChapterSequenceDef; majorCheck: MajorCheckDef;
+  chapter: ChapterDef; chapterSequence: ChapterSequenceDef;
   careerRank: CareerRankDef;
   faction: FactionDef; ending: EndingDef;
   item: ItemDef; itemPool: ItemPoolDef;

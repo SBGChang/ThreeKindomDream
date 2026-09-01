@@ -34,7 +34,7 @@
 | 買到什麼 | **進度**（過檢定 → 章節 → 圓夢） | **官階**（→ 結局稱號、輪迴點數） |
 
 這正是《明星志願》裡上課與工作的分野：上課長能力，工作換錢與名氣。
-兩邊都不可放棄 —— 只練不做事會圓夢卻無官無名；只做事不練則過不了大檢定。
+兩邊都不可放棄 —— 只練不做事會有一身本事卻帶不動兵；只做事不練則兵多而打不動。
 
 ### 1.2 `skip` 已移除
 
@@ -353,7 +353,7 @@ amount = baseByAttr[attr] × chapterMultiplier[chapter−1] × weight × ratio
 2. `offers` 內無重複 `eventDefId`
 3. `seenUniqueIds` 內的事件不再進可抽池
 4. `resolved !== null` ⇒ 本回合的動作是事件，`slots.training.selected === null`（15 §2）
-5. 小檢定失敗**不寫入 `RunState.ending`**（那是大檢定才有的後果），且仍給 `failRatio` 折後的磨練
+5. 小檢定失敗**不寫入 `RunState.ending`**（只有戰役的戰敗才會），且仍給 `failRatio` 折後的磨練
 6. 同一 `(seed, cursors, state)` → 抽出完全相同的 offers 與 params
 
 ---

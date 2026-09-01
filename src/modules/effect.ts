@@ -2,7 +2,7 @@
 import type { RunContext } from '../contracts/core/context.js';
 import type {
   ChanceModifierDef, Condition, Contribution, EffectDef, EffectTrace, FuncType,
-  NotableTarget, Op, ResolvedEffectRef, StandingReq, StatModifierDef,
+  NotableTarget, Op, ResolvedEffectRef, StandingReq, StatModifierDef, UnlockGrantDef,
 } from '../contracts/core/effects.js';
 import { notableOfSource, standingOf } from '../contracts/core/effects.js';
 import type { EffectRef as EffectRefInput } from '../contracts/core/effects.js';
@@ -33,14 +33,16 @@ export interface EffectResolver {
   hasFlag(flag: FlagId, ctx: RunContext): boolean;
   chargesOf(charge: ChargeId, ctx: RunContext): number;
   explain(target: TargetId, ctx: RunContext): readonly EffectTrace[];
+  /** 道具／天賦直接解鎖的能力（32 §5）。**不含學費** —— 學習仍要花經驗。 */
+  unlockGrants(ctx: RunContext): readonly UnlockGrantDef[];
   glowUpgradeChance(attr: Attr, ctx: RunContext): number;
   glowTierShift(attr: Attr, ctx: RunContext): number;
   /** 站位分配的權重倍率。不吃好感門檻 —— 好感正是靠同格養出來的（19 §4）。 */
   slotBias(subject: NotableId, attr: Attr, ctx: RunContext): number;
   eventRewardMul(eventKind: string, ctx: RunContext): number;
   affinityGrowthMul(subject: NotableId, ctx: RunContext): number;
-  checkValueAdd(attr: Attr, scope: 'minor' | 'major', ctx: RunContext): number;
-  checkRewardMul(ctx: RunContext): number;
+  /** 小檢定的檢定值加值（18）。 */
+  checkValueAdd(attr: Attr, ctx: RunContext): number;
   currencyMul(path: StatPath, ctx: RunContext): number;
   /**
    * 入夢時的好感補正（10 §2）。`owner` 是效果的來源名士 —— `target: self`
@@ -242,17 +244,11 @@ export function createEffectResolver(
         return targetHits(d.target, subject, ownerOf(b), ctx) ? acc + d.mulPct : acc;
       }, 0),
 
-    checkValueAdd: (attr, scope, ctx) => sumBy<
-      { attr: Attr | 'all'; scope: 'minor' | 'major' | 'both'; add: number }
-    >('CheckValueBonus', ctx, (d) => {
-      const attrOk = d.attr === 'all' || d.attr === attr;
-      const scopeOk = d.scope === 'both' || d.scope === scope;
-      return attrOk && scopeOk ? d.add : 0;
-    }),
-
-    checkRewardMul: (ctx) => 1 + sumBy<{ mulPct: number }>(
-      'CheckRewardBonus', ctx, (d) => d.mulPct,
+    checkValueAdd: (attr, ctx) => sumBy<{ attr: Attr | 'all'; add: number }>(
+      'CheckValueBonus', ctx, (d) => (d.attr === 'all' || d.attr === attr ? d.add : 0),
     ),
+
+    unlockGrants: (ctx) => active(ctx, 'UnlockGrant').map((b) => b.def as UnlockGrantDef),
 
     currencyMul: (path, ctx) => 1 + sumBy<{ currency: string; mulPct: number }>(
       'CurrencyBonus', ctx, (d) => {

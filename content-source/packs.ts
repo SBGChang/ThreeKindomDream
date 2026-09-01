@@ -24,7 +24,7 @@ import { effects as coreEffects } from './core/effects/tables.js';
 import { careerRanks } from './core/career/ranks.js';
 import { coreSkills, coreTraits } from './core/abilities/index.js';
 import { campCampaigns, campEnemies } from './core/campaigns/camp.js';
-import { campChapters, campChecks, campSequence } from './core/chapters/camp.js';
+import { campChapters, campSequence } from './core/chapters/camp.js';
 import { coreEndings } from './core/endings/index.js';
 import { coreCommissions } from './core/events/commissions.js';
 import { dcCurves, paramPools } from './core/events/pools.js';
@@ -35,7 +35,7 @@ import { talents } from './core/talents/index.js';
 
 import { WEI } from './wei/pack-id.js';
 import { weiCommissions, weiNotableCommissions } from './wei/commissions.js';
-import { weiChapters, weiChecks, weiSequence } from './wei/chapters.js';
+import { weiChapters, weiSequence } from './wei/chapters.js';
 import { weiFaction } from './wei/faction.js';
 import { weiNotableEvents } from './wei/notable-events.js';
 import { weiCampaigns, weiEnemies } from './wei/campaigns.js';
@@ -59,7 +59,7 @@ const corePack: AuthoredPack = {
     ...paramPools, ...dcCurves,
     ...coreItems, ...coreItemPools,
     ...coreCommissions,
-    ...campChecks, ...campChapters, campSequence,
+    ...campChapters, campSequence,
     ...careerRanks,
     ...coreEndings,
   ],
@@ -77,7 +77,7 @@ const weiPack: AuthoredPack = {
     ...weiNotables, weiSuperiorPool,
     weiFaction,
     ...weiCommissions, ...weiNotableCommissions, ...weiNotableEvents,
-    ...weiChecks, ...weiChapters, weiSequence,
+    ...weiChapters, weiSequence,
     ...weiEnemies, ...weiCampaigns,
   ],
   effects: {},

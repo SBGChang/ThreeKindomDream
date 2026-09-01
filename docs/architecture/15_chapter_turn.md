@@ -1,19 +1,14 @@
 # 15 · 章節與回合推進
 
-> **職責**：持有回合進度與行動配比、宣告「一回合一個動作」、決定何時觸發大檢定、執行章節通過後的特殊動作。
+> **職責**：持有回合進度與行動配比、宣告「一回合一個動作」、決定何時進入章末戰役、執行章節通過後的特殊動作。
 >
 > | | |
 > |---|---|
 > | **owns** | `RunState.progress`、`RunState.actions` |
-> | **reads** | 16 鍛鍊槽 ／ 17 事件槽（各回報自己那半的動作）、18 檢定引擎 |
+> | **reads** | 16 鍛鍊槽 ／ 17 事件槽（各回報自己那半的動作）、33 戰役 |
 > | **handles** | `turn.advance` |
-> | **emits** | `turn.advanced` / `chapter.entered` / `majorCheck.due` |
+> | **emits** | `turn.advanced` / `chapter.entered` / `campaign.due` |
 > | **ownsDefinitions** | `chapter`、`chapterSequence` |
-
-> 🔧 **[RFC-01](../RFC-01-campaign-rework.md) 改動**：章末不再進入大檢定判定，而是進入
-> [33 戰役](33_campaign.md)。`majorCheck.due` → **`campaign.due`**；
-> 章節通過與失敗改由 33 發出（`chapter.passed` / `chapter.failed`）。
-> `reads` 的「18 檢定引擎」改為「33 戰役」。
 
 ---
 
@@ -25,7 +20,6 @@ interface ChapterDefinition extends DefinitionHeader {
   readonly factionId: FactionId | null;     // null ＝ 南華村篇（共用）
   readonly order: number;                   // 在該序列中的位置，1-based 連續
   readonly length: number;                  // 回合數（資料，非常數）
-  readonly majorCheckId: MajorCheckId;      // 章末大檢定，見 18
   readonly onPass: ChapterPassAction | null;
   readonly collectible: boolean;            // 是否進收集圖鑑（見 12）
 }
@@ -110,7 +104,7 @@ actionOf = training.selectedAction(ctx) ?? event.resolvedAction(ctx)
 > 但呈現層因此多了一個責任：**動作的結果必須在推進前被讀出來並留在畫面上**。
 > 少了這一步，玩家永遠看不到自己剛才練出什麼、檢定成不成 ——
 > 灰盒的做法是把結果寫進一份由 App 持有的「回合紀錄」，
-> 讓它跨得過章末立刻切換的大檢定畫面（見 27）。
+> 讓它跨得過章末立刻切換的戰役畫面（見 27）。
 
 ### 2.4 沒有「什麼都不做」
 
@@ -129,18 +123,18 @@ turn.advance
   ├ progress.turn += 1
   ├ 重算 chapter / turnInChapter / phase
   ├ 若跨入新章節 → emit chapter.entered
-  ├ 若 turnInChapter > chapter.length      → emit majorCheck.due
-  │     └ 交由 18 檢定引擎處理（本模組不執行檢定）
+  ├ 若 turnInChapter > chapter.length      → emit campaign.due
+  │     └ 交由 33 戰役處理（本模組不打仗）
   ├ 清空 slots（16／17 各自重新生成）
   └ emit turn.advanced
 ```
 
-### 3.1 大檢定不由本模組執行
+### 3.1 章末的戰役不由本模組執行
 
-本模組只**宣告到期**（`majorCheck.due`）。檢定的難度選擇、DC 計算、成敗判定全在 18。
-通過後 18 發 `chapter.passed`，本模組訂閱它並執行 `onPass`。
+本模組只**宣告到期**（`campaign.due`）。配置、七關推進、走留決策、戰敗判定全在 33。
+玩家收兵後 33 發 `chapter.passed`，本模組訂閱它並執行 `onPass`。
 
-這個分工讓「回合怎麼走」與「檢定怎麼算」可獨立實作與測試。
+這個分工讓「回合怎麼走」與「仗怎麼打」可獨立實作與測試。
 
 ### 3.2 章節通過後的動作
 
@@ -162,7 +156,6 @@ chapter.passed
 | `chapterSequence.chapters` 的 `order` 從 1 起連續無缺口 | 否則章節推進會斷 |
 | 每個 `ChapterId` 只出現在一條序列中 | 否則歸屬不明 |
 | `length ≥ 1` | 否則章節長度為零 |
-| `majorCheckId` 存在 | 引用完整性 |
 | `onPass = chooseFaction` 只出現在 `factionId = null` 的序列 | 陣營篇不該再選陣營 |
 | 每條陣營序列至少一章 | 否則入陣營即圓夢 |
 
@@ -173,7 +166,7 @@ chapter.passed
 1. `progress.turn` 單調遞增，永不回退
 2. `progress.chapter` 與 `turnInChapter` 恆等於由 `turn` ＋ 章節表推導的值
 3. `phase === 'nanhua' ⟺ faction === null`
-4. 大檢定在每章恰好觸發一次
+4. 章末戰役在每章恰好觸發一次
 5. `canAdvance` ⟺ 兩個槽中恰有一個已結算（互斥，見 §2）
 6. `actions.training + actions.event` ＝ 已行動的回合數
 

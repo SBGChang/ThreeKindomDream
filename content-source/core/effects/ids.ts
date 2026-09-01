@@ -185,23 +185,10 @@ export const FX = {
   sortieInt6: 6003,
   sortiePol6: 6004,
   sortieLead6: 6005,
-  sortieAll6: 6006,
-  sortieAll10: 6007,
-  sortieAll16: 6008,
-  majorHardWar40: 6011,
-  majorWar30: 6012,
-  majorCivil45: 6013,
-  majorWar60: 6014,
   retryMajor1: 6101,
   retryMinor1: 6102,
   revealBattleTrace: 6201,
   revealSlots: 6202,
-  checkReward10: 6501,
-  checkReward15: 6502,
-  checkReward20: 6503,
-  checkReward25: 6504,
-  checkRewardHard25: 6511,
-  checkRewardHard30: 6512,
 
   // ── 功績 ────────────────────────────────────────
   meritAll30: 7001,
@@ -236,4 +223,25 @@ export const FX = {
   battleHeal12: 9041,
   battleHeal20: 9042,
   battleHealDown20: 9043,
+  battleHeal25: 9044,
+  battlePhys10: 9005,
+  battlePhys20: 9006,
+  battleMagic12: 9014,
+  battleTroops06: 9023,
+  battleTroops15: 9024,
+  battleSupply12: 9032,
+  battleSupply30: 9033,
+
+  // ── 養成兌現的降耗（32 §6）★ ────────────────────
+  // 三種都走既有的 StatModifier，不需要為道具新增任何 FuncType。
+  learnWarOff20: 9101,
+  learnIntOff20: 9102,
+  learnPolOff20: 9103,
+  learnLeadOff20: 9104,
+  learnAllOff10: 9105,
+  learnBandShift1: 9111,
+
+  // ── 直接解鎖（32 §6）★ 不含學費 ─────────────────
+  unlockBingfa: 9201,
+  unlockLiaodi: 9202,
 } as const;

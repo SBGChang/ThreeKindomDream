@@ -147,13 +147,19 @@ const playerAttrs = (ctx: RunContext): Readonly<Record<Attr, number>> => ({
  * 這是 17 6.4 已立的規矩：難度與報酬必須一起長，否則壓低某一線的官階
  * 會變成刷簡單高報酬的農場。取兩線較高者：你有多大本錢，對面就派多大的敵人。
  */
-const enemyBase = (ctx: RunContext): number => {
-  const r = rule(ctx);
-  const lvl = Math.max(
-    statQuery.read('career.civil', ctx), statQuery.read('career.martial', ctx),
-  );
-  return r.enemyTroopsByRank[lvl - 1] ?? r.enemyTroopsByRank.at(-1) ?? 1;
-};
+const rankIndex = (ctx: RunContext): number => Math.max(
+  statQuery.read('career.civil', ctx), statQuery.read('career.martial', ctx),
+) - 1;
+
+const at = (curve: readonly number[], i: number): number =>
+  curve[i] ?? curve.at(-1) ?? 1;
+
+const enemyBase = (ctx: RunContext): number =>
+  at(rule(ctx).enemyTroopsByRank, rankIndex(ctx));
+
+/** 敵方每回合輸出的基準。與兵力是兩條獨立的曲線 —— 長度與代價分開訂。 */
+const enemyDamageBase = (ctx: RunContext): number =>
+  at(rule(ctx).enemyDamageByRank, rankIndex(ctx));
 
 /**
  * 我軍每回合的期望輸出（33 §8.1）★
@@ -225,9 +231,8 @@ export function hostSustain(ctx: RunContext, fx: EffectResolver): number {
 }
 
 /** 關底敵將那一招的輸出。與雜兵的基本輸出同一把尺（見 §5.2）。 */
-const bossHit = (
-  enemyTroops: number, ratio: number, coef: number, r: BattleRuleDef,
-): number => enemyTroops * r.enemyDamageRatio * ratio * coef;
+const bossHit = (damageBase: number, ratio: number, coef: number): number =>
+  damageBase * ratio * coef;
 
 export interface StagePreview {
   readonly index: number;
@@ -245,17 +250,19 @@ export function nextStagePreview(ctx: RunContext): StagePreview | null {
   const stage = stageAt(st.clearedStages, ctx);
   const r = rule(ctx);
   const troops = Math.round(enemyBase(ctx) * stage.troopsMul);
+  const dmgBase = enemyDamageBase(ctx);
   const boss = stage.boss === null ? null : ctx.defs.reader('enemy').get(String(stage.boss));
   // 情報要【含關底敵將那一下】—— 少算它，玩家與模擬器都會低估這一關。
   const extra = boss === null ? 0 : (() => {
     const a = ability.skillDef(boss.skillId, ctx).action;
-    return bossHit(troops, a.ratio, coefOf(boss.attrs, a.actorAttr, r), r);
+    return bossHit(dmgBase, a.ratio, coefOf(boss.attrs, a.actorAttr, r));
   })();
+  void r;
   return {
     index: st.clearedStages,
     brief: stage.briefKey,
     enemyTroops: troops,
-    enemyDamage: Math.round(troops * r.enemyDamageRatio * stage.damageMul + extra),
+    enemyDamage: Math.round(dmgBase * stage.damageMul + extra),
     boss,
     rewards: stage.rewards,
   };
@@ -386,7 +393,8 @@ export function engage(
   const me = playerAttrs(ctx);
   const troopsMax = st.host.troopsMax;
   const enemyTroops = enemyBase(ctx) * stage.troopsMul;
-  const enemyHit = enemyTroops * r.enemyDamageRatio * stage.damageMul;
+  const dmgBase = enemyDamageBase(ctx);
+  const enemyHit = dmgBase * stage.damageMul;
   const boss = stage.boss === null
     ? null : ctx.defs.reader('enemy').get(String(stage.boss));
 
@@ -437,7 +445,7 @@ export function engage(
       // 對照玩家的 762 兵量是【一回合秒殺】。實測就是這樣死的。
       const bd = ability.skillDef(boss.skillId, ctx);
       const coef = coefOf(boss.attrs, bd.action.actorAttr, r);
-      const hit = Math.round(bossHit(enemyTroops, bd.action.ratio, coef, r));
+      const hit = Math.round(bossHit(dmgBase, bd.action.ratio, coef));
       sim.troops = Math.max(0, sim.troops - hit);
       sim.log.push({
         turn, actor: 'enemy', actorKey: boss.nameKey, skillKey: bd.nameKey,

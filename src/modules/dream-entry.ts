@@ -200,7 +200,7 @@ export function createRunState(
       turnInChapter: 1,
       phase: 'camp',
       chaptersPassed: 0,
-      pendingMajorCheck: false,
+      pendingCampaign: false,
       pendingFactionChoice: false,
       pendingSuperiorAssign: false,
     },
@@ -217,7 +217,7 @@ const SKELETON = (meta: MetaState, config: DreamEntryConfig, seed: Seed): RunSta
     turn: turnIndex(1), chapter: chapterIndex(1),
     chapterId: '' as RunState['progress']['chapterId'],
     turnInChapter: 1, phase: 'camp', chaptersPassed: 0,
-    pendingMajorCheck: false, pendingFactionChoice: false, pendingSuperiorAssign: false,
+    pendingCampaign: false, pendingFactionChoice: false, pendingSuperiorAssign: false,
   },
   faction: null,
   attributes: { values: { lead: 0, war: 0, int: 0, pol: 0 } },
@@ -241,7 +241,6 @@ const SKELETON = (meta: MetaState, config: DreamEntryConfig, seed: Seed): RunSta
   actions: { lead: 0, war: 0, int: 0, pol: 0 },
   charges: {},
   ending: null,
-  lastMajorCheck: null,
 });
 
 export const emptyMeta = (): MetaState => ({

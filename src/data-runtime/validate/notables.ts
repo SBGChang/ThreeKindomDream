@@ -14,11 +14,6 @@ function validateBase(c: Ctx, d: Rec, id: string, specialtyOwners: Set<string>):
     specialtyOwners.add(specialty);
   }
 
-  if (!(c.n(base['sortieBonus']) > 0)) {
-    c.push('rule', 'notables', 'base.sortieBonus', id,
-      `sortieBonus 必須 > 0（實得 ${c.n(base['sortieBonus'])}）`);
-  }
-
   const weight = c.n(base['specialtyWeight']);
   if (!(weight >= 1)) {
     c.push('rule', 'notables', 'base.specialtyWeight', id,

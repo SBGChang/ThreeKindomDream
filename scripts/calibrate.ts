@@ -58,9 +58,10 @@ function run(runSeed: number, policy: AgentPolicy): void {
       const cleared = playCampaign(s, policy);
       const key = `${chId}|${policy.name}`;
       const arr = samples.get(key) ?? [];
-      arr.push({
-        troops: lim.troopsMax, supply: lim.supplyMax, cleared, attrs, died: s.isOver,
-      });
+      // 【不能用 s.isOver】—— 序列走完也會 isOver，那是圓夢不是陣亡。
+      // 舊版就是這樣，於是最後一章的陣亡率永遠印 100%。
+      const died = s.current.ending !== null && !s.current.ending.isFullDream;
+      arr.push({ troops: lim.troopsMax, supply: lim.supplyMax, cleared, attrs, died });
       samples.set(key, arr);
       continue;
     }

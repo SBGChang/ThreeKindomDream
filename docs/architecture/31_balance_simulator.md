@@ -57,10 +57,12 @@ interface SimConfig {
 
 ```ts
 interface AgentPolicy {
-  chooseTraining(vm: TrainingSlotVM, ctx: RunContext): number;
-  chooseEvent(vm: EventSlotVM, ctx: RunContext): EventChoice | 'skip';
-  chooseDifficulty(previews: Readonly<Record<Difficulty, CheckPreview>>): Difficulty;
-  chooseSortie(eligible: readonly NotableId[], max: number): readonly NotableId[];
+  readonly name: string;
+  chooseSlot(s: Session): SlotIndex;
+  chooseOption(s: Session, offer: EventOffer): number;
+  spend(s: Session): void;                    // 經驗怎麼花（32）
+  chooseLoadout(s: Session): BattleLoadout;   // 三招 ＋ 三位指揮（33 §3）
+  chooseEngage(s: Session): boolean;          // 走還留（33 §6）
 }
 ```
 
@@ -71,8 +73,8 @@ interface AgentPolicy {
 | `greedy-glow` | 永遠選最高光階 | 測光階價值上限 |
 | `greedy-notable` | 永遠追名士 | 測名士養成路線 |
 | `balanced` | 依門檻缺口動態選 | 近似有經驗的玩家 |
-| `risk-averse` | 大檢定永選【穩】 | 測保守路線的天花板 |
-| `risk-seeking` | 大檢定永選【險】 | 測激進路線的死亡率 |
+| `risk-averse` | 戰役要 2.4 倍餘裕才再打一關 | 測保守路線的天花板 |
+| `risk-seeking` | 戰役只要 1.05 倍餘裕就再打一關 | 測激進路線的死亡率 |
 | `random` | 均勻隨機 | 下界基準 |
 
 **策略是程式碼，不是資料**——它不是遊戲內容，是分析工具的一部分。
@@ -88,7 +90,8 @@ interface SimReport {
   readonly endingDistribution: Readonly<Record<EndingId, number>>;
   readonly fullDreamRate: number;
   readonly glowDistribution: Readonly<Record<GlowTier, number>>;
-  readonly checkOutcomeByDifficulty: Readonly<Record<Difficulty, { pass: number; fail: number }>>;
+  readonly stageDepth: Stats;                             // 戰役打到第幾關
+  readonly deathRate: number;                             // 陣亡（非圓夢）比例
   readonly finalAttrs: Readonly<Record<Attr, Stats>>;      // mean / p5 / p50 / p95
   readonly finalCareer: Readonly<Record<CareerLine, Stats>>;
   readonly pointsEarned: Stats;
@@ -114,7 +117,7 @@ interface SimReport {
 1. 同一 `SimConfig` → 位元相同的 `SimReport`
 2. 模擬器不 import `src/ui/**` 或 `src/platform/**`
 3. 模擬器不修改任何 MetaState（純讀快照）
-4. `preview().successRate` 與 `checkOutcomeByDifficulty` 的實測通過率在統計上一致（18 §8.2）
+4. `preview().successRate` 與小檢定的實測通過率在統計上一致（18 §6.2）
 
 > 第 4 條是一條免費的正確性檢查：預覽公式與實際判定若不一致，模擬器會直接抓到。
 

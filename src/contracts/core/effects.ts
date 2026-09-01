@@ -1,8 +1,8 @@
 import type {
-  ChargeId, EffectId, FlagId, ItemId, NotableId, TargetId,
+  ChargeId, EffectId, FlagId, ItemId, NotableId, SkillId, TargetId, TraitId,
 } from './ids.js';
 import type {
-  AffinityStage, Attr, Difficulty, EventKind, GlowTier, Phase, Rarity, StatPath,
+  AffinityStage, Attr, EventKind, GlowTier, Phase, Rarity, StatPath,
 } from './primitives.js';
 
 export type FuncType =
@@ -16,6 +16,7 @@ export type FuncType =
   | 'CheckValueBonus'
   | 'CheckRetry'
   | 'RevealInfo'
+  | 'UnlockGrant'
   | 'CurrencyBonus'
   | 'DesignateSlots'
   // ── 站位層（19 §5）★ ──────────────────────────────
@@ -29,16 +30,16 @@ export type FuncType =
   | 'RarityWeight'
   | 'RarityFloor'
   // ── 產出層 ────────────────────────────────────────
-  | 'GainMultiplier'
-  | 'CheckRewardBonus';
+  | 'GainMultiplier';
 
 export const FUNC_TYPES: readonly FuncType[] = [
   'StatModifier', 'GlowUpgradeBonus', 'GlowBaseWeight', 'SlotBias',
   'EventRewardBonus', 'AffinityGrant', 'AffinityGrowth',
-  'CheckValueBonus', 'CheckRetry', 'RevealInfo', 'CurrencyBonus', 'DesignateSlots',
+  'CheckValueBonus', 'CheckRetry', 'RevealInfo', 'UnlockGrant',
+  'CurrencyBonus', 'DesignateSlots',
   'LinkBonus', 'LinkAmplify', 'SlotBaseAdd', 'SlotSizeBonus',
   'CommissionChance', 'EncounterChance', 'RarityWeight', 'RarityFloor',
-  'GainMultiplier', 'CheckRewardBonus',
+  'GainMultiplier',
 ];
 
 export interface EffectRef {
@@ -94,7 +95,6 @@ export type Condition =
   | { readonly type: 'statGte'; readonly stat: StatPath; readonly value: number }
   | { readonly type: 'statLte'; readonly stat: StatPath; readonly value: number }
   | { readonly type: 'glowTier'; readonly value: GlowTier }
-  | { readonly type: 'difficulty'; readonly value: Difficulty }
   | { readonly type: 'and'; readonly all: readonly Condition[] }
   | { readonly type: 'or'; readonly any: readonly Condition[] }
   | { readonly type: 'not'; readonly of: Condition };
@@ -143,14 +143,20 @@ export interface AffinityGrantDef { readonly timing: 'onDreamEnter' | 'onChapter
  * 作用卻是加快好感。因此 `AffinityGrowth` 沒有 `standing` 欄位。
  */
 export interface AffinityGrowthDef { readonly target: NotableTarget; readonly mulPct: number; readonly condition: Condition | null }
-export interface CheckValueBonusDef { readonly attr: Attr | 'all'; readonly scope: 'minor' | 'major' | 'both'; readonly add: number; readonly condition: Condition | null }
+/** 小檢定的檢定值加值（18）。 */
+export interface CheckValueBonusDef { readonly attr: Attr | 'all'; readonly add: number; readonly condition: Condition | null }
+/**
+ * 重來一次的額度。`scope` 決定它換到哪一種 charge：
+ *   minor  小檢定重擲
+ *   major  戰役中軍勢歸零時【原地再起】（33 §6.4）
+ */
 export interface CheckRetryDef { readonly scope: 'minor' | 'major'; readonly usesPerRun: number; readonly condition: Condition | null }
 /**
  * 揭示某一層資訊。`what` 直接推導出 FlagId（`flag.<what>`），
  * 因此新增一種揭示只要加一個字面值，不必動 `hasFlag`。
  *
- * `checkBreakdown` 已退場 —— 大檢定改為戰役之後沒有「檢定值組成」可看了。
- * 取代它的是 `battleTrace`：戰報的完整傷害歸因（33 §7.1）。
+ * `battleTrace` 開的是戰報的完整傷害歸因（33 §7.1）——
+ * 因果摘要一律可見，這一條開的是每一條加成各自的來源與數值。
  */
 export interface RevealInfoDef {
   readonly what: 'nextTurnSlots' | 'battleTrace';
@@ -158,6 +164,19 @@ export interface RevealInfoDef {
 }
 export interface CurrencyBonusDef { readonly currency: StatPath | 'allMerit'; readonly mulPct: number; readonly condition: Condition | null }
 export interface DesignateSlotsDef { readonly slots: number; readonly condition: null }
+/**
+ * 讓一項特質或技能進入【可學清單】（32 §5）★
+ *
+ * **它不含學費。** 兩道門（能不能學 ／ 買不買得起）不可被一件事同時繞過 ——
+ * 那正是「一切都要先解鎖」與「經驗是唯一貨幣」兩條規則的交集。
+ *
+ * 道具走這條：名士那層要七到十個回合才打得開，道具第一回合就開。
+ */
+export interface UnlockGrantDef {
+  readonly trait: TraitId | null;
+  readonly skill: SkillId | null;
+  readonly condition: Condition | null;
+}
 
 // ── 站位層 ────────────────────────────────────────────
 /**
@@ -239,17 +258,15 @@ export interface RarityFloorDef { readonly min: Rarity; readonly condition: Cond
 // ── 產出層 ────────────────────────────────────────────
 /** 某一維的成長量倍率。作用在 ⑯ 的乘法鏈上，與光階同層。 */
 export interface GainMultiplierDef { readonly scope: Attr | 'all'; readonly mulPct: number; readonly condition: Condition | null }
-/** 大檢定通過後的獎勵倍率（18 §5）。 */
-export interface CheckRewardBonusDef { readonly mulPct: number; readonly condition: Condition | null }
 
 export type EffectDef =
   | StatModifierDef | GlowUpgradeBonusDef | GlowBaseWeightDef | SlotBiasDef
   | EventRewardBonusDef | AffinityGrantDef | AffinityGrowthDef
   | CheckValueBonusDef | CheckRetryDef | RevealInfoDef | CurrencyBonusDef
-  | DesignateSlotsDef
+  | DesignateSlotsDef | UnlockGrantDef
   | LinkBonusEffectDef | LinkAmplifyDef | SlotBaseAddDef | SlotSizeBonusDef
   | ChanceModifierDef | RarityWeightDef | RarityFloorDef
-  | GainMultiplierDef | CheckRewardBonusDef;
+  | GainMultiplierDef;
 
 /** 效果表：funcType → referId → def */
 export type EffectTables = Readonly<Record<FuncType, Readonly<Record<number, EffectDef>>>>;

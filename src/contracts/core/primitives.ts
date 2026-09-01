@@ -45,9 +45,6 @@ export const SKILL_KINDS: readonly SkillKind[] =
 export type AptitudeGrade = 'F' | 'E' | 'D' | 'C' | 'B' | 'A' | 'S';
 export const APTITUDE_GRADES: readonly AptitudeGrade[] = ['F', 'E', 'D', 'C', 'B', 'A', 'S'];
 
-export type Difficulty = 'safe' | 'normal' | 'hard';
-export const DIFFICULTIES: readonly Difficulty[] = ['safe', 'normal', 'hard'];
-
 /**
  * 局內的兩個階段。決定四維的換皮名稱（GDD §5.1）。
  *
@@ -65,21 +62,6 @@ export const MERIT_KINDS: readonly MeritKind[] = ['civil', 'martial'];
 
 export type CareerLine = 'civil' | 'martial';
 export const CAREER_LINES: readonly CareerLine[] = ['civil', 'martial'];
-
-/**
- * 大檢定的一個選項＝【路線 × 難度】。文武各三檔，合計六個（18 §2）。
- *
- * 路線沿用 CareerLine 而不新增列舉：走武路憑的就是武功那一條官階。
- * 若讓兩者各自獨立變化，「文武雙軌」就會有兩份可能互相矛盾的真相。
- */
-export interface CheckChoice {
-  readonly line: CareerLine;
-  readonly difficulty: Difficulty;
-}
-
-/** 六個選項的正規列舉順序。UI 與模擬器共用同一份，否則兩邊的「第一個」會不一樣。 */
-export const CHECK_CHOICES: readonly CheckChoice[] = CAREER_LINES
-  .flatMap((line) => DIFFICULTIES.map((difficulty) => ({ line, difficulty })));
 
 /**
  * 事件的兩種來源（17 §1）。玩家不選事件 —— 事件是【選了固定事件之後發生的事】。

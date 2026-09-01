@@ -7,12 +7,12 @@
 > |---|---|
 > | **owns** | `RunState.campaign` |
 > | **reads** | 01 效果系統、19 名士局內、20 屬性與貨幣、21 官階、23 特質與技能 |
-> | **handles** | `campaign.configure`／`campaign.engage`／`campaign.withdraw` |
+> | **handles** | `campaign.configure`／`campaign.engage`／`campaign.sweep`／`campaign.withdraw` |
 > | **emits** | `campaign.stageCleared` / `campaign.withdrawn` / `campaign.defeated` / `chapter.passed` / `chapter.failed` |
-> | **ownsDefinitions** | `campaign`、`battleRule`、`enemy`、`enemyCurve` |
+> | **ownsDefinitions** | `campaign`、`battleRule`、`enemy` |
 
 > 決議來源見 [RFC-01](../RFC-01-campaign-rework.md) D1–D29。
-> 它取代 [18 檢定引擎](18_check_engine.md) 的大檢定職責；18 縮編為只有小檢定。
+> [18 檢定引擎](18_check_engine.md) 只服務事件內的小檢定，與本模組無關。
 
 ---
 
@@ -60,6 +60,8 @@ interface CampaignState {
   readonly host: HostState;
   readonly clearedStages: number;               // 已通過的關數 0..stages.length
   readonly banked: readonly EventReward[];      // 已保住的獎勵
+  readonly log: readonly BattleLogEntry[];      // 只留【最後一關】的戰報
+  readonly rallied: boolean;                    // 這一役是否已用過原地再起
 }
 
 interface BattleLoadout {
@@ -162,8 +164,7 @@ push-your-luck 的張力來自「只能帶著現有的狀態往前」。
 
 ### 4.3 指揮：獨立擲，機率由好感決定
 
-沿用 19 的好感五階。**`linkBonus.checkBonusByStage` 這張表原地換語意** ——
-它的舊用途（大檢定出戰加值）隨 18 的縮編一併作廢，同樣五個 key：
+沿用 19 的好感五階（`linkBonus.commandChanceByStage`）：
 
 | 好感階 | 施放機率 | 三人同階的期望 |
 |---|---|---|
@@ -198,10 +199,12 @@ push-your-luck 的張力來自「只能帶著現有的狀態往前」。
 ### 5.1 兩條資源上限
 
 ```
-兵量上限 = 兵量基底 × (1.0 × T[武官階] + 0.5 × T[文官階])
-糧量上限 = 糧量基底 × (0.5 × T[武官階] + 1.0 × T[文官階])
+兵量上限 = 兵量基底 × (1.0 × hostScale[武官階] + 0.5 × hostScale[文官階])
+糧量上限 = 糧量基底 × (0.5 × hostScale[武官階] + 1.0 × hostScale[文官階])
 
-T = careerRank 的 tierMultiplier（21 提供 hostCoefficient）
+hostScale 由 21 官階系統提供（沿用 tierMultiplier 的形狀）。
+兩個上限都會再過一次 `battle.troopsMax` / `battle.supplyMax` ——
+特質經由這兩個 target 抬高它們，不需要為戰役新增任何 FuncType。
 ```
 
 **血量只能用功績買。經驗買不到血量**（D27）。這讓單動作回合制第一次真的有兩邊：
@@ -231,9 +234,14 @@ Buff幅度 = skill.ratio × (統 / 50)                 作用於軍隊
 |---|---|---|
 | 兵量／糧量 | 官階 | 12 階間 19.8 倍 |
 | 你的傷害與恢復 | 官階（規模）× 四維（倍率） | 19.8 × 2 |
-| 敵方兵力與傷害 | **官階**（D25） | 由 `enemyCurve` 訂 |
+| 敵方兵力 | **官階**（D25） | `enemyTroopsByRank` |
+| 敵方輸出 | **官階** | `enemyDamageByRank` |
 
-於是**沒有任何一條曲線需要為個別技能重新校準** —— 只有 `enemyCurve` 一條要調。
+**敵方的兩條曲線刻意分開訂。** 兵力決定【一關要打幾回合】，輸出決定
+【一關要掉多少血】—— 綁在一起的話「想讓仗更長」就必然「更痛」，
+而那正好是把深關做成暴斃的做法（見 §5.4）。
+
+於是**沒有任何一條曲線需要為個別技能重新校準**。
 
 > **敵人索引官階、不索引章節**（D25）是 [17 §6.4](17_event_slot.md) 已立的規矩：
 > 難度與報酬必須一起長，否則壓低某一線的官階會變成刷簡單高報酬的農場。
@@ -274,8 +282,19 @@ Buff幅度 = skill.ratio × (統 / 50)                 作用於軍隊
 
 純武殺得快 1.68 倍，純文撐得久 1.86 倍。**兩條路是不同的打法，不是同一打法的強弱。**
 
-> ⚠️ **以上全部是推導，沒有一個有實測支撐。** `兵量基底`、`糧量基底`、
-> `skill.ratio` 的量級、`enemyCurve` 都未定。校準見 RFC-01 §6。
+### 5.4 一關要打五回合 ★★ 這是最重要的一個數值決定
+
+`enemyTroopsByRank` 訂在「平手關約打五回合」。**兩回合的仗不能用。**
+
+兩回合時，勝負幾乎完全由「這回合放了幾招」（1／2／3，28%／54%／18%）決定 ——
+擲骰的變異比估計值本身還大。於是「算得剛剛好就上」實際上是輸一半，
+而 push-your-luck 的整個前提是【你可以判斷】。實測：變異修好之前，
+圓夢率 48%；修好之後 92%，而且死亡率隨貪心程度呈現乾淨的梯度
+（0% ／ 7.5% ／ 17.5%）。
+
+> **玩家算得出來的東西，才值得他去算。**
+
+代價是戰鬥變長（滿七關約 55 回合）—— 掃蕩（§6.5）與戰報預設收起就是為它存在的。
 
 ---
 
@@ -305,13 +324,31 @@ banked 入帳 → phase = 'resolved' → emit chapter.passed
 
 ```
 軍勢 ≤ 0
-  ├ 查 charge.campaignRally（天賦〈天命所歸〉：原地再起）
-  │   └ 有可用 → 消耗後回復部分軍勢，繼續本關
+  ├ 查 charge.majorRetry（天賦〈天命所歸〉：原地再起，每輪一次）
+  │   └ 有可用且本役未用過 → 回復 rallyRatio 的軍勢，繼續本關
   └ 無 → banked 全部作廢 → emit chapter.failed → 25 結局判定接手
 ```
 
+失敗的結局由**你這一輪爬的官階線**決定：武系是戰歿，文系是罷官。
+
 **`banked` 在戰敗時全部作廢**，這是整個賭局的定價。夠殘忍的機制需要一個稀缺的
 安全閥，而它已經在天賦表裡（RFC-01 §3.6）。
+
+### 6.5 掃蕩：一路打到「開始需要想」為止 ★
+
+七場自動戰鬥第一輪好看，第五輪是阻礙。掃蕩吃掉前面那幾關 ——
+它**不繞過任何規則**：每一關都真的跑一次 `engage`，只是不停下來問玩家。
+
+判準用玩家自己會做的那個心算：
+
+```
+撐得住幾回合 ／ 對面要打幾回合 >= battleRule.sweepMargin
+```
+
+`sweepMargin` 訂得比替身策略的 `margin`（1.05–2.4）高很多 ——
+掃蕩只該吃掉**不需要想的那幾關**。
+
+**按鈕只在戰力明顯超過時出現，所以它的消失本身就是一個訊號。**
 
 ### 6.5 獎勵階梯
 

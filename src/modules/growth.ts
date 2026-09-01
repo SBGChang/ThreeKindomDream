@@ -205,7 +205,8 @@ export function learnableTraits(
     const cost = abilityCost(def.cost, ctx, fx);
     const teachers = traitTeachers(def, ctx);
     const unlocked = teachers.some((t) => t.ready)
-      || ctx.state.growth.unlockedTraits.some((x) => String(x) === String(def.traitId));
+      || ctx.state.growth.unlockedTraits.some((x) => String(x) === String(def.traitId))
+      || fx.unlockGrants(ctx).some((g) => String(g.trait) === String(def.traitId));
     const learned = ability.hasTrait(def.traitId, ctx);
     return { def, tier: def.tier, cost, teachers, state: stateOf(learned, unlocked, cost, ctx) };
   });
@@ -218,7 +219,8 @@ export function learnableSkills(
     const cost = abilityCost(def.cost, ctx, fx);
     const teachers = skillTeachers(def, ctx);
     const unlocked = teachers.some((t) => t.ready)
-      || ctx.state.growth.unlockedSkills.some((x) => String(x) === String(def.skillId));
+      || ctx.state.growth.unlockedSkills.some((x) => String(x) === String(def.skillId))
+      || fx.unlockGrants(ctx).some((g) => String(g.skill) === String(def.skillId));
     const learned = ability.hasSkill(def.skillId, ctx);
     return { def, tier: def.tier, cost, teachers, state: stateOf(learned, unlocked, cost, ctx) };
   });

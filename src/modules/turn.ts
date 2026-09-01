@@ -41,7 +41,7 @@ export function progressOf(
         turnInChapter: turn - consumed,
         phase: faction === null ? 'camp' : 'faction',
         chaptersPassed,
-        pendingMajorCheck: turn === consumed + ch.length,
+        pendingCampaign: turn === consumed + ch.length,
         pendingFactionChoice: false,
         pendingSuperiorAssign: false,
       };
@@ -58,7 +58,7 @@ export function progressOf(
     turnInChapter: chapterAt(last, ctx).length,
     phase: faction === null ? 'camp' : 'faction',
     chaptersPassed,
-    pendingMajorCheck: false,
+    pendingCampaign: false,
     pendingFactionChoice: false,
     pendingSuperiorAssign: false,
   };
@@ -105,7 +105,7 @@ export const currentChapter = (ctx: RunContext): ChapterDef =>
 export const isSequenceComplete = (ctx: RunContext): boolean => {
   const seq = sequenceOf(ctx.state.faction, ctx);
   const idx = seq.indexOf(ctx.state.progress.chapterId);
-  return idx === seq.length - 1 && !ctx.state.progress.pendingMajorCheck;
+  return idx === seq.length - 1 && !ctx.state.progress.pendingCampaign;
 };
 
 /** 本地回合序號（進入當前序列後的第幾回合）。 */

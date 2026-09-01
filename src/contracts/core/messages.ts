@@ -1,5 +1,5 @@
 import type { L10nKey, TurnIndex } from './ids.js';
-import type { AptitudeGrade, Attr, CareerLine, Difficulty, SlotIndex } from './primitives.js';
+import type { AptitudeGrade, Attr, SlotIndex } from './primitives.js';
 
 export type RejectionCode =
   | 'turn.not-ready'
@@ -49,7 +49,13 @@ export type GameCommandRequest =
   | { readonly kind: 'event.select'; readonly offerIndex: number; readonly optionIndex: number }
   | { readonly kind: 'event.skip' }
   | { readonly kind: 'turn.advance' }
-  | { readonly kind: 'majorCheck.attempt'; readonly line: CareerLine; readonly difficulty: Difficulty; readonly sortieIndices: readonly number[] }
+  | { readonly kind: 'campaign.configure'; readonly skillIndices: readonly number[]; readonly commanderIndices: readonly number[]; readonly commanderSkillIndices: readonly number[] }
+  | { readonly kind: 'campaign.engage' }
+  | { readonly kind: 'campaign.sweep' }
+  | { readonly kind: 'campaign.withdraw' }
+  | { readonly kind: 'learn.attr'; readonly attrIndex: number; readonly target: number }
+  | { readonly kind: 'learn.trait'; readonly offerIndex: number }
+  | { readonly kind: 'learn.skill'; readonly offerIndex: number }
   | { readonly kind: 'faction.choose'; readonly optionIndex: number }
   | { readonly kind: 'roster.assignSuperiors'; readonly candidateIndices: readonly number[] }
   | { readonly kind: 'run.settle' }

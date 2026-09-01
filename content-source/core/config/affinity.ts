@@ -49,8 +49,6 @@ export const affinityCurve: AffinityCurveDef = coreDef('affinityCurve', 'affCurv
 });
 
 export const linkBonus: LinkBonusDef = coreDef('linkBonus', 'link:main', {
-  // 大檢定出戰加值（與基底的 sortieBonus 相加）。這裡仍是加法，不會爆。
-  checkBonusByStage: { stranger: 0, acquainted: 4, friendly: 9, close: 14, sworn: 20 },
   /**
    * 站位效果的門檻 ＝ 知交（60）★
    *

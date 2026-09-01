@@ -41,7 +41,8 @@ interface LifetimeStats {
   readonly runsStarted: number;
   readonly runsFullDream: number;
   readonly chaptersPassed: number;
-  readonly majorChecksFailed: Readonly<Record<Difficulty, number>>;
+  readonly stagesCleared: number;          // 累計打過幾關
+  readonly campaignsFought: number;        // 累計打過幾場戰役
   readonly turnsPlayed: number;
   readonly glowResults: Readonly<Record<GlowTier, number>>;
   readonly actionsTraining: number;   // 回合花在鍛鍊的次數（15 §2.2）
@@ -56,7 +57,7 @@ type StatKey = keyof LifetimeStats | `glowResults.${GlowTier}` | `highestCareer.
 
 ### 2.1 統計欄位的挑選原則
 
-只記錄**能回答平衡問題**的數字。`glowResults` 分佈可以驗證光階機率是否符合設計；`majorChecksFailed` 按難度分組可以看出玩家實際上敢賭到什麼程度；`actionsTraining` ／ `actionsEvent` 的比值可以驗證「上課 vs 工作」是否真的形成抉擇 —— 若某一邊永遠是 0，那一半的系統就沒有發揮作用（15 §2.2）。
+只記錄**能回答平衡問題**的數字。`glowResults` 分佈可以驗證光階機率是否符合設計；`stagesCleared / campaignsFought` 就是平均深度 —— 它直接回答「玩家敢走多深」；`actionsTraining` ／ `actionsEvent` 的比值可以驗證「上課 vs 工作」是否真的形成抉擇 —— 若某一邊永遠是 0，那一半的系統就沒有發揮作用（15 §2.2）。
 
 不記錄「看起來很酷但沒人會問」的數字。
 

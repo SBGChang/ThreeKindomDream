@@ -47,7 +47,9 @@ type RunInstanceId = Brand<string, 'RunInstanceId'>;
 type Attr = 'war' | 'int' | 'pol' | 'cha';              // 武 智 政 魅
 type GlowTier = 'none' | 'silver' | 'gold' | 'red';     // 無 銀 金 紅
 type AptitudeGrade = 'F' | 'E' | 'D' | 'C' | 'B' | 'A' | 'S';
-type Difficulty = 'safe' | 'normal' | 'hard';           // 穩 進 險
+type AttrGrade = 'G' | 'F' | 'E' | 'D' | 'C' | 'B' | 'A' | 'S';   // 四維的等級
+type AbilityTier = 'common' | 'fine' | 'peerless';      // 常 良 絕
+type SkillKind = 'physical' | 'magic' | 'heal' | 'buff' | 'debuff';
 type Phase = 'nanhua' | 'faction';                      // 南華村篇 / 陣營篇
 ```
 

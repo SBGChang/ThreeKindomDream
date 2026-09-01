@@ -15,7 +15,7 @@ export function validateCareer(c: Ctx): void {
       .filter((d) => c.s(d['line']) === line)
       .slice()
       .sort((a, b) => c.n(a['level']) - c.n(b['level']));
-    for (const field of ['requiredMerit', 'checkBonus', 'trainingBaseAdd'] as const) {
+    for (const field of ['requiredMerit', 'hostScale', 'trainingBaseAdd'] as const) {
       let prev = -Infinity;
       for (const d of rows) {
         const v = c.n(d[field]);
@@ -46,9 +46,9 @@ export function validateCareer(c: Ctx): void {
         if (c.n(r['requiredMerit']) < c.n(prev['requiredMerit'])) {
           c.push('rule', 'career', 'requiredMerit', id, 'requiredMerit 必須單調不減');
         }
-        if (c.n(r['checkBonus']) < c.n(prev['checkBonus'])) {
-          c.push('rule', 'career', 'checkBonus', id,
-            'checkBonus 必須單調不減（否則升官變成懲罰）');
+        if (!(c.n(r['hostScale']) > c.n(prev['hostScale']))) {
+          c.push('rule', 'career', 'hostScale', id,
+            'hostScale 必須嚴格遞增（否則升官不會讓你帶更多兵）');
         }
       }
     });
@@ -242,25 +242,6 @@ export function validateLinkBonus(c: Ctx): void {
         `上限必須 > 1（實得 ${cap}）`, '≤ 1 會把所有站位加成夾掉');
     }
 
-    // 階段加成必須單調不減 —— 否則養好感度會變成減益
-    const stages = c.rows('affinityStage').slice()
-      .sort((a, b) => c.n(a['min']) - c.n(b['min'])).map((r) => c.s(r['stage']));
-    // 出戰加值仍隨局內好感單調不減。站位連動【已不吃好感】（19 §5.1），
-    // 因此這裡只剩一張表要檢查。
-    const table = (d['checkBonusByStage'] ?? {}) as Record<string, unknown>;
-    let prev = -Infinity;
-    for (const st of stages) {
-      if (table[st] === undefined) {
-        c.push('schema', 'linkBonus', `checkBonusByStage.${st}`, id, `缺少階段 ${st}`);
-        continue;
-      }
-      const v = c.n(table[st]);
-      if (v < prev) {
-        c.push('rule', 'linkBonus', `checkBonusByStage.${st}`, id,
-          `階段加值必須單調不減（前 ${prev}，本 ${v}）`, '否則養好感度會變成減益');
-      }
-      prev = v;
-    }
   }
 
   validateStarLadder(c);

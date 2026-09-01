@@ -2,8 +2,7 @@
 
 > **定位**：33 個模組的依賴關係、狀態組成、介面骨架。細節見各模組契約。
 >
-> ✅ **㉜㉝ 已實作**（[RFC-01](../RFC-01-campaign-rework.md) 階段 A–C），但**圖尚未納入**。
-> 下方 §5 的狀態圖描述的是【已作廢】的大檢定流程 —— 兩張圖都待重畫。
+> 決策記錄見 [RFC-01](../RFC-01-campaign-rework.md)。
 > 圖以 mermaid 撰寫，在 GitHub 與 VS Code 預覽中會渲染。
 
 ---
@@ -213,41 +212,38 @@ sequenceDiagram
   UI->>C: turn.advance（呈現層在讀出結果後立即送出）
   C->>C: 記帳 actions[kind] += 1
   Note over C: canAdvance ⟺ 兩槽恰有一個已結算
-  C-->>UI: turn.advanced（或章末 majorCheck.due）
+  C-->>UI: turn.advanced（或章末 campaign.due）
 ```
 
 ---
 
-## 5. 章節與檢定的職責切分
+## 5. 章節與戰役的職責切分
 
-> ✂️ **本節的狀態圖已作廢**（[RFC-01](../RFC-01-campaign-rework.md) 已實作）。
-> 大檢定的三檔難度自選、降級重判、重擲全部移除，換成 ㉝ 的七關推進與走留決策。
-> 15 改發 `campaign.due`，章節通過與失敗由 ㉝ 發出。**圖待重畫。**
-
-15 只宣告「大檢定到期」，18 才執行判定。這讓「回合怎麼走」與「檢定怎麼算」可獨立實作與測試。
+15 只宣告「章末到了」，33 才打仗。這讓「回合怎麼走」與「仗怎麼打」可獨立實作與測試。
 
 ```mermaid
 stateDiagram-v2
-  [*] --> 南華村篇
-  南華村篇 --> 大檢定 : 章末（15 發 majorCheck.due）
-  大檢定 --> 難度選擇 : 三檔・成功率一律可見
-  難度選擇 --> 判定 : 18 執行
-  判定 --> 降級重判 : 失敗且有 CheckDowngradeRetry
-  降級重判 --> 判定
-  判定 --> 重擲 : 失敗且有 charge
-  重擲 --> 判定
-  判定 --> 選陣營 : 通過且 onPass=chooseFaction
-  判定 --> 陣營篇 : 通過
-  判定 --> 中止類結局 : 全部搶救手段用盡
+  [*] --> 帳下篇
+  帳下篇 --> 戰役 : 章末（15 發 campaign.due）
+  戰役 --> 配置 : 三招 ＋ 三位指揮各一招
+  配置 --> 一關 : engage（自動戰鬥，玩家不操作）
+  一關 --> 走留 : 敵方全滅（軍勢與糧秣【不回滿】）
+  一關 --> 中止類結局 : 軍勢歸零
+  走留 --> 一關 : 再打一關（或掃蕩，打到吃緊為止）
+  走留 --> 選陣營 : 收兵且 onPass=chooseFaction
+  走留 --> 陣營篇 : 收兵
   選陣營 --> 陣營篇 : faction.joined（19 分配上司・21 定初始官階）
-  陣營篇 --> 大檢定
+  陣營篇 --> 戰役
   陣營篇 --> 圓夢類結局 : 序列走完
   中止類結局 --> 夢醒
   圓夢類結局 --> 夢醒
   夢醒 --> [*] : 26 結算 → MetaState
 ```
 
-**失敗處理鏈的順序固定**：先降級重判（寶物的條件性自動搶救），後重擲（天賦的主動資源）。自動的先跑，才不會浪費玩家的主動資源。
+**沒有及格線**：`clearedStages === 0` 時收兵也是合法的（按兵不動）——
+它拿不到任何獎勵，但章節照過。**沒有任何一條路能殺死你，除了你自己按下「再打一關」。**
+
+**跨關不回滿**是這張圖唯一的樞紐：若每關滿血重開，七個「走留」節點會塌成一個。
 
 ---
 
@@ -399,7 +395,6 @@ classDiagram
     +members(ctx) RosterMember[]
     +stageOf(id, ctx) AffinityStage
     +trainingMultiplier(slotNotables, ctx) number
-    +sortieBonus(ids, ctx) number
     +eligibleForSortie(checkId, ctx) NotableId[]
   }
   class StatQuery {
@@ -478,7 +473,9 @@ classDiagram
     <<interface>>
     +chooseTraining(vm, ctx) number
     +chooseEvent(vm, ctx) EventChoice
-    +chooseDifficulty(previews) Difficulty
+    +spend(s) void
+    +chooseLoadout(s) BattleLoadout
+    +chooseEngage(s) boolean
     +chooseSortie(eligible, max) NotableId[]
   }
 

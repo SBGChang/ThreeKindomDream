@@ -18,12 +18,14 @@
 // 底下的數值一律照這個梯度給：同樣是「同框加成再 +N%」，
 // all 版給 15%、點名版給 25%。
 import type { EffectTableInput } from '../../authoring.js';
-import { notableId, targetId } from '../../../src/contracts/core/ids.js';
-import type { Condition, NotableTarget, StandingReq } from '../../../src/contracts/core/effects.js';
+import { notableId, skillId, targetId, traitId } from '../../../src/contracts/core/ids.js';
+import type { NotableTarget, StandingReq } from '../../../src/contracts/core/effects.js';
 import { FX } from './ids.js';
 
 const T = targetId;
 const N = notableId;
+const S = skillId;
+const TR = traitId;
 
 // ── 作用對象的三層 ──────────────────────────────────
 const ALL: NotableTarget = { kind: 'all' };
@@ -39,9 +41,6 @@ const ALL_ATTRS_18 = { lead: 1.8, war: 1.8, int: 1.8, pol: 1.8 } as const;
 const STAND_SELF: StandingReq = { kind: 'self' };
 const STAND_NONE: StandingReq = { kind: 'none' };
 const stands = (id: string): StandingReq => ({ kind: 'named', notableId: N(id) });
-
-/** 大檢定走【險】檔時才生效。張遼與賈詡那一對靠它成立。 */
-const HARD: Condition = { type: 'difficulty', value: 'hard' };
 
 export const effects: EffectTableInput = {
   StatModifier: {
@@ -66,6 +65,29 @@ export const effects: EffectTableInput = {
     [FX.battleHeal20]: { target: T('battle.heal'), op: 'mulPct', value: 0.20, condition: null },
     // 剛愎的另一半。同一條特質同時有正負，取捨感就在這裡。
     [FX.battleHealDown20]: { target: T('battle.heal'), op: 'mulPct', value: -0.20, condition: null },
+    [FX.battlePhys10]: { target: T('battle.damage.physical'), op: 'mulPct', value: 0.10, condition: null },
+    [FX.battlePhys20]: { target: T('battle.damage.physical'), op: 'mulPct', value: 0.20, condition: null },
+    [FX.battleMagic12]: { target: T('battle.damage.magic'), op: 'mulPct', value: 0.12, condition: null },
+    [FX.battleTroops06]: { target: T('battle.troopsMax'), op: 'mulPct', value: 0.06, condition: null },
+    [FX.battleTroops15]: { target: T('battle.troopsMax'), op: 'mulPct', value: 0.15, condition: null },
+    [FX.battleSupply12]: { target: T('battle.supplyMax'), op: 'mulPct', value: 0.12, condition: null },
+    [FX.battleSupply30]: { target: T('battle.supplyMax'), op: 'mulPct', value: 0.30, condition: null },
+    [FX.battleHeal25]: { target: T('battle.heal'), op: 'mulPct', value: 0.25, condition: null },
+
+    // ── 養成兌現的降耗（32 §6）★ ────────────────────
+    //
+    // 【我們沒有會消耗的道具】—— 這三種全部是買斷型的常駐折扣，
+    // 與 GDD §9.1「寶物 ＝ 買斷型 Buff」一致。
+    //
+    //   折扣      learn.cost.<維>  某一類經驗的學費打折
+    //   階梯緩和  learn.bandShift  計價時把現值往下移一帶（32 §6）
+    //   直接解鎖  UnlockGrant      讓某一項進入可學清單，【不含學費】
+    [FX.learnWarOff20]: { target: T('learn.cost.war'), op: 'mulPct', value: -0.20, condition: null },
+    [FX.learnIntOff20]: { target: T('learn.cost.int'), op: 'mulPct', value: -0.20, condition: null },
+    [FX.learnPolOff20]: { target: T('learn.cost.pol'), op: 'mulPct', value: -0.20, condition: null },
+    [FX.learnLeadOff20]: { target: T('learn.cost.lead'), op: 'mulPct', value: -0.20, condition: null },
+    [FX.learnAllOff10]: { target: T('learn.cost.all'), op: 'mulPct', value: -0.10, condition: null },
+    [FX.learnBandShift1]: { target: T('learn.bandShift'), op: 'add', value: 1, condition: null },
   },
 
   GlowBaseWeight: {
@@ -297,20 +319,24 @@ export const effects: EffectTableInput = {
     [FX.growLejin60]: { target: named('notable:lejin'), mulPct: 0.60, condition: null },
   },
 
+  // 小檢定的檢定值加值。0–100 尺度下 +6 已經是相當大的一筆（DC 的一成上下）。
   CheckValueBonus: {
-    [FX.sortieAll8]: { attr: 'all', scope: 'major', add: 8, condition: null },
-    [FX.sortieWar6]: { attr: 'war', scope: 'both', add: 6, condition: null },
-    [FX.sortieInt6]: { attr: 'int', scope: 'both', add: 6, condition: null },
-    [FX.sortiePol6]: { attr: 'pol', scope: 'both', add: 6, condition: null },
-    [FX.sortieLead6]: { attr: 'lead', scope: 'both', add: 6, condition: null },
-    [FX.sortieAll6]: { attr: 'all', scope: 'major', add: 6, condition: null },
-    [FX.sortieAll10]: { attr: 'all', scope: 'major', add: 10, condition: null },
-    [FX.sortieAll16]: { attr: 'all', scope: 'major', add: 16, condition: null },
-    // 賈詡五階：只在【險】檔生效。他提高險檔的成功率，張遼放大險檔的獎勵。
-    [FX.majorHardWar40]: { attr: 'all', scope: 'major', add: 40, condition: HARD },
-    [FX.majorWar30]: { attr: 'war', scope: 'major', add: 30, condition: null },
-    [FX.majorCivil45]: { attr: 'int', scope: 'major', add: 45, condition: null },
-    [FX.majorWar60]: { attr: 'war', scope: 'major', add: 60, condition: null },
+    [FX.sortieWar6]: { attr: 'war', add: 6, condition: null },
+    [FX.sortieInt6]: { attr: 'int', add: 6, condition: null },
+    [FX.sortiePol6]: { attr: 'pol', add: 6, condition: null },
+    [FX.sortieLead6]: { attr: 'lead', add: 6, condition: null },
+  },
+
+  /**
+   * 直接解鎖（32 §6）★ **不含學費。**
+   *
+   * 〈孟德新書〉授予〈兵法〉那條 GDD §9.3 的舊承諾就是走這裡 ——
+   * 它把那一項放進可學清單，玩家仍然要花經驗學。
+   * 兩道門不可被一件事同時繞過。
+   */
+  UnlockGrant: {
+    [FX.unlockBingfa]: { trait: null, skill: S('skill:xianzhen'), condition: null },
+    [FX.unlockLiaodi]: { trait: TR('trait:liaodi'), skill: null, condition: null },
   },
 
   CheckRetry: {
@@ -318,14 +344,6 @@ export const effects: EffectTableInput = {
     [FX.retryMinor1]: { scope: 'minor', usesPerRun: 1, condition: null },
   },
 
-  CheckRewardBonus: {
-    [FX.checkReward10]: { mulPct: 0.10, condition: null },
-    [FX.checkReward15]: { mulPct: 0.15, condition: null },
-    [FX.checkReward20]: { mulPct: 0.20, condition: null },
-    [FX.checkReward25]: { mulPct: 0.25, condition: null },
-    [FX.checkRewardHard25]: { mulPct: 0.25, condition: HARD },
-    [FX.checkRewardHard30]: { mulPct: 0.30, condition: HARD },
-  },
 
   RevealInfo: {
     // 〈慧眼識人〉買到的是【戰報的完整歸因】（33 §7.1）。

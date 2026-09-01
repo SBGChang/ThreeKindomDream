@@ -20,7 +20,6 @@ export const attributeCap: AttributeCapDef = coreDef('attributeCap', 'cap:main',
 });
 
 export const gameRules: GameRulesDef = coreDef('gameRules', 'rules:main', {
-  maxSortie: 3,
   companionCount: 3,
   // 可【自行指定】的玩伴人數。0 ＝ 皇甫嵩三名全部替你指派（GDD §6.5）。
   // 「世家門閥」之類的天賦買回來的是選擇權，不是數值 ——

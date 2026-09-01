@@ -39,7 +39,7 @@ const add = (f: string, n: number, text: string, why: string): void => {
 
 // ── 1. 內容 ID 只允許出現在 content-source ─────────
 // 命名空間前綴（notable: / event: / chapter: …）是 ID 的識別特徵。
-const ID_PREFIX = /'(?:notable|event|chapter|check|faction|ending|shop|talent|pool|dc|glow|apt|rank|train|stage|seq|curve|link|cap|rules|settle|aptCost|careerInit|checkRule|affCurve):/;
+const ID_PREFIX = /'(?:notable|event|chapter|campaign|enemy|trait|skill|faction|ending|shop|talent|pool|dc|glow|apt|rank|train|stage|seq|curve|link|cap|rules|settle|aptCost|checkRule|affCurve|growth|battle|item):/;
 for (const f of files) {
   for (const l of codeLines(f)) {
     if (ID_PREFIX.test(l.code)) {

@@ -48,7 +48,7 @@ export class Session {
   get isOver(): boolean { return this.state.ending !== null; }
   get needsFactionChoice(): boolean { return this.state.progress.pendingFactionChoice; }
   get needsSuperiors(): boolean { return this.state.progress.pendingSuperiorAssign; }
-  get needsCampaign(): boolean { return this.state.progress.pendingMajorCheck; }
+  get needsCampaign(): boolean { return this.state.progress.pendingCampaign; }
 
   /** 本回合已投入固定事件。 */
   get hasActed(): boolean { return turn.hasActed(this.ctx); }
@@ -81,10 +81,10 @@ export class Session {
   /**
    * 進入下一回合。
    *
-   * 【必須清掉上一回合的結算】。章末推進時不會重抽格子（要先打大檢定），
+   * 【必須清掉上一回合的結算】。章末推進時不會重抽格子（要先打戰役），
    * 若不清空，`turn.selected` 會留著上一回合的值 ——
    * 於是「本回合已行動」在一個還沒行動的回合裡為真，`canAdvance` 也跟著騙人。
-   * 正常流程看不到（UI 會先路由到大檢定畫面），但那是靠巧合而不是靠規則。
+   * 正常流程看不到（UI 會先路由到戰役畫面），但那是靠巧合而不是靠規則。
    *
    * 清空不消耗 RNG，因此與重抽是兩件事：重抽只在需要新格子時才做。
    * `seenUniqueIds` 跨回合累積，因此【不清】—— 它是本輪的紀錄，不是本回合的。
@@ -152,7 +152,7 @@ export class Session {
       throw new Error('本回合尚未完成（未投入固定事件，或還有待處理事件）');
     }
     this.stepTurn();
-    if (this.state.progress.pendingMajorCheck) {
+    if (this.state.progress.pendingCampaign) {
       // 章末不再進入判定，而是開一場戰役（15 → ㉝）。
       this.mutate((tc) => campaign.begin(tc.state.progress.chapterId, tc, this.w.fx));
     } else {
@@ -162,7 +162,7 @@ export class Session {
 
   // ── 戰役（㉝）★ ──────────────────────────────────
   //
-  // 取代舊的大檢定判定。四條規格：玩家不操作、跨關不回滿、每關都可以走、
+  // 四條規格：玩家不操作、跨關不回滿、每關都可以走、
   // 不顯示勝率。沒有及格線 ——【沒有任何一條路能殺死你，除了你自己按下
   // 「再打一關」】（RFC-01 D5）。
 
@@ -244,7 +244,7 @@ export class Session {
         progress: {
           ...tc.state.progress,
           chaptersPassed: tc.state.progress.chaptersPassed + 1,
-          pendingMajorCheck: false,
+          pendingCampaign: false,
           pendingFactionChoice: chapter.onPass === 'chooseFaction',
         },
       };

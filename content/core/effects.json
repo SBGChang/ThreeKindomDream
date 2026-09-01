@@ -194,113 +194,26 @@
       "usesPerRun": 1
     }
   },
-  "CheckRewardBonus": {
-    "6501": {
-      "condition": null,
-      "mulPct": 0.1
-    },
-    "6502": {
-      "condition": null,
-      "mulPct": 0.15
-    },
-    "6503": {
-      "condition": null,
-      "mulPct": 0.2
-    },
-    "6504": {
-      "condition": null,
-      "mulPct": 0.25
-    },
-    "6511": {
-      "condition": {
-        "type": "difficulty",
-        "value": "hard"
-      },
-      "mulPct": 0.25
-    },
-    "6512": {
-      "condition": {
-        "type": "difficulty",
-        "value": "hard"
-      },
-      "mulPct": 0.3
-    }
-  },
   "CheckValueBonus": {
-    "6001": {
-      "add": 8,
-      "attr": "all",
-      "condition": null,
-      "scope": "major"
-    },
     "6002": {
       "add": 6,
       "attr": "war",
-      "condition": null,
-      "scope": "both"
+      "condition": null
     },
     "6003": {
       "add": 6,
       "attr": "int",
-      "condition": null,
-      "scope": "both"
+      "condition": null
     },
     "6004": {
       "add": 6,
       "attr": "pol",
-      "condition": null,
-      "scope": "both"
+      "condition": null
     },
     "6005": {
       "add": 6,
       "attr": "lead",
-      "condition": null,
-      "scope": "both"
-    },
-    "6006": {
-      "add": 6,
-      "attr": "all",
-      "condition": null,
-      "scope": "major"
-    },
-    "6007": {
-      "add": 10,
-      "attr": "all",
-      "condition": null,
-      "scope": "major"
-    },
-    "6008": {
-      "add": 16,
-      "attr": "all",
-      "condition": null,
-      "scope": "major"
-    },
-    "6011": {
-      "add": 40,
-      "attr": "all",
-      "condition": {
-        "type": "difficulty",
-        "value": "hard"
-      },
-      "scope": "major"
-    },
-    "6012": {
-      "add": 30,
-      "attr": "war",
-      "condition": null,
-      "scope": "major"
-    },
-    "6013": {
-      "add": 45,
-      "attr": "int",
-      "condition": null,
-      "scope": "major"
-    },
-    "6014": {
-      "add": 60,
-      "attr": "war",
-      "condition": null,
-      "scope": "major"
+      "condition": null
     }
   },
   "CommissionChance": {
@@ -1288,6 +1201,18 @@
       "target": "battle.damage.physical",
       "value": 0.3
     },
+    "9005": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "battle.damage.physical",
+      "value": 0.1
+    },
+    "9006": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "battle.damage.physical",
+      "value": 0.2
+    },
     "9011": {
       "condition": null,
       "op": "mulPct",
@@ -1306,6 +1231,12 @@
       "target": "battle.damage.magic",
       "value": 0.25
     },
+    "9014": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "battle.damage.magic",
+      "value": 0.12
+    },
     "9021": {
       "condition": null,
       "op": "mulPct",
@@ -1318,11 +1249,35 @@
       "target": "battle.troopsMax",
       "value": 0.12
     },
+    "9023": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "battle.troopsMax",
+      "value": 0.06
+    },
+    "9024": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "battle.troopsMax",
+      "value": 0.15
+    },
     "9031": {
       "condition": null,
       "op": "mulPct",
       "target": "battle.supplyMax",
       "value": 0.2
+    },
+    "9032": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "battle.supplyMax",
+      "value": 0.12
+    },
+    "9033": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "battle.supplyMax",
+      "value": 0.3
     },
     "9041": {
       "condition": null,
@@ -1341,6 +1296,60 @@
       "op": "mulPct",
       "target": "battle.heal",
       "value": -0.2
+    },
+    "9044": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "battle.heal",
+      "value": 0.25
+    },
+    "9101": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "learn.cost.war",
+      "value": -0.2
+    },
+    "9102": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "learn.cost.int",
+      "value": -0.2
+    },
+    "9103": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "learn.cost.pol",
+      "value": -0.2
+    },
+    "9104": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "learn.cost.lead",
+      "value": -0.2
+    },
+    "9105": {
+      "condition": null,
+      "op": "mulPct",
+      "target": "learn.cost.all",
+      "value": -0.1
+    },
+    "9111": {
+      "condition": null,
+      "op": "add",
+      "target": "learn.bandShift",
+      "value": 1
+    }
+  },
+  "UnlockGrant": {
+    "9201": {
+      "condition": null,
+      "skill": "skill:xianzhen",
+      "trait": null
+    },
+    "9202": {
+      "condition": null,
+      "skill": null,
+      "trait": "trait:liaodi"
     }
   }
 }

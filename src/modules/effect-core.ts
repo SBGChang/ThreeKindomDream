@@ -31,7 +31,6 @@ export function evaluateCondition(
     case 'statGte': return readStat(c.stat, ctx) >= c.value;
     case 'statLte': return readStat(c.stat, ctx) <= c.value;
     case 'glowTier': return ctx.state.turn.training?.finalGlow === c.value;
-    case 'difficulty': return ctx.state.lastMajorCheck?.difficulty === c.value;
     case 'and': return c.all.every((x) => evaluateCondition(x, ctx, readStat));
     case 'or': return c.any.some((x) => evaluateCondition(x, ctx, readStat));
     case 'not': return !evaluateCondition(c.of, ctx, readStat);

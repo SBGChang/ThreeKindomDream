@@ -23,7 +23,7 @@ export function App(): React.ReactElement {
 
   /**
    * 回合紀錄放在 App 而不是 ScreenRun：單動作回合「選完就跳」，
-   * 章末那一次行動會立刻切到大檢定畫面 —— 紀錄若隨畫面卸載就會漏掉它。
+   * 章末那一次行動會立刻切到戰役畫面 —— 紀錄若隨畫面卸載就會漏掉它。
    */
   const [log, setLog] = useState<readonly string[]>([]);
   const pushLog = useCallback((line: string) => {

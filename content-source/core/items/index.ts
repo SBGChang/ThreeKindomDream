@@ -80,7 +80,7 @@ const broad: readonly ItemDef[] = [
     [ref('CurrencyBonus', FX.meritCivil5)],
     [ref('SlotBaseAdd', FX.itemBaseInt3)],
     [ref('GlowBaseWeight', FX.glowIntShift)],
-    [ref('GainMultiplier', FX.gainInt15)],
+    [ref('StatModifier', FX.learnBandShift1)],
   ]),
 
   /** 鐵槍 ★1 · 武線入門。夏侯惇〈太壽陂〉掉。 */
@@ -147,7 +147,7 @@ const named: readonly ItemDef[] = [
     [ref('LinkAmplify', FX.amplifyCaocao25)],
     [ref('SlotBaseAdd', FX.itemBaseLead4)],
     [ref('AffinityGrant', FX.startCaocao20)],
-    [ref('RarityWeight', FX.rarity06)],
+    [ref('UnlockGrant', FX.unlockBingfa)],
   ]),
 
   /**
@@ -170,7 +170,7 @@ const named: readonly ItemDef[] = [
     [ref('AffinityGrant', FX.startGuojia20)],
     [ref('EncounterChance', FX.encItem25)],
     [ref('LinkAmplify', FX.amplifyGuojia25)],
-    [ref('EncounterChance', FX.encIntSure)],
+    [ref('UnlockGrant', FX.unlockLiaodi)],
   ]),
 
   /**
@@ -181,7 +181,7 @@ const named: readonly ItemDef[] = [
   item('wangzuo', 4, 1, [
     [ref('CurrencyBonus', FX.meritCivil15)],
     [ref('AffinityGrant', FX.startXunyu20)],
-    [ref('CheckRewardBonus', FX.checkReward20)],
+    [ref('StatModifier', FX.learnIntOff20)],
     [ref('AffinityGrowth', FX.growXunyu80)],
     [ref('SlotBias', FX.biasXunyuAll16)],
     [ref('RarityWeight', FX.rarity05)],

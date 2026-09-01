@@ -1,34 +1,31 @@
 # 18 · 檢定引擎
 
-> **職責**：小檢定與大檢定共用的判定核心。計算檢定值、成功率、執行判定、處理重擲與降級。
+> **職責**：事件內小檢定的判定核心。計算檢定值、成功率、執行判定。
 >
 > | | |
 > |---|---|
-> | **owns** | 無 State slice（純計算 ＋ 大檢定結果轉發） |
-> | **reads** | 01 效果系統、19 名士局內狀態、20 屬性與貨幣 |
-> | **handles** | `majorCheck.attempt`（含難度選擇） |
-> | **emits** | `chapter.passed` / `chapter.failed` / `check.resolved` |
-> | **ownsDefinitions** | `majorCheck`、`checkRule` |
+> | **owns** | 無 State slice（純計算） |
+> | **reads** | 01 效果系統、20 屬性與貨幣 |
+> | **handles** | 無（由 17 事件槽在結算選項時呼叫） |
+> | **emits** | 無 |
+> | **ownsDefinitions** | `checkRule` |
 
-> ✂️ **[RFC-01](../RFC-01-campaign-rework.md) 縮編**：**大檢定的職責整體移交
-> [33 戰役](33_campaign.md)**，本模組只保留小檢定。
-> 隨之作廢：`majorCheck` / `checkRule.maxSortie` 定義、難度自選、出戰名士、
-> `check.majorValue`、`careerService.checkBonus` 的加值路徑、§5 的失敗處理鏈、
-> §3.2 對「大檢定成功率一律可見」的承諾（戰役改為 D8：不顯示勝率、只給情報）。
-> **保留不動**：§3 的算式、§3.1 的封閉式、`specForMinor`、`preview` / `resolve` 的型別分層。
+> 章末那一格是 [33 戰役](33_campaign.md) —— 七關的自動戰役，有自己的算式
+> 與自己的失敗後果。本模組只服務**事件內的小檢定**。
 
 ---
 
-## 1. 兩種檢定，一套算式
+## 1. 小檢定是什麼
 
-| | 小檢定 | 大檢定 |
-|---|---|---|
-| 來源 | 事件選項（17） | 章末（15 發 `majorCheck.due`） |
-| 難度 | 固定（由事件定義） | **玩家自選三檔** |
-| 失敗後果 | 無獎勵，繼續遊戲 | **導向中止類結局**（25） |
-| 出戰名士 | 否 | 是 |
+| | |
+|---|---|
+| 來源 | 事件選項（17 §5） |
+| 難度 | 固定，由事件的 `dcCurveId` × 該線官階決定 |
+| 失敗後果 | **不會夢醒** —— 只是產出打折（`eventYieldCurve.failRatio`） |
 
-算式相同，差別只在加值來源與失敗後果。**共用一套實作**，否則兩邊的平衡會各自漂移。
+**失敗仍給四成**是刻意的（17 §6.3）：一回合只有這一次機會，
+若失敗＝顆粒無收，高 DC 的選項會沒人敢碰，「用哪個方法度過」就退化成
+只選最穩的那個。
 
 ---
 
@@ -37,174 +34,101 @@
 ```ts
 interface CheckRuleDefinition extends DefinitionHeader {
   readonly kind: 'checkRule';
-  readonly secondaryWeight: number;       // 副屬性權重，GDD 暫定 0.5
-  readonly rollMin: number;               // 1
-  readonly rollMax: number;               // 100
-  readonly maxSortie: number;             // 大檢定可派出的名士數上限
-}
-
-interface MajorCheckDefinition extends DefinitionHeader {
-  readonly kind: 'majorCheck';
-  readonly chapterId: ChapterId;
-  readonly primaryAttr: Attr;
-  readonly secondaryAttr: Attr | null;
-  readonly tiers: Readonly<Record<Difficulty, MajorCheckTier>>;
-  readonly enemyNotables: readonly NotableId[];   // 該檢定中屬敵方，不可出戰
-  readonly collectible: boolean;
-}
-
-interface MajorCheckTier {
-  readonly dc: number;
-  readonly requirements: readonly Condition[];    // 該難度的解鎖門檻
-  readonly rewards: readonly EventReward[];
-  readonly briefKey: L10nKey;                     // 該難度的任務說明
+  readonly rollMin: number;        // 1
+  readonly rollMax: number;        // 100
+  readonly rollCenter: number;     // 50
+  readonly rollSpread: number;     // 100
+  readonly baseFloor: number;      // 四維全 0 時的地板
 }
 ```
 
-### 2.1 難度門檻
-
-`tiers.hard.requirements` 可要求功績或官階達標——功績不足時【險】難度**鎖定但顯示所需條件**（GDD §7.4）。這與事件選項的處理一致（17 §3.2）。
+`dcCurve` 的 `byTier` 索引**官階階級**，不是章節（17 §6.4）——
+難度與報酬必須一起長，否則壓低某一線的官階會變成刷簡單高報酬的農場。
 
 ---
 
 ## 3. 檢定值與成功率
 
+**比例擺幅**，不是加減骰：
+
 ```
-base  = attr[primary] + attr[secondary] × secondaryWeight
-bonus = resolve('check.value.<primary>', 0)
-      + resolve('check.majorValue', 0)          // 僅大檢定
-      + Σ 出戰名士加值（19 依好感度階段提供）
-roll  = rng.int('check.roll', rollMin, rollMax + 1)
-total = base + bonus + roll
+value  = max(baseFloor, attr[primary]) + resolve('CheckValueBonus')
+roll   = rng.int('check.roll', rollMin, rollMax + 1)
+total  = round(value × (1 + (roll − rollCenter) / rollSpread))
 passed = total >= dc
 ```
+
+`rollSpread = 100` 讓 roll 1–100 對應倍率 0.51–1.50。因此 DC 應訂在
+「該階級的期望單維值」的 0.72 ／ 1.00 ／ 1.26 倍附近，三檔選項才會落在
+約 79% ／ 50% ／ 25% 的成功率上。
 
 ### 3.1 成功率是可計算的封閉式
 
 ```
-need = dc − base − bonus
+need = ceil(rollCenter + rollSpread × (dc / value − 1))
 successRate = clamp(0, 1, (rollMax − need + 1) / (rollMax − rollMin + 1))
 ```
 
-- `need ≤ rollMin` → 必成功（1.0）
-- `need > rollMax` → 必失敗（0.0）
+`value <= 0` 時退化為「dc <= 0 才必成功」。
 
-### 3.2 成功率一律可見 ★
+### 3.2 小檢定的成功率一律可見
 
-GDD §8.7 的設計意圖是「**走到中止類結局是玩家自己貪心的結果**，不是系統的隨機暴斃」。
+事件選項是一條**費力程度的階梯**（低／中／高），玩家要看得出取捨。
+沒有成功率，那三個選項就只剩文案差異。
 
-**若玩家看不到成功率，難度自選就不是決策而是盲賭**，那個意圖無法成立。因此：
-
-| 資訊 | 可見性 |
-|---|---|
-| 三檔難度的成功率 | **一律可見**，不需任何解鎖 |
-| 檢定值的組成明細（`explain()`） | 需 `flag.previewCheckBreakdown` |
-
-> ⚠️ **這推導出一個 GDD 修正**：`RevealInfo.what = 'majorCheckDC'`（郭嘉 50 級效果）變得多餘——成功率可見即可反推 DC。建議把它改成揭露**組成明細**（讓玩家知道「我這 47% 是被政治拖累的」），這比看到一個裸數字更有價值。
->
-> 需同步更新 GDD §6.7 與 [01 §10.3](01_effect_system.md) 的 `RevealInfoDef.what` 列舉。
+> ⚠️ **戰役那一側刻意不給勝率**（[RFC-01](../RFC-01-campaign-rework.md) D8）。
+> 兩邊的判準不同是因為兩邊的系統不同：小檢定是一次擲骰、算得出封閉式；
+> 戰役是幾十回合的模擬 ＋ 玩家自己的配置，那個百分比會是**假的精確**。
 
 ---
 
-## 4. 出戰名士
+## 4. 公開介面
 
 ```ts
-interface SortieSelection {
-  readonly notableIds: readonly NotableId[];      // ≤ maxSortie
-}
-```
+// 純計算，供 17 的 optionStates 顯示
+function preview(spec: CheckSpec, ctx: RunContext, fx: EffectResolver): CheckPreview;
 
-規則：
+// 執行判定（需要 rng）
+function resolveCheck(spec: CheckSpec, ctx: TurnContext, fx: EffectResolver): CheckOutcome;
 
-1. 只能從本輪陣容（19 `RosterState`）中選
-2. **列於 `enemyNotables` 的不可出戰**（GDD §6.2：選呂布當玩伴，虎牢關就不能靠他）
-3. 加值由 19 依各名士的**局內好感度階段**計算
-
-違反 1 或 2 → `threshold.not-met` 拒絕。
-
----
-
-## 5. 失敗處理鏈
-
-```
-判定失敗
-  ├ 查 RuleOverride（decision = 'check.onFailure'）
-  │   └ CheckDowngradeRetry：機率成功則降級重判（消耗 usesPerRun）
-  ├ 查 charge.majorCheckReroll
-  │   └ 有可用 → 提示玩家是否重擲（消耗後重跑 §3）
-  └ 皆無 → 小檢定：無獎勵結束
-           大檢定：emit chapter.failed → 25 結局判定接手
-```
-
-**順序固定**：先降級重判、後重擲。理由是降級是「條件性的自動搶救」（來自寶物），重擲是「玩家主動花資源」（來自天賦）——自動的先跑，才不會浪費玩家的主動資源。
-
-### 5.1 重擲必須重抽 roll，不得重用
-
-`rng.int('check.roll', ...)` 再取一次，cursor 前進。若重用同一個 roll，重擲毫無意義。
-
----
-
-## 6. 公開介面
-
-```ts
-interface CheckEngine {
-  // 純計算，供 UI 顯示與 17 的 optionStates
-  preview(spec: CheckSpec, ctx: RunContext): CheckPreview;
-
-  // 執行判定（需要 rng）
-  resolve(spec: CheckSpec, sortie: SortieSelection | null, ctx: TurnContext): CheckOutcome;
-}
-
-interface CheckPreview {
-  readonly base: number;
-  readonly bonus: number;
+interface CheckSpec {
+  readonly scope: 'minor';
+  readonly primaryAttr: Attr;
   readonly dc: number;
-  readonly successRate: number;
-  readonly breakdown: readonly EffectTrace[];   // 僅在 flag 開啟時填入
-}
-
-interface CheckOutcome {
-  readonly passed: boolean;
-  readonly roll: number;
-  readonly total: number;
-  readonly difficulty: Difficulty | null;       // 大檢定才有；降級後為降級後的值
-  readonly downgraded: boolean;
-  readonly rerolled: boolean;
 }
 ```
 
-`preview` 用 `RunContext`（無 RNG），`resolve` 用 `TurnContext`（有 RNG）——由型別保證預覽不會消耗隨機（03 §2）。
+`preview` 用 `RunContext`（無 RNG），`resolveCheck` 用 `TurnContext`（有 RNG）——
+由型別保證預覽不會消耗隨機（03 §2）。
+
+`scope` 仍留在型別上：效果系統的 `CheckValueBonusDef` 之後若要再分種類，
+擴充點在這裡；目前只有 `'minor'` 一種。
 
 ---
 
-## 7. 規則驗證（由 02 執行）
+## 5. 規則驗證（由 02 執行）
 
 | 規則 | 理由 |
 |---|---|
-| `tiers` 三檔齊全 | 否則玩家少一個選擇 |
-| `dc` 沿 safe → normal → hard 嚴格遞增 | 否則難度標籤與實際不符 |
-| `rewards` 的價值沿難度遞增 | 「難度越高獎勵越高」是 GDD 承諾 |
-| `enemyNotables` 引用的名士存在 | 引用完整性 |
-| `enemyNotables` 不得與該檢定的推薦出戰名單重疊 | 見 02 §3.3 |
-| `secondaryAttr ≠ primaryAttr` | 否則主屬性被重複計算 |
+| `dcCurve.byTier` 長度 ＝ 官階階數（12） | 索引對不上會靜靜取到 undefined |
+| `byTier` 嚴格遞增 | 否則高階反而更容易 |
 | `checkRule.rollMax > rollMin` | 否則骰子退化 |
+| `rollSpread > 0` | 否則比例擺幅除以零 |
 
 ---
 
-## 8. 不變量
+## 6. 不變量
 
 1. `preview` 是純函式，不消耗 RNG cursor
-2. `preview().successRate` 與大量 `resolve()` 的實測通過率在統計上一致（可由 31 模擬器驗證）
-3. 小檢定的 `resolve` **絕不寫入 `RunState.ending`**
-4. 大檢定失敗必然發出 `chapter.failed`，且必然在該回合導向結局
-5. 降級重判最多一次（`usesPerRun` 已扣除後不得再觸發）
-6. 同一 `(seed, cursors, state, sortie)` → 相同 roll 與相同結果
+2. `preview().successRate` 與大量 `resolveCheck()` 的實測通過率在統計上一致
+   （可由 31 模擬器驗證）
+3. 小檢定**絕不寫入 `RunState.ending`** —— 它不會導向任何結局
+4. 同一 `(seed, cursors, state)` → 相同 roll 與相同結果
 
 ---
 
-## 9. 刻意不做
+## 7. 刻意不做
 
-- 不做多輪對抗式戰鬥（GDD 明確採單次骰定）
-- 不做局部成功／部分獎勵（三檔難度已提供風險梯度）
+- 不做多輪對抗式判定（那是 33 戰役的事）
+- 不做局部成功／部分獎勵（`failRatio` 已經是那個東西）
 - 不做玩家自訂 DC
-- 不在此模組執行結局判定（那是 25）

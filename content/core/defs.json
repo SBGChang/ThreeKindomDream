@@ -398,13 +398,6 @@
     "schemaVersion": 1
   },
   {
-    "checkBonusByStage": {
-      "acquainted": 4,
-      "close": 14,
-      "friendly": 9,
-      "stranger": 0,
-      "sworn": 20
-    },
     "gainPerTraining": 6,
     "id": "link:main",
     "kind": "linkBonus",
@@ -478,7 +471,6 @@
     "encounterChance": 0.5,
     "id": "rules:main",
     "kind": "gameRules",
-    "maxSortie": 3,
     "packId": "pack:core",
     "schemaVersion": 1,
     "superiorCount": 3
@@ -571,24 +563,37 @@
       "sworn": 0.7
     },
     "crossLineRatio": 0.5,
-    "enemyDamageRatio": 0.06,
+    "enemyDamageByRank": [
+      6,
+      8,
+      11,
+      14,
+      19,
+      24,
+      31,
+      38,
+      47,
+      57,
+      68,
+      81
+    ],
     "enemyTroopsByRank": [
-      180,
-      260,
-      380,
-      540,
-      760,
-      1050,
-      1450,
-      1980,
-      2680,
-      3600,
-      4800,
-      6300
+      720,
+      1040,
+      1520,
+      2160,
+      3040,
+      4200,
+      5800,
+      7920,
+      10720,
+      14400,
+      19200,
+      25200
     ],
     "id": "battle:main",
     "kind": "battleRule",
-    "maxTurns": 40,
+    "maxTurns": 120,
     "packId": "pack:core",
     "rallyRatio": 0.35,
     "schemaVersion": 1,
@@ -1113,7 +1118,7 @@
       {
         "boss": null,
         "briefKey": "campaign.yellowturban.stage.0",
-        "damageMul": 0.6,
+        "damageMul": 0.55,
         "rewards": [
           {
             "amount": 10,
@@ -1126,10 +1131,10 @@
       {
         "boss": null,
         "briefKey": "campaign.yellowturban.stage.1",
-        "damageMul": 0.75,
+        "damageMul": 0.62,
         "rewards": [
           {
-            "amount": 16,
+            "amount": 18,
             "kind": "merit",
             "merit": "martial"
           }
@@ -1139,10 +1144,10 @@
       {
         "boss": "enemy:bocai",
         "briefKey": "campaign.yellowturban.stage.2",
-        "damageMul": 0.9,
+        "damageMul": 0.7,
         "rewards": [
           {
-            "amount": 26,
+            "amount": 32,
             "kind": "merit",
             "merit": "martial"
           }
@@ -1152,10 +1157,10 @@
       {
         "boss": null,
         "briefKey": "campaign.yellowturban.stage.3",
-        "damageMul": 1.05,
+        "damageMul": 0.78,
         "rewards": [
           {
-            "amount": 42,
+            "amount": 60,
             "kind": "merit",
             "merit": "martial"
           }
@@ -1165,10 +1170,10 @@
       {
         "boss": "enemy:zhangliang",
         "briefKey": "campaign.yellowturban.stage.4",
-        "damageMul": 1.25,
+        "damageMul": 0.88,
         "rewards": [
           {
-            "amount": 68,
+            "amount": 110,
             "kind": "merit",
             "merit": "martial"
           },
@@ -1183,10 +1188,10 @@
       {
         "boss": null,
         "briefKey": "campaign.yellowturban.stage.5",
-        "damageMul": 1.5,
+        "damageMul": 1,
         "rewards": [
           {
-            "amount": 110,
+            "amount": 220,
             "kind": "merit",
             "merit": "martial"
           },
@@ -1201,10 +1206,10 @@
       {
         "boss": "enemy:zhangjiao",
         "briefKey": "campaign.yellowturban.stage.6",
-        "damageMul": 1.8,
+        "damageMul": 1.15,
         "rewards": [
           {
-            "amount": 180,
+            "amount": 450,
             "kind": "merit",
             "merit": "martial"
           },
@@ -2058,8 +2063,8 @@
         "descKey": "item.bamboo.tier.5",
         "effects": [
           {
-            "funcType": "GainMultiplier",
-            "referId": 4902
+            "funcType": "StatModifier",
+            "referId": 9111
           }
         ],
         "fragmentCost": 16,
@@ -2453,8 +2458,8 @@
         "descKey": "item.mengde.tier.5",
         "effects": [
           {
-            "funcType": "RarityWeight",
-            "referId": 4705
+            "funcType": "UnlockGrant",
+            "referId": 9201
           }
         ],
         "fragmentCost": 16,
@@ -2611,8 +2616,8 @@
         "descKey": "item.fengxiao.tier.5",
         "effects": [
           {
-            "funcType": "EncounterChance",
-            "referId": 4607
+            "funcType": "UnlockGrant",
+            "referId": 9202
           }
         ],
         "fragmentCost": 16,
@@ -2657,8 +2662,8 @@
         "descKey": "item.wangzuo.tier.2",
         "effects": [
           {
-            "funcType": "CheckRewardBonus",
-            "referId": 6503
+            "funcType": "StatModifier",
+            "referId": 9102
           }
         ],
         "fragmentCost": 4,
@@ -4827,136 +4832,11 @@
     "weight": 30
   },
   {
-    "checkId": "check:yellowturban",
-    "enemyNotables": [],
-    "id": "check:yellowturban",
-    "kind": "majorCheck",
-    "packId": "pack:core",
-    "routes": {
-      "civil": {
-        "primaryAttr": "int",
-        "secondaryAttr": "pol",
-        "tiers": {
-          "hard": {
-            "briefKey": "check.yellowturban.civil.brief.hard",
-            "dc": 135,
-            "requirements": [],
-            "rewards": [
-              {
-                "amount": 40,
-                "kind": "merit",
-                "merit": "civil"
-              },
-              {
-                "amount": 8,
-                "kind": "merit",
-                "merit": "martial"
-              },
-              {
-                "amount": 25,
-                "attr": "int",
-                "kind": "attr"
-              }
-            ]
-          },
-          "normal": {
-            "briefKey": "check.yellowturban.civil.brief.normal",
-            "dc": 100,
-            "requirements": [],
-            "rewards": [
-              {
-                "amount": 24,
-                "kind": "merit",
-                "merit": "civil"
-              },
-              {
-                "amount": 10,
-                "attr": "int",
-                "kind": "attr"
-              }
-            ]
-          },
-          "safe": {
-            "briefKey": "check.yellowturban.civil.brief.safe",
-            "dc": 60,
-            "requirements": [],
-            "rewards": [
-              {
-                "amount": 12,
-                "kind": "merit",
-                "merit": "civil"
-              }
-            ]
-          }
-        }
-      },
-      "martial": {
-        "primaryAttr": "war",
-        "secondaryAttr": "lead",
-        "tiers": {
-          "hard": {
-            "briefKey": "check.yellowturban.martial.brief.hard",
-            "dc": 135,
-            "requirements": [],
-            "rewards": [
-              {
-                "amount": 40,
-                "kind": "merit",
-                "merit": "martial"
-              },
-              {
-                "amount": 8,
-                "kind": "merit",
-                "merit": "civil"
-              },
-              {
-                "amount": 25,
-                "attr": "war",
-                "kind": "attr"
-              }
-            ]
-          },
-          "normal": {
-            "briefKey": "check.yellowturban.martial.brief.normal",
-            "dc": 100,
-            "requirements": [],
-            "rewards": [
-              {
-                "amount": 24,
-                "kind": "merit",
-                "merit": "martial"
-              },
-              {
-                "amount": 10,
-                "attr": "war",
-                "kind": "attr"
-              }
-            ]
-          },
-          "safe": {
-            "briefKey": "check.yellowturban.martial.brief.safe",
-            "dc": 60,
-            "requirements": [],
-            "rewards": [
-              {
-                "amount": 12,
-                "kind": "merit",
-                "merit": "martial"
-              }
-            ]
-          }
-        }
-      }
-    },
-    "schemaVersion": 1
-  },
-  {
     "chapterId": "ch:camp.yellowturban",
     "factionId": null,
     "id": "ch:camp.yellowturban",
     "kind": "chapter",
     "length": 8,
-    "majorCheckId": "check:yellowturban",
     "onPass": "chooseFaction",
     "order": 1,
     "packId": "pack:core",

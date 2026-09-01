@@ -92,7 +92,8 @@ forceConsistentCasingInFileNames, isolatedModules
 | 光階的存在與有序性 | 各階的機率與收益倍率 |
 | 事件三類的存在 | 各類的出現率、抽取權重 |
 | 文武雙軌的結構 | 各階名稱、升遷門檻 |
-| 「檢定＝屬性＋加值＋骰子」的算式形狀 | 每個大檢定三難度的 DC |
+| 「檢定＝屬性＋加值＋骰子」的算式形狀 | 小檢定的 DC 曲線 |
+| 「戰役＝七關 ＋ 每關可收兵」的形狀 | 敵方曲線、獎勵階梯、施放機率 |
 | Module ID、Schema kind、錯誤碼、RNG 安全上限、**一回合一個動作** | 章節長度、事件上限、資質倍率、事件產出比、碎片產出、商店定價、結局門檻 |
 
 > 注意「章節長度 8 回合」與「事件上限 3」都是**資料**——它們是平衡數值，不是遊戲結構。
@@ -219,7 +220,7 @@ platform/         檔案、IPC、Steam、音效。不實作任何遊戲規則
 
 1. **Schema 驗證** —— 欄位、列舉、型別、必填、數值範圍
 2. **Reference 驗證** —— 所有引用的 ID 必須存在（含 FuncType/ReferID 的兩段式，見 §6.9）
-3. **規則驗證** —— 跨欄位一致性。例：某大檢定的敵方名士不得同時列在該檢定的可出戰名單
+3. **規則驗證** —— 跨欄位一致性。例：某戰役的敵方名士不得同時列在該戰役的可指揮名單
 
 任一層失敗**不得啟動**，並必須回報**檔案路徑 ／ Definition ID ／ 欄位路徑 ／ 錯誤原因**。
 
@@ -289,7 +290,7 @@ pack:core                              陣營無關的規則骨架
   └─ 居民委託模板與參數池
 
 pack:wei / pack:shu / pack:wu           每個陣營一包，requiredPacks: [core]
-  ├─ 章節序列（7 章）與大檢定
+  ├─ 章節序列（7 章）與戰役
   ├─ 陣營委託模板
   ├─ 專屬劇情事件
   ├─ 該陣營帶來的名士與寶物
@@ -327,7 +328,8 @@ content-source/                    作者層：TypeScript，型別即 Schema
 │  ├─ chapters/nanhua.ts           南華村篇（黃巾、虎牢）
 │  └─ events/                      居民委託模板、參數池
 ├─ wei/                            pack:wei —— requiredPacks: [core]
-│  ├─ chapters/<id>.ts             7 章與大檢定（一章一檔）
+│  ├─ chapters/<id>.ts             7 章（一章一檔）
+│  ├─ campaigns.ts                 7 章的戰役與敵將
 │  ├─ notables/<id>.ts             該陣營帶來的名士（一筆一檔）
 │  ├─ treasures/<id>.ts
 │  ├─ events/                      陣營委託模板、專屬劇情事件
@@ -413,10 +415,10 @@ scripts/                           門禁與工具鏈
 
 | # | 模組 | 職責 | 狀態 |
 |---|---|---|---|
-| 15 | **章節回合推進** | 章節表、回合計數、階段轉換、大檢定觸發 | 🔵 |
+| 15 | **章節回合推進** | 章節表、回合計數、階段轉換、章末戰役觸發 | 🔵 |
 | 16 | **鍛鍊槽** | 四格生成、兩層光階抽取、名士站位、結算 | 🔵 |
 | 17 | **事件槽** | 門檻過濾抽取、刷新、執行、事上磨練 | 🔵 |
-| 18 | **檢定引擎** | **只剩小檢定**（大檢定已移交 33） | 🔵 |
+| 18 | **檢定引擎** | 事件內小檢定：DC、成功率、判定 | 🔵 |
 | 19 | **名士局內狀態** | 3+3 陣容組建、好感度、連動、事件鏈進度 | 🔵 |
 | 20 | **屬性與貨幣** | 四維、名聲（文／武／善惡）、功績（文／武） | 🔵 |
 | 21 | **官階系統** | 文武雙軌、升遷檢定、作為委託門檻 | 🔵 |
@@ -486,14 +488,19 @@ scripts/                           門禁與工具鏈
 | `<faction>/events/commissions.ts` | 陣營 | 陣營委託**模板** |
 | `<faction>/events/story/<id>.ts` | 陣營 | 唯一性劇情事件（一筆一檔） |
 
-### 5.5 章節與大檢定
+### 5.5 章節與戰役
 
 | 檔案 | 歸屬 | 內容 |
 |---|---|---|
-| `core/chapters/nanhua.ts` | core | 南華村篇（黃巾、虎牢） |
-| `<faction>/chapters/<id>.ts` | 陣營 | 該陣營 7 章（一章一檔） |
+| `core/chapters/camp.ts` | core | 帳下篇（黃巾） |
+| `core/campaigns/build.ts` | core | **七關的共用曲線**（兵力、輸出、獎勵） |
+| `core/campaigns/camp.ts` | core | 黃巾的戰役與敵將 |
+| `<faction>/chapters.ts` | 陣營 | 該陣營的章節 |
+| `<faction>/campaigns.ts` | 陣營 | 該陣營的戰役與敵將 |
 
-大檢定的三難度 DC、獎勵、敵方名士名單隨章節同檔。
+**七關的曲線只有一份。** 21 場戰役各自填的只有三件事：
+敵人主題、關底敵將的位置、獎勵的量級 —— 逐關手寫的話，
+「越深越險」與「獎勵加速遞增」會在第三場戰役就開始漂移。
 
 ### 5.6 其餘
 
@@ -533,7 +540,7 @@ Registry 以 `kind` 判斷 Definition 家族與擁有模組。**登記表以各�
 | `achievement` | 13 成就統計 | core ／陣營 | 成就條件 |
 | `talent` | 14 入夢配置 | core | 天賦、配帶成本、互斥組 |
 | `aptitudeCost` | 14 入夢配置 | core | 資質累計成本 |
-| `chapter` | 15 章節推進 | core ／**陣營** | 章節、長度、大檢定引用 |
+| `chapter` | 15 章節推進 | core ／**陣營** | 章節、長度、通過後的動作 |
 | `chapterSequence` | 15 章節推進 | core ／**陣營** | 章節序列 |
 | `trainingAction` | 16 鍛鍊槽 | core | 四維 × 兩階段的行動與小標題池 |
 | `glowTier` | 16 鍛鍊槽 | core | 光階倍率與權重 |
@@ -543,7 +550,11 @@ Registry 以 `kind` 判斷 Definition 家族與擁有模組。**登記表以各�
 | `paramPool` | 17 事件槽 | core ／**陣營** | 委託參數池 |
 | `dcCurve` | 17 事件槽 | core | 小檢定 DC 依章節縮放 |
 | `eventYieldCurve` | 17 事件槽 | core | 事件的四維與貨幣產出曲線 |
-| `majorCheck` | 18 檢定引擎 | core ／**陣營** | 大檢定三難度、敵方名士 |
+| `campaign` | 33 戰役 | core ／**陣營** | 七關、敵方名士、獎勵階梯 |
+| `enemy` | 33 戰役 | core ／**陣營** | 關底敵將的四維與那一招 |
+| `trait` ／ `skill` | 23 特質與技能 | core | 消耗、階、效果／戰役行動 |
+| `growthRule` | 32 養成兌現 | core | 七個價格帶、傳授門檻 |
+| `battleRule` | 33 戰役 | core | 施放機率、敵方曲線、掃蕩判準 |
 | `checkRule` | 18 檢定引擎 | core | 副屬性權重、骰範圍、出戰上限 |
 | `notablePool` | 19 名士局內 | **陣營** | 陣營上司池 |
 | `linkBonus` | 19 名士局內 | core | 連動倍率、出戰加值、好感成長 |
@@ -665,10 +676,10 @@ Registry 以 `kind` 判斷 Definition 家族與擁有模組。**登記表以各�
 
 | # | 項目 | 出處 | 說明 |
 |---|---|---|---|
-| 1 | **四維上限未定義** | [20 §2](docs/architecture/20_attributes_currency.md) | 沒有上限就無法設計 DC 曲線。這是最優先的待補數值 |
+| 1 | ~~四維上限未定義~~ | — | **已定：0–100**（七個價格帶對齊七個等級 G–S） |
 | 2 | **資質「±N 檔」的語意未定** | [16 §2.1](docs/architecture/16_training_slot.md) | S 資質 +4 檔若直譯為「全部移到紅光」會破壞光階系統 |
-| 3 | **`RevealInfo.majorCheckDC` 多餘** | [18 §3.2](docs/architecture/18_check_engine.md) | 成功率一律可見 ⇒ DC 可反推。建議改為揭露**檢定值組成明細** |
-| 4 | **技能內容清單缺** | [23](docs/architecture/23_skill.md) | 架構完整，缺的是 `content-source/*/skills/*.ts` |
+| 3 | ~~`RevealInfo` 的第二種揭示未定~~ | — | **已定**：`battleTrace`，開的是戰報的完整歸因 |
+| 4 | ~~技能內容清單缺~~ | — | **已寫**：12 招 ＋ 10 條特質，在 `core/abilities/` |
 | 5 | **技能的 pack 歸屬未定** | [23 §2.2](docs/architecture/23_skill.md) | 依判準預設歸陣營包 |
 | 6 | **結算兩線相加 vs 取高值** | [26 §4.1](docs/architecture/26_settlement.md) | 與官階門檻曲線互為表裡，需一併決定 |
 | 7 | **天命商店定價全缺** | [09](docs/architecture/09_destiny_shop.md) | 輪迴點數的產出已定義，消耗完全沒有 |

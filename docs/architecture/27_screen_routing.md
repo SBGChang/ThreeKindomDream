@@ -28,13 +28,15 @@
    └────┬─────┘
         ▼ config.confirm
    ┌────────────────────────────┐
-   │  局內：南華村篇（16 回合） │◄──┐
-   └────┬───────────────────────┘   │ 回合推進
+   │  局內：帳下篇（8 回合）    │◄──┐
+   │  （隨時可進出「養成」畫面）│   │ 回合推進
+   └────┬───────────────────────┘   │
         ▼ 章末                       │
    ┌──────────┐                      │
-   │ 大檢定   │──── 三難度選擇 ──────┘
+   │ 戰役     │──── 收兵 ────────────┘
+   │ 配置→七關│
    └────┬─────┘
-        │ 虎牢關通過
+        │ 黃巾通過
         ▼
    ┌──────────┐
    │ 選陣營   │
@@ -89,7 +91,10 @@ type GameCommandRequest =
   | { readonly kind: 'training.select';     readonly slotIndex: 0 | 1 | 2 | 3 }
   | { readonly kind: 'event.select';        readonly offerIndex: number; readonly optionIndex: number }
   | { readonly kind: 'turn.advance' }
-  | { readonly kind: 'majorCheck.attempt';  readonly difficulty: Difficulty;
+  | { readonly kind: 'campaign.engage' }
+  | { readonly kind: 'campaign.withdraw' }
+  | { readonly kind: 'learn.skill';        readonly offerIndex: number }
+  | { readonly kind: '_removed';           readonly difficulty: never;
       readonly sortieIndices: readonly number[] };
 ```
 
@@ -99,11 +104,15 @@ type GameCommandRequest =
 
 ---
 
-## 3. 成功率必須在畫面上
+## 3. 走留畫面的三條硬要求
 
-大檢定的難度選擇畫面**必須同時顯示三檔的成功率**（18 §3.2）。
+戰役的「走還留」是這個遊戲情緒最高的一格。三條列在**不變量**裡，不是設計建議：
 
-這不是 UI 偏好，是機制要求：GDD 的設計意圖是「走到中止類結局是玩家自己貪心的結果」，若成功率不可見，難度自選就退化為盲賭。因此它列在本模組的**不變量**，不是設計建議。
+| # | 要求 | 理由 |
+|---|---|---|
+| 1 | **收兵按鈕上寫著你放棄了什麼** | GDD §9.5 已立的原則。看不見代價的「走」會讓 push-your-luck 退化成隨便按 |
+| 2 | **不顯示勝率**，但下一關的情報要完整 | 在一個玩家不操作、變數眾多的系統裡，算出來的百分比是【假的精確】；玩家輸了會覺得被系統騙（33 §8.1） |
+| 3 | **戰報是因果鏈**，而且可以收起 | 玩家不操作，戰報是他唯一的資訊來源；但七場自動戰鬥第一輪好看、第五輪是阻礙 |
 
 ---
 
@@ -117,7 +126,7 @@ type GameCommandRequest =
 ### 4.1 回合紀錄由 App 持有
 
 「選完就跳」讓動作結果沒有畫面可以停留。若把結果留在回合畫面的區域性狀態裡，
-**章末那一次行動會立刻切到大檢定畫面，玩家永遠看不到它**。
+**章末那一次行動會立刻切到戰役畫面，玩家永遠看不到它**。
 
 因此結果摘要寫進一份由 App 持有的回合紀錄（rolling log），跨得過畫面切換。
 它是純呈現狀態，不進 `RunState` —— 核心不需要知道玩家看過什麼。
@@ -134,7 +143,7 @@ type GameCommandRequest =
 ## 5. 不變量
 
 1. UI 的依賴圖中不存在指向 `modules/*` 或 `kernel/*` 的邊
-2. 大檢定畫面顯示三檔成功率
+2. 走留畫面滿足 §3 的三條（放棄提示、不給勝率、戰報可讀可收）
 3. 任何 `GameCommandRequest` 的 payload 都不含核心 ID 型別
 4. 畫面狀態不進存檔（重啟後由 RunState 推導當前該在哪個畫面）
 

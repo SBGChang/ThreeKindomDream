@@ -1,6 +1,15 @@
 # 21 · 官階系統
 
-> **職責**：文武雙軌的升遷判定，並作為陣營委託的門檻與大檢定的加值來源。
+> **職責**：文武雙軌的升遷判定，作為陣營委託的門檻，並提供**戰役的兵量與糧量係數**。
+>
+> ```
+> 兵量係數 = 1.0 × hostScale[武階] + 0.5 × hostScale[文階]
+> 糧量係數 = 0.5 × hostScale[武階] + 1.0 × hostScale[文階]
+> ```
+>
+> **功績因此不只是門檻貨幣，它就是玩家的血條**（33 §5.1）。
+> 0.5 那一項自帶防退化底線：純武官的糧量有近八成來自他自己的武官階，
+> 因此「零糧秣」不可能出現 —— 不需要另加基底常數。
 >
 > | | |
 > |---|---|
@@ -8,24 +17,7 @@
 > | **reads** | 20 屬性與貨幣（經 `StatQuery`） |
 > | **handles** | 無（升遷是功績變動的被動結果） |
 > | **emits** | `career.promoted` |
-> | **ownsDefinitions** | `careerRank`、`careerInit` |
-
-> 🔧 **[RFC-01](../RFC-01-campaign-rework.md) 改動**：官階的產出改變。
->
-> | | 舊 | 新 |
-> |---|---|---|
-> | `careerRank.checkBonus` | 大檢定的檢定值加值 | **作廢**（大檢定不再是單次判定） |
-> | 新增 | — | **`hostCoefficient(ctx)`** ＝ 兵量／糧量係數（33 §5.1） |
-> | `trainingBaseAdd` | 抬高該線四維的固定事件基礎值 | 語意改為抬高該線**經驗**產出 |
->
-> ```
-> 兵量係數 = 1.0 × T[武階] + 0.5 × T[文階]
-> 糧量係數 = 0.5 × T[武階] + 1.0 × T[文階]
-> ```
->
-> 於是**功績從門檻貨幣升級為玩家的血條**（D29）。0.5 那一項自帶防退化底線 ——
-> 純武官的糧量有近八成來自他自己的武官階，「零糧秣」不可能出現，
-> 因此**不需要另加基底常數**。驗算見 [RFC-01 §3.4](../RFC-01-campaign-rework.md)。
+> | **ownsDefinitions** | `careerRank` |
 
 ---
 
@@ -38,7 +30,7 @@ interface CareerRankDefinition extends DefinitionHeader {
   readonly level: number;                    // 1..12
   readonly nameKey: L10nKey;
   readonly requiredMerit: number;            // 該線功績門檻
-  readonly checkBonus: number;               // 提供的大檢定加值
+  readonly hostScale: number;                // 兵量／糧量的係數，見 33 §5.1
   readonly commissionTierUnlocked: number;   // 解鎖到第幾階的陣營委託
 }
 
@@ -101,7 +93,7 @@ while merit[line] ≥ rankDef(line, level + 1).requiredMerit:
   emit career.promoted
 ```
 
-**用 while 而非 if**：單次事件獎勵可能一次跨兩階（尤其大檢定【險】的獎勵）。
+**用 while 而非 if**：單次獎勵可能一次跨兩階（尤其戰役深關的功績）。
 
 ---
 
@@ -111,13 +103,13 @@ while merit[line] ≥ rankDef(line, level + 1).requiredMerit:
 |---|---|
 | **陣營委託門檻** | 17 事件槽（經 `Condition.statGte` with `career.*`） |
 
-> **`checkBonus` 是門檻貨幣唯一的「換成檢定力」管道。** 雙槽制時事件不花回合、
+> **`hostScale` 是門檻貨幣唯一的「換成戰力」管道。** 雙槽制時事件不花回合、
 > 功績純屬白賺，所以加值多小都無所謂。單動作回合制下做事要用掉一個鍛鍊回合 ——
 > 若功績換不到檢定力，事件就被鍛鍊完全支配，門檻貨幣淪為純懲罰。
 >
 > 訂法：在玩家**自然會持有該階**的那一章，加值約為其四維檢定值的兩成。
 > 兩成夠讓升官有感，又不足以取代鍛鍊 —— 檢定值的主體仍必須靠練。
-| **大檢定加值** | 18 檢定引擎（`checkBonus` 加總兩線） |
+| **兵量與糧量** | 33 戰役（`hostScale` 依 1.0／0.5 組合兩線） |
 | **結局門檻** | 25 結局判定 |
 
 ### 3.1 委託門檻的表達方式
@@ -134,7 +126,7 @@ while merit[line] ≥ rankDef(line, level + 1).requiredMerit:
 |---|---|
 | 每線 `level` 從 1 起連續至 12，無缺口重複 | 否則升遷會卡住 |
 | `requiredMerit` 沿 `level` 單調不減 | 否則出現「升上去又掉回來」 |
-| `checkBonus` 沿 `level` 單調不減 | 否則升官變成懲罰 |
+| `hostScale` 沿 `level` 嚴格遞增 | 否則升官變成懲罰 |
 | `level = 1` 的 `requiredMerit === 0` | 白身是起點 |
 | `byTotalFame` 依 `minTotalFame` 排序且首筆為 0 | 否則低名聲玩家無對應項 |
 | `byTotalFame` 的 level 值都在 1..12 內 | 引用完整性 |

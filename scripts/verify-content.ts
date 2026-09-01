@@ -48,7 +48,8 @@ if (problems.length > 0 || !result.ok) {
     `  名士 ${reg.reader('notable').all().length} 位`
     + ` / 事件 ${reg.reader('event').all().length} 則`
     + ` / 章節 ${reg.reader('chapter').all().length} 章`
-    + ` / 大檢定 ${reg.reader('majorCheck').all().length} 場`
+    + ` / 戰役 ${reg.reader('campaign').all().length} 場`
+    + ` / 能力 ${reg.reader('trait').all().length + reg.reader('skill').all().length} 條`
     + ` / 結局 ${reg.reader('ending').all().length} 種`
     + ` / 文案 ${reg.allTextKeys().length} 條`,
   );

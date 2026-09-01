@@ -2,19 +2,16 @@
 
 > **職責**：生成四個行動格（光階保底值 ＋ 名士站位）、處理選擇、執行升階判定與結算。
 >
+> 產出的是**經驗**，不是屬性點 —— 屬性只能經 [32 養成兌現](32_growth_conversion.md)
+> 花經驗買。本模組**不寫 `RunState.attributes`**。
+>
 > | | |
 > |---|---|
 > | **owns** | `RunState.slots.training` |
-> | **reads** | 01 效果系統、19 名士局內狀態、20 屬性與貨幣 |
+> | **reads** | 01 效果系統、19 名士局內狀態、21 官階系統 |
 > | **handles** | `training.select` / `training.reroll` |
-> | **emits** | `training.slotsGenerated` / `training.selected` / `glow.resolved` / `attribute.gained` |
+> | **emits** | `training.slotsGenerated` / `training.selected` / `glow.resolved` / `exp.gained` |
 > | **ownsDefinitions** | `trainingAction`、`glowTier`、`trainingCurve`、`aptitudeGrade` |
-
-> 🔧 **[RFC-01](../RFC-01-campaign-rework.md) 改動**：產出從屬性點改為**四類經驗值**。
-> `attr.grant` → **`exp.grant`**（收方由 20 改為 [32 養成兌現](32_growth_conversion.md)）；
-> `attribute.gained` → `exp.gained`。
-> `trainingCurve.baseByAttr` 的**數值可照用、語意改變**（產出是經驗不是屬性）。
-> 本模組因此**不再寫入 `RunState.attributes`** —— 那成為 32 的專屬寫入權。
 
 ---
 

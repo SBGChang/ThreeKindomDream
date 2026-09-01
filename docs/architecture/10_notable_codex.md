@@ -73,7 +73,6 @@ interface NotableBaseDef {
   readonly trainingBonus: number;    // 站任何一格都有
   readonly specialtyBonus: number;   // 專長對位時追加
   readonly specialtyWeight: number;  // 專長格的站位權重（≥ 1）
-  readonly sortieBonus: number;      // 大檢定出戰的基底加值
 }
 ```
 

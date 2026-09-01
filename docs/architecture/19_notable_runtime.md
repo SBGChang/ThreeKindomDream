@@ -1,6 +1,6 @@
 # 19 · 名士局內狀態
 
-> **職責**：組建本輪 3+3 陣容、持有局內好感度、分配行動格站位、提供連動加成與出戰加值。
+> **職責**：組建本輪 3+3 陣容、持有局內好感度、分配行動格站位、提供連動加成。
 >
 > | | |
 > |---|---|
@@ -10,19 +10,13 @@
 > | **emits** | `affinity.changed` / `notable.eventUnlocked` / `roster.assembled` |
 > | **ownsDefinitions** | `notablePool`、`linkBonus` |
 >
-> 名士的 `base`（§5.1）隨 `notable` 定義走，由 10 名士圖鑑擁有；本模組只讀它。
-
-> 🔧 **[RFC-01](../RFC-01-campaign-rework.md) 改動**：名士在戰役中的角色整體改寫。
+> 名士的 `base` 與 `abilities`（§5.1）隨 `notable` 定義走，由 10 名士圖鑑擁有；本模組只讀它。
 >
-> | | 舊 | 新 |
-> |---|---|---|
-> | 好感度的戰鬥用途 | `linkBonus.checkBonusByStage` ＝ 大檢定出戰**加值** | 同一張表**原地換語意** ＝ 傳令的**施放機率**（33 §4.3） |
-> | 星階 | 起始好感與解鎖條 | 額外決定他**有幾招可選**（33 §3.1） |
-> | 名士數值 | 無（只有 `base.sortieBonus` 1–8） | **完整能力表：四維 0–100 ＋ 特質 ＋ 技能池** |
-> | 出戰 | `sortieBonus` 加總、`eligibleForSortie` | `sortieBonus` 作廢；`eligibleForSortie` 保留（敵方名士不可指揮） |
+> **好感度在戰役裡是「他多常傳令」**（`linkBonus.commandChanceByStage`，33 §4.3）；
+> **星階是「他有幾招可選」**（33 §3.1）。兩條軸各一個職責，都不碰他的數值。
 >
-> 並新增一條職責：**他能教你的，就是他自己表上有的**（32 §5.1）——
-> 名士的能力表**就是**他的教學表，不另立「誰能教什麼」的資料。
+> 名士的能力表（四維 0–100 ＋ 特質 ＋ 技能池）**同時是他的教學表** ——
+> 他能教你的就是他自己有的（32 §5.1），不另立「誰能教什麼」的資料。
 
 ---
 
@@ -172,7 +166,8 @@ interface AffinityStageDefinition extends DefinitionHeader {
 interface LinkBonusDefinition extends DefinitionHeader {
   readonly kind: 'linkBonus';
   readonly trainingBonusByStage: Readonly<Record<AffinityStage, number>>;  // 加成，不是倍率
-  readonly checkBonusByStage: Readonly<Record<AffinityStage, number>>;
+  /** 戰役中傳令的施放機率，依好感階（33 §4.3）。 */
+  readonly commandChanceByStage: Readonly<Record<AffinityStage, number>>;
   readonly gainPerTraining: number;      // 踩到一格的基礎增長
   readonly maxPerSlot: number;           // 必須 ≥ 陣容人數，見 §5.2
   readonly pileMultiplier: readonly number[];   // index ＝ 同格人數，見 §5.2
@@ -188,7 +183,6 @@ interface NotableBaseDef {
   readonly trainingBonus: number;    // 站任何一格都有
   readonly specialtyBonus: number;   // 專長對位時追加
   readonly specialtyWeight: number;  // 專長格的站位權重（≥ 1）
-  readonly sortieBonus: number;      // 大檢定出戰的基底加值
 }
 ```
 
@@ -266,7 +260,7 @@ pileMultiplier[人數] = [1, 1, 1.15, 1.4, 1.8, 2.3, 3.0]
 | **看情況決定（機會主義）** | 59.5% | **3057** |
 | **追爆發（永遠練期望值最高的格）** | 34.8% | **1964** |
 
-追爆發**明顯最差** —— 四維被打散（258/232/226/180）過不了大檢定。
+追爆發**明顯最差** —— 四維被打散，戰役裡每一招的倍率都不夠。
 爆發是誘惑，接不接是決策，而不是「看到就該拿」。
 
 > **附帶效果**：乘法制讓「逐回合看情況」開始值錢了。加法制時機會主義輸給固定比例
@@ -320,7 +314,6 @@ interface RosterService {
   trainingMultiplier(slotNotables: readonly NotableId[], attr: Attr, ctx: RunContext): number;
   /** 單一名士在該格的加成。UI 靠它把「他站這裡值多少」顯示出來。 */
   notableSlotBonus(id: NotableId, attr: Attr, ctx: RunContext): number;
-  sortieBonus(ids: readonly NotableId[], ctx: RunContext): number;
   eligibleForSortie(checkId: MajorCheckId, ctx: RunContext): readonly NotableId[];
 }
 ```

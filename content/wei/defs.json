@@ -27,7 +27,6 @@
       ]
     },
     "base": {
-      "sortieBonus": 12,
       "specialty": "lead",
       "specialtyWeight": 1
     },
@@ -118,7 +117,6 @@
       ]
     },
     "base": {
-      "sortieBonus": 7,
       "specialty": "lead",
       "specialtyWeight": 1
     },
@@ -145,8 +143,8 @@
       },
       {
         "descKey": "notable.zhangliao.kit.2",
-        "funcType": "CheckValueBonus",
-        "referId": 6001,
+        "funcType": "StatModifier",
+        "referId": 9021,
         "star": 0
       },
       {
@@ -157,8 +155,8 @@
       },
       {
         "descKey": "notable.zhangliao.kit.4",
-        "funcType": "CheckRewardBonus",
-        "referId": 6503,
+        "funcType": "StatModifier",
+        "referId": 9005,
         "star": 2
       },
       {
@@ -175,14 +173,14 @@
       },
       {
         "descKey": "notable.zhangliao.kit.7",
-        "funcType": "CheckValueBonus",
-        "referId": 6008,
+        "funcType": "StatModifier",
+        "referId": 9024,
         "star": 5
       },
       {
         "descKey": "notable.zhangliao.kit.8",
-        "funcType": "CheckRewardBonus",
-        "referId": 6511,
+        "funcType": "StatModifier",
+        "referId": 9006,
         "star": 5
       }
     ]
@@ -210,7 +208,6 @@
       ]
     },
     "base": {
-      "sortieBonus": 2,
       "specialty": "lead",
       "specialtyWeight": 1
     },
@@ -296,7 +293,6 @@
       ]
     },
     "base": {
-      "sortieBonus": 5,
       "specialty": "war",
       "specialtyWeight": 1
     },
@@ -383,7 +379,6 @@
       ]
     },
     "base": {
-      "sortieBonus": 6,
       "specialty": "war",
       "specialtyWeight": 1
     },
@@ -416,8 +411,8 @@
       },
       {
         "descKey": "notable.dianwei.kit.3",
-        "funcType": "CheckValueBonus",
-        "referId": 6006,
+        "funcType": "StatModifier",
+        "referId": 9001,
         "star": 0
       },
       {
@@ -434,8 +429,8 @@
       },
       {
         "descKey": "notable.dianwei.kit.6",
-        "funcType": "CheckValueBonus",
-        "referId": 6007,
+        "funcType": "StatModifier",
+        "referId": 9005,
         "star": 3
       },
       {
@@ -471,7 +466,6 @@
       ]
     },
     "base": {
-      "sortieBonus": 1,
       "specialty": "war",
       "specialtyWeight": 1
     },
@@ -562,7 +556,6 @@
       ]
     },
     "base": {
-      "sortieBonus": 5,
       "specialty": "int",
       "specialtyWeight": 1
     },
@@ -649,7 +642,6 @@
       ]
     },
     "base": {
-      "sortieBonus": 4,
       "specialty": "int",
       "specialtyWeight": 1
     },
@@ -676,8 +668,8 @@
       },
       {
         "descKey": "notable.jiaxu.kit.2",
-        "funcType": "CheckRewardBonus",
-        "referId": 6501,
+        "funcType": "StatModifier",
+        "referId": 9011,
         "star": 0
       },
       {
@@ -700,14 +692,14 @@
       },
       {
         "descKey": "notable.jiaxu.kit.6",
-        "funcType": "CheckRewardBonus",
-        "referId": 6503,
+        "funcType": "StatModifier",
+        "referId": 9014,
         "star": 4
       },
       {
         "descKey": "notable.jiaxu.kit.7",
-        "funcType": "CheckValueBonus",
-        "referId": 6011,
+        "funcType": "StatModifier",
+        "referId": 9013,
         "star": 5
       }
     ]
@@ -735,7 +727,6 @@
       ]
     },
     "base": {
-      "sortieBonus": 2,
       "specialty": "int",
       "specialtyWeight": 1
     },
@@ -827,7 +818,6 @@
       ]
     },
     "base": {
-      "sortieBonus": 8,
       "specialty": "pol",
       "specialtyWeight": 1
     },
@@ -854,8 +844,8 @@
       },
       {
         "descKey": "notable.xunyu.kit.2",
-        "funcType": "CheckRewardBonus",
-        "referId": 6501,
+        "funcType": "StatModifier",
+        "referId": 9032,
         "star": 0
       },
       {
@@ -872,8 +862,8 @@
       },
       {
         "descKey": "notable.xunyu.kit.5",
-        "funcType": "CheckRewardBonus",
-        "referId": 6503,
+        "funcType": "StatModifier",
+        "referId": 9042,
         "star": 3
       },
       {
@@ -884,8 +874,8 @@
       },
       {
         "descKey": "notable.xunyu.kit.7",
-        "funcType": "CheckRewardBonus",
-        "referId": 6503,
+        "funcType": "StatModifier",
+        "referId": 9033,
         "star": 5
       }
     ]
@@ -914,7 +904,6 @@
       ]
     },
     "base": {
-      "sortieBonus": 3,
       "specialty": "pol",
       "specialtyWeight": 1
     },
@@ -1000,7 +989,6 @@
       ]
     },
     "base": {
-      "sortieBonus": 2,
       "specialty": "pol",
       "specialtyWeight": 1
     },
@@ -5663,408 +5651,11 @@
     "weight": 100
   },
   {
-    "checkId": "check:wei.hulao",
-    "enemyNotables": [],
-    "id": "check:wei.hulao",
-    "kind": "majorCheck",
-    "packId": "pack:wei",
-    "routes": {
-      "civil": {
-        "primaryAttr": "int",
-        "secondaryAttr": "pol",
-        "tiers": {
-          "hard": {
-            "briefKey": "check.wei.hulao.civil.brief.hard",
-            "dc": 330,
-            "requirements": [],
-            "rewards": [
-              {
-                "amount": 110,
-                "kind": "merit",
-                "merit": "civil"
-              },
-              {
-                "amount": 25,
-                "kind": "merit",
-                "merit": "martial"
-              },
-              {
-                "amount": 40,
-                "attr": "int",
-                "kind": "attr"
-              }
-            ]
-          },
-          "normal": {
-            "briefKey": "check.wei.hulao.civil.brief.normal",
-            "dc": 240,
-            "requirements": [],
-            "rewards": [
-              {
-                "amount": 65,
-                "kind": "merit",
-                "merit": "civil"
-              },
-              {
-                "amount": 18,
-                "attr": "int",
-                "kind": "attr"
-              }
-            ]
-          },
-          "safe": {
-            "briefKey": "check.wei.hulao.civil.brief.safe",
-            "dc": 155,
-            "requirements": [],
-            "rewards": [
-              {
-                "amount": 35,
-                "kind": "merit",
-                "merit": "civil"
-              }
-            ]
-          }
-        }
-      },
-      "martial": {
-        "primaryAttr": "war",
-        "secondaryAttr": "int",
-        "tiers": {
-          "hard": {
-            "briefKey": "check.wei.hulao.martial.brief.hard",
-            "dc": 330,
-            "requirements": [],
-            "rewards": [
-              {
-                "amount": 55,
-                "kind": "merit",
-                "merit": "martial"
-              },
-              {
-                "amount": 12,
-                "kind": "merit",
-                "merit": "civil"
-              },
-              {
-                "amount": 40,
-                "attr": "war",
-                "kind": "attr"
-              }
-            ]
-          },
-          "normal": {
-            "briefKey": "check.wei.hulao.martial.brief.normal",
-            "dc": 240,
-            "requirements": [],
-            "rewards": [
-              {
-                "amount": 32,
-                "kind": "merit",
-                "merit": "martial"
-              },
-              {
-                "amount": 18,
-                "attr": "war",
-                "kind": "attr"
-              }
-            ]
-          },
-          "safe": {
-            "briefKey": "check.wei.hulao.martial.brief.safe",
-            "dc": 155,
-            "requirements": [],
-            "rewards": [
-              {
-                "amount": 16,
-                "kind": "merit",
-                "merit": "martial"
-              }
-            ]
-          }
-        }
-      }
-    },
-    "schemaVersion": 1
-  },
-  {
-    "checkId": "check:wei.guandu",
-    "enemyNotables": [],
-    "id": "check:wei.guandu",
-    "kind": "majorCheck",
-    "packId": "pack:wei",
-    "routes": {
-      "civil": {
-        "primaryAttr": "int",
-        "secondaryAttr": "pol",
-        "tiers": {
-          "hard": {
-            "briefKey": "check.wei.guandu.civil.brief.hard",
-            "dc": 305,
-            "requirements": [
-              {
-                "stat": "career.civil",
-                "type": "statGte",
-                "value": 2
-              }
-            ],
-            "rewards": [
-              {
-                "amount": 50,
-                "kind": "merit",
-                "merit": "civil"
-              },
-              {
-                "amount": 18,
-                "kind": "merit",
-                "merit": "martial"
-              },
-              {
-                "amount": 40,
-                "attr": "int",
-                "kind": "attr"
-              }
-            ]
-          },
-          "normal": {
-            "briefKey": "check.wei.guandu.civil.brief.normal",
-            "dc": 224,
-            "requirements": [],
-            "rewards": [
-              {
-                "amount": 30,
-                "kind": "merit",
-                "merit": "civil"
-              },
-              {
-                "amount": 20,
-                "attr": "int",
-                "kind": "attr"
-              }
-            ]
-          },
-          "safe": {
-            "briefKey": "check.wei.guandu.civil.brief.safe",
-            "dc": 142,
-            "requirements": [],
-            "rewards": [
-              {
-                "amount": 15,
-                "kind": "merit",
-                "merit": "civil"
-              }
-            ]
-          }
-        }
-      },
-      "martial": {
-        "primaryAttr": "war",
-        "secondaryAttr": "pol",
-        "tiers": {
-          "hard": {
-            "briefKey": "check.wei.guandu.martial.brief.hard",
-            "dc": 305,
-            "requirements": [
-              {
-                "stat": "career.martial",
-                "type": "statGte",
-                "value": 2
-              }
-            ],
-            "rewards": [
-              {
-                "amount": 50,
-                "kind": "merit",
-                "merit": "martial"
-              },
-              {
-                "amount": 18,
-                "kind": "merit",
-                "merit": "civil"
-              },
-              {
-                "amount": 40,
-                "attr": "war",
-                "kind": "attr"
-              }
-            ]
-          },
-          "normal": {
-            "briefKey": "check.wei.guandu.martial.brief.normal",
-            "dc": 224,
-            "requirements": [],
-            "rewards": [
-              {
-                "amount": 30,
-                "kind": "merit",
-                "merit": "martial"
-              },
-              {
-                "amount": 20,
-                "attr": "war",
-                "kind": "attr"
-              }
-            ]
-          },
-          "safe": {
-            "briefKey": "check.wei.guandu.martial.brief.safe",
-            "dc": 142,
-            "requirements": [],
-            "rewards": [
-              {
-                "amount": 15,
-                "kind": "merit",
-                "merit": "martial"
-              }
-            ]
-          }
-        }
-      }
-    },
-    "schemaVersion": 1
-  },
-  {
-    "checkId": "check:wei.hebei",
-    "enemyNotables": [],
-    "id": "check:wei.hebei",
-    "kind": "majorCheck",
-    "packId": "pack:wei",
-    "routes": {
-      "civil": {
-        "primaryAttr": "int",
-        "secondaryAttr": "pol",
-        "tiers": {
-          "hard": {
-            "briefKey": "check.wei.hebei.civil.brief.hard",
-            "dc": 865,
-            "requirements": [
-              {
-                "stat": "career.civil",
-                "type": "statGte",
-                "value": 3
-              }
-            ],
-            "rewards": [
-              {
-                "amount": 70,
-                "kind": "merit",
-                "merit": "civil"
-              },
-              {
-                "amount": 25,
-                "kind": "merit",
-                "merit": "martial"
-              },
-              {
-                "amount": 50,
-                "attr": "int",
-                "kind": "attr"
-              }
-            ]
-          },
-          "normal": {
-            "briefKey": "check.wei.hebei.civil.brief.normal",
-            "dc": 634,
-            "requirements": [],
-            "rewards": [
-              {
-                "amount": 40,
-                "kind": "merit",
-                "merit": "civil"
-              },
-              {
-                "amount": 25,
-                "attr": "int",
-                "kind": "attr"
-              }
-            ]
-          },
-          "safe": {
-            "briefKey": "check.wei.hebei.civil.brief.safe",
-            "dc": 403,
-            "requirements": [],
-            "rewards": [
-              {
-                "amount": 20,
-                "kind": "merit",
-                "merit": "civil"
-              }
-            ]
-          }
-        }
-      },
-      "martial": {
-        "primaryAttr": "war",
-        "secondaryAttr": "pol",
-        "tiers": {
-          "hard": {
-            "briefKey": "check.wei.hebei.martial.brief.hard",
-            "dc": 865,
-            "requirements": [
-              {
-                "stat": "career.martial",
-                "type": "statGte",
-                "value": 3
-              }
-            ],
-            "rewards": [
-              {
-                "amount": 70,
-                "kind": "merit",
-                "merit": "martial"
-              },
-              {
-                "amount": 25,
-                "kind": "merit",
-                "merit": "civil"
-              },
-              {
-                "amount": 50,
-                "attr": "war",
-                "kind": "attr"
-              }
-            ]
-          },
-          "normal": {
-            "briefKey": "check.wei.hebei.martial.brief.normal",
-            "dc": 634,
-            "requirements": [],
-            "rewards": [
-              {
-                "amount": 40,
-                "kind": "merit",
-                "merit": "martial"
-              },
-              {
-                "amount": 25,
-                "attr": "war",
-                "kind": "attr"
-              }
-            ]
-          },
-          "safe": {
-            "briefKey": "check.wei.hebei.martial.brief.safe",
-            "dc": 403,
-            "requirements": [],
-            "rewards": [
-              {
-                "amount": 20,
-                "kind": "merit",
-                "merit": "martial"
-              }
-            ]
-          }
-        }
-      }
-    },
-    "schemaVersion": 1
-  },
-  {
     "chapterId": "ch:wei.hulao",
     "factionId": "faction:wei",
     "id": "ch:wei.hulao",
     "kind": "chapter",
     "length": 8,
-    "majorCheckId": "check:wei.hulao",
     "onPass": null,
     "order": 1,
     "packId": "pack:wei",
@@ -6077,7 +5668,6 @@
     "id": "ch:wei.guandu",
     "kind": "chapter",
     "length": 8,
-    "majorCheckId": "check:wei.guandu",
     "onPass": null,
     "order": 2,
     "packId": "pack:wei",
@@ -6090,7 +5680,6 @@
     "id": "ch:wei.hebei",
     "kind": "chapter",
     "length": 8,
-    "majorCheckId": "check:wei.hebei",
     "onPass": null,
     "order": 3,
     "packId": "pack:wei",
@@ -6256,7 +5845,7 @@
       {
         "boss": null,
         "briefKey": "campaign.wei.hulao.stage.0",
-        "damageMul": 0.6,
+        "damageMul": 0.55,
         "rewards": [
           {
             "amount": 22,
@@ -6269,10 +5858,10 @@
       {
         "boss": null,
         "briefKey": "campaign.wei.hulao.stage.1",
-        "damageMul": 0.75,
+        "damageMul": 0.62,
         "rewards": [
           {
-            "amount": 35,
+            "amount": 40,
             "kind": "merit",
             "merit": "martial"
           }
@@ -6282,10 +5871,10 @@
       {
         "boss": "enemy:lijue",
         "briefKey": "campaign.wei.hulao.stage.2",
-        "damageMul": 0.9,
+        "damageMul": 0.7,
         "rewards": [
           {
-            "amount": 57,
+            "amount": 70,
             "kind": "merit",
             "merit": "martial"
           }
@@ -6295,10 +5884,10 @@
       {
         "boss": null,
         "briefKey": "campaign.wei.hulao.stage.3",
-        "damageMul": 1.05,
+        "damageMul": 0.78,
         "rewards": [
           {
-            "amount": 92,
+            "amount": 132,
             "kind": "merit",
             "merit": "martial"
           },
@@ -6313,10 +5902,10 @@
       {
         "boss": "enemy:huaxiong",
         "briefKey": "campaign.wei.hulao.stage.4",
-        "damageMul": 1.25,
+        "damageMul": 0.88,
         "rewards": [
           {
-            "amount": 150,
+            "amount": 242,
             "kind": "merit",
             "merit": "martial"
           },
@@ -6331,10 +5920,10 @@
       {
         "boss": null,
         "briefKey": "campaign.wei.hulao.stage.5",
-        "damageMul": 1.5,
+        "damageMul": 1,
         "rewards": [
           {
-            "amount": 242,
+            "amount": 484,
             "kind": "merit",
             "merit": "martial"
           }
@@ -6344,10 +5933,10 @@
       {
         "boss": "enemy:lvbu",
         "briefKey": "campaign.wei.hulao.stage.6",
-        "damageMul": 1.8,
+        "damageMul": 1.15,
         "rewards": [
           {
-            "amount": 396,
+            "amount": 990,
             "kind": "merit",
             "merit": "martial"
           },
@@ -6373,7 +5962,7 @@
       {
         "boss": null,
         "briefKey": "campaign.wei.guandu.stage.0",
-        "damageMul": 0.6,
+        "damageMul": 0.55,
         "rewards": [
           {
             "amount": 40,
@@ -6386,10 +5975,10 @@
       {
         "boss": "enemy:guotu",
         "briefKey": "campaign.wei.guandu.stage.1",
-        "damageMul": 0.75,
+        "damageMul": 0.62,
         "rewards": [
           {
-            "amount": 64,
+            "amount": 72,
             "kind": "merit",
             "merit": "martial"
           }
@@ -6399,10 +5988,10 @@
       {
         "boss": null,
         "briefKey": "campaign.wei.guandu.stage.2",
-        "damageMul": 0.9,
+        "damageMul": 0.7,
         "rewards": [
           {
-            "amount": 104,
+            "amount": 128,
             "kind": "merit",
             "merit": "martial"
           }
@@ -6412,10 +6001,10 @@
       {
         "boss": "enemy:yanliang",
         "briefKey": "campaign.wei.guandu.stage.3",
-        "damageMul": 1.05,
+        "damageMul": 0.78,
         "rewards": [
           {
-            "amount": 168,
+            "amount": 240,
             "kind": "merit",
             "merit": "martial"
           },
@@ -6430,10 +6019,10 @@
       {
         "boss": null,
         "briefKey": "campaign.wei.guandu.stage.4",
-        "damageMul": 1.25,
+        "damageMul": 0.88,
         "rewards": [
           {
-            "amount": 272,
+            "amount": 440,
             "kind": "merit",
             "merit": "martial"
           },
@@ -6448,10 +6037,10 @@
       {
         "boss": "enemy:shenpei",
         "briefKey": "campaign.wei.guandu.stage.5",
-        "damageMul": 1.5,
+        "damageMul": 1,
         "rewards": [
           {
-            "amount": 440,
+            "amount": 880,
             "kind": "merit",
             "merit": "martial"
           },
@@ -6466,10 +6055,10 @@
       {
         "boss": "enemy:yuanshao",
         "briefKey": "campaign.wei.guandu.stage.6",
-        "damageMul": 1.8,
+        "damageMul": 1.15,
         "rewards": [
           {
-            "amount": 720,
+            "amount": 1800,
             "kind": "merit",
             "merit": "martial"
           },
@@ -6495,7 +6084,7 @@
       {
         "boss": null,
         "briefKey": "campaign.wei.hebei.stage.0",
-        "damageMul": 0.6,
+        "damageMul": 0.55,
         "rewards": [
           {
             "amount": 68,
@@ -6508,10 +6097,10 @@
       {
         "boss": null,
         "briefKey": "campaign.wei.hebei.stage.1",
-        "damageMul": 0.75,
+        "damageMul": 0.62,
         "rewards": [
           {
-            "amount": 109,
+            "amount": 122,
             "kind": "merit",
             "merit": "martial"
           }
@@ -6521,10 +6110,10 @@
       {
         "boss": "enemy:yuantan",
         "briefKey": "campaign.wei.hebei.stage.2",
-        "damageMul": 0.9,
+        "damageMul": 0.7,
         "rewards": [
           {
-            "amount": 177,
+            "amount": 218,
             "kind": "merit",
             "merit": "martial"
           }
@@ -6534,10 +6123,10 @@
       {
         "boss": null,
         "briefKey": "campaign.wei.hebei.stage.3",
-        "damageMul": 1.05,
+        "damageMul": 0.78,
         "rewards": [
           {
-            "amount": 286,
+            "amount": 408,
             "kind": "merit",
             "merit": "martial"
           }
@@ -6547,10 +6136,10 @@
       {
         "boss": "enemy:shenpei",
         "briefKey": "campaign.wei.hebei.stage.4",
-        "damageMul": 1.25,
+        "damageMul": 0.88,
         "rewards": [
           {
-            "amount": 462,
+            "amount": 748,
             "kind": "merit",
             "merit": "martial"
           },
@@ -6565,10 +6154,10 @@
       {
         "boss": "enemy:tadun",
         "briefKey": "campaign.wei.hebei.stage.5",
-        "damageMul": 1.5,
+        "damageMul": 1,
         "rewards": [
           {
-            "amount": 748,
+            "amount": 1496,
             "kind": "merit",
             "merit": "martial"
           },
@@ -6583,10 +6172,10 @@
       {
         "boss": "enemy:tadun",
         "briefKey": "campaign.wei.hebei.stage.6",
-        "damageMul": 1.8,
+        "damageMul": 1.15,
         "rewards": [
           {
-            "amount": 1224,
+            "amount": 3060,
             "kind": "merit",
             "merit": "martial"
           },

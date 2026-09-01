@@ -2,8 +2,7 @@
 
 > **定位**：33 個模組的完整對外函式，以及模組間的持有關係。
 >
-> ✅ **㉜㉝ 已實作、㉓ 已重寫、⑱ 已縮編**（[RFC-01](../RFC-01-campaign-rework.md) 階段 A–C）。
-> ㉝ 另有 `hostPower` / `hostSustain` / `sweep`，本表尚未補上。
+> 決策記錄見 [RFC-01](../RFC-01-campaign-rework.md)。
 > 每個模組只從 `public.ts` 匯出這些；其餘一律 internal。
 > **不含實作**。簽章是契約，不是指定寫法。
 
@@ -469,27 +468,23 @@ export function practiceYield(
 
 ### ⑱ 檢定引擎 — `modules/check/public.ts`
 
+本模組**只服務事件內的小檢定**。章末那一格是 ㉝ 戰役，有自己的算式。
+
 ```ts
-export interface CheckEngine {
-  preview(spec: CheckSpec, sortie: readonly NotableId[], ctx: RunContext): CheckPreview;
-  previewAll(
-    checkId: MajorCheckId, sortie: readonly NotableId[], ctx: RunContext,
-  ): Readonly<Record<Difficulty, CheckPreview>>;
-  availableDifficulties(checkId: MajorCheckId, ctx: RunContext): readonly Difficulty[];
-  resolveMinor(spec: CheckSpec, ctx: TurnContext): CheckOutcome;
-  attemptMajor(
-    difficulty: Difficulty, sortie: readonly NotableId[], ctx: TurnContext,
-  ): CommandOutcome<RunState>;
-}
+export function preview(
+  spec: CheckSpec, ctx: RunContext, fx: EffectResolver,
+): CheckPreview;
+export function resolveCheck(
+  spec: CheckSpec, ctx: TurnContext, fx: EffectResolver,
+): CheckOutcome;
+export function specForMinor(attr: Attr, dc: number): CheckSpec;
 
 export function successRate(
   base: number, bonus: number, dc: number, rule: CheckRuleDefinition,
 ): number;
-
-export function checkValue(spec: CheckSpec, ctx: RunContext): CheckValueParts;
 ```
 
-**`resolveMinor` 與 `attemptMajor` 分成兩個函式而不是一個帶 flag。** 兩者失敗後果完全不同（小檢定無獎勵、大檢定導向結局），共用入口會誘使呼叫端傳錯參數，而那個錯誤在測試裡不明顯。
+`preview` 收 `RunContext`、`resolveCheck` 收 `TurnContext` —— 由型別保證預覽不消耗隨機。
 
 `successRate` 獨立匯出，供 ㉛ 模擬器對照實測通過率 —— 預覽公式與實際判定若不一致，模擬器直接抓到。
 
@@ -509,7 +504,6 @@ export interface RosterService {
   trainingMultiplier(slotNotables: readonly NotableId[], ctx: RunContext): number;
   gainAffinity(ids: readonly NotableId[], ctx: RunContext): CommandOutcome<RunState>;
 
-  sortieBonus(ids: readonly NotableId[], ctx: RunContext): number;
   eligibleForSortie(checkId: MajorCheckId, ctx: RunContext): readonly NotableId[];
 
   unlockedEventStages(ctx: RunContext): readonly NotableStageRef[];
@@ -555,14 +549,14 @@ export interface StatWriter {
 export interface CareerService {
   levels(ctx: RunContext): CareerState;
   rankOf(line: CareerLine, ctx: RunContext): CareerRankDefinition;
-  checkBonus(ctx: RunContext): number;                     // 兩線加總
   commissionTierUnlocked(ctx: RunContext): number;
-  initializeOnJoin(ctx: RunContext): CommandOutcome<RunState>;   // 依總名聲
   reevaluate(ctx: RunContext): CommandOutcome<RunState>;         // 訂閱 currency.gained
 }
 ```
 
-`reevaluate` 內部用 while 迴圈而非 if：單次大檢定【險】的獎勵可能一次跨兩階。
+`reevaluate` 內部用 while 迴圈而非 if：戰役深關的功績可能一次跨兩階。
+
+`rankOf(line).hostScale` 是 ㉝ 算兵量與糧量的來源（33 §5.1）。
 
 ### ㉒ 陣營系統 — `modules/faction/public.ts`
 
@@ -624,7 +618,7 @@ export interface TreasureDisplay {
 
 ---
 
-### ㉜ 養成兌現 — `modules/growth/public.ts` 🆕
+### ㉜ 養成兌現 — `modules/growth/public.ts`
 
 ```ts
 export interface GrowthQuery {
@@ -645,18 +639,25 @@ export interface GrowthService {
 
 三個 `learn*` 全部收 `RunContext` —— **兌換不得引入隨機**，由型別保證（32 §7.1）。
 
-### ㉝ 戰役 — `modules/campaign/public.ts` 🆕
+### ㉝ 戰役 — `modules/campaign/public.ts`
 
 ```ts
 export interface CampaignService {
-  configure(loadout: BattleLoadout, ctx: RunContext): CommandOutcome<RunState>;
-  preview(ctx: RunContext): CampaignPreview;          // 四人能力表，0–100 同尺
-  engage(ctx: TurnContext): StageOutcome;             // 打下一關
-  withdraw(ctx: RunContext): CommandOutcome<RunState>;
+  hostLimits(ctx: RunContext, fx: EffectResolver): HostLimits;   // 兵量／糧量上限
+  hostPower(ctx: RunContext, fx: EffectResolver): number;        // 每回合期望輸出
+  hostSustain(ctx: RunContext, fx: EffectResolver): number;      // 糧秣換得回多少軍勢
+  nextStagePreview(ctx: RunContext): StagePreview | null;        // 情報，不含勝率
+  isOverwhelming(ctx: RunContext, fx: EffectResolver): boolean;  // 掃蕩的判準
+  configure(loadout: BattleLoadout, ctx: RunContext): RunState;
+  engage(ctx: TurnContext, fx: EffectResolver): { state: RunState; outcome: StageOutcome };
+  withdraw(ctx: RunContext): RunState;
 }
 ```
 
-`engage` 是本模組唯一收 `TurnContext` 的方法。`preview` 不含勝率（33 §8.1）。
+`engage` 是本模組唯一收 `TurnContext` 的方法。`nextStagePreview` **不含勝率**（33 §8.1）——
+在一個玩家不操作但變數眾多的系統裡，那個百分比是假的精確。
+
+`hostPower` 不是勝率：它是玩家自己就讀得出來的東西（技能寫著「以兵量的 30%」）。
 
 ## 6. 結束層
 
@@ -704,7 +705,7 @@ export interface SettlementResult {
 ```ts
 export type Screen =
   | 'menu' | 'shop' | 'codex' | 'config'
-  | 'run' | 'majorCheck' | 'factionChoice'
+  | 'run' | 'learn' | 'campaign' | 'factionChoice'
   | 'ending' | 'settlement';
 
 export interface ScreenRouter {
@@ -756,31 +757,26 @@ export function serializeDeterministic(value: unknown): string;
 export function runSimulation(config: SimConfig): SimReport;
 
 export interface AgentPolicy {
-  chooseTraining(vm: TrainingSlotVM, ctx: RunContext): SlotIndex;
-  chooseEvent(vm: EventSlotVM, ctx: RunContext): EventChoice | 'skip';
-  chooseDifficulty(previews: Readonly<Record<Difficulty, CheckPreview>>): Difficulty;
-  chooseSortie(eligible: readonly NotableId[], max: number): readonly NotableId[];
+  readonly name: string;
+  chooseSlot(s: Session): SlotIndex;
+  chooseOption(s: Session, offer: EventOffer): number;
+  /** 經驗怎麼花（32）。 */
+  spend(s: Session): void;
+  /** 戰役配置：三招 ＋ 三位指揮各一招（33 §3）。 */
+  chooseLoadout(s: Session): BattleLoadout;
+  /** 走還留（33 §6）。**這是策略組的主軸線。** */
+  chooseEngage(s: Session): boolean;
 }
 
-export const BUILTIN_POLICIES: Readonly<Record<PolicyName, AgentPolicy>>;
-
-export type PolicyName =
-  | 'greedy-glow' | 'greedy-notable' | 'balanced'
-  | 'risk-averse' | 'risk-seeking' | 'random';
+export function playCampaign(s: Session, policy: AgentPolicy): number;
+export const POLICIES: readonly AgentPolicy[];
 ```
 
-`AgentPolicy` 的四個方法**恰好對應玩家在一個回合裡的全部決策**。若日後新增第五種決策，這個介面會強制被檢視 —— 那正是「模擬器有沒有跟上遊戲」的提醒機制。
+`AgentPolicy` 的五個方法**恰好對應玩家在一輪裡的全部決策**。若日後新增第六種，
+這個介面會強制被檢視 —— 那正是「模擬器有沒有跟上遊戲」的提醒機制。
 
-> 🔧 **[RFC-01](../RFC-01-campaign-rework.md) 正是那個時刻。** 它移除 `chooseDifficulty` 與
-> `chooseSortie`，新增三種決策：
->
-> ```ts
-> chooseExpSpend(q: GrowthQuery, ctx: RunContext): readonly LearnAction[];
-> chooseLoadout(pv: CampaignPreview, ctx: RunContext): BattleLoadout;
-> chooseEngage(outcome: StageOutcome, ctx: RunContext): boolean;   // 留 or 走
-> ```
->
-> `chooseEngage` 的閾值是新的策略軸線 —— 七策略要量的東西從「事件佔比」變成**貪心的定價**。
+`chooseEngage` 的 `margin`（撐得住幾回合 ／ 對面要打幾回合）是策略組鋪開的軸線：
+1.05 是「算得剛剛好就上」、2.4 是「要有兩倍餘裕」。兩端的點數差就是貪心的定價。
 
 ---
 
@@ -797,7 +793,7 @@ export type PolicyName =
 | 寫法 | 判定 |
 |---|---|
 | ⑱ 讀 `ctx.state.career.civil` | ❌ 門禁擋下 |
-| ⑱ 呼叫 `careerService.checkBonus(ctx)` | ✅ |
+| ㉝ 呼叫 `careerService.rankOf(line, ctx).hostScale` | ✅ |
 | ⑯ 讀 `ctx.state.slots.training` | ✅（自己的） |
 | ⑮ 讀 `ctx.state.slots.training.selected` | ❌ —— 改呼叫 `trainingSlot.selectedAction(ctx)` |
 
@@ -891,13 +887,13 @@ UI 只能送出這些，且**一律以序號指定，不含核心 ID**。
 | `event.select` | ⑰ | `{ offerIndex, optionIndex }` |
 | `event.reroll` | ⑰ | `{}` |
 | `turn.advance` | ⑮ | `{}` |
-| `majorCheck.attempt` | ⑱ | `{ difficulty, sortieIndices }` ✂️ **RFC-01 移除** |
-| `learn.attr` 🆕 | ㉜ | `{ attrIndex, target }` |
-| `learn.trait` 🆕 | ㉜ | `{ offerIndex }` |
-| `learn.skill` 🆕 | ㉜ | `{ offerIndex }` |
-| `campaign.configure` 🆕 | ㉝ | `{ skillIndices, commanderIndices, commanderSkillIndices }` |
-| `campaign.engage` 🆕 | ㉝ | `{}` |
-| `campaign.withdraw` 🆕 | ㉝ | `{}` |
+| `learn.attr` | ㉜ | `{ attrIndex, target }` |
+| `learn.trait` | ㉜ | `{ offerIndex }` |
+| `learn.skill` | ㉜ | `{ offerIndex }` |
+| `campaign.configure` | ㉝ | `{ skillIndices, commanderIndices, commanderSkillIndices }` |
+| `campaign.engage` | ㉝ | `{}` |
+| `campaign.sweep` | ㉝ | `{}` |
+| `campaign.withdraw` | ㉝ | `{}` |
 | `faction.choose` | ㉒ | `{ optionIndex }` |
 | `roster.assignSuperiors` | ⑲ | `{ candidateIndices }` |
 | `run.retire` | ㉕ | `{}` |

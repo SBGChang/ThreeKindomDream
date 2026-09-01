@@ -20,7 +20,7 @@
 
 **「夢醒」是所有 Run 的統一出口，不是失敗的同義詞；結局才是分歧點**（GDD §2.2）。
 
-因此本模組**不處理「失敗」**，它處理「達成了哪一種結局」。大檢定失敗只是其中一類觸發條件。
+因此本模組**不處理「失敗」**，它處理「達成了哪一種結局」。戰役中軍勢歸零只是其中一類觸發條件。
 
 ---
 
@@ -42,8 +42,7 @@ interface EndingDefinition extends DefinitionHeader {
 
 type EndingTrigger =
   | { readonly kind: 'sequenceCompleted' }                              // 走完全部大事件
-  | { readonly kind: 'checkFailed'; readonly attr: Attr | 'any';
-      readonly difficulty: Difficulty | 'any' }
+  | { readonly kind: 'checkFailed'; readonly attr: Attr | 'any' }   // 戰役中軍勢歸零
   | { readonly kind: 'noFactionEligible' }                              // 在野
   | { readonly kind: 'playerRetired' };                                 // 歸隱
 
@@ -54,7 +53,7 @@ type MoralBand = 'veryGood' | 'neutral' | 'veryEvil';
 
 | | 回答什麼 | 例 |
 |---|---|---|
-| `trigger` | **什麼事件**導致結局 | 武系大檢定失敗 |
+| `trigger` | **什麼事件**導致結局 | 武官途上戰敗 |
 | `requirements` | 當下的**狀態**是否符合 | 文官階 ≥ 10 |
 
 分開是必要的：〈戰歿〉與〈流放〉的 trigger 相同（檢定失敗），差別在 `requirements`（惡名高低）。若合成一套，就得為每個組合寫一個 trigger 型別。

@@ -51,7 +51,7 @@ export const weiNotables: readonly NotableDef[] = [
   weiDef('notable', 'notable:caocao', {
     notableId: notableId('notable:caocao'), rarity: 5, factionId: WEI_F,
     nameKey: k('notable.caocao.name'),
-    base: notableBase(5, 'lead', { sortieBonus: 12 }),
+    base: notableBase(5, 'lead'),
     abilities: WEI_ABILITIES.caocao,
     unlocks: [
       row('caocao', 0, 0, 'LinkBonus', FX.linkAll10),
@@ -66,24 +66,24 @@ export const weiNotables: readonly NotableDef[] = [
   }),
 
   /**
-   * 張遼 ★4 · 出戰與委託機率。逍遙津。
-   * 他讓你敢賭險檔 —— 賭贏的報酬由他放大，成功率由賈詡撐。兩人是一對。
+   * 張遼 ★4 · 兵量與委託機率。逍遙津。
+   * 他替你帶兵：滿星兵量上限 +23%，而且把物理輸出推上去 —— 武系的骨幹。
    */
   weiDef('notable', 'notable:zhangliao', {
     notableId: notableId('notable:zhangliao'), rarity: 4, factionId: WEI_F,
     nameKey: k('notable.zhangliao.name'),
-    base: notableBase(4, 'lead', { sortieBonus: 7 }),
+    base: notableBase(4, 'lead'),
     abilities: WEI_ABILITIES.zhangliao,
     unlocks: [
       row('zhangliao', 0, 0, 'LinkBonus', FX.linkAll10),
       row('zhangliao', 1, 0, 'CurrencyBonus', FX.meritMartial10),
-      row('zhangliao', 2, 0, 'CheckValueBonus', FX.sortieAll8),
+      row('zhangliao', 2, 0, 'StatModifier', FX.battleTroops08),
       row('zhangliao', 3, 1, 'CommissionChance', FX.commSelf15),
-      row('zhangliao', 4, 2, 'CheckRewardBonus', FX.checkReward20),
+      row('zhangliao', 4, 2, 'StatModifier', FX.battlePhys10),
       row('zhangliao', 5, 3, 'AffinityGrant', FX.startSelf20),
       row('zhangliao', 6, 4, 'LinkBonus', FX.linkLead15),
-      row('zhangliao', 7, 5, 'CheckValueBonus', FX.sortieAll16),
-      row('zhangliao', 8, 5, 'CheckRewardBonus', FX.checkRewardHard25),
+      row('zhangliao', 7, 5, 'StatModifier', FX.battleTroops15),
+      row('zhangliao', 8, 5, 'StatModifier', FX.battlePhys20),
     ],
   }),
 
@@ -139,16 +139,16 @@ export const weiNotables: readonly NotableDef[] = [
   weiDef('notable', 'notable:dianwei', {
     notableId: notableId('notable:dianwei'), rarity: 3, factionId: WEI_F,
     nameKey: k('notable.dianwei.name'),
-    base: notableBase(3, 'war', { sortieBonus: 6 }),
+    base: notableBase(3, 'war'),
     abilities: WEI_ABILITIES.dianwei,
     unlocks: [
       row('dianwei', 0, 0, 'AffinityGrant', FX.startSelf20),
       row('dianwei', 1, 0, 'LinkBonus', FX.linkAll10),
       row('dianwei', 2, 0, 'CurrencyBonus', FX.meritMartial10),
-      row('dianwei', 3, 0, 'CheckValueBonus', FX.sortieAll6),
+      row('dianwei', 3, 0, 'StatModifier', FX.battlePhys06),
       row('dianwei', 4, 1, 'LinkBonus', FX.linkAll8),
       row('dianwei', 5, 2, 'AffinityGrant', FX.startSelf20),
-      row('dianwei', 6, 3, 'CheckValueBonus', FX.sortieAll10),
+      row('dianwei', 6, 3, 'StatModifier', FX.battlePhys10),
       row('dianwei', 7, 4, 'LinkBonus', FX.linkWar15),
       row('dianwei', 8, 5, 'SlotBaseAdd', FX.baseAll5),
     ],
@@ -185,7 +185,7 @@ export const weiNotables: readonly NotableDef[] = [
   weiDef('notable', 'notable:guojia', {
     notableId: notableId('notable:guojia'), rarity: 5, factionId: WEI_F,
     nameKey: k('notable.guojia.name'),
-    base: notableBase(5, 'int', { sortieBonus: 5 }),
+    base: notableBase(5, 'int'),
     abilities: WEI_ABILITIES.guojia,
     unlocks: [
       row('guojia', 0, 0, 'LinkBonus', FX.linkAll10),
@@ -207,17 +207,17 @@ export const weiNotables: readonly NotableDef[] = [
   weiDef('notable', 'notable:jiaxu', {
     notableId: notableId('notable:jiaxu'), rarity: 4, factionId: WEI_F,
     nameKey: k('notable.jiaxu.name'),
-    base: notableBase(4, 'int', { sortieBonus: 4 }),
+    base: notableBase(4, 'int'),
     abilities: WEI_ABILITIES.jiaxu,
     unlocks: [
       row('jiaxu', 0, 0, 'LinkBonus', FX.linkAll10),
       row('jiaxu', 1, 0, 'CurrencyBonus', FX.meritCivil10),
-      row('jiaxu', 2, 0, 'CheckRewardBonus', FX.checkReward10),
+      row('jiaxu', 2, 0, 'StatModifier', FX.battleMagic08),
       row('jiaxu', 3, 1, 'RarityWeight', FX.rarity03),
       row('jiaxu', 4, 2, 'AffinityGrant', FX.startSelf20),
       row('jiaxu', 5, 3, 'LinkBonus', FX.linkInt15),
-      row('jiaxu', 6, 4, 'CheckRewardBonus', FX.checkReward20),
-      row('jiaxu', 7, 5, 'CheckValueBonus', FX.majorHardWar40),
+      row('jiaxu', 6, 4, 'StatModifier', FX.battleMagic12),
+      row('jiaxu', 7, 5, 'StatModifier', FX.battleMagic25),
     ],
   }),
 
@@ -258,12 +258,12 @@ export const weiNotables: readonly NotableDef[] = [
     unlocks: [
       row('xunyu', 0, 0, 'LinkBonus', FX.linkAll10),
       row('xunyu', 1, 0, 'CurrencyBonus', FX.meritCivil20),
-      row('xunyu', 2, 0, 'CheckRewardBonus', FX.checkReward10),
+      row('xunyu', 2, 0, 'StatModifier', FX.battleSupply12),
       row('xunyu', 3, 1, 'CurrencyBonus', FX.meritCivil20),
       row('xunyu', 4, 2, 'AffinityGrant', FX.startSelf20),
-      row('xunyu', 5, 3, 'CheckRewardBonus', FX.checkReward20),
+      row('xunyu', 5, 3, 'StatModifier', FX.battleHeal20),
       row('xunyu', 6, 4, 'CommissionChance', FX.commSelfSure),
-      row('xunyu', 7, 5, 'CheckRewardBonus', FX.checkReward20),
+      row('xunyu', 7, 5, 'StatModifier', FX.battleSupply30),
     ],
   }),
 

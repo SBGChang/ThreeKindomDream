@@ -1,8 +1,6 @@
 // ⑲ 名士局內狀態 · 唯讀查詢（無 RNG）。
 import type { RunContext } from '../contracts/core/context.js';
-import type {
-  LinkBonusDef, MajorCheckDef, NotableBaseDef,
-} from '../contracts/core/definitions.js';
+import type { LinkBonusDef, NotableBaseDef } from '../contracts/core/definitions.js';
 import type { NotableId } from '../contracts/core/ids.js';
 import type { AffinityStage, Attr } from '../contracts/core/primitives.js';
 import type { RosterMember, RunState } from '../contracts/core/state.js';
@@ -128,18 +126,3 @@ export function trainingMultiplier(
   return Math.min(lb.maxSlotMultiplier, product * pile * sized);
 }
 
-export function sortieBonus(ids: readonly NotableId[], ctx: RunContext): number {
-  const table = link(ctx).checkBonusByStage;
-  return ids.reduce(
-    (acc, id) => acc + (table[stageOf(id, ctx)] ?? 0) + baseOf(id, ctx).sortieBonus,
-    0,
-  );
-}
-
-/** 排除該檢定的敵方名士 —— 選呂布當玩伴，虎牢關就不能靠他（18 §4）。 */
-export function eligibleForSortie(
-  check: MajorCheckDef, ctx: RunContext,
-): readonly NotableId[] {
-  const enemies = new Set(check.enemyNotables.map(String));
-  return rosterIds(ctx).filter((id) => !enemies.has(String(id)));
-}

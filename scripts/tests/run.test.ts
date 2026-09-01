@@ -1,8 +1,7 @@
 // 局內不變量：回合座標、門檻貨幣、supersedes、結局兜底、可重播、結算冪等。
 import {
-  ATTRS, CHECK_CHOICES, SLOT_INDICES,
-  TIER_COST_KINDS,
-  type Attr, type CareerLine, type SlotIndex,
+  ATTRS, SLOT_INDICES, TIER_COST_KINDS,
+  type Attr, type SlotIndex,
 } from '../../src/contracts/core/primitives.js';
 import { careerService } from '../../src/modules/career.js';
 import { candidatesFor, failedByAttr } from '../../src/modules/ending.js';
@@ -106,9 +105,9 @@ export function run(): void {
       eq(progressOf(firstLen, null, 0, ctx).turnInChapter, firstLen);
     });
 
-    it('章末標記 pendingMajorCheck', () => {
-      ok(progressOf(firstLen, null, 0, ctx).pendingMajorCheck, '章末應標記');
-      ok(!progressOf(firstLen - 1, null, 0, ctx).pendingMajorCheck, '章中不應標記');
+    it('章末標記 pendingCampaign', () => {
+      ok(progressOf(firstLen, null, 0, ctx).pendingCampaign, '章末應標記');
+      ok(!progressOf(firstLen - 1, null, 0, ctx).pendingCampaign, '章中不應標記');
     });
 
     it('序列切換：陣營序列從自己的第一章接續下去（15 §1.2）', () => {

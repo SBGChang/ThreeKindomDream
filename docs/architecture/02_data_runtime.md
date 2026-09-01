@@ -89,7 +89,7 @@ interface PackManifest {
 
 | 規則 | 為什麼 |
 |---|---|
-| 大檢定的敵方名士不得同時列在該檢定的可出戰名單 | 否則玩家可派敵人幫自己打 |
+| 戰役的敵方名士不得同時列在該戰役的可指揮名單 | 否則玩家可派敵人替自己傳令 |
 | 名士 `unlocks` 的 `affinity` 嚴格遞增且不重複 | 否則解鎖刻度語意不明 |
 | `supersedes` 引用的門檻必須存在於同一 `unlocks` 陣列 | 否則過濾失效 |
 | `FragmentDropDef.trigger='onGlowResult'` 時 `glowTier` 必填 | 否則觸發條件不完整 |

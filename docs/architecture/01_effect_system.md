@@ -113,7 +113,6 @@ type Condition =
   | { readonly type: 'chapterGte';  readonly value: number }
   | { readonly type: 'statGte';     readonly stat: StatPath; readonly value: number }
   | { readonly type: 'glowTier';    readonly value: GlowTier }
-  | { readonly type: 'difficulty';  readonly value: Difficulty }
   | { readonly type: 'hasSkill';    readonly value: SkillId }
   | { readonly type: 'and';         readonly all: readonly Condition[] }
   | { readonly type: 'or';          readonly any: readonly Condition[] }
@@ -316,12 +315,11 @@ interface CheckRetryDef {
   readonly usesPerRun: number;
 }
 
-// 14. 失敗降級重判
-interface CheckDowngradeRetryDef {
-  readonly from: Difficulty;
-  readonly to: Difficulty;
-  readonly chance: number;
-  readonly usesPerRun: number;
+// 14. 直接解鎖一項能力（不含學費，見 32 §6）
+interface UnlockGrantDef {
+  readonly trait: TraitId | null;
+  readonly skill: SkillId | null;
+  readonly condition: Condition | null;
 }
 
 // 15. 授予技能（觸發型）
@@ -332,7 +330,7 @@ interface SkillGrantDef {
 
 // 16. 揭露資訊（旗標）
 interface RevealInfoDef {
-  readonly what: 'nextTurnSlots' | 'majorCheckDC' | 'successRate';
+  readonly what: 'nextTurnSlots' | 'battleTrace';
 }
 
 // 17. 名聲／功績獲得量
