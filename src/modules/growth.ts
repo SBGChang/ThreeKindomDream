@@ -60,6 +60,13 @@ const bandAt = (value: number, ctx: RunContext): AttrCostBand => {
 export const gradeOf = (attr: Attr, ctx: RunContext): AttrGrade =>
   bandAt(statQuery.attr(attr, ctx), ctx).grade;
 
+/**
+ * 價格帶表本身。UI 要說明「每一點的價碼怎麼長」時讀它 ——
+ * **畫面上不得寫死那兩個端點的數字**：整張表改過三次尺度，
+ * 每次都會留下一句對不上的說明文字（32 §3.1）。
+ */
+export const bands = (ctx: RunContext): readonly AttrCostBand[] => bandsOf(ctx);
+
 export const gradeAt = (value: number, ctx: RunContext): AttrGrade =>
   bandAt(value, ctx).grade;
 

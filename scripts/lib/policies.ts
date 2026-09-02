@@ -123,7 +123,7 @@ const slotCap = (s: Session): number => s.current.abilities.skills.length;
  *   特質是餘裕
  */
 const spendGreedy = (bias: Attr) => (s: Session): void => {
-  for (let guard = 0; guard < 60; guard += 1) {
+  for (let guard = 0; guard < 400; guard += 1) {
     let acted = false;
 
     if (slotCap(s) < 3) {
@@ -142,9 +142,14 @@ const spendGreedy = (bias: Attr) => (s: Session): void => {
     }
 
     if (!acted) {
-      // 沒有可學的了 —— 把剩下的經驗全部倒進主維，一次一點。
-      const cur = s.current.attributes.values[bias];
-      if (cur < 100 && s.learnAttr(bias, cur + 1).ok) acted = true;
+      // 主維滿了就往其他維倒 —— 一個人不會讓經驗爛在手上。
+      // 這一段是【度量整套經濟有沒有稀缺】的關鍵：若替身只買一維，
+      // 「未花的經驗」會被高估，看起來像貨幣過剩其實是 AI 太笨。
+      for (const a of [bias, ...ATTRS.filter((x) => x !== bias)]) {
+        const cur = s.current.attributes.values[a];
+        if (cur >= 100) continue;
+        if (s.learnAttr(a, cur + 1).ok) { acted = true; break; }
+      }
     }
     if (!acted) break;
   }
@@ -242,7 +247,8 @@ export const POLICIES: readonly AgentPolicy[] = [
      * 追期望值：永遠投期望四維最高的那一格，不管是哪一維。
      *
      * 名士相乘之後「全員擠在統御格但我需要武」是真兩難。四維會被打散，
-     * 因此它的大檢定走 flexibleCheck —— 分散的人最受益於路線自選。
+     * 而戰役裡四維都能打（D19），所以它量的是【均衡者的上限】：
+     * 四類經驗齊全買得起絕階，但每一維都上不到專精者的高度。
      */
     name: 'greedy-gain',
     chooseSlot: (s) => bestSlot(s, (i) => s.previewTraining(i).expectedGain),
@@ -303,7 +309,7 @@ export const POLICIES: readonly AgentPolicy[] = [
   {
     /**
      * 追人物事件旗標。量的是【人物事件真的碰得到嗎】——
-     * 它们全都卡在好感門檻上，而好感又要靠同格養。
+     * 它們全都卡在好感門檻上，而好感又要靠同格養。
      */
     name: 'encounter-chaser',
     chooseSlot: (s) => bestSlot(s, (i) => {
@@ -314,7 +320,7 @@ export const POLICIES: readonly AgentPolicy[] = [
     ...campaignOf('war', 1.5),
   },
   {
-    // 平均分配四維：輪流投。四維上限與大檢定副屬性的價值由它量出來。
+    // 平均分配四維：輪流投。四維上限與「攤平四類經驗」的代價由它量出來。
     name: 'balanced',
     chooseSlot: (s) => {
       const want = ATTRS[s.current.progress.turn % ATTRS.length];

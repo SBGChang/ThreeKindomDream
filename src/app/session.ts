@@ -6,12 +6,13 @@ import type { NotableId as NId, SkillId, TraitId } from '../contracts/core/ids.j
 import type {
   AffinityStage, Attr, AttrGrade, SlotIndex,
 } from '../contracts/core/primitives.js';
-import type { CampaignDef, EventReward } from '../contracts/core/definitions.js';
+import type { AttrCostBand, CampaignDef, EventReward } from '../contracts/core/definitions.js';
 import type {
   BattleLoadout, DreamEntryConfig, EventOffer, MetaState, RunState, RunSummary,
 } from '../contracts/core/state.js';
 import { createRng, type DeterministicRng } from '../kernel/rng.js';
 import { careerService } from '../modules/career.js';
+import * as ability from '../modules/ability.js';
 import * as campaign from '../modules/campaign.js';
 import * as growth from '../modules/growth.js';
 import type { RunContext as RC } from '../contracts/core/context.js';
@@ -42,6 +43,11 @@ export class Session {
     // 再組陣容（起始好感要把道具的補正一併算進去），最後才抽格子。
     // 順序重要：先擲起始四維（15–30），道具的效果才有東西可以乘。
     s.mutate((tc) => rollStartAttrs(tc));
+    // 再送「你本來就會的那一招」—— 取決於剛剛擲到的最高維（23 §4.2）。
+    s.mutate((tc) => {
+      const id = ability.starterSkill(tc);
+      return id === null ? tc.state : ability.addSkill(id, tc);
+    });
     s.mutate((tc) => item.seedCarried(tc));
     s.mutate((tc) => roster.assembleCompanions(tc, w.fx));
     s.refreshSlots();
@@ -313,6 +319,10 @@ export class Session {
   }
 
   attrMax(): number { return defsAttrMax(this.ctx); }
+
+  /** 價格帶表。UI 用它生成說明文字，不寫死端點數字。 */
+  attrBands(): readonly AttrCostBand[] { return growth.bands(this.ctx); }
+
   traitOffers(): readonly growth.TraitOffer[] {
     return growth.learnableTraits(this.ctx, this.w.fx);
   }

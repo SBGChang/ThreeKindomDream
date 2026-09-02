@@ -107,6 +107,7 @@ const OWNS: Readonly<Record<string, readonly string[]>> = {
   'check.ts': [],
   // ㉜ 擁有 growth。它【寫】attributes 但一律經 ⑳ 的 StatWriter，因此不需要讀權。
   'growth.ts': ['growth'],
+  // ㉓ 讀 attributes 是為了 starterSkill（取最高維）—— 經 ⑳ 的 statQuery，不是直讀。
   'ability.ts': ['abilities'],
   // ㉝ 擁有 campaign。career／attributes／roster 一律經各自的 Query。
   'campaign.ts': ['campaign'],

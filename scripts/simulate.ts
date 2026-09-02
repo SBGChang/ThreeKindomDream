@@ -51,6 +51,14 @@ interface RunRecord {
   /** 本輪學了幾條特質、幾招技能。經驗分配那條新軸線的直接度量。 */
   readonly traits: number;
   readonly skills: number;
+  /**
+   * 一輪【產出】的經驗總量 ＝ 已花 ＋ 手上剩的。
+   *
+   * 這是整套兌換經濟的分母：若它大到四維都練得滿、特質都買得起，
+   * 「S 級空手 對 A 級帶特質」那個決策就消失了（32 §4.1）。
+   */
+  readonly expTotal: number;
+  readonly expUnspent: number;
   readonly failedAt: string | null;
 }
 
@@ -137,6 +145,8 @@ function runOnce(policy: AgentPolicy, runSeed: number, meta: MetaState): RunReco
     campaigns,
     traits: st.abilities.traits.length,
     skills: st.abilities.skills.length,
+    expTotal: ATTRS.reduce((n, a) => n + st.growth.exp[a] + st.growth.spent[a], 0),
+    expUnspent: ATTRS.reduce((n, a) => n + st.growth.exp[a], 0),
     failedAt,
   };
 }
@@ -226,6 +236,8 @@ for (const policy of POLICIES) {
     + `${avg(recs.map((r) => r.campaigns)).toFixed(1)} 場）`
     + `　特質 ${avg(recs.map((r) => r.traits)).toFixed(1)}`
     + ` 技能 ${avg(recs.map((r) => r.skills)).toFixed(1)}`);
+  console.log(`  經驗總量 ${avg(recs.map((r) => r.expTotal)).toFixed(0)}`
+    + `（未花 ${avg(recs.map((r) => r.expUnspent)).toFixed(0)}）`);
 
   const top = [...byEnding.entries()].sort((a, b) => b[1] - a[1]).slice(0, 4);
   console.log(`  結局 ${top.map(([k, v]) => `${k.replace('ending:', '')} ${pct(v, recs.length)}`).join('  ')}`);

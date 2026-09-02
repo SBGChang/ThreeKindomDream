@@ -49,7 +49,7 @@ export const attrTexts: Record<string, string> = {
   'glow.silver': '銀光',
   'glow.gold': '金光',
   'glow.red': '紅光',
-  // 大檢定的路線標籤。與官階的文武雙軌同一個軸 —— 走武路憑的就是武功那條官階。
+  // 官階的文武雙軌。功績分兩本帳，各自爬各自的階梯。
   'careerLine.civil': '文',
   'careerLine.martial': '武',
 

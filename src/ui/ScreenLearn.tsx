@@ -32,6 +32,11 @@ export function ScreenLearn({ s, bump, onBack }: Props): React.ReactElement {
   const skills = s.skillOffers();
   const learnedSkills = s.current.abilities.skills.length;
 
+  // 說明文字的兩個端點從價格帶表算出來 —— 寫死過一次，改尺度就對不上了。
+  const bands = s.attrBands().filter((b) => b.max > b.min);
+  const cheapest = bands.reduce((a, b) => (b.costPerPoint < a.costPerPoint ? b : a));
+  const priciest = bands.reduce((a, b) => (b.costPerPoint > a.costPerPoint ? b : a));
+
   const nameOf = (id: unknown): string =>
     t(defs.reader('notable').get(String(id)).nameKey);
 
@@ -108,7 +113,8 @@ export function ScreenLearn({ s, bump, onBack }: Props): React.ReactElement {
         </tbody>
       </table>
       <p className="sub">
-        每一點的價碼隨等級帶上升（F 帶 1／點 → S 帶 35／點）。
+        {`每一點的價碼隨等級帶上升（${cheapest.grade} 帶 ${cheapest.costPerPoint}／點`
+          + ` → ${priciest.grade} 帶 ${priciest.costPerPoint}／點）。`}
         <b>七個價格帶就是七個等級</b> —— 看到「武 B」就知道下一階要付多少。
       </p>
 

@@ -13,6 +13,10 @@
           "star": 0
         },
         {
+          "skillId": "skill:haoling",
+          "star": 1
+        },
+        {
           "skillId": "skill:jiezhi",
           "star": 2
         },
@@ -197,6 +201,10 @@
         {
           "skillId": "skill:guwu",
           "star": 0
+        },
+        {
+          "skillId": "skill:haoling",
+          "star": 1
         },
         {
           "skillId": "skill:jiezhi",
@@ -803,6 +811,10 @@
           "star": 0
         },
         {
+          "skillId": "skill:luanci",
+          "star": 1
+        },
+        {
           "skillId": "skill:tuntian",
           "star": 2
         },
@@ -978,6 +990,10 @@
         {
           "skillId": "skill:fumin",
           "star": 0
+        },
+        {
+          "skillId": "skill:luanci",
+          "star": 2
         },
         {
           "skillId": "skill:tuntian",
@@ -5853,12 +5869,12 @@
             "merit": "martial"
           },
           {
-            "amount": 7,
+            "amount": 15,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 7,
+            "amount": 15,
             "attr": "lead",
             "kind": "exp"
           }
@@ -5876,12 +5892,12 @@
             "merit": "martial"
           },
           {
-            "amount": 11,
+            "amount": 30,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 11,
+            "amount": 30,
             "attr": "lead",
             "kind": "exp"
           }
@@ -5899,12 +5915,12 @@
             "merit": "martial"
           },
           {
-            "amount": 15,
+            "amount": 45,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 15,
+            "amount": 45,
             "attr": "lead",
             "kind": "exp"
           }
@@ -5922,12 +5938,12 @@
             "merit": "martial"
           },
           {
-            "amount": 19,
+            "amount": 60,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 19,
+            "amount": 60,
             "attr": "lead",
             "kind": "exp"
           },
@@ -5950,12 +5966,12 @@
             "merit": "martial"
           },
           {
-            "amount": 22,
+            "amount": 75,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 22,
+            "amount": 75,
             "attr": "lead",
             "kind": "exp"
           },
@@ -5978,12 +5994,12 @@
             "merit": "martial"
           },
           {
-            "amount": 26,
+            "amount": 90,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 26,
+            "amount": 90,
             "attr": "lead",
             "kind": "exp"
           }
@@ -6001,12 +6017,12 @@
             "merit": "martial"
           },
           {
-            "amount": 30,
+            "amount": 105,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 30,
+            "amount": 105,
             "attr": "lead",
             "kind": "exp"
           },
@@ -6040,12 +6056,12 @@
             "merit": "martial"
           },
           {
-            "amount": 9,
+            "amount": 15,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 9,
+            "amount": 15,
             "attr": "lead",
             "kind": "exp"
           }
@@ -6063,12 +6079,12 @@
             "merit": "martial"
           },
           {
-            "amount": 14,
+            "amount": 30,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 14,
+            "amount": 30,
             "attr": "lead",
             "kind": "exp"
           }
@@ -6086,12 +6102,12 @@
             "merit": "martial"
           },
           {
-            "amount": 19,
+            "amount": 45,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 19,
+            "amount": 45,
             "attr": "lead",
             "kind": "exp"
           }
@@ -6109,12 +6125,12 @@
             "merit": "martial"
           },
           {
-            "amount": 24,
+            "amount": 60,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 24,
+            "amount": 60,
             "attr": "lead",
             "kind": "exp"
           },
@@ -6137,12 +6153,12 @@
             "merit": "martial"
           },
           {
-            "amount": 29,
+            "amount": 75,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 29,
+            "amount": 75,
             "attr": "lead",
             "kind": "exp"
           },
@@ -6165,12 +6181,12 @@
             "merit": "martial"
           },
           {
-            "amount": 34,
+            "amount": 90,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 34,
+            "amount": 90,
             "attr": "lead",
             "kind": "exp"
           },
@@ -6193,12 +6209,12 @@
             "merit": "martial"
           },
           {
-            "amount": 39,
+            "amount": 105,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 39,
+            "amount": 105,
             "attr": "lead",
             "kind": "exp"
           },
@@ -6232,12 +6248,12 @@
             "merit": "martial"
           },
           {
-            "amount": 11,
+            "amount": 15,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 11,
+            "amount": 15,
             "attr": "lead",
             "kind": "exp"
           }
@@ -6255,12 +6271,12 @@
             "merit": "martial"
           },
           {
-            "amount": 17,
+            "amount": 30,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 17,
+            "amount": 30,
             "attr": "lead",
             "kind": "exp"
           }
@@ -6278,12 +6294,12 @@
             "merit": "martial"
           },
           {
-            "amount": 23,
+            "amount": 45,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 23,
+            "amount": 45,
             "attr": "lead",
             "kind": "exp"
           }
@@ -6301,12 +6317,12 @@
             "merit": "martial"
           },
           {
-            "amount": 29,
+            "amount": 60,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 29,
+            "amount": 60,
             "attr": "lead",
             "kind": "exp"
           }
@@ -6324,12 +6340,12 @@
             "merit": "martial"
           },
           {
-            "amount": 35,
+            "amount": 75,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 35,
+            "amount": 75,
             "attr": "lead",
             "kind": "exp"
           },
@@ -6352,12 +6368,12 @@
             "merit": "martial"
           },
           {
-            "amount": 41,
+            "amount": 90,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 41,
+            "amount": 90,
             "attr": "lead",
             "kind": "exp"
           },
@@ -6380,12 +6396,12 @@
             "merit": "martial"
           },
           {
-            "amount": 47,
+            "amount": 105,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 47,
+            "amount": 105,
             "attr": "lead",
             "kind": "exp"
           },

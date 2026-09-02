@@ -12,6 +12,12 @@
 // 分配原則：主維按稀有度給（★5 ≈ 95、★1 ≈ 76），副維按史實性格鋪開。
 // 他的數值決定他【傳令時的效果強度】，不決定他多常傳令（那是好感）。
 //
+// ── star-0 那一招 ＝ 他的定位 ★ ──────────────────────
+// 四職能（武物理／智法術／政恢復／統 Buff）約束的是【名士】，
+// 所以每個人的 star-0 一定是他本行那一招 —— 未升星的他就是他的定位。
+// 統與政的輸出招（號令／亂辭）掛在 star 1 以上：它們的職責是
+// 給【主角】一條輸出路（RFC-01 D19），名士只是順便會。
+//
 // ── skills 的 star ＝ 他有幾招可選（33 §3.1）★ ───────
 // 星階開放選項、好感決定頻率、玩家挑一招。三件事各管一塊，都不碰他的數值。
 // 於是兩種跨局投資有了不同的產品：
@@ -42,13 +48,13 @@ export const WEI_ABILITIES = {
   // ══ 統 ══════════════════════════════════════════════
   /** 曹操 ★5 · 全能偏統。他是唯一教得起〈治戎〉的人。 */
   caocao: abil(attrs(95, 72, 88, 90), ['chenyi', 'linzhen'],
-    [[0, 'guwu'], [2, 'jiezhi'], [4, 'zhirong']]),
+    [[0, 'guwu'], [1, 'haoling'], [2, 'jiezhi'], [4, 'zhirong']]),
   /** 張遼 ★4 · 統武兼備。〈萬人敵〉的兩個師父之一。 */
   zhangliao: abil(attrs(88, 92, 70, 55), ['danshi', 'linzhen'],
     [[0, 'tuzhen'], [2, 'xianzhen'], [4, 'wanrenzhi']]),
   /** 于禁 ★2 · 持軍嚴整。低星就給得起〈節制〉—— 他的價值在早期。 */
   yujin: abil(attrs(80, 78, 60, 62), ['chenyi'],
-    [[0, 'guwu'], [3, 'jiezhi']]),
+    [[0, 'guwu'], [1, 'haoling'], [3, 'jiezhi']]),
 
   // ══ 武 ══════════════════════════════════════════════
   xiahoudun: abil(attrs(78, 90, 55, 50), ['danshi'],
@@ -72,9 +78,9 @@ export const WEI_ABILITIES = {
   // ══ 政 ══════════════════════════════════════════════
   /** 荀彧 ★5 · 王佐之才。〈王佐〉與〈經緯之才〉只有他教得起。 */
   xunyu: abil(attrs(70, 40, 95, 92), ['liande', 'zhechong', 'jingwei'],
-    [[0, 'fumin'], [2, 'tuntian'], [4, 'wangzuo']]),
+    [[0, 'fumin'], [1, 'luanci'], [2, 'tuntian'], [4, 'wangzuo']]),
   chenqun: abil(attrs(58, 35, 82, 90), ['liande', 'zhechong'],
     [[0, 'fumin'], [3, 'tuntian']]),
   maojie: abil(attrs(55, 40, 74, 82), ['liande'],
-    [[0, 'fumin'], [3, 'tuntian']]),
+    [[0, 'fumin'], [2, 'luanci'], [3, 'tuntian']]),
 } as const satisfies Readonly<Record<string, NotableAbilityDef>>;

@@ -29,14 +29,14 @@ import { coreDef } from '../pack-id.js';
  */
 export const growthRule: GrowthRuleDef = coreDef('growthRule', 'growth:main', {
   bands: [
-    { grade: 'G', min: 0, max: 0, costPerPoint: 1 },
-    { grade: 'F', min: 1, max: 19, costPerPoint: 1 },
-    { grade: 'E', min: 20, max: 39, costPerPoint: 2 },
-    { grade: 'D', min: 40, max: 59, costPerPoint: 4 },
-    { grade: 'C', min: 60, max: 74, costPerPoint: 7 },
-    { grade: 'B', min: 75, max: 84, costPerPoint: 12 },
-    { grade: 'A', min: 85, max: 94, costPerPoint: 20 },
-    { grade: 'S', min: 95, max: 100, costPerPoint: 35 },
+    { grade: 'G', min: 0, max: 0, costPerPoint: 2 },
+    { grade: 'F', min: 1, max: 19, costPerPoint: 2 },
+    { grade: 'E', min: 20, max: 39, costPerPoint: 5 },
+    { grade: 'D', min: 40, max: 59, costPerPoint: 10 },
+    { grade: 'C', min: 60, max: 74, costPerPoint: 18 },
+    { grade: 'B', min: 75, max: 84, costPerPoint: 30 },
+    { grade: 'A', min: 85, max: 94, costPerPoint: 50 },
+    { grade: 'S', min: 95, max: 100, costPerPoint: 90 },
   ],
   /**
    * 向名士學該階能力所需的好感（32 §5）。階越高，要越熟。

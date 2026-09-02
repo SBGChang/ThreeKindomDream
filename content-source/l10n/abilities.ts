@@ -50,6 +50,11 @@ export const abilityTexts: Record<string, string> = {
   'skill.wangzuo.name': '王佐',
   'skill.wangzuo.desc': '恢復 · 依政治。耗糧回復兵量的 75%。',
 
+  'skill.haoling.name': '號令',
+  'skill.haoling.desc': '物理 · 依統御。你不親自砍 —— 以兵量的 24% 叫別人砍。',
+  'skill.luanci.name': '亂辭',
+  'skill.luanci.desc': '法術 · 依政治。以兵量的 26% 亂其軍心。',
+
   'skill.guwu.name': '鼓舞',
   'skill.guwu.desc': '增益 · 依統御。三回合內我方傷害提升。',
   'skill.jiezhi.name': '節制',

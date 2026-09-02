@@ -53,7 +53,6 @@ export const campCampaigns: readonly CampaignDef[] = [
       baseMerit: 10,
       meritKind: 'martial',
       // 打仗長的是帶兵的本事 —— 武與統各一半。
-      baseExp: 10,
       expAttrs: ['war', 'lead'],
       /**
        * 深處的唯一掉落 —— 這一場給的是【入門的兩招】。

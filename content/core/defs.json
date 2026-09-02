@@ -511,49 +511,49 @@
   {
     "bands": [
       {
-        "costPerPoint": 1,
+        "costPerPoint": 2,
         "grade": "G",
         "max": 0,
         "min": 0
       },
       {
-        "costPerPoint": 1,
+        "costPerPoint": 2,
         "grade": "F",
         "max": 19,
         "min": 1
       },
       {
-        "costPerPoint": 2,
+        "costPerPoint": 5,
         "grade": "E",
         "max": 39,
         "min": 20
       },
       {
-        "costPerPoint": 4,
+        "costPerPoint": 10,
         "grade": "D",
         "max": 59,
         "min": 40
       },
       {
-        "costPerPoint": 7,
+        "costPerPoint": 18,
         "grade": "C",
         "max": 74,
         "min": 60
       },
       {
-        "costPerPoint": 12,
+        "costPerPoint": 30,
         "grade": "B",
         "max": 84,
         "min": 75
       },
       {
-        "costPerPoint": 20,
+        "costPerPoint": 50,
         "grade": "A",
         "max": 94,
         "min": 85
       },
       {
-        "costPerPoint": 35,
+        "costPerPoint": 90,
         "grade": "S",
         "max": 100,
         "min": 95
@@ -627,7 +627,7 @@
   },
   {
     "cost": {
-      "war": 40
+      "war": 100
     },
     "descKey": "trait.danshi.desc",
     "effects": [
@@ -647,7 +647,7 @@
   },
   {
     "cost": {
-      "lead": 40
+      "lead": 100
     },
     "descKey": "trait.chenyi.desc",
     "effects": [
@@ -667,7 +667,7 @@
   },
   {
     "cost": {
-      "pol": 40
+      "pol": 100
     },
     "descKey": "trait.liande.desc",
     "effects": [
@@ -687,7 +687,7 @@
   },
   {
     "cost": {
-      "int": 40
+      "int": 100
     },
     "descKey": "trait.jimin.desc",
     "effects": [
@@ -707,8 +707,8 @@
   },
   {
     "cost": {
-      "lead": 40,
-      "war": 60
+      "lead": 100,
+      "war": 150
     },
     "descKey": "trait.linzhen.desc",
     "effects": [
@@ -732,8 +732,8 @@
   },
   {
     "cost": {
-      "int": 40,
-      "pol": 60
+      "int": 100,
+      "pol": 150
     },
     "descKey": "trait.zhechong.desc",
     "effects": [
@@ -753,8 +753,8 @@
   },
   {
     "cost": {
-      "int": 60,
-      "pol": 40
+      "int": 150,
+      "pol": 100
     },
     "descKey": "trait.liaodi.desc",
     "effects": [
@@ -774,9 +774,9 @@
   },
   {
     "cost": {
-      "int": 40,
-      "lead": 60,
-      "war": 80
+      "int": 100,
+      "lead": 150,
+      "war": 200
     },
     "descKey": "trait.wanrendi.desc",
     "effects": [
@@ -796,9 +796,9 @@
   },
   {
     "cost": {
-      "int": 80,
-      "lead": 40,
-      "pol": 60
+      "int": 200,
+      "lead": 100,
+      "pol": 150
     },
     "descKey": "trait.jingwei.desc",
     "effects": [
@@ -822,7 +822,7 @@
   },
   {
     "cost": {
-      "war": 40
+      "war": 100
     },
     "descKey": "trait.gangbi.desc",
     "effects": [
@@ -852,7 +852,7 @@
       "ratio": 0.3
     },
     "cost": {
-      "war": 55
+      "war": 140
     },
     "descKey": "skill.tuzhen.desc",
     "id": "skill:tuzhen",
@@ -871,8 +871,8 @@
       "ratio": 0.5
     },
     "cost": {
-      "lead": 55,
-      "war": 75
+      "lead": 140,
+      "war": 190
     },
     "descKey": "skill.xianzhen.desc",
     "id": "skill:xianzhen",
@@ -891,9 +891,9 @@
       "ratio": 0.85
     },
     "cost": {
-      "int": 55,
-      "lead": 75,
-      "war": 100
+      "int": 140,
+      "lead": 190,
+      "war": 250
     },
     "descKey": "skill.wanrenzhi.desc",
     "id": "skill:wanrenzhi",
@@ -912,7 +912,7 @@
       "ratio": 0.32
     },
     "cost": {
-      "int": 55
+      "int": 140
     },
     "descKey": "skill.huoji.desc",
     "id": "skill:huoji",
@@ -931,8 +931,8 @@
       "ratio": 0.52
     },
     "cost": {
-      "int": 75,
-      "pol": 55
+      "int": 190,
+      "pol": 140
     },
     "descKey": "skill.shuiyan.desc",
     "id": "skill:shuiyan",
@@ -951,9 +951,9 @@
       "ratio": 0.88
     },
     "cost": {
-      "int": 100,
-      "lead": 55,
-      "pol": 75
+      "int": 250,
+      "lead": 140,
+      "pol": 190
     },
     "descKey": "skill.lianhuan.desc",
     "id": "skill:lianhuan",
@@ -972,7 +972,7 @@
       "ratio": 0.28
     },
     "cost": {
-      "pol": 55
+      "pol": 140
     },
     "descKey": "skill.fumin.desc",
     "id": "skill:fumin",
@@ -991,8 +991,8 @@
       "ratio": 0.46
     },
     "cost": {
-      "int": 55,
-      "pol": 75
+      "int": 140,
+      "pol": 190
     },
     "descKey": "skill.tuntian.desc",
     "id": "skill:tuntian",
@@ -1011,9 +1011,9 @@
       "ratio": 0.75
     },
     "cost": {
-      "int": 75,
-      "lead": 55,
-      "pol": 100
+      "int": 190,
+      "lead": 140,
+      "pol": 250
     },
     "descKey": "skill.wangzuo.desc",
     "id": "skill:wangzuo",
@@ -1027,12 +1027,50 @@
   {
     "action": {
       "actorAttr": "lead",
+      "duration": 0,
+      "kind": "physical",
+      "ratio": 0.24
+    },
+    "cost": {
+      "lead": 140
+    },
+    "descKey": "skill.haoling.desc",
+    "id": "skill:haoling",
+    "kind": "skill",
+    "nameKey": "skill.haoling.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:haoling",
+    "tier": "common"
+  },
+  {
+    "action": {
+      "actorAttr": "pol",
+      "duration": 0,
+      "kind": "magic",
+      "ratio": 0.26
+    },
+    "cost": {
+      "pol": 140
+    },
+    "descKey": "skill.luanci.desc",
+    "id": "skill:luanci",
+    "kind": "skill",
+    "nameKey": "skill.luanci.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:luanci",
+    "tier": "common"
+  },
+  {
+    "action": {
+      "actorAttr": "lead",
       "duration": 3,
       "kind": "buff",
       "ratio": 0.18
     },
     "cost": {
-      "lead": 55
+      "lead": 140
     },
     "descKey": "skill.guwu.desc",
     "id": "skill:guwu",
@@ -1051,8 +1089,8 @@
       "ratio": 0.22
     },
     "cost": {
-      "lead": 75,
-      "war": 55
+      "lead": 190,
+      "war": 140
     },
     "descKey": "skill.jiezhi.desc",
     "id": "skill:jiezhi",
@@ -1071,9 +1109,9 @@
       "ratio": 0.35
     },
     "cost": {
-      "lead": 100,
-      "pol": 55,
-      "war": 75
+      "lead": 250,
+      "pol": 140,
+      "war": 190
     },
     "descKey": "skill.zhirong.desc",
     "id": "skill:zhirong",
@@ -1149,12 +1187,12 @@
             "merit": "martial"
           },
           {
-            "amount": 5,
+            "amount": 15,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 5,
+            "amount": 15,
             "attr": "lead",
             "kind": "exp"
           }
@@ -1172,12 +1210,12 @@
             "merit": "martial"
           },
           {
-            "amount": 8,
+            "amount": 30,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 8,
+            "amount": 30,
             "attr": "lead",
             "kind": "exp"
           }
@@ -1195,12 +1233,12 @@
             "merit": "martial"
           },
           {
-            "amount": 11,
+            "amount": 45,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 11,
+            "amount": 45,
             "attr": "lead",
             "kind": "exp"
           }
@@ -1218,12 +1256,12 @@
             "merit": "martial"
           },
           {
-            "amount": 13,
+            "amount": 60,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 13,
+            "amount": 60,
             "attr": "lead",
             "kind": "exp"
           }
@@ -1241,12 +1279,12 @@
             "merit": "martial"
           },
           {
-            "amount": 16,
+            "amount": 75,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 16,
+            "amount": 75,
             "attr": "lead",
             "kind": "exp"
           },
@@ -1269,12 +1307,12 @@
             "merit": "martial"
           },
           {
-            "amount": 19,
+            "amount": 90,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 19,
+            "amount": 90,
             "attr": "lead",
             "kind": "exp"
           },
@@ -1297,12 +1335,12 @@
             "merit": "martial"
           },
           {
-            "amount": 22,
+            "amount": 105,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 22,
+            "amount": 105,
             "attr": "lead",
             "kind": "exp"
           },

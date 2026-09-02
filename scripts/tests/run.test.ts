@@ -352,7 +352,7 @@ export function run(): void {
       ok(s.canAdvance(), '事件清空後應可推進');
     });
 
-    it('推進到章末大檢定回合時，上一回合的行動不得殘留', () => {
+    it('推進到章末戰役回合時，上一回合的行動不得殘留', () => {
       const s = newSession(4242);
       let guard = 0;
       while (!s.isOver && guard < 40 && !s.needsCampaign) {
@@ -360,11 +360,11 @@ export function run(): void {
         playTurn(s);
         s.advance();
       }
-      ok(s.needsCampaign, '沒走到章末大檢定');
+      ok(s.needsCampaign, '沒走到章末戰役');
       // 章末不重抽格子，但「本回合已行動」必須是 false
-      ok(!s.hasActed, '大檢定回合不該被視為已行動');
+      ok(!s.hasActed, '戰役回合不該被視為已行動');
       eq(s.pendingEvent, null);
-      ok(!s.canAdvance(), '大檢定回合不該可推進');
+      ok(!s.canAdvance(), '戰役回合不該可推進');
     });
 
     it('回合配比以維累加，總和等於已行動回合數', () => {

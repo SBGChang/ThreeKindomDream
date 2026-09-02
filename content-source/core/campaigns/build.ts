@@ -53,6 +53,21 @@ const DAMAGE_MUL = [0.55, 0.62, 0.70, 0.78, 0.88, 1.00, 1.15];
  */
 const REWARD_MUL = [1.0, 1.8, 3.2, 6.0, 11.0, 22.0, 45.0];
 
+/**
+ * 一關給的經驗 ＝ **關數 × 這個單位**（第 1 關 30、第 7 關 210，累計 840）★
+ *
+ * ── 為什麼用「幾個基礎單位」而不是一條倍率 ───────────
+ * 線性、數字圓、而且【深度是唯一的變數】—— 不看章節。
+ * 於是兩種獎勵各說一件事：
+ *
+ *   經驗  只看你打了多深    「這一仗你自己練到了多少」
+ *   功績  看章節 × 深度      「這一仗有多重要」
+ *
+ * 對照一次鍛鍊約 13（第 1 章）到 29（第 4 章），
+ * **一關 ≈ 一次半的鍛鍊**，打滿七關 ≈ 四十二回合的訓練量。
+ */
+const STAGE_EXP_UNIT = 30;
+
 export interface StageSpec {
   /** 該場戰役的文案前綴。第 n 關讀 `campaign.<slug>.stage.<n>`。 */
   readonly slug: string;
@@ -62,16 +77,15 @@ export interface StageSpec {
   readonly baseMerit: number;
   readonly meritKind: 'civil' | 'martial';
   /**
-   * 第 1 關的經驗量級，以及分給哪幾維 ★
+   * 經驗分給哪幾維 ★ **打仗長的是帶兵的本事。**
    *
-   * **打仗長的是帶兵的本事。** 一場武系戰役給的是武與統的經驗 ——
-   * 文系玩家照樣拿得到，只是拿到的不是他主練的那一維，
-   * 那正是「這一場對我值不值得深入」的一部分。
+   * 一場武系戰役給的是武與統的經驗 —— 文系玩家照樣拿得到，
+   * 只是拿到的不是他主練的那一維，而那正是
+   * 「這一場對我值不值得深入」的一部分。
    *
-   * 經驗的曲線比功績平緩得多（REWARD_MUL 只套在功績上）：
-   * 功績要追官階門檻，經驗對照的是 0–100 的四維。
+   * 量由 `STAGE_EXP_UNIT × 關數` 決定，不逐場設定 ——
+   * 經驗只看深度，不看章節（見 STAGE_EXP_UNIT）。
    */
-  readonly baseExp: number;
   readonly expAttrs: readonly Attr[];
   /**
    * 深處的唯一掉落（D12）★
@@ -89,13 +103,12 @@ export function buildStages(spec: StageSpec): readonly CampaignStageDef[] {
       merit: spec.meritKind,
       amount: Math.round(spec.baseMerit * (REWARD_MUL[i] ?? 1)),
     };
-    // 經驗走【平緩】曲線：深關給得多，但不像功績那樣拉到 45 倍。
-    // 四維只有 0–100，一輪總經驗約 900 —— 一關就給掉一整級是壞事。
-    const expMul = 1 + i * 0.55;
+    // 第 N 關給 N × 30 經驗，平分給該線的兩維。
+    const stageExp = STAGE_EXP_UNIT * (i + 1);
     const exp: readonly EventReward[] = spec.expAttrs.map((attr) => ({
       kind: 'exp' as const,
       attr,
-      amount: Math.round(spec.baseExp * expMul / spec.expAttrs.length),
+      amount: Math.round(stageExp / spec.expAttrs.length),
     }));
     const extra = spec.deepUnlocks[i] ?? null;
     return {

@@ -7,6 +7,9 @@
 // 本模組【不 handle 任何指令】：學習的唯一入口在 ㉜，
 // 這樣「產出總和 − 消耗總和 ＝ 餘額」才是可斷言的不變量。
 import type { RunContext } from '../contracts/core/context.js';
+import type { Attr } from '../contracts/core/primitives.js';
+import { ATTRS } from '../contracts/core/primitives.js';
+import { statQuery } from './stats.js';
 import type { SkillDef, TraitDef } from '../contracts/core/definitions.js';
 import type { ResolvedEffectRef } from '../contracts/core/effects.js';
 import type { SkillId, TraitId } from '../contracts/core/ids.js';
@@ -37,6 +40,31 @@ export function addSkill(id: SkillId, ctx: RunContext): RunState {
     ...ctx.state,
     abilities: { ...ctx.state.abilities, skills: [...ctx.state.abilities.skills, id] },
   };
+}
+
+/**
+ * 入夢時就會的那一招 ★ **你本來就會的那一手。**
+ *
+ * 取【起始四維最高那一維】的常階招。理由是玩不下去：消耗表的尺度
+ * 讓第一章的購買力買不起任何一招（常階 140，八回合約攢到 100），
+ * 於是玩家會帶著三個空格走進第一場戰役 —— 一招都放不出來，
+ * 全靠指揮傳令。那不是「配置不好」，那是【沒有配置可做】。
+ *
+ * 它同時給「起始四維」第二個職責：**你抽到什麼底子，就會什麼**。
+ * 於是第一輪的自己不是白紙，而是一個已經有一手的人。
+ *
+ * 不寫死對照表 —— 從 `action.actorAttr` 反查，加一維或改職能都不用回來補。
+ */
+export function starterSkill(ctx: RunContext): SkillId | null {
+  const best = ATTRS.reduce(
+    (a, b) => (statQuery.attr(b, ctx) > statQuery.attr(a, ctx) ? b : a),
+    ATTRS[0] as Attr,
+  );
+  // 【必須是能打的那一種】—— 送一招 Buff 給玩家，他還是零輸出。
+  const hit = ctx.defs.reader('skill').all().find((sk) => sk.tier === 'common'
+    && sk.action.actorAttr === best
+    && (sk.action.kind === 'physical' || sk.action.kind === 'magic'));
+  return hit?.skillId ?? null;
 }
 
 export const traitDef = (id: TraitId, ctx: RunContext): TraitDef =>

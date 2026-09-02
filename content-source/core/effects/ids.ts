@@ -20,8 +20,7 @@
 //   48xx  RarityFloor           稀有度地板
 //   49xx  GainMultiplier        某維成長量
 //   5xxx  Affinity              起始好感 ／ 好感成長
-//   6xxx  Check                 檢定值 ／ 重擲 ／ 揭示
-//   65xx  CheckRewardBonus      大檢定獎勵
+//   6xxx  Check                 小檢定的檢定值 ／ 重擲 ／ 揭示
 //   7xxx  CurrencyBonus         功績倍率
 //   8xxx  DesignateSlots        指名額度
 
