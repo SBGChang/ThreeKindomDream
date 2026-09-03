@@ -50,10 +50,9 @@ export const campCampaigns: readonly CampaignDef[] = [
         null, enemyId('enemy:zhangliang'),
         null, enemyId('enemy:zhangjiao'),
       ],
-      baseMerit: 10,
+      baseMerit: 2,
       meritKind: 'martial',
       // 打仗長的是帶兵的本事 —— 武與統各一半。
-      expAttrs: ['war', 'lead'],
       /**
        * 深處的唯一掉落 —— 這一場給的是【入門的兩招】。
        *

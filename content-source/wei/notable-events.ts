@@ -94,9 +94,13 @@ const event = (s: Spec): EventDef => weiDef('event', `event:wei.${s.name}`, {
   options: options(s),
 });
 
-const SMALL = 12;
-const MID = 26;
-const BIG = 48;
+// 功績量級 ★ **已從 12／26／48 減半** —— 它們還要再乘官階與稀有度。
+// 舊值下一則 ★5 大事件在 rank 12 給 1680，而那一階只要 1330：
+// **一則事件跳一階**。減半＋兩條倍率壓平之後約 310，
+// 剛好是頂階一步的一半 —— 是個大場面，但不是階梯的替代品。
+const SMALL = 6;
+const MID = 13;
+const BIG = 24;
 
 // ══ 入門 · 十二則（單人，step 0）══════════════════════
 const entries: readonly Spec[] = [

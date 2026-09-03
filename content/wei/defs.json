@@ -3101,7 +3101,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3124,7 +3124,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3179,7 +3179,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3202,7 +3202,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3257,7 +3257,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 6,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3280,7 +3280,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 6,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3335,7 +3335,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3358,7 +3358,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3413,7 +3413,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 6,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3436,7 +3436,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 6,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3491,7 +3491,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 6,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3514,7 +3514,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 6,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3569,7 +3569,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "civil"
           }
@@ -3592,7 +3592,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "civil"
           }
@@ -3647,7 +3647,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "civil"
           }
@@ -3670,7 +3670,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "civil"
           }
@@ -3725,7 +3725,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 6,
             "kind": "merit",
             "merit": "civil"
           }
@@ -3748,7 +3748,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 6,
             "kind": "merit",
             "merit": "civil"
           }
@@ -3803,7 +3803,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "civil"
           }
@@ -3826,7 +3826,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "civil"
           }
@@ -3881,7 +3881,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 6,
             "kind": "merit",
             "merit": "civil"
           }
@@ -3904,7 +3904,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 6,
             "kind": "merit",
             "merit": "civil"
           }
@@ -3959,7 +3959,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 6,
             "kind": "merit",
             "merit": "civil"
           }
@@ -3982,7 +3982,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 6,
             "kind": "merit",
             "merit": "civil"
           }
@@ -4037,7 +4037,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "martial"
           },
@@ -4065,7 +4065,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "martial"
           },
@@ -4125,7 +4125,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "martial"
           },
@@ -4153,7 +4153,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "martial"
           },
@@ -4213,7 +4213,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "martial"
           },
@@ -4241,7 +4241,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "martial"
           },
@@ -4301,7 +4301,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "martial"
           },
@@ -4329,7 +4329,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "martial"
           },
@@ -4389,7 +4389,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4417,7 +4417,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4477,7 +4477,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4505,7 +4505,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4565,7 +4565,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4593,7 +4593,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 26,
+            "amount": 13,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4653,7 +4653,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 48,
+            "amount": 24,
             "kind": "merit",
             "merit": "martial"
           }
@@ -4676,7 +4676,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 48,
+            "amount": 24,
             "kind": "merit",
             "merit": "martial"
           }
@@ -4731,7 +4731,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 48,
+            "amount": 24,
             "kind": "merit",
             "merit": "martial"
           },
@@ -4759,7 +4759,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 48,
+            "amount": 24,
             "kind": "merit",
             "merit": "martial"
           },
@@ -4819,7 +4819,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 48,
+            "amount": 24,
             "kind": "merit",
             "merit": "civil"
           }
@@ -4842,7 +4842,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 48,
+            "amount": 24,
             "kind": "merit",
             "merit": "civil"
           }
@@ -4897,7 +4897,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 48,
+            "amount": 24,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4925,7 +4925,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 48,
+            "amount": 24,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4985,7 +4985,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 48,
+            "amount": 24,
             "kind": "merit",
             "merit": "civil"
           }
@@ -5008,7 +5008,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 48,
+            "amount": 24,
             "kind": "merit",
             "merit": "civil"
           }
@@ -5063,7 +5063,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 48,
+            "amount": 24,
             "kind": "merit",
             "merit": "civil"
           },
@@ -5091,7 +5091,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 48,
+            "amount": 24,
             "kind": "merit",
             "merit": "civil"
           },
@@ -5151,7 +5151,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 48,
+            "amount": 24,
             "kind": "merit",
             "merit": "martial"
           },
@@ -5179,7 +5179,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 48,
+            "amount": 24,
             "kind": "merit",
             "merit": "martial"
           },
@@ -5239,7 +5239,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 48,
+            "amount": 24,
             "kind": "merit",
             "merit": "martial"
           },
@@ -5267,7 +5267,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 48,
+            "amount": 24,
             "kind": "merit",
             "merit": "martial"
           },
@@ -5327,7 +5327,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 48,
+            "amount": 24,
             "kind": "merit",
             "merit": "martial"
           }
@@ -5350,7 +5350,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 48,
+            "amount": 24,
             "kind": "merit",
             "merit": "martial"
           }
@@ -5409,7 +5409,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 48,
+            "amount": 24,
             "kind": "merit",
             "merit": "martial"
           },
@@ -5437,7 +5437,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 48,
+            "amount": 24,
             "kind": "merit",
             "merit": "martial"
           },
@@ -5501,7 +5501,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 48,
+            "amount": 24,
             "kind": "merit",
             "merit": "civil"
           }
@@ -5524,7 +5524,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 48,
+            "amount": 24,
             "kind": "merit",
             "merit": "civil"
           }
@@ -5583,7 +5583,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 48,
+            "amount": 24,
             "kind": "merit",
             "merit": "martial"
           },
@@ -5616,7 +5616,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 48,
+            "amount": 24,
             "kind": "merit",
             "merit": "martial"
           },
@@ -5864,18 +5864,28 @@
         "damageMul": 0.55,
         "rewards": [
           {
-            "amount": 22,
+            "amount": 4,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 15,
+            "amount": 8,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 8,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 15,
-            "attr": "lead",
+            "amount": 8,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 8,
+            "attr": "pol",
             "kind": "exp"
           }
         ],
@@ -5884,21 +5894,31 @@
       {
         "boss": null,
         "briefKey": "campaign.wei.hulao.stage.1",
-        "damageMul": 0.62,
+        "damageMul": 0.75,
         "rewards": [
           {
-            "amount": 40,
+            "amount": 7,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 30,
+            "amount": 15,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 15,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 30,
-            "attr": "lead",
+            "amount": 15,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 15,
+            "attr": "pol",
             "kind": "exp"
           }
         ],
@@ -5907,21 +5927,31 @@
       {
         "boss": "enemy:lijue",
         "briefKey": "campaign.wei.hulao.stage.2",
-        "damageMul": 0.7,
+        "damageMul": 1,
         "rewards": [
           {
-            "amount": 70,
+            "amount": 13,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 45,
+            "amount": 23,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 23,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 45,
-            "attr": "lead",
+            "amount": 23,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 23,
+            "attr": "pol",
             "kind": "exp"
           }
         ],
@@ -5930,21 +5960,31 @@
       {
         "boss": null,
         "briefKey": "campaign.wei.hulao.stage.3",
-        "damageMul": 0.78,
+        "damageMul": 1.35,
         "rewards": [
           {
-            "amount": 132,
+            "amount": 24,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 60,
+            "amount": 30,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 30,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 60,
-            "attr": "lead",
+            "amount": 30,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 30,
+            "attr": "pol",
             "kind": "exp"
           },
           {
@@ -5958,21 +5998,31 @@
       {
         "boss": "enemy:huaxiong",
         "briefKey": "campaign.wei.hulao.stage.4",
-        "damageMul": 0.88,
+        "damageMul": 1.85,
         "rewards": [
           {
-            "amount": 242,
+            "amount": 44,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 75,
+            "amount": 38,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 38,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 75,
-            "attr": "lead",
+            "amount": 38,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 38,
+            "attr": "pol",
             "kind": "exp"
           },
           {
@@ -5986,21 +6036,31 @@
       {
         "boss": null,
         "briefKey": "campaign.wei.hulao.stage.5",
-        "damageMul": 1,
+        "damageMul": 2.55,
         "rewards": [
           {
-            "amount": 484,
+            "amount": 88,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 90,
+            "amount": 45,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 45,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 90,
-            "attr": "lead",
+            "amount": 45,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 45,
+            "attr": "pol",
             "kind": "exp"
           }
         ],
@@ -6009,21 +6069,31 @@
       {
         "boss": "enemy:lvbu",
         "briefKey": "campaign.wei.hulao.stage.6",
-        "damageMul": 1.15,
+        "damageMul": 3.5,
         "rewards": [
           {
-            "amount": 990,
+            "amount": 180,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 105,
+            "amount": 53,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 53,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 105,
-            "attr": "lead",
+            "amount": 53,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 53,
+            "attr": "pol",
             "kind": "exp"
           },
           {
@@ -6051,18 +6121,28 @@
         "damageMul": 0.55,
         "rewards": [
           {
-            "amount": 40,
+            "amount": 7,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 15,
+            "amount": 8,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 8,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 15,
-            "attr": "lead",
+            "amount": 8,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 8,
+            "attr": "pol",
             "kind": "exp"
           }
         ],
@@ -6071,21 +6151,31 @@
       {
         "boss": "enemy:guotu",
         "briefKey": "campaign.wei.guandu.stage.1",
-        "damageMul": 0.62,
+        "damageMul": 0.75,
         "rewards": [
           {
-            "amount": 72,
+            "amount": 13,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 30,
+            "amount": 15,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 15,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 30,
-            "attr": "lead",
+            "amount": 15,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 15,
+            "attr": "pol",
             "kind": "exp"
           }
         ],
@@ -6094,21 +6184,31 @@
       {
         "boss": null,
         "briefKey": "campaign.wei.guandu.stage.2",
-        "damageMul": 0.7,
+        "damageMul": 1,
         "rewards": [
           {
-            "amount": 128,
+            "amount": 22,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 45,
+            "amount": 23,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 23,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 45,
-            "attr": "lead",
+            "amount": 23,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 23,
+            "attr": "pol",
             "kind": "exp"
           }
         ],
@@ -6117,21 +6217,31 @@
       {
         "boss": "enemy:yanliang",
         "briefKey": "campaign.wei.guandu.stage.3",
-        "damageMul": 0.78,
+        "damageMul": 1.35,
         "rewards": [
           {
-            "amount": 240,
+            "amount": 42,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 60,
+            "amount": 30,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 30,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 60,
-            "attr": "lead",
+            "amount": 30,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 30,
+            "attr": "pol",
             "kind": "exp"
           },
           {
@@ -6145,21 +6255,31 @@
       {
         "boss": null,
         "briefKey": "campaign.wei.guandu.stage.4",
-        "damageMul": 0.88,
+        "damageMul": 1.85,
         "rewards": [
           {
-            "amount": 440,
+            "amount": 77,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 75,
+            "amount": 38,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 38,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 75,
-            "attr": "lead",
+            "amount": 38,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 38,
+            "attr": "pol",
             "kind": "exp"
           },
           {
@@ -6173,21 +6293,31 @@
       {
         "boss": "enemy:shenpei",
         "briefKey": "campaign.wei.guandu.stage.5",
-        "damageMul": 1,
+        "damageMul": 2.55,
         "rewards": [
           {
-            "amount": 880,
+            "amount": 154,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 90,
+            "amount": 45,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 45,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 90,
-            "attr": "lead",
+            "amount": 45,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 45,
+            "attr": "pol",
             "kind": "exp"
           },
           {
@@ -6201,21 +6331,31 @@
       {
         "boss": "enemy:yuanshao",
         "briefKey": "campaign.wei.guandu.stage.6",
-        "damageMul": 1.15,
+        "damageMul": 3.5,
         "rewards": [
           {
-            "amount": 1800,
+            "amount": 315,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 105,
+            "amount": 53,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 53,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 105,
-            "attr": "lead",
+            "amount": 53,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 53,
+            "attr": "pol",
             "kind": "exp"
           },
           {
@@ -6243,18 +6383,28 @@
         "damageMul": 0.55,
         "rewards": [
           {
-            "amount": 68,
+            "amount": 12,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 15,
+            "amount": 8,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 8,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 15,
-            "attr": "lead",
+            "amount": 8,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 8,
+            "attr": "pol",
             "kind": "exp"
           }
         ],
@@ -6263,21 +6413,31 @@
       {
         "boss": null,
         "briefKey": "campaign.wei.hebei.stage.1",
-        "damageMul": 0.62,
+        "damageMul": 0.75,
         "rewards": [
           {
-            "amount": 122,
+            "amount": 22,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 30,
+            "amount": 15,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 15,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 30,
-            "attr": "lead",
+            "amount": 15,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 15,
+            "attr": "pol",
             "kind": "exp"
           }
         ],
@@ -6286,21 +6446,31 @@
       {
         "boss": "enemy:yuantan",
         "briefKey": "campaign.wei.hebei.stage.2",
-        "damageMul": 0.7,
+        "damageMul": 1,
         "rewards": [
           {
-            "amount": 218,
+            "amount": 38,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 45,
+            "amount": 23,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 23,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 45,
-            "attr": "lead",
+            "amount": 23,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 23,
+            "attr": "pol",
             "kind": "exp"
           }
         ],
@@ -6309,21 +6479,31 @@
       {
         "boss": null,
         "briefKey": "campaign.wei.hebei.stage.3",
-        "damageMul": 0.78,
+        "damageMul": 1.35,
         "rewards": [
           {
-            "amount": 408,
+            "amount": 72,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 60,
+            "amount": 30,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 30,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 60,
-            "attr": "lead",
+            "amount": 30,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 30,
+            "attr": "pol",
             "kind": "exp"
           }
         ],
@@ -6332,21 +6512,31 @@
       {
         "boss": "enemy:shenpei",
         "briefKey": "campaign.wei.hebei.stage.4",
-        "damageMul": 0.88,
+        "damageMul": 1.85,
         "rewards": [
           {
-            "amount": 748,
+            "amount": 132,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 75,
+            "amount": 38,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 38,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 75,
-            "attr": "lead",
+            "amount": 38,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 38,
+            "attr": "pol",
             "kind": "exp"
           },
           {
@@ -6360,21 +6550,31 @@
       {
         "boss": "enemy:tadun",
         "briefKey": "campaign.wei.hebei.stage.5",
-        "damageMul": 1,
+        "damageMul": 2.55,
         "rewards": [
           {
-            "amount": 1496,
+            "amount": 264,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 90,
+            "amount": 45,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 45,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 90,
-            "attr": "lead",
+            "amount": 45,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 45,
+            "attr": "pol",
             "kind": "exp"
           },
           {
@@ -6388,21 +6588,31 @@
       {
         "boss": "enemy:tadun",
         "briefKey": "campaign.wei.hebei.stage.6",
-        "damageMul": 1.15,
+        "damageMul": 3.5,
         "rewards": [
           {
-            "amount": 3060,
+            "amount": 540,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 105,
+            "amount": 53,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 53,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 105,
-            "attr": "lead",
+            "amount": 53,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 53,
+            "attr": "pol",
             "kind": "exp"
           },
           {

@@ -471,25 +471,27 @@ export interface EventYieldCurveDef extends DefHeader {
   /** 檢定失敗時仍給的比例。事情辦砸了，但人還是走過那一趟（17 §6.3）。 */
   readonly failRatio: number;
   /**
-   * 事上磨練（經驗）的縮放【與功績分開】★
+   * 事上磨練（經驗）的稀有度倍率 ★ **一則事件的經驗 ＝ 基礎值 × 星數**
    *
-   * 功績要追得上官階門檻（最高 6405），所以它吃 `tierMultiplier`（→19.8）
-   * 與 `rarityMultiplier`（→9.0）—— 兩者相乘可以到 178 倍。
+   * 這是玩家自己訂的規矩，訂成 `[1,2,3,4,5]` 就是它的字面意思。
    *
-   * 經驗不能吃那條鏈：四維只有 0–100，一輪的總經驗約 900。
-   * 一則 ★4 人物事件若乘上 178 倍，一次就給 97 點經驗 ——
-   * 那是一整個等級，而玩家還沒選過任何東西。
+   * ── 兩種貨幣，兩個索引，不重疊 ★ ─────────────────
+   *   經驗 只吃【稀有度】—— 事情本身有多大
+   *   功績 只吃【官階】  —— 你的身分有多重（`tierMultiplier`）
    *
-   * 因此經驗走【自己的兩條平緩曲線】。這是舊制（產出即屬性、上限 999）
-   * 留下來的尺度錯誤，不是平衡微調。
+   * 舊制兩者都吃兩條鏈（相乘 178 倍），於是同一個決定同時放大兩種貨幣，
+   * 「追光階 對 追驚嘆號」讀不出差別。分開之後那個取捨才有內容：
+   * **光階買經驗，委託旗標買功績。**
+   *
+   * 刻意【沒有】官階項：`practiceTierMul` 已刪除。它的存在讓
+   * 「基礎值 × 星數」多一個看不見的乘數，而經驗的官階成長已經由
+   * `trainingCurve`（鍛鍊）與戰役深度承擔了。
    */
-  readonly practiceTierMul: readonly number[];
   readonly practiceRarityMul: readonly number[];
   /**
-   * 稀有度倍率，index ＝ rarity − 1（17 §6.5）。
+   * 功績的官階倍率，index ＝ 官階階級 − 1（17 §6.5）。
    *
-   * 光階決定抽到多稀有的委託，這張表決定「稀有」值多少。少了它，
-   * 紅光帶來的只是不一樣的文字 —— 玩家看到紅光時該期待的是【更大的事】。
+   * 與 DC 曲線【共用同一個索引】：朝廷按身分派事，難度與報酬一起長。
    */
   readonly rarityMultiplier: readonly number[];
 }
@@ -598,11 +600,18 @@ export interface FactionDef extends DefHeader {
 }
 export type EndingTrigger =
   | { readonly kind: 'sequenceCompleted' }
-  | { readonly kind: 'checkFailed'; readonly attr: Attr | 'any' }
   | { readonly kind: 'noFactionEligible' };
 export interface EndingDef extends DefHeader {
   readonly kind: 'ending';
   readonly ending: EndingId;
+  /**
+   * 圓夢與否 ★ **不是「中途結束與否」**
+   *
+   * 戰役失敗不再夢醒（獎勵減半、章節照過），所以每一輪都會走完章節序列。
+   * `aborted` 因此改讀作【走完了，但沒有圓夢】—— 官階低到沒有稱號可領。
+   * `isFullDream` 仍然是那條分界，只是它現在量的是「你有沒有經營出一份前程」，
+   * 而不是「你有沒有活下來」。
+   */
   readonly endingKind: 'fullDream' | 'aborted';
   readonly factionId: FactionId | null;
   readonly trigger: EndingTrigger;

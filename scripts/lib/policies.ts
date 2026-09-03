@@ -84,16 +84,22 @@ const safest = (offer: EventOffer): number => {
   return on.reduce((best, i) => (rateOf(offer, i) > rateOf(offer, best) ? i : best), on[0] ?? 0);
 };
 
-/** 貪：功績最高的那個，不看成功率。失敗仍給四成，所以這不是純自殺。 */
+/** 貪：功績最高的那個，不看成功率。**failRatio ＝ 0 之後這真的是自殺**。 */
 const richest = (offer: EventOffer): number => {
   const on = enabledIndices(offer);
   return on.reduce((best, i) => (meritOf(offer, i) > meritOf(offer, best) ? i : best), on[0] ?? 0);
 };
 
-/** 期望值：功績 × 成功率（失敗仍有四成，所以下限不是 0）。 */
+/**
+ * 期望值：功績 × 成功率。
+ *
+ * ★ 舊式是 `merit × (0.4 + 0.6 × rate)` —— 那是 `failRatio = 0.4` 的算法。
+ * 失敗改成顆粒無收之後期望值就是純乘積；不改的話替身會高估高難度選項，
+ * 而「三檔怎麼選」正是這一版要量的東西。
+ */
 const expected = (offer: EventOffer): number => {
   const on = enabledIndices(offer);
-  const ev = (i: number): number => meritOf(offer, i) * (0.4 + 0.6 * rateOf(offer, i));
+  const ev = (i: number): number => meritOf(offer, i) * rateOf(offer, i);
   return on.reduce((best, i) => (ev(i) > ev(best) ? i : best), on[0] ?? 0);
 };
 
@@ -104,8 +110,8 @@ const expected = (offer: EventOffer): number => {
 //   margin 走還留要的餘裕倍數 —— 見 engageIf
 //
 // **margin 是這一版策略組的主軸線。** 舊制量的是「事件佔比」，
-// 新制要量的是【貪心的定價對不對】：1.05 的人算得剛剛好就上，
-// 2.4 的人要有兩倍餘裕才敢打。兩者的點數差就是獎勵曲線該不該再陡的答案。
+// 新制要量的是【貪心的定價對不對】：0.55 的人算不夠也上，
+// 2.0 的人要有兩倍餘裕才敢打。兩者的點數差就是獎勵曲線該不該再陡的答案。
 
 const cheapestFirst = <T extends { readonly cost: Readonly<Partial<Record<Attr, number>>> }>(
   offers: readonly T[],
@@ -122,7 +128,14 @@ const slotCap = (s: Session): number => s.current.abilities.skills.length;
  *   數值是所有技能的倍率，先抬它比多學一招划算
  *   特質是餘裕
  */
-const spendGreedy = (bias: Attr) => (s: Session): void => {
+/**
+ * `bias` 收【一組】維度 —— 單維就是專精，兩維就是雙修 ★
+ *
+ * 玩家描述第一輪該有的樣子時給了兩個分支：「兩三個 B，或一個 A」。
+ * 舊策略組只有「全押一維」與「四維輪流」，量不到中間那個 ——
+ * 而中間那個正是【兩維專精】：兩維各到 B，其餘留在起始值附近。
+ */
+const spendGreedy = (...bias: readonly Attr[]) => (s: Session): void => {
   for (let guard = 0; guard < 400; guard += 1) {
     let acted = false;
 
@@ -131,9 +144,18 @@ const spendGreedy = (bias: Attr) => (s: Session): void => {
       if (pick !== undefined && s.learnSkill(pick.def.skillId).ok) acted = true;
     }
 
-    const ng = s.nextGrade(bias);
-    if (!acted && ng !== null && s.expOf(bias) >= ng.cost) {
-      if (s.learnAttr(bias, ng.at).ok) acted = true;
+    // 多維時挑【現值最低的那一維】先抬 —— 那就是「兩維一起養」的意思。
+    if (!acted) {
+      const wants = bias.slice().sort(
+        (a, b) => s.current.attributes.values[a] - s.current.attributes.values[b],
+      );
+      for (const a of wants) {
+        const ng = s.nextGrade(a);
+        if (ng !== null && s.expOf(a) >= ng.cost && s.learnAttr(a, ng.at).ok) {
+          acted = true;
+          break;
+        }
+      }
     }
 
     if (!acted) {
@@ -145,7 +167,7 @@ const spendGreedy = (bias: Attr) => (s: Session): void => {
       // 主維滿了就往其他維倒 —— 一個人不會讓經驗爛在手上。
       // 這一段是【度量整套經濟有沒有稀缺】的關鍵：若替身只買一維，
       // 「未花的經驗」會被高估，看起來像貨幣過剩其實是 AI 太笨。
-      for (const a of [bias, ...ATTRS.filter((x) => x !== bias)]) {
+      for (const a of [...bias, ...ATTRS.filter((x) => !bias.includes(x))]) {
         const cur = s.current.attributes.values[a];
         if (cur >= 100) continue;
         if (s.learnAttr(a, cur + 1).ok) { acted = true; break; }
@@ -185,7 +207,7 @@ const affinityOf = (s: Session, id: NotableId): number =>
  *   turnsToDie  = 軍勢 ／ 敵方每回合輸出
  *   turnsToKill = 敵方兵力 ／ 我每回合輸出
  *
- * `margin` 就是貪心閾值：1.1 是「算得剛剛好就上」，2.0 是「要有兩倍餘裕」。
+ * `margin` 就是貪心閾值：1.0 是「算得剛剛好就上」，2.0 是「要有兩倍餘裕」。
  * **它是這一版策略組的主軸線** —— 兩端的點數差就是獎勵曲線該不該再陡的答案。
  */
 const engageIf = (margin: number) => (s: Session): boolean => {
@@ -205,8 +227,23 @@ const engageIf = (margin: number) => (s: Session): boolean => {
   return (turnsToDie + healed) >= turnsToKill * margin;
 };
 
-const campaignOf = (bias: Attr, margin: number) => ({
-  spend: spendGreedy(bias),
+/**
+ * ★ margin 的合理值隨【戰敗的定價】改變 —— 這一版整條軸下移
+ *
+ * 舊制戰敗 ＝ 夢醒，損失是「剩下所有章節」，所以要五六成勝率才該上。
+ * 新制戰敗 ＝ 已保住的獎勵減半（33 §6.4）。獎勵曲線是加速的
+ * （第 N 關 ≈ 前面全部之和），於是再打一關的賭注是
+ * 「拿一半的已得，換一倍的已得」：
+ *
+ *   p × 2B + (1 − p) × 0.5B ≥ B   →   **p ≥ 1/3**
+ *
+ * 損益兩平的勝率從 ~55% 掉到 33%，所以「標準」那一檔從 1.5 改成 1.0，
+ * 真正魯莽的那一檔要下到 0.55 才還是魯莽。
+ * **不改的話「魯莽」會變成正解，軸線量不到任何東西。**
+ */
+
+const campaignOf = (bias: Attr | readonly Attr[], margin: number) => ({
+  spend: spendGreedy(...(Array.isArray(bias) ? bias : [bias as Attr])),
   chooseLoadout: loadoutOf,
   chooseEngage: engageIf(margin),
 });
@@ -236,12 +273,29 @@ const lineFocused = (name: string, line: CareerLine): AgentPolicy => ({
   name,
   chooseSlot: (s) => focus(s, LINE_ATTR[line]),
   chooseOption: (s, offer) => expected(offer),
-  ...campaignOf(LINE_ATTR[line], 1.5),
+  ...campaignOf(LINE_ATTR[line], 1.0),
 });
 
 export const POLICIES: readonly AgentPolicy[] = [
   lineFocused('focus-martial', 'martial'),
   lineFocused('focus-civil', 'civil'),
+  {
+    /**
+     * 雙修：武與統一起養 —— **玩家自己描述的那個分支** ★
+     *
+     * 「兩三個 B，或一個 A，其他都 CDE」。舊策略組只有兩端
+     * （全押一維 → 一個 A；四維輪流 → 四個 C），沒有中間這個。
+     * 它同時是最自然的人類玩法：戰役裡武是輸出、統是 Buff，兩者相乘。
+     */
+    name: 'dual-martial',
+    chooseSlot: (s) => bestSlot(s, (i) => {
+      const a = slotAttr(s, i);
+      const bonus = a === 'war' || a === 'lead' ? 10000 : 0;
+      return bonus + s.previewTraining(i).expectedGain;
+    }),
+    chooseOption: (s, offer) => expected(offer),
+    ...campaignOf(['war', 'lead'], 1.0),
+  },
   {
     /**
      * 追期望值：永遠投期望四維最高的那一格，不管是哪一維。
@@ -253,7 +307,7 @@ export const POLICIES: readonly AgentPolicy[] = [
     name: 'greedy-gain',
     chooseSlot: (s) => bestSlot(s, (i) => s.previewTraining(i).expectedGain),
     chooseOption: (s, offer) => expected(offer),
-    ...campaignOf('war', 1.5),
+    ...campaignOf('war', 1.0),
   },
   {
     /**
@@ -269,7 +323,7 @@ export const POLICIES: readonly AgentPolicy[] = [
       return GLOW_ORDER[slot.baseGlow] * 1000 + s.previewTraining(i).expectedGain;
     }),
     chooseOption: (s, offer) => richest(offer),
-    ...campaignOf('war', 1.5),
+    ...campaignOf('war', 1.0),
   },
   {
     /**
@@ -285,7 +339,7 @@ export const POLICIES: readonly AgentPolicy[] = [
       return slot.notables.length * 1000 + s.previewTraining(i).expectedGain;
     }),
     chooseOption: (s, offer) => expected(offer),
-    ...campaignOf('war', 1.5),
+    ...campaignOf('war', 1.0),
   },
   {
     /**
@@ -304,7 +358,7 @@ export const POLICIES: readonly AgentPolicy[] = [
       return (pv.hasCommission ? 2000 : 0) + (pv.hasEncounter ? 1000 : 0) + pv.expectedGain;
     }),
     chooseOption: (s, offer) => expected(offer),
-    ...campaignOf('war', 1.5),
+    ...campaignOf('war', 1.0),
   },
   {
     /**
@@ -317,7 +371,7 @@ export const POLICIES: readonly AgentPolicy[] = [
       return (pv.hasEncounter ? 2000 : 0) + pv.notableCount * 100 + pv.expectedGain;
     }),
     chooseOption: (s, offer) => expected(offer),
-    ...campaignOf('war', 1.5),
+    ...campaignOf('war', 1.0),
   },
   {
     // 平均分配四維：輪流投。四維上限與「攤平四類經驗」的代價由它量出來。
@@ -327,14 +381,14 @@ export const POLICIES: readonly AgentPolicy[] = [
       return want === undefined ? 0 : focus(s, want);
     },
     chooseOption: (s, offer) => expected(offer),
-    ...campaignOf('war', 1.5),
+    ...campaignOf('war', 1.0),
   },
   {
     // 專精武，委託一律選最穩的 —— 功績少但幾乎不失敗。
     name: 'option-safe',
     chooseSlot: (s) => focus(s, LINE_ATTR.martial),
     chooseOption: (s, offer) => safest(offer),
-    ...campaignOf('war', 1.5),
+    ...campaignOf('war', 1.0),
   },
   {
     // 專精武，委託一律選功績最高的 —— 常失敗，但失敗仍給四成。
@@ -342,19 +396,19 @@ export const POLICIES: readonly AgentPolicy[] = [
     name: 'option-greedy',
     chooseSlot: (s) => focus(s, LINE_ATTR.martial),
     chooseOption: (s, offer) => richest(offer),
-    ...campaignOf('war', 1.5),
+    ...campaignOf('war', 1.0),
   },
   {
     name: 'risk-averse',
     chooseSlot: (s) => focus(s, LINE_ATTR.martial),
     chooseOption: (s, offer) => safest(offer),
-    ...campaignOf('war', 2.4),
+    ...campaignOf('war', 2.0),
   },
   {
     name: 'risk-seeking',
     chooseSlot: (s) => focus(s, LINE_ATTR.martial),
     chooseOption: (s, offer) => richest(offer),
-    ...campaignOf('war', 1.05),
+    ...campaignOf('war', 0.55),
   },
   {
     name: 'random',
@@ -369,6 +423,6 @@ export const POLICIES: readonly AgentPolicy[] = [
       const r = Math.abs(Math.sin(turn * 78.233) * 43758.5453) % 1;
       return on[Math.floor(r * on.length) % Math.max(1, on.length)] ?? 0;
     },
-    ...campaignOf('war', 2.4),
+    ...campaignOf('war', 2.0),
   },
 ];

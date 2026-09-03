@@ -280,10 +280,10 @@
     "id": "curve:training",
     "kind": "trainingCurve",
     "meritByAttr": {
-      "int": 6,
-      "lead": 6,
-      "pol": 6,
-      "war": 6
+      "int": 3,
+      "lead": 3,
+      "pol": 3,
+      "war": 3
     },
     "packId": "pack:core",
     "schemaVersion": 1,
@@ -292,57 +292,43 @@
   },
   {
     "baseByAttr": {
-      "int": 4,
-      "lead": 4,
-      "pol": 4,
-      "war": 4
+      "int": 20,
+      "lead": 20,
+      "pol": 20,
+      "war": 20
     },
-    "failRatio": 0.4,
+    "failRatio": 0,
     "id": "curve:eventYield",
     "kind": "eventYieldCurve",
     "packId": "pack:core",
     "practiceRarityMul": [
       1,
-      1.2,
-      1.5,
-      1.9,
-      2.4
-    ],
-    "practiceTierMul": [
-      1,
-      1.15,
-      1.3,
-      1.45,
-      1.6,
-      1.75,
-      1.9,
-      2.05,
-      2.2,
-      2.35,
-      2.5,
-      2.65
+      2,
+      3,
+      4,
+      5
     ],
     "rarityMultiplier": [
       1,
+      1.15,
       1.3,
-      1.7,
-      2.2,
-      2.8
+      1.5,
+      1.7
     ],
     "schemaVersion": 1,
     "tierMultiplier": [
       1,
-      1.4,
-      1.9,
-      2.5,
-      3.2,
-      4.1,
-      5.1,
-      6.3,
-      7.6,
-      9.1,
-      10.7,
-      12.5
+      1.3,
+      1.7,
+      2.1,
+      2.6,
+      3.1,
+      3.7,
+      4.3,
+      5,
+      5.8,
+      6.7,
+      7.6
     ]
   },
   {
@@ -511,49 +497,49 @@
   {
     "bands": [
       {
-        "costPerPoint": 2,
+        "costPerPoint": 4,
         "grade": "G",
         "max": 0,
         "min": 0
       },
       {
-        "costPerPoint": 2,
+        "costPerPoint": 4,
         "grade": "F",
         "max": 19,
         "min": 1
       },
       {
-        "costPerPoint": 5,
+        "costPerPoint": 8,
         "grade": "E",
         "max": 39,
         "min": 20
       },
       {
-        "costPerPoint": 10,
+        "costPerPoint": 16,
         "grade": "D",
         "max": 59,
         "min": 40
       },
       {
-        "costPerPoint": 18,
+        "costPerPoint": 28,
         "grade": "C",
         "max": 74,
         "min": 60
       },
       {
-        "costPerPoint": 30,
+        "costPerPoint": 44,
         "grade": "B",
         "max": 84,
         "min": 75
       },
       {
-        "costPerPoint": 50,
+        "costPerPoint": 76,
         "grade": "A",
         "max": 94,
         "min": 85
       },
       {
-        "costPerPoint": 90,
+        "costPerPoint": 136,
         "grade": "S",
         "max": 100,
         "min": 95
@@ -587,18 +573,18 @@
     },
     "crossLineRatio": 0.5,
     "enemyDamageByRank": [
-      6,
-      8,
-      11,
-      14,
-      19,
-      24,
-      31,
-      38,
-      47,
-      57,
-      68,
-      81
+      16,
+      21,
+      29,
+      36,
+      49,
+      62,
+      81,
+      99,
+      122,
+      148,
+      177,
+      211
     ],
     "enemyTroopsByRank": [
       720,
@@ -627,7 +613,7 @@
   },
   {
     "cost": {
-      "war": 100
+      "war": 150
     },
     "descKey": "trait.danshi.desc",
     "effects": [
@@ -647,7 +633,7 @@
   },
   {
     "cost": {
-      "lead": 100
+      "lead": 150
     },
     "descKey": "trait.chenyi.desc",
     "effects": [
@@ -667,7 +653,7 @@
   },
   {
     "cost": {
-      "pol": 100
+      "pol": 150
     },
     "descKey": "trait.liande.desc",
     "effects": [
@@ -687,7 +673,7 @@
   },
   {
     "cost": {
-      "int": 100
+      "int": 150
     },
     "descKey": "trait.jimin.desc",
     "effects": [
@@ -707,8 +693,8 @@
   },
   {
     "cost": {
-      "lead": 100,
-      "war": 150
+      "lead": 150,
+      "war": 220
     },
     "descKey": "trait.linzhen.desc",
     "effects": [
@@ -732,8 +718,8 @@
   },
   {
     "cost": {
-      "int": 100,
-      "pol": 150
+      "int": 150,
+      "pol": 220
     },
     "descKey": "trait.zhechong.desc",
     "effects": [
@@ -753,8 +739,8 @@
   },
   {
     "cost": {
-      "int": 150,
-      "pol": 100
+      "int": 220,
+      "pol": 150
     },
     "descKey": "trait.liaodi.desc",
     "effects": [
@@ -774,9 +760,9 @@
   },
   {
     "cost": {
-      "int": 100,
-      "lead": 150,
-      "war": 200
+      "int": 150,
+      "lead": 220,
+      "war": 300
     },
     "descKey": "trait.wanrendi.desc",
     "effects": [
@@ -796,9 +782,9 @@
   },
   {
     "cost": {
-      "int": 200,
-      "lead": 100,
-      "pol": 150
+      "int": 300,
+      "lead": 150,
+      "pol": 220
     },
     "descKey": "trait.jingwei.desc",
     "effects": [
@@ -822,7 +808,7 @@
   },
   {
     "cost": {
-      "war": 100
+      "war": 150
     },
     "descKey": "trait.gangbi.desc",
     "effects": [
@@ -852,7 +838,7 @@
       "ratio": 0.3
     },
     "cost": {
-      "war": 140
+      "war": 210
     },
     "descKey": "skill.tuzhen.desc",
     "id": "skill:tuzhen",
@@ -871,8 +857,8 @@
       "ratio": 0.5
     },
     "cost": {
-      "lead": 140,
-      "war": 190
+      "lead": 210,
+      "war": 280
     },
     "descKey": "skill.xianzhen.desc",
     "id": "skill:xianzhen",
@@ -891,9 +877,9 @@
       "ratio": 0.85
     },
     "cost": {
-      "int": 140,
-      "lead": 190,
-      "war": 250
+      "int": 210,
+      "lead": 280,
+      "war": 380
     },
     "descKey": "skill.wanrenzhi.desc",
     "id": "skill:wanrenzhi",
@@ -912,7 +898,7 @@
       "ratio": 0.32
     },
     "cost": {
-      "int": 140
+      "int": 210
     },
     "descKey": "skill.huoji.desc",
     "id": "skill:huoji",
@@ -931,8 +917,8 @@
       "ratio": 0.52
     },
     "cost": {
-      "int": 190,
-      "pol": 140
+      "int": 280,
+      "pol": 210
     },
     "descKey": "skill.shuiyan.desc",
     "id": "skill:shuiyan",
@@ -951,9 +937,9 @@
       "ratio": 0.88
     },
     "cost": {
-      "int": 250,
-      "lead": 140,
-      "pol": 190
+      "int": 380,
+      "lead": 210,
+      "pol": 280
     },
     "descKey": "skill.lianhuan.desc",
     "id": "skill:lianhuan",
@@ -972,7 +958,7 @@
       "ratio": 0.28
     },
     "cost": {
-      "pol": 140
+      "pol": 210
     },
     "descKey": "skill.fumin.desc",
     "id": "skill:fumin",
@@ -991,8 +977,8 @@
       "ratio": 0.46
     },
     "cost": {
-      "int": 140,
-      "pol": 190
+      "int": 210,
+      "pol": 280
     },
     "descKey": "skill.tuntian.desc",
     "id": "skill:tuntian",
@@ -1011,9 +997,9 @@
       "ratio": 0.75
     },
     "cost": {
-      "int": 190,
-      "lead": 140,
-      "pol": 250
+      "int": 280,
+      "lead": 210,
+      "pol": 380
     },
     "descKey": "skill.wangzuo.desc",
     "id": "skill:wangzuo",
@@ -1032,7 +1018,7 @@
       "ratio": 0.24
     },
     "cost": {
-      "lead": 140
+      "lead": 210
     },
     "descKey": "skill.haoling.desc",
     "id": "skill:haoling",
@@ -1051,7 +1037,7 @@
       "ratio": 0.26
     },
     "cost": {
-      "pol": 140
+      "pol": 210
     },
     "descKey": "skill.luanci.desc",
     "id": "skill:luanci",
@@ -1070,7 +1056,7 @@
       "ratio": 0.18
     },
     "cost": {
-      "lead": 140
+      "lead": 210
     },
     "descKey": "skill.guwu.desc",
     "id": "skill:guwu",
@@ -1089,8 +1075,8 @@
       "ratio": 0.22
     },
     "cost": {
-      "lead": 190,
-      "war": 140
+      "lead": 280,
+      "war": 210
     },
     "descKey": "skill.jiezhi.desc",
     "id": "skill:jiezhi",
@@ -1109,9 +1095,9 @@
       "ratio": 0.35
     },
     "cost": {
-      "lead": 250,
-      "pol": 140,
-      "war": 190
+      "lead": 380,
+      "pol": 210,
+      "war": 280
     },
     "descKey": "skill.zhirong.desc",
     "id": "skill:zhirong",
@@ -1182,18 +1168,28 @@
         "damageMul": 0.55,
         "rewards": [
           {
-            "amount": 10,
+            "amount": 2,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 15,
+            "amount": 8,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 8,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 15,
-            "attr": "lead",
+            "amount": 8,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 8,
+            "attr": "pol",
             "kind": "exp"
           }
         ],
@@ -1202,21 +1198,31 @@
       {
         "boss": null,
         "briefKey": "campaign.yellowturban.stage.1",
-        "damageMul": 0.62,
+        "damageMul": 0.75,
         "rewards": [
           {
-            "amount": 18,
+            "amount": 4,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 30,
+            "amount": 15,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 15,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 30,
-            "attr": "lead",
+            "amount": 15,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 15,
+            "attr": "pol",
             "kind": "exp"
           }
         ],
@@ -1225,21 +1231,31 @@
       {
         "boss": "enemy:bocai",
         "briefKey": "campaign.yellowturban.stage.2",
-        "damageMul": 0.7,
+        "damageMul": 1,
         "rewards": [
           {
-            "amount": 32,
+            "amount": 6,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 45,
+            "amount": 23,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 23,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 45,
-            "attr": "lead",
+            "amount": 23,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 23,
+            "attr": "pol",
             "kind": "exp"
           }
         ],
@@ -1248,21 +1264,31 @@
       {
         "boss": null,
         "briefKey": "campaign.yellowturban.stage.3",
-        "damageMul": 0.78,
+        "damageMul": 1.35,
         "rewards": [
           {
-            "amount": 60,
+            "amount": 12,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 60,
+            "amount": 30,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 30,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 60,
-            "attr": "lead",
+            "amount": 30,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 30,
+            "attr": "pol",
             "kind": "exp"
           }
         ],
@@ -1271,21 +1297,31 @@
       {
         "boss": "enemy:zhangliang",
         "briefKey": "campaign.yellowturban.stage.4",
-        "damageMul": 0.88,
+        "damageMul": 1.85,
         "rewards": [
           {
-            "amount": 110,
+            "amount": 22,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 75,
+            "amount": 38,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 38,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 75,
-            "attr": "lead",
+            "amount": 38,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 38,
+            "attr": "pol",
             "kind": "exp"
           },
           {
@@ -1299,21 +1335,31 @@
       {
         "boss": null,
         "briefKey": "campaign.yellowturban.stage.5",
-        "damageMul": 1,
+        "damageMul": 2.55,
         "rewards": [
           {
-            "amount": 220,
+            "amount": 44,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 90,
+            "amount": 45,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 45,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 90,
-            "attr": "lead",
+            "amount": 45,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 45,
+            "attr": "pol",
             "kind": "exp"
           },
           {
@@ -1327,21 +1373,31 @@
       {
         "boss": "enemy:zhangjiao",
         "briefKey": "campaign.yellowturban.stage.6",
-        "damageMul": 1.15,
+        "damageMul": 3.5,
         "rewards": [
           {
-            "amount": 450,
+            "amount": 90,
             "kind": "merit",
             "merit": "martial"
           },
           {
-            "amount": 105,
+            "amount": 53,
+            "attr": "lead",
+            "kind": "exp"
+          },
+          {
+            "amount": 53,
             "attr": "war",
             "kind": "exp"
           },
           {
-            "amount": 105,
-            "attr": "lead",
+            "amount": 53,
+            "attr": "int",
+            "kind": "exp"
+          },
+          {
+            "amount": 53,
+            "attr": "pol",
             "kind": "exp"
           },
           {
@@ -2063,18 +2119,18 @@
   },
   {
     "byTier": [
-      9,
-      16,
-      24,
+      11,
+      13,
+      17,
+      23,
+      28,
       32,
-      40,
-      45,
-      50,
-      55,
-      59,
-      63,
-      66,
-      69
+      35,
+      38,
+      41,
+      44,
+      46,
+      48
     ],
     "curveId": "dc:easy",
     "id": "dc:easy",
@@ -2084,8 +2140,8 @@
   },
   {
     "byTier": [
-      12,
       22,
+      26,
       33,
       45,
       55,
@@ -2105,8 +2161,8 @@
   },
   {
     "byTier": [
-      15,
       28,
+      33,
       42,
       57,
       69,
@@ -3074,17 +3130,17 @@
         "practice": [
           {
             "attr": "lead",
-            "weight": 0.8
+            "weight": 0.45
           },
           {
             "attr": "pol",
-            "weight": 0.3
+            "weight": 0.15
           }
         ],
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 3,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3110,7 +3166,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 20,
+            "amount": 10,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3126,11 +3182,11 @@
         "practice": [
           {
             "attr": "lead",
-            "weight": 1.4
+            "weight": 1.6
           },
           {
             "attr": "pol",
-            "weight": 0.5
+            "weight": 0.6
           }
         ],
         "requirements": [
@@ -3142,7 +3198,7 @@
         ],
         "rewards": [
           {
-            "amount": 32,
+            "amount": 18,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3184,17 +3240,17 @@
         "practice": [
           {
             "attr": "lead",
-            "weight": 0.8
+            "weight": 0.45
           },
           {
             "attr": "war",
-            "weight": 0.3
+            "weight": 0.15
           }
         ],
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 3,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3220,7 +3276,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 20,
+            "amount": 10,
             "kind": "merit",
             "merit": "martial"
           },
@@ -3241,11 +3297,11 @@
         "practice": [
           {
             "attr": "lead",
-            "weight": 1.4
+            "weight": 1.6
           },
           {
             "attr": "war",
-            "weight": 0.5
+            "weight": 0.6
           }
         ],
         "requirements": [
@@ -3257,7 +3313,7 @@
         ],
         "rewards": [
           {
-            "amount": 32,
+            "amount": 18,
             "kind": "merit",
             "merit": "martial"
           },
@@ -3312,17 +3368,17 @@
         "practice": [
           {
             "attr": "lead",
-            "weight": 0.8
+            "weight": 0.45
           },
           {
             "attr": "pol",
-            "weight": 0.3
+            "weight": 0.15
           }
         ],
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 3,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3348,7 +3404,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 20,
+            "amount": 10,
             "kind": "merit",
             "merit": "martial"
           },
@@ -3369,11 +3425,11 @@
         "practice": [
           {
             "attr": "lead",
-            "weight": 1.4
+            "weight": 1.6
           },
           {
             "attr": "pol",
-            "weight": 0.5
+            "weight": 0.6
           }
         ],
         "requirements": [
@@ -3385,7 +3441,7 @@
         ],
         "rewards": [
           {
-            "amount": 32,
+            "amount": 18,
             "kind": "merit",
             "merit": "martial"
           },
@@ -3436,17 +3492,17 @@
         "practice": [
           {
             "attr": "lead",
-            "weight": 0.8
+            "weight": 0.45
           },
           {
             "attr": "war",
-            "weight": 0.3
+            "weight": 0.15
           }
         ],
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 3,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3472,7 +3528,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 20,
+            "amount": 10,
             "kind": "merit",
             "merit": "martial"
           },
@@ -3493,11 +3549,11 @@
         "practice": [
           {
             "attr": "lead",
-            "weight": 1.4
+            "weight": 1.6
           },
           {
             "attr": "war",
-            "weight": 0.5
+            "weight": 0.6
           }
         ],
         "requirements": [
@@ -3509,7 +3565,7 @@
         ],
         "rewards": [
           {
-            "amount": 32,
+            "amount": 18,
             "kind": "merit",
             "merit": "martial"
           },
@@ -3556,17 +3612,17 @@
         "practice": [
           {
             "attr": "war",
-            "weight": 0.8
+            "weight": 0.45
           },
           {
             "attr": "lead",
-            "weight": 0.3
+            "weight": 0.15
           }
         ],
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 3,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3592,7 +3648,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 20,
+            "amount": 10,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3608,11 +3664,11 @@
         "practice": [
           {
             "attr": "war",
-            "weight": 1.4
+            "weight": 1.6
           },
           {
             "attr": "lead",
-            "weight": 0.5
+            "weight": 0.6
           }
         ],
         "requirements": [
@@ -3624,7 +3680,7 @@
         ],
         "rewards": [
           {
-            "amount": 32,
+            "amount": 18,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3670,17 +3726,17 @@
         "practice": [
           {
             "attr": "war",
-            "weight": 0.8
+            "weight": 0.45
           },
           {
             "attr": "lead",
-            "weight": 0.3
+            "weight": 0.15
           }
         ],
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 3,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3706,7 +3762,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 20,
+            "amount": 10,
             "kind": "merit",
             "merit": "martial"
           },
@@ -3727,11 +3783,11 @@
         "practice": [
           {
             "attr": "war",
-            "weight": 1.4
+            "weight": 1.6
           },
           {
             "attr": "lead",
-            "weight": 0.5
+            "weight": 0.6
           }
         ],
         "requirements": [
@@ -3743,7 +3799,7 @@
         ],
         "rewards": [
           {
-            "amount": 32,
+            "amount": 18,
             "kind": "merit",
             "merit": "martial"
           },
@@ -3794,17 +3850,17 @@
         "practice": [
           {
             "attr": "war",
-            "weight": 0.8
+            "weight": 0.45
           },
           {
             "attr": "lead",
-            "weight": 0.3
+            "weight": 0.15
           }
         ],
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 3,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3830,7 +3886,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 20,
+            "amount": 10,
             "kind": "merit",
             "merit": "martial"
           },
@@ -3851,11 +3907,11 @@
         "practice": [
           {
             "attr": "war",
-            "weight": 1.4
+            "weight": 1.6
           },
           {
             "attr": "lead",
-            "weight": 0.5
+            "weight": 0.6
           }
         ],
         "requirements": [
@@ -3867,7 +3923,7 @@
         ],
         "rewards": [
           {
-            "amount": 32,
+            "amount": 18,
             "kind": "merit",
             "merit": "martial"
           },
@@ -3914,17 +3970,17 @@
         "practice": [
           {
             "attr": "war",
-            "weight": 0.8
+            "weight": 0.45
           },
           {
             "attr": "lead",
-            "weight": 0.3
+            "weight": 0.15
           }
         ],
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 3,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3950,7 +4006,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 20,
+            "amount": 10,
             "kind": "merit",
             "merit": "martial"
           },
@@ -3971,11 +4027,11 @@
         "practice": [
           {
             "attr": "war",
-            "weight": 1.4
+            "weight": 1.6
           },
           {
             "attr": "lead",
-            "weight": 0.5
+            "weight": 0.6
           }
         ],
         "requirements": [
@@ -3987,7 +4043,7 @@
         ],
         "rewards": [
           {
-            "amount": 32,
+            "amount": 18,
             "kind": "merit",
             "merit": "martial"
           },
@@ -4034,17 +4090,17 @@
         "practice": [
           {
             "attr": "int",
-            "weight": 0.8
+            "weight": 0.45
           },
           {
             "attr": "pol",
-            "weight": 0.3
+            "weight": 0.15
           }
         ],
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 3,
             "kind": "merit",
             "merit": "civil"
           }
@@ -4070,7 +4126,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 20,
+            "amount": 10,
             "kind": "merit",
             "merit": "civil"
           }
@@ -4086,11 +4142,11 @@
         "practice": [
           {
             "attr": "int",
-            "weight": 1.4
+            "weight": 1.6
           },
           {
             "attr": "pol",
-            "weight": 0.5
+            "weight": 0.6
           }
         ],
         "requirements": [
@@ -4102,7 +4158,7 @@
         ],
         "rewards": [
           {
-            "amount": 32,
+            "amount": 18,
             "kind": "merit",
             "merit": "civil"
           }
@@ -4144,17 +4200,17 @@
         "practice": [
           {
             "attr": "int",
-            "weight": 0.8
+            "weight": 0.45
           },
           {
             "attr": "pol",
-            "weight": 0.3
+            "weight": 0.15
           }
         ],
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 3,
             "kind": "merit",
             "merit": "civil"
           }
@@ -4180,7 +4236,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 20,
+            "amount": 10,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4201,11 +4257,11 @@
         "practice": [
           {
             "attr": "int",
-            "weight": 1.4
+            "weight": 1.6
           },
           {
             "attr": "pol",
-            "weight": 0.5
+            "weight": 0.6
           }
         ],
         "requirements": [
@@ -4217,7 +4273,7 @@
         ],
         "rewards": [
           {
-            "amount": 32,
+            "amount": 18,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4268,17 +4324,17 @@
         "practice": [
           {
             "attr": "int",
-            "weight": 0.8
+            "weight": 0.45
           },
           {
             "attr": "pol",
-            "weight": 0.3
+            "weight": 0.15
           }
         ],
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 3,
             "kind": "merit",
             "merit": "civil"
           }
@@ -4304,7 +4360,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 20,
+            "amount": 10,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4325,11 +4381,11 @@
         "practice": [
           {
             "attr": "int",
-            "weight": 1.4
+            "weight": 1.6
           },
           {
             "attr": "pol",
-            "weight": 0.5
+            "weight": 0.6
           }
         ],
         "requirements": [
@@ -4341,7 +4397,7 @@
         ],
         "rewards": [
           {
-            "amount": 32,
+            "amount": 18,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4388,17 +4444,17 @@
         "practice": [
           {
             "attr": "int",
-            "weight": 0.8
+            "weight": 0.45
           },
           {
             "attr": "pol",
-            "weight": 0.3
+            "weight": 0.15
           }
         ],
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 3,
             "kind": "merit",
             "merit": "civil"
           }
@@ -4424,7 +4480,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 20,
+            "amount": 10,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4445,11 +4501,11 @@
         "practice": [
           {
             "attr": "int",
-            "weight": 1.4
+            "weight": 1.6
           },
           {
             "attr": "lead",
-            "weight": 0.5
+            "weight": 0.6
           }
         ],
         "requirements": [
@@ -4461,7 +4517,7 @@
         ],
         "rewards": [
           {
-            "amount": 32,
+            "amount": 18,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4508,17 +4564,17 @@
         "practice": [
           {
             "attr": "pol",
-            "weight": 0.8
+            "weight": 0.45
           },
           {
             "attr": "int",
-            "weight": 0.3
+            "weight": 0.15
           }
         ],
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 3,
             "kind": "merit",
             "merit": "civil"
           }
@@ -4544,7 +4600,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 20,
+            "amount": 10,
             "kind": "merit",
             "merit": "civil"
           }
@@ -4560,11 +4616,11 @@
         "practice": [
           {
             "attr": "pol",
-            "weight": 1.4
+            "weight": 1.6
           },
           {
             "attr": "int",
-            "weight": 0.5
+            "weight": 0.6
           }
         ],
         "requirements": [
@@ -4576,7 +4632,7 @@
         ],
         "rewards": [
           {
-            "amount": 32,
+            "amount": 18,
             "kind": "merit",
             "merit": "civil"
           }
@@ -4618,17 +4674,17 @@
         "practice": [
           {
             "attr": "pol",
-            "weight": 0.8
+            "weight": 0.45
           },
           {
             "attr": "lead",
-            "weight": 0.3
+            "weight": 0.15
           }
         ],
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 3,
             "kind": "merit",
             "merit": "civil"
           }
@@ -4654,7 +4710,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 20,
+            "amount": 10,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4675,11 +4731,11 @@
         "practice": [
           {
             "attr": "pol",
-            "weight": 1.4
+            "weight": 1.6
           },
           {
             "attr": "int",
-            "weight": 0.5
+            "weight": 0.6
           }
         ],
         "requirements": [
@@ -4691,7 +4747,7 @@
         ],
         "rewards": [
           {
-            "amount": 32,
+            "amount": 18,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4738,17 +4794,17 @@
         "practice": [
           {
             "attr": "pol",
-            "weight": 0.8
+            "weight": 0.45
           },
           {
             "attr": "int",
-            "weight": 0.3
+            "weight": 0.15
           }
         ],
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 3,
             "kind": "merit",
             "merit": "civil"
           }
@@ -4774,7 +4830,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 20,
+            "amount": 10,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4795,11 +4851,11 @@
         "practice": [
           {
             "attr": "pol",
-            "weight": 1.4
+            "weight": 1.6
           },
           {
             "attr": "lead",
-            "weight": 0.5
+            "weight": 0.6
           }
         ],
         "requirements": [
@@ -4811,7 +4867,7 @@
         ],
         "rewards": [
           {
-            "amount": 32,
+            "amount": 18,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4858,17 +4914,17 @@
         "practice": [
           {
             "attr": "pol",
-            "weight": 0.8
+            "weight": 0.45
           },
           {
             "attr": "lead",
-            "weight": 0.3
+            "weight": 0.15
           }
         ],
         "requirements": [],
         "rewards": [
           {
-            "amount": 12,
+            "amount": 3,
             "kind": "merit",
             "merit": "civil"
           }
@@ -4894,7 +4950,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 20,
+            "amount": 10,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4915,11 +4971,11 @@
         "practice": [
           {
             "attr": "pol",
-            "weight": 1.4
+            "weight": 1.6
           },
           {
             "attr": "int",
-            "weight": 0.5
+            "weight": 0.6
           }
         ],
         "requirements": [
@@ -4931,7 +4987,7 @@
         ],
         "rewards": [
           {
-            "amount": 32,
+            "amount": 18,
             "kind": "merit",
             "merit": "civil"
           },
@@ -5004,7 +5060,7 @@
     "line": "civil",
     "nameKey": "career.civil.2",
     "packId": "pack:core",
-    "requiredMerit": 105,
+    "requiredMerit": 60,
     "schemaVersion": 1,
     "trainingBaseAdd": 1
   },
@@ -5016,9 +5072,9 @@
     "line": "civil",
     "nameKey": "career.civil.3",
     "packId": "pack:core",
-    "requiredMerit": 245,
+    "requiredMerit": 145,
     "schemaVersion": 1,
-    "trainingBaseAdd": 2
+    "trainingBaseAdd": 1
   },
   {
     "hostScale": 3.1,
@@ -5028,9 +5084,9 @@
     "line": "civil",
     "nameKey": "career.civil.4",
     "packId": "pack:core",
-    "requiredMerit": 455,
+    "requiredMerit": 260,
     "schemaVersion": 1,
-    "trainingBaseAdd": 3
+    "trainingBaseAdd": 2
   },
   {
     "hostScale": 4.2,
@@ -5040,9 +5096,9 @@
     "line": "civil",
     "nameKey": "career.civil.5",
     "packId": "pack:core",
-    "requiredMerit": 735,
+    "requiredMerit": 410,
     "schemaVersion": 1,
-    "trainingBaseAdd": 4
+    "trainingBaseAdd": 2
   },
   {
     "hostScale": 5.6,
@@ -5052,9 +5108,9 @@
     "line": "civil",
     "nameKey": "career.civil.6",
     "packId": "pack:core",
-    "requiredMerit": 1120,
+    "requiredMerit": 600,
     "schemaVersion": 1,
-    "trainingBaseAdd": 5
+    "trainingBaseAdd": 3
   },
   {
     "hostScale": 7.2,
@@ -5064,9 +5120,9 @@
     "line": "civil",
     "nameKey": "career.civil.7",
     "packId": "pack:core",
-    "requiredMerit": 1610,
+    "requiredMerit": 830,
     "schemaVersion": 1,
-    "trainingBaseAdd": 6
+    "trainingBaseAdd": 3
   },
   {
     "hostScale": 9.1,
@@ -5076,9 +5132,9 @@
     "line": "civil",
     "nameKey": "career.civil.8",
     "packId": "pack:core",
-    "requiredMerit": 2240,
+    "requiredMerit": 1110,
     "schemaVersion": 1,
-    "trainingBaseAdd": 7
+    "trainingBaseAdd": 4
   },
   {
     "hostScale": 11.3,
@@ -5088,9 +5144,9 @@
     "line": "civil",
     "nameKey": "career.civil.9",
     "packId": "pack:core",
-    "requiredMerit": 3010,
+    "requiredMerit": 1450,
     "schemaVersion": 1,
-    "trainingBaseAdd": 8
+    "trainingBaseAdd": 4
   },
   {
     "hostScale": 13.8,
@@ -5100,9 +5156,9 @@
     "line": "civil",
     "nameKey": "career.civil.10",
     "packId": "pack:core",
-    "requiredMerit": 3955,
+    "requiredMerit": 1860,
     "schemaVersion": 1,
-    "trainingBaseAdd": 9
+    "trainingBaseAdd": 5
   },
   {
     "hostScale": 16.6,
@@ -5112,9 +5168,9 @@
     "line": "civil",
     "nameKey": "career.civil.11",
     "packId": "pack:core",
-    "requiredMerit": 5075,
+    "requiredMerit": 2360,
     "schemaVersion": 1,
-    "trainingBaseAdd": 10
+    "trainingBaseAdd": 5
   },
   {
     "hostScale": 19.8,
@@ -5124,9 +5180,9 @@
     "line": "civil",
     "nameKey": "career.civil.12",
     "packId": "pack:core",
-    "requiredMerit": 6405,
+    "requiredMerit": 2960,
     "schemaVersion": 1,
-    "trainingBaseAdd": 11
+    "trainingBaseAdd": 6
   },
   {
     "hostScale": 1,
@@ -5148,7 +5204,7 @@
     "line": "martial",
     "nameKey": "career.martial.2",
     "packId": "pack:core",
-    "requiredMerit": 105,
+    "requiredMerit": 60,
     "schemaVersion": 1,
     "trainingBaseAdd": 1
   },
@@ -5160,9 +5216,9 @@
     "line": "martial",
     "nameKey": "career.martial.3",
     "packId": "pack:core",
-    "requiredMerit": 245,
+    "requiredMerit": 145,
     "schemaVersion": 1,
-    "trainingBaseAdd": 2
+    "trainingBaseAdd": 1
   },
   {
     "hostScale": 3.1,
@@ -5172,9 +5228,9 @@
     "line": "martial",
     "nameKey": "career.martial.4",
     "packId": "pack:core",
-    "requiredMerit": 455,
+    "requiredMerit": 260,
     "schemaVersion": 1,
-    "trainingBaseAdd": 3
+    "trainingBaseAdd": 2
   },
   {
     "hostScale": 4.2,
@@ -5184,9 +5240,9 @@
     "line": "martial",
     "nameKey": "career.martial.5",
     "packId": "pack:core",
-    "requiredMerit": 735,
+    "requiredMerit": 410,
     "schemaVersion": 1,
-    "trainingBaseAdd": 4
+    "trainingBaseAdd": 2
   },
   {
     "hostScale": 5.6,
@@ -5196,9 +5252,9 @@
     "line": "martial",
     "nameKey": "career.martial.6",
     "packId": "pack:core",
-    "requiredMerit": 1120,
+    "requiredMerit": 600,
     "schemaVersion": 1,
-    "trainingBaseAdd": 5
+    "trainingBaseAdd": 3
   },
   {
     "hostScale": 7.2,
@@ -5208,9 +5264,9 @@
     "line": "martial",
     "nameKey": "career.martial.7",
     "packId": "pack:core",
-    "requiredMerit": 1610,
+    "requiredMerit": 830,
     "schemaVersion": 1,
-    "trainingBaseAdd": 6
+    "trainingBaseAdd": 3
   },
   {
     "hostScale": 9.1,
@@ -5220,9 +5276,9 @@
     "line": "martial",
     "nameKey": "career.martial.8",
     "packId": "pack:core",
-    "requiredMerit": 2240,
+    "requiredMerit": 1110,
     "schemaVersion": 1,
-    "trainingBaseAdd": 7
+    "trainingBaseAdd": 4
   },
   {
     "hostScale": 11.3,
@@ -5232,9 +5288,9 @@
     "line": "martial",
     "nameKey": "career.martial.9",
     "packId": "pack:core",
-    "requiredMerit": 3010,
+    "requiredMerit": 1450,
     "schemaVersion": 1,
-    "trainingBaseAdd": 8
+    "trainingBaseAdd": 4
   },
   {
     "hostScale": 13.8,
@@ -5244,9 +5300,9 @@
     "line": "martial",
     "nameKey": "career.martial.10",
     "packId": "pack:core",
-    "requiredMerit": 3955,
+    "requiredMerit": 1860,
     "schemaVersion": 1,
-    "trainingBaseAdd": 9
+    "trainingBaseAdd": 5
   },
   {
     "hostScale": 16.6,
@@ -5256,9 +5312,9 @@
     "line": "martial",
     "nameKey": "career.martial.11",
     "packId": "pack:core",
-    "requiredMerit": 5075,
+    "requiredMerit": 2360,
     "schemaVersion": 1,
-    "trainingBaseAdd": 10
+    "trainingBaseAdd": 5
   },
   {
     "hostScale": 19.8,
@@ -5268,9 +5324,9 @@
     "line": "martial",
     "nameKey": "career.martial.12",
     "packId": "pack:core",
-    "requiredMerit": 6405,
+    "requiredMerit": 2960,
     "schemaVersion": 1,
-    "trainingBaseAdd": 11
+    "trainingBaseAdd": 6
   },
   {
     "bodyKey": "ending.pillar.body",
@@ -5407,50 +5463,12 @@
     "kind": "ending",
     "packId": "pack:core",
     "pointsMultiplier": 1.2,
-    "priority": 0,
+    "priority": 1,
     "requirements": [],
     "schemaVersion": 1,
     "titleKey": "ending.accomplished.title",
     "trigger": {
       "kind": "sequenceCompleted"
-    }
-  },
-  {
-    "bodyKey": "ending.fallen.body",
-    "collectible": true,
-    "ending": "ending:fallen",
-    "endingKind": "aborted",
-    "factionId": null,
-    "id": "ending:fallen",
-    "kind": "ending",
-    "packId": "pack:core",
-    "pointsMultiplier": 1.05,
-    "priority": 50,
-    "requirements": [],
-    "schemaVersion": 1,
-    "titleKey": "ending.fallen.title",
-    "trigger": {
-      "attr": "war",
-      "kind": "checkFailed"
-    }
-  },
-  {
-    "bodyKey": "ending.dismissed.body",
-    "collectible": true,
-    "ending": "ending:dismissed",
-    "endingKind": "aborted",
-    "factionId": null,
-    "id": "ending:dismissed",
-    "kind": "ending",
-    "packId": "pack:core",
-    "pointsMultiplier": 1.05,
-    "priority": 49,
-    "requirements": [],
-    "schemaVersion": 1,
-    "titleKey": "ending.dismissed.title",
-    "trigger": {
-      "attr": "int",
-      "kind": "checkFailed"
     }
   },
   {
@@ -5463,13 +5481,52 @@
     "kind": "ending",
     "packId": "pack:core",
     "pointsMultiplier": 1,
-    "priority": 0,
-    "requirements": [],
+    "priority": 6,
+    "requirements": [
+      {
+        "stat": "career.civil",
+        "type": "statLte",
+        "value": 1
+      },
+      {
+        "stat": "career.martial",
+        "type": "statLte",
+        "value": 1
+      }
+    ],
     "schemaVersion": 1,
     "titleKey": "ending.commoner.title",
     "trigger": {
-      "attr": "any",
-      "kind": "checkFailed"
+      "kind": "sequenceCompleted"
+    }
+  },
+  {
+    "bodyKey": "ending.dismissed.body",
+    "collectible": true,
+    "ending": "ending:dismissed",
+    "endingKind": "aborted",
+    "factionId": null,
+    "id": "ending:dismissed",
+    "kind": "ending",
+    "packId": "pack:core",
+    "pointsMultiplier": 1.05,
+    "priority": 5,
+    "requirements": [
+      {
+        "stat": "career.civil",
+        "type": "statLte",
+        "value": 2
+      },
+      {
+        "stat": "career.martial",
+        "type": "statLte",
+        "value": 2
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "ending.dismissed.title",
+    "trigger": {
+      "kind": "sequenceCompleted"
     }
   },
   {

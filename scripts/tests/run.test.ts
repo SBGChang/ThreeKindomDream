@@ -4,7 +4,7 @@ import {
   type Attr, type SlotIndex,
 } from '../../src/contracts/core/primitives.js';
 import { careerService } from '../../src/modules/career.js';
-import { candidatesFor, failedByAttr } from '../../src/modules/ending.js';
+import { candidatesFor } from '../../src/modules/ending.js';
 import { notableCodex } from '../../src/modules/notable-codex.js';
 import { statQuery } from '../../src/modules/stats.js';
 import { baseOf, notableSlotBonus, trainingMultiplier } from '../../src/modules/roster-query.js';
@@ -245,10 +245,9 @@ export function run(): void {
   describe('ending · 兜底（25 §3.1）', () => {
     it('每個 trigger 都有候選', () => {
       const ctx = { state: newSession(5).current, defs };
+      // checkFailed 已刪除 —— 戰役失敗不再夢醒，那個 trigger 沒有來源了。
       const triggers = [
         { kind: 'sequenceCompleted' as const },
-        { kind: 'checkFailed' as const, attr: 'war' as const },
-        { kind: 'checkFailed' as const, attr: 'lead' as const },
         { kind: 'noFactionEligible' as const },
       ];
       for (const trig of triggers) {
@@ -588,22 +587,52 @@ export function run(): void {
         const delta = s.current.growth.exp[g.attr] - before[g.attr];
         ok(delta >= g.amount, `${g.attr} 實際入帳 ${delta} 小於回報的 ${g.amount}`);
       }
-      if (res.passed) eq(res.practiceExp, preview);
-      // failRatio > 0：一回合只有這一次機會，失敗也不該顆粒無收
-      ok(res.practiceExp.length > 0, '無論成敗都該有磨練產出');
+      // failRatio ＝ 0：**成功才有產出**。舊斷言寫的是「無論成敗都該有」，
+      // 那是 failRatio 0.4 的規則 —— 而 0.4 讓最兇的選項怎麼算都贏。
+      if (res.passed) {
+        eq(res.practiceExp, preview);
+        ok(res.practiceExp.length > 0, '成功卻沒有磨練產出');
+      } else {
+        eq(res.practiceExp.length, 0, '失敗應顆粒無收');
+      }
     });
 
-    it('委託的四維產出小於固定事件 —— 玩家的選擇才是主力（GDD §4.2）', () => {
+    /**
+     * ★ 這條斷言換過內容。舊版斷的是「委託磨練 < 固定事件」——
+     * 那是「委託的四維產出是附帶的」那個舊設計。
+     *
+     * 現在的規矩是玩家訂的：**一則 ★N 中檔事件的經驗總量 ≈ 30N**
+     * （＝ N 個基礎事件，與一關戰役同一把尺）。一則 ★3 事件本來就
+     * 該勝過一回合的鍛鍊 —— 那是它稀有的意思。
+     */
+    it('一則 ★N 中檔委託的經驗總量 ＝ 30N ± 1（基礎事件 × 星數）', () => {
       const s = newSession(4242);
-      const trBest = SLOT_INDICES.reduce<number>(
-        (m, i) => Math.max(m, s.previewTraining(i).expectedGain), 0,
-      );
       s.selectSlot(0);
       const offer = s.pendingEvent;
       if (offer === null) return;
-      const evBest = offer.optionStates
-        .flatMap((o) => o.practicePreview).reduce((a, g) => Math.max(a, g.amount), 0);
-      ok(evBest < trBest, `委託磨練 ${evBest} 應小於固定事件期望 ${trBest}`);
+      const mid = offer.optionStates.findIndex((o) => o.tier === 'mid');
+      if (mid < 0) return;
+      const total = (offer.optionStates[mid]?.practicePreview ?? [])
+        .reduce((n, g) => n + g.amount, 0);
+      const want = 30 * offer.rarity;
+      ok(Math.abs(total - want) <= 1,
+        `★${offer.rarity} 中檔給 ${total}，應為 ${want}`);
+    });
+
+    it('委託三檔的經驗同向遞增，且低檔明顯少（低 ≈ 中的四成）', () => {
+      const s = newSession(4242);
+      s.selectSlot(0);
+      const offer = s.pendingEvent;
+      if (offer === null) return;
+      const sum = (t: string): number => {
+        const at = offer.optionStates.findIndex((o) => o.tier === t);
+        return at < 0 ? 0 : (offer.optionStates[at]?.practicePreview ?? [])
+          .reduce((n, g) => n + g.amount, 0);
+      };
+      const [lo, mi, hi] = [sum('low'), sum('mid'), sum('high')];
+      if (mi === 0) return;
+      ok(lo < mi && mi < hi, `三檔未遞增：${lo} / ${mi} / ${hi}`);
+      ok(lo <= mi * 0.5, `低檔 ${lo} 沒有明顯少於中檔 ${mi}`);
     });
 
     it('委託的功績大於固定事件 —— 它才是主要來源', () => {
@@ -909,6 +938,62 @@ export function run(): void {
           }
         }
       }
+    });
+
+    /**
+     * 戰敗的定價 ★ **這一版換掉的核心規則，所以必須釘住**
+     *
+     * 舊制：戰敗 → 夢醒（整輪結束）。現在：戰敗 → 已保住的獎勵減半、章節照過。
+     *
+     * 三件事要成立，少一件這條規則就是半套：
+     *   一 · 不夢醒（`ending` 仍為 null）
+     *   二 · 章節照過
+     *   三 · 入帳的功績【比收兵少，但不是零】—— 不是作廢，也不是全給
+     *
+     * 第三條刻意不釘「剛好一半」：`grantMerit` 之後還有一層貨幣倍率
+     * （`CurrencyBonus`），而減半是逐筆取整的。釘死那個數字會讓這條測試
+     * 在任何一個無關的倍率變動時失敗，卻不會抓到任何真的錯。
+     * 用【同 seed 的雙生 session】對照，量的就是那個比值本身。
+     *
+     * 替身 AI 算不過時會收兵，所以這裡刻意不問它 —— 一路打到輸。
+     */
+    it('戰敗不夢醒、章節照過，獎勵比收兵少但不是零（D54）', () => {
+      const meritOfState = (x: Session): number =>
+        x.current.currencies.merit.martial + x.current.currencies.merit.civil;
+
+      let checked = 0;
+      for (const sd of [4242, 77, 1234, 555, 9001, 31337]) {
+        // 先探一次：這個 seed 打到第幾關會輸？
+        const probe = toFirstCampaign(sd);
+        probe.configureCampaign(loadoutFor(probe));
+        let cleared = 0;
+        let lost = false;
+        for (let i = 0; i < 8 && !lost; i += 1) {
+          if (probe.nextStage() === null) break;
+          lost = probe.engage().defeated;
+          if (!lost) cleared += 1;
+        }
+        if (!lost || cleared === 0) continue;   // 沒輸、或第一關就輸（沒有 banked 可減半）
+
+        // 雙生 session：同 seed 走到同一關【收兵】，量「全額」是多少。
+        const twin = toFirstCampaign(sd);
+        twin.configureCampaign(loadoutFor(twin));
+        const base = meritOfState(twin);
+        for (let i = 0; i < cleared; i += 1) twin.engage();
+        twin.withdraw();
+        const full = meritOfState(twin) - base;
+        if (full <= 1) continue;                // 太小，減半量不出東西
+
+        const halved = meritOfState(probe) - base;
+        checked += 1;
+        eq(probe.current.ending, null);
+        ok(probe.current.progress.chaptersPassed > 0, '戰敗的章節沒有推進');
+        ok(halved > 0, `戰敗把獎勵歸零了（全額 ${full}）—— 應該只是減半`);
+        ok(halved < full, `戰敗拿到全額 ${halved}／${full} —— 沒有減半`);
+        ok(halved * 2 >= full - cleared * 2 && halved * 2 <= full + cleared * 2,
+          `減半的量不對：${halved} 對全額 ${full}（清 ${cleared} 關）`);
+      }
+      ok(checked > 0, '沒有任何 seed 走到「清過關再戰敗」—— 這條規則沒被實際走到');
     });
 
     it('沒有及格線：一關都不打就收兵，章節照過（D5）', () => {

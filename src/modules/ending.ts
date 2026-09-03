@@ -8,13 +8,8 @@ import { statQuery } from './stats.js';
 
 const readStat = statQuery.read.bind(statQuery);
 
-const triggerMatches = (def: EndingDef, t: EndingTrigger): boolean => {
-  if (def.trigger.kind !== t.kind) return false;
-  if (def.trigger.kind === 'checkFailed' && t.kind === 'checkFailed') {
-    return def.trigger.attr === 'any' || def.trigger.attr === t.attr;
-  }
-  return true;
-};
+const triggerMatches = (def: EndingDef, t: EndingTrigger): boolean =>
+  def.trigger.kind === t.kind;
 
 export function candidatesFor(
   trigger: EndingTrigger, ctx: RunContext,
@@ -49,6 +44,5 @@ export function resolveEnding(trigger: EndingTrigger, ctx: RunContext): EndingOu
 export const reachEnding = (trigger: EndingTrigger, ctx: RunContext): RunState =>
   ({ ...ctx.state, ending: resolveEnding(trigger, ctx) });
 
-export const failedByAttr = (attr: Attr): EndingTrigger => ({ kind: 'checkFailed', attr });
 export const SEQUENCE_DONE: EndingTrigger = { kind: 'sequenceCompleted' };
 export const NO_FACTION: EndingTrigger = { kind: 'noFactionEligible' };

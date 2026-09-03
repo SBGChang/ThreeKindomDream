@@ -211,7 +211,8 @@ export class Session {
     });
     const outcome = box.value;
     if (outcome === null) throw new Error('戰役結算未回傳結果');
-    if (outcome.defeated) this.abortByDefeat();
+    // 戰敗【不再夢醒】—— ㉝ 已把 banked 減半，這裡走與收兵相同的收尾。
+    if (outcome.defeated) this.closeCampaign();
     return outcome;
   }
 
@@ -244,8 +245,18 @@ export class Session {
    * 它拿不到任何獎勵，但章節照過；膽小的懲罰是難看的結局，不是死亡（D7）。
    */
   withdraw(): void {
-    const banked = campaign.bankedOf(this.ctx);
     this.mutate((tc) => campaign.withdraw(tc));
+    this.closeCampaign();
+  }
+
+  /**
+   * 戰役收尾：獎勵入帳 → 重算官階 → 過章。**戰敗與收兵共用這一條** ★
+   *
+   * 兩者唯一的差別在 ㉝ 那一側：戰敗時 `banked` 已經減半。
+   * 收尾只有一條路，「戰敗的章節到底算不算過」就不可能有兩種答案。
+   */
+  private closeCampaign(): void {
+    const banked = campaign.bankedOf(this.ctx);
     this.mutate((tc) => this.applyRewards(banked, tc.state, tc));
     this.mutate((tc) => careerService.reevaluate({ state: tc.state, defs: tc.defs }));
     this.mutate((tc) => {
@@ -263,23 +274,7 @@ export class Session {
     this.afterChapterPassed();
   }
 
-  /**
-   * 戰敗 → 中止類結局。
-   *
-   * 走哪一條官途決定結局的性質：武系敗了是戰歿，文系敗了是罷官。
-   * 這與舊制「由檢定路線決定」是同一個判準 —— 只是路線不再是當場選的，
-   * 而是你這一輪爬的那條官階。
-   */
-  private abortByDefeat(): void {
-    this.mutate((tc) => {
-      const martial = tc.state.career.martial >= tc.state.career.civil;
-      return ending.reachEnding(
-        ending.failedByAttr(martial ? 'war' : 'int'), { state: tc.state, defs: tc.defs },
-      );
-    });
-  }
-
-  /** 已保住的獎勵入帳。戰敗時不會走到這裡 —— `banked` 全部作廢（33 §11.3）。 */
+  /** 已保住的獎勵入帳。戰敗時走的是同一條，只是 `banked` 已在 ㉝ 減半。 */
   private applyRewards(
     rewards: readonly EventReward[], from: RunState, tc: TurnContext,
   ): RunState {

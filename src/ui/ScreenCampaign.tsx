@@ -75,7 +75,8 @@ export function ScreenCampaign({ s, bump }: Props): React.ReactElement {
         <h1>{`戰役 · ${t(chapter.titleKey)}`}</h1>
         <p className="sub">
           七關。<b>你不操作</b> —— 驗收的是這裡的配置。
-          每一關打完都可以收兵，帶著已到手的獎勵走；輸了則夢醒。
+          每一關打完都可以收兵，帶著已到手的獎勵走；
+          <b>輸了不會夢醒，但已到手的獎勵只剩一半</b>。
         </p>
         <StatusBar s={s} />
 
@@ -234,6 +235,13 @@ export function ScreenCampaign({ s, bump }: Props): React.ReactElement {
           </p>
           <p className="sub">
             這裡<b>不給勝率</b> —— 你打過前幾關，剩多少血、上一關花了多少，你看得到。
+          </p>
+          {/*
+            往前的代價也要寫在按鈕旁邊（D14 的原則，兩個方向都適用）。
+            「輸了會怎樣」與「走了放棄什麼」是同一個決定的兩半。
+          */}
+          <p className="warn">
+            {`打輸了不會夢醒 —— 但已保住的 ${banked} 功績會剩一半（${Math.floor(banked / 2)}）。`}
           </p>
         </>
       )}

@@ -117,6 +117,44 @@ export function begin(
   return { ...ctx.state, campaign: st };
 }
 
+/**
+ * 戰敗的定價：**已保住的獎勵減半**（不是全部作廢，也不是夢醒）★
+ *
+ * ── 這條規則換過三次，方向是一致的 ──────────────────
+ *   一 · 戰敗 ＝ 夢醒（整輪結束）
+ *   二 · 戰敗 ＝ banked 全部作廢
+ *   三 · **戰敗 ＝ banked 減半，章節照過**  ← 現在
+ *
+ * 為什麼往這裡走：**擋住玩家的應該是牆，不是懲罰。** 第一輪的玩家本來就
+ * 只打得到第二三關，那時他需要的是「撞牆、拿走能拿的、下一輪再來」，
+ * 而不是把三十二個回合的養成一次歸零。
+ *
+ * ── 代價要記下來：走留的門檻變低了 ★ ─────────────────
+ * 獎勵曲線是加速的（第 N 關 ≈ 前面全部之和），所以再打一關的賭注是
+ * 「拿一半的已得換一倍的已得」—— 損益兩平的勝率只要 **1/3**。
+ * 舊制（夢醒）要的是五到六成。於是：
+ *
+ *   走留仍然是決策，但它的答案從「有把握才上」變成「沒把握也上」。
+ *   **真正決定深度的變成敵人的強度，不是玩家的膽子。**
+ *
+ * 減半的算法：數量對半（`amount`）、機率對半（`chance`）。
+ * 解鎖沒有一半 —— 它留著，因為你確實打到那一關了（深處的唯一掉落，D12）。
+ */
+function halveRewards(rewards: readonly EventReward[]): readonly EventReward[] {
+  const out: EventReward[] = [];
+  for (const r of rewards) {
+    if ('amount' in r) {
+      const amount = Math.floor(r.amount / 2);
+      if (amount > 0) out.push({ ...r, amount });
+    } else if ('chance' in r) {
+      out.push({ ...r, chance: r.chance / 2 });
+    } else {
+      out.push(r);
+    }
+  }
+  return out;
+}
+
 /** `loadout` 在此凍結。關卡之間不得更換 —— 張力來自「只能帶著現有狀態往前」。 */
 export function configure(loadout: BattleLoadout, ctx: RunContext): RunState {
   const st = ctx.state.campaign;
@@ -491,7 +529,8 @@ export function engage(
     log: sim.log,
     rallied: sim.rallied,
     clearedStages: cleared ? st.clearedStages + 1 : st.clearedStages,
-    banked: cleared ? [...st.banked, ...stage.rewards] : st.banked,
+    // 戰敗 → 已保住的獎勵【減半】，然後這一役就結束（見 halveRewards）。
+    banked: cleared ? [...st.banked, ...stage.rewards] : halveRewards(st.banked),
     phase: cleared ? 'awaitingDecision' : 'resolved',
   };
   return { state: { ...next, campaign }, outcome };

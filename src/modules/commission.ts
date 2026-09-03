@@ -269,19 +269,21 @@ function castRarity(def: EventDef, ctx: RunContext): Rarity {
 // ── 產出 ────────────────────────────────────────────
 
 /**
- * 事上磨練的產出 ★ **它吃的是經驗那兩條平緩曲線，不是功績那兩條。**
+ * 事上磨練的產出 ★ **一則事件的經驗 ＝ 基礎值 × 星數**
  *
- * 功績要追得上官階門檻（最高 6405），所以它可以乘到 178 倍；
- * 經驗對照的是 0–100 的四維與一輪約 900 的總量，乘 178 倍會讓
- * 一則事件就給掉一整個等級。兩者【必須用不同的縮放】——
- * 舊版共用一條，那是「產出即屬性、上限 999」時代留下來的尺度錯誤。
+ * 只吃稀有度，【不吃官階】。功績吃官階，經驗吃稀有度 —— 兩種貨幣
+ * 各有一個索引，於是「追光階 對 追驚嘆號」變成兩種貨幣之間的取捨，
+ * 而不是同一件事的兩種說法（見 `practiceRarityMul` 的註解）。
+ *
+ * `Σweight` 承擔檔次差：低 0.6 ／ 中 1.5 ／ 高 2.2。
+ * 基礎值 20 之下，中檔 ★N 恰好給 30N —— 那就是「N 個基礎事件」。
  */
 export function practiceYield(
-  practice: readonly EventPractice[], ratio: number, rarity: Rarity, tier: number,
+  practice: readonly EventPractice[], ratio: number, rarity: Rarity,
   ctx: RunContext, fx: EffectResolver,
 ): readonly ExpGain[] {
   const c = yieldCurve(ctx);
-  const mul = practiceTierMul(tier, ctx) * practiceRarityMul(rarity, ctx);
+  const mul = practiceRarityMul(rarity, ctx);
   return practice.map((p) => {
     const raw = (c.baseByAttr[p.attr] ?? 0) * mul * p.weight * ratio * fx.gainMul(p.attr, ctx);
     return {
@@ -293,12 +295,6 @@ export function practiceYield(
 
 const rarityMul = (rarity: Rarity, ctx: RunContext): number =>
   yieldCurve(ctx).rarityMultiplier[rarity - 1] ?? 1;
-
-/** 經驗的官階縮放。與功績的 `tierScale` 是兩條不同的曲線（見 practiceYield）。 */
-const practiceTierMul = (tier: number, ctx: RunContext): number => {
-  const curve = yieldCurve(ctx).practiceTierMul;
-  return curve[Math.max(0, tier - 1)] ?? curve.at(-1) ?? 1;
-};
 
 const practiceRarityMul = (rarity: Rarity, ctx: RunContext): number =>
   yieldCurve(ctx).practiceRarityMul[rarity - 1] ?? 1;
@@ -353,7 +349,7 @@ export function optionStates(
       enabled: unmet.length === 0,
       blockedReasonKeys: unmet.map(() => ('rejection.threshold.not-met' as L10nKey)),
       successRate: rate,
-      practicePreview: practiceYield(o.practice, 1, rarity, tier, ctx, fx),
+      practicePreview: practiceYield(o.practice, 1, rarity, ctx, fx),
       meritPreview: meritShown(meritYield(o, 1, rarity, tier, ctx, fx), ctx, fx),
     };
   });
@@ -480,7 +476,7 @@ export function resolveHead(
   // 檢定失敗仍給四成（17 §6.3）。一回合只有這一次機會，若失敗＝顆粒無收，
   // 高 DC 的選項會沒人敢碰，「用哪個方法度過」就退化成只選最穩的那個。
   const ratio = passed ? 1 : yieldCurve(ctx).failRatio;
-  const practiceExp = practiceYield(option.practice, ratio, offer.rarity, tier, ctx, fx);
+  const practiceExp = practiceYield(option.practice, ratio, offer.rarity, ctx, fx);
   const meritRaw = meritYield(option, ratio, offer.rarity, tier, ctx, fx);
   // 紀錄的是【實際入帳】的數字，不是交給 writer 之前的那個 —— 回合紀錄要與存摺一致。
   const meritGained = meritShown(meritRaw, ctx, fx);

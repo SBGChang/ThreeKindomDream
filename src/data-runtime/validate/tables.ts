@@ -203,6 +203,26 @@ export function validateYieldCurves(c: Ctx): void {
       }
     });
 
+    // `practiceRarityMul` 是經驗的【唯一】倍率（官階項已刪除），
+    // 所以它必須夠長、必須遞增 —— 少一格就會靜靜落回 fallback 1。
+    const prac = c.list(d['practiceRarityMul']).map(c.n);
+    if (prac.length < RARITIES.length) {
+      c.push('rule', 'eventYieldCurve', 'practiceRarityMul', c.s(d['id']),
+        `長度 ${prac.length} 不足 ${RARITIES.length} 個稀有度`,
+        '經驗只吃這一條倍率，少一格就會落回 1');
+    }
+    prac.forEach((v, i) => {
+      if (!(v > 0)) {
+        c.push('rule', 'eventYieldCurve', `practiceRarityMul[${i}]`, c.s(d['id']),
+          '倍率必須 > 0');
+      }
+      const prev = prac[i - 1];
+      if (prev !== undefined && v < prev) {
+        c.push('rule', 'eventYieldCurve', `practiceRarityMul[${i}]`, c.s(d['id']),
+          `經驗倍率倒退（前 ${prev}，本 ${v}）`, '★4 不該比 ★1 練得少');
+      }
+    });
+
     const ratio = c.n(d['failRatio']);
     if (ratio < 0 || ratio > 1) {
       c.push('rule', 'eventYieldCurve', 'failRatio', c.s(d['id']),

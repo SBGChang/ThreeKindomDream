@@ -17,13 +17,11 @@ export function validateEndings(c: Ctx): void {
     }
   }
 
-  for (const kind of ['sequenceCompleted', 'checkFailed', 'noFactionEligible'] as const) {
+  for (const kind of ['sequenceCompleted', 'noFactionEligible'] as const) {
     const hasFallback = endings.some((e) => {
       const trig = (e['trigger'] ?? {}) as Rec;
       if (trig['kind'] !== kind) return false;
-      if (c.list(e['requirements']).length !== 0) return false;
-      if (kind === 'checkFailed') return trig['attr'] === 'any';
-      return true;
+      return c.list(e['requirements']).length === 0;
     });
     if (!hasFallback) {
       c.push('rule', 'endings', kind, null,

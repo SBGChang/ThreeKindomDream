@@ -5,12 +5,16 @@
 //   技能  戰役中的行動，【只有 3 格】 → 稀缺在格數（編組決策）
 //
 // ── 混合消耗是專精者的天花板 ★ ──────────────────────
-//   常  單類 100／140      良  兩類 150+100／190+140
-//   絕  三類 200+150+100／250+190+140
+//   常  單類 150／210      良  兩類 220+150／280+210
+//   絕  三類 300+220+150／380+280+210
 //
 // 量級由消耗表決定（32 §3.1）—— 兩張表是同一個尺度的兩面：
-// 專精者站 A 帶（50／點），一個常階特質 100 ＝ 放棄 2 點數值；
-// 均衡者站 C 帶（18／點），絕階 450 ＝ 放棄 25 點。
+// 專精者站 A 帶（76／點），一個常階特質 150 ＝ 放棄 2 點數值；
+// 均衡者站 C 帶（28／點），絕階 670 ＝ 放棄 24 點。
+//
+// ★ 兩張表【一起 ×1.5】過一次（2026-09）：事件經驗改成「基礎值 × 星數」
+// 之後收入漲了四成，舊表下最強的策略四維全部點到 82 以上 —— 買得完，
+// 就沒有取捨。只動一邊會讓取捨偏向便宜的那一邊，所以兩張表必須同時動。
 //
 // 純專精買不起絕階 —— 他沒有另外兩類的經驗。這與階梯計價（32 §3.1）
 // 形成方向相反的夾擠：
@@ -60,19 +64,19 @@ const skill = (
 
 // ── 特質 ──────────────────────────────────────────────
 export const coreTraits: readonly TraitDef[] = [
-  trait('danshi', 'common', cost(['war', 100]), 'positive', [FX.battlePhys08]),
-  trait('chenyi', 'common', cost(['lead', 100]), 'positive', [FX.battleTroops08]),
-  trait('liande', 'common', cost(['pol', 100]), 'positive', [FX.battleHeal12]),
-  trait('jimin', 'common', cost(['int', 100]), 'positive', [FX.battleMagic08]),
+  trait('danshi', 'common', cost(['war', 150]), 'positive', [FX.battlePhys08]),
+  trait('chenyi', 'common', cost(['lead', 150]), 'positive', [FX.battleTroops08]),
+  trait('liande', 'common', cost(['pol', 150]), 'positive', [FX.battleHeal12]),
+  trait('jimin', 'common', cost(['int', 150]), 'positive', [FX.battleMagic08]),
 
-  trait('linzhen', 'fine', cost(['war', 150], ['lead', 100]), 'positive',
+  trait('linzhen', 'fine', cost(['war', 220], ['lead', 150]), 'positive',
     [FX.battleTroops12, FX.battlePhys06]),
-  trait('zhechong', 'fine', cost(['pol', 150], ['int', 100]), 'positive', [FX.battleSupply20]),
-  trait('liaodi', 'fine', cost(['int', 150], ['pol', 100]), 'positive', [FX.battleMagic18]),
+  trait('zhechong', 'fine', cost(['pol', 220], ['int', 150]), 'positive', [FX.battleSupply20]),
+  trait('liaodi', 'fine', cost(['int', 220], ['pol', 150]), 'positive', [FX.battleMagic18]),
 
-  trait('wanrendi', 'peerless', cost(['war', 200], ['lead', 150], ['int', 100]), 'positive',
+  trait('wanrendi', 'peerless', cost(['war', 300], ['lead', 220], ['int', 150]), 'positive',
     [FX.battlePhys30]),
-  trait('jingwei', 'peerless', cost(['int', 200], ['pol', 150], ['lead', 100]), 'positive',
+  trait('jingwei', 'peerless', cost(['int', 300], ['pol', 220], ['lead', 150]), 'positive',
     [FX.battleMagic25, FX.battleHeal20]),
 
   /**
@@ -80,7 +84,7 @@ export const coreTraits: readonly TraitDef[] = [
    * 它的 effects 同時有正負，這才有取捨感。
    * 賈詡教得出來：他自己就有這一條。
    */
-  trait('gangbi', 'common', cost(['war', 100]), 'negative',
+  trait('gangbi', 'common', cost(['war', 150]), 'negative',
     [FX.battlePhys15, FX.battleHealDown20]),
 ];
 
@@ -94,21 +98,21 @@ export const coreTraits: readonly TraitDef[] = [
 // 那正好是你去陣容裡補位的理由。
 export const coreSkills: readonly SkillDef[] = [
   // 武 · 物理
-  skill('tuzhen', 'common', cost(['war', 140]), 'physical', 'war', 0.30, 0),
-  skill('xianzhen', 'fine', cost(['war', 190], ['lead', 140]), 'physical', 'war', 0.50, 0),
-  skill('wanrenzhi', 'peerless', cost(['war', 250], ['lead', 190], ['int', 140]),
+  skill('tuzhen', 'common', cost(['war', 210]), 'physical', 'war', 0.30, 0),
+  skill('xianzhen', 'fine', cost(['war', 280], ['lead', 210]), 'physical', 'war', 0.50, 0),
+  skill('wanrenzhi', 'peerless', cost(['war', 380], ['lead', 280], ['int', 210]),
     'physical', 'war', 0.85, 0),
 
   // 智 · 法術
-  skill('huoji', 'common', cost(['int', 140]), 'magic', 'int', 0.32, 0),
-  skill('shuiyan', 'fine', cost(['int', 190], ['pol', 140]), 'magic', 'int', 0.52, 0),
-  skill('lianhuan', 'peerless', cost(['int', 250], ['pol', 190], ['lead', 140]),
+  skill('huoji', 'common', cost(['int', 210]), 'magic', 'int', 0.32, 0),
+  skill('shuiyan', 'fine', cost(['int', 280], ['pol', 210]), 'magic', 'int', 0.52, 0),
+  skill('lianhuan', 'peerless', cost(['int', 380], ['pol', 280], ['lead', 210]),
     'magic', 'int', 0.88, 0),
 
   // 政 · 恢復。吃糧秣 —— 這是文系續航的全部內容（33 §5.3）。
-  skill('fumin', 'common', cost(['pol', 140]), 'heal', 'pol', 0.28, 0),
-  skill('tuntian', 'fine', cost(['pol', 190], ['int', 140]), 'heal', 'pol', 0.46, 0),
-  skill('wangzuo', 'peerless', cost(['pol', 250], ['int', 190], ['lead', 140]),
+  skill('fumin', 'common', cost(['pol', 210]), 'heal', 'pol', 0.28, 0),
+  skill('tuntian', 'fine', cost(['pol', 280], ['int', 210]), 'heal', 'pol', 0.46, 0),
+  skill('wangzuo', 'peerless', cost(['pol', 380], ['int', 280], ['lead', 210]),
     'heal', 'pol', 0.75, 0),
 
   /**
@@ -127,12 +131,12 @@ export const coreSkills: readonly SkillDef[] = [
    * 兩條都比同維的本行招弱一截（0.24／0.26 對 0.30／0.32）——
    * 主角能用四條路打，但每條路都有它更擅長的那一手。
    */
-  skill('haoling', 'common', cost(['lead', 140]), 'physical', 'lead', 0.24, 0),
-  skill('luanci', 'common', cost(['pol', 140]), 'magic', 'pol', 0.26, 0),
+  skill('haoling', 'common', cost(['lead', 210]), 'physical', 'lead', 0.24, 0),
+  skill('luanci', 'common', cost(['pol', 210]), 'magic', 'pol', 0.26, 0),
 
   // 統 · Buff／Debuff。不吃糧 —— 武系靠大池子撐，統把池子的每一下打得更重。
-  skill('guwu', 'common', cost(['lead', 140]), 'buff', 'lead', 0.18, 3),
-  skill('jiezhi', 'fine', cost(['lead', 190], ['war', 140]), 'debuff', 'lead', 0.22, 3),
-  skill('zhirong', 'peerless', cost(['lead', 250], ['war', 190], ['pol', 140]),
+  skill('guwu', 'common', cost(['lead', 210]), 'buff', 'lead', 0.18, 3),
+  skill('jiezhi', 'fine', cost(['lead', 280], ['war', 210]), 'debuff', 'lead', 0.22, 3),
+  skill('zhirong', 'peerless', cost(['lead', 380], ['war', 280], ['pol', 210]),
     'buff', 'lead', 0.35, 4),
 ];

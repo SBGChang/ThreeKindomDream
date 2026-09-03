@@ -17,9 +17,6 @@ export const endingTexts: Record<string, string> = {
   'ending.accomplished.title': '功成',
   'ending.accomplished.body': '該打的仗都打完了。官位不高，但你在場。',
 
-  'ending.fallen.title': '戰歿',
-  'ending.fallen.body': '最後看見的是塵土。有人把你的旗撿了起來。',
-
   'ending.dismissed.title': '罷官',
   'ending.dismissed.body': '文書下來得很簡短。你連辯解的機會都沒有。',
 

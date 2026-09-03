@@ -35,42 +35,55 @@ interface EndingDefinition extends DefinitionHeader {
   readonly requirements: readonly Condition[];           // 觸發當下的狀態門檻
   readonly priority: number;                             // 多個符合時取最高
   readonly titleKey: L10nKey;
-  readonly moralVariants: Readonly<Record<MoralBand, L10nKey>>;
+  readonly bodyKey: L10nKey;
   readonly pointsMultiplier: number;
   readonly collectible: boolean;
 }
 
 type EndingTrigger =
-  | { readonly kind: 'sequenceCompleted' }                              // 走完全部大事件
-  | { readonly kind: 'checkFailed'; readonly attr: Attr | 'any' }   // 戰役中軍勢歸零
-  | { readonly kind: 'noFactionEligible' }                              // 在野
-  | { readonly kind: 'playerRetired' };                                 // 歸隱
-
-type MoralBand = 'veryGood' | 'neutral' | 'veryEvil';
+  | { readonly kind: 'sequenceCompleted' }        // 走完全部大事件
+  | { readonly kind: 'noFactionEligible' };       // 在野
 ```
 
-### 2.1 `trigger` 與 `requirements` 的分工
+### 2.1 只剩兩個 trigger 型別 ★
+
+| 已刪除 | 為什麼 |
+|---|---|
+| `checkFailed` | 「戰役中軍勢歸零」。**戰敗改成獎勵減半、章節照過**（33 §6.4），這個事件不再結束一輪，所以它不再導向任何結局 |
+| `playerRetired` | 從來沒有內容用它，也沒有指令會發出它 |
+| `moralVariants` / `MoralBand` | 善惡名整條退場（20）。同一個結局現在只有一段本文（`bodyKey`） |
+
+**局內因此沒有任何死亡路徑了。** 直接的後果是〈戰歿〉那一筆被刪除 ——
+它的本文寫的是「最後看見的是塵土」，需要一個死亡，而那已經不存在。
+要把它拿回來只需要一個死亡來源（例如「一關未過就戰敗 ＝ 全軍覆沒」），
+那是一個設計決定，不是一行程式。
+
+### 2.2 `trigger` 與 `requirements` 的分工
 
 | | 回答什麼 | 例 |
 |---|---|---|
-| `trigger` | **什麼事件**導致結局 | 武官途上戰敗 |
-| `requirements` | 當下的**狀態**是否符合 | 文官階 ≥ 10 |
+| `trigger` | **什麼事件**導致結局 | 走完章節序列 |
+| `requirements` | 當下的**狀態**是否符合 | 文官階 ≥ 6 |
 
-分開是必要的：〈戰歿〉與〈流放〉的 trigger 相同（檢定失敗），差別在 `requirements`（惡名高低）。若合成一套，就得為每個組合寫一個 trigger 型別。
+分開仍然必要：**十個結局裡有八個共用 `sequenceCompleted`**，
+差別全在 `requirements`（官階高低）與 `priority`。
+若合成一套，就得為每個組合寫一個 trigger 型別。
 
-### 2.2 `moralVariants` 是文本修飾，不是不同結局
+### 2.3 `aborted` 讀作【沒有圓夢】，不是【中途結束】★
 
-同一個結局，善惡名決定用詞（GDD §12.3）：
+戰敗不再夢醒，所以每一輪都會走完章節序列。
+`endingKind: 'aborted'` 因此改由 `sequenceCompleted` ＋ **官階上限**觸發：
 
-| MoralBand | 文線 | 武線 |
+| 結局 | 門檻 | priority |
 |---|---|---|
-| `veryGood` | 賢相・純臣 | 忠武・國之干城 |
-| `neutral` | （原稱號） | （原稱號） |
-| `veryEvil` | 權相・國賊 | 梟將・虎狼之臣 |
+| 〈布衣一夢〉 | `career.civil ≤ 1` 且 `career.martial ≤ 1` | 6 |
+| 〈罷官〉 | `career.civil ≤ 2` 且 `career.martial ≤ 2` | 5 |
+| 〈功成〉 | 無（`fullDream` 兜底） | 1 |
 
-**不做成三個 EndingDefinition**——那會讓圖鑑分母膨脹三倍，而玩家心裡它們是同一個結局的三種說法。
-
-`MoralBand` 的邊界值來自 `config/game-rules`（資料）。
+門檻嚴的排前面。`isFullDream` 仍然是那條分界，只是它現在量的是
+**「你有沒有經營出一份前程」**，而不是「你有沒有活下來」——
+那正是 D7 一直想做的事：**膽小與失手的懲罰是難看的結局，不是死亡。**
+現在它是唯一的懲罰。
 
 ---
 
@@ -88,9 +101,10 @@ interface EndingEvalInput {
 
 interface EndingOutcome {
   readonly endingId: EndingId;
-  readonly moralBand: MoralBand;
-  readonly titleKey: L10nKey;          // 已套用 moralVariants
+  readonly titleKey: L10nKey;
+  readonly bodyKey: L10nKey;
   readonly pointsMultiplier: number;
+  readonly isFullDream: boolean;
 }
 ```
 
@@ -99,14 +113,13 @@ interface EndingOutcome {
 2. 篩出 factionId 相符者（null 視為通用，恆相符）
 3. 篩出 requirements 全部通過者
 4. 取 priority 最高的一筆
-5. 依 fame.moral 決定 MoralBand，套用 moralVariants
 ```
 
 ### 3.1 必須永遠有結局可達 ★
 
 第 4 步若候選為空，就會出現「夢醒了但沒有結局」——那是 GDD §2.2 明確排除的狀態。
 
-因此每個 `trigger` 型別**必須存在至少一筆 `requirements` 為空的通用結局**作為兜底（例如 `checkFailed` 對應〈布衣一夢〉）。這由規則驗證強制，**不是執行期 fallback**——若資料不齊，載入就失敗（ARCHITECTURE §2.2）。
+因此每個 `trigger` 型別**必須存在至少一筆 `requirements` 為空的通用結局**作為兜底（`sequenceCompleted` 對應〈功成〉、`noFactionEligible` 對應〈隱者〉）。這由規則驗證強制，**不是執行期 fallback**——若資料不齊，載入就失敗（ARCHITECTURE §2.2）。
 
 > 這是「五個合法出口」的正確用法：不在執行期硬給一個預設結局，而是在載入期保證資料一定齊。
 
@@ -132,13 +145,17 @@ interface EndingOutcome {
 |---|---|
 | 每個 `EndingTrigger` 型別至少有一筆 `requirements` 為空的通用結局 | 見 §3.1 |
 | `priority` 在同一 `(trigger, factionId)` 組內不重複 | 否則選擇不決定性 |
-| `moralVariants` 三個 band 齊全 | 否則某個善惡區間無文本 |
+| `titleKey` / `bodyKey` 都存在於文案表 | 否則結局畫面是空的 |
 | `pointsMultiplier > 0` | 否則該結局結算為零 |
 | `factionId ≠ null ⇒ packId` 為該陣營包 | 陣營結局不得進 core |
 | 每個 `collectible` 結局至少有一組可達的門檻組合 | 否則圖鑑分母有永遠拿不到的項目 |
 | `endingKind === 'fullDream' ⇒ trigger.kind === 'sequenceCompleted'` | 語意一致 |
 
 倒數第二條需要對 `requirements` 做可達性分析（官階上限 12、四維上限、功績可達範圍）。這擋下「寫了結局但門檻互相矛盾」——不會有任何測試失敗，玩家卻永遠湊不滿圖鑑。
+
+**它目前沒有實作**，而〈戰歿〉正是它該抓到的那一種：`checkFailed` 的來源
+被刪掉之後，那一筆變成永遠拿不到的圖鑑格，四道門禁全綠（33 §6.4 那一版
+是靠人看出來的）。
 
 ---
 
