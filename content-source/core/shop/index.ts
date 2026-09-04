@@ -24,6 +24,32 @@ const aptCap = (attr: Attr): ShopItemDef =>
 
 export const shopItems: readonly ShopItemDef[] = [
   aptCap('lead'), aptCap('war'), aptCap('int'), aptCap('pol'),
+  /**
+   * 官途 ★★ **官階那條線唯一的跨輪成長**
+   *
+   * 實測：舊的九個品項有 **0 個**碰官階，於是它在第一輪與第五十輪
+   * 爬法完全一樣 —— 而它是全遊戲最顯眼的數字（稱號寫在狀態列上）。
+   *
+   * 第一輪上限 5（都尉／功曹）。七階買到頂（12，四方將軍／軍師將軍），
+   * 每一階都是一個**新的稱號**，不是同一個稱號來得更快。
+   *
+   * 定價比資質陡：它同時解開官階背後的三件事 ——
+   * 兵量糧量（hostScale）、委託報酬（tierMultiplier）、高檔委託的門檻。
+   */
+  coreDef('shopItem', 'shop:career', {
+    item: shopItemId('shop:career'), category: 'career',
+    nameKey: k('shop.career.name'), descKey: k('shop.career.desc'),
+    requiresItems: [], requiresPack: null,
+    levels: [
+      { level: 1, cost: 500, grant: { kind: 'careerCap', delta: 1 } },
+      { level: 2, cost: 900, grant: { kind: 'careerCap', delta: 1 } },
+      { level: 3, cost: 1600, grant: { kind: 'careerCap', delta: 1 } },
+      { level: 4, cost: 2600, grant: { kind: 'careerCap', delta: 1 } },
+      { level: 5, cost: 4000, grant: { kind: 'careerCap', delta: 1 } },
+      { level: 6, cost: 6000, grant: { kind: 'careerCap', delta: 1 } },
+      { level: 7, cost: 9000, grant: { kind: 'careerCap', delta: 1 } },
+    ],
+  }),
   coreDef('shopItem', 'shop:aptPoints', {
     item: shopItemId('shop:aptPoints'), category: 'aptitude',
     nameKey: k('shop.aptPoints.name'), descKey: k('shop.aptPoints.desc'),

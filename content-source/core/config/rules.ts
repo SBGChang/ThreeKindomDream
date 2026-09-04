@@ -20,6 +20,18 @@ export const attributeCap: AttributeCapDef = coreDef('attributeCap', 'cap:main',
 });
 
 export const gameRules: GameRulesDef = coreDef('gameRules', 'rules:main', {
+  /**
+   * 第一輪的官階上限 ＝ **第 5 階**（都尉／功曹）★
+   *
+   * 十二階裡的第 5 階：帶得動一支兵、進得了幕府，但還不是將軍。
+   * 那正是「第一輪你走到哪裡」該有的答案 —— 而它是一道
+   * **看得見的牆**：狀態列會寫「都尉（本輪上限）」。
+   *
+   * 實測第一輪原本爬到 rank 6.2–7.5，而天命商店有 0 個品項碰官階 ——
+   * 那條線在第一輪與第五十輪完全一樣。上限訂在這裡、成長賣進商店
+   * （`shop:career`），官階才第一次有跨輪的意義。
+   */
+  careerCapBase: 5,
   companionCount: 3,
   // 可【自行指定】的玩伴人數。0 ＝ 皇甫嵩三名全部替你指派（GDD §6.5）。
   // 「世家門閥」之類的天賦買回來的是選擇權，不是數值 ——

@@ -74,6 +74,13 @@ export interface DreamEntryConfig {
    * 因此【不帶就永遠拿不到碎片】。攜帶格的取捨只在高階道具上存在。
    */
   readonly carriedItems: readonly ItemId[];
+  /**
+   * **本輪官階能爬到第幾階**（`gameRules.careerCapBase` ＋ 天命買到的）★
+   *
+   * 放在 config 而不是每次去問 meta：入夢那一刻定案，一輪之內不變 ——
+   * 與資質同一個位置、同一個理由（那些也是天命買的，也放在這裡）。
+   */
+  readonly careerCap: number;
 }
 
 export interface TurnProgress {

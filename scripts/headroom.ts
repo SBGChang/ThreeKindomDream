@@ -8,8 +8,10 @@ import { compose } from '../src/app/composition.js';
 import { Session } from '../src/app/session.js';
 import { loadContent } from '../src/data-runtime/loader.js';
 import { diskRepository } from '../src/platform/content-repository.js';
-import { emptyDraft, emptyMeta, designateQuota } from '../src/modules/dream-entry.js';
+import { emptyDraft, emptyMeta } from '../src/modules/dream-entry.js';
+import { shopLimits } from '../src/modules/shop.js';
 import { seed as mkSeed } from '../src/contracts/core/ids.js';
+import type { AptitudeGrade, Attr } from '../src/contracts/core/primitives.js';
 import { ATTRS } from '../src/contracts/core/primitives.js';
 import { heldItems } from '../src/modules/item.js';
 import { POLICIES, playCampaign } from './lib/policies.js';
@@ -43,15 +45,44 @@ const maxedMeta = (): MetaState => {
   };
 };
 
-/** 資質全部拉到解放後的上限、天賦帶滿、玩伴自己指定。 */
-const bestDraft = (meta: MetaState, reg: DefinitionRegistry): DreamEntryConfig => {
+/**
+ * 把資質配點【全部押在主維】，其餘三維砍到 F 換點數。
+ *
+ * ★ 這一段不能偷懶寫成「全部拉到上限」—— 那會量出一個玩家做不到的狀態。
+ * 資質配點是有限的（商店買滿 10 點），而升到 S 要 14 點，
+ * 所以想摸到 S 就【必須】把另外三維砍到 F（每維退回 +2 點）。
+ * 那個取捨正是資質這條線的內容，量測必須把它算進去。
+ */
+const bestDraft = (
+  meta: MetaState, reg: DefinitionRegistry, bias: Attr,
+): DreamEntryConfig => {
   const draft = emptyDraft(meta, reg);
-  const caps = draft.aptitudes;
+  const cost = reg.single('aptitudeCost');
+  const caps = shopLimits(meta, reg).aptitudeCaps;
+  const budget = shopLimits(meta, reg).aptitudePoints;
+
+  const apt: Record<string, AptitudeGrade> = { ...draft.aptitudes };
+  let pool = budget;
+  // 一、其餘三維砍到 F，把點數換出來
+  for (const a of ATTRS) {
+    if (a === bias) continue;
+    apt[a] = 'F';
+    pool -= cost.cumulativeCost.F;
+  }
+  // 二、主維買到買得起的最高階（受商店解放的上限限制）
+  for (const g of ['S', 'A', 'B', 'C'] as const) {
+    if (APT_ORDER.indexOf(g) > APT_ORDER.indexOf(caps[bias])) continue;
+    if (cost.cumulativeCost[g] <= pool) { apt[bias] = g; break; }
+  }
   const talents = reg.reader('talent').all();
-  const quota = designateQuota(draft, reg);
-  void quota;
-  return { ...draft, aptitudes: caps, talents: talents.map((x) => x.talentId).slice(0, 8) };
+  return {
+    ...draft,
+    aptitudes: apt as Record<Attr, AptitudeGrade>,
+    talents: talents.map((x) => x.talentId).slice(0, 8),
+  };
 };
+
+const APT_ORDER = ['F', 'E', 'D', 'C', 'B', 'A', 'S'] as const;
 
 interface Row {
   rank: number; best: number; attrs: number[]; traits: number; skills: number;
@@ -63,7 +94,9 @@ const play = (meta: MetaState, name: string): Row[] => {
   if (policy === undefined) throw new Error(name);
   const out: Row[] = [];
   for (let r = 0; r < RUNS; r += 1) {
-    const cfg = meta.points > 0 ? bestDraft(meta, defs) : emptyDraft(meta, defs);
+    const cfg = meta.points > 0
+      ? bestDraft(meta, defs, name === 'focus-martial' ? 'war' : 'lead')
+      : emptyDraft(meta, defs);
     const s = Session.start(w, meta, cfg, mkSeed(4000 + r));
     let guard = 0;
     let cleared = 0;

@@ -33,6 +33,25 @@ export interface StatWriter {
 
 const attrLine = (ctx: RunContext): AttrLineDef => ctx.defs.single('attrLine');
 
+/**
+ * **那一維這一輪的天花板** ★ 全遊戲唯一的來源
+ *
+ * `attributeCap.attrMax`（100）是【尺度】—— 等級表 G..S 就畫在這條尺上。
+ * 這一輪實際爬得到哪裡由【資質】決定：資質是跨輪貨幣，天花板是它買到的東西。
+ *
+ * 第一輪資質全 D → 四維上限 75（B 帶起點）；把某一維買到 S 才摸得到 100。
+ * 兩層一起取 min，所以資質表寫錯也不可能超過尺度本身。
+ *
+ * ㉜ 兌換與這裡的寫入都走同一個函式 —— 「買得到」與「加得上去」
+ * 若各有一份上限，總有一天會不一致（而那不會讓任何測試失敗）。
+ */
+export function attrCapOf(attr: Attr, ctx: RunContext): number {
+  const scale = ctx.defs.single('attributeCap').attrMax;
+  const grade = ctx.state.config.aptitudes[attr];
+  const def = ctx.defs.reader('aptitudeGrade').all().find((g) => g.grade === grade);
+  return Math.min(scale, def?.attrCap ?? scale);
+}
+
 export const statQuery: StatQuery = {
   read(path, ctx) {
     const [group, key] = String(path).split('.') as [string, string];
@@ -55,12 +74,9 @@ export const statQuery: StatQuery = {
 };
 
 export function createStatWriter(fx: EffectResolver): StatWriter {
-  const capOf = (ctx: RunContext): AttributeCapDef => ctx.defs.single('attributeCap');
-
   return {
     grantAttr(attr, amount, ctx) {
-      const cap = capOf(ctx);
-      const next = Math.min(cap.attrMax, ctx.state.attributes.values[attr] + amount);
+      const next = Math.min(attrCapOf(attr, ctx), ctx.state.attributes.values[attr] + amount);
       return {
         ...ctx.state,
         attributes: { values: { ...ctx.state.attributes.values, [attr]: next } },

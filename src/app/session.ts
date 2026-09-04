@@ -1,10 +1,10 @@
 // 局內 session：持有 RunState、處理指令、把 RNG cursor 寫回。
 import type { RunContext, TurnContext } from '../contracts/core/context.js';
-import type { FactionId, NotableId, Seed } from '../contracts/core/ids.js';
+import type { FactionId, ItemId as ItemIdT, NotableId, Seed } from '../contracts/core/ids.js';
 import { turnIndex } from '../contracts/core/ids.js';
 import type { NotableId as NId, SkillId, TraitId } from '../contracts/core/ids.js';
 import type {
-  AffinityStage, Attr, AttrGrade, SlotIndex,
+  AffinityStage, AptitudeGrade, Attr, AttrGrade, SlotIndex,
 } from '../contracts/core/primitives.js';
 import type { AttrCostBand, CampaignDef, EventReward } from '../contracts/core/definitions.js';
 import type {
@@ -313,7 +313,45 @@ export class Session {
     return growth.attrCost(attr, target, this.ctx, this.w.fx);
   }
 
-  attrMax(): number { return defsAttrMax(this.ctx); }
+  /** 那一維【本輪】的天花板（資質決定）。不是尺度上限 —— 見 ⑳ attrCapOf。 */
+  attrCap(attr: Attr): number { return growth.attrCap(attr, this.ctx); }
+
+  /** 那一維的資質階。天花板旁邊要寫著它，否則玩家不知道什麼買得動那道牆。 */
+  aptitudeOf(attr: Attr): AptitudeGrade { return growth.aptitudeOf(attr, this.ctx); }
+
+  /** 四維的尺度上限（100）。等級表 G..S 畫在這條尺上。 */
+  attrScale(): number { return defsAttrMax(this.ctx); }
+
+  /**
+   * 身上的道具 ★ **舊版 UI 拿不到這個，所以道具形同不存在**
+   *
+   * 道具的效果一直有在生效（`itemEffectSource` 掛在效果系統上），
+   * 但畫面上唯一的露出是回合紀錄裡一個 `◆`。玩家玩完一整輪，
+   * 不知道自己拿過什麼、那些東西做了什麼、也不知道有【碎片升階】這回事。
+   *
+   * 這裡把「已解放的階」也一起攤平成一行說明：道具的階是跨輪成長
+   * （碎片換階，與名士星階同構），看不到它就等於那條線不存在。
+   */
+  heldItems(): readonly {
+    readonly itemId: ItemIdT;
+    readonly name: string;
+    readonly desc: string;
+    readonly count: number;
+    readonly tier: number;
+  }[] {
+    const meta = this.state.metaSnapshot;
+    return item.heldItems(this.ctx).map((id) => {
+      const def = this.w.defs.reader('item').get(String(id));
+      const tiers = item.itemCodex.unlockedTiers(id, meta, this.w.defs);
+      return {
+        itemId: id,
+        name: this.w.defs.text(String(def.nameKey)),
+        desc: tiers.map((x) => this.w.defs.text(String(x.descKey))).join('；'),
+        count: item.heldCount(id, this.ctx),
+        tier: item.itemCodex.tierOf(id, meta),
+      };
+    });
+  }
 
   /** 價格帶表。UI 用它生成說明文字，不寫死端點數字。 */
   attrBands(): readonly AttrCostBand[] { return growth.bands(this.ctx); }

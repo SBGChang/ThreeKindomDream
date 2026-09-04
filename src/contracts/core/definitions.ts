@@ -54,6 +54,25 @@ export interface AptitudeGradeDef extends DefHeader {
   readonly grade: AptitudeGrade;
   readonly shiftSteps: number;
   readonly yieldMul: number;
+  /**
+   * **那一維這一輪的硬上限**（0–100 尺度）★ 資質的第二個職責
+   *
+   * ── 為什麼要加這個欄位 ──────────────────────────
+   * 實測「第一輪 對 天命全滿」：最高四維 83.1 → 98.2，
+   * **第一輪就拿到全滿的 85%**。原因是天命商店賣的全部是
+   * 【經驗產量】的乘數（資質倍率、配點、升階機率），
+   * 而經驗的出口是四維、上限 100、第一輪就摸到 83。
+   *
+   * 階梯計價（85→95 每點 76–136）讓產量的邊際報酬掉得極快，
+   * 於是「把經驗產量翻倍」只換到四維 +15 —— **跨輪成長被自己的定價吃掉了**。
+   *
+   * 對照組是特質：它只佔全滿的 45%，因為它的成長來自【解鎖】
+   * （好感、星階）而不是產量。**買「新東西」有跨輪成長，買「更快」沒有。**
+   *
+   * 所以資質從「產量倍率」升級成「產量倍率 ＋ 天花板」：
+   * 天花板是玩家看得到的東西，而且它一動就是新的可能性，不是更快的同一件事。
+   */
+  readonly attrCap: number;
 }
 export interface TrainingActionDef extends DefHeader {
   readonly kind: 'trainingAction';
@@ -213,6 +232,20 @@ export interface AttributeCapDef extends DefHeader {
 }
 export interface GameRulesDef extends DefHeader {
   readonly kind: 'gameRules';
+  /**
+   * **第一輪的官階上限**（未買任何天命商店的官途時）★
+   *
+   * 官階是玩家最有感的那個數字（稱號寫在狀態列上），而它原本沒有任何
+   * 跨輪閘門 —— 於是階梯只能訂成「第一輪爬得動」。
+   * 把上限訂在這裡、把它的成長賣進商店，兩件事同時成立：
+   *   第一輪撞得到一道**看得見的牆**（都尉／功曹，第 5 階）
+   *   跨輪投資買得到**新的稱號**，不是同一個稱號來得更快
+   *
+   * 功績超過上限【不會浪費】—— 兵量吃 `hostScale[官階]`，
+   * 而上限同時封住兵量，所以那是一句可讀的話：
+   * 「你只是個都尉，帶不了那麼多兵。」
+   */
+  readonly careerCapBase: number;
   readonly companionCount: number;
   /** 開局可自行指定的玩伴人數。其餘由皇甫嵩指派（14 §3）。 */
   readonly designateBase: number;
@@ -627,6 +660,17 @@ export interface EndingDef extends DefHeader {
 export type ShopGrant =
   | { readonly kind: 'aptitudeCap'; readonly attr: Attr; readonly toGrade: AptitudeGrade }
   | { readonly kind: 'aptitudePoints'; readonly delta: number }
+  /**
+   * **本輪官階能爬到第幾階** ★ 官階那條線唯一的跨輪成長
+   *
+   * 實測：天命商店九個品項裡有 **0 個**碰官階。它在第一輪與第五十輪的
+   * 爬法完全一樣，所以「官階」這條線根本沒有 progression ——
+   * 而它是全遊戲最大、最顯眼的那個數字（稱號寫在狀態列上）。
+   *
+   * 那也解釋了為什麼第一輪就爬到 rank 7：**沒有跨輪的閘門，
+   * 階梯就只能訂成「第一輪爬得動」，而那必然是「第一輪爬掉一半」。**
+   */
+  | { readonly kind: 'careerCap'; readonly delta: number }
   | { readonly kind: 'talentPoints'; readonly delta: number }
   | { readonly kind: 'factionBond'; readonly faction: FactionId; readonly toLevel: number }
   | { readonly kind: 'unlockTalent'; readonly talentId: TalentId }
@@ -640,7 +684,7 @@ export interface ShopLevel {
 export interface ShopItemDef extends DefHeader {
   readonly kind: 'shopItem';
   readonly item: ShopItemId;
-  readonly category: 'aptitude' | 'talent' | 'bond' | 'glow';
+  readonly category: 'aptitude' | 'talent' | 'bond' | 'glow' | 'career';
   readonly nameKey: L10nKey;
   readonly descKey: L10nKey;
   readonly levels: readonly ShopLevel[];

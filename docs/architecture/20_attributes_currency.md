@@ -48,13 +48,35 @@ totalMerit = merit.civil + merit.martial
 ```ts
 interface AttributeCapDefinition extends DefinitionHeader {
   readonly kind: 'attributeCap';
-  readonly attrMax: number;
-  readonly moralMin: number;        // 善惡名下限（負值）
-  readonly moralMax: number;
+  readonly attrMax: number;         // 100 —— 這是【尺度】，不是這一輪的上限
 }
 ```
 
-> ⚠️ **待定數值**：GDD 尚未定義四維上限。它是 DC 曲線設計的前提（沒有上限就無法設計 DC），列為 GDD 待補項。架構只保證它是**資料**。
+（`moralMin` / `moralMax` 已刪除：善惡名整條退場。）
+
+### 2.1 尺度 與 這一輪的天花板是兩件事 ★★
+
+```ts
+// ⑳ 唯一的來源。㉜ 兌換與 StatWriter 寫入都走它。
+function attrCapOf(attr: Attr, ctx: RunContext): number {
+  return Math.min(
+    ctx.defs.single('attributeCap').attrMax,          // 尺度：等級表 G..S 畫在這條尺上
+    aptitudeGrade[ctx.state.config.aptitudes[attr]].attrCap,   // 這一輪：資質買到的
+  );
+}
+```
+
+| | 是什麼 | 值 |
+|---|---|---|
+| `attributeCap.attrMax` | **尺度** —— 等級表與 DC 曲線的座標 | 100（固定） |
+| `aptitudeGrade.attrCap` | **這一輪爬得到哪** —— 跨輪貨幣買的 | 59…100（逐階） |
+
+第一輪資質全 D → 四維上限 **75**（B 帶起點）；把某一維買到 S 才摸得到 100。
+理由與實測見 [14 §2.1.1](14_dream_entry_config.md)。
+
+**兩個上限取 min 是刻意的**：資質表寫錯也不可能超過尺度本身。
+而「買得到」（㉜）與「加得上去」（`StatWriter`）**共用同一個函式** ——
+兩邊各有一份上限的話，總有一天會不一致，而那不會讓任何測試失敗。
 
 ---
 
@@ -121,7 +143,7 @@ interface StatQuery {
 
 ## 6. 不變量
 
-1. `attributes.values[attr]` ∈ `[0, attrMax]`，單調不減
+1. `attributes.values[attr]` ∈ `[0, attrCapOf(attr)]`，單調不減
 2. `fame.civil` / `fame.martial` / `merit.*` ≥ 0，單調不減
 3. `fame.moral` ∈ `[moralMin, moralMax]`，**可雙向變動**
 4. `totalFame` 不含 `fame.moral`

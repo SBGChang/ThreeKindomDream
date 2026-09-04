@@ -28,6 +28,8 @@ export interface ConfigLimits {
   /** 可攜帶的道具。高階道具不帶就永遠拿不到碎片（23 §5）。 */
   readonly carriableItems: readonly ItemId[];
   readonly carrySlots: number;
+  /** 本輪官階能爬到第幾階。入夢畫面要把它寫出來 —— 那是這一輪的天花板。 */
+  readonly careerCap: number;
 }
 
 /** 組裝 ⑨＋⑩ 的上限。全部現算（14 §4.1）。 */
@@ -43,6 +45,7 @@ export function limits(meta: MetaState, defs: DefinitionRegistry): ConfigLimits 
     companionSlots: defs.single('gameRules').companionCount,
     carriableItems: itemCodex.known(meta, defs),
     carrySlots: defs.single('gameRules').carrySlots,
+    careerCap: shop.careerCap,
   };
 }
 
@@ -74,12 +77,14 @@ export function emptyDraft(meta: MetaState, defs: DefinitionRegistry): DreamEntr
   const aptCost = defs.single('aptitudeCost');
   const aptitudes: Record<string, AptitudeGrade> = {};
   for (const a of ATTRS) aptitudes[a] = aptCost.defaultGrade;
-  void meta;
   return {
     aptitudes: aptitudes as Record<Attr, AptitudeGrade>,
     talents: [],
     designatedCompanions: [],
     carriedItems: [],
+    // 官階上限【由天命買到的決定】，不是玩家在入夢畫面選的 ——
+    // 所以它在 draft 一生成就定案，不會被後續編輯改掉。
+    careerCap: shopLimits(meta, defs).careerCap,
   };
 }
 

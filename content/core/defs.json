@@ -68,6 +68,7 @@
     "yieldMul": 2.2
   },
   {
+    "attrCap": 59,
     "grade": "F",
     "id": "apt:F",
     "kind": "aptitudeGrade",
@@ -77,6 +78,7 @@
     "yieldMul": 0.7
   },
   {
+    "attrCap": 67,
     "grade": "E",
     "id": "apt:E",
     "kind": "aptitudeGrade",
@@ -86,6 +88,7 @@
     "yieldMul": 0.85
   },
   {
+    "attrCap": 75,
     "grade": "D",
     "id": "apt:D",
     "kind": "aptitudeGrade",
@@ -95,6 +98,7 @@
     "yieldMul": 1
   },
   {
+    "attrCap": 82,
     "grade": "C",
     "id": "apt:C",
     "kind": "aptitudeGrade",
@@ -104,6 +108,7 @@
     "yieldMul": 1.15
   },
   {
+    "attrCap": 88,
     "grade": "B",
     "id": "apt:B",
     "kind": "aptitudeGrade",
@@ -113,6 +118,7 @@
     "yieldMul": 1.3
   },
   {
+    "attrCap": 94,
     "grade": "A",
     "id": "apt:A",
     "kind": "aptitudeGrade",
@@ -122,6 +128,7 @@
     "yieldMul": 1.45
   },
   {
+    "attrCap": 100,
     "grade": "S",
     "id": "apt:S",
     "kind": "aptitudeGrade",
@@ -471,6 +478,7 @@
     "schemaVersion": 1
   },
   {
+    "careerCapBase": 5,
     "carrySlots": 2,
     "commissionChance": 0.5,
     "companionCount": 3,
@@ -1760,6 +1768,76 @@
       }
     ],
     "nameKey": "shop.aptCap.pol.name",
+    "packId": "pack:core",
+    "requiresItems": [],
+    "requiresPack": null,
+    "schemaVersion": 1
+  },
+  {
+    "category": "career",
+    "descKey": "shop.career.desc",
+    "id": "shop:career",
+    "item": "shop:career",
+    "kind": "shopItem",
+    "levels": [
+      {
+        "cost": 500,
+        "grant": {
+          "delta": 1,
+          "kind": "careerCap"
+        },
+        "level": 1
+      },
+      {
+        "cost": 900,
+        "grant": {
+          "delta": 1,
+          "kind": "careerCap"
+        },
+        "level": 2
+      },
+      {
+        "cost": 1600,
+        "grant": {
+          "delta": 1,
+          "kind": "careerCap"
+        },
+        "level": 3
+      },
+      {
+        "cost": 2600,
+        "grant": {
+          "delta": 1,
+          "kind": "careerCap"
+        },
+        "level": 4
+      },
+      {
+        "cost": 4000,
+        "grant": {
+          "delta": 1,
+          "kind": "careerCap"
+        },
+        "level": 5
+      },
+      {
+        "cost": 6000,
+        "grant": {
+          "delta": 1,
+          "kind": "careerCap"
+        },
+        "level": 6
+      },
+      {
+        "cost": 9000,
+        "grant": {
+          "delta": 1,
+          "kind": "careerCap"
+        },
+        "level": 7
+      }
+    ],
+    "nameKey": "shop.career.name",
     "packId": "pack:core",
     "requiresItems": [],
     "requiresPack": null,

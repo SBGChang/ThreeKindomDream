@@ -718,6 +718,8 @@
   "shop.aptPoints.name": "資質配點",
   "shop.bond.wei.desc": "入朝時可自行指定的上司名額",
   "shop.bond.wei.name": "魏 · 勢力緣分",
+  "shop.career.desc": "解放本輪官階能爬到的最高階（第一輪到都尉／功曹為止）",
+  "shop.career.name": "官途",
   "shop.glowUpgrade.desc": "提高鍛鍊的升階判定機率",
   "shop.glowUpgrade.name": "升階機率",
   "shop.talentPoints.desc": "入夢前可配帶的天賦點數上限",

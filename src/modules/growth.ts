@@ -12,17 +12,18 @@ import type {
 import type { NotableId, SkillId, TraitId } from '../contracts/core/ids.js';
 import { targetId } from '../contracts/core/ids.js';
 import type {
-  AbilityTier, AffinityStage, Attr, AttrGrade,
+  AbilityTier, AffinityStage, AptitudeGrade, Attr, AttrGrade,
 } from '../contracts/core/primitives.js';
 import { AFFINITY_STAGES, ATTRS } from '../contracts/core/primitives.js';
 import type { RunState } from '../contracts/core/state.js';
 import * as ability from './ability.js';
 import type { EffectResolver } from './effect.js';
 import { rosterIds, stageOf } from './roster-query.js';
-import { statQuery, type StatWriter } from './stats.js';
+import { attrCapOf, statQuery, type StatWriter } from './stats.js';
 
 const rule = (ctx: RunContext): GrowthRuleDef => ctx.defs.single('growthRule');
-const capOf = (ctx: RunContext): number => ctx.defs.single('attributeCap').attrMax;
+// 上限【逐維】不同 —— 它由資質決定，而資質是跨輪貨幣（⑳ attrCapOf）。
+const capOf = (attr: Attr, ctx: RunContext): number => attrCapOf(attr, ctx);
 
 const bandsOf = (ctx: RunContext): readonly AttrCostBand[] =>
   rule(ctx).bands.slice().sort((a, b) => a.min - b.min);
@@ -90,7 +91,7 @@ export function attrCost(
   attr: Attr, target: number, ctx: RunContext, fx: EffectResolver,
 ): number {
   const from = statQuery.attr(attr, ctx);
-  const to = Math.min(target, capOf(ctx));
+  const to = Math.min(target, capOf(attr, ctx));
   let sum = 0;
   for (let v = from; v < to; v += 1) sum += shiftedCostPerPoint(v + 1, ctx, fx);
   return Math.max(0, Math.ceil(fx.resolve(targetId(`learn.cost.${attr}`), sum, ctx)));
@@ -102,16 +103,31 @@ export interface NextGrade {
   readonly cost: number;
 }
 
-/** 下一級的價碼 —— UI 的主要顯示。已在頂級時回 null。 */
+/**
+ * 下一級的價碼 —— UI 的主要顯示。已在頂級時回 null。
+ *
+ * **超過本輪天花板的等級一律回 null** ★ 否則畫面會出現「升到 A（0）」——
+ * `attrCost` 會把 target 夾到上限，於是差額歸零，看起來像免費。
+ * 那個 0 是真的算出來的，而它說的是謊：`learnAttr` 會直接拒絕。
+ * 天花板到了就該說「到頂了」，不該報一個買不到的價。
+ */
 export function nextGrade(
   attr: Attr, ctx: RunContext, fx: EffectResolver,
 ): NextGrade | null {
   const bands = bandsOf(ctx);
   const value = statQuery.attr(attr, ctx);
+  const cap = capOf(attr, ctx);
   const next = bands.find((b) => b.min > value);
-  if (next === undefined) return null;
+  if (next === undefined || next.min > cap) return null;
   return { grade: next.grade, at: next.min, cost: attrCost(attr, next.min, ctx, fx) };
 }
+
+/** 本輪那一維的天花板。UI 要把它畫出來 —— 看得見的牆才是跨輪動機（14 §2）。 */
+export const attrCap = (attr: Attr, ctx: RunContext): number => capOf(attr, ctx);
+
+/** 本輪那一維的資質階。與天花板一起顯示，玩家才知道【什麼買得動它】。 */
+export const aptitudeOf = (attr: Attr, ctx: RunContext): AptitudeGrade =>
+  ctx.state.config.aptitudes[attr];
 
 // ── 特質與技能 ────────────────────────────────────────
 
@@ -256,7 +272,7 @@ export function learnAttr(
   attr: Attr, target: number, ctx: RunContext, fx: EffectResolver, writer: StatWriter,
 ): LearnResult {
   const from = statQuery.attr(attr, ctx);
-  if (target <= from || target > capOf(ctx)) return { ok: false, reason: 'capped' };
+  if (target <= from || target > capOf(attr, ctx)) return { ok: false, reason: 'capped' };
   const cost = attrCost(attr, target, ctx, fx);
   if (expOf(attr, ctx) < cost) return { ok: false, reason: 'unaffordable' };
   const paid = pay({ [attr]: cost }, ctx);

@@ -25,13 +25,16 @@ export const careerService: CareerService = {
   },
 
   reevaluate(ctx) {
+    // 本輪的天花板（14 §2）。功績超過它【不浪費】—— 兵量吃 hostScale[官階]，
+    // 所以上限同時封住兵量，那是一句可讀的話：「你只是個都尉，帶不了那麼多兵。」
+    const cap = this.maxLevel('martial', ctx);
     const step = (line: CareerLine, current: number): number => {
       const all = ranksOf(line, ctx);
       const merit = statQuery.merit(line, ctx);
       let level = current;
       for (;;) {
         const next = all.find((r) => r.level === level + 1);
-        if (next === undefined || merit < next.requiredMerit) break;
+        if (next === undefined || next.level > cap || merit < next.requiredMerit) break;
         level = next.level;
       }
       return level;
@@ -45,5 +48,14 @@ export const careerService: CareerService = {
     };
   },
 
-  maxLevel: (line, ctx) => ranksOf(line, ctx).length,
+  /**
+   * 本輪爬得到的最高階 ★ **不是內容裡有幾階**
+   *
+   * 舊版回的是階數總和（12），那是【尺度】不是【這一輪的上限】。
+   * 兩者分開之後，官階第一次有了跨輪成長：第一輪 5（都尉／功曹），
+   * 天命商店的〈官途〉一路買到 12（四方將軍／軍師將軍）。
+   */
+  maxLevel: (line, ctx) => Math.min(
+    ranksOf(line, ctx).length, ctx.state.config.careerCap,
+  ),
 };

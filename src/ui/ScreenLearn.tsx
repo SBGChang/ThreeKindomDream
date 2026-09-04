@@ -54,7 +54,7 @@ export function ScreenLearn({ s, bump, onBack }: Props): React.ReactElement {
         <thead>
           <tr>
             <th>維</th><th className="n">現值</th><th>評</th>
-            <th className="n">經驗</th><th>下一級</th><th>加點</th>
+            <th className="n">經驗</th><th>本輪上限</th><th>下一級</th><th>加點</th>
           </tr>
         </thead>
         <tbody>
@@ -62,7 +62,7 @@ export function ScreenLearn({ s, bump, onBack }: Props): React.ReactElement {
             const cur = s.current.attributes.values[a];
             const exp = s.expOf(a);
             const ng = s.nextGrade(a);
-            const cap = s.attrMax();
+            const cap = s.attrCap(a);
             /*
               **一點一點加**，不是一次跳一整級。
               階梯計價的重點就是「下一點多少錢」——
@@ -89,8 +89,21 @@ export function ScreenLearn({ s, bump, onBack }: Props): React.ReactElement {
                 <td className="n mono">{cur}</td>
                 <td className="mono"><b>{s.gradeOf(a)}</b></td>
                 <td className={`n mono ${exp > 0 ? 'ok' : ''}`}>{exp}</td>
+                {/*
+                  **天花板要看得見**（14 §2）。它是這一輪爬得到哪裡的答案，
+                  而它由資質決定 —— 資質是跨輪貨幣。把兩個數字寫在一起，
+                  玩家才知道那道牆在哪、以及【什麼買得動它】。
+                  舊版這一欄不存在，於是「練不上去」讀起來像經驗不夠，
+                  其實是本輪根本到頂了。
+                */}
+                <td className={`n mono ${cur >= cap ? 'warn' : 'sub'}`}>
+                  {`${cap}`}
+                  <span className="sub">{`（資質 ${s.aptitudeOf(a)}）`}</span>
+                </td>
                 <td className="mono">
-                  {ng === null ? '已達頂' : `${ng.grade} @${ng.at}`}
+                  {ng === null
+                    ? (cur >= cap ? '本輪到頂' : '已達頂')
+                    : `${ng.grade} @${ng.at}`}
                 </td>
                 <td>
                   <div className="row">

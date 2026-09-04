@@ -34,6 +34,9 @@ export const careerTalentTexts: Record<string, string> = {
   'talent.great-clan.name': '累世公卿',
   'talent.great-clan.desc': '三位同伴全由你自己指定',
 
+  'shop.career.name': '官途',
+  'shop.career.desc': '解放本輪官階能爬到的最高階（第一輪到都尉／功曹為止）',
+
   'shop.aptCap.war.name': '武的資質上限',
   'shop.aptCap.war.desc': '解放武資質可分配到的最高階',
   'shop.aptCap.int.name': '智的資質上限',

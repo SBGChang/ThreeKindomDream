@@ -23,6 +23,8 @@ export interface ShopLimits {
   readonly talentPoints: number;
   readonly unlockedTalents: readonly TalentId[];
   readonly factionBonds: Readonly<Record<string, number>>;
+  /** 官階上限 ＝ `gameRules.careerCapBase` ＋ 買到的 `careerCap` 總和。 */
+  readonly careerCap: number;
 }
 
 const boughtLevels = (item: ShopItemDef, meta: MetaState): readonly ShopLevel[] =>
@@ -88,6 +90,7 @@ export function shopLimits(meta: MetaState, defs: DefinitionRegistry): ShopLimit
   for (const a of ATTRS) caps[a] = aptCost.defaultGrade;
   let aptitudePoints = 0;
   let talentPoints = 0;
+  let careerCap = defs.single('gameRules').careerCapBase;
   const unlockedTalents: TalentId[] = [];
   const factionBonds: Record<string, number> = {};
 
@@ -98,7 +101,8 @@ export function shopLimits(meta: MetaState, defs: DefinitionRegistry): ShopLimit
         const cur = caps[g.attr] ?? aptCost.defaultGrade;
         caps[g.attr] = APTITUDE_GRADES.indexOf(g.toGrade) > APTITUDE_GRADES.indexOf(cur)
           ? g.toGrade : cur;
-      } else if (g.kind === 'aptitudePoints') aptitudePoints += g.delta;
+      } else if (g.kind === 'careerCap') careerCap += g.delta;
+      else if (g.kind === 'aptitudePoints') aptitudePoints += g.delta;
       else if (g.kind === 'talentPoints') talentPoints += g.delta;
       else if (g.kind === 'unlockTalent') unlockedTalents.push(g.talentId);
       else if (g.kind === 'factionBond') {
@@ -115,6 +119,7 @@ export function shopLimits(meta: MetaState, defs: DefinitionRegistry): ShopLimit
     talentPoints,
     unlockedTalents,
     factionBonds,
+    careerCap: Math.min(careerCap, defs.reader('careerRank').all().length / 2),
   };
 }
 
