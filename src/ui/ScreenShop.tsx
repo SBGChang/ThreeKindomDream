@@ -1,7 +1,8 @@
 import type { MetaState } from '../contracts/core/state.js';
 import {
-  catalog, defs, designateQuota, emptyDraft, notableCodex, purchase, t,
+  catalog, defs, designateQuota, emptyDraft, itemCodex, notableCodex, purchase, t,
 } from '../app/bootstrap.js';
+import type { ItemTierDef } from '../contracts/core/definitions.js';
 
 interface Props {
   readonly meta: MetaState;
@@ -65,6 +66,52 @@ export function ScreenShop({ meta, onMeta, onStart, onReset }: Props): React.Rea
               </td>
             </tr>
           ))}
+        </tbody>
+      </table>
+
+      {/*
+        道具圖鑑 ★ **這條線原本完全沒有畫面**
+        每件道具有六階、靠碎片升，結算也確實算出 itemFragments／itemTierRaised
+        —— 整套跑在程式裡，玩家看不到也就不知道有這回事。
+        它與名士圖鑑同構（碎片換階），所以擺在一起。
+      */}
+      <h2>道具圖鑑</h2>
+      <p className="sub" style={{ margin: '-4px 0 12px' }}>
+        碎片換階。<b>第二次拿到同一件才產碎片</b> —— 首次獲得換到的是圖鑑登錄。
+        而高階道具一輪只拿得到一次，所以它的碎片<b>只能靠攜帶進場</b>（入夢畫面）。
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>道具</th><th className="n">稀有度</th><th className="n">階</th>
+            <th className="n">碎片／下一階</th><th>已解放</th>
+          </tr>
+        </thead>
+        <tbody>
+          {defs.reader('item').all()
+            .slice().sort((a, b) => b.rarity - a.rarity)
+            .map((it) => {
+              const entry = itemCodex.entry(it.itemId, meta);
+              const known = entry.tier >= 0 && meta.itemCodex[String(it.itemId)] !== undefined;
+              const tier = itemCodex.tierOf(it.itemId, meta);
+              const next = itemCodex.nextCost(it.itemId, meta, defs);
+              const rows = itemCodex.unlockedTiers(it.itemId, meta, defs);
+              return (
+                <tr key={String(it.itemId)} style={known ? undefined : { opacity: 0.45 }}>
+                  <td>{known ? t(it.nameKey) : '？？？'}</td>
+                  <td className="n mono">{it.rarity}</td>
+                  <td className="n mono">{`${tier}/${it.tiers.length - 1}`}</td>
+                  <td className="n mono" style={{ color: 'var(--dim)' }}>
+                    {next === null ? `${entry.fragments} / 已滿階` : `${entry.fragments} / ${next}`}
+                  </td>
+                  <td style={{ color: 'var(--dim)', fontSize: 12 }}>
+                    {!known || rows.length === 0
+                      ? '尚未在夢裡見過'
+                      : rows.map((r: ItemTierDef) => t(r.descKey)).join('；')}
+                  </td>
+                </tr>
+              );
+            })}
         </tbody>
       </table>
 

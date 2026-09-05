@@ -6,7 +6,10 @@ import { loadContent } from '../data-runtime/loader.js';
 import type { DefinitionRegistry } from '../data-runtime/registry.js';
 import { seed as mkSeed } from '../contracts/core/ids.js';
 import type { MetaState } from '../contracts/core/state.js';
-import { designateQuota, emptyDraft, emptyMeta } from '../modules/dream-entry.js';
+import {
+  cost as draftCost, designateQuota, emptyDraft, emptyMeta,
+  limits as draftLimits, validate as validateDraft,
+} from '../modules/dream-entry.js';
 import { browserRepository } from '../platform/browser-repository.js';
 
 const loaded = loadContent(browserRepository);
@@ -40,7 +43,13 @@ export function startRun(meta: MetaState, config = emptyDraft(meta, defs)): Sess
   return Session.start(wiring, meta, config, mkSeed(Date.now() % 2_000_000_000));
 }
 
-export { designateQuota, emptyDraft, emptyMeta };
+// ⑭ 入夢配置：草稿、上限、成本、驗證。**入夢畫面靠這四個活著** ——
+// 在它出現之前 startRun 直接吃 emptyDraft，於是天命商店買的資質點、
+// 天賦、攜帶格、指定名額全部沒有出口（09 §5.1）。
+export {
+  designateQuota, emptyDraft, emptyMeta, draftCost, draftLimits, validateDraft,
+};
+export { itemCodex } from '../modules/item.js';
 
 // UI 需要的唯讀 Query 與元層操作，經此層轉出（ui/ 不直接 import modules/）。
 export { catalog, purchase } from '../modules/shop.js';

@@ -5,6 +5,7 @@ import { ATTRS } from '../contracts/core/primitives.js';
 import { loadMeta, resetMeta, saveMeta, startRun } from '../app/bootstrap.js';
 import { ScreenCampaign } from './ScreenCampaign.js';
 import { ScreenEnd } from './ScreenEnd.js';
+import { ScreenEntry } from './ScreenEntry.js';
 import { ScreenFaction, ScreenSuperiors } from './ScreenPick.js';
 import { ScreenLearn } from './ScreenLearn.js';
 import { ScreenRun } from './ScreenRun.js';
@@ -15,6 +16,12 @@ const logMax = 6;
 export function App(): React.ReactElement {
   const [meta, setMeta] = useState<MetaState>(() => loadMeta());
   const [session, setSession] = useState<Session | null>(null);
+  /**
+   * 天命 →【入夢配置】→ 局內。中間這一站原本不存在 ——
+   * `startRun` 直接吃 `emptyDraft`，於是商店賣的資質點、天賦、
+   * 攜帶格、指定名額全部沒有出口（14 §1）。
+   */
+  const [entering, setEntering] = useState(false);
   const [, force] = useState(0);
   // 學習不佔行動、隨時可做（32 §7.3）—— 因此它是一個可以隨時進出的畫面，
   // 不是回合流程裡的一站。
@@ -36,11 +43,24 @@ export function App(): React.ReactElement {
   }, []);
 
   if (session === null) {
+    if (entering) {
+      return (
+        <ScreenEntry
+          meta={meta}
+          onEnter={(config) => {
+            setLog([]);
+            setEntering(false);
+            setSession(startRun(meta, config));
+          }}
+          onBack={() => { setEntering(false); }}
+        />
+      );
+    }
     return (
       <ScreenShop
         meta={meta}
         onMeta={commitMeta}
-        onStart={() => { setLog([]); setSession(startRun(meta)); }}
+        onStart={() => { setEntering(true); }}
         onReset={() => { resetMeta(); setMeta(loadMeta()); }}
       />
     );
