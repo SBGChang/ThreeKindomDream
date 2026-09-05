@@ -4,7 +4,7 @@ import type { NotableId, SkillId } from '../contracts/core/ids.js';
 import type { CommanderSlot } from '../contracts/core/state.js';
 import { ATTRS } from '../contracts/core/primitives.js';
 import { defs, t } from '../app/bootstrap.js';
-import { StatusBar } from './StatusBar.js';
+import { Hud } from './Hud.js';
 
 interface Props { readonly s: Session; readonly bump: () => void }
 
@@ -78,7 +78,7 @@ export function ScreenCampaign({ s, bump }: Props): React.ReactElement {
           每一關打完都可以收兵，帶著已到手的獎勵走；
           <b>輸了不會夢醒，但已到手的獎勵只剩一半</b>。
         </p>
-        <StatusBar s={s} />
+        <Hud s={s} />
 
         <h2>我軍</h2>
         <Bar label="兵量" now={lim.troopsMax} max={lim.troopsMax} tone="#7ea6ff" />
@@ -174,7 +174,7 @@ export function ScreenCampaign({ s, bump }: Props): React.ReactElement {
     <>
       <h1>{`戰役 · ${t(chapter.titleKey)}`}</h1>
       <p className="sub">{`已通過 ${st.clearedStages} / ${s.stageCount()} 關`}</p>
-      <StatusBar s={s} />
+      <Hud s={s} />
 
       <h2>我軍</h2>
       <Bar label="軍勢" now={st.host.troops} max={st.host.troopsMax} tone="#7ea6ff" />

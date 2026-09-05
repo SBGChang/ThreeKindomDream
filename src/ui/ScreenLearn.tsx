@@ -1,9 +1,10 @@
+import { useState } from 'react';
 import type { Session } from '../app/session.js';
 import type { AbilityCost } from '../contracts/core/definitions.js';
 import type { Attr } from '../contracts/core/primitives.js';
 import { ATTRS } from '../contracts/core/primitives.js';
 import { defs, t } from '../app/bootstrap.js';
-import { StatusBar } from './StatusBar.js';
+import { Hud } from './Hud.js';
 
 interface Props {
   readonly s: Session;
@@ -27,10 +28,26 @@ const costText = (c: AbilityCost): string => ATTRS
  *   2. 數值買到哪一級、下一級多少錢
  *   3. 特質與技能 —— 未解鎖的【也要顯示】，並寫出誰能教
  */
+type Tab = 'attr' | 'skill' | 'trait';
+
 export function ScreenLearn({ s, bump, onBack }: Props): React.ReactElement {
+  /**
+   * 三個 Tab ★ **它們的稀缺不同，所以不該擠在同一頁**（32 §4）
+   *
+   *   基礎能力  稀缺在【天花板】—— 買不買得到看資質
+   *   技能      稀缺在【格數】（只有 3 格）與【解鎖】（誰教你）
+   *   特性      稀缺在【經驗總量】
+   *
+   * 舊版三張表垂直疊成一頁，於是「我現在該花在哪」要靠捲動去比較。
+   * 分頁之後每一頁只回答一個問題，而分頁列本身就是那三種稀缺的清單。
+   */
+  const [tab, setTab] = useState<Tab>('attr');
   const traits = s.traitOffers();
   const skills = s.skillOffers();
   const learnedSkills = s.current.abilities.skills.length;
+  const canLearn = (n: number): string => (n > 0 ? ` ·${n}` : '');
+  const readyTraits = traits.filter((o) => o.state === 'learnable').length;
+  const readySkills = skills.filter((o) => o.state === 'learnable').length;
 
   // 說明文字的兩個端點從價格帶表算出來 —— 寫死過一次，改尺度就對不上了。
   const bands = s.attrBands().filter((b) => b.max > b.min);
@@ -42,14 +59,26 @@ export function ScreenLearn({ s, bump, onBack }: Props): React.ReactElement {
 
   return (
     <>
-      <h1>養成</h1>
+      <h1>能力提升</h1>
       <p className="sub">
-        鍛鍊產出的是<b>經驗</b>，四類不共用。屬性、特質、技能都要在這裡花掉它。
-        學習隨時可做，不佔回合。
+        鍛鍊產出的是<b>經驗</b>，四類不共用。<b>學習隨時可做，不佔回合。</b>
       </p>
-      <StatusBar s={s} />
+      <Hud s={s} />
 
-      <h2>四維 · 花經驗買</h2>
+      <div className="tabs">
+        <button className={tab === 'attr' ? 'sel' : ''} onClick={() => { setTab('attr'); }}>
+          基礎能力
+        </button>
+        <button className={tab === 'skill' ? 'sel' : ''} onClick={() => { setTab('skill'); }}>
+          {`技能（${learnedSkills}/3）${canLearn(readySkills)}`}
+        </button>
+        <button className={tab === 'trait' ? 'sel' : ''} onClick={() => { setTab('trait'); }}>
+          {`特性（${s.current.abilities.traits.length}）${canLearn(readyTraits)}`}
+        </button>
+      </div>
+
+      {tab !== 'attr' ? null : (
+      <>
       <table>
         <thead>
           <tr>
@@ -129,9 +158,17 @@ export function ScreenLearn({ s, bump, onBack }: Props): React.ReactElement {
         {`每一點的價碼隨等級帶上升（${cheapest.grade} 帶 ${cheapest.costPerPoint}／點`
           + ` → ${priciest.grade} 帶 ${priciest.costPerPoint}／點）。`}
         <b>七個價格帶就是七個等級</b> —— 看到「武 B」就知道下一階要付多少。
+        天花板由<b>資質</b>決定，而資質是天命買的（山河圖那一頁分配）。
       </p>
+      </>
+      )}
 
-      <h2>{`技能（戰役中的行動 · 已學 ${learnedSkills}，帶 3 招上場）`}</h2>
+      {tab !== 'skill' ? null : (
+      <>
+      <p className="sub">
+        戰役中的行動，<b>只有 3 格</b>。學第四招的理由只有一個 ——
+        換帶（不同章節的敵人性質不同）。
+      </p>
       <table>
         <thead>
           <tr><th>技能</th><th>階</th><th>說明</th><th>消耗</th><th>狀態</th><th /></tr>
@@ -164,7 +201,14 @@ export function ScreenLearn({ s, bump, onBack }: Props): React.ReactElement {
         </tbody>
       </table>
 
-      <h2>特質（常駐 · 不佔格，買得起就一直帶著）</h2>
+      </>
+      )}
+
+      {tab !== 'trait' ? null : (
+      <>
+      <p className="sub">
+        常駐被動，<b>不佔格</b> —— 買得起就一直帶著。所以它的稀缺是經驗總量。
+      </p>
       <table>
         <thead>
           <tr><th>特質</th><th>階</th><th>說明</th><th>消耗</th><th>狀態</th><th /></tr>
@@ -203,7 +247,10 @@ export function ScreenLearn({ s, bump, onBack }: Props): React.ReactElement {
       <p className="sub" style={{ marginTop: 12 }}>
         絕階要三類經驗混合 —— 只練一維的人買不起。這是專精要付的代價。
       </p>
-      <button onClick={onBack}>回到回合</button>
+      </>
+      )}
+
+      <button style={{ marginTop: 12 }} onClick={onBack}>回到回合</button>
     </>
   );
 }

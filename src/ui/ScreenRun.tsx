@@ -3,13 +3,16 @@ import type { ExpGain, EventOffer, MeritGain } from '../contracts/core/state.js'
 import type { SlotIndex } from '../contracts/core/primitives.js';
 import { SLOT_INDICES } from '../contracts/core/primitives.js';
 import { baseOf, defs, stageOf, t } from '../app/bootstrap.js';
-import { StatusBar } from './StatusBar.js';
+import { Hud } from './Hud.js';
 
 interface Props {
   readonly s: Session;
   readonly bump: () => void;
   readonly log: readonly string[];
   readonly onLog: (line: string) => void;
+  /** 兩個側畫面的入口。都【不佔行動】，所以放在 HUD 上而不是回合流程裡。 */
+  readonly onLearn: () => void;
+  readonly onVault: () => void;
 }
 
 const fill = (body: string, params: Readonly<Record<string, unknown>>): string =>
@@ -31,7 +34,7 @@ const stars = (n: number): string => '★'.repeat(n);
  *
  * 委託與人物事件共用同一段呈現 —— 追加一種事件來源不需要在這裡多長一個分支。
  */
-export function ScreenRun({ s, bump, log, onLog }: Props): React.ReactElement {
+export function ScreenRun({ s, bump, log, onLog, onLearn, onVault }: Props): React.ReactElement {
   const st = s.current;
   const chapter = defs.reader('chapter').get(String(st.progress.chapterId));
   const turnNo = st.progress.turn;
@@ -96,7 +99,7 @@ export function ScreenRun({ s, bump, log, onLog }: Props): React.ReactElement {
           ? t(`phase.${st.progress.phase}`)
           : t(defs.reader('faction').get(String(st.faction)).nameKey)}`}
       </p>
-      <StatusBar s={s} />
+      <Hud s={s} onLearn={onLearn} onVault={onVault} />
 
       {pending === null ? (
         <>
