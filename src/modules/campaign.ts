@@ -547,24 +547,129 @@ export function withdraw(ctx: RunContext): RunState {
   return { ...ctx.state, campaign: { ...st, phase: 'resolved' } };
 }
 
+export interface StageOutlook {
+  /** 對面要打幾回合才倒。 */
+  readonly turnsToKill: number;
+  /** 我撐得住幾回合（含糧秣換得回的部分）。 */
+  readonly turnsToDie: number;
+  /** 現在的軍勢。 */
+  readonly troops: number;
+  /** 糧秣還能換回多少軍勢。**沒帶恢復招的人是 0**（33 §5.3）。 */
+  readonly sustain: number;
+  /**
+   * 有效軍勢 ＝ 軍勢 ＋ 糧秣換得回的。
+   *
+   * ★ `turnsToDie` 吃的是這個池子，所以「預估掉多少」也必須拿它來比 ——
+   * 拿現有軍勢去比會讀成矛盾（「撐得住 12 回合」卻「掉的比現有多」）。
+   */
+  readonly pool: number;
+  /** 打完這一關【預估】掉多少軍勢。超過 `pool` 就是打不完。 */
+  readonly expectedLoss: number;
+  /** 餘裕倍數 ＝ turnsToDie / turnsToKill。1.0 ＝ 剛剛好。 */
+  readonly margin: number;
+  /** 這一關「不需要想」嗎（D15 掃蕩的判準）。 */
+  readonly overwhelming: boolean;
+}
+
+/**
+ * 走留那一刻，玩家該讀的兩個數字 ★★
+ *
+ * ── 為什麼它必須是一個公開查詢 ─────────────────────
+ * D8 說【不顯示勝率】：在一個玩家不操作但變數眾多的系統裡，
+ * 算出來的百分比是假的精確。但那條規矩有一個配套 ——
+ * **不給勝率，就得給原料。** 而原料就是這兩個數字：
+ *
+ *   turnsToKill  對面要打幾回合
+ *   turnsToDie   我撐得住幾回合
+ *
+ * 這兩個數字【本來就存在】，只是以前埋在 `isOverwhelming` 裡算完就丟。
+ * 於是替身 AI 用的判準比玩家看得到的還多 —— 而 33 §5.4 的整個立論
+ * （「玩家算得出來的東西，才值得他去算」）靠的正是玩家看得到它們。
+ *
+ * 抽成查詢之後，畫面、掃蕩判準、模擬器策略共用同一份算式。
+ * 三份各自實作的話，畫面上寫的數字與 AI 的判斷遲早會漂移。
+ */
+export function stageOutlook(ctx: RunContext, fx: EffectResolver): StageOutlook | null {
+  const st = ctx.state.campaign;
+  const nx = nextStagePreview(ctx);
+  if (st === null || st.loadout === null || nx === null) return null;
+  const power = hostPower(ctx, fx);
+  const dmg = Math.max(1, nx.enemyDamage);
+  // 一招輸出都沒有 ＝ 永遠打不完。用 Infinity 而不是 0，
+  // 因為「要打無限多回合」才是它真正的意思（回 0 會讀成「立刻贏」）。
+  const turnsToKill = power <= 0 ? Infinity : nx.enemyTroops / power;
+  const sustain = hostSustain(ctx, fx);
+  const pool = st.host.troops + sustain;
+  const turnsToDie = pool / dmg;
+  return {
+    turnsToKill,
+    turnsToDie,
+    troops: st.host.troops,
+    sustain,
+    pool,
+    expectedLoss: Number.isFinite(turnsToKill) ? turnsToKill * dmg : Infinity,
+    margin: turnsToKill <= 0 ? Infinity : turnsToDie / turnsToKill,
+    overwhelming: power > 0 && turnsToDie >= turnsToKill * rule(ctx).sweepMargin,
+  };
+}
+
 /**
  * 這一關「不需要想」嗎（D15）★
  *
- * 掃蕩的判準用玩家自己會做的那個心算：
- *   撐得住幾回合 ／ 對面要打幾回合 ≥ sweepMargin
- *
  * 七場自動戰鬥第一輪好看、第五輪是阻礙。掃蕩吃掉前面那幾關，
  * 讓玩家真正在讀的是後段 —— 而它停手的那一刻，就是決定回到他手上的那一刻。
+ *
+ * 判準與畫面共用 `stageOutlook` —— 見那裡的長註解。
  */
 export function isOverwhelming(ctx: RunContext, fx: EffectResolver): boolean {
+  return stageOutlook(ctx, fx)?.overwhelming ?? false;
+}
+
+export interface StageRow {
+  readonly index: number;
+  readonly brief: L10nKey;
+  readonly boss: EnemyDef | null;
+  /** 這一關單獨給的功績。獎勵曲線的形狀靠它畫出來（D12）。 */
+  readonly merit: number;
+  /** 打到這一關為止的功績累計。**「再走一關值多少」要看這個。** */
+  readonly cumulative: number;
+  /** 這一關有沒有唯一掉落（深處才有）。 */
+  readonly unique: boolean;
+  readonly cleared: boolean;
+  readonly current: boolean;
+}
+
+/**
+ * 七關的全貌 ★★ **獎勵曲線必須看得見**
+ *
+ * `REWARD_MUL` 是 1 → 45：**一場戰役的價值有八成六在第五關之後**（D12）。
+ * 那是整個 push-your-luck 的張力來源，而畫面上原本只有一行
+ * 「已通過 1 / 7 關」—— 玩家不可能從那行字讀出這件事。
+ *
+ * 回傳含【累計】而不只是單關：走留的問題是「再走一關，我手上的東西
+ * 會變成幾倍」，那要拿累計去比，不是拿單關。
+ */
+export function stageRows(ctx: RunContext): readonly StageRow[] {
   const st = ctx.state.campaign;
-  const nx = nextStagePreview(ctx);
-  if (st === null || st.loadout === null || nx === null) return false;
-  const power = hostPower(ctx, fx);
-  if (power <= 0) return false;
-  const turnsToKill = nx.enemyTroops / power;
-  const turnsToDie = (st.host.troops + hostSustain(ctx, fx)) / Math.max(1, nx.enemyDamage);
-  return turnsToDie >= turnsToKill * rule(ctx).sweepMargin;
+  if (st === null) return [];
+  const stages = currentCampaign(ctx).stages;
+  let acc = 0;
+  return stages.map((stage, i) => {
+    const merit = stage.rewards.reduce(
+      (n, r) => n + (r.kind === 'merit' ? r.amount : 0), 0,
+    );
+    acc += merit;
+    return {
+      index: i,
+      brief: stage.briefKey,
+      boss: stage.boss === null ? null : ctx.defs.reader('enemy').get(String(stage.boss)),
+      merit,
+      cumulative: acc,
+      unique: stage.rewards.some((r) => r.kind === 'unlock' || r.kind === 'item'),
+      cleared: i < st.clearedStages,
+      current: i === st.clearedStages,
+    };
+  });
 }
 
 export const bankedOf = (ctx: RunContext): readonly EventReward[] =>

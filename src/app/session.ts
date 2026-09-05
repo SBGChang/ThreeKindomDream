@@ -185,6 +185,17 @@ export class Session {
   /** 糧秣實際換得回多少軍勢。沒帶恢復招的人是 0。 */
   hostSustain(): number { return campaign.hostSustain(this.ctx, this.w.fx); }
   stageCount(): number { return campaign.stageCount(this.ctx); }
+
+  /**
+   * 走留的兩個數字（33 §8.1）。**不是勝率** ——
+   * 是玩家自己在螢幕上會做的那個心算，只是由 ㉝ 算給他。
+   */
+  stageOutlook(): campaign.StageOutlook | null {
+    return campaign.stageOutlook(this.ctx, this.w.fx);
+  }
+
+  /** 七關的全貌：獎勵曲線、關底敵將、唯一掉落、走到哪了。 */
+  stageRows(): readonly campaign.StageRow[] { return campaign.stageRows(this.ctx); }
   nextStage(): campaign.StagePreview | null { return campaign.nextStagePreview(this.ctx); }
   eligibleCommanders(): readonly NotableId[] { return campaign.eligibleCommanders(this.ctx); }
 

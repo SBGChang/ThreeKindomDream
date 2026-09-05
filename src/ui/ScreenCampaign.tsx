@@ -4,6 +4,7 @@ import type { NotableId, SkillId } from '../contracts/core/ids.js';
 import type { CommanderSlot } from '../contracts/core/state.js';
 import { ATTRS } from '../contracts/core/primitives.js';
 import { defs, t } from '../app/bootstrap.js';
+import { CampaignRoad, Outlook } from './CampaignRoad.js';
 import { Hud } from './Hud.js';
 
 interface Props { readonly s: Session; readonly bump: () => void }
@@ -173,7 +174,11 @@ export function ScreenCampaign({ s, bump }: Props): React.ReactElement {
   return (
     <>
       <h1>{`戰役 · ${t(chapter.titleKey)}`}</h1>
-      <p className="sub">{`已通過 ${st.clearedStages} / ${s.stageCount()} 關`}</p>
+      <p className="sub" style={{ marginBottom: 8 }}>
+        {`已通過 ${st.clearedStages} / ${s.stageCount()} 關`}
+        {'　—— 下面那條路的高度就是每一關值多少，數字是【打到那裡的累計】。'}
+      </p>
+      <CampaignRoad s={s} />
       <Hud s={s} />
 
       <h2>我軍</h2>
@@ -229,18 +234,16 @@ export function ScreenCampaign({ s, bump }: Props): React.ReactElement {
         <>
           <h2>{`下一關 · 第 ${(nx.index) + 1} 關`}</h2>
           <p>{t(nx.brief)}</p>
-          <p className="mono">
+          <p className="mono sub" style={{ margin: '0 0 8px' }}>
             {`對面 ${nx.boss === null ? '雜兵' : t(nx.boss.nameKey)}`}
             {`　兵力 ${nx.enemyTroops}　每回合輸出 ${nx.enemyDamage}`}
           </p>
-          <p className="sub">
-            這裡<b>不給勝率</b> —— 你打過前幾關，剩多少血、上一關花了多少，你看得到。
-          </p>
+          <Outlook s={s} />
           {/*
             往前的代價也要寫在按鈕旁邊（D14 的原則，兩個方向都適用）。
             「輸了會怎樣」與「走了放棄什麼」是同一個決定的兩半。
           */}
-          <p className="warn">
+          <p className="warn" style={{ marginTop: 10 }}>
             {`打輸了不會夢醒 —— 但已保住的 ${banked} 功績會剩一半（${Math.floor(banked / 2)}）。`}
           </p>
         </>
