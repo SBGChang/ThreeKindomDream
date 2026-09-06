@@ -57,6 +57,24 @@ export function ScreenLearn({ s, bump, onBack }: Props): React.ReactElement {
   const nameOf = (id: unknown): string =>
     t(defs.reader('notable').get(String(id)).nameKey);
 
+  /**
+   * 未解鎖時要說出【現在缺什麼】★
+   *
+   * 三種情況要分開，否則玩家不知道下一步該做什麼：
+   *   好感夠了，只是還沒共事  → 去投他站的那一格
+   *   好感還不夠              → 先跟他混熟
+   *   陣容裡沒人有這一項      → 這一輪學不到
+   *
+   * 舊版把前兩種都寫成「需 X 更熟」—— 而好感明明已經夠了，
+   * 玩家會一直投他的格子等好感漲，卻不知道其實只要投一次就會教。
+   */
+  const lockReason = (teachers: readonly { notableId: unknown; ready: boolean }[]): string => {
+    const ready = teachers.filter((x) => x.ready);
+    if (ready.length > 0) return `與 ${ready.map((x) => nameOf(x.notableId)).join('／')} 共事`;
+    if (teachers.length > 0) return `需 ${teachers.map((x) => nameOf(x.notableId)).join('／')} 更熟`;
+    return '無人可教';
+  };
+
   return (
     <>
       <h1>能力提升</h1>
@@ -181,11 +199,7 @@ export function ScreenLearn({ s, bump, onBack }: Props): React.ReactElement {
               <td style={{ maxWidth: 320 }}>{t(o.def.descKey)}</td>
               <td className="mono">{costText(o.cost)}</td>
               <td className={o.state === 'learnable' ? 'ok' : (o.state === 'locked' ? 'warn' : '')}>
-                {o.state === 'locked'
-                  ? (o.teachers.length === 0
-                    ? '無人可教'
-                    : `需 ${o.teachers.map((x) => nameOf(x.notableId)).join('／')} 更熟`)
-                  : t(`learnState.${o.state}`)}
+                {o.state === 'locked' ? lockReason(o.teachers) : t(`learnState.${o.state}`)}
               </td>
               <td>
                 <button
@@ -224,11 +238,7 @@ export function ScreenLearn({ s, bump, onBack }: Props): React.ReactElement {
               <td style={{ maxWidth: 320 }}>{t(o.def.descKey)}</td>
               <td className="mono">{costText(o.cost)}</td>
               <td className={o.state === 'learnable' ? 'ok' : (o.state === 'locked' ? 'warn' : '')}>
-                {o.state === 'locked'
-                  ? (o.teachers.length === 0
-                    ? '無人可教'
-                    : `需 ${o.teachers.map((x) => nameOf(x.notableId)).join('／')} 更熟`)
-                  : t(`learnState.${o.state}`)}
+                {o.state === 'locked' ? lockReason(o.teachers) : t(`learnState.${o.state}`)}
               </td>
               <td>
                 <button

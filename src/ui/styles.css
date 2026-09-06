@@ -227,3 +227,8 @@ h3.lane { color: var(--accent); font-size: 12px; letter-spacing: .06em;
 .ol-verdict.safe { color: var(--accent); }
 .ol-verdict.tight { color: var(--glow-gold); }
 .ol-verdict.bad { color: var(--warn); }
+
+/* 第四個入口（天命閣）進來之後改成四欄 */
+.gates.gates-4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 900px) { .gates.gates-4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .gates.gates-4 { grid-template-columns: 1fr; } }

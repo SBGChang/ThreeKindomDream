@@ -152,14 +152,14 @@ const affordable = (cost: AbilityCost, ctx: RunContext): boolean =>
   costEntries(cost).every(([a, n]) => expOf(a, ctx) >= n);
 
 /**
- * 解鎖來源（32 §5）★
+ * 他教不教得動這一階（32 §5）★
  *
- * 兩條路合流：
- *   1. **名士傳授** —— 他能教的就是他自己表上有的。門檻是好感階（teachStage）。
- *      這一條是【推導】的，不存 state：好感單調上升，所以清單只會變長。
- *   2. **事件／道具授予** —— 寫進 `growth.unlocked*`。
+ * 門檻是好感階（`teachStage`）。★ 但**達到門檻不等於已解鎖** ——
+ * 還要真的同格共事一次，他才教（`teachFromSlot`，D63）。
+ * 舊版把這個判斷直接當成解鎖，於是起始好感 20 就開了七項。
  *
- * 不另立一張「誰能教什麼」的表 —— 否則同一件事會有兩份可能漂移的資料。
+ * 不另立一張「誰能教什麼」的表：他能教的就是他自己表上有的（D36）——
+ * 否則同一件事會有兩份可能漂移的資料。
  */
 function meetsTeachStage(tier: AbilityTier, stage: AffinityStage, ctx: RunContext): boolean {
   const need = rule(ctx).teachStage[tier];
@@ -220,16 +220,36 @@ function stateOf(
   return affordable(cost, ctx) ? 'learnable' : 'unaffordable';
 }
 
-/** 未解鎖的也要回傳（32 §5.2）：看不見的東西不會讓玩家想去達成它的門檻。 */
+/**
+ * 解鎖 ＝ **他真的教過你**（D35 ＋ D63）★★
+ *
+ * ── 這裡改過一次，方向是相反的 ────────────────────
+ * 舊版：`teachers.some((t) => t.ready)` —— 只要他在陣容裡、好感夠，就自動可學。
+ * 而起始好感是 20（相識），`teachStage.common` 也是相識 ——
+ * **於是第一回合就有四條特質、三個技能是可學的，玩家什麼都還沒做。**
+ *
+ * 規則本來就是「事件內被教了，才會出現在選單中」。舊版把它實作成
+ * 一個狀態查詢，那讓 D35（一切都要先解鎖）名存實亡：解鎖不是一個事件，
+ * 而是一個恆真的條件。
+ *
+ * 現在解鎖只有三個來源，全部是**發生過的事**：
+ *   一 · 同格共事時他教你一項（`teachFromSlot`，寫進 `growth.unlocked*`）
+ *   二 · 事件／戰役深關的 `EventReward.unlock`
+ *   三 · 道具的 `UnlockGrant`
+ *
+ * `teachers` 仍然回傳 —— 未解鎖的項目要寫出【誰能教】（32 §5.2），
+ * 否則玩家看不出該去跟誰混。
+ */
 export function learnableTraits(
   ctx: RunContext, fx: EffectResolver,
 ): readonly TraitOffer[] {
+  const granted = fx.unlockGrants(ctx);
   return traitDefs(ctx).map((def) => {
     const cost = abilityCost(def.cost, ctx, fx);
     const teachers = traitTeachers(def, ctx);
-    const unlocked = teachers.some((t) => t.ready)
-      || ctx.state.growth.unlockedTraits.some((x) => String(x) === String(def.traitId))
-      || fx.unlockGrants(ctx).some((g) => String(g.trait) === String(def.traitId));
+    const unlocked = ctx.state.growth.unlockedTraits
+      .some((x) => String(x) === String(def.traitId))
+      || granted.some((g) => String(g.trait) === String(def.traitId));
     const learned = ability.hasTrait(def.traitId, ctx);
     return { def, tier: def.tier, cost, teachers, state: stateOf(learned, unlocked, cost, ctx) };
   });
@@ -238,15 +258,75 @@ export function learnableTraits(
 export function learnableSkills(
   ctx: RunContext, fx: EffectResolver,
 ): readonly SkillOffer[] {
+  const granted = fx.unlockGrants(ctx);
   return skillDefs(ctx).map((def) => {
     const cost = abilityCost(def.cost, ctx, fx);
     const teachers = skillTeachers(def, ctx);
-    const unlocked = teachers.some((t) => t.ready)
-      || ctx.state.growth.unlockedSkills.some((x) => String(x) === String(def.skillId))
-      || fx.unlockGrants(ctx).some((g) => String(g.skill) === String(def.skillId));
+    const unlocked = ctx.state.growth.unlockedSkills
+      .some((x) => String(x) === String(def.skillId))
+      || granted.some((g) => String(g.skill) === String(def.skillId));
     const learned = ability.hasSkill(def.skillId, ctx);
     return { def, tier: def.tier, cost, teachers, state: stateOf(learned, unlocked, cost, ctx) };
   });
+}
+
+export interface Taught {
+  readonly notableId: NotableId;
+  readonly trait: TraitId | null;
+  readonly skill: SkillId | null;
+}
+
+/**
+ * **同格共事 → 他教你一項**（D63）★★ 解鎖的主要來源
+ *
+ * 玩家選了某一格，而那一格站著的名士好感已達該階門檻時，
+ * 他從自己表上挑【一項你還沒解鎖的】教給你。
+ *
+ * ── 三個設計決定 ───────────────────────────────
+ * 一 · **一次最多一項。** 否則第一次同格就把他整張表倒給你，
+ *      「跟誰混久了學到什麼」就沒有節奏。
+ * 二 · **綁在同格上。** 同格本來就是好感的來源（19 §5），
+ *      所以「跟他相處 → 好感漲 → 他教你更難的東西」是同一條線，
+ *      不需要第二套機制。
+ * 三 · **由低階往高階教。** 常階最先，因為它的好感門檻最低；
+ *      玩家因此看得到一條「越熟學得越好」的順序。
+ *
+ * 不消耗 RNG：教什麼是決定性的（表上第一個還沒解鎖的）。
+ * 隨機會讓「我知道他能教我什麼」變成「我不知道他這次給不給」，
+ * 而那條線的價值正是【可以計畫】。
+ */
+export function teachFromSlot(
+  standing: readonly NotableId[], ctx: RunContext,
+): { readonly state: RunState; readonly taught: readonly Taught[] } {
+  let state = ctx.state;
+  const taught: Taught[] = [];
+  for (const id of standing) {
+    const at: RunContext = { state, defs: ctx.defs };
+    const nd = ctx.defs.reader('notable').get(String(id));
+    const stage = stageOf(id, at);
+    const star = at.state.metaSnapshot.notableCodex[String(id)]?.star ?? 0;
+
+    // 技能先於特質 —— 沒有招就打不出傷害，那是玩家最先需要的東西。
+    const skill = nd.abilities.skills
+      .filter((r) => r.star <= star)
+      .map((r) => ability.skillDef(r.skillId, at))
+      .filter((d) => meetsTeachStage(d.tier, stage, at))
+      .find((d) => !at.state.growth.unlockedSkills.some((x) => String(x) === String(d.skillId)));
+    if (skill !== undefined) {
+      state = grantUnlock(null, skill.skillId, at);
+      taught.push({ notableId: id, trait: null, skill: skill.skillId });
+      continue;
+    }
+    const trait = nd.abilities.traits
+      .map((tid) => ability.traitDef(tid, at))
+      .filter((d) => meetsTeachStage(d.tier, stage, at))
+      .find((d) => !at.state.growth.unlockedTraits.some((x) => String(x) === String(d.traitId)));
+    if (trait !== undefined) {
+      state = grantUnlock(trait.traitId, null, at);
+      taught.push({ notableId: id, trait: trait.traitId, skill: null });
+    }
+  }
+  return { state, taught };
 }
 
 // ── 學習（唯一的扣款處）★ ─────────────────────────────

@@ -41,20 +41,29 @@ const glowOf = (tier: GlowTier, ctx: RunContext): GlowTierDef => {
 };
 
 /**
- * 委託階級 ＝【該委託所屬官階線的階級】（17 §4）★
+ * 委託階級 ＝【該委託所屬官階線的名義階級】（17 §4）★
  *
  * 不是章節。章節索引讓後期才開始練文政的玩家，拿第 1 章的政去對第 4 章的
  * DC —— 成功率恆為 0%，轉換道路在制度上不可能。
  *
- * 人物事件沒有維度，取兩線較高者 —— 它問的是「你這個人現在什麼身分」。
+ * 人物事件沒有維度，取兩線較高者 —— 它問的是「你這個人現在做多大的事」。
+ *
+ * ── 為什麼是【名義】階級（21 §2.2）★
+ *
+ * 它同時決定報酬倍率與小檢定的 DC —— 難度與報酬一起長（17 §6.4）。
+ *
+ * 吃 `notionalLevel` 而不是真實階級：本輪上限（D59）封住的是頭銜與
+ * 兵量，不該連「朝廷派給你多大的事」一起封住。用真實階級的話，
+ * 上限一到，報酬與難度雙雙凍結，而功績從那一刻起完全沒有出口 ——
+ * 實測 rank 5 只要 410 功績，第一輪第二章就滿了。
  */
 export function commissionTier(def: EventDef, ctx: RunContext): number {
   if (def.trigger.kind === 'commission') {
-    return careerService.rankOf(statQuery.lineOf(def.trigger.attr, ctx), ctx).level;
+    return careerService.notionalLevel(statQuery.lineOf(def.trigger.attr, ctx), ctx);
   }
   return Math.max(
-    careerService.rankOf('civil', ctx).level,
-    careerService.rankOf('martial', ctx).level,
+    careerService.notionalLevel('civil', ctx),
+    careerService.notionalLevel('martial', ctx),
   );
 }
 

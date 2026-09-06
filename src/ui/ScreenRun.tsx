@@ -66,10 +66,22 @@ export function ScreenRun({ s, bump, log, onLog, onLearn, onVault }: Props): Rea
     const r = s.current.turn.training;
     // 先讀結果再推進 —— advance 會清掉 turn.training。
     if (r !== null) {
+      /*
+        同格共事教了什麼，要【寫在回合紀錄裡】（D63）。
+        解鎖是一件發生過的事，不是一個狀態 —— 沒有這一行，
+        玩家只會發現選單裡莫名其妙多了一項，不知道是誰給的。
+      */
+      const taught = s.taughtThisTurn().map((x) => {
+        const who = t(defs.reader('notable').get(String(x.notableId)).nameKey);
+        const what = x.skill !== null
+          ? t(defs.reader('skill').get(String(x.skill)).nameKey)
+          : (x.trait === null ? '' : t(defs.reader('trait').get(String(x.trait)).nameKey));
+        return what === '' ? '' : `　✎${who}教了〈${what}〉`;
+      }).join('');
       stamp(`【${t(`attr.${r.attr}.${st.progress.phase}.label`)}】`
         + `${t(`glow.${r.finalGlow}`)}${r.upgraded ? '⬆' : ''}`
         + ` ${t(`attr.${r.attr}.short`)}+${r.expGained}`
-        + `　${t(`merit.${r.meritGained.line}`)}+${r.meritGained.amount}`);
+        + `　${t(`merit.${r.meritGained.line}`)}+${r.meritGained.amount}${taught}`);
     }
     settle();
   };

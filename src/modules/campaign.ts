@@ -62,10 +62,30 @@ export interface HostLimits {
   readonly supplyMax: number;
 }
 
+/**
+ * 兵量糧量吃 **名義階級**，與敵人同一把尺（21 §2.2）★
+ *
+ * ── 為什麼不是真實官階（實測抓到的第二個洞）─────────
+ * 本輪上限（D59）之下，官階會在第 26 回合左右封頂。若兵量吃真實官階，
+ * 封頂之後再賺的功績會**只把敵人變強**（敵人吃名義階）而不給你任何兵 ——
+ * **那讓「封頂之後繼續做事」變成嚴格的壞事。**
+ *
+ * 分工因此收斂成一句話：
+ *   名義階級（做了多少事）→ 你的規模、敵人的規模、委託的份量
+ *   真實官階（頭銜）      → 稱號、結局門檻、高檔委託的資格
+ *
+ * 上限鎖的是**你是誰**，不是**你有多少斤兩**。
+ */
 export function hostLimits(ctx: RunContext, fx: EffectResolver): HostLimits {
   const r = rule(ctx);
-  const m = careerService.rankOf('martial', ctx).hostScale;
-  const c = careerService.rankOf('civil', ctx).hostScale;
+  const scaleAt = (line: 'civil' | 'martial'): number => {
+    const level = careerService.notionalLevel(line, ctx);
+    const rows = ctx.defs.reader('careerRank').where((x) => x.line === line);
+    const hit = rows.find((x) => x.level === level);
+    return hit?.hostScale ?? 1;
+  };
+  const m = scaleAt('martial');
+  const c = scaleAt('civil');
   const troops = r.troopsBase * (m + r.crossLineRatio * c);
   const supply = r.supplyBase * (r.crossLineRatio * m + c);
   // 特質經由這兩個 target 抬高上限 —— 不需要為戰役新增任何 FuncType。
@@ -180,13 +200,21 @@ const playerAttrs = (ctx: RunContext): Readonly<Record<Attr, number>> => ({
 });
 
 /**
- * 敵方兵力基準 —— **索引官階，不索引章節**（D25）。
+ * 敵方強度的索引 —— **名義階級，不是頭銜**（D25 ＋ 21 §2.2）★
  *
- * 這是 17 6.4 已立的規矩：難度與報酬必須一起長，否則壓低某一線的官階
- * 會變成刷簡單高報酬的農場。取兩線較高者：你有多大本錢，對面就派多大的敵人。
+ * 索引官階、不索引章節，是 17 §6.4 已立的規矩：難度與報酬必須一起長，
+ * 否則壓低某一線的官階會變成刷簡單高報酬的農場。
+ *
+ * ★ 但它要吃的是 `notionalLevel` 而不是真實階級。加上本輪上限（D59）
+ * 之後，真實階級會在第一輪封在 5 —— 敵人跟著凍住，玩家卻照樣練上去，
+ * 實測就是「第一輪輕鬆打到第七關」。
+ * 頭銜可以被鎖，**你惹到的麻煩不會因為你沒升官就變小**。
+ *
+ * 取兩線較高者：你做了多大的事，對面就派多大的敵人。
  */
 const rankIndex = (ctx: RunContext): number => Math.max(
-  statQuery.read('career.civil', ctx), statQuery.read('career.martial', ctx),
+  careerService.notionalLevel('civil', ctx),
+  careerService.notionalLevel('martial', ctx),
 ) - 1;
 
 const at = (curve: readonly number[], i: number): number =>

@@ -80,8 +80,19 @@ export function ScreenNotableCodex({ meta, onBack }: Props): React.ReactElement 
  * 沒把這條寫出來，玩家會以為高階道具的階級是刷不到的（23 §5）。
  */
 export function ScreenItemCodex({ meta, onBack }: Props): React.ReactElement {
-  const rows = defs.reader('item').all().slice()
+  const all = defs.reader('item').all().slice()
     .sort((a, b) => b.rarity - a.rarity || String(a.itemId).localeCompare(String(b.itemId)));
+  /**
+   * **只列見過的** ★ 未見過的收成一行計數
+   *
+   * 舊版把十一件全部列出、未見的填 `？？？` —— 那是圖鑑分母的標準做法，
+   * 但在這裡它說了謊：第一輪打開天工鑒會看到滿滿十一格，
+   * 讀起來像「我已經有這麼多東西」，而規則是**拿過一次才會登錄**（23 §7）。
+   *
+   * 分母仍然要給（收集品要看得到進度），但它是一行字，不是十一個空格。
+   */
+  const rows = all.filter((it) => meta.itemCodex[String(it.itemId)] !== undefined);
+  const unseen = all.length - rows.length;
 
   return (
     <>
@@ -90,39 +101,47 @@ export function ScreenItemCodex({ meta, onBack }: Props): React.ReactElement {
         碎片換階。<b>第二次拿到同一件才產碎片</b> —— 首次獲得換到的是登錄。
         而高階道具一輪只拿得到一次，所以它的碎片<b>只能靠帶進場</b>（山河圖）。
       </p>
+      {rows.length > 0 ? null : (
+        <p className="body dim">
+          {`還沒有登錄任何器物 —— 在夢裡拿過一次，它才會出現在這裡（全 ${all.length} 件）。`}
+          委託的中檔與高檔會掉低階的，深關與人物事件掉高階的。
+        </p>
+      )}
       <div className="codex">
         {rows.map((it) => {
           const entry = itemCodex.entry(it.itemId, meta);
-          const known = meta.itemCodex[String(it.itemId)] !== undefined;
           const tier = itemCodex.tierOf(it.itemId, meta);
           const top = it.tiers.length - 1;
           const next = itemCodex.nextCost(it.itemId, meta, defs);
           const opened = itemCodex.unlockedTiers(it.itemId, meta, defs);
           return (
-            <div className={`codex-card${known ? '' : ' unknown'}`} key={String(it.itemId)}>
+            <div className="codex-card" key={String(it.itemId)}>
               <div className="codex-head">
-                <b>{known ? `◆${t(it.nameKey)}` : '◆？？？'}</b>
+                <b>{`◆${t(it.nameKey)}`}</b>
                 <span className={`rar r${it.rarity}`}>{`★${it.rarity}`}</span>
               </div>
               <div className={`stars s${tier}`}>{stars(tier, top)}</div>
-              {known ? <Frag have={entry.fragments} need={next} /> : <div className="frag" />}
+              <Frag have={entry.fragments} need={next} />
               <ul className="codex-fx">
-                {!known
-                  ? <li className="dim">尚未在夢裡見過</li>
-                  : it.tiers.map((row: ItemTierDef) => (
-                    <li
-                      key={row.tier}
-                      className={opened.some((o) => o.tier === row.tier) ? '' : 'locked'}
-                    >
-                      {t(row.descKey)}
-                    </li>
-                  ))}
+                {it.tiers.map((row: ItemTierDef) => (
+                  <li
+                    key={row.tier}
+                    className={opened.some((o) => o.tier === row.tier) ? '' : 'locked'}
+                  >
+                    {t(row.descKey)}
+                  </li>
+                ))}
               </ul>
             </div>
           );
         })}
       </div>
-      <button style={{ marginTop: 16 }} onClick={onBack}>回天命</button>
+      <p className="sub" style={{ marginTop: 12 }}>
+        {unseen === 0
+          ? '全部登錄完畢。'
+          : `已登錄 ${rows.length} / ${all.length} —— 還有 ${unseen} 件沒在夢裡見過。`}
+      </p>
+      <button onClick={onBack}>回天命</button>
     </>
   );
 }

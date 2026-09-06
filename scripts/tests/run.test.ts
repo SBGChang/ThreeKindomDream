@@ -515,11 +515,29 @@ export function run(): void {
   });
 
   describe('commission · 難度依官階線而非章節（17 §4）', () => {
-    it('同一則委託：該線官階越低，DC 越低', () => {
+    /**
+     * ★ 這條測試改推【功績】而不是 `career.civil`。
+     *
+     * 檔次現在由 `notionalLevel` 決定，而它從功績推導（21 §2.2）——
+     * 本輪上限封住的是頭銜與兵量，不該連「朝廷派給你多大的事」一起封住。
+     * 直接寫 `career` 已經量不到任何東西（實測：兩邊都回 0.77）。
+     */
+    it('同一則委託：該線【做的事越小】，DC 越低', () => {
       const s2 = newSession(4242);
       const base = s2.current;
-      const rate = (civil: number): number => {
-        const ctx = { state: { ...base, career: { civil, martial: 1 } }, defs };
+      const ranks = defs.reader('careerRank').all()
+        .filter((r) => r.line === 'civil').slice().sort((a, b) => a.level - b.level);
+      const meritFor = (level: number): number =>
+        ranks.find((r) => r.level === level)?.requiredMerit ?? 0;
+
+      const rate = (level: number): number => {
+        const ctx = {
+          state: {
+            ...base,
+            currencies: { merit: { civil: meritFor(level), martial: 0 } },
+          },
+          defs,
+        };
         // 找一則文線（智／政）的委託，量它 low 檔的成功率
         const def = defs.reader('event').all().find(
           (e) => e.trigger.kind === 'commission' && e.trigger.attr === 'pol'
@@ -529,11 +547,11 @@ export function run(): void {
         const states = optionStates(def, 1, ctx, wiring.fx);
         return states[0]?.successRate ?? -1;
       };
-      // 四維固定不動，只動官階：低官階應更容易。
-      // 這正是「後期轉練文政卻永遠 0%」的修法 —— 難度跟著你在那條線的身分走。
+      // 四維固定不動，只動功績：做的事越小應更容易。
+      // 這正是「後期轉練文政卻永遠 0%」的修法 —— 難度跟著你在那條線的份量走。
       const low = rate(1);
       const high = rate(8);
-      ok(low > high, `文官 1 階的成功率 ${low} 應高於 8 階的 ${high}`);
+      ok(low > high, `文線 1 階的成功率 ${low} 應高於 8 階的 ${high}`);
     });
 
     it('官階抬 base：另一線也算一半，換路不必從新兵重來（16 §4.3）', () => {

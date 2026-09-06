@@ -1,26 +1,30 @@
 import type { MetaState } from '../contracts/core/state.js';
 import {
-  catalog, defs, designateQuota, emptyDraft, itemCodex, notableCodex, purchase, t,
+  catalog, defs, designateQuota, emptyDraft, itemCodex, notableCodex, t,
 } from '../app/bootstrap.js';
 
-export type MetaView = 'destiny' | 'entry' | 'notables' | 'items';
+export type MetaView = 'destiny' | 'entry' | 'shop' | 'notables' | 'items';
 
 interface Props {
   readonly meta: MetaState;
-  readonly onMeta: (m: MetaState) => void;
   readonly onGo: (v: MetaView) => void;
   readonly onReset: () => void;
 }
 
 /**
- * 三個入口 ★ **它們是三種不同的東西，不是三個分頁**
+ * 四個入口 ★ **它們是四種不同的東西，不是四個分頁**
  *
  *   山河圖  往前走的那一步（唯一會改變 RunState 的入口）
+ *   天命閣  花輪迴點數的地方
  *   風雲錄  你這輩子認識過誰
  *   天工鑒  你這輩子拿過什麼
  *
- * 兩本圖鑑是【累積】，山河圖是【出發】。把出發那一張放在最前面並吃掉
- * primary 的顏色，是因為第一頁只有一個動作是真的動作。
+ * 山河圖是【出發】，天命閣是【投資】，兩本圖鑑是【累積】。
+ * 只有出發那一張吃 primary 的顏色 —— 第一頁只有一個動作是往前的。
+ *
+ * 商店本來直接攤在第一頁上（十個品項的長表），於是三個入口被推到表格上方
+ * 像是附屬品。做成同級的入口之後，第一頁短到一眼看得完，
+ * **而「這一頁有四件事可以做」本身就是資訊。**
  */
 function Gate({
   title, sub, note, primary, onClick,
@@ -37,8 +41,8 @@ function Gate({
   );
 }
 
-/** 第一頁：天命。點數在這裡花，三個入口從這裡去。 */
-export function ScreenDestiny({ meta, onMeta, onGo, onReset }: Props): React.ReactElement {
+/** 第一頁：天命。四個入口從這裡去 —— 這一頁本身不做任何事。 */
+export function ScreenDestiny({ meta, onGo, onReset }: Props): React.ReactElement {
   const entries = catalog(meta, defs);
   const quota = designateQuota(emptyDraft(meta, defs), defs);
   const slots = defs.single('gameRules').companionCount;
@@ -49,6 +53,11 @@ export function ScreenDestiny({ meta, onMeta, onGo, onReset }: Props): React.Rea
   const notables = defs.reader('notable').all();
   const items = defs.reader('item').all();
   const starSeen = notables.filter((n) => notableCodex.starOf(n.notableId, meta) > 0).length;
+  const buyable = entries.filter(
+    (e) => e.nextLevel !== null && e.affordable && e.blockedBy.length === 0,
+  ).length;
+  const bought = entries.reduce((n, e) => n + e.currentLevel, 0);
+  const levels = entries.reduce((n, e) => n + e.item.levels.length, 0);
   const itemSeen = items.filter((i) => meta.itemCodex[String(i.itemId)] !== undefined).length;
   const endings = defs.reader('ending').all().length;
 
@@ -64,13 +73,19 @@ export function ScreenDestiny({ meta, onMeta, onGo, onReset }: Props): React.Rea
           「世家門閥」買到的是選擇權，那件事必須在入夢前就說出來（14 §3）。 */}
       <p className="body">{t(openingLine)}</p>
 
-      <div className="gates">
+      <div className="gates gates-4">
         <Gate
           primary
           title="山河圖"
           sub="入夢"
           note="分配資質、天賦、帶什麼進去"
           onClick={() => { onGo('entry'); }}
+        />
+        <Gate
+          title="天命閣"
+          sub="輪迴"
+          note={buyable > 0 ? `${buyable} 項買得起` : `已購 ${bought} / ${levels} 階`}
+          onClick={() => { onGo('shop'); }}
         />
         <Gate
           title="風雲錄"
@@ -85,39 +100,6 @@ export function ScreenDestiny({ meta, onMeta, onGo, onReset }: Props): React.Rea
           onClick={() => { onGo('items'); }}
         />
       </div>
-
-      <h2>天命商店</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>品項</th><th>效果</th><th className="n">等級</th>
-            <th className="n">下一階</th><th />
-          </tr>
-        </thead>
-        <tbody>
-          {entries.map((e) => (
-            <tr key={String(e.item.item)}>
-              <td><b>{t(e.item.nameKey)}</b></td>
-              <td style={{ color: 'var(--dim)' }}>{t(e.item.descKey)}</td>
-              <td className="n mono">{`${e.currentLevel}/${e.item.levels.length}`}</td>
-              <td className="n mono">{e.nextLevel === null ? '—' : e.nextLevel.cost}</td>
-              <td>
-                <button
-                  disabled={e.nextLevel === null || !e.affordable || e.blockedBy.length > 0}
-                  onClick={() => {
-                    const r = purchase(e.item.item, meta, defs);
-                    if (r.ok) onMeta(r.meta);
-                  }}
-                >
-                  {e.nextLevel === null ? '已購滿'
-                    : (e.blockedBy.length > 0 ? '前置未滿'
-                      : (e.affordable ? '購買' : '點數不足'))}
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
 
       <p className="sub" style={{ marginTop: 18 }}>
         {`碎片：名士 ${notables.reduce(

@@ -10,6 +10,7 @@ import { ScreenEntry } from './ScreenEntry.js';
 import { ScreenFaction, ScreenSuperiors } from './ScreenPick.js';
 import { ScreenLearn } from './ScreenLearn.js';
 import { ScreenRun } from './ScreenRun.js';
+import { ScreenShop } from './ScreenShop.js';
 import { ScreenVault } from './ScreenVault.js';
 
 const logMax = 6;
@@ -62,12 +63,14 @@ export function App(): React.ReactElement {
         />
       );
     }
+    if (metaView === 'shop') {
+      return <ScreenShop meta={meta} onMeta={commitMeta} onBack={backToDestiny} />;
+    }
     if (metaView === 'notables') return <ScreenNotableCodex meta={meta} onBack={backToDestiny} />;
     if (metaView === 'items') return <ScreenItemCodex meta={meta} onBack={backToDestiny} />;
     return (
       <ScreenDestiny
         meta={meta}
-        onMeta={commitMeta}
         onGo={setMetaView}
         onReset={() => { resetMeta(); setMeta(loadMeta()); }}
       />

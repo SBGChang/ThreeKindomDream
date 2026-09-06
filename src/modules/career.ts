@@ -9,7 +9,34 @@ export interface CareerService {
   rankOf(line: CareerLine, ctx: RunContext): CareerRankDef;
   /** 訂閱功績變動。用 while 而非 if —— 單次獎勵可能一次跨兩階（21 §2.2）。 */
   reevaluate(ctx: RunContext): RunState;
+  /** 本輪爬得到的最高階（`config.careerCap` ∧ 內容裡的階數）。 */
   maxLevel(line: CareerLine, ctx: RunContext): number;
+  /**
+   * **名義階級：沒有上限的話你會在第幾階** ★★
+   *
+   * ── 為什麼需要它（實測抓到的 bug）───────────────
+   * 官階同時是三種東西：
+   *   一 · 頭銜（稱號、結局門檻）
+   *   二 · 規模（`hostScale` → 兵量糧量、`trainingBaseAdd`）
+   *   三 · **索引**（敵人強度 D25、委託報酬倍率、小檢定 DC）
+   *
+   * 加上本輪上限（D59）之後，第三種跟著被封住了 ——
+   * 第一輪官階封在 5，於是敵人永遠是 rank 5 的
+   * （兵 3040／輸出 49），而舊制第一輪會遇到 rank 9 的
+   * （兵 10720／輸出 122）。**敵人只剩 28%**，玩家卻照樣練到 75。
+   * 實測結果就是「第一輪輕鬆打到第七關」。
+   *
+   * 同時功績在爬到上限之後【完全沒有出口】—— 而 rank 5 只要 410 功績，
+   * 第一輪單線賺約 1800，第二章就滿了，剩下四分之三的遊戲功績是廢紙。
+   *
+   * ── 分開之後 ★ ────────────────────────────────
+   *   頭銜與規模  吃【真實階級】—— 第一輪你就是個都尉，帶不了那麼多兵
+   *   難度與報酬  吃【名義階級】—— 世界照樣變難，委託照樣變大
+   *
+   * 於是第一輪的感覺變成：**你只是個都尉，卻在打將軍該打的仗。**
+   * 那正好解釋了為什麼你打不深 —— 而功績永遠有作用，因為它推動名義階級。
+   */
+  notionalLevel(line: CareerLine, ctx: RunContext): number;
 }
 
 const ranksOf = (line: CareerLine, ctx: RunContext): readonly CareerRankDef[] =>
@@ -58,4 +85,12 @@ export const careerService: CareerService = {
   maxLevel: (line, ctx) => Math.min(
     ranksOf(line, ctx).length, ctx.state.config.careerCap,
   ),
+
+  notionalLevel(line, ctx) {
+    const all = ranksOf(line, ctx);
+    const merit = statQuery.merit(line, ctx);
+    let level = 1;
+    for (const r of all) if (merit >= r.requiredMerit) level = r.level;
+    return level;
+  },
 };

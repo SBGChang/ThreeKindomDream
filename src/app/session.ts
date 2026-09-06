@@ -135,11 +135,33 @@ export class Session {
    */
   selectSlot(index: SlotIndex): void {
     turn.assertActable(this.ctx);
-    const attr = training.slotAt(index, this.ctx).attr;
+    const slot = training.slotAt(index, this.ctx);
+    const attr = slot.attr;
     this.mutate((tc) => training.select(index, tc, this.w.fx, this.w.writer));
+    /**
+     * **同格共事 → 他教你一項**（D63）★
+     *
+     * 解鎖必須是【發生過的事】，不是一個狀態查詢。舊版靠「好感夠就自動可學」，
+     * 而起始好感 20 就已經達到常階門檻 —— 第一回合就有七項可學，
+     * 玩家什麼都還沒做。那讓 D35（一切都要先解鎖）名存實亡。
+     *
+     * 放在 `training.select` 之後、事件之前：教學是【選了這一格】的後果，
+     * 與好感成長同一個來源。
+     */
+    this.lastTaught = [];
+    this.mutate((tc) => {
+      const r = growth.teachFromSlot(slot.notables, tc);
+      this.lastTaught = r.taught;
+      return r.state;
+    });
     this.mutate((tc) => commission.openBeats(tc, this.w.fx));
     this.mutate((tc) => turn.tally(attr, tc));
   }
+
+  /** 上一次選格時【誰教了你什麼】。呈現層要把它寫進回合紀錄（D63）。 */
+  private lastTaught: readonly growth.Taught[] = [];
+
+  taughtThisTurn(): readonly growth.Taught[] { return this.lastTaught; }
 
   /**
    * 回合裡第二個決定：待處理事件用哪個方法度過。
