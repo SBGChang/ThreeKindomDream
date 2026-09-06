@@ -581,26 +581,26 @@
     },
     "crossLineRatio": 0.5,
     "enemyDamageByChapter": [
-      17,
-      27,
-      41,
-      68,
-      106,
-      167,
-      262,
-      412,
-      646
+      19,
+      25,
+      36,
+      57,
+      83,
+      120,
+      174,
+      252,
+      366
     ],
     "enemyTroopsByChapter": [
-      520,
-      1140,
-      2050,
-      4140,
-      8280,
-      16600,
-      33100,
-      66200,
-      132000
+      515,
+      995,
+      1660,
+      3135,
+      5740,
+      10500,
+      19200,
+      35200,
+      64400
     ],
     "id": "battle:main",
     "kind": "battleRule",
@@ -5132,7 +5132,7 @@
     "line": "civil",
     "nameKey": "career.civil.2",
     "packId": "pack:core",
-    "requiredMerit": 60,
+    "requiredMerit": 65,
     "schemaVersion": 1,
     "trainingBaseAdd": 1
   },
@@ -5144,7 +5144,7 @@
     "line": "civil",
     "nameKey": "career.civil.3",
     "packId": "pack:core",
-    "requiredMerit": 145,
+    "requiredMerit": 195,
     "schemaVersion": 1,
     "trainingBaseAdd": 1
   },
@@ -5156,7 +5156,7 @@
     "line": "civil",
     "nameKey": "career.civil.4",
     "packId": "pack:core",
-    "requiredMerit": 260,
+    "requiredMerit": 380,
     "schemaVersion": 1,
     "trainingBaseAdd": 2
   },
@@ -5168,7 +5168,7 @@
     "line": "civil",
     "nameKey": "career.civil.5",
     "packId": "pack:core",
-    "requiredMerit": 410,
+    "requiredMerit": 595,
     "schemaVersion": 1,
     "trainingBaseAdd": 2
   },
@@ -5180,7 +5180,7 @@
     "line": "civil",
     "nameKey": "career.civil.6",
     "packId": "pack:core",
-    "requiredMerit": 600,
+    "requiredMerit": 845,
     "schemaVersion": 1,
     "trainingBaseAdd": 3
   },
@@ -5192,7 +5192,7 @@
     "line": "civil",
     "nameKey": "career.civil.7",
     "packId": "pack:core",
-    "requiredMerit": 830,
+    "requiredMerit": 1125,
     "schemaVersion": 1,
     "trainingBaseAdd": 3
   },
@@ -5204,7 +5204,7 @@
     "line": "civil",
     "nameKey": "career.civil.8",
     "packId": "pack:core",
-    "requiredMerit": 1110,
+    "requiredMerit": 1435,
     "schemaVersion": 1,
     "trainingBaseAdd": 4
   },
@@ -5216,7 +5216,7 @@
     "line": "civil",
     "nameKey": "career.civil.9",
     "packId": "pack:core",
-    "requiredMerit": 1450,
+    "requiredMerit": 1775,
     "schemaVersion": 1,
     "trainingBaseAdd": 4
   },
@@ -5228,7 +5228,7 @@
     "line": "civil",
     "nameKey": "career.civil.10",
     "packId": "pack:core",
-    "requiredMerit": 1860,
+    "requiredMerit": 2140,
     "schemaVersion": 1,
     "trainingBaseAdd": 5
   },
@@ -5240,7 +5240,7 @@
     "line": "civil",
     "nameKey": "career.civil.11",
     "packId": "pack:core",
-    "requiredMerit": 2360,
+    "requiredMerit": 2525,
     "schemaVersion": 1,
     "trainingBaseAdd": 5
   },
@@ -5252,7 +5252,7 @@
     "line": "civil",
     "nameKey": "career.civil.12",
     "packId": "pack:core",
-    "requiredMerit": 2960,
+    "requiredMerit": 3005,
     "schemaVersion": 1,
     "trainingBaseAdd": 6
   },
@@ -5276,7 +5276,7 @@
     "line": "martial",
     "nameKey": "career.martial.2",
     "packId": "pack:core",
-    "requiredMerit": 60,
+    "requiredMerit": 65,
     "schemaVersion": 1,
     "trainingBaseAdd": 1
   },
@@ -5288,7 +5288,7 @@
     "line": "martial",
     "nameKey": "career.martial.3",
     "packId": "pack:core",
-    "requiredMerit": 145,
+    "requiredMerit": 195,
     "schemaVersion": 1,
     "trainingBaseAdd": 1
   },
@@ -5300,7 +5300,7 @@
     "line": "martial",
     "nameKey": "career.martial.4",
     "packId": "pack:core",
-    "requiredMerit": 260,
+    "requiredMerit": 380,
     "schemaVersion": 1,
     "trainingBaseAdd": 2
   },
@@ -5312,7 +5312,7 @@
     "line": "martial",
     "nameKey": "career.martial.5",
     "packId": "pack:core",
-    "requiredMerit": 410,
+    "requiredMerit": 595,
     "schemaVersion": 1,
     "trainingBaseAdd": 2
   },
@@ -5324,7 +5324,7 @@
     "line": "martial",
     "nameKey": "career.martial.6",
     "packId": "pack:core",
-    "requiredMerit": 600,
+    "requiredMerit": 845,
     "schemaVersion": 1,
     "trainingBaseAdd": 3
   },
@@ -5336,7 +5336,7 @@
     "line": "martial",
     "nameKey": "career.martial.7",
     "packId": "pack:core",
-    "requiredMerit": 830,
+    "requiredMerit": 1125,
     "schemaVersion": 1,
     "trainingBaseAdd": 3
   },
@@ -5348,7 +5348,7 @@
     "line": "martial",
     "nameKey": "career.martial.8",
     "packId": "pack:core",
-    "requiredMerit": 1110,
+    "requiredMerit": 1435,
     "schemaVersion": 1,
     "trainingBaseAdd": 4
   },
@@ -5360,7 +5360,7 @@
     "line": "martial",
     "nameKey": "career.martial.9",
     "packId": "pack:core",
-    "requiredMerit": 1450,
+    "requiredMerit": 1775,
     "schemaVersion": 1,
     "trainingBaseAdd": 4
   },
@@ -5372,7 +5372,7 @@
     "line": "martial",
     "nameKey": "career.martial.10",
     "packId": "pack:core",
-    "requiredMerit": 1860,
+    "requiredMerit": 2140,
     "schemaVersion": 1,
     "trainingBaseAdd": 5
   },
@@ -5384,7 +5384,7 @@
     "line": "martial",
     "nameKey": "career.martial.11",
     "packId": "pack:core",
-    "requiredMerit": 2360,
+    "requiredMerit": 2525,
     "schemaVersion": 1,
     "trainingBaseAdd": 5
   },
@@ -5396,7 +5396,7 @@
     "line": "martial",
     "nameKey": "career.martial.12",
     "packId": "pack:core",
-    "requiredMerit": 2960,
+    "requiredMerit": 3005,
     "schemaVersion": 1,
     "trainingBaseAdd": 6
   },
