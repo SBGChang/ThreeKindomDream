@@ -23,11 +23,32 @@ const chapterAt = (id: ChapterId, ctx: RunContext): ChapterDef =>
 /**
  * turn 是唯一權威；chapter 與 turnInChapter 由章節表推導。
  * 不得反向用固定除法算章節 —— 章節長度是資料，可能非等長（15 §1.1）。
+ *
+ * ── `chapter` 曾經【重複計算】★★ 修正記錄（D68）─────────
+ * 舊式是 `chaptersPassed + i + 1`。它假設 `chaptersPassed` 是
+ * 「本序列開始【之前】就已經過關的章數」，是個凍住的偏移量。
+ * 但它不是 —— 它一路在長，而 `i` 也一路在長，**兩個一起加就重複了**：
+ *
+ *   黃巾    passed 0, i 0 → 1  ✔
+ *   虎牢    passed 1, i 0 → 2  ✔
+ *   官渡    passed 2, i 1 → 4  ✘ 應為 3
+ *   河北    passed 3, i 2 → 6  ✘ 應為 4
+ *
+ * 於是四章實際吃到的 `chapterMultiplier` 是索引 0/1/3/5
+ * （1.0／1.3／2.2／3.5），而不是 0/1/2/3（1.0／1.3／1.7／2.2）——
+ * **第三、四章的經驗與功績各自多了 29% 與 59%**，
+ * 而 `enemyTroopsByChapter` 也跟著讀錯格（索引 2 與 4 根本沒被用過）。
+ *
+ * 正解：偏移量是【本序列之前有幾章】，那是個常數，可以從資料算出來 ——
+ * 黃巾序列之前沒有章，陣營序列之前就是黃巾那一段。
+ * `chaptersPassed` 不該出現在這條式子裡。
  */
 export function progressOf(
   turn: number, faction: FactionId | null, chaptersPassed: number, ctx: RunContext,
 ): TurnProgress {
   const seq = sequenceOf(faction, ctx);
+  // 本序列之前有幾章。只看序列表，不看跑到哪裡 —— 所以它不會跟著 i 一起長。
+  const before = faction === null ? 0 : sequenceOf(null, ctx).length;
   let consumed = 0;
   for (let i = 0; i < seq.length; i += 1) {
     const cid = seq[i];
@@ -36,7 +57,7 @@ export function progressOf(
     if (turn <= consumed + ch.length) {
       return {
         turn: turnIndex(turn),
-        chapter: chapterIndex(chaptersPassed + i + 1),
+        chapter: chapterIndex(before + i + 1),
         chapterId: cid,
         turnInChapter: turn - consumed,
         phase: faction === null ? 'camp' : 'faction',
@@ -53,7 +74,7 @@ export function progressOf(
   if (last === undefined) throw new Error('空的章節序列');
   return {
     turn: turnIndex(turn),
-    chapter: chapterIndex(chaptersPassed + seq.length),
+    chapter: chapterIndex(before + seq.length),
     chapterId: last,
     turnInChapter: chapterAt(last, ctx).length,
     phase: faction === null ? 'camp' : 'faction',

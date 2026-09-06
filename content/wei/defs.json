@@ -3101,7 +3101,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3124,7 +3124,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3179,7 +3179,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3202,7 +3202,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3257,7 +3257,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 6,
+            "amount": 5,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3280,7 +3280,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 6,
+            "amount": 5,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3335,7 +3335,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3358,7 +3358,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3413,7 +3413,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 6,
+            "amount": 5,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3436,7 +3436,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 6,
+            "amount": 5,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3491,7 +3491,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 6,
+            "amount": 5,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3514,7 +3514,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 6,
+            "amount": 5,
             "kind": "merit",
             "merit": "martial"
           }
@@ -3569,7 +3569,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "civil"
           }
@@ -3592,7 +3592,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "civil"
           }
@@ -3647,7 +3647,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "civil"
           }
@@ -3670,7 +3670,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "civil"
           }
@@ -3725,7 +3725,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 6,
+            "amount": 5,
             "kind": "merit",
             "merit": "civil"
           }
@@ -3748,7 +3748,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 6,
+            "amount": 5,
             "kind": "merit",
             "merit": "civil"
           }
@@ -3803,7 +3803,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "civil"
           }
@@ -3826,7 +3826,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "civil"
           }
@@ -3881,7 +3881,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 6,
+            "amount": 5,
             "kind": "merit",
             "merit": "civil"
           }
@@ -3904,7 +3904,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 6,
+            "amount": 5,
             "kind": "merit",
             "merit": "civil"
           }
@@ -3959,7 +3959,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 6,
+            "amount": 5,
             "kind": "merit",
             "merit": "civil"
           }
@@ -3982,7 +3982,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 6,
+            "amount": 5,
             "kind": "merit",
             "merit": "civil"
           }
@@ -4037,7 +4037,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "martial"
           },
@@ -4065,7 +4065,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "martial"
           },
@@ -4125,7 +4125,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "martial"
           },
@@ -4153,7 +4153,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "martial"
           },
@@ -4213,7 +4213,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "martial"
           },
@@ -4241,7 +4241,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "martial"
           },
@@ -4301,7 +4301,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "martial"
           },
@@ -4329,7 +4329,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "martial"
           },
@@ -4389,7 +4389,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4417,7 +4417,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4477,7 +4477,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4505,7 +4505,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4565,7 +4565,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4593,7 +4593,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 13,
+            "amount": 11,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4653,7 +4653,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 24,
+            "amount": 20,
             "kind": "merit",
             "merit": "martial"
           }
@@ -4676,7 +4676,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 24,
+            "amount": 20,
             "kind": "merit",
             "merit": "martial"
           }
@@ -4731,7 +4731,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 24,
+            "amount": 20,
             "kind": "merit",
             "merit": "martial"
           },
@@ -4759,7 +4759,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 24,
+            "amount": 20,
             "kind": "merit",
             "merit": "martial"
           },
@@ -4819,7 +4819,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 24,
+            "amount": 20,
             "kind": "merit",
             "merit": "civil"
           }
@@ -4842,7 +4842,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 24,
+            "amount": 20,
             "kind": "merit",
             "merit": "civil"
           }
@@ -4897,7 +4897,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 24,
+            "amount": 20,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4925,7 +4925,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 24,
+            "amount": 20,
             "kind": "merit",
             "merit": "civil"
           },
@@ -4985,7 +4985,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 24,
+            "amount": 20,
             "kind": "merit",
             "merit": "civil"
           }
@@ -5008,7 +5008,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 24,
+            "amount": 20,
             "kind": "merit",
             "merit": "civil"
           }
@@ -5063,7 +5063,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 24,
+            "amount": 20,
             "kind": "merit",
             "merit": "civil"
           },
@@ -5091,7 +5091,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 24,
+            "amount": 20,
             "kind": "merit",
             "merit": "civil"
           },
@@ -5151,7 +5151,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 24,
+            "amount": 20,
             "kind": "merit",
             "merit": "martial"
           },
@@ -5179,7 +5179,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 24,
+            "amount": 20,
             "kind": "merit",
             "merit": "martial"
           },
@@ -5239,7 +5239,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 24,
+            "amount": 20,
             "kind": "merit",
             "merit": "martial"
           },
@@ -5267,7 +5267,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 24,
+            "amount": 20,
             "kind": "merit",
             "merit": "martial"
           },
@@ -5327,7 +5327,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 24,
+            "amount": 20,
             "kind": "merit",
             "merit": "martial"
           }
@@ -5350,7 +5350,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 24,
+            "amount": 20,
             "kind": "merit",
             "merit": "martial"
           }
@@ -5409,7 +5409,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 24,
+            "amount": 20,
             "kind": "merit",
             "merit": "martial"
           },
@@ -5437,7 +5437,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 24,
+            "amount": 20,
             "kind": "merit",
             "merit": "martial"
           },
@@ -5501,7 +5501,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 24,
+            "amount": 20,
             "kind": "merit",
             "merit": "civil"
           }
@@ -5524,7 +5524,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 24,
+            "amount": 20,
             "kind": "merit",
             "merit": "civil"
           }
@@ -5583,7 +5583,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 24,
+            "amount": 20,
             "kind": "merit",
             "merit": "martial"
           },
@@ -5616,7 +5616,7 @@
         "requirements": [],
         "rewards": [
           {
-            "amount": 24,
+            "amount": 20,
             "kind": "merit",
             "merit": "martial"
           },

@@ -16,7 +16,9 @@ import type {
 } from '../contracts/core/definitions.js';
 import type { EventDefId, ItemId, L10nKey, NotableId } from '../contracts/core/ids.js';
 import { targetId } from '../contracts/core/ids.js';
-import type { Attr, GlowTier, Rarity } from '../contracts/core/primitives.js';
+import type {
+  Attr, CareerLine, GlowTier, Rarity,
+} from '../contracts/core/primitives.js';
 import { RARITIES } from '../contracts/core/primitives.js';
 import type {
   ExpGain, EventOffer, EventResolution, ItemGain, MeritGain, OptionState, RunState,
@@ -71,6 +73,28 @@ const tierScale = (tier: number, ctx: RunContext): number => {
   const t = yieldCurve(ctx).tierMultiplier;
   return t[tier - 1] ?? t.at(-1) ?? 1;
 };
+
+/**
+ * 功績的階級倍率吃【收款的那一條線】★★ 與難度階分開（D69）
+ *
+ * `commissionTier` 是**難度**：人物事件取兩線較高者，因為「你惹到多大的事」
+ * 由你整體的份量決定。但它同時被拿去乘**報酬**，於是：
+ *
+ *   武功爬到名義 5 的人，他的【文功】獎勵也照 tier 5 放大。
+ *
+ * 副線因此搭著主線的便車長大 —— 那正是玩家回報的
+ * 「第一Run 就兩個官階都滿了」。而且人物事件受害最深：
+ * 它的稀有度來自名士本人（3–5 星 → ×1.3–1.7），兩個放大器疊在一起，
+ * 實測一則人物事件 40 功績，是一則委託（19）的兩倍、固定事件（6.4）的六倍。
+ *
+ * 改成看收款線之後，**文功只能靠文官的資歷放大** ——
+ * 「兩條路都爬到頂」變成真的要兩條都經營，不是主線爬完副線自動跟上。
+ *
+ * 難度那一側【不動】：`commissionTier` 仍然取較高者去查 DC。
+ * 一件難事不會因為你收的是文功就變簡單。
+ */
+const meritTier = (line: CareerLine, ctx: RunContext): number =>
+  careerService.notionalLevel(line, ctx);
 
 const dcAt = (curveId: string, tier: number, ctx: RunContext): number => {
   const curve = ctx.defs.reader('dcCurve').get(curveId).byTier;
@@ -317,13 +341,17 @@ const practiceRarityMul = (rarity: Rarity, ctx: RunContext): number =>
  * 而名字不同時，呼叫端一眼看得出自己拿到的是哪一個。
  */
 export function meritYield(
-  option: EventOptionDef, ratio: number, rarity: Rarity, tier: number,
+  option: EventOptionDef, ratio: number, rarity: Rarity,
   ctx: RunContext, fx: EffectResolver,
 ): readonly MeritGain[] {
-  const mul = tierScale(tier, ctx) * rarityMul(rarity, ctx) * fx.eventRewardMul('commission', ctx);
+  const mul = rarityMul(rarity, ctx) * fx.eventRewardMul('commission', ctx);
   return option.rewards
     .filter((r) => r.kind === 'merit')
-    .map((r) => ({ line: r.merit, amount: Math.round(r.amount * mul * ratio) }))
+    .map((r) => ({
+      line: r.merit,
+      // ★ 階級倍率吃【這筆功績付給哪一條線】，不吃事件的難度階（D69）。
+      amount: Math.round(r.amount * mul * tierScale(meritTier(r.merit, ctx), ctx) * ratio),
+    }))
     .filter((m) => m.amount > 0);
 }
 
@@ -359,7 +387,7 @@ export function optionStates(
       blockedReasonKeys: unmet.map(() => ('rejection.threshold.not-met' as L10nKey)),
       successRate: rate,
       practicePreview: practiceYield(o.practice, 1, rarity, ctx, fx),
-      meritPreview: meritShown(meritYield(o, 1, rarity, tier, ctx, fx), ctx, fx),
+      meritPreview: meritShown(meritYield(o, 1, rarity, ctx, fx), ctx, fx),
     };
   });
 }
@@ -486,7 +514,7 @@ export function resolveHead(
   // 高 DC 的選項會沒人敢碰，「用哪個方法度過」就退化成只選最穩的那個。
   const ratio = passed ? 1 : yieldCurve(ctx).failRatio;
   const practiceExp = practiceYield(option.practice, ratio, offer.rarity, ctx, fx);
-  const meritRaw = meritYield(option, ratio, offer.rarity, tier, ctx, fx);
+  const meritRaw = meritYield(option, ratio, offer.rarity, ctx, fx);
   // 紀錄的是【實際入帳】的數字，不是交給 writer 之前的那個 —— 回合紀錄要與存摺一致。
   const meritGained = meritShown(meritRaw, ctx, fx);
 

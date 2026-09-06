@@ -127,6 +127,32 @@ export function run(): void {
       const len = defs.reader('chapter').get(String(a)).length;
       eq(String(progressOf(len + 1, f.faction, 1, ctx).chapterId), String(b));
     });
+
+    /**
+     * 章序號必須【整輪連號】★★ 這條是事後補的，因為舊版沒有人檢查第二章之後
+     *
+     * 舊式是 `chaptersPassed + i + 1`，而 `chaptersPassed` 會隨著過關一直長、
+     * `i` 也一直長 —— **兩個一起加就重複計算**，實測跑出 1、2、4、6。
+     * 上面那條斷言只驗到陣營序列的【第一章】（chapter 2），
+     * 而那一格恰好是對的，所以它綠著讓 bug 活了下來（D68）。
+     *
+     * 後果不只是顯示：`chapterMultiplier` 與 `enemyTroopsByChapter`
+     * 都用 `chapter - 1` 當索引，於是經驗、功績、敵人強度**全部讀錯格**。
+     */
+    it('章序號沿整輪連號 —— 不隨 chaptersPassed 重複計算', () => {
+      const f = defs.reader('faction').all()[0];
+      if (f === undefined) return;
+      const camp = sequenceOf(null, ctx).length;
+      const seq = sequenceOf(f.faction, ctx);
+      let local = 1;
+      for (const [i, cid] of seq.entries()) {
+        // 真實流程：本地回合累加、每過一章 chaptersPassed 加一。
+        const p = progressOf(local, f.faction, camp + i, ctx);
+        eq(String(p.chapterId), String(cid));
+        eq(p.chapter, camp + i + 1);
+        local += defs.reader('chapter').get(String(cid)).length;
+      }
+    });
   });
 
   describe('opening · 開場與陣營時點（GDD §2.1、§4.1）', () => {
