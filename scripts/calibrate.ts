@@ -1,125 +1,145 @@
-// 量出各章戰役的實際深度分佈，供敵方曲線與獎勵階梯校準（31 §1、RFC-01 §6）。
+// 敵人輸出的【單一校準常數】—— 掃描 k，找出讓無星停在第 2–3 關的那一個。
 //
-// ── 舊版量的是什麼、為什麼作廢 ──────────────────────
-// 舊版量「大檢定的檢定值（base+bonus）」，用來反推三檔 DC。
-// 大檢定改成七關戰役之後那個數字不存在了 —— 現在要校準的是三件事：
+// ── 為什麼需要這個常數 ★ ────────────────────────────
+// `config/battle.ts` 的敵人曲線是從對標表**解出來**的（D64），閉式解是：
 //
-//   1. 玩家在該章的【兵量與糧量】（＝官階曲線對不對）
-//   2. 照著玩能打到【第幾關】（＝ enemyTroopsByRank 對不對）
-//   3. 貪心閾值不同的人差多少（＝獎勵階梯該不該再陡）
+//   一路打到第 K 關吃到的傷害 ＝ (兵力基準 × 輸出基準 / 我方輸出) × cum(K)
 //
-// 第 3 點是新制真正的問題。它由 `--greed` 的兩組取樣給出答案。
+// 那個閉式解漏掉三件會**加重**玩家負擔的事，而且三件都難以解析地寫進去：
+//   1. 關底敵將【每回合多打一下】，而且那一下也乘 dmgBase
+//   2. 兵量掉下去之後我方輸出跟著掉 —— 死亡螺旋，閉式解假設輸出恆定
+//   3. 「有效軍勢」裡的糧秣要花招式格去換，那些回合不輸出
+//
+// 所以：**形狀（章節間的比例、關與關的斜率）由推導決定，
+// 絕對高度由這一個常數決定。** 一個常數，量出來的，不是憑感覺調的。
 import { compose } from '../src/app/composition.js';
 import { Session } from '../src/app/session.js';
 import { loadContent } from '../src/data-runtime/loader.js';
 import { diskRepository } from '../src/platform/content-repository.js';
 import { emptyDraft, emptyMeta } from '../src/modules/dream-entry.js';
 import { seed as mkSeed } from '../src/contracts/core/ids.js';
-import { ATTRS, type Attr } from '../src/contracts/core/primitives.js';
-import { POLICIES, playCampaign, type AgentPolicy } from './lib/policies.js';
+import type { ContentRepository } from '../src/data-runtime/loader.js';
+import type { MetaState } from '../src/contracts/core/state.js';
+import { POLICIES } from './lib/policies.js';
 
-const loaded = loadContent(diskRepository());
-if (!loaded.ok) { console.error(loaded.report); process.exit(1); }
-const defs = loaded.registry;
-const w = compose(defs);
-const t = (k: unknown): string => defs.text(String(k));
-
-interface Sample {
-  readonly troops: number;
-  readonly supply: number;
-  readonly cleared: number;
-  readonly attrs: Readonly<Record<Attr, number>>;
-  readonly died: boolean;
-}
-const samples = new Map<string, Sample[]>();
-
-function run(runSeed: number, policy: AgentPolicy): void {
-  const meta = emptyMeta();
-  const s = Session.start(w, meta, emptyDraft(meta, defs), mkSeed(runSeed));
-  let guard = 0;
-
-  while (!s.isOver && guard < 200) {
-    guard += 1;
-    if (s.needsFactionChoice) {
-      const opt = s.factionOptions().filter((o) => o.eligible)[0];
-      if (opt === undefined) { s.noFactionAvailable(); continue; }
-      s.chooseFaction(opt.factionId);
-      continue;
-    }
-    if (s.needsSuperiors) {
-      s.assignSuperiors(s.superiorCandidates().slice(0, s.bondQuota()));
-      continue;
-    }
-    if (s.needsCampaign) {
-      const chId = String(s.current.progress.chapterId);
-      // 配置前先量兩條資源上限 —— 那是官階曲線的直接產物。
-      const lim = s.hostLimits();
-      const attrs = { ...s.current.attributes.values };
-      const cleared = playCampaign(s, policy);
-      const key = `${chId}|${policy.name}`;
-      const arr = samples.get(key) ?? [];
-      // 【不能用 s.isOver】—— 序列走完也會 isOver，那是圓夢不是陣亡。
-      // 舊版就是這樣，於是最後一章的陣亡率永遠印 100%。
-      const died = s.current.ending !== null && !s.current.ending.isFullDream;
-      arr.push({ troops: lim.troopsMax, supply: lim.supplyMax, cleared, attrs, died });
-      samples.set(key, arr);
-      continue;
-    }
-
-    s.selectSlot(policy.chooseSlot(s));
-    for (;;) {
-      const offer = s.pendingEvent;
-      if (offer === null) break;
-      s.resolveEvent(policy.chooseOption(s, offer));
-    }
-    s.advance();
-  }
-}
+const RUNS = Number(process.argv[2] ?? 24);
+const KS = (process.argv[3] ?? '1,0.5,0.35,0.25,0.2,0.15')
+  .split(',').map(Number);
 
 /**
- * 兩個對照組：**同樣的打法，只有貪心閾值不同。**
- *   risk-averse   軍勢剩六成就收兵
- *   risk-seeking  剩一成二才收兵
- * 兩者的深度差與死亡率差，就是「貪心的定價」那個問題的實測答案。
+ * 把敵人曲線【在載入時】乘上 k —— 不改檔、不重編。
+ * `ContentRepository` 只是 `read(path) => string`，所以包一層就能改。
  */
-const PICKED = ['risk-averse', 'focus-martial', 'risk-seeking'];
-const chosen = POLICIES.filter((p) => PICKED.includes(p.name));
+const scaled = (k: number, troopsK: number): ContentRepository => {
+  const disk = diskRepository();
+  return {
+    read: (path) => {
+      const raw = disk.read(path);
+      if (!path.endsWith('core/defs.json')) return raw;
+      // defs.json 是【扁平陣列】，不是照 kind 分組的物件 —— 踩過一次。
+      const json = JSON.parse(raw) as Record<string, unknown>[];
+      for (const b of json) {
+        if (b['kind'] !== 'battleRule') continue;
+        b['enemyDamageByChapter'] = (b['enemyDamageByChapter'] as number[])
+          .map((x) => Math.round(x * k));
+        b['enemyTroopsByChapter'] = (b['enemyTroopsByChapter'] as number[])
+          .map((x) => Math.round(x * troopsK));
+      }
+      return JSON.stringify(json);
+    },
+  };
+};
 
-const N = Number(process.argv[2] ?? 150);
-for (let i = 0; i < N; i += 1) {
-  for (const p of chosen) run(3000 + i, p);
+const starMeta = (star: number, defs: ReturnType<typeof mk>['defs']): MetaState => {
+  const base = emptyMeta();
+  if (star <= 0) return base;
+  const codex: Record<string, { star: number; fragments: number; unlocked: boolean }> = {};
+  for (const n of defs.reader('notable').all()) {
+    codex[String(n.notableId)] = { star, fragments: 0, unlocked: true };
+  }
+  return { ...base, notableCodex: codex as MetaState['notableCodex'] };
+};
+
+function mk(repo: ContentRepository) {
+  const loaded = loadContent(repo);
+  if (!loaded.ok) { console.error(loaded.report); process.exit(1); }
+  return { defs: loaded.registry, w: compose(loaded.registry) };
 }
 
-const q = (xs: readonly number[], p: number): number => {
-  const s2 = [...xs].sort((a, b) => a - b);
-  return s2[Math.min(s2.length - 1, Math.floor(s2.length * p))] ?? 0;
-};
-const avg = (xs: readonly number[]): number =>
-  xs.reduce((a, b) => a + b, 0) / Math.max(1, xs.length);
+interface Row { depth: number; lost: boolean; turns: number; full: number }
 
-console.log(`各章戰役的深度與資源分佈　n=${N}`);
-console.log('');
-console.log('章節'.padEnd(12) + '策略'.padEnd(16)
-  + '兵量   糧量 │ 深度 p10/p50/p90  平均 │ 陣亡率 │ 四維');
-for (const chId of defs.reader('chapterSequence').all()
-  .flatMap((s2) => s2.chapters).map(String)) {
-  const ch = defs.reader('chapter').get(chId);
-  for (const p of chosen) {
-    const xs = samples.get(`${chId}|${p.name}`) ?? [];
-    if (xs.length === 0) continue;
-    const cl = xs.map((x) => x.cleared);
-    const attrLine = ATTRS
-      .map((a) => `${t(`attr.${a}.short`)}${avg(xs.map((x) => x.attrs[a])).toFixed(0)}`)
-      .join(' ');
-    console.log(
-      `${t(ch.titleKey).padEnd(8)}${p.name.padEnd(16)}`
-      + `${avg(xs.map((x) => x.troops)).toFixed(0).padStart(5)}`
-      + `${avg(xs.map((x) => x.supply)).toFixed(0).padStart(7)} │ `
-      + `${String(q(cl, 0.1)).padStart(2)}/${String(q(cl, 0.5)).padStart(2)}`
-      + `/${String(q(cl, 0.9)).padStart(2)}`
-      + `  ${avg(cl).toFixed(2).padStart(5)} │ `
-      + `${((xs.filter((x) => x.died).length / xs.length) * 100).toFixed(1).padStart(5)}% │ `
-      + attrLine,
-    );
+const play = (w: ReturnType<typeof mk>['w'], meta: MetaState): Row[] => {
+  const policy = POLICIES.find((x) => x.name === 'greedy-gain');
+  if (policy === undefined) throw new Error('no policy');
+  const out: Row[] = [];
+  for (let r = 0; r < RUNS; r += 1) {
+    const s = Session.start(w, meta, emptyDraft(meta, w.defs), mkSeed(7000 + r));
+    let guard = 0; let cleared = 0; let fights = 0; let lost = false; let turns = 0;
+    let full = 0;
+    while (!s.isOver && guard < 220) {
+      guard += 1;
+      if (s.needsFactionChoice) {
+        const o = s.factionOptions().filter((x) => x.eligible)[0];
+        if (o === undefined) { s.noFactionAvailable(); continue; }
+        s.chooseFaction(o.factionId); continue;
+      }
+      if (s.needsSuperiors) { s.assignSuperiors([]); continue; }
+      if (s.needsCampaign) {
+        policy.spend(s);
+        s.configureCampaign(policy.chooseLoadout(s));
+        fights += 1;
+        let here = 0;
+        // ★ 一路按下去 —— 真人的玩法（戰敗只掉一半，D54）。
+        for (let i = 0; i < 8; i += 1) {
+          if (s.nextStage() === null) break;
+          const res = s.engage();
+          turns += res.log.filter((l) => l.actor === 'enemy' && l.skillKey === null).length;
+          if (res.defeated) { lost = true; break; }
+          cleared += 1; here += 1;
+        }
+        if (here >= 7) full += 1;
+        if (s.needsCampaign) s.withdraw();
+        continue;
+      }
+      s.selectSlot(policy.chooseSlot(s));
+      let g2 = 0;
+      while (s.pendingEvent !== null && g2 < 8) {
+        g2 += 1;
+        const offer = s.pendingEvent;
+        const want = policy.chooseOption(s, offer);
+        const i = offer.optionStates[want]?.enabled === true
+          ? want : offer.optionStates.findIndex((x) => x.enabled);
+        s.resolveEvent(i);
+      }
+      s.advance();
+    }
+    out.push({
+      depth: fights === 0 ? 0 : cleared / fights, lost,
+      turns: turns / Math.max(1, cleared),
+      full: fights === 0 ? 0 : full / fights,
+    });
   }
+  return out;
+};
+
+const avg = (xs: readonly number[]): number =>
+  (xs.length === 0 ? 0 : xs.reduce((a, b) => a + b, 0) / xs.length);
+const p = (n: number, w2 = 6): string => n.toFixed(2).padStart(w2);
+
+const TROOPS_K = Number(process.argv[4] ?? 1);
+console.log(`敵人輸出校準　${RUNS} 輪／組　兵力係數 ×${TROOPS_K}`);
+console.log('目標：無星 ≈ 2.5 關、4–5★ ≈ 7 關');
+console.log('');
+// 「穩定過第七關」是玩家講的話 —— 平均深度會被 7 這個天花板壓平，
+// 所以真正要看的是【七關全清率】：一場戰役有多少比例是打完七關的。
+console.log('   k   　深度（無／3★／4★／5★）　　七關全清率（無／3★／4★／5★）');
+for (const k of KS) {
+  const { defs, w } = mk(scaled(k, TROOPS_K));
+  const rows = [0, 3, 4, 5].map((st) => play(w, starMeta(st, defs)));
+  console.log(
+    `${k.toFixed(2).padStart(5)}  `
+    + rows.map((r) => p(avg(r.map((x) => x.depth)))).join('')
+    + '   '
+    + rows.map((r) => `${(avg(r.map((x) => x.full)) * 100).toFixed(0).padStart(5)}%`).join(''),
+  );
 }

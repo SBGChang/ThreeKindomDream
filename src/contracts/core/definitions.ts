@@ -854,7 +854,7 @@ export interface BattleRuleDef extends DefHeader {
    *
    * 它決定的是**一關要打幾回合** —— 兵力 ÷ 我方每回合輸出。
    */
-  readonly enemyTroopsByRank: readonly number[];
+  readonly enemyTroopsByChapter: readonly number[];
   /**
    * 敵方每回合輸出的基準，index 同上。**與兵力是兩條獨立的曲線。**
    *
@@ -862,7 +862,7 @@ export interface BattleRuleDef extends DefHeader {
    * 想讓仗更長就必然更痛，而那正好是把深關做成暴斃的做法。
    * 分開之後，長度由兵力訂、代價由這條訂，兩個旋鈕互不干涉。
    */
-  readonly enemyDamageByRank: readonly number[];
+  readonly enemyDamageByChapter: readonly number[];
   /** 恢復 1 點軍勢消耗幾點糧秣。1 ＝ 糧量就是「你能補回多少軍勢」（33 §5.3）。 */
   readonly supplyPerTroop: number;
   /** 天賦〈天命所歸〉原地再起時回復的軍勢比例。 */

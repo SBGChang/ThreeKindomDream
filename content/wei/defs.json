@@ -5861,7 +5861,7 @@
       {
         "boss": null,
         "briefKey": "campaign.wei.hulao.stage.0",
-        "damageMul": 0.55,
+        "damageMul": 0.49,
         "rewards": [
           {
             "amount": 4,
@@ -5889,12 +5889,12 @@
             "kind": "exp"
           }
         ],
-        "troopsMul": 0.55
+        "troopsMul": 0.61
       },
       {
         "boss": null,
         "briefKey": "campaign.wei.hulao.stage.1",
-        "damageMul": 0.75,
+        "damageMul": 0.57,
         "rewards": [
           {
             "amount": 7,
@@ -5922,12 +5922,12 @@
             "kind": "exp"
           }
         ],
-        "troopsMul": 0.75
+        "troopsMul": 0.72
       },
       {
         "boss": "enemy:lijue",
         "briefKey": "campaign.wei.hulao.stage.2",
-        "damageMul": 1,
+        "damageMul": 0.66,
         "rewards": [
           {
             "amount": 13,
@@ -5955,12 +5955,12 @@
             "kind": "exp"
           }
         ],
-        "troopsMul": 1
+        "troopsMul": 0.85
       },
       {
         "boss": null,
         "briefKey": "campaign.wei.hulao.stage.3",
-        "damageMul": 1.35,
+        "damageMul": 0.76,
         "rewards": [
           {
             "amount": 24,
@@ -5993,12 +5993,12 @@
             "trait": "trait:chenyi"
           }
         ],
-        "troopsMul": 1.35
+        "troopsMul": 1
       },
       {
         "boss": "enemy:huaxiong",
         "briefKey": "campaign.wei.hulao.stage.4",
-        "damageMul": 1.85,
+        "damageMul": 0.88,
         "rewards": [
           {
             "amount": 44,
@@ -6031,12 +6031,12 @@
             "trait": null
           }
         ],
-        "troopsMul": 1.8
+        "troopsMul": 1.18
       },
       {
         "boss": null,
         "briefKey": "campaign.wei.hulao.stage.5",
-        "damageMul": 2.55,
+        "damageMul": 1.01,
         "rewards": [
           {
             "amount": 88,
@@ -6064,12 +6064,12 @@
             "kind": "exp"
           }
         ],
-        "troopsMul": 2.4
+        "troopsMul": 1.39
       },
       {
         "boss": "enemy:lvbu",
         "briefKey": "campaign.wei.hulao.stage.6",
-        "damageMul": 3.5,
+        "damageMul": 1.17,
         "rewards": [
           {
             "amount": 180,
@@ -6102,7 +6102,7 @@
             "trait": "trait:linzhen"
           }
         ],
-        "troopsMul": 3.2
+        "troopsMul": 1.64
       }
     ]
   },
@@ -6118,7 +6118,7 @@
       {
         "boss": null,
         "briefKey": "campaign.wei.guandu.stage.0",
-        "damageMul": 0.55,
+        "damageMul": 0.49,
         "rewards": [
           {
             "amount": 7,
@@ -6146,12 +6146,12 @@
             "kind": "exp"
           }
         ],
-        "troopsMul": 0.55
+        "troopsMul": 0.61
       },
       {
         "boss": "enemy:guotu",
         "briefKey": "campaign.wei.guandu.stage.1",
-        "damageMul": 0.75,
+        "damageMul": 0.57,
         "rewards": [
           {
             "amount": 13,
@@ -6179,12 +6179,12 @@
             "kind": "exp"
           }
         ],
-        "troopsMul": 0.75
+        "troopsMul": 0.72
       },
       {
         "boss": null,
         "briefKey": "campaign.wei.guandu.stage.2",
-        "damageMul": 1,
+        "damageMul": 0.66,
         "rewards": [
           {
             "amount": 22,
@@ -6212,12 +6212,12 @@
             "kind": "exp"
           }
         ],
-        "troopsMul": 1
+        "troopsMul": 0.85
       },
       {
         "boss": "enemy:yanliang",
         "briefKey": "campaign.wei.guandu.stage.3",
-        "damageMul": 1.35,
+        "damageMul": 0.76,
         "rewards": [
           {
             "amount": 42,
@@ -6250,12 +6250,12 @@
             "trait": null
           }
         ],
-        "troopsMul": 1.35
+        "troopsMul": 1
       },
       {
         "boss": null,
         "briefKey": "campaign.wei.guandu.stage.4",
-        "damageMul": 1.85,
+        "damageMul": 0.88,
         "rewards": [
           {
             "amount": 77,
@@ -6288,12 +6288,12 @@
             "trait": "trait:liaodi"
           }
         ],
-        "troopsMul": 1.8
+        "troopsMul": 1.18
       },
       {
         "boss": "enemy:shenpei",
         "briefKey": "campaign.wei.guandu.stage.5",
-        "damageMul": 2.55,
+        "damageMul": 1.01,
         "rewards": [
           {
             "amount": 154,
@@ -6326,12 +6326,12 @@
             "trait": null
           }
         ],
-        "troopsMul": 2.4
+        "troopsMul": 1.39
       },
       {
         "boss": "enemy:yuanshao",
         "briefKey": "campaign.wei.guandu.stage.6",
-        "damageMul": 3.5,
+        "damageMul": 1.17,
         "rewards": [
           {
             "amount": 315,
@@ -6364,7 +6364,7 @@
             "trait": "trait:zhechong"
           }
         ],
-        "troopsMul": 3.2
+        "troopsMul": 1.64
       }
     ]
   },
@@ -6380,7 +6380,7 @@
       {
         "boss": null,
         "briefKey": "campaign.wei.hebei.stage.0",
-        "damageMul": 0.55,
+        "damageMul": 0.49,
         "rewards": [
           {
             "amount": 12,
@@ -6408,12 +6408,12 @@
             "kind": "exp"
           }
         ],
-        "troopsMul": 0.55
+        "troopsMul": 0.61
       },
       {
         "boss": null,
         "briefKey": "campaign.wei.hebei.stage.1",
-        "damageMul": 0.75,
+        "damageMul": 0.57,
         "rewards": [
           {
             "amount": 22,
@@ -6441,12 +6441,12 @@
             "kind": "exp"
           }
         ],
-        "troopsMul": 0.75
+        "troopsMul": 0.72
       },
       {
         "boss": "enemy:yuantan",
         "briefKey": "campaign.wei.hebei.stage.2",
-        "damageMul": 1,
+        "damageMul": 0.66,
         "rewards": [
           {
             "amount": 38,
@@ -6474,12 +6474,12 @@
             "kind": "exp"
           }
         ],
-        "troopsMul": 1
+        "troopsMul": 0.85
       },
       {
         "boss": null,
         "briefKey": "campaign.wei.hebei.stage.3",
-        "damageMul": 1.35,
+        "damageMul": 0.76,
         "rewards": [
           {
             "amount": 72,
@@ -6507,12 +6507,12 @@
             "kind": "exp"
           }
         ],
-        "troopsMul": 1.35
+        "troopsMul": 1
       },
       {
         "boss": "enemy:shenpei",
         "briefKey": "campaign.wei.hebei.stage.4",
-        "damageMul": 1.85,
+        "damageMul": 0.88,
         "rewards": [
           {
             "amount": 132,
@@ -6545,12 +6545,12 @@
             "trait": "trait:wanrendi"
           }
         ],
-        "troopsMul": 1.8
+        "troopsMul": 1.18
       },
       {
         "boss": "enemy:tadun",
         "briefKey": "campaign.wei.hebei.stage.5",
-        "damageMul": 2.55,
+        "damageMul": 1.01,
         "rewards": [
           {
             "amount": 264,
@@ -6583,12 +6583,12 @@
             "trait": null
           }
         ],
-        "troopsMul": 2.4
+        "troopsMul": 1.39
       },
       {
         "boss": "enemy:tadun",
         "briefKey": "campaign.wei.hebei.stage.6",
-        "damageMul": 3.5,
+        "damageMul": 1.17,
         "rewards": [
           {
             "amount": 540,
@@ -6621,7 +6621,7 @@
             "trait": null
           }
         ],
-        "troopsMul": 3.2
+        "troopsMul": 1.64
       }
     ]
   }

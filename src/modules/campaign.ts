@@ -189,7 +189,7 @@ export function configure(loadout: BattleLoadout, ctx: RunContext): RunState {
 //
 // 傷害【也按兵量比例算】是刻意的：你造成的傷害來自你帶的兵，武力是倍率。
 // 一萬人衝陣比五百人衝陣傷害大。於是整套算式尺度一致 ——
-// 官階＝規模、四維＝倍率，兩者相乘；只有 enemyTroopsByRank 一條要校準。
+// 官階＝規模、四維＝倍率，兩者相乘；只有 enemyTroopsByChapter 一條要校準。
 
 const coefOf = (attrs: Readonly<Record<Attr, number>>, a: Attr, r: BattleRuleDef): number =>
   (attrs[a] ?? 0) / r.actorDivisor;
@@ -200,32 +200,37 @@ const playerAttrs = (ctx: RunContext): Readonly<Record<Attr, number>> => ({
 });
 
 /**
- * 敵方強度的索引 —— **名義階級，不是頭銜**（D25 ＋ 21 §2.2）★
+ * 敵方強度的索引 ＝ **章節**（D64）★★ 這條改過兩次
  *
- * 索引官階、不索引章節，是 17 §6.4 已立的規矩：難度與報酬必須一起長，
- * 否則壓低某一線的官階會變成刷簡單高報酬的農場。
+ * ── 為什麼不是官階（前一版，已推翻）────────────────
+ * D25 訂的是「索引官階」，理由抄自 17 §6.4「難度與報酬必須一起長」——
+ * 但那條規矩講的是**委託報酬**，把它類推到敵人身上沒有依據。
+ * 而它有實測的壞處：官階加上本輪上限之後，敵人跟著凍住
+ * （rank 5 的兵 3040 對上 rank 9 的 10720），第一輪變得輕鬆到第七關。
  *
- * ★ 但它要吃的是 `notionalLevel` 而不是真實階級。加上本輪上限（D59）
- * 之後，真實階級會在第一輪封在 5 —— 敵人跟著凍住，玩家卻照樣練上去，
- * 實測就是「第一輪輕鬆打到第七關」。
- * 頭銜可以被鎖，**你惹到的麻煩不會因為你沒升官就變小**。
+ * ── 為什麼不是【執行期讀四維】★★ 這一條最重要 ────────
+ * 「用能力值對標」是對的，但**對標必須發生在設計時，不是執行時**。
+ * 敵人若在執行期讀玩家的四維，就是等級同步：**你練越高對面越強，
+ * 養成整個白做**。那會把這個遊戲最核心的迴圈拆掉。
  *
- * 取兩線較高者：你做了多大的事，對面就派多大的敵人。
+ * ── 所以：索引章節，而數字從【預期四維】反推 ──────────
+ * 章節是固定的、可讀的、可校準的。而 `enemyTroopsByChapter` 那張表
+ * 的每一格都是用 `scripts/benchmark.ts` 量出來的
+ * 「這一章玩家該有多少輸出與多少有效軍勢」反推出來的（見 battle.ts）。
+ *
+ * 於是「能力值對標」成立，而等級同步不成立。
  */
-const rankIndex = (ctx: RunContext): number => Math.max(
-  careerService.notionalLevel('civil', ctx),
-  careerService.notionalLevel('martial', ctx),
-) - 1;
+const chapterIndex = (ctx: RunContext): number => ctx.state.progress.chapter - 1;
 
 const at = (curve: readonly number[], i: number): number =>
   curve[i] ?? curve.at(-1) ?? 1;
 
 const enemyBase = (ctx: RunContext): number =>
-  at(rule(ctx).enemyTroopsByRank, rankIndex(ctx));
+  at(rule(ctx).enemyTroopsByChapter, chapterIndex(ctx));
 
 /** 敵方每回合輸出的基準。與兵力是兩條獨立的曲線 —— 長度與代價分開訂。 */
 const enemyDamageBase = (ctx: RunContext): number =>
-  at(rule(ctx).enemyDamageByRank, rankIndex(ctx));
+  at(rule(ctx).enemyDamageByChapter, chapterIndex(ctx));
 
 /**
  * 我軍每回合的期望輸出（33 §8.1）★
