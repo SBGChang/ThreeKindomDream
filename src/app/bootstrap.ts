@@ -39,6 +39,26 @@ export function resetMeta(): void {
   localStorage.removeItem(SAVE_KEY);
 }
 
+/**
+ * 戰鬥呈現模式（D67）★ —— 玩家偏好，【不是局內狀態】
+ *
+ *   instant  立刻結算，直接看結果。模擬器走的就是這條（它連 UI 都沒有）。
+ *   theater  逐回合演出來。
+ *
+ * 兩者【結算完全相同】—— 差別只在要不要把過程播出來，
+ * 所以它不進 RunState、不進存檔、不影響任何判定，只是一個瀏覽器偏好。
+ */
+export type BattleMode = 'instant' | 'theater';
+const MODE_KEY = 'sgd.battleMode.v1';
+
+export function loadBattleMode(): BattleMode {
+  return localStorage.getItem(MODE_KEY) === 'instant' ? 'instant' : 'theater';
+}
+
+export function saveBattleMode(mode: BattleMode): void {
+  localStorage.setItem(MODE_KEY, mode);
+}
+
 export function startRun(meta: MetaState, config = emptyDraft(meta, defs)): Session {
   return Session.start(wiring, meta, config, mkSeed(Date.now() % 2_000_000_000));
 }

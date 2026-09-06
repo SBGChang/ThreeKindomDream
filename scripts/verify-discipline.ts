@@ -49,11 +49,19 @@ for (const f of files) {
 }
 
 // ── 2. 玩法數值不得寫進 code ───────────────────────
-// 具名常數帶有「可調數值」的味道。技術參數（陣列長度、索引）不在此列。
+// 具名常數帶有「可調數值」的味道。技術參數（陣列長度、索引）不在此列 ——
+// 但正規表示式分不出這件事，所以例外要【逐行明示】：
+//
+//     const BEAT_MS = 460;   // 呈現參數
+//
+// 為什麼不整包放行 src/ui/：那等於開一個「數值可以躲在畫面層」的洞。
+// 逐行標記的成本很低，而且 grep 得到 —— 想知道破例了幾次，搜這四個字就好。
+const PRESENTATION = /呈現參數/;
 const NUMERIC_CONST = /^\s*(?:const|let)\s+[A-Z_][A-Z0-9_]*\s*[:=]\s*-?\d+(?:\.\d+)?\s*;/;
 for (const f of files) {
   if (/\/(contracts|kernel)\//.test(rel(f))) continue;
   for (const l of codeLines(f)) {
+    if (PRESENTATION.test(l.raw)) continue;
     if (NUMERIC_CONST.test(l.code)) {
       add(f, l.n, l.raw, '玩法數值必須來自資料，不得是 code 裡的具名常數');
     }

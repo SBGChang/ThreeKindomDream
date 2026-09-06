@@ -1,13 +1,22 @@
 import { useState } from 'react';
-import type { Session } from '../app/session.js';
+import type { Session, StageOutcome } from '../app/session.js';
 import type { NotableId, SkillId } from '../contracts/core/ids.js';
 import type { CommanderSlot } from '../contracts/core/state.js';
+import type { EventReward } from '../contracts/core/definitions.js';
 import { ATTRS } from '../contracts/core/primitives.js';
-import { defs, t } from '../app/bootstrap.js';
+import {
+  defs, loadBattleMode, saveBattleMode, t, type BattleMode,
+} from '../app/bootstrap.js';
+import type { ReplayData } from './BattleTheater.js';
 import { CampaignRoad, Outlook } from './CampaignRoad.js';
 import { Hud } from './Hud.js';
 
-interface Props { readonly s: Session; readonly bump: () => void }
+interface Props {
+  readonly s: Session;
+  readonly bump: () => void;
+  /** 交給 App 去播 —— 戰敗時本畫面會當場卸載，見 BattleTheater 的 ReplayData。 */
+  readonly onReplay: (r: ReplayData) => void;
+}
 
 const skillName = (id: SkillId): string =>
   t(defs.reader('skill').get(String(id)).nameKey);
@@ -33,7 +42,16 @@ function Bar({ label, now, max, tone }: {
   );
 }
 
-export function ScreenCampaign({ s, bump }: Props): React.ReactElement {
+export function ScreenCampaign({ s, bump, onReplay }: Props): React.ReactElement {
+  /**
+   * 兩種呈現、【同一個結算】（D67）★
+   *
+   *   立即結算  按下去直接看結果 —— 模擬器走的就是這條路
+   *   逐回合演出 把 engage() 回傳的戰報播出來
+   *
+   * 差別只在要不要把過程播出來，所以它是瀏覽器偏好、不是局內狀態。
+   */
+  const [mode, setMode] = useState<BattleMode>(loadBattleMode);
   // 戰報預設收起（D15）：七場自動戰鬥第一輪好看、第五輪是阻礙。
   // 玩家真正在讀的是「軍勢剩幾成」與「下一關是誰」。
   const [showLog, setShowLog] = useState(false);
@@ -159,17 +177,48 @@ export function ScreenCampaign({ s, bump }: Props): React.ReactElement {
   // ── 走還留 ─────────────────────────────────────
   const nx = s.nextStage();
   const done = nx === null;
-  const banked = st.banked
-    .filter((r) => r.kind === 'merit')
-    .reduce((n, r) => n + (r.kind === 'merit' ? r.amount : 0), 0);
+  /*
+    ★ 戰役 banked 的是【經驗】不是功績（D66）——
+    「我的大檢定一直以來都只是要給經驗值而已。」
+    這幾行原本在數 `kind === 'merit'`，改完之後永遠是 0，
+    按鈕會寫「收兵（保住 0 功績）」—— 數字對了、話卻是錯的。
+  */
+  const expOf = (rs: readonly EventReward[]): number => rs
+    .reduce((n, r) => n + (r.kind === 'exp' ? r.amount : 0), 0);
+  const banked = expOf(st.banked);
   const forgone = nx === null ? [] : nx.rewards.flatMap((r) => {
-    if (r.kind === 'merit') return [`功績 ${r.amount}`];
     if (r.kind === 'unlock') {
       if (r.trait !== null) return [t(defs.reader('trait').get(String(r.trait)).nameKey)];
       if (r.skill !== null) return [skillName(r.skill)];
     }
     return [];
   });
+  const nextExp = nx === null ? 0 : expOf(nx.rewards);
+
+  /**
+   * 打一關 ★ 順序很重要：**先抓開打前的數字，再結算。**
+   * `engage()` 一回來狀態就是打完的了 —— 兵陣要從哪裡開始掉，
+   * 只有在呼叫之前問得到。
+   */
+  const fight = (): void => {
+    if (nx === null) return;
+    const before = st.host.troops;
+    const label = `第 ${nx.index + 1} 關 · ${nx.boss === null ? '雜兵' : t(nx.boss.nameKey)}`;
+    const enemyLabel = nx.boss === null ? '敵軍' : t(nx.boss.nameKey);
+    const out: StageOutcome = s.engage();
+    bump();
+    if (mode === 'instant') return;
+    onReplay({
+      log: out.log,
+      troopsMax: st.host.troopsMax,
+      enemyMax: nx.enemyTroops,
+      startTroops: before,
+      stageLabel: label,
+      enemyLabel,
+      cleared: out.cleared,
+      defeated: out.defeated,
+    });
+  };
 
   return (
     <>
@@ -244,15 +293,15 @@ export function ScreenCampaign({ s, bump }: Props): React.ReactElement {
             「輸了會怎樣」與「走了放棄什麼」是同一個決定的兩半。
           */}
           <p className="warn" style={{ marginTop: 10 }}>
-            {`打輸了不會夢醒 —— 但已保住的 ${banked} 功績會剩一半（${Math.floor(banked / 2)}）。`}
+            {`打輸了不會夢醒 —— 但已保住的 ${banked} 經驗會剩一半（${Math.floor(banked / 2)}）。`}
           </p>
         </>
       )}
 
       <div className="row" style={{ marginTop: 12 }}>
         {done ? null : (
-          <button className="primary" onClick={() => { s.engage(); bump(); }}>
-            再打一關
+          <button className="primary" onClick={fight}>
+            {mode === 'theater' ? '再打一關（演出）' : '再打一關'}
           </button>
         )}
         {/*
@@ -260,18 +309,30 @@ export function ScreenCampaign({ s, bump }: Props): React.ReactElement {
           它不繞過任何規則 —— 每一關都真的跑一次，只是不停下來問你。
           按鈕只在戰力明顯超過時出現，所以它的消失本身就是一個訊號。
         */}
+        {/*
+          掃蕩【永遠走立即結算】—— 它的定義就是「不要停下來問我」（D15）。
+          一路演過去會直接違反那個目的。
+        */}
         {done || !s.canSweep() ? null : (
           <button onClick={() => { s.sweep(); bump(); }}>
             掃蕩（打到吃緊為止）
           </button>
         )}
+        <button
+          onClick={() => {
+            const next: BattleMode = mode === 'theater' ? 'instant' : 'theater';
+            setMode(next); saveBattleMode(next);
+          }}
+        >
+          {mode === 'theater' ? '戰鬥：逐回合演出' : '戰鬥：立即結算'}
+        </button>
         {/*
           收兵按鈕上【必須寫著你放棄了什麼】（D14）——
           這是 GDD §9.5 已立的原則。看不見代價的「走」會讓 push-your-luck
           退化成隨便按。
         */}
         <button onClick={() => { s.withdraw(); bump(); }}>
-          {`收兵（保住 ${banked} 功績`}
+          {`收兵（保住 ${banked} 經驗`}
           {forgone.length === 0 ? '' : `，放棄：${forgone.join('、')}`}
           {'）'}
         </button>

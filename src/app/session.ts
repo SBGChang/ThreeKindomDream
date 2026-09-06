@@ -234,7 +234,12 @@ export class Session {
     this.mutate((tc) => campaign.configure(loadout, tc));
   }
 
-  /** 打下一關。回傳結果供呈現層播戰報 —— 戰報是玩家唯一的資訊來源（33 §7）。 */
+  /**
+   * 打下一關。回傳結果供呈現層播戰報 —— 戰報是玩家唯一的資訊來源（33 §7）。
+   *
+   * ★ 回傳型別由 `StageOutcome` 從本檔轉出（見檔尾）：
+   * `ui/` 不得直接 import `modules/`，而它需要這個型別去演戰鬥（D67）。
+   */
   engage(): campaign.StageOutcome {
     const box: { value: campaign.StageOutcome | null } = { value: null };
     this.mutate((tc) => {
@@ -466,3 +471,9 @@ export class Session {
     return settle(this.summary(), meta, this.w.defs);
   }
 }
+
+/**
+ * 轉出給呈現層 ★ —— `ui/` 只能經 `app/` 取用核心（verify:discipline 第 4 條）。
+ * 戰鬥演出需要 `engage()` 的回傳型別，這一行就是那道門。
+ */
+export type { StageOutcome } from '../modules/campaign.js';

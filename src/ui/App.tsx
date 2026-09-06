@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 import type { Session } from '../app/session.js';
 import type { MetaState } from '../contracts/core/state.js';
 import { loadMeta, resetMeta, saveMeta, startRun } from '../app/bootstrap.js';
+import { BattleTheater, type ReplayData } from './BattleTheater.js';
 import { ScreenCampaign } from './ScreenCampaign.js';
 import { ScreenNotableCodex, ScreenItemCodex } from './ScreenCodex.js';
 import { ScreenDestiny, type MetaView } from './ScreenDestiny.js';
@@ -30,6 +31,15 @@ export function App(): React.ReactElement {
    */
   const [metaView, setMetaView] = useState<MetaView>('destiny');
   const [runView, setRunView] = useState<RunView>('run');
+  /**
+   * 正在播的那一關（D67）★ **它必須住在這裡，不能住在 ScreenCampaign**
+   *
+   * 戰敗時 `engage()` 會收掉戰役，`needsCampaign` 立刻變 false，
+   * 戰役畫面當場卸載 —— 而戰敗正是最該看的那一關。
+   * 而且最後一章打輸時 `isOver` 也會變 true，所以這個判斷要排在
+   * 【所有畫面切換之前】：演出播完之前，誰都不准換畫面。
+   */
+  const [replay, setReplay] = useState<ReplayData | null>(null);
   const bump = useCallback(() => { force((n) => n + 1); }, []);
 
   /**
@@ -77,6 +87,16 @@ export function App(): React.ReactElement {
     );
   }
 
+  // ★ 排在 isOver 之前：最後一關打輸也要看得完，不能直接跳結局。
+  if (replay !== null) {
+    return (
+      <BattleTheater
+        {...replay}
+        onDone={() => { setReplay(null); bump(); }}
+      />
+    );
+  }
+
   if (session.isOver) {
     return (
       <ScreenEnd
@@ -93,7 +113,9 @@ export function App(): React.ReactElement {
   if (runView === 'learn') return <ScreenLearn s={session} bump={bump} onBack={back} />;
   if (runView === 'vault') return <ScreenVault s={session} onBack={back} />;
 
-  if (session.needsCampaign) return <ScreenCampaign s={session} bump={bump} />;
+  if (session.needsCampaign) {
+    return <ScreenCampaign s={session} bump={bump} onReplay={setReplay} />;
+  }
   return (
     <ScreenRun
       s={session}
