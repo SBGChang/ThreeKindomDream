@@ -40,7 +40,7 @@ import { asKey } from '../../authoring.js';
  * 兵力／輸出的拆法：兵力先滿足「平手關約五回合」（§5.4 是估算的前提，
  * 所以第 4 關釘在 1.00），輸出拿剩下的成長 —— 見 DAMAGE_MUL。
  */
-const TROOPS_MUL = [0.61, 0.72, 0.85, 1.00, 1.18, 1.39, 1.64];
+const TROOPS_MUL = [0.66, 0.76, 0.87, 1.00, 1.15, 1.32, 1.52];
 /**
  * 敵方輸出 ★ **成長 1.154 倍／關** —— 比兵力再慢一點
  *
@@ -55,7 +55,7 @@ const TROOPS_MUL = [0.61, 0.72, 0.85, 1.00, 1.18, 1.39, 1.64];
  * 玩家讀得到這個數（配置畫面寫著「每回合輸出 N」、走留兩個數字），
  * 所以牆是【看得見的】，不是隨機的。
  */
-const DAMAGE_MUL = [0.49, 0.57, 0.66, 0.76, 0.88, 1.01, 1.17];
+const DAMAGE_MUL = [0.45, 0.51, 0.58, 0.66, 0.74, 0.84, 0.95];
 
 /**
  * 獎勵的加速曲線（D12）★★ 這是全檔最關鍵的一組數字
@@ -114,9 +114,6 @@ export interface StageSpec {
   readonly slug: string;
   /** 關底敵將。index 0..6，null ＝ 雜兵。內容準則：每三關一位有名有姓的。 */
   readonly bosses: readonly (EnemyId | null)[];
-  /** 第 1 關的功績量級。其餘關卡由 REWARD_MUL 推導。 */
-  readonly baseMerit: number;
-  readonly meritKind: 'civil' | 'martial';
   /**
    * 深處的唯一掉落（D12）★
    *
@@ -128,12 +125,7 @@ export interface StageSpec {
 
 export function buildStages(spec: StageSpec): readonly CampaignStageDef[] {
   return TROOPS_MUL.map((troopsMul, i) => {
-    const merit: EventReward = {
-      kind: 'merit',
-      merit: spec.meritKind,
-      amount: Math.round(spec.baseMerit * (REWARD_MUL[i] ?? 1)),
-    };
-    // 第 N 關給 N × 30 經驗，四維均分。
+    // 第 N 關給 N × 30 經驗，四維均分。**戰役不給功績**（D66）。
     const stageExp = STAGE_EXP_UNIT * (i + 1);
     const exp: readonly EventReward[] = EXP_ATTRS.map((attr) => ({
       kind: 'exp' as const,
@@ -146,7 +138,7 @@ export function buildStages(spec: StageSpec): readonly CampaignStageDef[] {
       troopsMul,
       damageMul: DAMAGE_MUL[i] ?? 1,
       boss: spec.bosses[i] ?? null,
-      rewards: extra === null ? [merit, ...exp] : [merit, ...exp, extra],
+      rewards: extra === null ? [...exp] : [...exp, extra],
     };
   });
 }

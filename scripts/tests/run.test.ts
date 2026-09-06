@@ -924,8 +924,10 @@ export function run(): void {
       for (const c of all) {
         const id = String(c.campaignId);
         eq(c.stages.length, 7);
+        // ★ 量的是【經驗】不是功績（D66）——「大檢定一直以來都只是要給經驗值」。
+        // 這條斷言本身沒變：越深的關獎勵必須越大，否則「夠了就停」成立。
         const val = (st: { readonly rewards: readonly EventReward[] }): number => st.rewards
-          .reduce((n, r) => n + (r.kind === 'merit' ? r.amount : 0), 0);
+          .reduce((n, r) => n + (r.kind === 'exp' ? r.amount : 0), 0);
         for (let i = 1; i < c.stages.length; i += 1) {
           const prev = c.stages[i - 1];
           const cur = c.stages[i];
@@ -976,8 +978,10 @@ export function run(): void {
      * 替身 AI 算不過時會收兵，所以這裡刻意不問它 —— 一路打到輸。
      */
     it('戰敗不夢醒、章節照過，獎勵比收兵少但不是零（D54）', () => {
-      const meritOfState = (x: Session): number =>
-        x.current.currencies.merit.martial + x.current.currencies.merit.civil;
+      // ★ 戰役 banked 的是【經驗】不是功績（D66）。減半的是同一批獎勵，
+      // 只是幣別換了 —— 這條規則量的是「戰敗拿一半」，不是量哪一種幣。
+      const bankedOf = (x: Session): number =>
+        ATTRS.reduce((n, a) => n + x.expOf(a), 0);
 
       let checked = 0;
       for (const sd of [4242, 77, 1234, 555, 9001, 31337]) {
@@ -996,19 +1000,20 @@ export function run(): void {
         // 雙生 session：同 seed 走到同一關【收兵】，量「全額」是多少。
         const twin = toFirstCampaign(sd);
         twin.configureCampaign(loadoutFor(twin));
-        const base = meritOfState(twin);
+        const base = bankedOf(twin);
         for (let i = 0; i < cleared; i += 1) twin.engage();
         twin.withdraw();
-        const full = meritOfState(twin) - base;
+        const full = bankedOf(twin) - base;
         if (full <= 1) continue;                // 太小，減半量不出東西
 
-        const halved = meritOfState(probe) - base;
+        const halved = bankedOf(probe) - base;
         checked += 1;
         eq(probe.current.ending, null);
         ok(probe.current.progress.chaptersPassed > 0, '戰敗的章節沒有推進');
         ok(halved > 0, `戰敗把獎勵歸零了（全額 ${full}）—— 應該只是減半`);
         ok(halved < full, `戰敗拿到全額 ${halved}／${full} —— 沒有減半`);
-        ok(halved * 2 >= full - cleared * 2 && halved * 2 <= full + cleared * 2,
+        // 每關四維各一筆，減半後各自四捨五入 → 每關最多差 2，加倍後 4。
+        ok(halved * 2 >= full - cleared * 4 && halved * 2 <= full + cleared * 4,
           `減半的量不對：${halved} 對全額 ${full}（清 ${cleared} 關）`);
       }
       ok(checked > 0, '沒有任何 seed 走到「清過關再戰敗」—— 這條規則沒被實際走到');

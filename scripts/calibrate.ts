@@ -67,6 +67,8 @@ function mk(repo: ContentRepository) {
 }
 
 interface Row { depth: number; lost: boolean; turns: number; full: number }
+/** 每一章分開記【打到第幾關】—— 平均值會把「前段碾、後段拚」抹平。 */
+const byChapter: number[][] = [[], [], [], []];
 
 const play = (w: ReturnType<typeof mk>['w'], meta: MetaState): Row[] => {
   const policy = POLICIES.find((x) => x.name === 'greedy-gain');
@@ -98,6 +100,7 @@ const play = (w: ReturnType<typeof mk>['w'], meta: MetaState): Row[] => {
           cleared += 1; here += 1;
         }
         if (here >= 7) full += 1;
+        byChapter[Math.min(3, fights - 1)]?.push(here);
         if (s.needsCampaign) s.withdraw();
         continue;
       }
@@ -135,11 +138,23 @@ console.log('');
 console.log('   k   　深度（無／3★／4★／5★）　　七關全清率（無／3★／4★／5★）');
 for (const k of KS) {
   const { defs, w } = mk(scaled(k, TROOPS_K));
-  const rows = [0, 3, 4, 5].map((st) => play(w, starMeta(st, defs)));
+  const rows: Row[][] = [];
+  const chap: number[][][] = [];
+  for (const st of [0, 3, 4, 5]) {
+    for (const b of byChapter) b.length = 0;
+    rows.push(play(w, starMeta(st, defs)));
+    chap.push(byChapter.map((b) => [...b]));
+  }
   console.log(
     `${k.toFixed(2).padStart(5)}  `
     + rows.map((r) => p(avg(r.map((x) => x.depth)))).join('')
     + '   '
     + rows.map((r) => `${(avg(r.map((x) => x.full)) * 100).toFixed(0).padStart(5)}%`).join(''),
   );
+  for (const [i, st] of [0, 3, 4, 5].entries()) {
+    console.log(
+      `        ${st === 0 ? '無星' : `${st}★  `} 每章打到　`
+      + (chap[i] ?? []).map((b, c) => `第${c + 1}章 ${avg(b).toFixed(1)}關`).join('　'),
+    );
+  }
 }
