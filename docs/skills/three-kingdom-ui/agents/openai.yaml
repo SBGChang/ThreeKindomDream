@@ -1,0 +1,4 @@
+interface:
+  display_name: "三國夢 UI 設計"
+  short_description: "依三國夢已確認的 Q 版美術偏好，設計與驗收遊戲介面及短篇演出"
+  default_prompt: "使用 $three-kingdom-ui 檢視這個頁面，依既有美術偏好完成 UI 改版與驗收。"
