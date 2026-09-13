@@ -1,0 +1,16 @@
+.infantry-sprite{width:88px;height:88px;background-size:800% 100%;background-repeat:no-repeat;animation:infantry-frames .88s steps(8) infinite}
+.clip-death{animation:infantry-death .833333s steps(7) forwards}
+@keyframes infantry-frames{to{background-position:-704px 0}}
+@keyframes infantry-death{to{background-position:100% 0}}
+.journey-enter :is(.army-host,.host-general) .infantry-sprite,.journey-march :is(.army-host,.host-general) .infantry-sprite,.journey-retreat :is(.army-host,.host-general) .infantry-sprite{background-image:var(--run-sprite)!important;animation:infantry-frames .65s steps(8) infinite!important}
+.journey-cheer :is(.army-host,.host-general) .infantry-sprite{background-image:var(--cheer-sprite)!important;animation:infantry-frames 1.6s steps(8) infinite!important}
+.skill-cutin{position:absolute;inset:0;z-index:5;background:#020608db;pointer-events:none;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.cutin-art{position:absolute;left:260px;bottom:120px;width:410px;height:480px;filter:drop-shadow(0 0 24px #bd945d66);animation:cutin-slide .3s ease-out both}
+.cutin-art .character-halfbody{width:100%;height:100%;object-fit:contain}
+.cutin-copy{position:absolute;left:570px;right:90px;top:255px;padding:25px 35px;background:linear-gradient(90deg,#171715ef,transparent);border-block:1px solid #c0a168;animation:cutin-slide .35s ease-out both}
+.cutin-copy span{display:block;font:25px serif;color:#e6d7b6;letter-spacing:.2em}.cutin-copy strong{display:block;font:bold 62px serif;letter-spacing:.12em;color:#ffe6ae;text-shadow:0 3px 0 #4b2915,0 0 30px #d49a4866}.cutin-copy b{display:block;font:26px serif;letter-spacing:.6em;color:#ffc781;margin-top:12px}
+@keyframes cutin-slide{from{opacity:0;transform:translateX(-50px)}to{opacity:1;transform:none}}
+.asset-review{max-width:1250px;margin:auto;padding:24px;color:#e5dac3;background:#111a20;min-height:100vh;font-family:system-ui}.asset-review h1{font-size:26px}.asset-review p{color:#a8b6bc}.asset-review button{margin:4px}.asset-review .selected{border-color:#e3b66b;color:#e3b66b}.asset-viewport{height:500px;border:1px solid #53636b;border-radius:8px;overflow:hidden}.asset-viewport canvas{width:100%;height:100%;display:block}.asset-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px}.asset-grid img{width:100%;background:#1c2831}.asset-grid figure{margin:0}.asset-review a{color:#efc780}.asset-review .battle-demo{position:relative;width:1280px;height:666px;transform-origin:top left}.asset-review .demo-shell{overflow:auto}.asset-review figcaption{padding:8px}
+@media(prefers-reduced-motion:reduce){.infantry-sprite,.cutin-art,.cutin-copy{animation:none!important}}
+.asset-review{height:100vh;overflow:auto;min-height:0}
+.battle-paused .cutin-art,.battle-paused .cutin-copy{animation:none;opacity:1;transform:none}

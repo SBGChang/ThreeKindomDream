@@ -15,6 +15,7 @@ import { careerService } from '../modules/career.js';
 import * as ability from '../modules/ability.js';
 import * as campaign from '../modules/campaign.js';
 import * as growth from '../modules/growth.js';
+import * as learning from '../modules/learning.js';
 import type { RunContext as RC } from '../contracts/core/context.js';
 import * as commission from '../modules/commission.js';
 import { createRunState, rollStartAttrs } from '../modules/dream-entry.js';
@@ -55,6 +56,15 @@ export class Session {
   }
 
   get current(): RunState { return this.state; }
+  static restore(w: Wiring, state: RunState): Session { return new Session(w, state); }
+  learningOffers(): readonly learning.LearningOffer[] { return learning.offers(this.ctx, this.w.fx); }
+  get learningExp(): number { return learning.balance(this.ctx); }
+  abilityLevel(id: SkillId | TraitId): number { return ability.levelOf(id, this.ctx); }
+  upgradeAbility(id: SkillId | TraitId): boolean {
+    const result = learning.upgrade(id, this.ctx, this.w.fx);
+    if (result.ok) this.state = result.state;
+    return result.ok;
+  }
   get ctx(): RunContext { return { state: this.state, defs: this.w.defs }; }
   get isOver(): boolean { return this.state.ending !== null; }
   get needsFactionChoice(): boolean { return this.state.progress.pendingFactionChoice; }
@@ -184,11 +194,14 @@ export class Session {
     if (!turn.canAdvance(this.ctx)) {
       throw new Error('本回合尚未完成（未投入固定事件，或還有待處理事件）');
     }
-    this.stepTurn();
-    if (this.state.progress.pendingCampaign) {
+    if (this.state.progress.turnInChapter >= turn.currentChapter(this.ctx).length) {
+      this.state = { ...this.state,
+        turn: { ...this.state.turn, selected: null, training: null, pending: [], resolved: [] },
+        progress: { ...this.state.progress, pendingCampaign: true } };
       // 章末不再進入判定，而是開一場戰役（15 → ㉝）。
       this.mutate((tc) => campaign.begin(tc.state.progress.chapterId, tc, this.w.fx));
     } else {
+      this.stepTurn();
       this.refreshSlots();
     }
   }
@@ -218,6 +231,7 @@ export class Session {
 
   /** 七關的全貌：獎勵曲線、關底敵將、唯一掉落、走到哪了。 */
   stageRows(): readonly campaign.StageRow[] { return campaign.stageRows(this.ctx); }
+  previousStage(): campaign.StagePreview | null { return campaign.nextStagePreview(this.ctx, (this.state.campaign?.clearedStages ?? 0) - 1); }
   nextStage(): campaign.StagePreview | null { return campaign.nextStagePreview(this.ctx); }
   eligibleCommanders(): readonly NotableId[] { return campaign.eligibleCommanders(this.ctx); }
 
@@ -231,7 +245,15 @@ export class Session {
   }
 
   configureCampaign(loadout: BattleLoadout): void {
-    this.mutate((tc) => campaign.configure(loadout, tc));
+    if (this.state.campaign?.phase !== 'configuring') throw new Error('戰役已開打，配置已凍結');
+    // Learning at preparation may change troop/supply limits. Snapshot only on departure.
+    this.mutate((tc) => campaign.configure(loadout, {
+      ...tc, state: campaign.begin(tc.state.progress.chapterId, tc, this.w.fx),
+    }));
+  }
+  rememberCampaign(loadout: BattleLoadout): void {
+    if (this.state.campaign?.phase !== 'configuring') return;
+    this.state = { ...this.state, campaign: { ...this.state.campaign, loadout } };
   }
 
   /**
@@ -324,7 +346,7 @@ export class Session {
       else if (r.kind === 'affinity' && r.notableId !== null) {
         s = roster.addAffinity(r.notableId, r.amount, at());
       } else if (r.kind === 'exp') {
-        s = growth.grantExp(r.attr, r.amount, at());
+        s = growth.grantExp(r.attr, r.amount, at(), this.w.fx);
       } else if (r.kind === 'unlock') {
         s = growth.grantUnlock(r.trait, r.skill, at());
       } else if (r.kind === 'item') {
@@ -477,3 +499,4 @@ export class Session {
  * 戰鬥演出需要 `engage()` 的回傳型別，這一行就是那道門。
  */
 export type { StageOutcome } from '../modules/campaign.js';
+export type { LearningOffer } from '../modules/learning.js';

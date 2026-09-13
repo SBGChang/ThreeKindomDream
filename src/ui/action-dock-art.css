@@ -1,0 +1,64 @@
+/* Painted medallion atlas: leadership / martial / study / governance.
+   Text, experience, companions and signals remain live UI elements. */
+.game-stage .command-token {
+  isolation: isolate;
+  grid-template-columns: 76px 1fr auto;
+  border-radius: 10px;
+  background: #421b16;
+  box-shadow: 0 4px 0 #20100d, 0 7px 12px #0008;
+}
+.game-stage .command-token::before {
+  inset: 0;
+  width: auto;
+  height: auto;
+  border: 20px solid transparent;
+  border-image: url('../../public/art/ui/ui-hud-command-v1.png') 160 fill / 20px / 0 stretch;
+  background: none;
+  box-shadow: none;
+  opacity: 1;
+  z-index: -1;
+  pointer-events: none;
+}
+.game-stage .command-token::after {
+  content: '';
+  position: absolute;
+  top: 7px;
+  left: 27px;
+  right: 27px;
+  height: 2px;
+  background: var(--quality);
+  box-shadow: 0 0 6px var(--quality);
+  pointer-events: none;
+}
+.game-stage .command-token:hover:not(:disabled),
+.game-stage .command-token:focus-visible {
+  background: #421b16;
+  box-shadow: 0 5px 0 #20100d, 0 8px 16px #0008,
+    0 0 14px color-mix(in srgb, var(--quality) 45%, transparent);
+}
+.game-stage .command-token:focus-visible {
+  outline: 2px solid #ffe4aa;
+  outline-offset: 4px;
+}
+.command-token .action-art {
+  display: block;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background-image: url('../../public/art/ui/ui-action-icons-v1.png');
+  background-repeat: no-repeat;
+  background-size: 200% 200%;
+  filter: drop-shadow(0 3px 2px #160b09aa);
+}
+.action-art-lead { background-position: 0 0; }
+.action-art-war { background-position: 100% 0; }
+.action-art-int { background-position: 0 100%; }
+.action-art-pol { background-position: 100% 100%; }
+.command-token .command-name {
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #ffebbf;
+  text-shadow: 1px 2px 0 #28120e;
+}
+.command-token .command-solo { color: #cdb38a; }

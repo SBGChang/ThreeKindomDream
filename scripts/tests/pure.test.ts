@@ -1,4 +1,6 @@
 // 純函式的不變量：結算順序、權重變換、成功率封閉式、RNG 決定性。
+import { soldierScale, soldierShares, replayFrame } from '../../src/app/battle-presentation.js';
+import type { BattleLogEntry } from '../../src/contracts/core/state.js';
 import { seed as mkSeed, targetId } from '../../src/contracts/core/ids.js';
 import { createRng, emptyCursors } from '../../src/kernel/rng.js';
 import { checkRuleOf, successRate } from '../../src/modules/check.js';
@@ -8,6 +10,34 @@ import { describe, eq, it, near, ok, throws } from '../lib/tinytest.js';
 import { defs, newSession } from './harness.js';
 
 export function run(): void {
+  describe('battle presentation · 共同比例與命中時序', () => {
+    it('雙方使用同一比例，小軍隊不會被各自正規化成滿編', () => {
+      const scale = soldierScale(240, 960);
+      eq(scale, 10);
+      eq(soldierShares(240, scale).length, 24);
+      eq(soldierShares(960, scale).length, 96);
+      eq(soldierShares(0, scale).length, 0);
+      near(soldierShares(237, scale).reduce((a,b)=>a+b,0)*scale, 237, 1e-9);
+    });
+    it('最大兵量決定整關比例，治療不會重設每個兵影的代表兵量', () => {
+      const scale=soldierScale(1000,340);
+      ok(soldierShares(1000,scale).length<=96,'最大編制不可超過96兵影');
+      ok(soldierShares(100,scale).length<soldierShares(500,scale).length,'治療後應補回兵影');
+      near(soldierShares(500,scale).reduce((a,b)=>a+b,0)*scale,500,1e-9);
+    });
+    it('準備階段保留舊兵量，命中後讀取戰報；跳過停在最後一筆', () => {
+      const log: BattleLogEntry[]=[
+        {turn:1,actor:'host',actorKey:null,skillKey:null,kind:'physical',amount:31,why:[],trace:[],troopsAfter:100,enemyAfter:169,supplyAfter:50},
+        {turn:1,actor:'enemy',actorKey:null,skillKey:null,kind:null,amount:20,why:[],trace:[],troopsAfter:80,enemyAfter:169,supplyAfter:50},
+        {turn:2,actor:'commander',actorKey:null,skillKey:null,kind:'heal',amount:10,why:[],trace:[],troopsAfter:90,enemyAfter:169,supplyAfter:40},
+      ];
+      eq(replayFrame(log,0,false,100,200,50).current.enemy,200);
+      eq(replayFrame(log,0,true,100,200,50).current.enemy,169);
+      eq(replayFrame(log,1,true,100,200,50).hostDelta,-20);
+      eq(replayFrame(log,2,true,100,200,50).current,{troops:90,enemy:169,supply:40});
+      eq(replayFrame(log,2,true,100,200,50).hostDelta,10);
+    });
+  });
   describe('effect · 結算順序（01 §4）', () => {
     it('base 加總後再乘', () => {
       eq(applyResolveOrder(100, [

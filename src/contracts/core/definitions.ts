@@ -767,6 +767,13 @@ export interface AttrCostBand {
   readonly costPerPoint: number;
 }
 export interface GrowthRuleDef extends DefHeader {
+  readonly learning: {
+    readonly skillCosts: readonly number[];
+    readonly traitCosts: readonly number[];
+    readonly requirements: readonly number[];
+    readonly power: readonly number[];
+    readonly tierCost: Readonly<Record<AbilityTier, number>>;
+  };
   readonly kind: 'growthRule';
   /** 依 min 遞增、無洞無重疊、覆蓋 0..attrMax。由載入期驗證強制。 */
   readonly bands: readonly AttrCostBand[];

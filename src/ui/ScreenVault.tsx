@@ -1,3 +1,4 @@
+import { ArtControl } from './ArtControl.js';
 import type { Session } from '../app/session.js';
 import { defs, t } from '../app/bootstrap.js';
 import { Hud } from './Hud.js';
@@ -10,12 +11,12 @@ interface Props {
 /**
  * 府庫 —— **這一輪**手上有什麼。
  *
- * 與天工鑒（跨輪的圖鑑）分開是刻意的：
+ * 與天工閣（跨輪的圖鑑）分開是刻意的：
  *   府庫  這一輪拿到了什麼、它現在給你什麼加成
- *   天工鑒 這件東西一共有幾階、你解放到第幾階
+ *   天工閣 這件東西一共有幾階、你解放到第幾階
  *
  * 中間那條線是【重複獲得】：第二次拿到同一件才產碎片，
- * 而碎片是天工鑒那一側的貨幣（23 §7）。所以「×2」不是贅字，
+ * 而碎片是天工閣那一側的貨幣（23 §7）。所以「×2」不是贅字，
  * 它是玩家看得到的唯一一個「這一輪替下一輪存了什麼」的訊號。
  */
 export function ScreenVault({ s, onBack }: Props): React.ReactElement {
@@ -27,7 +28,7 @@ export function ScreenVault({ s, onBack }: Props): React.ReactElement {
       <h1>府庫</h1>
       <p className="sub">
         這一輪手上的東西。<b>第二次拿到同一件才產碎片</b> ——
-        碎片帶回天工鑒換階，那是它唯一的跨輪出口。
+        碎片帶回天工閣換階，那是它唯一的跨輪出口。
       </p>
       <Hud s={s} />
 
@@ -61,7 +62,7 @@ export function ScreenVault({ s, onBack }: Props): React.ReactElement {
           })}
         </div>
       )}
-      <button style={{ marginTop: 16 }} onClick={onBack}>回到回合</button>
+      <ArtControl kind="back" label="返回行旅" onClick={onBack}/>
     </>
   );
 }

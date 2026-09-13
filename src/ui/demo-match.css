@@ -1,0 +1,146 @@
+
+/* Per-component painted assets matched to approved demo. Coordinates are atlas-normalized. */
+:root{--demo-stat:url('../../public/art/ui/demo-match/stat-rows.png');--demo-person:url('../../public/art/ui/demo-match/participant-card.png');--demo-career:url('../../public/art/ui/demo-match/careers.png');--demo-footer:url('../../public/art/ui/demo-match/footer.png');--cards-art:url('../../public/art/ui/demo-match/actions.png')}
+.stage-content:has(>.run-screen){bottom:88px}
+.run-screen>.player-panel{width:300px;height:391px;left:12px;padding:0;border-width:14px;border-image-width:14px}
+.run-screen>.participants{width:300px;right:12px;padding:0;border-width:14px;border-image-width:14px}
+.run-screen .player-panel-title,.participants h2{height:46px;font-size:27px;border-width:7px;border-image-width:7px;line-height:30px}
+.run-screen .stat-grid{gap:3px;margin:6px 0}
+.run-screen .stat-cell{height:49px;padding:0;border:0!important;background-image:var(--demo-stat)!important;background-size:100% 400%!important;background-repeat:no-repeat!important}
+.run-screen .stat-cell.attr-lead{background-position:0 0}.run-screen .stat-cell.attr-war{background-position:0 33.3333%}.run-screen .stat-cell.attr-int{background-position:0 66.6667%}.run-screen .stat-cell.attr-pol{background-position:0 100%}
+.run-screen .stat-top{height:100%;position:relative;display:block}
+.run-screen .painted-stat-icon{display:none}
+.run-screen .stat-glyph{position:absolute;left:16%;top:8px;font-family:'DFKai-SB',serif;font-size:28px;color:#fff0a6;text-shadow:2px 2px #231207,-1px -1px #231207;line-height:30px}
+.run-screen .stat-top strong{position:absolute;left:67%;top:12px;width:12%;text-align:center;font:900 23px Arial,sans-serif;color:#fff9e4;line-height:26px;text-shadow:2px 2px #0d0c09,-1px -1px #0d0c09;z-index:2}
+.run-screen .grade-medal{display:none}
+.run-screen .stat-preview{position:absolute;right:3%;top:12px;min-width:0;font:900 23px Arial,sans-serif;color:#fff09e;text-shadow:2px 2px #261407,-1px -1px #261407;line-height:26px}
+.run-screen .stat-track{left:30%;top:15px;bottom:auto;width:35%;height:20px;margin:0;padding:2px;border:2px solid #090a08;border-radius:6px;background:linear-gradient(#10100f,#39392f);box-shadow:inset 0 3px 3px #000,0 1px 1px #d6b45e}
+.run-screen .stat-track i{height:100%;display:block;border-radius:3px;background:linear-gradient(#fff6b4 0%,#ffd65f 35%,#e9a331 100%);box-shadow:inset 0 2px #fff7c588}
+.run-screen .attr-war .stat-track i{background:linear-gradient(#ffc0a6,#fa6550 40%,#cf3929)}
+.run-screen .attr-int .stat-track i{background:linear-gradient(#b6f4ff,#52cafa 40%,#239cce)}
+.run-screen .attr-pol .stat-track i{background:linear-gradient(#d6ffa2,#91e95c 40%,#4cbd35)}
+.run-screen .career-row{gap:5px;padding:0}
+.run-screen .career-meter{position:relative;height:48px;padding:0;border:0;background:var(--demo-career) 0 0 / 100% 200%;box-shadow:none}
+.run-screen .career-meter:nth-child(2){background-position:0 100%}
+.run-screen .career-icon,.run-screen .career-track{display:none}
+.run-screen .career-detail{position:absolute;left:24%;top:11px;right:15%;display:block}
+.run-screen .career-name{display:flex;gap:13px;align-items:center;white-space:nowrap;font:900 23px 'DFKai-SB',serif;color:#241207;line-height:27px}
+.career-line-label{display:none}.run-screen .career-line-label{display:inline}
+.run-screen .career-list-button{position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;background:none!important;box-shadow:none!important;color:transparent}
+.run-screen .career-list-button svg{display:none}
+.run-screen .career-list-button:hover{outline:2px solid #ffd987;outline-offset:-3px}
+.game-stage .participant-card{height:103px;min-height:103px;border:0;background:var(--demo-person) center / 100% 100%;padding:0;box-shadow:none}
+.participant-list{gap:6px;padding:0;max-height:321px;margin-top:6px}
+.participant-card b{position:absolute;left:9%;top:17%;font-size:29px;line-height:32px}
+.participant-card .character-face{width:122px;height:113px;right:2px;top:0;z-index:1;mask-image:linear-gradient(to right,transparent,#000 19%);-webkit-mask-image:linear-gradient(to right,transparent,#000 19%)}
+.participant-card:after{display:none}
+.participant-card .relationship-icon{position:absolute;left:4%;bottom:12%;width:40px;height:32px;z-index:3}
+.ui-symbol{width:100%;height:100%;display:block;object-fit:contain}
+.stage-stranger{filter:grayscale(.65) brightness(.78)}
+.stage-sworn{filter:hue-rotate(36deg) drop-shadow(0 0 2px #cff)}
+.participant-card .relationship-fill{position:absolute;left:19.6%;top:73%;width:38.5%;height:10%;display:block;z-index:3;overflow:hidden;border-radius:6px;background:none;box-shadow:inset 0 2px 2px #050704}
+.relationship-fill i{height:100%;display:block;border-radius:4px;background:linear-gradient(#e4ffb0,#a6f158 38%,#70c731 90%);box-shadow:inset 0 2px #ecffc0cc}
+.participant-signals{height:41px;display:flex;justify-content:center;gap:31px;margin:4px 0 0}
+.participant-signals .signal-icon{display:block;width:43px;height:40px;flex:none;padding:0;border:0;border-image:none;background:none;filter:none}
+.participant-signals .unavailable{filter:grayscale(1) brightness(.65);opacity:.5}
+.participant-signals .available{filter:drop-shadow(0 0 3px #ffcd65)}
+.game-stage .command-token{height:210px;background-size:200% 200%!important}
+.command-token .command-name{top:78%;height:18%;font-size:32px;line-height:36px}
+.command-wrap.selected:after{display:none}
+.command-token .selected-arrow{position:absolute;left:calc(50% - 23px);top:-37px;width:46px;height:46px;filter:drop-shadow(0 0 5px #ffd133);z-index:2}
+.run-screen .command-dock{height:210px;bottom:16px;left:192px;right:192px}
+.run-screen .command-tooltip{display:none}
+.run-screen .scene-notice{bottom:244px;left:320px;right:185px;max-height:24px;font-size:10px;padding:4px 8px}
+.run-screen .journal-toggle{bottom:244px}
+.game-stage:has(.run-screen)>.game-bottom{height:88px;border:0;border-image:none;background:var(--demo-footer) 50% 46% / 100% 400% no-repeat;padding:0;display:block}
+.game-stage:has(.run-screen)>.game-bottom .run-bottom-info{position:absolute;inset:0;display:block;pointer-events:none}
+.run-bottom-info>b{position:absolute;left:7.2%;top:27%;font-size:30px;line-height:34px;color:#ffe08a;text-shadow:2px 2px #2a1308,-1px -1px #2a1308}
+.run-bottom-info>span{position:absolute;left:21%;top:27%;font:900 21px 'DFKai-SB',serif;color:#ffeac0;white-space:nowrap}
+.run-bottom-info>span b{font:900 35px Georgia,serif;color:#ffdc87}
+.run-bottom-info>strong{position:absolute;left:39%;width:21%;top:23%;height:51%;padding:0;border:0;border-image:none;background:none;display:flex;align-items:center;justify-content:space-between}
+.run-bottom-info>strong>span{font:900 22px 'DFKai-SB',serif;color:#ffe7a4}
+.run-bottom-info>strong>b{font:900 39px Georgia,serif;min-width:76px;text-align:center;color:#ffe3a0;text-shadow:2px 2px #1b1009}
+.game-stage:has(.run-screen)>.game-bottom nav{position:absolute;inset:0;margin:0;display:block;pointer-events:none}
+.game-stage:has(.run-screen) .game-bottom button{position:absolute;top:16%;height:69%;min-width:0;width:10.8%;padding:0 1% 0 4%;border:0;border-image:none;background:transparent!important;color:#ffebae;font:900 24px 'DFKai-SB',serif;line-height:28px;text-shadow:2px 2px #23150b;pointer-events:auto;box-shadow:none;white-space:nowrap}
+.game-stage:has(.run-screen) .game-bottom button:before{display:none}
+.game-stage:has(.run-screen) .game-bottom nav button:nth-child(2){left:63.7%}
+.game-stage:has(.run-screen) .game-bottom nav button:nth-child(3){left:75.5%}
+.game-stage:has(.run-screen) .game-bottom .bottom-settings{left:87.1%;width:11.9%}
+.game-stage:has(.run-screen) .game-bottom button:hover,.game-stage:has(.run-screen) .game-bottom button:focus-visible{outline:2px solid #ffe08a;outline-offset:-3px;border-radius:8px;background:#ffe8a51a!important}
+
+.run-screen .career-row>.career-meter{flex:0 0 48px;min-height:48px;width:100%;display:block}
+.game-stage .run-screen button.career-list-button{width:100%;height:100%;min-width:0;border:0;inset:0;border-radius:0}
+.run-screen .career-name{justify-content:flex-start;gap:15px}.run-screen .career-name b{font:900 23px 'DFKai-SB',serif;margin:0}
+.run-screen .stat-top strong{left:65%}.run-screen .stat-preview{right:2%;font-size:21px}
+.run-bottom-info>b{left:9.1%;font-size:27px}
+
+/* Compact icon actions leave the full right column to participants. */
+.run-screen .command-dock{left:24px;right:auto;width:552px;height:112px;bottom:20px}
+.run-screen .command-tokens{gap:16px}
+.game-stage .command-token{height:112px;background-size:200% 266.667%!important;border-bottom:3px solid #d5a344!important;border-radius:5px}
+.game-stage .command-token.attr-lead{background-position:0 0}
+.game-stage .command-token.attr-war{background-position:100% 0}
+.game-stage .command-token.attr-int{background-position:0 80%}
+.game-stage .command-token.attr-pol{background-position:100% 80%}
+.command-token .selected-arrow{width:32px;height:32px;top:-27px;left:calc(50% - 16px)}
+.run-screen>.participants{--person-row:min(103px,calc(526px / var(--participant-count) - 6px));height:auto;max-height:none}
+.run-screen .participant-list{display:grid;grid-auto-rows:var(--person-row);height:auto;max-height:none;overflow:visible;gap:6px;margin-top:5px;touch-action:auto}
+.run-screen .participant-signals{margin:3px 0;height:39px}
+.game-stage .participant-card{height:var(--person-row);min-height:0;background-image:url('../../public/art/ui/demo-match/participant-card-short.png')}
+.participant-card .character-face{right:2%;top:1%;height:98%;width:44%}
+.participant-card b{font-size:min(29px,calc(var(--person-row) * .28));line-height:1.15}
+.participant-card .relationship-icon{width:14%;height:31%;bottom:12%}
+.participant-card .relationship-fill{left:19.6%;width:25%;top:73%;height:10%}
+.run-screen .scene-notice{left:24px;right:340px;bottom:163px}
+.run-screen .journal-toggle{right:340px;bottom:197px}
+
+.game-stage .command-token{background-size:200% 300%!important}
+.game-stage .command-token.attr-int{background-position:0 75%}.game-stage .command-token.attr-pol{background-position:100% 75%}
+.run-bottom-info>b{width:11.5%;white-space:normal;top:22%;font-size:23px;line-height:25px}
+
+/* Context panel enters and leaves from the right; absent signals have no placeholder. */
+.run-screen>.participants{transition:transform 260ms cubic-bezier(.2,.75,.25,1),opacity 200ms;will-change:transform}
+.run-screen>.participants.is-hidden{transform:translateX(calc(100% + 30px));opacity:0;pointer-events:none;visibility:hidden;transition:transform 260ms cubic-bezier(.4,0,.6,1),opacity 240ms,visibility 0s 260ms}
+.run-screen>.participants.is-visible{transform:translateX(0);opacity:1;visibility:visible}
+.run-screen .participant-signals{height:49px;margin:0;gap:22px;border:7px solid transparent;border-image:var(--paper-art) 150 fill / 7px;align-items:center}
+.participant-signals .signal-icon{height:39px;width:42px}
+.run-screen .participant-list:first-child{margin-top:0}
+.run-screen .scene-caption{left:calc(50% - 180px);right:auto;top:36px;width:360px;height:75px;display:flex;align-items:center;justify-content:center;gap:20px;padding:10px 22px;border:14px solid transparent;border-image:var(--paper-art) 150 fill / 14px;text-shadow:none}
+.run-screen .scene-caption h1{font:900 34px 'DFKai-SB',serif;color:#291509;text-shadow:none;margin:0;line-height:38px}
+.run-screen .scene-caption .action-subtitle{display:block;font:900 21px 'DFKai-SB',serif;color:#7b321f;letter-spacing:3px;padding-left:17px;border-left:2px solid #b78848;line-height:30px}
+.run-screen .journal-toggle{top:56px;left:253px;right:auto;bottom:auto;width:43px;height:38px;padding:2px;border:0;border-image:none;background:none;box-shadow:none;z-index:7}
+.journal-art-icon{display:block;width:100%;height:100%;background:var(--icons-art) 0 0 / 400% 200%;mix-blend-mode:multiply}
+.run-screen .player-panel-title{justify-content:flex-start;padding-left:30px;padding-right:48px}
+.run-screen .journal-toggle:hover{filter:brightness(1.2);transform:translateY(-1px)}
+.run-screen .journal-toggle:focus-visible{outline:2px solid #a1531d;border-radius:5px}
+.journal-modal .journal-book{width:800px;max-height:610px;padding:20px 28px;border:24px solid transparent;border-image:var(--paper-art) 150 fill / 24px;color:#342113;box-shadow:0 18px 60px #0009}
+.journal-book header{position:relative;display:flex;align-items:center;gap:15px;border-bottom:2px solid #9b6a3e;padding:0 45px 12px 0}
+.journal-book header .journal-art-icon{width:48px;height:48px}
+.journal-book h1{font:900 32px 'DFKai-SB',serif;margin:0}
+.journal-book .panel-close{position:absolute;right:0;top:0;border:0;background:none;color:#6d361c;font-size:33px;width:38px;height:38px;padding:0}
+.journal-pages{max-height:440px;overflow:auto;margin-top:12px;line-height:1.8;font-size:16px}
+.journal-pages ol{list-style:none;margin:0;padding:0}
+.journal-pages li{padding:13px 5px;border-bottom:1px solid #b88e5a66}
+.journal-blank{padding:30px;text-align:center;color:#896b4a}
+@media(prefers-reduced-motion:reduce){.run-screen>.participants,.run-screen>.participants.is-hidden{transition:none}}
+
+.journal-pages{scrollbar-width:thin;scrollbar-color:#9b713c #e8cf9c}.journal-pages:focus-visible{outline:1px solid #a67940;outline-offset:4px}
+
+/* Atlas lives on a child so background shorthands on button states cannot reset its cell. */
+.game-stage .command-token,.game-stage .command-token:hover:not(:disabled),.game-stage .command-token:focus-visible,.game-stage .command-token:active{background:none!important;border:0!important}
+.compact-action-image{position:absolute;inset:0;display:block;pointer-events:none;background-image:url('../../public/art/ui/demo-match/actions-square.png');background-size:200% 200%;background-repeat:no-repeat;border-radius:4px;z-index:0}
+.compact-action-lead{background-position:0 0}.compact-action-war{background-position:100% 0}.compact-action-int{background-position:0 100%}.compact-action-pol{background-position:100% 100%}
+.command-token .selected-arrow{z-index:2}
+.journal-art-icon{background:url('../../public/art/ui/demo-match/journal-book.png') center / contain no-repeat;mix-blend-mode:normal}
+.game-stage .run-screen .journal-toggle,.game-stage .run-screen .journal-toggle:hover:not(:disabled){background:transparent;border:0;box-shadow:none}
+.run-bottom-info>b{left:9%;width:10.1%;height:65%;top:18%;font-size:23px;line-height:24px;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.run-bottom-info>b>span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.run-bottom-info>b>span+span{font-size:20px;line-height:22px}
+.run-screen .participant-signals{justify-content:flex-end;padding-right:8px}
+.game-stage .participant-card:hover:not(:disabled),.game-stage .participant-card:active{background:url('../../public/art/ui/demo-match/participant-card-short.png') center / 100% 100%;filter:none;transform:none;border:0;box-shadow:none}
+
+/* Expected growth is shown before choosing; earned values settle instantly. */
+.run-screen .stat-top strong.predicted-value{color:#8be8ff;text-shadow:0 0 6px #53caff88,2px 2px #0d0c09,-1px -1px #0d0c09}
+.run-screen .stat-track{overflow:hidden}
+.run-screen .stat-track .stat-ghost{position:absolute;top:2px;bottom:2px;border-radius:2px;background:linear-gradient(#efffffaa,#a7edff55 55%,#d7fbff88);box-shadow:inset 0 1px #ffffffaa,0 0 7px #b6f5ff99;pointer-events:none}
+.run-screen .stat-track i{transition:none}

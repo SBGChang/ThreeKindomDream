@@ -1,0 +1,91 @@
+/* Approved practice-menu composition; fixed 1280×800 stage scales as a unit. */
+.game-stage:has(.run-screen) > .game-top{display:none}
+.stage-content:has(>.run-screen){top:0;bottom:64px}
+.run-screen>.player-panel{top:46px;left:18px;right:auto;width:272px;height:394px;display:block;padding:15px 13px}
+.run-screen .player-panel-title{display:flex;height:40px;padding:0 0 8px;border:0;font-size:24px;font-weight:900}
+.run-screen .player-panel-title>span:first-child{display:block}
+.run-screen .player-panel-title .learning-total{display:none}
+.run-screen .stat-grid{display:flex;flex-direction:column;padding:0;gap:5px}
+.run-screen .stat-cell{width:100%;padding:5px 6px;border-right:0!important;background:#1b100c66;border-radius:5px}
+.run-screen .stat-top{display:flex;gap:9px;margin:0}
+.run-screen .stat-top strong{font-size:25px}
+.run-screen .stat-glyph{width:27px;height:29px;font-size:22px}
+.run-screen .grade-medal{margin-left:auto;width:24px;height:28px}
+.run-screen .stat-track{height:5px;margin-top:5px;width:100%}
+.stat-preview{font:bold 19px Georgia,serif;color:#ffdf78;min-width:44px;text-align:right}
+.stat-preview small{display:block;font:9px system-ui;color:#ccb98d}
+.run-screen .career-row{display:flex;flex-direction:column;padding:10px 2px 0;gap:8px}
+.run-screen .career-detail{gap:7px}
+.run-screen .career-name{min-width:58px}
+.run-screen .career-icon{width:28px;height:28px}
+.run-screen .scene-caption{top:28px;left:310px;right:300px;text-align:center;text-shadow:0 2px 3px #27150d;z-index:3}
+.run-screen .scene-caption>span{font-size:11px;letter-spacing:6px;color:#ffedc3}
+.run-screen .scene-caption h1{font-size:30px;margin:5px 0;color:#fff0c8;font-weight:900}
+.run-screen .scene-caption p{font-size:13px;margin:7px}
+.training-stage{position:absolute;top:100px;left:282px;right:280px;height:466px;pointer-events:none}
+.training-ink{position:absolute;inset:90px 25px 50px;background:linear-gradient(140deg,#652723aa,#381b1877);clip-path:polygon(8% 14%,86% 0,95% 22%,100% 68%,24% 96%,0 79%);transform:rotate(-7deg)}
+.training-hero{position:absolute;left:12px;top:0;width:330px;height:475px;z-index:2}
+.training-partner{position:absolute;left:274px;top:65px;width:280px;height:402px;z-index:1}
+.training-stage .character-halfbody,.training-stage .caocao-rig{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 7px 3px #24110b88)}
+.participants{position:absolute;top:46px;right:18px;width:264px;padding:17px 13px 14px;border:3px solid #98713f;border-radius:11px;background:#421b16;box-shadow:0 4px 0 #20100c;isolation:isolate;z-index:4}
+.participants:before{content:'';position:absolute;inset:0;border:19px solid transparent;border-image:url('../../public/art/ui/ui-hud-command-v1.png') 160 fill / 19px;z-index:-1;pointer-events:none}
+.participants h2{margin:0;text-align:center;font-size:25px;color:#ffe5af;font-weight:900}
+.participant-action{margin:4px 0 9px;text-align:center;font-size:11px;color:#e5c78f;letter-spacing:3px}
+.participant-list{display:flex;flex-direction:column;gap:8px;max-height:284px;overflow:auto;padding:1px}
+.game-stage .participant-card{position:relative;display:block;text-align:left;width:100%;height:78px;padding:8px 92px 7px 10px;border:2px solid #b68d53;border-radius:5px;background:linear-gradient(110deg,#fff0ce,#d9bb85);color:#342015;overflow:hidden;box-shadow:0 2px 0 #1c0d09}
+.participant-card .character-face{position:absolute;right:0;top:0;width:83px;height:83px;object-fit:contain}
+.participant-card b{display:block;font:900 23px 'PMingLiU',serif}
+.participant-card>span{display:block;font-size:10px;color:#775438}
+.participant-card meter{width:82px;height:12px;vertical-align:middle}
+.participant-card small{font-size:10px;margin-left:4px}
+.participant-empty{margin:16px 0;padding:32px 0;text-align:center;color:#d7bb91;background:#24140e77;border-radius:7px}
+.participant-signals{display:flex;gap:8px;margin-top:12px;font-size:12px}
+.participant-signals span{flex:1;text-align:center;padding:7px 0;border:1px solid #775634;color:#baa487;border-radius:5px;background:#291b15}
+.participant-signals .available{border-color:#f0c470;background:#8e4328;color:#fff2cc;font-weight:800}
+.run-screen .command-dock{left:185px;right:185px;bottom:11px;height:228px;background:none;padding:0;border:0;z-index:6}
+.command-dock .dock-heading{margin-bottom:9px}
+.command-tokens{gap:20px}
+.game-stage .command-token{height:194px;display:grid;grid-template-columns:1fr auto;grid-template-rows:101px 37px 29px;padding:10px 13px;gap:0 5px;transform:rotate(-2deg)}
+.command-wrap:nth-child(even) .command-token{transform:rotate(2deg)}
+.command-token .action-art{grid-column:1/3;grid-row:1;width:99px;height:99px;justify-self:center;filter:drop-shadow(0 3px 1px #120907)}
+.command-token .command-name{grid-column:1/3;grid-row:2;font-size:26px;text-align:center;color:#fff1c9}
+.command-token .command-gain{grid-column:2;grid-row:3;font-size:23px}
+.command-token .command-gain small{display:none}
+.command-token .command-companions{grid-column:1;grid-row:3;padding:0}
+.command-token .command-companions .officer-portrait{width:28px;height:28px}
+.command-token .command-signals{right:9px;top:14px;bottom:auto}
+.command-token.attr-war{background:#6b321b}
+.command-token.attr-int{background:#18454d}
+.command-token.attr-pol{background:#24472b}
+.command-token.attr-war:before{filter:hue-rotate(12deg)}
+.command-token.attr-int:before{filter:hue-rotate(165deg)}
+.command-token.attr-pol:before{filter:hue-rotate(90deg)}
+.command-wrap.selected .command-token,.game-stage .command-token:hover:not(:disabled),.game-stage .command-token:focus-visible{transform:translateY(-10px) rotate(0);outline:3px solid var(--quality);outline-offset:2px;filter:brightness(1.13)}
+.command-wrap.selected:after{content:'▼';position:absolute;top:-23px;left:calc(50% - 12px);font-size:24px;color:#ffe485;text-shadow:0 2px #75390e;pointer-events:none}
+.command-wrap .command-tooltip{bottom:calc(100% + 28px)}
+.run-screen .scene-notice{left:18px;right:170px;bottom:253px;font-size:11px;padding:8px 12px;max-height:35px;overflow:hidden;background:#271a12b3}
+.run-screen .journal-toggle{bottom:251px;right:18px;font-size:11px;padding:7px 12px}
+.game-stage:has(.run-screen)>.game-bottom{height:64px;gap:15px;padding:8px 22px;justify-content:space-between;background:linear-gradient(#56291d,#2f1b15);border-top:3px solid #bc9658}
+.run-bottom-info{display:flex;align-items:center;gap:22px;color:#ffedbb;white-space:nowrap}
+.run-bottom-info>b{font:900 24px 'PMingLiU',serif}
+.run-bottom-info>span{font-size:16px}
+.run-bottom-info>strong{font-size:19px;color:#ffe48e;margin-left:12px}
+.game-stage:has(.run-screen)>.game-bottom>span{display:none}
+.game-stage:has(.run-screen)>.game-bottom nav{margin-left:auto}
+.game-stage:has(.run-screen)>.game-bottom nav button:first-child{display:none}
+.game-stage:has(.run-screen)>.game-bottom button{font-size:16px;padding:8px 22px;min-width:85px}
+.run-screen .event-overlay{z-index:14}
+.run-screen .game-modal{z-index:35}
+.caocao-rig{display:block;width:100%;height:100%;object-fit:contain}
+.rig-review{min-height:100vh;padding:26px;text-align:center;background:radial-gradient(ellipse,#8a7251,#281914);color:#fff0cd;overflow:auto}
+body:has(.rig-review){overflow:auto}
+.rig-review h1{font-size:28px;margin:0 0 8px}
+.rig-review p{margin:6px;font-size:14px}
+.rig-controls{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:18px}
+.rig-controls button,.rig-controls a{padding:9px 16px;border:1px solid #cfac6e;background:#542b20;color:#fff0c9;border-radius:6px}
+.rig-controls button[aria-pressed=true]{background:#b68544;color:#251b13}
+.rig-review>.caocao-rig{width:min(550px,90vw);height:auto;max-height:70vh;margin:auto}
+@media(prefers-reduced-motion:reduce){.command-token{transition:none!important}}
+
+.command-wrap.selected .command-token{outline-color:#ffe082;box-shadow:0 0 0 2px #85431e,0 0 22px #ffc74b88,0 5px 0 #24130d}
+.participants h2{padding:5px 0;border-radius:5px;background:linear-gradient(#fff0ce,#d9bb85);color:#382214;border:1px solid #c19b61}

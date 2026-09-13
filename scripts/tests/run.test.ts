@@ -10,7 +10,10 @@ import { statQuery } from '../../src/modules/stats.js';
 import { baseOf, notableSlotBonus, trainingMultiplier } from '../../src/modules/roster-query.js';
 import { progressOf, sequenceOf } from '../../src/modules/turn.js';
 import { describe, eq, it, near, ok, throws } from '../lib/tinytest.js';
-import type { Session } from '../../src/app/session.js';
+import { Session } from '../../src/app/session.js';
+import { driveRun, type RunPolicy } from '../../src/app/run-driver.js';
+import { grantUnlock } from '../../src/modules/growth.js';
+import { battleSkill } from '../../src/modules/ability.js';
 import type { NotableId } from '../../src/contracts/core/ids.js';
 import { FLAGS } from '../../src/contracts/core/effects.js';
 import type { EventReward } from '../../src/contracts/core/definitions.js';
@@ -90,6 +93,122 @@ const drive = (sd: number): string => {
 };
 
 export function run(): void {
+  describe('戰役續戰情報', () => {
+    it('回讀已勝關卡不推進戰鬥，保留正確敵軍與待決獎勵', () => {
+      const s = newSession(4242);
+      for (let i = 0; i < 8; i++) { playTurn(s); s.advance(); }
+      s.configureCampaign(loadoutFor(s));
+      eq(s.previousStage(), null);
+      const first = s.nextStage();
+      ok(first !== null, '第一關存在');
+      const out = s.engage();
+      ok(out.cleared, '測試第一關勝利');
+      const state = JSON.stringify(s.current);
+      eq(JSON.stringify(s.previousStage()), JSON.stringify(first));
+      eq(s.nextStage()?.index, 1);
+      eq(JSON.stringify(s.current), state);
+    });
+  });
+  describe('player pipeline · 自動養成與無畫面續玩', () => {
+    const policy: RunPolicy = {
+      chooseSlot: s => SLOT_INDICES.reduce((a, b) => s.previewTraining(b).expectedGain > s.previewTraining(a).expectedGain ? b : a),
+      chooseOption: (_s, offer) => offer.optionStates.findIndex(o => o.enabled),
+      spend: () => {}, chooseLoadout: loadoutFor, chooseEngage: () => false,
+    };
+    it('每章八次行動，四章共三十二次，沒有重複進入章末', () => {
+      const s = newSession(4242);
+      const chapters: Record<number, number> = {};
+      const result = driveRun(s, { ...policy, chooseSlot: s2 => {
+        const ch = s2.current.progress.chapter;
+        chapters[ch] = (chapters[ch] ?? 0) + 1;
+        return policy.chooseSlot(s2);
+      } });
+      eq(result.actions, 32);
+      eq(Object.values(chapters), [8, 8, 8, 8]);
+      eq(s.current.progress.turn, 32);
+      ok(!s.canAdvance(), '結局後不可繼續推進');
+    });
+    it('存檔在待處理事件中恢复後，策略與逐步操作得到相同結果', () => {
+      const full = newSession(4242);
+      driveRun(full, policy);
+      const partial = newSession(4242);
+      partial.selectSlot(policy.chooseSlot(partial));
+      const resumed = Session.restore(wiring, JSON.parse(JSON.stringify(partial.current)));
+      driveRun(resumed, policy);
+      eq(resumed.current, full.current);
+    });
+    it('戰前配置與開打後存檔都能經同一條策略管道續玩', () => {
+      const partial = newSession(4242);
+      for (let i = 0; i < 8; i++) { playTurn(partial, policy.chooseSlot(partial)); partial.advance(); }
+      ok(partial.needsCampaign, '八次行動後應進入整備');
+      const rows = partial.stageRows();
+      eq(rows.at(-1)?.cumulative, rows.reduce((n, row) => n + row.exp, 0));
+      ok(rows.every(row => row.exp > 0), '戰役獎勵路線不得誤讀成功績而全為零');
+      const draft = loadoutFor(partial);
+      partial.rememberCampaign(draft);
+      const saved = Session.restore(wiring, JSON.parse(JSON.stringify(partial.current)));
+      eq(saved.campaignState()?.loadout, draft);
+      partial.configureCampaign(draft);
+      const fighting = Session.restore(wiring, JSON.parse(JSON.stringify(partial.current)));
+      driveRun(saved, policy);
+      driveRun(fighting, policy);
+      eq(saved.current, fighting.current);
+    });
+    it('技能與特性重複獲得免費升級，最高 Lv5', () => {
+      const initial = newSession(3).current;
+      const skill = defs.reader('skill').all().find(x => !initial.abilities.skills.includes(x.skillId))!;
+      const trait = defs.reader('trait').all()[0]!;
+      let state = grantUnlock(trait.traitId, skill.skillId, { state: initial, defs });
+      eq(state.abilities.levels?.[String(skill.skillId)], 1);
+      ok(state.abilities.skills.includes(skill.skillId), '首次傳授即可使用');
+      for (let i = 0; i < 7; i++) state = grantUnlock(trait.traitId, skill.skillId, { state, defs });
+      eq(state.abilities.levels?.[String(skill.skillId)], 5);
+      eq(state.abilities.levels?.[String(trait.traitId)], 5);
+      eq(state.growth, { ...initial.growth, unlockedSkills: state.growth.unlockedSkills, unlockedTraits: state.growth.unlockedTraits });
+    });
+    it('升級扣獨立學習點、保留屬性經驗，且戰鬥倍率生效', () => {
+      const base = newSession(3).current;
+      const s = Session.restore(wiring, { ...base,
+        attributes: { values: { lead: 95, war: 95, int: 95, pol: 95 } },
+        growth: { ...base.growth, learningExp: 5000 } });
+      const offer = s.learningOffers().find(x => x.kind === 'skill' && x.status === 'ready')!;
+      ok(offer !== undefined, '必須有可升級技能');
+      const before = s.current;
+      const ratio = battleSkill(before.abilities.skills[0]!, { state: before, defs }).action.ratio;
+      ok(s.upgradeAbility(offer.id), '升級應成功');
+      eq(s.learningExp, 5000 - offer.cost);
+      eq(s.current.attributes, before.attributes);
+      eq(s.current.growth.exp, before.growth.exp);
+      eq(s.abilityLevel(offer.id), 2);
+      ok(battleSkill(before.abilities.skills[0]!, { state: s.current, defs }).action.ratio > ratio, '戰鬥技能未增强');
+    });
+    it('能力門檻與戰中鎖定不允許扣款', () => {
+      const base = newSession(3).current;
+      const s = Session.restore(wiring, { ...base, growth: { ...base.growth, learningExp: 5000 } });
+      const blocked = s.learningOffers().find(x => x.level > 0 && x.status === 'attribute')!;
+      ok(blocked !== undefined, '初始能力應未達 Lv2 門檻');
+      ok(!s.upgradeAbility(blocked.id), '能力不足不可升級');
+      eq(s.learningExp, 5000);
+      for (let i = 0; i < 8; i++) { playTurn(s); s.advance(); }
+      s.configureCampaign(loadoutFor(s));
+      const before = s.current;
+      ok(!s.upgradeAbility(blocked.id), '出陣後不可升級');
+      eq(s.current, before);
+    });
+    it('舊存檔或器物解鎖的能力仍可在修習堂取得 Lv1', () => {
+      const base = newSession(3).current;
+      const skill = defs.reader('skill').all().find(x => !base.abilities.skills.includes(x.skillId))!;
+      const s = Session.restore(wiring, { ...base,
+        attributes: { values: { lead: 95, war: 95, int: 95, pol: 95 } },
+        growth: { ...base.growth, unlockedSkills: [skill.skillId] } });
+      const offer = s.learningOffers().find(x => x.id === skill.skillId)!;
+      eq(offer.status, 'ready');
+      eq(offer.cost, 0);
+      ok(s.upgradeAbility(skill.skillId), '已解鎖技能必須有可用入口');
+      ok(s.current.abilities.skills.includes(skill.skillId), '取得後必須能配置出陣');
+      eq(s.abilityLevel(skill.skillId), 1);
+    });
+  });
   describe('turn · 回合座標（15 §1.1）', () => {
     const ctx = { state: newSession(3).current, defs };
     // 全部從內容推導，不寫死章節 ID —— 章節搬家（虎牢移入陣營包）時
@@ -105,8 +224,8 @@ export function run(): void {
       eq(progressOf(firstLen, null, 0, ctx).turnInChapter, firstLen);
     });
 
-    it('章末標記 pendingCampaign', () => {
-      ok(progressOf(firstLen, null, 0, ctx).pendingCampaign, '章末應標記');
+    it('章末仍有行動，完成後才進入戰役', () => {
+      ok(!progressOf(firstLen, null, 0, ctx).pendingCampaign, '第八回合應能行動');
       ok(!progressOf(firstLen - 1, null, 0, ctx).pendingCampaign, '章中不應標記');
     });
 
@@ -192,7 +311,7 @@ export function run(): void {
       if (opt === undefined) return;
       s.chooseFaction(opt.factionId);
       // 舊版讓它歸 1，於是結算的 turnsPlayed 少算了整個前段。
-      eq(s.current.progress.turn, before);
+      eq(s.current.progress.turn, before + 1);
       ok(before >= 8, `入陣營時應已走過至少一章，實得 ${before}`);
     });
 
@@ -623,12 +742,12 @@ export function run(): void {
       ok(preview.length > 0, '預覽的磨練值不該為空');
       // 磨練入的是【經驗池】，不是屬性（D32）。屬性只能經 ㉜ 花經驗買 ——
       // 舊版這裡比對 attributes，那正是「產出直接寫進屬性」那條假設的殘留。
-      const before = { ...s.current.growth.exp };
+      const before = Object.fromEntries(ATTRS.map(a => [a, s.current.growth.exp[a] + s.current.growth.spent[a]]));
       s.resolveEvent(0);
       const res = s.current.turn.resolved.at(-1);
       if (res === undefined) throw new Error('沒有結算紀錄');
       for (const g of res.practiceExp) {
-        const delta = s.current.growth.exp[g.attr] - before[g.attr];
+        const delta = s.current.growth.exp[g.attr] + s.current.growth.spent[g.attr] - before[g.attr]!;
         ok(delta >= g.amount, `${g.attr} 實際入帳 ${delta} 小於回報的 ${g.amount}`);
       }
       // failRatio ＝ 0：**成功才有產出**。舊斷言寫的是「無論成敗都該有」，
@@ -1007,7 +1126,7 @@ export function run(): void {
       // ★ 戰役 banked 的是【經驗】不是功績（D66）。減半的是同一批獎勵，
       // 只是幣別換了 —— 這條規則量的是「戰敗拿一半」，不是量哪一種幣。
       const bankedOf = (x: Session): number =>
-        ATTRS.reduce((n, a) => n + x.expOf(a), 0);
+        ATTRS.reduce((n, a) => n + x.expOf(a) + x.current.growth.spent[a], 0);
 
       let checked = 0;
       for (const sd of [4242, 77, 1234, 555, 9001, 31337]) {
@@ -1206,16 +1325,16 @@ export function run(): void {
       }
     });
 
-    it('鍛鍊產出的是經驗，不是屬性（D32）', () => {
+    it('經驗自動提升屬性，等量累積獨立學習點', () => {
       const s = newSession(4242);
       const beforeAttr = { ...s.current.attributes.values };
       playTurn(s, 0 as SlotIndex);
       const r = s.current.turn.training;
       ok(r !== null && r.expGained > 0, '固定事件沒有產出經驗');
       if (r === null) return;
-      ok(s.current.growth.exp[r.attr] > 0, '經驗池沒有增加');
-      // 屬性【一點都不該動】—— 它只能經 ㉜ 花經驗買。
-      for (const a of ATTRS) eq(s.current.attributes.values[a], beforeAttr[a]);
+      ok(s.current.attributes.values[r.attr] > beforeAttr[r.attr], '屬性未自動成長');
+      const produced = ATTRS.reduce((n, a) => n + s.current.growth.exp[a] + s.current.growth.spent[a], 0);
+      eq(s.learningExp, produced);
     });
 
     it('學習會扣款，而且重複學是拒絕不是靜默 no-op（23 §4.1）', () => {

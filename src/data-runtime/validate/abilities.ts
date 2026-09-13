@@ -49,6 +49,23 @@ const checkCost = (c: Ctx, file: string, row: Rec, id: string): void => {
  * （寫在他的 star-0 招裡），不是 def 的性質。〈號令〉是統的物理招。
  */
 export function validateAbilities(c: Ctx): void {
+  for (const row of c.rows('growthRule')) {
+    const id = c.s(row['id']);
+    const learning = row['learning'] as Rec | undefined;
+    for (const field of ['skillCosts', 'traitCosts', 'requirements', 'power']) {
+      const values = learning?.[field];
+      const valid = Array.isArray(values) && values.length === 5
+        && values.every((v, i) => typeof v === 'number' && Number.isFinite(v) && v >= 0
+          && (i === 0 || v > values[i - 1]));
+      if (!valid) c.push('rule', 'growthRule', `learning.${field}`, id, '需要五個有限、非負、嚴格遞增的等級數值');
+    }
+    const tiers = learning?.['tierCost'] as Rec | undefined;
+    for (const tier of ['common', 'fine', 'peerless']) {
+      const value = tiers?.[tier];
+      if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0)
+        c.push('rule', 'growthRule', `learning.tierCost.${tier}`, id, '能力階級費用倍率必須為有限正數');
+    }
+  }
   for (const row of c.rows('trait')) {
     const id = c.s(row['id']);
     c.text(row['nameKey'], 'trait', 'nameKey', id);

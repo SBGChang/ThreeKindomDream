@@ -96,3 +96,10 @@ export function createStatWriter(fx: EffectResolver): StatWriter {
     },
   };
 }
+
+/** Automatic experience conversion uses the same attribute owner and cap. */
+export function setGrownAttribute(attr: Attr, value: number, ctx: RunContext): RunState {
+  return { ...ctx.state, attributes: { values: { ...ctx.state.attributes.values,
+    [attr]: Math.min(attrCapOf(attr, ctx), Math.max(statQuery.attr(attr, ctx), value)),
+  } } };
+}

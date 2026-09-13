@@ -34,7 +34,7 @@ export function ScreenFaction({ s, bump }: Props): React.ReactElement {
         <button onClick={() => { s.noFactionAvailable(); bump(); }}>無處可去 → 在野</button>
       )}
       <p className="sub" style={{ marginTop: 16 }}>
-        灰盒 v0 只安裝了 pack:wei。蜀吳未安裝，因此完全不出現在清單裡。
+        魏國篇 · 從此踏上你的文武官途。
       </p>
     </>
   );
@@ -90,7 +90,7 @@ export function ScreenSuperiors({ s, bump }: Props): React.ReactElement {
         </button>
       </div>
       {quota === 0 && (
-        <p className="sub">緣分為 0，三位上司全由 RNG 分配。到天命商店買緣分可解放自選權。</p>
+        <p className="sub">主公將安排三位上司。提升天命閣中的勢力緣分，可自行選擇人選。</p>
       )}
     </>
   );

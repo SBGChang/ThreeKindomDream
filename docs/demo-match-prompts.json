@@ -1,0 +1,52 @@
+{
+  "mode": "built-in image_gen",
+  "reference": "C:/Users/DerekHChang/.codex/generated_images/01a0915c-6241-7202-9f66-67a25c2d46f9/exec-7eb850a3-8bd8-47ba-99ce-70610599b0ac.png",
+  "finalAssets": [
+    "public/art/ui/demo-match/stat-rows.png",
+    "public/art/ui/demo-match/participant-card.png",
+    "public/art/ui/demo-match/footer.png",
+    "public/art/ui/demo-match/careers.png",
+    "public/art/ui/demo-match/signals.png",
+    "public/art/ui/demo-match/actions.png"
+  ],
+  "prompts": [
+    {
+      "name": "stat-rows",
+      "prompt": "Use case: ui-mockup. Reference is the approved game demo. Create production UI SPRITE ATLAS of exactly FOUR horizontal STAT ROWS stacked vertically, no gaps, occupying entire 1536x1024 canvas; each row 1536x256. Match LEFT STAT ROWS in reference extremely closely, do not design a generic panel. Top to bottom: deep red with golden sculpted COMMAND DRAGON medallion, burnt orange with ivory CROSSED SABERS medallion, dark teal with GOLD OPEN BOOK medallion, dark green with JADE CIVIL SEAL medallion. Each medallion occupies x=0%-15% of row width. x=15%-27% blank for attribute character. x=28%-82% is one large dark charcoal RECESSED rounded rectangular gauge enclosure, including black inner bevel, thick bronzed black outer lip, bright gold upper rim, deep cavity, empty with NO colored fill. x=82%-100% empty colored texture for projected gain text. Fine gold angular outline and dark wood backing around each entire row, rich hand-painted brush grain, bold black ink contours. No text, letters, digits or symbols except four icons. Precisely same pixel positions across rows. Original game art style warm cartoon, not shiny 3D render. Each row edge-to-edge."
+    },
+    {
+      "name": "participant-card",
+      "prompt": "Use case: ui-mockup. Reference is the approved Three Kingdoms game demo. Create a single EMPTY PARTICIPANT NAME CARD matching the right side demo rows exactly. Landscape canvas 1536x1024: one card fills entire canvas, will resize to wide card. Strong dark brown ink outlines, fine beveled golden angular frame with clipped corner pins, pale warm parchment left 52%, RIGHT 48% transitions into burgundy ink-wash cloud that fades irregularly toward the left. Very important painted wine-red cloud gradient BEHIND future portrait on right, not plain parchment. No portrait yet. Lower left x18%-59%, y70%-88% has a large empty black recessed rounded relationship gauge, metallic gold rim, layered dark inner groove, heavy charcoal bevel, EMPTY no green fill. Left x0-16% at gauge height EMPTY for a separate handshake icon. Upper-left x8%-48% blank parchment for future name. Empty top-right area, NO badges. No text no numbers no people, no icons. Production UI background exact warm handpainted chibi RPG style of reference."
+    },
+    {
+      "name": "footer",
+      "prompt": "Use case: ui-mockup. Reproduce the BOTTOM FOOTER BAR of the reference demo as a blank production UI background, NOT a redesign. Extremely wide low horizontal aspect ratio 1536x160. One continuous oxblood red lacquered horizontal bar, subtle Chinese cloud etching, dark wooden gold filigree border with triangular gold corner caps. Layout exactly: x0%-19% red chapter pennant pointing right, integrated large gold ancient map icon at far left x1%-6%; x20%-37% red blank space for turn counter; x38%-62% dark brown recessed beveled gold-rimmed learning-points plaque, tiny cream rolled-scroll icon at x45%; x65%-75% dark brown beveled gold octagonal button with large OPEN BOOK art icon on left; x76%-86% matching dark button with TREASURE CHEST icon on left; x87%-99% matching dark button with GOLD GEAR icon on left. Keep all text areas EMPTY. NO text no letters no digits. NOT pale parchment buttons. Same warm inked handpainted chibi game footer as reference. Bar fills the entire image edge-to-edge; no padding, no surroundings, not a screenshot. Preserve relative geometry precisely."
+    },
+    {
+      "name": "signals",
+      "prompt": "Use case: ui-mockup. Production ICON SPRITE ATLAS for the reference Three Kingdoms chibi game UI. 1536x1024, EXACT 3 columns x 2 rows equal cells. Transparent background with actual alpha. Icons centered each within 12% margin, NO text, NO digits, NO rectangular tiles. TOP LEFT: coral-red two hands shaking, bold black contour, tiny gold cuff. TOP MIDDLE: amber-gold two hands shaking same silhouette. TOP RIGHT: jade-green two hands shaking same silhouette. BOTTOM LEFT: vivid golden speech balloon with large red exclamation mark and two tiny dialogue strokes, signifies character EVENT. BOTTOM MIDDLE: illustrated ivory parchment commission scroll with red wax seal and a tiny red brush, signifies QUEST. BOTTOM RIGHT: chunky gilded DOWNWARD selection arrow, luminous golden border and cream face. Bold clean black ink lines, substantial shapes, warm cel shading, simple iconic silhouettes readable at 32px. Match exact handshake aesthetic and arrow aesthetic in reference. Do not give icons parchment square backgrounds. Actual transparency."
+    },
+    {
+      "name": "careers",
+      "prompt": "Use case: ui-mockup. Production UI atlas of TWO career buttons, one above other, reproduce the LEFT BOTTOM career rows in reference precisely. 1536x512 wide image. Each row 1536x256, entire image filled edge to edge, no gaps or surrounding background. Cream parchment NAMEPLATE, beveled thin antique gold trim, clipped angular corners, strong dark ink outline, small corner rivets, warm fibrous brush texture, NOT big square wooden frame. First row left 4%-17% has large silhouette of an ornate dark bronze Chinese CIVIL OFFICIAL HAT AND SEAL. Second row left 4%-17% has large dark bronze crossed military sabers. Last 8% at right both rows has a clear dark brown chevron > carved into parchment. Center x22%-87% completely BLANK parchment for live career labels. NO text, no number, NO bar, no gauge, no extra icons. Warm cartoon painted Three Kingdoms UI matching reference. Exact two separate horizontal buttons in two rows."
+    },
+    {
+      "name": "actions",
+      "prompt": "Use case: precise-object-edit. Edit target is this four-card atlas. Keep exact 2x2 card arrangement and the flag, crossed swords, books, jade seal and rice illustration style. CHANGE ONLY card layout to REMOVE bottom dark information footers ENTIRELY. Every card must consist of the illustration in the top 78% and a cream brushstroke blank NAME BAND in bottom 22%, with thin gold outer frame closing immediately below that name band. No dark information strip or extra blank section below name. Keep each card square, exact 2x2 cells, all fill entire image, no gaps. NO text no numbers no characters. Each card must have its appropriate colored decorative gold corner trim. Use all recovered bottom space to enlarge the icon art. This is the final game button asset, no HUD numbers or tiny portraits."
+    },
+    {
+      "name": "signals-alpha",
+      "prompt": "Use case: background-extraction. Edit target attached icon atlas. Remove ALL dark background and ambient glow outside the six icon silhouettes. Actual transparent alpha channel, not black not checkerboard. Preserve thick black ink contours INSIDE silhouette of each icon exactly. Keep six icons exact same positions, colors and geometry in 3x2 grid. Clean isolated cutout sprites on true transparent background. Do not add any background glow or backdrop."
+    },
+    {
+      "name": "signals-key",
+      "prompt": "Use case: precise-object-edit. Change ONLY background of attached 3x2 icon atlas to FLAT SOLID PURE MAGENTA #FF00FF. Absolutely all pixels outside the 6 hard black-outlined icon silhouettes must be #FF00FF. Remove all glow and all shadows outside silhouettes. NO dark gradients, no black backdrop. Keep the six icons themselves including thick black outlines unchanged. Same exact 3 columns x2 rows, same canvas dimensions. This is chroma-key sprite export. Top row red gold green handshakes. Bottom row event balloon, quest scroll, golden down arrow. MAGENTA background crucial."
+    }
+  ],
+  "notes": [
+    "Final signals use magenta-key export; UiSymbol removes magenta at load time. Earlier alpha requests returned opaque backgrounds and were not selected.",
+    "Relationship color follows existing five-stage state; visible affinity text and numbers are removed.",
+    "Stat values and experience remain live; all bars are data-driven. Career rows open existing rank details.",
+    "Footer source contains external white margins; CSS positions the painted strip in its viewport without altering the image."
+  ]
+}

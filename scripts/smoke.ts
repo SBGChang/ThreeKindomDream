@@ -80,7 +80,7 @@ while (!s.isOver && guard < 200) {
       if (out.defeated) break;
       void st;
     }
-    if (!s.isOver) {
+    if (s.needsCampaign) {
       const cleared = s.current.campaign?.clearedStages ?? 0;
       s.withdraw();
       console.log(`  收兵 —— 保住 ${cleared} 關的獎勵`

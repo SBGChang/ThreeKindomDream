@@ -36,6 +36,13 @@ import { coreDef } from '../pack-id.js';
  * 所有策略都剩 477–741 未花（總量的 12–13%）：**買不完。**
  */
 export const growthRule: GrowthRuleDef = coreDef('growthRule', 'growth:main', {
+  learning: {
+    skillCosts: [0, 80, 160, 300, 500],
+    traitCosts: [0, 60, 120, 240, 420],
+    requirements: [20, 40, 60, 75, 90],
+    power: [1, 1.2, 1.45, 1.75, 2.1],
+    tierCost: { common: 1, fine: 1.25, peerless: 1.5 },
+  },
   bands: [
     { grade: 'G', min: 0, max: 0, costPerPoint: 4 },
     { grade: 'F', min: 1, max: 19, costPerPoint: 4 },

@@ -48,6 +48,7 @@ export interface EffectRef {
 }
 
 export interface ResolvedEffectRef extends EffectRef {
+  readonly magnitude?: number;
   readonly sourceId: string;
 }
 

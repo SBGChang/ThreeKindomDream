@@ -1,0 +1,60 @@
+/* Painted command plaque. Nine-slice keeps the bronze corners round at HUD scale.
+   The decorative layer does not participate in layout or intercept controls. */
+.run-screen > .player-panel {
+  isolation: isolate;
+  border: 3px solid transparent;
+  border-radius: 12px;
+  background: #421b16;
+  box-shadow: 0 4px 0 #1d100dc9, 0 7px 12px #0007;
+}
+.run-screen > .player-panel::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  z-index: -1;
+  border: 22px solid transparent;
+  border-image: url('../../public/art/ui/ui-hud-command-v1.png') 160 fill / 22px / 0 stretch;
+  pointer-events: none;
+}
+.run-screen .stat-glyph {
+  border: 2px solid #28170f;
+  border-radius: 6px;
+  background: linear-gradient(#c39a56, #896035);
+  color: #fff2ca;
+  box-shadow: inset 0 1px #ffe3a0, 1px 2px 0 #1b0c09;
+  text-shadow: 0 1px 1px #412313;
+  font-weight: 900;
+}
+.run-screen .stat-top strong {
+  color: #fff2cf;
+  text-shadow: 1px 2px 0 #24100d;
+}
+.run-screen .stat-track,
+.run-screen .career-track {
+  border-color: #b18a54;
+  border-radius: 4px;
+  background: #241410;
+  box-shadow: 0 1px 0 #160b09, inset 0 1px 2px #000b;
+}
+.run-screen .hud-actions button,
+.run-screen button.career-list-button {
+  border: 1px solid #dbb879;
+  border-radius: 5px;
+  background: linear-gradient(#9b5237, #613024);
+  color: #fff0c8;
+  box-shadow: inset 0 1px #e6b26a66, 0 2px 0 #25100c;
+}
+.run-screen .hud-actions button:hover,
+.run-screen button.career-list-button:hover {
+  background: linear-gradient(#bb7049, #814331);
+}
+.run-screen .hud-actions button:focus-visible,
+.run-screen button.career-list-button:focus-visible {
+  outline: 2px solid #ffe6a3;
+  outline-offset: 3px;
+}
+.game-stage:has(.run-screen) > .game-top .chapter-plaque {
+  color: #ffebbc;
+  font-weight: 900;
+  text-shadow: 1px 2px 0 #35120e;
+}

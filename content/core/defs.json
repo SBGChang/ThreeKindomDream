@@ -555,6 +555,41 @@
     ],
     "id": "growth:main",
     "kind": "growthRule",
+    "learning": {
+      "power": [
+        1,
+        1.2,
+        1.45,
+        1.75,
+        2.1
+      ],
+      "requirements": [
+        20,
+        40,
+        60,
+        75,
+        90
+      ],
+      "skillCosts": [
+        0,
+        80,
+        160,
+        300,
+        500
+      ],
+      "tierCost": {
+        "common": 1,
+        "fine": 1.25,
+        "peerless": 1.5
+      },
+      "traitCosts": [
+        0,
+        60,
+        120,
+        240,
+        420
+      ]
+    },
     "packId": "pack:core",
     "schemaVersion": 1,
     "startMax": 30,

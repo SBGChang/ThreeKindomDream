@@ -7,6 +7,7 @@ import type { Attr } from '../contracts/core/primitives.js';
 import type { ActionTally, RunState, TurnProgress } from '../contracts/core/state.js';
 import { hasSelected } from './training.js';
 import { isClear } from './commission.js';
+import { hasEnded } from './ending.js';
 
 export const sequenceOf = (
   faction: FactionId | null, ctx: RunContext,
@@ -62,7 +63,7 @@ export function progressOf(
         turnInChapter: turn - consumed,
         phase: faction === null ? 'camp' : 'faction',
         chaptersPassed,
-        pendingCampaign: turn === consumed + ch.length,
+        pendingCampaign: false,
         pendingFactionChoice: false,
         pendingSuperiorAssign: false,
       };
@@ -101,6 +102,9 @@ export const hasActed = (ctx: RunContext): boolean => hasSelected(ctx);
  * 委託的守門是「佇列非空」，見 canAdvance。
  */
 export function assertActable(ctx: RunContext): void {
+  if (hasEnded(ctx) || ctx.state.progress.pendingCampaign || ctx.state.progress.pendingFactionChoice || ctx.state.progress.pendingSuperiorAssign) {
+    throw new Error('請先完成目前階段');
+  }
   if (hasActed(ctx)) {
     throw new Error('本回合已投入固定事件，一回合只能投入一個');
   }
@@ -118,7 +122,9 @@ export function tally(attr: Attr, ctx: RunContext): RunState {
  * 兩個條件是同一條規則的兩半：一個回合＝一個固定事件，加上它引發的全部事件。
  * 因此追加武將事件不需要在這裡多一個分支 —— 它只是讓佇列又非空了。
  */
-export const canAdvance = (ctx: RunContext): boolean => hasSelected(ctx) && isClear(ctx);
+export const canAdvance = (ctx: RunContext): boolean => !hasEnded(ctx)
+  && !ctx.state.progress.pendingCampaign && !ctx.state.progress.pendingFactionChoice
+  && !ctx.state.progress.pendingSuperiorAssign && hasSelected(ctx) && isClear(ctx);
 
 export const currentChapter = (ctx: RunContext): ChapterDef =>
   chapterAt(ctx.state.progress.chapterId, ctx);

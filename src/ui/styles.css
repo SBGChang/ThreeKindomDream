@@ -79,7 +79,7 @@ h3.lane { color: var(--accent); font-size: 12px; letter-spacing: .06em;
 .card .flags .f-comm { color: var(--glow-gold); font-weight: 700; }
 .card .flags .f-enc { color: var(--accent); font-weight: 700; }
 
-/* ══ 第一頁的三個入口（山河圖／風雲錄／天工鑒）★ ══════
+/* ══ 第一頁的三個入口（山河圖／風雲錄／天工閣）★ ══════
  *
  * 三張卡不等重：山河圖是【唯一會改變 RunState 的動作】，
  * 另外兩本是累積的紀錄。所以只有它吃 accent 色。
@@ -93,7 +93,7 @@ h3.lane { color: var(--accent); font-size: 12px; letter-spacing: .06em;
 .gate.primary .gate-title { color: var(--accent); }
 .gate.primary { background: linear-gradient(180deg, #22302c 0%, var(--panel) 100%); }
 
-/* ══ 圖鑑卡（風雲錄／天工鑒／府庫共用）══════════════ */
+/* ══ 圖鑑卡（風雲錄／天工閣／府庫共用）══════════════ */
 .codex { display: grid; grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); gap: 10px; }
 .codex-card { background: var(--panel); border: 1px solid var(--line);
   border-radius: 4px; padding: 10px 12px; }

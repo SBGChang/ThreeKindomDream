@@ -1,0 +1,1 @@
+export function RealmBack({onClick}:{onClick:()=>void}):React.ReactElement{return <button type="button" className="realm-back" aria-label="返回" title="返回" onClick={onClick}><img src="/art/ui/entry/button-back-v2.png" alt="" draggable={false}/></button>;}

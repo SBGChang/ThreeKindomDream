@@ -1,0 +1,32 @@
+
+/* Production miniature theater; four illustrated key poses held over 16 timing steps. */
+.run-screen .inspection-theater{position:absolute;inset:auto;left:370px;top:170px;width:540px;height:405px;background:none;overflow:hidden;border-radius:0;box-shadow:none;filter:drop-shadow(0 12px 18px #170d0780);animation:inspection-enter .35s ease-out;z-index:20}
+.inspection-theater canvas{display:block;width:100%;height:100%;object-fit:contain}
+.run-screen.task-playing:has(.inspection-theater)>.player-panel{transform:translateX(-330px);opacity:0}
+.run-screen.task-playing:has(.inspection-theater)>.participants{transform:translateX(330px);opacity:0;transition:transform .35s,opacity .35s}
+.run-screen.task-playing:has(.inspection-theater)>.scene-caption{transform:translateY(-145px);opacity:0}
+.run-screen.task-playing:has(.inspection-theater)>.journal-toggle{transform:translateX(-330px);opacity:0}
+.run-screen.task-playing:has(.inspection-theater)>.command-dock{transform:translateY(180px);opacity:0}
+.run-screen.task-playing:has(.inspection-theater)>.training-stage{transform:none;opacity:0}
+@keyframes inspection-enter{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+.inspection-review{height:100vh;background:#211711;color:#ffe4b0}
+.inspection-controls{height:70px;display:flex;align-items:center;justify-content:center;gap:18px;font-size:14px}
+.inspection-controls button,.inspection-controls a{padding:7px 14px;color:#ffe4b0;background:#553324;border:1px solid #b79150;border-radius:5px}
+.inspection-controls label{display:flex;align-items:center;gap:5px}
+.inspection-review .game-viewport{height:calc(100vh - 70px)}
+.inspection-review .stage-content{inset:0}
+.inspection-preview{height:100%}
+.preview-ui{position:absolute;background:#43271f;border:12px solid transparent;border-image:var(--paper-art) 150 fill / 12px;color:#372215;padding:12px;font:900 25px 'DFKai-SB',serif}
+.preview-left{left:12px;top:46px;width:260px;height:340px}.preview-left div{height:220px;margin-top:12px;background:var(--demo-stat) center / 100% 100%}
+.preview-right{right:12px;top:46px;width:220px;height:100px}
+.preview-bottom{bottom:20px;left:24px}
+.inspection-preview.task-playing>.preview-left{transform:translateX(-300px)}
+.inspection-preview.task-playing>.preview-right{transform:translateX(270px)}
+.inspection-preview.task-playing>.preview-bottom{transform:translateY(120px)}
+@media(prefers-reduced-motion:reduce){.run-screen .inspection-theater{animation:none}.run-screen.task-playing:has(.inspection-theater)>*{transition:none!important}}
+
+.inspection-review .inspection-controls{position:absolute;inset:0 0 auto;height:70px;z-index:100;background:#211711}.inspection-review .game-viewport{position:absolute;inset:70px 0 0;height:calc(100vh - 70px)}
+
+.career-hero-art{object-fit:contain}
+.inspection-controls select{background:#553324;color:#ffe4b0;border:1px solid #b79150;padding:6px}
+.inspection-review .inspection-controls{gap:10px;font-size:13px}

@@ -1,0 +1,1 @@
+Built-in image_gen edit. Reference: public/art/theater/career/wardrobe.png. Only change bottom row third teal civil official: remove all ponytail/hair above and behind the closed black official hat; retain bangs under brim, face, costume, pose, cell placement and magenta background. Preserve other seven sprites. Saved: public/art/theater/career/wardrobe-hat-fixed.png.

@@ -47,7 +47,7 @@ export function choose(id: FactionId, ctx: RunContext): RunState {
     ...next,
     progress: {
       ...progress,
-      turn: ctx.state.progress.turn,
+      turn: (ctx.state.progress.turn + 1) as typeof ctx.state.progress.turn,
       pendingSuperiorAssign: true,
     },
   };

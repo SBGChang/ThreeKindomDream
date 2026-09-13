@@ -7,6 +7,7 @@ import { evaluateCondition } from './effect-core.js';
 import { statQuery } from './stats.js';
 
 const readStat = statQuery.read.bind(statQuery);
+export const hasEnded = (ctx: RunContext): boolean => ctx.state.ending !== null;
 
 const triggerMatches = (def: EndingDef, t: EndingTrigger): boolean =>
   def.trigger.kind === t.kind;

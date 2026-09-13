@@ -1,0 +1,39 @@
+{
+  "style": "approved-long-round-body",
+  "vertices": 1787,
+  "triangles": 3516,
+  "bones": 17,
+  "atlas": 2048,
+  "uvParts": 31,
+  "bodyConnectedComponents": 1,
+  "factions": [
+    "host",
+    "enemy"
+  ],
+  "animations": {
+    "Idle": {
+      "frames": 8,
+      "seconds": 2.0
+    },
+    "Run": {
+      "frames": 8,
+      "seconds": 1.0
+    },
+    "Thrust": {
+      "frames": 8,
+      "seconds": 1.3333333333333333
+    },
+    "Hit": {
+      "frames": 8,
+      "seconds": 0.8333333333333334
+    },
+    "Death": {
+      "frames": 8,
+      "seconds": 0.8333333333333334
+    },
+    "Cheer": {
+      "frames": 8,
+      "seconds": 1.6666666666666667
+    }
+  }
+}

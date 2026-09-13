@@ -1,0 +1,5 @@
+{
+  "mode": "built-in image_gen",
+  "asset": "public/art/ui/demo-match/participant-card-short.png",
+  "prompt": "Use case: precise-object-edit. Edit this empty game participant-card background. Change ONLY the black gold-rimmed gauge near bottom left: SHORTEN its width by about 28%, keeping left edge at 17% of canvas, new right edge at 48% of canvas instead of 60%. Keep gauge y position at 70%-85% and height unchanged. Repaint exposed area seamlessly with original parchment and burgundy gradient. Preserve all frame corners, parchment, ink-wash burgundy gradient and texture precisely. NO text, no icons, no people. Output same composition and size. Gauge must end clearly BEFORE canvas center to leave space for portrait on right."
+}

@@ -1,0 +1,47 @@
+
+/* Raising UI v2: each container is an illustrated object, without the repeated gold paper frame. */
+.run-screen>.player-panel{width:300px;height:402px;padding:12px 17px 17px;border:0;border-image:none;border-radius:0;background:url('/art/ui/demo-match/record-board-v2.png') center/100% 100% no-repeat;box-shadow:none;filter:drop-shadow(0 4px 2px #21130b66)}
+.run-screen .player-panel-title{height:48px;padding:0 35px 0 15px;border:0;border-image:none;background:none;color:#fff2cb;font-size:27px;line-height:34px;text-shadow:1px 2px #593016;box-shadow:none}
+.run-screen .stat-grid{margin:4px 0 7px;gap:5px}
+.run-screen .stat-cell{height:48px;background:linear-gradient(90deg,var(--row-tint),transparent)!important;border-radius:8px;box-shadow:none}
+.run-screen .stat-cell.attr-lead{--row-tint:#a9772888}.run-screen .stat-cell.attr-war{--row-tint:#b33d2b99}.run-screen .stat-cell.attr-int{--row-tint:#227e9599}.run-screen .stat-cell.attr-pol{--row-tint:#427b3999}
+.run-screen .painted-stat-icon{display:block;position:absolute;left:0;top:5px;width:36px;height:36px;border:0;border-radius:8px;background-image:url('/art/ui/demo-match/actions-square.png');background-size:200% 200%;box-shadow:0 2px 2px #20130c66}
+.run-screen .painted-stat-lead{background-position:0 0}.run-screen .painted-stat-war{background-position:100% 0}.run-screen .painted-stat-int{background-position:0 100%}.run-screen .painted-stat-pol{background-position:100% 100%}
+.run-screen .stat-glyph{left:40px;top:10px;font-size:25px;line-height:29px}
+.run-screen .stat-track{left:71px;top:12px;width:137px;height:25px;border:3px solid #26190f;border-radius:9px;box-shadow:inset 0 3px 4px #000,0 1px #b78b52;background:#171d17;padding:2px 3px}
+.run-screen .stat-top strong{left:166px;top:12px;width:39px;font-size:22px}
+.run-screen .stat-preview{right:0;top:12px;font-size:19px;line-height:26px}
+.run-screen .career-row{gap:4px}
+.run-screen .career-row>.career-meter{height:45px;min-height:45px;flex-basis:45px;border:0;border-image:none;background:none;box-shadow:none}
+.run-screen .career-icon{display:block;position:absolute;left:5px;top:8px;width:31px;height:30px;mix-blend-mode:normal}
+.run-screen .career-detail{left:46px;right:28px;top:9px}
+.run-screen .career-name,.run-screen .career-name b{color:#ffedc7;font-size:22px;text-shadow:1px 2px #392312}
+.run-screen .career-list-button::after{content:'›';position:absolute;right:5px;top:2px;color:#efd394;font:bold 33px Georgia;line-height:38px}
+.run-screen .career-list-button:hover{outline:0;filter:brightness(1.15)}
+.run-screen .career-list-button:focus-visible{outline:2px solid #fff0b0;outline-offset:-3px;border-radius:8px}
+.run-screen .journal-toggle{left:252px;top:52px}
+.run-screen>.participants{width:300px;padding:0;border:0;border-image:none;background:none;box-shadow:none}
+.run-screen .participant-signals{height:44px;padding:0 12px 0 0;border:0;border-image:none;background:none;box-shadow:none;gap:17px}
+.run-screen .participant-list{gap:8px}
+.game-stage .run-screen .participant-card,.game-stage .run-screen .participant-card:hover:not(:disabled),.game-stage .run-screen .participant-card:active{border:0;border-image:none;background:url('/art/ui/demo-match/name-card-v2.png') center/100% 100% no-repeat;box-shadow:none;filter:none;transform:none;border-radius:0}
+.run-screen .participant-card b{left:11%;top:21%;color:#332213;font-size:28px}
+.run-screen .participant-card .character-face{right:2%;top:7%;height:87%;width:45%;mask-image:linear-gradient(to right,transparent,#000 20%);-webkit-mask-image:linear-gradient(to right,transparent,#000 20%)}
+.run-screen .participant-card .relationship-icon{left:9%;bottom:14%;width:11%;height:29%}
+.run-screen .participant-card .relationship-fill{left:22%;top:69%;width:29%;height:17%;padding:2px;border:2px solid #513b22;border-radius:12px;background:#1d251b;box-shadow:inset 0 2px 3px #000,0 1px #f2dbaa}
+.run-screen .scene-caption{background:none;border:0;border-image:none;box-shadow:none;top:30px;height:66px;gap:17px;padding:8px 24px}
+.run-screen .scene-caption h1{font-size:34px;color:#fff2cc;text-shadow:2px 2px #412817,-1px -1px #412817,0 3px 5px #412817}
+.run-screen .scene-caption .action-subtitle{font-size:23px;color:#ffe0a5;border:0;text-shadow:1px 2px #412817,-1px -1px #412817}
+.game-stage:has(.run-screen)>.game-bottom{height:88px;border:0;border-image:none;background:url('/art/ui/demo-match/footer-wood-v2.png') 50% 52.6%/100% 850% no-repeat;box-shadow:none}
+.run-bottom-info>b{left:3%;width:17%;font-size:24px;top:23%;height:55%}
+.run-bottom-info>span{left:22%;top:30%}
+.run-bottom-info>strong{left:40%;width:20%;top:28%;height:43%}
+.game-stage:has(.run-screen) .game-bottom button{top:20%;height:60%;padding:0 0 0 37px;width:10.8%;font-size:23px}
+.game-stage:has(.run-screen) .game-bottom button:before{display:block;width:34px;height:34px;top:8px;left:0;mix-blend-mode:normal}
+.game-stage:has(.run-screen) .game-bottom button:hover{outline:0;background:none!important;filter:brightness(1.18)}
+.game-stage:has(.run-screen) .game-bottom button:focus-visible{outline:2px solid #ffebaf;outline-offset:1px}
+
+.run-screen .career-icon{background-image:url('/art/ui/demo-match/utility-icons-v2.png');background-size:200% 200%;width:40px;height:40px;left:0;top:2px}
+.run-screen .career-icon.civil{background-position:0 0}.run-screen .career-icon.martial{background-position:100% 0}
+.game-stage:has(.run-screen) .game-bottom nav button:nth-child(2):before{background:url('/art/ui/demo-match/journal-book.png') center/contain no-repeat}
+.game-stage:has(.run-screen) .game-bottom nav button:nth-child(3):before{background:url('/art/ui/demo-match/utility-icons-v2.png') 0 100%/200% 200% no-repeat}
+.game-stage:has(.run-screen) .game-bottom .bottom-settings:before{background:url('/art/ui/demo-match/utility-icons-v2.png') 100% 100%/200% 200% no-repeat}

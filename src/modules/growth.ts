@@ -19,7 +19,7 @@ import type { RunState } from '../contracts/core/state.js';
 import * as ability from './ability.js';
 import type { EffectResolver } from './effect.js';
 import { rosterIds, stageOf } from './roster-query.js';
-import { attrCapOf, statQuery, type StatWriter } from './stats.js';
+import { attrCapOf, statQuery, setGrownAttribute, type StatWriter } from './stats.js';
 
 const rule = (ctx: RunContext): GrowthRuleDef => ctx.defs.single('growthRule');
 // 上限【逐維】不同 —— 它由資質決定，而資質是跨輪貨幣（⑳ attrCapOf）。
@@ -33,13 +33,32 @@ const bandsOf = (ctx: RunContext): readonly AttrCostBand[] =>
 export const expOf = (attr: Attr, ctx: RunContext): number => ctx.state.growth.exp[attr];
 
 /** ⑯ 與 ⑰ 的產出入口。取代舊的 `attr.grant`（RFC-01 D32）。 */
-export function grantExp(attr: Attr, amount: number, ctx: RunContext): RunState {
-  if (amount <= 0) return ctx.state;
+export function grantExp(attr: Attr, amount: number, ctx: RunContext, fx?: EffectResolver): RunState {
+  if (!Number.isFinite(amount) || amount <= 0) return ctx.state;
+  let pool = ctx.state.growth.exp[attr] + amount;
+  let value = statQuery.attr(attr, ctx);
+  let spent = 0;
+  const cap = capOf(attr, ctx);
+  const prices = new Map<number, number>();
+  while (value < cap) {
+    const band = bandAt(value + 1, ctx);
+    let price = prices.get(band.min);
+    if (price === undefined) {
+      price = fx === undefined ? band.costPerPoint
+        : Math.max(0, Math.ceil(fx.resolve(targetId(`learn.cost.${attr}`), shiftedCostPerPoint(value + 1, ctx, fx), ctx)));
+      prices.set(band.min, price);
+    }
+    if (pool < price) break;
+    pool -= price; spent += price; value += 1;
+  }
+  const state = setGrownAttribute(attr, value, ctx);
   return {
-    ...ctx.state,
+    ...state,
     growth: {
       ...ctx.state.growth,
-      exp: { ...ctx.state.growth.exp, [attr]: ctx.state.growth.exp[attr] + amount },
+      exp: { ...ctx.state.growth.exp, [attr]: pool },
+      spent: { ...ctx.state.growth.spent, [attr]: ctx.state.growth.spent[attr] + spent },
+      learningExp: (ctx.state.growth.learningExp ?? 0) + amount,
     },
   };
 }
@@ -313,7 +332,7 @@ export function teachFromSlot(
       .filter((d) => meetsTeachStage(d.tier, stage, at))
       .find((d) => !at.state.growth.unlockedSkills.some((x) => String(x) === String(d.skillId)));
     if (skill !== undefined) {
-      state = grantUnlock(null, skill.skillId, at);
+      state = ability.addSkill(skill.skillId, { ...at, state: grantUnlock(null, skill.skillId, at) });
       taught.push({ notableId: id, trait: null, skill: skill.skillId });
       continue;
     }
@@ -322,7 +341,7 @@ export function teachFromSlot(
       .filter((d) => meetsTeachStage(d.tier, stage, at))
       .find((d) => !at.state.growth.unlockedTraits.some((x) => String(x) === String(d.traitId)));
     if (trait !== undefined) {
-      state = grantUnlock(trait.traitId, null, at);
+      state = ability.addTrait(trait.traitId, { ...at, state: grantUnlock(trait.traitId, null, at) });
       taught.push({ notableId: id, trait: trait.traitId, skill: null });
     }
   }
@@ -386,7 +405,7 @@ export function learnSkill(
   return { ok: true, state: ability.addSkill(id, { state: paid, defs: ctx.defs }) };
 }
 
-/** 事件／道具授予的解鎖（32 §5）。它【不含學習費】—— 兩道門不可被一件事同時繞過。 */
+/** 傳授直接取得 Lv1；再次獲得免費升一階，最高 Lv5。 */
 export function grantUnlock(
   trait: TraitId | null, skill: SkillId | null, ctx: RunContext,
 ): RunState {
@@ -395,5 +414,14 @@ export function grantUnlock(
     ? [...g.unlockedTraits, trait] : g.unlockedTraits;
   const skills = skill !== null && !g.unlockedSkills.some((x) => String(x) === String(skill))
     ? [...g.unlockedSkills, skill] : g.unlockedSkills;
-  return { ...ctx.state, growth: { ...g, unlockedTraits: traits, unlockedSkills: skills } };
+  let state: RunState = { ...ctx.state, growth: { ...g, unlockedTraits: traits, unlockedSkills: skills } };
+  for (const [id, kind] of [[trait, 'trait'], [skill, 'skill']] as const) {
+    if (id === null) continue;
+    const at = { ...ctx, state };
+    const owned = kind === 'trait' ? ability.hasTrait(id as TraitId, at) : ability.hasSkill(id as SkillId, at);
+    const level = owned ? Math.min(5, ability.levelOf(id, at) + 1) : 1;
+    state = kind === 'trait' ? ability.addTrait(id as TraitId, at) : ability.addSkill(id as SkillId, at);
+    state = { ...state, abilities: { ...state.abilities, levels: { ...state.abilities.levels, [String(id)]: level } } };
+  }
+  return state;
 }

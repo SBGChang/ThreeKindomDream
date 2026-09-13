@@ -1,0 +1,18 @@
+{
+  "mode": "built-in image_gen",
+  "reference": "exec-7eb850a3-8bd8-47ba-99ce-70610599b0ac.png",
+  "assets": [
+    {
+      "path": "public/art/ui/practice-cards-v3.png",
+      "prompt": "Use case: ui-mockup. Create a production atlas of FOUR SQUARE action cards in a STRICT 2 by 2 grid, 1536x1536 square image, each cell 768x768. No gaps, no tilt, no perspective, full cards touch the cell edges. Match the approved reference game's FOUR bottom action-card illustrations and handpainted gold corners. Top-left red flag with decorative gold swirl, top-right orange crossed curved sabers, bottom-left cyan bamboo books and scroll, bottom-right green rice stalk and jade seal. Each cell: upper 63% huge lively illustrated object in natural proportions; 63%-79% empty cream brushstroke band; bottom21% dark colored footer with delicate cloud pattern. ZERO text or numbers or portraits. Square card format critical, not narrow tall panels. Rich handpainted brush texture, thick dark ink contours, brilliant gold frame, dimensional chibi game illustration, same exact motifs as reference."
+    },
+    {
+      "path": "public/art/ui/parchment-frame-v2.png",
+      "prompt": "Use case: ui-mockup. Make one production reusable EMPTY panel texture matching exactly the wooden framed UI in the provided approved Three Kingdoms chibi game. Square 1024x1024 canvas, entire panel fills image edge-to-edge. Bold dark hand-ink outline, broad dark walnut wood outer frame, bevel carved grain, bright antique gold angular corner caps with spiral embossed motif, double gold inner trim. Interior is warm pale creamy parchment with subtle fibers and lightly weathered edges, bright and CLEAN for black labels. Orthographic flat front view, symmetric, no perspective. Frame thickness about 65 pixels each side and corner decorations within 100 pixels. All center completely EMPTY parchment; no text, no lines, no icons, no characters, no separate sections, no shadows outside panel. Exact polished richly hand-painted game aesthetic of the reference right participant name cards and left career nameplate. This is a nine-slice UI texture, not a mockup. All pixels opaque."
+    },
+    {
+      "path": "public/art/ui/practice-icons-v2.png",
+      "prompt": "Use case: ui-mockup. Production game icon atlas in approved reference art style. 1536x1024, exact 4 columns by 2 rows, equal cells. Each icon centered within its cell with generous 15% margins, plain uniform warm cream #f4dfb1 background. No text no labels no borders. TOP ROW: open Chinese bamboo book; squat golden treasure chest; golden chunky gear; golden rolled map. BOTTOM ROW: golden two hands handshake affinity symbol; jade civil official hat and seal; crossed short sabers; golden hanging scroll event notice. Bold dark ink contours, warm cel shaded handpainted chibi game illustrations, antique Chinese materials, dimensional illustrated not line icons, crisp readable shape. Match the approved footer icons and handshake icon in reference."
+    }
+  ]
+}

@@ -262,6 +262,9 @@ export type BoonState = readonly EffectRef[];
  * 解鎖清單只在本輪有效。跨輪的預先解鎖若要做，走 ⑨ 天命商店（D37）。
  */
 export interface GrowthState {
+  /** Independent learning currency; optional only for older saved states. */
+  readonly learningExp?: number;
+  readonly learningSpent?: number;
   readonly exp: Readonly<Record<Attr, number>>;
   readonly unlockedTraits: readonly TraitId[];
   readonly unlockedSkills: readonly SkillId[];
@@ -272,6 +275,7 @@ export interface GrowthState {
 // ── ㉓ 特質與技能（23 §2.4）★ ─────────────────────────
 /** 只存 ID。效果、消耗、戰役行為全由 Definition 現算。 */
 export interface AbilityState {
+  readonly levels?: Readonly<Record<string, number>>;
   readonly traits: readonly TraitId[];
   readonly skills: readonly SkillId[];
 }

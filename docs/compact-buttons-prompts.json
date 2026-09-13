@@ -1,0 +1,14 @@
+{
+  "mode": "built-in image_gen",
+  "assets": [
+    {
+      "path": "public/art/ui/demo-match/actions-square.png",
+      "prompt": "Use case: precise-object-edit. Redesign this atlas for FOUR COMPACT SQUARE ICON BUTTONS. Exact 2x2 grid, 1536x1536. Each square fills its quadrant edge-to-edge. NO cream label band, NO text, NO footer. Same red flag / orange crossed sabers / cyan books and scroll / green rice and jade seal. Recompose each entire object to fit INSIDE its square with 12 percent padding between object silhouette and thin gold ornamental frame. Flag must include entire pole bottom, spear tip, tassel, ALL cloth edges. Sabers must include both full handles and tips. Books scroll rice seal all complete. Bold handpainted chibi game illustration same style. These render at128x112, so compact readable symbols, not zoomed-in crops. Gold frame on all four sides. Entire object visible, nothing touches frame. Saturated textured backgrounds."
+    },
+    {
+      "path": "public/art/ui/demo-match/journal-book.png",
+      "prompt": "Use case: stylized-concept. One isolated OPEN ANCIENT CHINESE BAMBOO BOOK journal UI icon. Chunky warm golden bamboo slips, dark brown bold hand-ink outlines, visible string binding, open book silhouette, subtle reddish ribbon bookmark. Match handpainted chibi Three Kingdoms game UI. Complete book centered with 15% margin, 1024 square. Actual transparent background with alpha. No square backdrop, no parchment sheet under book, no glow or drop shadow outside silhouette. No text, no labels, no letters."
+    }
+  ],
+  "fix": "Action atlas moved to child element to prevent hover/focus background shorthand resetting sprite position."
+}

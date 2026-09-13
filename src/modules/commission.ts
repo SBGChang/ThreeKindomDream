@@ -521,7 +521,7 @@ export function resolveHead(
   let state = ctx.state;
   const at = (): RunContext => ({ state, defs: ctx.defs });
   // 事上磨練也給【經驗】（D32）。做事會練到一點，只是比專心練少。
-  for (const g of practiceExp) state = grantExp(g.attr, g.amount, at());
+  for (const g of practiceExp) state = grantExp(g.attr, g.amount, at(), fx);
   for (const m of meritRaw) state = writer.grantMerit(m.line, m.amount, at());
 
   // 劇情級的一次性獎勵：好感度與道具。四維與功績走上面的曲線，這裡只處理例外。

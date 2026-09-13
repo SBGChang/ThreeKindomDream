@@ -179,6 +179,13 @@ function halveRewards(rewards: readonly EventReward[]): readonly EventReward[] {
 export function configure(loadout: BattleLoadout, ctx: RunContext): RunState {
   const st = ctx.state.campaign;
   if (st === null || st.phase !== 'configuring') throw new Error('戰役已開打，配置已凍結');
+  if (loadout.skills.length > 3 || new Set(loadout.skills).size !== loadout.skills.length
+    || loadout.skills.some(id => !ability.hasSkill(id, ctx))) throw new Error('招式配置不合法');
+  const eligible = eligibleCommanders(ctx);
+  if (loadout.commanders.length > 3 || new Set(loadout.commanders.map(x => x.notableId)).size !== loadout.commanders.length
+    || loadout.commanders.some(x => !eligible.includes(x.notableId) || !skillOptionsFor(x.notableId, ctx).includes(x.skillId))) {
+    throw new Error('指揮配置不合法');
+  }
   return {
     ...ctx.state,
     campaign: { ...st, loadout, phase: 'awaitingDecision' },
@@ -250,9 +257,9 @@ export function hostPower(ctx: RunContext, fx: EffectResolver): number {
   const troopsMax = st.host.troopsMax;
 
   const dmgOf = (
-    id: SkillId, attrs: Readonly<Record<Attr, number>>, weight: number,
+    id: SkillId, attrs: Readonly<Record<Attr, number>>, weight: number, player = false,
   ): number => {
-    const a = ability.skillDef(id, ctx).action;
+    const a = (player ? ability.battleSkill(id, ctx) : ability.skillDef(id, ctx)).action;
     if (a.kind !== 'physical' && a.kind !== 'magic') return 0;
     const raw = troopsMax * a.ratio * coefOf(attrs, a.actorAttr, r);
     return fx.resolve(targetId(`battle.damage.${a.kind}`), raw, ctx) * weight;
@@ -260,7 +267,7 @@ export function hostPower(ctx: RunContext, fx: EffectResolver): number {
 
   const casts = r.castChances.reduce((n, c) => n + c, 0);
   const mine = st.loadout.skills.length === 0 ? 0
-    : st.loadout.skills.reduce((n, id) => n + dmgOf(id, me, 1), 0)
+    : st.loadout.skills.reduce((n, id) => n + dmgOf(id, me, 1, true), 0)
       / st.loadout.skills.length * casts;
 
   const aid = st.loadout.commanders.reduce((n, c) => {
@@ -315,10 +322,10 @@ export interface StagePreview {
 }
 
 /** 下一關的【情報】。不含勝率（33 §8.1）—— 假的精確比沒有更糟。 */
-export function nextStagePreview(ctx: RunContext): StagePreview | null {
+export function nextStagePreview(ctx: RunContext, index = ctx.state.campaign?.clearedStages ?? 0): StagePreview | null {
   const st = ctx.state.campaign;
-  if (st === null || st.clearedStages >= stageCount(ctx)) return null;
-  const stage = stageAt(st.clearedStages, ctx);
+  if (st === null || index < 0 || index >= stageCount(ctx)) return null;
+  const stage = stageAt(index, ctx);
   const r = rule(ctx);
   const troops = Math.round(enemyBase(ctx) * stage.troopsMul);
   const dmgBase = enemyDamageBase(ctx);
@@ -330,7 +337,7 @@ export function nextStagePreview(ctx: RunContext): StagePreview | null {
   })();
   void r;
   return {
-    index: st.clearedStages,
+    index,
     brief: stage.briefKey,
     enemyTroops: troops,
     enemyDamage: Math.round(dmgBase * stage.damageMul + extra),
@@ -483,7 +490,7 @@ export function engage(
     }
     for (const id of pickDistinct(loadout.skills, casts, ctx)) {
       applyCast(
-        sim, ability.skillDef(id, ctx), me, 'host', null, troopsMax, turn, r, ctx, fx, true,
+        sim, ability.battleSkill(id, ctx), me, 'host', null, troopsMax, turn, r, ctx, fx, true,
       );
     }
 
@@ -662,9 +669,9 @@ export interface StageRow {
   readonly index: number;
   readonly brief: L10nKey;
   readonly boss: EnemyDef | null;
-  /** 這一關單獨給的功績。獎勵曲線的形狀靠它畫出來（D12）。 */
-  readonly merit: number;
-  /** 打到這一關為止的功績累計。**「再走一關值多少」要看這個。** */
+  /** 這一關單獨給的能力經驗，也等量成為學習點。 */
+  readonly exp: number;
+  /** 打到這一關為止的經驗累計。 */
   readonly cumulative: number;
   /** 這一關有沒有唯一掉落（深處才有）。 */
   readonly unique: boolean;
@@ -688,15 +695,15 @@ export function stageRows(ctx: RunContext): readonly StageRow[] {
   const stages = currentCampaign(ctx).stages;
   let acc = 0;
   return stages.map((stage, i) => {
-    const merit = stage.rewards.reduce(
-      (n, r) => n + (r.kind === 'merit' ? r.amount : 0), 0,
+    const exp = stage.rewards.reduce(
+      (n, r) => n + (r.kind === 'exp' ? r.amount : 0), 0,
     );
-    acc += merit;
+    acc += exp;
     return {
       index: i,
       brief: stage.briefKey,
       boss: stage.boss === null ? null : ctx.defs.reader('enemy').get(String(stage.boss)),
-      merit,
+      exp,
       cumulative: acc,
       unique: stage.rewards.some((r) => r.kind === 'unlock' || r.kind === 'item'),
       cleared: i < st.clearedStages,

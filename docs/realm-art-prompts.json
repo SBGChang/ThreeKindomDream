@@ -1,0 +1,24 @@
+{
+  "tool": "built-in image_gen",
+  "style": "Q版、熱血三國、實況野球感；曹操原作為風格參考",
+  "entries": [
+    {
+      "id": "heroes",
+      "prompt": "Redraw image 1 completely in the simple cute super-deformed cartoon visual language of image 2 (style reference only, do not include this character). It is currently FAR too realistic. Use thick bold dark brown outlines everywhere, chunky rounded oversize toy-like props, simple flat two-tone cel shading, bright saturated colors, playful energetic Japanese chibi sports RPG game look (Power Pros / Jikkyou Powerful Pro Yakyuu energy) in a Three Kingdoms setting. No realistic textures, no photorealistic rendering, no intricate engravings, no dark gritty mood. Keep the scene theme and quiet empty UI space, 16:10 landscape. No text or buttons or people. Theme spec: Use case: stylized-concept. Create a 16:10 landscape game background for Three Kingdoms chibi single-player RPG, warm cel shading and bold dark ink outlines matching hand-painted Chinese game art. Heroic chronicles archive: enormous open aged book on a carved dark wood desk, silk scrolls, brush and inkstone, military banners and bronze ancestral reliefs behind, warm amber lamplight. Book occupies central and right lower area with quiet blank parchment pages for interactive UI overlays, ornamental surroundings mainly along edges. Rich crafted leather, paper and bronze, atmospheric heroic history. No people, no lettering, no symbols resembling text, no UI buttons. Production game art.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-69e0cd98-26eb-4ead-8ba2-3986243e8301.png",
+      "target": "public/art/realms/heroes-v2.png"
+    },
+    {
+      "id": "destiny",
+      "prompt": "Redraw image 1 completely in the simple cute super-deformed cartoon visual language of image 2 (style reference only, do not include this character). It is currently FAR too realistic. Use thick bold dark brown outlines everywhere, chunky rounded oversize toy-like props, simple flat two-tone cel shading, bright saturated colors, playful energetic Japanese chibi sports RPG game look (Power Pros / Jikkyou Powerful Pro Yakyuu energy) in a Three Kingdoms setting. No realistic textures, no photorealistic rendering, no intricate engravings, no dark gritty mood. Keep the scene theme and quiet empty UI space, 16:10 landscape. No text or buttons or people. Theme spec: Use case: stylized-concept. Create a 16:10 landscape game background for Three Kingdoms chibi single-player RPG with bold dark ink outlines and cel shaded hand-painted art. Mystical fate pavilion open to a deep indigo starry sky, giant bronze Chinese astronomical armillary sphere on LEFT THIRD, luminous golden threads connecting constellations, circular jade platform, floating ribbons and cloud motifs. Quiet dark blue space across center and right for readable interactive UI overlays. Ancient Chinese destiny and reincarnation atmosphere, restrained teal and antique gold highlights, no western zodiac, no people, no text, no UI buttons. Production game art.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-2118b75d-932e-4e15-908c-9d55c0f6b16c.png",
+      "target": "public/art/realms/destiny-v2.png"
+    },
+    {
+      "id": "treasury",
+      "prompt": "Redraw image 1 completely in the simple cute super-deformed cartoon visual language of image 2 (style reference only, do not include this character). It is currently FAR too realistic. Use thick bold dark brown outlines everywhere, chunky rounded oversize toy-like props, simple flat two-tone cel shading, bright saturated colors, playful energetic Japanese chibi sports RPG game look (Power Pros / Jikkyou Powerful Pro Yakyuu energy) in a Three Kingdoms setting. No realistic textures, no photorealistic rendering, no intricate engravings, no dark gritty mood. Keep the scene theme and quiet empty UI space, 16:10 landscape. No text or buttons or people. Theme spec: Use case: stylized-concept. Create a 16:10 landscape game background for Three Kingdoms chibi single-player RPG, warm cel shading and bold dark ink outlines matching crafted Chinese game art. Opulent ancient treasure vault: lacquer wood display shelves, ceremonial sword stands, bronze vessels, jade ornaments and closed red chests, amber lanterns, engraved brass fittings. Ornamental treasures mainly at far left and far right, a calm dark walnut central wall and lower display counter leave space for interactive item collection overlays. Treasure-house feeling, deep burgundy shadows, warm gold lighting. No people, no text, no UI buttons. Production game art.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-329a1b14-daec-4c1c-b771-0de4776c2af3.png",
+      "target": "public/art/realms/treasury-v2.png"
+    }
+  ]
+}

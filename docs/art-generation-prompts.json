@@ -1,0 +1,321 @@
+{
+  "tool": "built-in image_gen",
+  "characters": [
+    {
+      "id": "zhangliao",
+      "name": "張遼",
+      "prompt": "Edit target: this Zhang Liao waist-up game sprite. Preserve the entire character identity, drawing, colors, pose and framing exactly. Replace ONLY the grey-and-white checkerboard background with a perfectly flat solid pure magenta #FF00FF background for chroma-key extraction. No checker pattern remains, no texture on background, no transparency simulation. Do not change or repaint the general.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-ad22efde-38fd-4609-bd1b-8429351c95c6.png",
+      "target": "public/art/characters/zhangliao.png"
+    },
+    {
+      "id": "yujin",
+      "name": "于禁",
+      "prompt": "Create ONE waist-up production sprite for Three Kingdoms game. Attached are STYLE REFERENCES only. Match chunky dark brown outlines, oversized adult chibi head, bold warm cel-shading, compact cartoon proportions. Single centered front three-quarter figure, top of helmet/hair fully inside image with 5% margin, shoulders/hands/waist visible. Head and headwear occupy upper 50 percent. Simple shapes, no realistic rendering, no 3D, no text or frame. BACKGROUND: perfectly uniform solid pure magenta #FF00FF for the game's chroma-key renderer. Absolutely NO checkerboard, NO scenery, no ground shadow. Character: Yu Jin, strict disciplined middle-aged general, straight narrow moustache, square chin, low steel helmet without plume, desaturated teal armor and grey cloak, holds wooden military tally upright.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-f335f8f8-d526-48b4-8c63-1b1c2adf3360.png",
+      "target": "public/art/characters/yujin.png"
+    },
+    {
+      "id": "xiahoudun",
+      "name": "夏侯惇",
+      "prompt": "Create ONE waist-up production sprite for Three Kingdoms game. Attached are STYLE REFERENCES only. Match chunky dark brown outlines, oversized adult chibi head, bold warm cel-shading, compact cartoon proportions. Single centered front three-quarter figure, top of helmet/hair fully inside image with 5% margin, shoulders/hands/waist visible. Head and headwear occupy upper 50 percent. Simple shapes, no realistic rendering, no 3D, no text or frame. BACKGROUND: perfectly uniform solid pure magenta #FF00FF for the game's chroma-key renderer. Absolutely NO checkerboard, NO scenery, no ground shadow. Character: Xiahou Dun, fierce veteran, black patch over his left eye (viewer right), swept black hair topknot, short rough beard, dark crimson scarf, charcoal armor, hand on broad sword hilt.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-311a066f-5b23-4174-8b74-124f2ac4c339.png",
+      "target": "public/art/characters/xiahoudun.png"
+    },
+    {
+      "id": "lejin",
+      "name": "樂進",
+      "prompt": "Create ONE waist-up production sprite for Three Kingdoms game. Attached are STYLE REFERENCES only. Match chunky dark brown outlines, oversized adult chibi head, bold warm cel-shading, compact cartoon proportions. Single centered front three-quarter figure, top of helmet/hair fully inside image with 5% margin, shoulders/hands/waist visible. Head and headwear occupy upper 50 percent. Simple shapes, no realistic rendering, no 3D, no text or frame. BACKGROUND: perfectly uniform solid pure magenta #FF00FF for the game's chroma-key renderer. Absolutely NO checkerboard, NO scenery, no ground shadow. Character: Yue Jin, energetic compact young adult general, clean-shaven round face, bright intent eyes, simple blue-grey helmet with short red tuft, light brown leather lamellar armor, clenched confident fist at chest.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-ee7c75c5-fe6f-45dc-b2fc-000725b93977.png",
+      "target": "public/art/characters/lejin.png"
+    },
+    {
+      "id": "chenqun",
+      "name": "陳群",
+      "prompt": "Create ONE waist-up production sprite for Three Kingdoms game. Attached are STYLE REFERENCES only. Match chunky dark brown outlines, oversized adult chibi head, bold warm cel-shading, compact cartoon proportions. Single centered front three-quarter figure, top of helmet/hair fully inside image with 5% margin, shoulders/hands/waist visible. Head and headwear occupy upper 50 percent. Simple shapes, no realistic rendering, no 3D, no text or frame. BACKGROUND: perfectly uniform solid pure magenta #FF00FF for the game's chroma-key renderer. Absolutely NO checkerboard, NO scenery, no ground shadow. Character: Chen Qun, meticulous civil official, narrow moustache and neatly trimmed small beard, rectangular black scholar cap, muted indigo robe, cream collar, holds bamboo law slips against chest, thoughtful strict expression.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-29955f36-33cc-4051-852f-1cddf7f32e8d.png",
+      "target": "public/art/characters/chenqun.png"
+    },
+    {
+      "id": "maojie",
+      "name": "毛玠",
+      "prompt": "Create ONE waist-up production sprite for Three Kingdoms game. Attached are STYLE REFERENCES only. Match chunky dark brown outlines, oversized adult chibi head, bold warm cel-shading, compact cartoon proportions. Single centered front three-quarter figure, top of helmet/hair fully inside image with 5% margin, shoulders/hands/waist visible. Head and headwear occupy upper 50 percent. Simple shapes, no realistic rendering, no 3D, no text or frame. BACKGROUND: perfectly uniform solid pure magenta #FF00FF for the game's chroma-key renderer. Absolutely NO checkerboard, NO scenery, no ground shadow. Character: Mao Jie, frugal older civil official, long narrow face, wispy greying beard, simple dark cloth headwrap, olive grey plain robe without gold, rolled grain ledger in hand, gentle serious eyes.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-5ccabade-0e11-42d5-a6b0-cf3a6ec8d2f3.png",
+      "target": "public/art/characters/maojie.png"
+    },
+    {
+      "id": "bocai",
+      "name": "波才",
+      "prompt": "Create ONE waist-up production sprite for Three Kingdoms game. Attached are STYLE REFERENCES only. Match chunky dark brown outlines, oversized adult chibi head, bold warm cel-shading, compact cartoon proportions. Single centered front three-quarter figure, top of helmet/hair fully inside image with 5% margin, shoulders/hands/waist visible. Head and headwear occupy upper 50 percent. Simple shapes, no realistic rendering, no 3D, no text or frame. BACKGROUND: perfectly uniform solid pure magenta #FF00FF for the game's chroma-key renderer. Absolutely NO checkerboard, NO scenery, no ground shadow. Character: Bo Cai, Yellow Turban rebel leader, ochre yellow knotted headband, rugged tan face with broad short beard, patched brown vest and simple leather shoulder plates, spear held to side, resolute defiant expression.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-80cf16e4-9db0-4a1c-9ce3-703df688916c.png",
+      "target": "public/art/characters/bocai.png"
+    },
+    {
+      "id": "huaxiong",
+      "name": "華雄",
+      "prompt": "Create ONE waist-up production sprite for Three Kingdoms game. Attached are STYLE REFERENCES only. Match chunky dark brown outlines, oversized adult chibi head, bold warm cel-shading, compact cartoon proportions. Single centered front three-quarter figure, top of helmet/hair fully inside image with 5% margin, shoulders/hands/waist visible. Head and headwear occupy upper 50 percent. Simple shapes, no realistic rendering, no 3D, no text or frame. BACKGROUND: perfectly uniform solid pure magenta #FF00FF for the game's chroma-key renderer. Absolutely NO checkerboard, NO scenery, no ground shadow. Character: Hua Xiong, imposing burly western army commander, broad angular face, huge black moustache, dark iron helmet with short crimson crest, heavy black and copper lamellar armor, holds thick poleaxe to side.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-b928b270-852a-45ce-b012-edbe6017cfdd.png",
+      "target": "public/art/characters/huaxiong.png"
+    },
+    {
+      "id": "lijue",
+      "name": "李傕",
+      "prompt": "Create ONE waist-up production sprite for Three Kingdoms game. Attached are STYLE REFERENCES only. Match chunky dark brown outlines, oversized adult chibi head, bold warm cel-shading, compact cartoon proportions. Single centered front three-quarter figure, top of helmet/hair fully inside image with 5% margin, shoulders/hands/waist visible. Head and headwear occupy upper 50 percent. Simple shapes, no realistic rendering, no 3D, no text or frame. BACKGROUND: perfectly uniform solid pure magenta #FF00FF for the game's chroma-key renderer. Absolutely NO checkerboard, NO scenery, no ground shadow. Character: Li Jue, ruthless western army commander, thin long moustache, sun-browned skin and sharp cheekbones, battered dark helmet, rust-red armor and fur collar, hand on curved sword at belt.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-64d076fa-59cc-4fc6-ae41-c53aa9b51a38.png",
+      "target": "public/art/characters/lijue.png"
+    },
+    {
+      "id": "yanliang",
+      "name": "顏良",
+      "prompt": "Create ONE waist-up production sprite for Three Kingdoms game. Attached are STYLE REFERENCES only. Match chunky dark brown outlines, oversized adult chibi head, bold warm cel-shading, compact cartoon proportions. Single centered front three-quarter figure, top of helmet/hair fully inside image with 5% margin, shoulders/hands/waist visible. Head and headwear occupy upper 50 percent. Simple shapes, no realistic rendering, no 3D, no text or frame. BACKGROUND: perfectly uniform solid pure magenta #FF00FF for the game's chroma-key renderer. Absolutely NO checkerboard, NO scenery, no ground shadow. Character: Yan Liang, proud strong general, square dark beard, confident large eyes, bronze-green helmet with cream plume, ornate muted green armor and white scarf, holds broad saber at side.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-7c38402a-dab3-40e1-bc4e-eb2b6b8a87f6.png",
+      "target": "public/art/characters/yanliang.png"
+    },
+    {
+      "id": "guotu",
+      "name": "郭圖",
+      "prompt": "Create ONE waist-up production sprite for Three Kingdoms game. Attached are STYLE REFERENCES only. Match chunky dark brown outlines, oversized adult chibi head, bold warm cel-shading, compact cartoon proportions. Single centered front three-quarter figure, top of helmet/hair fully inside image with 5% margin, shoulders/hands/waist visible. Head and headwear occupy upper 50 percent. Simple shapes, no realistic rendering, no 3D, no text or frame. BACKGROUND: perfectly uniform solid pure magenta #FF00FF for the game's chroma-key renderer. Absolutely NO checkerboard, NO scenery, no ground shadow. Character: Guo Tu, scheming middle-aged adviser, arching thin eyebrows, thin pointed moustache, narrow smirk, tall black scholar cap, purple brown robe, folded bamboo scroll held near chest.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-04b34130-fd12-450f-9c36-30cacb48475a.png",
+      "target": "public/art/characters/guotu.png"
+    },
+    {
+      "id": "yuanshao",
+      "name": "袁紹",
+      "prompt": "Create ONE waist-up production sprite for Three Kingdoms game. Attached are STYLE REFERENCES only. Match chunky dark brown outlines, oversized adult chibi head, bold warm cel-shading, compact cartoon proportions. Single centered front three-quarter figure, top of helmet/hair fully inside image with 5% margin, shoulders/hands/waist visible. Head and headwear occupy upper 50 percent. Simple shapes, no realistic rendering, no 3D, no text or frame. BACKGROUND: perfectly uniform solid pure magenta #FF00FF for the game's chroma-key renderer. Absolutely NO checkerboard, NO scenery, no ground shadow. Character: Yuan Shao, aristocratic lord, handsome dignified middle-aged face, groomed black moustache and medium beard, gold-edged black ceremonial crown, ivory and burgundy brocade robe over bronze armor, holds command baton.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-94251e9d-7693-403d-a763-9d2c062d59a6.png",
+      "target": "public/art/characters/yuanshao.png"
+    },
+    {
+      "id": "yuantan",
+      "name": "袁譚",
+      "prompt": "Create ONE waist-up production sprite for Three Kingdoms game. Attached are STYLE REFERENCES only. Match chunky dark brown outlines, oversized adult chibi head, bold warm cel-shading, compact cartoon proportions. Single centered front three-quarter figure, top of helmet/hair fully inside image with 5% margin, shoulders/hands/waist visible. Head and headwear occupy upper 50 percent. Simple shapes, no realistic rendering, no 3D, no text or frame. BACKGROUND: perfectly uniform solid pure magenta #FF00FF for the game's chroma-key renderer. Absolutely NO checkerboard, NO scenery, no ground shadow. Character: Yuan Tan, young aristocratic general, clean defined face with small moustache, proud impatient eyebrows, burgundy plume on bronze helmet, maroon and gold armor, ivory cape, hand gripping belt.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-10b13afd-c2b2-4506-a48d-b1bb060f9fa8.png",
+      "target": "public/art/characters/yuantan.png"
+    },
+    {
+      "id": "shenpei",
+      "name": "審配",
+      "prompt": "Create ONE waist-up production sprite for Three Kingdoms game. Attached are STYLE REFERENCES only. Match chunky dark brown outlines, oversized adult chibi head, bold warm cel-shading, compact cartoon proportions. Single centered front three-quarter figure, top of helmet/hair fully inside image with 5% margin, shoulders/hands/waist visible. Head and headwear occupy upper 50 percent. Simple shapes, no realistic rendering, no 3D, no text or frame. BACKGROUND: perfectly uniform solid pure magenta #FF00FF for the game's chroma-key renderer. Absolutely NO checkerboard, NO scenery, no ground shadow. Character: Shen Pei, stern elderly administrator and defender, grey straight beard and strong eyebrows, tall plain black cap, dark green robe with brown armor vest, holds wooden dispatch tablet, unwavering expression.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-48d122ad-4fe2-40f1-94d8-174cf8a06f90.png",
+      "target": "public/art/characters/shenpei.png"
+    },
+    {
+      "id": "tadun",
+      "name": "蹋頓",
+      "prompt": "Create ONE waist-up production sprite for Three Kingdoms game. Attached are STYLE REFERENCES only. Match chunky dark brown outlines, oversized adult chibi head, bold warm cel-shading, compact cartoon proportions. Single centered front three-quarter figure, top of helmet/hair fully inside image with 5% margin, shoulders/hands/waist visible. Head and headwear occupy upper 50 percent. Simple shapes, no realistic rendering, no 3D, no text or frame. BACKGROUND: perfectly uniform solid pure magenta #FF00FF for the game's chroma-key renderer. Absolutely NO checkerboard, NO scenery, no ground shadow. Character: Tadun, Wuhuan cavalry chief, strong wind-weathered face, black braided side hair and thick moustache, fur-edged brown cap, deep blue tunic under leather scale armor, fur mantle, curved bow held at side. Historical northern steppe military clothing, no fantasy horns.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-342b49f0-f3d5-4427-a0cb-34fdfa2d2f24.png",
+      "target": "public/art/characters/tadun.png"
+    }
+  ],
+  "backgrounds": [
+    {
+      "id": "bg-destiny",
+      "name": "天命山河",
+      "prompt": "Create ONE landscape 16:10 game background for 三國夢. Attached image is a STYLE REFERENCE only. Match clean dark ink outlines, warm muted cel-shaded colors, simplified hand-drawn storybook Chinese strategy-game scenery. No photorealism, no 3D, no painterly blur. Production environment art, NOT a screenshot or mockup. No people, no soldiers, no UI, no text, no watermarks. Keep central and lower half quiet to overlay game characters. Scene: Misty Chinese river valley seen from a quiet ancient pavilion at dawn. A warm lantern and unrolled blank scroll on a low table at extreme left, distant winding river and city walls on right, pale golden clouds. Center-left upper sky is simple negative space for game title. Dreamlike yet grounded.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-dce93b66-f382-46ec-84ce-cc2ad5894e7b.png",
+      "target": "public/art/backgrounds/bg-destiny.png"
+    },
+    {
+      "id": "bg-hall",
+      "name": "魏府議事廳",
+      "prompt": "Create ONE landscape 16:10 game background for 三國夢. Attached image is a STYLE REFERENCE only. Match clean dark ink outlines, warm muted cel-shaded colors, simplified hand-drawn storybook Chinese strategy-game scenery. No photorealism, no 3D, no painterly blur. Production environment art, NOT a screenshot or mockup. No people, no soldiers, no UI, no text, no watermarks. Keep central and lower half quiet to overlay game characters. Scene: Wei dynasty command hall interior, reddish wooden pillars at far edges, a low strategy table with bamboo slips at rear, dignified blue-grey hanging cloth, warm lantern light. Wide empty foreground and center for six chibi officers and game controls. No throne room gold excess.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-e942481b-bb65-41fe-9b08-8a4ffd640928.png",
+      "target": "public/art/backgrounds/bg-hall.png"
+    },
+    {
+      "id": "bg-drill",
+      "name": "軍營校場",
+      "prompt": "Create ONE landscape 16:10 game background for 三國夢. Attached image is a STYLE REFERENCE only. Match clean dark ink outlines, warm muted cel-shaded colors, simplified hand-drawn storybook Chinese strategy-game scenery. No photorealism, no 3D, no painterly blur. Production environment art, NOT a screenshot or mockup. No people, no soldiers, no UI, no text, no watermarks. Keep central and lower half quiet to overlay game characters. Scene: Han dynasty army training courtyard at morning, timber palisades and weapon racks toward rear edges, blue banners without writing, distant command tent, broad empty packed-earth foreground suitable for character sprites.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-839bf9a8-b427-4b9a-b48a-8efa5b029170.png",
+      "target": "public/art/backgrounds/bg-drill.png"
+    },
+    {
+      "id": "bg-study",
+      "name": "書齋",
+      "prompt": "Create ONE landscape 16:10 game background for 三國夢. Attached image is a STYLE REFERENCE only. Match clean dark ink outlines, warm muted cel-shaded colors, simplified hand-drawn storybook Chinese strategy-game scenery. No photorealism, no 3D, no painterly blur. Production environment art, NOT a screenshot or mockup. No people, no soldiers, no UI, no text, no watermarks. Keep central and lower half quiet to overlay game characters. Scene: Han dynasty scholar study, bamboo scroll shelves and low desk to left and right rear, paper lattice window, inkstone and warm lamp, spacious empty middle floor, calming blue dusk outside.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-3f1ea3a0-60cb-48c8-9625-f39b9f5d1025.png",
+      "target": "public/art/backgrounds/bg-study.png"
+    },
+    {
+      "id": "bg-field",
+      "name": "屯田郊野",
+      "prompt": "Create ONE landscape 16:10 game background for 三國夢. Attached image is a STYLE REFERENCE only. Match clean dark ink outlines, warm muted cel-shaded colors, simplified hand-drawn storybook Chinese strategy-game scenery. No photorealism, no 3D, no painterly blur. Production environment art, NOT a screenshot or mockup. No people, no soldiers, no UI, no text, no watermarks. Keep central and lower half quiet to overlay game characters. Scene: Wei farmland with rice and wheat terraces, small irrigation waterwheel and village roofs in distance, willow at far edge, broad empty sandy courtyard foreground for characters, warm afternoon, calm pastoral setting.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-e7287ca2-fc51-4520-8326-3f706db860c7.png",
+      "target": "public/art/backgrounds/bg-field.png"
+    },
+    {
+      "id": "bg-battle-1",
+      "name": "黃巾戰場",
+      "prompt": "Create ONE landscape 16:10 game background for 三國夢. Attached image is a STYLE REFERENCE only. Match clean dark ink outlines, warm muted cel-shaded colors, simplified hand-drawn storybook Chinese strategy-game scenery. No photorealism, no 3D, no painterly blur. Production environment art, NOT a screenshot or mockup. No people, no soldiers, no UI, no text, no watermarks. Keep central and lower half quiet to overlay game characters. Scene: Yellow Turban campaign: rural Chinese village outskirts, modest thatched houses far behind, yellow blank banners and distant wooden palisade, dusty late-afternoon ochre sky. Wide flat EMPTY battlefield foreground and middle, horizontal ground, no fires. Background scenery only at back and edges.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-377bb63e-9e37-484d-ad21-2eb5d402339f.png",
+      "target": "public/art/backgrounds/bg-battle-1.png"
+    },
+    {
+      "id": "bg-battle-2",
+      "name": "虎牢關戰場",
+      "prompt": "Create ONE landscape 16:10 game background for 三國夢. Attached image is a STYLE REFERENCE only. Match clean dark ink outlines, warm muted cel-shaded colors, simplified hand-drawn storybook Chinese strategy-game scenery. No photorealism, no 3D, no painterly blur. Production environment art, NOT a screenshot or mockup. No people, no soldiers, no UI, no text, no watermarks. Keep central and lower half quiet to overlay game characters. Scene: Hulao Pass: monumental ancient stone gate and fortress walls far in background, rocky mountain pass on sides, slate blue storm clouds, red blank banners on distant walls. Wide flat EMPTY packed-earth battlefield foreground and middle, horizontal ground.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-a1118c29-9680-490a-b2e0-38e6dafb8355.png",
+      "target": "public/art/backgrounds/bg-battle-2.png"
+    },
+    {
+      "id": "bg-battle-3",
+      "name": "官渡戰場",
+      "prompt": "Create ONE landscape 16:10 game background for 三國夢. Attached image is a STYLE REFERENCE only. Match clean dark ink outlines, warm muted cel-shaded colors, simplified hand-drawn storybook Chinese strategy-game scenery. No photorealism, no 3D, no painterly blur. Production environment art, NOT a screenshot or mockup. No people, no soldiers, no UI, no text, no watermarks. Keep central and lower half quiet to overlay game characters. Scene: Guandu campaign: distant wooden army palisades and grain-store silhouettes, tall reeds and low riverbank at far sides, hazy warm sunset, blue and burgundy blank banners far rear. Wide flat EMPTY dusty battlefield foreground and middle, horizontal ground. No fire already burning.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-3e179f5b-cf0d-4cd2-a524-81d5e5532993.png",
+      "target": "public/art/backgrounds/bg-battle-3.png"
+    },
+    {
+      "id": "bg-battle-4",
+      "name": "河北戰場",
+      "prompt": "Create ONE landscape 16:10 game background for 三國夢. Attached image is a STYLE REFERENCE only. Match clean dark ink outlines, warm muted cel-shaded colors, simplified hand-drawn storybook Chinese strategy-game scenery. No photorealism, no 3D, no painterly blur. Production environment art, NOT a screenshot or mockup. No people, no soldiers, no UI, no text, no watermarks. Keep central and lower half quiet to overlay game characters. Scene: Northern Hebei campaign: distant frontier fort, dry golden grassland, sparse bare trees at edges and low rugged mountains, cold pale dawn, muted blue and ochre palette. Wide flat EMPTY battlefield foreground and middle, horizontal ground.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-4f60baba-6ba8-48e7-81ba-456922cf2724.png",
+      "target": "public/art/backgrounds/bg-battle-4.png"
+    }
+  ],
+  "ui": [
+    {
+      "id": "ui-paper",
+      "prompt": "Use case: game UI asset. Create ONE reusable flat rectangular parchment panel texture, edge-to-edge full canvas 3:2 landscape, no outside margin. Reference image provides bold cartoon outline and warm parchment shading style only. For 三國夢, add thin dark brown wooden perimeter, restrained bronze-gold corner fittings and subtle ancient Chinese cloud motifs confined to the outer 6% border. Center 80% is uniform pale warm ivory paper, quiet and highly readable beneath dark game text. Straight rectangular corners, symmetric edges suitable for nine-slice scaling. No text, no symbols in center, no mockup, no other items, no background around panel, no magenta.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-08c17a59-324a-42d7-867b-c650c9586509.png",
+      "target": "public/art/ui/ui-paper.png"
+    },
+    {
+      "id": "ui-button",
+      "prompt": "Use case: game UI asset. Create ONE reusable horizontal 3:1 button texture, full canvas edge-to-edge no outside margin. Match the reference's chunky dark ink linework and warm cel-shaded Chinese strategy game style. A dark oxblood lacquer wooden plaque, antique bronze thin raised border, modest corner fittings, very subtle cloud incisions only near edges. Large central 80% dark burgundy plain space where readable cream game text will be rendered separately. Straight rectangular corners, symmetric horizontal plaque. No text, no lettering, no icons, no checkerboard, no magenta, no mockup.",
+      "source": "C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-5bd64afc-7dc2-41fc-82e1-407bd51e726a.png",
+      "target": "public/art/ui/ui-button.png"
+    }
+  ],
+  "copied": [
+    {
+      "id": "caocao",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/char_o_caocao.png",
+      "target": "public/art/characters/caocao.png"
+    },
+    {
+      "id": "caocao",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/face_o_caocao.png",
+      "target": "public/art/characters/caocao-face.png"
+    },
+    {
+      "id": "chengyu",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/char_o_chengyu.png",
+      "target": "public/art/characters/chengyu.png"
+    },
+    {
+      "id": "chengyu",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/face_o_chengyu.png",
+      "target": "public/art/characters/chengyu-face.png"
+    },
+    {
+      "id": "guojia",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/char_o_guojia.png",
+      "target": "public/art/characters/guojia.png"
+    },
+    {
+      "id": "guojia",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/face_o_guojia.png",
+      "target": "public/art/characters/guojia-face.png"
+    },
+    {
+      "id": "xunyu",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/char_o_xunyu.png",
+      "target": "public/art/characters/xunyu.png"
+    },
+    {
+      "id": "xunyu",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/face_o_xunyu.png",
+      "target": "public/art/characters/xunyu-face.png"
+    },
+    {
+      "id": "huangfusong",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/char_o_huangfusong.png",
+      "target": "public/art/characters/huangfusong.png"
+    },
+    {
+      "id": "huangfusong",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/face_o_huangfusong.png",
+      "target": "public/art/characters/huangfusong-face.png"
+    },
+    {
+      "id": "simayi",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/char_o_simayi.png",
+      "target": "public/art/characters/simayi.png"
+    },
+    {
+      "id": "simayi",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/face_o_simayi.png",
+      "target": "public/art/characters/simayi-face.png"
+    },
+    {
+      "id": "zhangjiao",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/char_o_zhangjiao.png",
+      "target": "public/art/characters/zhangjiao.png"
+    },
+    {
+      "id": "zhangjiao",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/face_o_zhangjiao.png",
+      "target": "public/art/characters/zhangjiao-face.png"
+    },
+    {
+      "id": "zhangliang",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/char_o_zhangliang.png",
+      "target": "public/art/characters/zhangliang.png"
+    },
+    {
+      "id": "zhangliang",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/face_o_zhangliang.png",
+      "target": "public/art/characters/zhangliang-face.png"
+    },
+    {
+      "id": "lvbu",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/char_o_lvbu.png",
+      "target": "public/art/characters/lvbu.png"
+    },
+    {
+      "id": "lvbu",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/face_o_lvbu.png",
+      "target": "public/art/characters/lvbu-face.png"
+    },
+    {
+      "id": "lord",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/char_o_lord.png",
+      "target": "public/art/characters/lord.png"
+    },
+    {
+      "id": "lord",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/face_o_lord.png",
+      "target": "public/art/characters/lord-face.png"
+    },
+    {
+      "id": "npc_soldier",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/char_o_npc_soldier.png",
+      "target": "public/art/characters/npc_soldier.png"
+    },
+    {
+      "id": "npc_soldier",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/face_o_npc_soldier.png",
+      "target": "public/art/characters/npc_soldier-face.png"
+    },
+    {
+      "id": "dianwei",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/char_off_dianwei.png",
+      "target": "public/art/characters/dianwei.png"
+    },
+    {
+      "id": "dianwei",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/face_off_dianwei.png",
+      "target": "public/art/characters/dianwei-face.png"
+    },
+    {
+      "id": "jiaxu",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/char_off_jiaxu.png",
+      "target": "public/art/characters/jiaxu.png"
+    },
+    {
+      "id": "jiaxu",
+      "source": "C:/Users/DerekHChang/Desktop/GreetingsMyLord/GreetingsMyLord/src/assets/art/chars/face_off_jiaxu.png",
+      "target": "public/art/characters/jiaxu-face.png"
+    }
+  ]
+}

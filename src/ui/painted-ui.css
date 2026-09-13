@@ -1,0 +1,85 @@
+
+/* Painted textures based on the approved practice-screen artwork. */
+:root{--paper-art:url('../../public/art/ui/parchment-frame-v2.png');--cards-art:url('../../public/art/ui/practice-cards-v2.png');--icons-art:url('../../public/art/ui/practice-icons-v2.png')}
+.run-screen>.player-panel,.run-screen>.participants{border:20px solid transparent;border-image:var(--paper-art) 150 / 20px;background:#382014;border-radius:0;padding:4px 0;box-shadow:0 5px 5px #1d100dbb}
+.run-screen>.player-panel:before,.participants:before{display:none}
+.run-screen>.player-panel{height:405px;width:285px;left:12px}
+.run-screen>.participants{width:285px;right:12px}
+.run-screen .player-panel-title,.participants h2,.game-stage .participant-card,.run-screen .career-meter,.participant-signals span,.game-stage:has(.run-screen) .game-bottom button,.run-screen .journal-toggle{border:10px solid transparent;border-image:var(--paper-art) 150 fill / 10px;background:none;border-radius:0;color:#291607;text-shadow:none;box-shadow:none}
+.run-screen .player-panel-title{height:49px;padding:0;justify-content:center;align-items:center;font-size:26px}
+.participants h2{padding:0;font-size:26px}
+.participant-action{color:#e9c68b;margin:3px 0 7px}
+.game-stage .participant-card{height:89px;padding:2px 100px 2px 4px;overflow:hidden}
+.participant-card .character-face{width:108px;height:108px;right:-3px;top:-8px;z-index:0}
+.participant-card b{position:relative;z-index:1;font-size:25px;margin:0 0 3px}
+.participant-card>span{position:relative;z-index:1}
+.participant-card meter{position:relative;z-index:1;width:77px;height:15px;margin-left:24px}
+.participant-card:after{content:'';position:absolute;left:0;bottom:3px;width:27px;height:26px;background:var(--icons-art) 0 100% / 400% 200%;mix-blend-mode:multiply}
+.participant-card meter::-webkit-meter-bar{background:#22211b;border:2px solid #5c401e;box-shadow:0 0 0 1px #d3ad58;border-radius:7px}
+.participant-card meter::-webkit-meter-optimum-value{background:linear-gradient(#c9ff75,#79c92d)}
+.participant-list{max-height:290px;gap:7px}
+.participant-signals{gap:5px;margin-top:7px}
+.participant-signals span{font-size:11px;padding:0;filter:brightness(.65)}
+.participant-signals .available{filter:none;color:#6d2711;background:none;border-color:transparent}
+.run-screen .stat-grid{gap:5px;margin:5px 0}
+.run-screen .stat-cell{position:relative;height:48px;padding:7px 5px;border:5px solid transparent!important;border-image:var(--paper-art) 150 / 5px;border-radius:0;background:#713027}
+.run-screen .stat-cell.attr-war{background:#743319}.run-screen .stat-cell.attr-int{background:#204956}.run-screen .stat-cell.attr-pol{background:#285233}
+.run-screen .stat-top{height:25px;gap:5px}
+.run-screen .stat-glyph{border:0;background:none;box-shadow:none;width:27px;color:#fff0ba;font-size:25px}
+.painted-stat-icon{display:block;width:30px;height:30px;flex-shrink:0;background-image:var(--cards-art);background-size:400% 150%;border:1px solid #d3af58;border-radius:50%}
+.painted-stat-lead{background-position:0 0}.painted-stat-war{background-position:33.333% 0}.painted-stat-int{background-position:66.667% 0}.painted-stat-pol{background-position:100% 0}
+.run-screen .stat-top strong{font-size:23px;margin-left:auto}
+.run-screen .grade-medal{width:17px;height:23px;margin:0}
+.stat-preview{font-size:20px;min-width:40px}.stat-preview small{display:none}
+.run-screen .stat-track{position:absolute;left:71px;bottom:1px;width:85px;height:6px}
+.run-screen .career-row{padding:0;gap:5px}
+.run-screen .career-meter{padding:0;height:42px;display:flex;gap:7px}
+.run-screen .career-icon{background-image:var(--icons-art);background-size:400% 200%;width:29px;height:27px;mix-blend-mode:multiply;flex-shrink:0}
+.run-screen .career-icon.civil{background-position:33.333% 100%}.run-screen .career-icon.martial{background-position:66.667% 100%}
+.run-screen .career-icon>*{visibility:hidden}
+.run-screen .career-name{color:#271709;font-size:17px}
+.run-screen .career-list-button{border:0;background:none;color:#65411a;box-shadow:none}
+.run-screen .career-detail{flex:1}
+.run-screen .career-track{height:5px}
+.game-stage .command-token{border:0!important;border-radius:0;display:block;height:231px;padding:0;background-image:var(--cards-art)!important;background-size:400% 100%!important;background-repeat:no-repeat!important;box-shadow:0 5px 5px #1c0f0b99}
+.game-stage .command-token.attr-lead{background-position:0 0}.game-stage .command-token.attr-war{background-position:33.333333% 0}.game-stage .command-token.attr-int{background-position:66.666667% 0}.game-stage .command-token.attr-pol{background-position:100% 0}
+.game-stage .command-token:before,.game-stage .command-token:after,.command-token .action-art{display:none}
+.command-token .command-name{position:absolute;top:63%;height:15%;left:8px;right:8px;color:#211205;text-shadow:none;font-size:29px;line-height:34px;letter-spacing:4px}
+.command-token .command-gain{position:absolute;bottom:10px;right:17px;font-size:27px;color:#fff2bb;text-shadow:1px 2px #211108}
+.command-token .command-companions{position:absolute;bottom:10px;left:12px;max-width:90px;display:flex}
+.command-token .command-companions .officer-portrait{width:33px;height:33px;border:2px solid #d8b05e;margin-right:-6px}
+.command-token .command-solo{font-size:12px;color:#f7dca2}
+.run-screen .command-dock{bottom:9px;height:253px;left:194px;right:194px}
+.command-tokens{gap:20px}
+.command-dock .dock-heading{display:none}
+.run-screen .scene-notice{bottom:274px}
+.run-screen .journal-toggle{bottom:274px;padding:0 8px}
+.training-ink{display:none}
+.run-screen .scene-caption{top:35px}
+.run-screen .scene-caption>span{display:none}
+.run-screen .scene-caption h1{color:#20140b;text-shadow:1px 1px #fff0b8,-1px -1px #fff0b8,0 0 9px #fff2cc;font-size:34px}
+.run-screen .scene-caption p{color:#271609;background:#f9e2adcc;text-shadow:none;display:inline-block;padding:3px 12px}
+.game-stage:has(.run-screen)>.game-bottom{border:12px solid transparent;border-image:var(--paper-art) 150 / 12px;background:#4b2117;height:67px;padding:0 9px;gap:10px}
+.game-stage:has(.run-screen) .game-bottom button{height:45px;min-width:105px;padding:0 7px 0 35px;position:relative;font-size:19px;font-weight:900}
+.game-stage:has(.run-screen) .game-bottom button:before,.run-bottom-info>b:before{content:'';position:absolute;left:0;top:0;width:30px;height:27px;background-image:var(--icons-art);background-size:400% 200%;mix-blend-mode:multiply}
+.game-stage:has(.run-screen) .game-bottom nav button:nth-child(2):before{background-position:0 0}
+.game-stage:has(.run-screen) .game-bottom nav button:nth-child(3):before{background-position:33.333% 0}
+.game-stage:has(.run-screen) .game-bottom .bottom-settings:before{background-position:66.667% 0}
+.run-bottom-info{gap:16px}
+.run-bottom-info>b{font-size:24px;color:#ffe199;position:relative;padding-left:0}
+.run-bottom-info>b:before{display:none}
+.run-bottom-info>strong{border:9px solid transparent;border-image:var(--paper-art) 150 / 9px;background:#291c12;padding:0 12px;margin-left:0;color:#ffe4a3}
+.run-screen .command-tooltip,.game-stage:has(.run-screen) .settings-paper,.run-screen .journal-paper{border:20px solid transparent;border-image:var(--paper-art) 150 fill / 20px;background:none;color:#2c1a0d}
+.game-stage:has(.run-screen) .settings-paper button{border:10px solid transparent;border-image:var(--paper-art) 150 fill / 10px;background:none;color:#2c1a0d}
+
+:root{--cards-art:url('../../public/art/ui/practice-cards-v3.png')}
+.game-stage .command-token{background-size:200% 200%!important}
+.game-stage .command-token.attr-war{background-position:100% 0}
+.game-stage .command-token.attr-int{background-position:0 100%}
+.game-stage .command-token.attr-pol{background-position:100% 100%}
+.painted-stat-icon{background-size:200% 300%}
+.painted-stat-war{background-position:100% 0}.painted-stat-int{background-position:0 75%}.painted-stat-pol{background-position:100% 75%}
+.participant-card .character-face{width:89px;height:89px;top:-5px;right:0}
+.participant-card small{position:relative;z-index:1;background:#efd7a7}
+.run-screen .player-panel-title,.participants h2,.participant-card b,.command-token .command-name,.run-screen .scene-caption h1,.run-bottom-info>b{font-family:'DFKai-SB','KaiTi','PMingLiU',serif;font-weight:900}
+.run-screen .command-tooltip{background:#f6e0b5;opacity:1}

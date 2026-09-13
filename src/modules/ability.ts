@@ -18,6 +18,13 @@ import type { EffectSource } from './effect.js';
 
 export const traits = (ctx: RunContext): readonly TraitId[] => ctx.state.abilities.traits;
 export const skills = (ctx: RunContext): readonly SkillId[] => ctx.state.abilities.skills;
+export const levelOf = (id: SkillId | TraitId, ctx: RunContext): number => ctx.state.abilities.levels?.[String(id)] ?? 1;
+export const powerOf = (id: SkillId | TraitId, ctx: RunContext): number =>
+  ctx.defs.single('growthRule').learning.power[levelOf(id, ctx) - 1] ?? 1;
+export const battleSkill = (id: SkillId, ctx: RunContext): SkillDef => {
+  const def = skillDef(id, ctx);
+  return { ...def, action: { ...def.action, ratio: def.action.ratio * powerOf(id, ctx) } };
+};
 
 export const hasTrait = (id: TraitId, ctx: RunContext): boolean =>
   ctx.state.abilities.traits.some((x) => String(x) === String(id));
@@ -86,6 +93,6 @@ export function traitEffectSource(): EffectSource {
   return {
     collect: (ctx: RunContext): readonly ResolvedEffectRef[] => ctx.state.abilities.traits
       .flatMap((id) => traitDef(id, ctx).effects
-        .map((ref) => ({ ...ref, sourceId: `trait/${String(id)}` }))),
+        .map((ref) => ({ ...ref, magnitude: powerOf(id, ctx), sourceId: `trait/${String(id)}` }))),
   };
 }

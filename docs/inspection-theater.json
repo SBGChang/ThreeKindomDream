@@ -1,0 +1,14 @@
+{
+  "mode": "built-in image_gen",
+  "asset": "public/art/theater/inspection-loop.png",
+  "prompt": "Use case: stylized-concept. Production ANIMATION SPRITESHEET for a cute Three Kingdoms military inspection miniature theater. Reference image ONLY provides hero identity (brown spiky tied hair, red scarf, bronze armor). Redesign hero MUCH CUTER, 1.7 heads tall, enormous round head, tiny stubby body/feet, rounded mitten hands, simple thick ink and warm cel shading, classic raising-simulation game miniature characters. Canvas 2048x1536, EXACT 4 columns x4 rows =16 equal 512x384 landscape frames. Frames touch edges NO gutters NO borders NO labels. Each frame is SAME locked camera and SAME small sandy parade-ground diorama, tiny wooden fence and two red flags behind, small desk and bamboo muster roll left-center. Hero on left at same position, blue-gray helmet chibi soldier on right with two tiny soldiers behind him, ALL full bodies entirely within cell. Every frame is a complete identical-composition mini-scene. Frame sequence row-major seamless loop: 1-4 hero looking down at bamboo roll while front soldier begins raising his hand to salute; 5-8 soldier salutes and reports, hero lifts chin to look at him; 9-12 hero gives small approving nod, soldier holds salute; 13-16 soldier lowers hand and hero looks back down at roll, frame16 closely matches frame1. Subtle changes per frame, no camera movement, no zoom, no changes to outfits/background/positions/number of characters. Hero small cheerful serious face, soldier nervous earnest face. No words no speech bubbles no UI no letters no numbers. Strong temporal consistency, same art and poses smoothly progressing, short modest idle-like loop not cinematic. Background is a simple painted little courtyard identical in every tile. Do not draw 16 unrelated illustrations.",
+  "columns": 4,
+  "rows": 4,
+  "frames": 16,
+  "fps": 8,
+  "loopMs": 2000,
+  "introMs": 350,
+  "performanceMs": 4350,
+  "trigger": "slot subtitle 校閱",
+  "preview": "http://127.0.0.1:5186/?art=inspection"
+}

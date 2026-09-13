@@ -1,0 +1,234 @@
+/* No exposed scrollbars; longer collections support pointer dragging. */
+.game-stage,.game-stage *{scrollbar-width:none!important}.game-stage::-webkit-scrollbar,.game-stage *::-webkit-scrollbar{display:none!important;width:0;height:0}
+.is-drag-scrolling,.is-drag-scrolling *{cursor:grabbing!important;user-select:none!important}
+.game-stage .art-control,.game-stage .realm-heading>.art-control{width:48px!important;height:48px!important;min-width:48px!important;min-height:48px!important;border:8px solid transparent!important;border-image:var(--paper-art) 150 fill / 8px!important;border-radius:0!important;padding:2px!important;background:none!important;display:inline-grid;place-items:center;box-shadow:0 3px 4px #1b0d0966;flex-shrink:0}
+.art-control svg,.art-control .realm-icon{width:100%!important;height:100%!important;display:block;filter:drop-shadow(0 2px 1px #25100766)}
+.game-stage .art-control:focus-visible{outline:3px solid #8be8ff;outline-offset:3px}
+.dream-entry{position:absolute;inset:0;padding:14px 24px 8px;background:url('/art/realms/destiny-v2.png') center/cover;color:#402815;overflow:hidden}
+.entry-heading{height:68px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.entry-heading>div{display:flex;align-items:center;gap:16px;padding:0 20px;border:12px solid transparent;border-image:var(--paper-art) 150 fill / 12px;min-width:300px;height:64px}.entry-heading h1{font:900 30px 'DFKai-SB',serif;margin:0}.entry-heading>div>.realm-icon{width:44px;height:44px}.entry-heading>div>span{font-size:15px;color:#865c30}
+.entry-grid{display:grid;grid-template-columns:1.1fr 1fr;grid-template-rows:1.22fr 1fr;gap:14px;height:calc(100% - 142px);min-height:0}
+.entry-card{border:17px solid transparent;border-image:var(--paper-art) 150 fill / 17px;min-height:0;padding:1px 9px 5px;overflow:hidden;box-shadow:0 5px 9px #11070666}
+.entry-card>header{height:41px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #ab793e66;margin-bottom:7px}.entry-card header>.realm-icon{width:35px;height:35px}.entry-card h2{font:900 23px 'DFKai-SB',serif;margin:0}.entry-card header>b{margin-left:auto;font:900 19px Georgia,serif;color:#88602d}.entry-card header>b.over-budget{color:#b43120}
+.entry-card-body{height:calc(100% - 49px);overflow:auto;overscroll-behavior:contain}.entry-empty{width:100%;height:100%;display:flex;align-items:center;justify-content:center;gap:16px;color:#937443;font-size:14px}.entry-empty>.realm-icon{width:65px;height:65px;filter:grayscale(.8);opacity:.35}
+.entry-aptitude-rows{height:calc(100% - 49px);display:grid;grid-template-rows:repeat(4,1fr);gap:4px}.entry-aptitude{display:flex;align-items:center;gap:8px;min-height:0;border-bottom:1px solid #a3743633}.entry-stat-icon{width:36px;height:36px;display:inline-block;flex-shrink:0;background-image:url('../../public/art/ui/demo-match/stat-rows.png');background-size:600% 400%;background-position-x:0}.entry-stat-lead{background-position-y:0}.entry-stat-war{background-position-y:33.333%}.entry-stat-int{background-position-y:66.667%}.entry-stat-pol{background-position-y:100%}
+.entry-aptitude>b{font:900 21px 'DFKai-SB',serif}.entry-grades{display:flex;flex:1;gap:4px;justify-content:center}.game-stage .entry-grades button{min-width:29px;height:30px;margin:0;padding:1px 4px;border:2px solid #ad844b;border-radius:4px;background:#f4e2b9;font:900 16px Georgia,serif;color:#69441f}.game-stage .entry-grades button[aria-pressed=true]{background:#8d321f;color:#ffe991;border-color:#efc872;box-shadow:0 0 0 1px #5d3216}.game-stage .entry-grades button:disabled{opacity:.3}.entry-cap{display:grid;min-width:38px;text-align:center;font:900 17px Georgia,serif}.entry-cap small{font:10px sans-serif;color:#9b764b}
+.entry-talents{display:grid;grid-template-columns:1fr;align-content:start;gap:6px}.game-stage .entry-talents>button{display:flex;align-items:center;gap:9px;text-align:left;padding:7px 9px;background:#ab793616;border:1px solid #bd9b6055;border-radius:3px;color:#52341e;min-height:57px}.entry-talents button>.realm-icon{width:33px;height:33px}.entry-talents button>span{flex:1;min-width:0}.entry-talents b{font-size:15px;display:block}.entry-talents small{font-size:11px;line-height:1.4;display:block;margin-top:3px}.entry-talents strong{font:900 18px Georgia,serif}
+.entry-choices{display:flex;flex-wrap:wrap;align-content:start;gap:8px}.game-stage .entry-choices>button{display:flex;flex-direction:column;align-items:center;justify-content:center;width:96px;min-height:86px;padding:4px;border:1px solid #bc995c66;border-radius:3px;background:#ad743414;color:#50321b;font-size:13px}.entry-choices .realm-icon,.entry-choices .character-face{width:59px;height:59px;object-fit:contain}.game-stage .entry-card button[aria-pressed=true]{border-color:#d69531;box-shadow:inset 0 0 0 2px #e9c473;background-color:#efd28c88}.entry-card-body:focus-visible{outline:2px solid #8bd9eb;outline-offset:-2px}
+.entry-footer{height:59px;display:flex;align-items:center;justify-content:flex-end;gap:15px;padding-top:8px}.entry-validation{flex:1;max-height:49px;overflow:auto;display:flex;flex-direction:column;color:#ffdf98;font-size:12px;text-shadow:1px 1px #391508}.game-stage .entry-confirm{display:flex;gap:10px;align-items:center;justify-content:center;min-width:155px;height:52px;border:11px solid transparent;border-image:var(--paper-art) 150 fill / 11px;background:none;padding:0 18px;color:#572b17;font:900 25px 'DFKai-SB',serif}.entry-confirm .realm-icon{width:33px;height:33px}.entry-confirm:disabled{filter:grayscale(1);opacity:.5}
+.notable-detail-paper{position:relative;width:580px;height:380px;display:grid;grid-template-columns:52% 48%;border:22px solid transparent;border-image:var(--paper-art) 150 fill / 22px;padding:12px 20px 10px 2px;color:#392312;box-shadow:0 12px 35px #15090488}
+.notable-detail-paper>.panel-close{position:absolute;right:0;top:0;z-index:3}.notable-detail-portrait{display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse,#bc733b26,transparent 70%)}.notable-detail-portrait .character-halfbody{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 7px 4px #683a2144)}
+.notable-detail-info{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:15px 4px 0;gap:12px}.notable-detail-info h1{font:900 33px 'DFKai-SB',serif;margin:0;letter-spacing:4px;color:#422714}.notable-role{font-size:12px;padding:2px 14px;border:1px solid #af693a;color:#9a4b28}
+.notable-affinity{display:flex;align-items:center;width:100%;gap:8px}.notable-affinity>.ui-symbol{width:38px;height:38px}.notable-affinity-track{flex:1;height:24px;border:4px ridge #a98240;border-radius:11px;background:linear-gradient(#080b09,#2c3027);padding:2px;overflow:hidden;box-shadow:inset 0 2px 3px #000}.notable-affinity-track i{display:block;height:100%;border-radius:5px;background:linear-gradient(#deffa5,#92dc42 50%,#5fa72a)}
+.notable-specialty{display:flex;align-items:center;gap:7px}.notable-specialty b{font:900 21px 'DFKai-SB',serif}.game-stage .notable-learn{width:65px!important;height:58px!important;border:0!important;border-image:none!important;background:none!important;box-shadow:none!important}.notable-learn .realm-icon{filter:drop-shadow(0 4px 2px #68371766)}
+
+.notable-detail-paper{grid-template-rows:minmax(0,1fr)}.notable-detail-portrait{min-height:0;height:100%;overflow:hidden}.notable-detail-portrait .character-halfbody{max-height:100%;min-height:0}
+.game-stage .entry-aptitude .entry-grades button[aria-pressed=true]{background:#84331f;color:#fff0ba;border-color:#e5b757;text-shadow:0 1px #3b1b10}
+
+.settings-paper{position:relative}
+
+/* Bespoke entry scenes: shared navigation, distinct presentation for each system. */
+.entry-tabbed{display:flex;flex-direction:column;padding:8px 22px;background:#211912;gap:0}
+.entry-tabbed .entry-heading{height:54px;flex-shrink:0;margin:0 0 4px}
+.entry-tabbed .entry-heading>div{background:none;border:0;border-image:none;box-shadow:none;color:#ffdf9b;height:48px;padding:0 8px;gap:12px}
+.entry-tabbed .entry-heading h1{color:#ffe2a0;font-size:28px;letter-spacing:6px}
+.entry-tabbed .entry-heading>div>span{color:#c6a475}
+.entry-tabs{display:flex;gap:7px;height:59px;flex-shrink:0;padding-left:20px;z-index:2}
+.game-stage .entry-tabs>button{display:flex;align-items:center;gap:12px;justify-content:center;width:177px;margin:0;height:59px;border:2px solid #a38243;border-bottom:0;border-radius:15px 15px 0 0;background:linear-gradient(#57402e,#2d201b);color:#c5ae83;font:900 24px 'DFKai-SB',serif;padding:3px 18px;box-shadow:inset 0 2px #efd49144}
+.entry-tabs .realm-icon{width:39px;height:39px}
+.game-stage .entry-tabs>button[aria-selected=true]{background:linear-gradient(#f7d78d,#ce994b);color:#482715;border-color:#ffe3a2;text-shadow:none;box-shadow:0 -3px 15px #f0b25744}
+.game-stage .entry-tabs>button:focus-visible{outline:3px solid #85e4ff;outline-offset:-5px}
+.entry-scene{position:relative;flex:1;min-height:0;background-size:100% 100%;background-position:center;border:2px solid #be9149;border-radius:5px;overflow:hidden;box-shadow:0 8px 20px #0008}
+.entry-tabbed .entry-grid{position:absolute;inset:0;display:block;height:auto}
+.entry-tabbed .entry-card[hidden]{display:none}
+.entry-tabbed .entry-card{position:absolute;left:41%;right:5%;top:8%;bottom:10%;border:0;border-image:none;padding:12px 20px;box-shadow:none;background:none}
+.entry-tabbed .entry-aptitudes{left:49%;right:7%;top:7%;bottom:9%}
+.entry-tabbed .entry-card>header{height:47px;margin:0 0 15px;gap:12px;border-bottom:2px solid #9f713b55}
+.entry-tabbed .entry-card h2{font-size:27px;letter-spacing:5px}
+.entry-tabbed .entry-card header>b{font-size:23px}
+.entry-tabbed .entry-aptitude-rows{height:calc(100% - 63px);gap:6px}
+.entry-tabbed .entry-aptitude{gap:10px}
+.entry-tabbed .entry-stat-icon{width:44px;height:44px}
+.entry-tabbed .entry-aptitude>b{font-size:27px}
+.entry-tabbed .entry-grades{gap:5px}
+.game-stage .entry-tabbed .entry-grades button{min-width:31px;height:38px;font-size:19px;padding:2px}
+.entry-tabbed .entry-cap{font-size:24px;min-width:42px}
+.entry-tabbed .entry-cap small{font-size:11px}
+.entry-incarnation{position:absolute;left:8%;bottom:3%;width:29%;height:66%;pointer-events:none;filter:drop-shadow(0 8px 5px #25160e88)}
+.entry-incarnation canvas{width:100%;height:100%;object-fit:contain}
+.entry-tabbed .entry-footer{height:65px;flex-shrink:0;padding-top:7px;gap:12px}
+.entry-summary{display:flex;align-items:center;gap:18px;color:#ffe4a8;font:700 17px Georgia,serif}
+.entry-summary>span{display:flex;align-items:center;gap:4px}
+.entry-summary .realm-icon{width:32px;height:32px}
+.entry-tabbed .entry-validation{font-size:12px;text-align:right}
+.entry-tabbed .entry-card-body{height:calc(100% - 63px)}
+.entry-tabbed .entry-talent{left:37%;right:5%;top:5%;bottom:5%;color:#eef1ff}
+.entry-tabbed .entry-talent header{border-color:#d7b77088;color:#ffe8ae}
+.entry-tabbed .entry-talent header>b{color:#ffe8ae}
+.entry-tabbed .entry-talents{grid-template-columns:repeat(2,minmax(0,1fr));gap:17px;padding:8px}
+.game-stage .entry-tabbed .entry-talents>button{position:relative;min-height:120px;border:1px solid #b8a5df;border-radius:22px 4px;background:linear-gradient(135deg,#262552e8,#0a163cdb);padding:14px;color:#e7e9ff;box-shadow:inset 0 0 22px #7778d933,0 4px 8px #0005}
+.entry-tabbed .entry-talents button>.realm-icon{width:49px;height:49px;filter:drop-shadow(0 0 9px #b697ff)}
+.entry-tabbed .entry-talents b{font-size:20px;color:#ffe6ac}
+.entry-tabbed .entry-talents small{font-size:13px;line-height:1.6}
+.entry-tabbed .entry-talents strong{align-self:flex-start;color:#ebce8b}
+.game-stage .entry-tabbed .entry-talents>button[aria-pressed=true]{background:linear-gradient(135deg,#615488ed,#253d72ed);border-color:#ffe5a0;box-shadow:inset 0 0 25px #dad2ff44,0 0 14px #cbb2ff99}
+.entry-tabbed .entry-items{top:20%;bottom:5%;left:39%;right:4%;color:#ffe7b8}
+.entry-tabbed .entry-items header{border-color:#e4b27188}
+.entry-tabbed .entry-items header>b{color:#ffdfa4}
+.entry-tabbed .entry-items .entry-choices{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;padding:6px;align-content:start}
+.game-stage .entry-tabbed .entry-items .entry-choices>button{width:auto;min-height:143px;gap:8px;border:3px ridge #b48b49;border-radius:7px;background:linear-gradient(#2b1811cc,#69472acd);color:#ffe4aa;box-shadow:0 7px 9px #15090577,inset 0 0 16px #0008;font-size:17px}
+.entry-tabbed .entry-items .realm-icon{width:86px;height:86px;filter:drop-shadow(0 5px 3px #0008)}
+.entry-tabbed .entry-items header>.realm-icon{width:35px;height:35px}
+.game-stage .entry-tabbed .entry-items .entry-choices>button[aria-pressed=true]{border-color:#ffe9a6;background:#966026ba;box-shadow:0 0 13px #f9cc5988,inset 0 0 10px #f4d78444}
+.entry-tabbed .entry-empty{grid-column:1/-1;min-height:200px;flex-direction:column;gap:22px;font:900 23px 'DFKai-SB',serif;color:inherit}
+.entry-tabbed .entry-empty>.realm-icon{width:105px;height:105px;filter:none;opacity:.75}
+.entry-tabbed .entry-talent .entry-empty{background:radial-gradient(ellipse,#5265ae55,transparent 68%);color:#dbe6ff}
+.entry-tabbed .entry-items .entry-empty{color:#ffe0a1;text-shadow:0 2px 3px #160b07}
+@media(prefers-reduced-motion:no-preference){.entry-tabbed .entry-card:not([hidden]){animation:entry-reveal .2s ease-out}@keyframes entry-reveal{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}}
+
+.entry-tabbed .entry-talent h2,.entry-tabbed .entry-items h2{color:#ffe8ae;text-shadow:0 2px 3px #17142a}
+.entry-tabbed .entry-card header>b.over-budget{color:#e26349}
+
+.entry-talent-icon{display:block;width:58px;height:58px;flex-shrink:0;background-image:url('/art/ui/entry/talent-medallions-v1.png');background-size:400% 300%;border-radius:50%;box-shadow:0 0 9px #b995e955}
+.entry-tabbed .entry-talents{gap:9px}
+.game-stage .entry-tabbed .entry-talents>button{min-height:79px;padding:7px 10px;gap:8px}
+.entry-tabbed .entry-talents b{font-size:18px}
+.entry-tabbed .entry-talents small{font-size:12px;line-height:1.4}
+
+.entry-tabbed .entry-talents button>.entry-talent-icon{flex:0 0 58px;width:58px;height:58px;border-radius:8px}
+
+.entry-tabbed .entry-items{top:16%;bottom:3%}
+.entry-tabbed .entry-items .entry-choices{gap:8px}
+.game-stage .entry-tabbed .entry-items .entry-choices>button{min-height:94px;gap:3px;font-size:15px;padding:3px}
+.entry-tabbed .entry-items .entry-choices .realm-icon{width:58px;height:58px}
+
+/* Whole painted button silhouettes, with no frame or sliced border. */
+.game-stage .entry-tabbed .entry-art-back,.game-stage .entry-tabbed .entry-art-enter{display:block;flex-shrink:0;border:0!important;border-image:none!important;background:none!important;padding:0!important;margin:0;box-shadow:none!important;border-radius:0;min-width:0;min-height:0;cursor:pointer;line-height:0;filter:drop-shadow(0 3px 2px #0008)}
+.game-stage .entry-tabbed .entry-art-back{width:54px;height:54px}
+.game-stage .entry-tabbed .entry-art-enter{width:220px;height:64px}
+.entry-art-back img,.entry-art-enter img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;user-select:none}
+.game-stage .entry-tabbed .entry-art-back:hover,.game-stage .entry-tabbed .entry-art-enter:hover:not(:disabled){filter:brightness(1.13) drop-shadow(0 2px 5px #ecc97177)}
+.game-stage .entry-tabbed .entry-art-back:active,.game-stage .entry-tabbed .entry-art-enter:active:not(:disabled){transform:translateY(2px);filter:brightness(.94)}
+.game-stage .entry-tabbed .entry-art-back:focus-visible,.game-stage .entry-tabbed .entry-art-enter:focus-visible{outline:2px solid #9feeff;outline-offset:2px;border-radius:14px}
+.game-stage .entry-tabbed .entry-art-enter:disabled{filter:grayscale(1);opacity:.45;cursor:not-allowed}
+
+/* Matte, bold cartoon treatment matching the new illustrated scenes. */
+.entry-tabbed{background:#35251e}
+.entry-tabbed .entry-scene{border:3px solid #533421;box-shadow:0 4px 0 #211712;border-radius:9px}
+.game-stage .entry-tabbed .entry-tabs>button{border:3px solid #452a20;border-bottom:0;background:#73513a;box-shadow:inset 0 3px #a5754b;color:#f2d8a9}
+.game-stage .entry-tabbed .entry-tabs>button[aria-selected=true]{background:#cb5537;border-color:#452a20;color:#fff2ce;box-shadow:inset 0 4px #ed8a58}
+.game-stage .entry-tabbed .entry-talents>button{border:2px solid #a2aacc;background:#283b62;box-shadow:0 3px 0 #17243e;border-radius:16px 6px}
+.game-stage .entry-tabbed .entry-talents>button[aria-pressed=true]{background:#4a557b;border-color:#ffe0a0;box-shadow:0 3px 0 #17243e}
+.game-stage .entry-tabbed .entry-items .entry-choices>button{border:3px solid #4d2f20;background:#70472ee6;box-shadow:inset 0 3px #a87b4e,0 3px #3d271d}
+.game-stage .entry-tabbed .entry-items .entry-choices>button[aria-pressed=true]{border-color:#f5d499;background:#a4653d;box-shadow:0 3px #3d271d}
+.game-stage .entry-tabbed .entry-art-back{width:62px;height:54px}
+
+/* Entry is a focused full-stage preparation screen without the global chrome. */
+.game-stage .stage-content.view-entry{position:absolute;inset:0;width:100%;height:100%;padding:0;margin:0;overflow:hidden}
+.game-stage .entry-tabbed{padding:18px 24px 12px;display:grid;grid-template-columns:170px 1fr 66px;grid-template-rows:62px minmax(0,1fr) 62px;column-gap:14px;row-gap:8px}
+.entry-tabbed .entry-heading{display:contents}
+.entry-tabbed .entry-heading>div{grid-column:1;grid-row:1;min-width:0;padding:0;gap:9px;align-self:center}
+.entry-tabbed .entry-heading h1{font-size:28px;letter-spacing:3px}
+.entry-tabbed .entry-heading .entry-art-back{grid-column:3;grid-row:1;align-self:center;justify-self:end}
+.entry-tabbed .entry-tabs{grid-column:2;grid-row:1;align-self:end;padding:0;height:57px}
+.game-stage .entry-tabbed .entry-tabs>button{height:57px;width:164px}
+.entry-tabbed .entry-scene{grid-column:1/-1;grid-row:2;min-height:0}
+.entry-tabbed .entry-footer{grid-column:1/-1;grid-row:3;height:62px;padding:0}
+.entry-tabbed .entry-validation{flex:1;text-align:right}
+.entry-tabbed .entry-incarnation{height:66%;bottom:5%}
+
+/* Three standalone realm screens: character stage, destiny choices, display cabinet. */
+.game-stage .stage-content:is(.view-notables,.view-shop,.view-items){inset:0;padding:0;width:100%;height:100%}
+.realm{padding:18px 28px 18px;background-size:100% 100%}
+.realm-heroes{background-image:url('/art/ui/realms/heroes-v3.png')}
+.realm-fate{background-image:url('/art/ui/realms/destiny-v3.png')}
+.realm-treasury{background-image:url('/art/ui/realms/treasury-v3.png')}
+.realm .realm-heading{height:62px;margin:0;gap:18px}
+.realm .realm-heading>div{border:0;border-image:none;background:none;min-width:0;padding:0 10px;width:auto}
+.realm .realm-heading h1{color:#ffe6b5;font-size:30px;text-shadow:0 2px #392116}
+.realm .realm-heading>div>.realm-icon{width:42px;height:42px;margin:0 12px 0 0}
+.game-stage .realm .realm-heading>.realm-back,.game-stage .realm .realm-upgrade{border:0!important;border-image:none!important;padding:0!important;background:none!important;box-shadow:none;min-height:0;min-width:0;flex-shrink:0;line-height:0}
+.game-stage .realm .realm-heading>.realm-back{width:62px;height:54px}
+.realm-back img,.realm-upgrade img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none}
+.game-stage .realm .realm-back:hover,.game-stage .realm .realm-upgrade:hover:enabled{filter:brightness(1.12)}
+.game-stage .realm .realm-back:active,.game-stage .realm .realm-upgrade:active:enabled{transform:translateY(2px)}
+.realm .realm-heading>span:not(.fate-balance){border:0;border-image:none;background:none;color:#ffe6b5;padding:0;font-size:18px}
+.realm .hero-book{position:absolute;inset:98px 32px 20px;display:block;height:auto}
+.realm .hero-folio{position:absolute;inset:0 0 138px;display:grid;grid-template-columns:48% 52%;border:0;border-image:none;background:none;box-shadow:none;padding:8px 45px 20px 25px;gap:24px}
+.realm .hero-illustration{border:0;background:none;min-height:0;display:flex;align-items:center;justify-content:center}
+.realm .hero-illustration .character-halfbody{width:100%;height:100%;max-height:100%;object-fit:contain}
+.realm .hero-biography{padding:14px 24px 8px 18px;overflow:auto;min-height:0}
+.realm .hero-biography h2{margin:0 0 8px;font-size:38px}
+.realm .hero-biography h3{font-size:20px;margin:18px 0 8px}
+.realm .hero-biography li{font-size:16px;margin:8px 0;padding:10px;border-left:4px solid #ac513a;background:#bf7e3d19}
+.realm .hero-index{position:absolute;left:0;right:0;bottom:0;height:119px;display:flex;overflow:auto;gap:12px;padding:8px 5px;align-items:stretch}
+.game-stage .realm .hero-index button{flex:0 0 157px;display:flex;align-items:center;gap:5px;border:3px solid #583623;border-image:none;background:#f2d6a6;border-radius:12px 12px 6px 6px;padding:5px;box-shadow:0 4px #24180f;min-height:0;font-size:20px}
+.realm .hero-index .officer-portrait{width:61px;height:68px;flex-shrink:0}
+.realm .hero-index .painted-stars .realm-icon{width:14px;height:16px}
+.game-stage .realm .hero-index button.selected{background:#ffe8b8;border-color:#c34c2f;box-shadow:0 4px #6b291d;filter:none}
+.realm .realm-progress{border:3px solid #67452b;border-radius:9px;height:29px;box-shadow:inset 0 3px #0007;background:#292b21}
+.realm .realm-progress i{background:#a4cd63;box-shadow:inset 0 3px #d8eb9c}
+.realm .realm-progress span{line-height:23px;font-size:13px}
+.realm .fate-balance{display:flex;gap:7px;border:0;border-image:none;background:#172745b8;border-radius:22px;padding:3px 18px;color:#ffe7af;font-size:27px}
+.realm .fate-balance .realm-icon{width:39px;height:39px}
+.realm .fate-layout{position:absolute;inset:96px 100px 75px;height:auto;display:grid;grid-template-columns:1fr;grid-template-rows:65px minmax(0,1fr);gap:24px}
+.realm .fate-paths{display:flex;justify-content:center;padding:0;gap:12px}
+.game-stage .realm .fate-paths button{width:170px;min-height:0;height:62px;margin:0;justify-content:center;border:3px solid #362938;border-image:none;background:#3c496b;border-radius:16px 16px 5px 5px;color:#ffe7bb;box-shadow:0 4px #19243e;padding:4px 12px}
+.game-stage .realm .fate-paths button.selected{background:#b75339;border-color:#ffdd98;box-shadow:0 4px #633426}
+.realm .fate-paths .realm-icon{width:38px;height:38px}
+.realm .fate-offerings{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;padding:10px 12px;align-content:start}
+.realm .fate-offering{border:3px solid #959aba;border-image:none;border-radius:22px 8px;background:#233454ee;box-shadow:0 5px #16213a;padding:20px;min-height:235px;color:#f8e7c7}
+.realm .fate-offering h2{color:#ffe3a0;font-size:26px;margin-top:0}
+.realm .fate-offering p{color:#f1e1c7;font-size:15px;line-height:1.7}
+.realm .fate-offering footer{color:#ffe1a1}
+.realm .fate-offering:only-child{grid-column:1/-1;width:690px;justify-self:center;min-height:310px;padding:32px}
+.realm .fate-offering:only-child .fate-node{margin:0 18px 8px 24px}
+.realm .fate-offering:only-child .fate-node .realm-icon{width:115px;height:115px}
+.realm .fate-offering:only-child p{min-height:64px}
+.game-stage .realm .realm-upgrade{width:125px;height:47px}
+.game-stage .realm .realm-upgrade:disabled{filter:grayscale(1);opacity:.42}
+.realm .fate-steps .realm-icon{width:27px;height:27px}
+.realm .realm-footnote{background:#18263fd9;border:0;border-radius:9px;bottom:20px;left:25%;right:25%;font-size:14px;padding:10px}
+.realm .treasury-layout{position:absolute;inset:130px 74px 99px 115px;height:auto;display:grid;grid-template-columns:minmax(0,1fr) 335px;gap:75px}
+.realm .treasury-shelves{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:160px;gap:18px 12px;padding:4px;overflow:auto}
+.game-stage .realm .treasury-shelves button{min-height:0;gap:0;padding:5px;border:2px solid transparent;border-image:none;background:none;box-shadow:none;border-radius:12px;justify-content:center;color:#ffe6b4}
+.game-stage .realm .treasury-shelves button.selected{border-color:#f3c575;background:#efbd5b22;box-shadow:inset 0 -5px #bc7045;filter:none}
+.realm .treasury-shelves .relic-art{width:95px;height:95px}
+.realm .treasury-shelves b{font-size:18px}
+.realm .treasury-shelves .painted-stars .realm-icon{width:17px;height:17px}
+.realm .relic-detail{border:0;border-image:none;box-shadow:none;background:none;padding:5px 8px;overflow:auto}
+.realm .relic-detail .relic-art.large{width:116px;height:116px}
+.realm .relic-detail h2{font-size:29px}
+.realm .relic-detail li{font-size:14px;padding:6px 8px;margin:5px 0;line-height:1.5}
+.realm .treasury-empty{position:absolute;left:67%;right:7%;top:26%;width:auto;margin:0;padding:0;border:0;border-image:none;background:none;box-shadow:none}
+.realm .treasury-empty h2{font-size:26px}.realm .treasury-empty p{font-size:15px;line-height:1.8}
+
+.realm .realm-heading>div{display:flex;align-items:center;gap:12px;min-width:240px;flex-shrink:0}.realm .realm-heading h1{white-space:nowrap}.realm .realm-heading>div>.realm-icon{float:none;margin:0}
+.realm .hero-folio{grid-template-columns:minmax(0,46%) minmax(0,1fr)}
+
+.realm .fate-offerings{grid-template-columns:repeat(3,minmax(0,1fr))}
+.realm .fate-offering{padding:16px;min-height:219px}
+.realm .fate-offering h2{font-size:23px}
+.realm .fate-offering p{font-size:14px;min-height:45px}
+.realm .fate-node .realm-icon{width:47px;height:47px}
+.realm .fate-steps .lit{background:none;border:0;box-shadow:none}
+.realm .realm-pages{position:absolute;bottom:20px;left:40%;right:40%;display:flex;align-items:center;justify-content:center;gap:15px;color:#ffe6b6}
+.game-stage .realm-pages button{border:0;background:none;padding:0;width:45px;height:37px;box-shadow:none}
+.realm-pages img{width:100%;height:100%;object-fit:contain}.realm-pages button:last-child img{transform:scaleX(-1)}.realm-pages button:disabled{opacity:.3}
+.realm-fate .realm-footnote{left:8%;right:auto;max-width:29%;bottom:14px}
+
+.realm .relic-detail .sealed{opacity:.65;color:#76624d}
+
+.realm .hero-biography{padding-left:48px}
+
+.realm .hero-biography li{padding:6px 10px;margin:5px 0;font-size:15px;line-height:1.5}.realm .hero-biography h3{margin:12px 0 6px}.realm .hero-biography .realm-progress{margin:10px 0}
+
+/* Alternate activity title: a whole cloth banner instead of repeated paper frames. */
+.run-screen .scene-caption{left:calc(50% - 195px);top:24px;width:390px;height:94px;border:0;border-image:none;background:url('/art/ui/demo-match/activity-banner-v1.png') center/100% 100% no-repeat;padding:18px 42px 12px;gap:18px;box-shadow:none}
+.run-screen .scene-caption h1{color:#fff0cc;font-size:31px;line-height:37px;text-shadow:0 2px 0 #61251e;margin:0;white-space:nowrap}
+.run-screen .scene-caption .action-subtitle{color:#ffe0a5;border-left:0;padding:0;font-size:21px;line-height:30px;letter-spacing:3px;text-shadow:0 2px #64271b;white-space:nowrap}
+.run-screen .scene-caption .action-subtitle:empty{display:none}
+
+/* Retire the rejected cloth banner; retain the activity labels. */
+.run-screen .scene-caption{background:none;border:0;border-image:none;box-shadow:none;height:66px;top:30px;padding:8px 24px;gap:18px}
+.run-screen .scene-caption h1{color:#fff0c9;text-shadow:2px 2px #412817,-1px -1px #412817,0 2px 4px #412817;font-size:32px}
+.run-screen .scene-caption .action-subtitle{color:#ffe0a5;text-shadow:1px 2px #412817,-1px -1px #412817;font-size:22px}

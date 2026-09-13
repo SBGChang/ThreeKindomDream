@@ -1,6 +1,7 @@
 import type { Session } from '../app/session.js';
 import type { MetaState } from '../contracts/core/state.js';
 import { defs, t } from '../app/bootstrap.js';
+import { Hud } from './Hud.js';
 
 interface Props {
   readonly s: Session;
@@ -22,12 +23,13 @@ export function ScreenEnd({ s, meta, onSettled }: Props): React.ReactElement {
       <div className="card" style={{ marginBottom: 20 }}>
         <div className="body">{t(ending.bodyKey)}</div>
       </div>
+      <Hud s={s} />
 
       <h2>結算</h2>
       <table>
         <tbody>
           <tr><td>通過大事件</td><td className="n mono">{st.progress.chaptersPassed}</td></tr>
-          <tr><td>存活回合</td><td className="n mono">{st.progress.turn}</td></tr>
+          <tr><td>走過回合</td><td className="n mono">{st.progress.turn}</td></tr>
           <tr>
             <td>官階（文／武）</td>
             <td className="n mono">{`${st.career.civil} / ${st.career.martial}`}</td>

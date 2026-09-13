@@ -136,44 +136,13 @@ const slotCap = (s: Session): number => s.current.abilities.skills.length;
  * 而中間那個正是【兩維專精】：兩維各到 B，其餘留在起始值附近。
  */
 const spendGreedy = (...bias: readonly Attr[]) => (s: Session): void => {
-  for (let guard = 0; guard < 400; guard += 1) {
-    let acted = false;
-
-    if (slotCap(s) < 3) {
-      const pick = cheapestFirst(s.skillOffers().filter((o) => o.state === 'learnable'))[0];
-      if (pick !== undefined && s.learnSkill(pick.def.skillId).ok) acted = true;
-    }
-
-    // 多維時挑【現值最低的那一維】先抬 —— 那就是「兩維一起養」的意思。
-    if (!acted) {
-      const wants = bias.slice().sort(
-        (a, b) => s.current.attributes.values[a] - s.current.attributes.values[b],
-      );
-      for (const a of wants) {
-        const ng = s.nextGrade(a);
-        if (ng !== null && s.expOf(a) >= ng.cost && s.learnAttr(a, ng.at).ok) {
-          acted = true;
-          break;
-        }
-      }
-    }
-
-    if (!acted) {
-      const pick = cheapestFirst(s.traitOffers().filter((o) => o.state === 'learnable'))[0];
-      if (pick !== undefined && s.learnTrait(pick.def.traitId).ok) acted = true;
-    }
-
-    if (!acted) {
-      // 主維滿了就往其他維倒 —— 一個人不會讓經驗爛在手上。
-      // 這一段是【度量整套經濟有沒有稀缺】的關鍵：若替身只買一維，
-      // 「未花的經驗」會被高估，看起來像貨幣過剩其實是 AI 太笨。
-      for (const a of [...bias, ...ATTRS.filter((x) => !bias.includes(x))]) {
-        const cur = s.current.attributes.values[a];
-        if (cur >= 100) continue;
-        if (s.learnAttr(a, cur + 1).ok) { acted = true; break; }
-      }
-    }
-    if (!acted) break;
+  for (let guard = 0; guard < 100; guard++) {
+    const candidates = s.learningOffers().filter(o => o.status === 'ready').slice().sort((a, b) => {
+      const priority = (x: typeof a): number => (bias.includes(x.attr) ? 0 : 1) + (x.kind === 'skill' ? 0 : 1);
+      return priority(a) - priority(b) || a.cost - b.cost;
+    });
+    const next = candidates[0];
+    if (next === undefined || !s.upgradeAbility(next.id)) break;
   }
 };
 

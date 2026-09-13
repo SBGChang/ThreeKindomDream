@@ -1,0 +1,51 @@
+{
+  "asset": "public/art/rigs/caocao/parts-v1.png",
+  "source": "C:/Users/DerekHChang/.codex/generated_images/01a0915c-6241-7202-9f66-67a25c2d46f9/exec-a6a577a1-1a52-4703-a4e1-4b60516110c0.png",
+  "prompt": "Use case: precise-object-edit. Target: attached approved Cao Cao full-body chibi sprite. Produce a production CUTOUT ANIMATION PARTS ATLAS of this exact character, preserving face, costume, dark red palette and thick line style. Landscape canvas 1536x1024 split into EXACTLY 3 columns x 2 rows of equal cells. Six individual disassembled parts centered one in each cell, completely separate, with ample 8% empty margin within each cell. Opaque solid pure magenta #FF00FF everywhere except parts; NO checkerboard, text, grid lines or shadows. TOP LEFT: complete detached HEAD including helmet, entire red plume, hair, face and full beard, small neck stump, no shoulders or torso. TOP MIDDLE: complete front TORSO from neck socket to armor skirt, NO head, NO arms, NO legs, NO cape; reconstruct hidden shoulder sockets and chest so parts can overlap cleanly. TOP RIGHT: the entire POINTING ARM on viewer left, including red shoulder armor, upper arm, wrist and pointing gloved hand, keep recognizable gesture, draw hidden shoulder attachment as rounded overlap, no torso. BOTTOM LEFT: entire relaxed opposite ARM from shoulder armor to clenched gloved hand, no torso. BOTTOM MIDDLE: BOTH short LEGS together with hips under armor skirt, pants, kneepads and boots, complete tips of both boots, no torso. BOTTOM RIGHT: complete detached red CAPE with flowing two tails and shoulder attachment, fill all hidden areas behind torso and head, NO body. Each part alone centered in its own cell; no duplicated whole characters. Parts should each nearly fill its cell without touching boundaries, they will be cropped and scaled into a skeleton by game code. NO extra pieces, exactly SIX parts. This is not a mockup, no decorative layout. Crucial reconstruct normally occluded clothing to prevent holes when moving. Maintain original character identity and polished chibi face.",
+  "regions": [
+    [
+      0,
+      0,
+      547,
+      520
+    ],
+    [
+      554,
+      70,
+      431,
+      443
+    ],
+    [
+      1050,
+      100,
+      448,
+      305
+    ],
+    [
+      54,
+      548,
+      300,
+      415
+    ],
+    [
+      523,
+      532,
+      482,
+      430
+    ],
+    [
+      1007,
+      539,
+      520,
+      429
+    ]
+  ],
+  "parts": [
+    "head",
+    "torso",
+    "pointing-arm",
+    "opposite-arm",
+    "legs",
+    "cape"
+  ]
+}

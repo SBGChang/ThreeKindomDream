@@ -22,10 +22,15 @@ export const t = (key: unknown): string => defs.text(String(key));
 const SAVE_KEY = 'sgd.meta.v1';
 
 export function loadMeta(): MetaState {
-  const raw = localStorage.getItem(SAVE_KEY);
-  if (raw === null) return emptyMeta();
   try {
-    return JSON.parse(raw) as MetaState;
+    const raw = localStorage.getItem(SAVE_KEY);
+    if (raw === null) return emptyMeta();
+    const parsed = JSON.parse(raw) as MetaState;
+    if (!parsed || !Number.isFinite(parsed.points) || !Number.isFinite(parsed.runIndex)
+      || !parsed.shop?.purchased || !parsed.notableCodex || !parsed.itemCodex || !parsed.stats
+      || !Array.isArray(parsed.collection?.reachedEndings) || !Array.isArray(parsed.collection?.seenEvents)
+      || !Array.isArray(parsed.settledSeeds)) return emptyMeta();
+    return parsed;
   } catch {
     return emptyMeta();
   }
@@ -52,11 +57,12 @@ export type BattleMode = 'instant' | 'theater';
 const MODE_KEY = 'sgd.battleMode.v1';
 
 export function loadBattleMode(): BattleMode {
-  return localStorage.getItem(MODE_KEY) === 'instant' ? 'instant' : 'theater';
+  try { return localStorage.getItem(MODE_KEY) === 'instant' ? 'instant' : 'theater'; }
+  catch { return 'theater'; }
 }
 
 export function saveBattleMode(mode: BattleMode): void {
-  localStorage.setItem(MODE_KEY, mode);
+  try { localStorage.setItem(MODE_KEY, mode); } catch { /* Preference only; the run still works. */ }
 }
 
 export function startRun(meta: MetaState, config = emptyDraft(meta, defs)): Session {

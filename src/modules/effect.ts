@@ -125,7 +125,9 @@ export function createEffectResolver(
     const out: Bound[] = [];
     for (const s of sources) {
       for (const ref of s.collect(ctx)) {
-        out.push({ ref, def: ctx.defs.effect(ref.funcType, ref.referId) });
+        const def = ctx.defs.effect(ref.funcType, ref.referId);
+        out.push({ ref, def: ref.funcType === 'StatModifier' && ref.magnitude !== undefined
+          ? { ...def, value: (def as StatModifierDef).value * ref.magnitude } : def });
       }
     }
     return out;

@@ -20,15 +20,15 @@ import { t } from '../app/bootstrap.js';
 export function CampaignRoad({ s }: { readonly s: Session }): React.ReactElement | null {
   const rows = s.stageRows();
   if (rows.length === 0) return null;
-  const top = Math.max(...rows.map((r) => r.merit), 1);
+  const top = Math.max(...rows.map((r) => r.exp), 1);
 
   return (
     <div className="road">
       {rows.map((r) => {
-        const h = 14 + Math.round(56 * (Math.cbrt(r.merit) / Math.cbrt(top)));
+        const h = 14 + Math.round(56 * (Math.cbrt(r.exp) / Math.cbrt(top)));
         const state = r.cleared ? 'done' : (r.current ? 'now' : 'far');
         return (
-          <div className={`road-step ${state}`} key={r.index} title={t(r.brief)}>
+          <div className={`road-step ${state}`} key={r.index} title={`${t(r.brief)} · 本關 ${r.exp} 經驗 · 累計 ${r.cumulative} 經驗`}>
             <div className="road-bar-wrap">
               <div className="road-bar" style={{ height: `${h}px` }} />
             </div>
@@ -107,7 +107,7 @@ export function Outlook({ s }: { readonly s: Session }): React.ReactElement | nu
           : ' ＋ 糧秣 0（沒帶恢復招，糧秣換不回軍勢）'}
       </p>
       <p className="sub" style={{ margin: '2px 0 0' }}>
-        這裡<b>不給勝率</b> —— 給的是你自己會做的那個除法。
+        依目前配置估算；實戰仍受招式觸發與敵將技能影響。
       </p>
     </div>
   );

@@ -1,0 +1,39 @@
+import { useEffect, useRef, useState } from 'react';
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { BattleTheater, type ReplayData } from './BattleTheater.js';
+import { defs } from '../app/bootstrap.js';
+import './soldier-assets.css';
+
+const base='./models/wei-infantry/';
+const labels:Record<string,string>={TPose:'T Pose',Idle:'待機',Run:'跑步',Thrust:'刺擊',Hit:'受擊',Death:'倒地',Cheer:'歡呼'};
+export function SoldierReview():React.ReactElement {
+  const mount=useRef<HTMLDivElement>(null), controls=useRef<{play:(name:string)=>void;wire:(on:boolean)=>void;pause:(on:boolean)=>void;scrub:(fraction:number)=>void}|null>(null);
+  const [faction,setFaction]=useState<'host'|'enemy'>('host');
+  const [assetInfo,setAssetInfo]=useState('讀取網格規格…');
+  const [scrub,setScrub]=useState(0);
+  useEffect(()=>{let active=true;void fetch(base+'manifest.json').then(r=>r.json()).then((m:{triangles:number;atlas:number})=>{if(active)setAssetInfo(`${m.triangles.toLocaleString()} 三角面 · ${m.atlas}² UV · 連續身體／混合蒙皮`);}).catch(()=>{if(active)setAssetInfo('模型規格暫時無法讀取');});return()=>{active=false;};},[]);
+  const [clip,setClip]=useState('Idle'),[wire,setWire]=useState(false),[paused,setPaused]=useState(false),[status,setStatus]=useState('載入 GLB…'),[clips,setClips]=useState<string[]>([]),[demo,setDemo]=useState(false),[replay,setReplay]=useState(0);
+  useEffect(()=>{
+    const host=mount.current;if(!host)return;
+    let active=true,frame=0;const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setClearColor('#16232e');host.appendChild(renderer.domElement);
+    const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(35,1,.01,100);camera.position.set(3,-5,2.7);camera.up.set(0,1,0);
+    // glTF uses Y-up; Blender's -Y front becomes +Z.
+    camera.position.set(3.1,2.1,5.2);const orbit=new OrbitControls(camera,renderer.domElement);orbit.target.set(0,1.35,0);orbit.enableDamping=true;orbit.update();
+    scene.add(new THREE.HemisphereLight(0xc6e2ff,0x55422e,2));const key=new THREE.DirectionalLight(0xffe5c7,3);key.position.set(3,5,4);scene.add(key);const rim=new THREE.DirectionalLight(0x9ecbff,2);rim.position.set(-3,3,-2);scene.add(rim);
+    const pmrem=new THREE.PMREMGenerator(renderer),room=new RoomEnvironment(),env=pmrem.fromScene(room);scene.environment=env.texture;room.dispose();pmrem.dispose();
+    scene.add(new THREE.GridHelper(5,20,0x547080,0x29404d));let mixer:THREE.AnimationMixer|undefined;let model:THREE.Object3D|undefined;let actions:Record<string,THREE.AnimationAction>={};let stopped=false;let currentClip='Idle';
+    const resize=()=>{const w=host.clientWidth,h=host.clientHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();};const observer=new ResizeObserver(resize);observer.observe(host);resize();
+    new GLTFLoader().load(base+(faction==='host'?'wei-infantry.glb':'enemy-infantry.glb'),g=>{if(!active){g.scene.traverse(o=>{if(o instanceof THREE.Mesh){o.geometry.dispose();}});return;}model=g.scene;scene.add(model);mixer=new THREE.AnimationMixer(model);actions=Object.fromEntries(g.animations.map(c=>[c.name,mixer!.clipAction(c)]));
+      controls.current={play:name=>{if(name==='Cheer'&&currentClip!=='Cheer'){camera.position.set(3.8,2.6,6.4);orbit.target.set(0,1.85,0);orbit.update();}else if(currentClip==='Cheer'&&name!=='Cheer'){camera.position.set(3.1,2.1,5.2);orbit.target.set(0,1.35,0);orbit.update();}currentClip=name;mixer!.stopAllAction();if(name==='TPose'){model!.traverse(o=>{if(o instanceof THREE.SkinnedMesh)o.pose();});return;}const a=actions[name];if(a){a.reset();a.setLoop(name==='Death'?THREE.LoopOnce:THREE.LoopRepeat,Infinity);a.clampWhenFinished=true;a.play();}},wire:on=>model!.traverse(o=>{if(o instanceof THREE.Mesh){const ms=Array.isArray(o.material)?o.material:[o.material];ms.forEach(m=>{if(m instanceof THREE.MeshStandardMaterial)m.wireframe=on;});}}),pause:on=>{stopped=on;},scrub:fraction=>{stopped=true;mixer!.stopAllAction();const a=actions[currentClip];if(a){a.reset().play();mixer!.update(fraction*a.getClip().duration);}}};
+      setClips(['TPose',...g.animations.map(c=>c.name)]);controls.current.play('Idle');setStatus(`GLB 載入成功 · ${g.animations.length} 組骨架動畫 · 拖曳旋轉／滾輪縮放`);
+    },undefined,e=>{if(active)setStatus('模型載入失敗：'+String(e));});
+    let previous=performance.now();const tick=(now:number)=>{frame=requestAnimationFrame(tick);const delta=Math.min((now-previous)/1000,.1);previous=now;if(!stopped)mixer?.update(delta);orbit.update();renderer.render(scene,camera);};frame=requestAnimationFrame(tick);
+    return()=>{active=false;controls.current=null;cancelAnimationFrame(frame);observer.disconnect();orbit.dispose();mixer?.stopAllAction();scene.traverse(o=>{if(o instanceof THREE.Mesh){o.geometry.dispose();const ms=Array.isArray(o.material)?o.material:[o.material];ms.forEach(m=>{for(const v of Object.values(m))if(v instanceof THREE.Texture)v.dispose();m.dispose();});}});env.dispose();renderer.dispose();host.removeChild(renderer.domElement);};
+  },[faction]);
+  const skill=defs.reader('skill').all().find(s=>s.action.kind==='physical')??defs.reader('skill').all()[0];
+  const fixture:ReplayData={log:skill?[{turn:1,actor:'host',actorKey:null,skillKey:skill.nameKey,kind:'physical',amount:300,why:[],trace:[],troopsAfter:960,supplyAfter:100,enemyAfter:660},{turn:1,actor:'enemy',actorKey:null,skillKey:null,kind:null,amount:160,why:[],trace:[],troopsAfter:800,supplyAfter:100,enemyAfter:660}]:[],troopsMax:960,enemyMax:960,startTroops:960,startSupply:100,commanders:[],stageLabel:'驗收戰場 · 示範資料',enemyLabel:'敵軍',cleared:false,defeated:false};
+  return <main className="asset-review"><h1>Q 版低模步卒 · 敵我 UV 配色</h1><p>{assetInfo} · 敵我獨立塗裝。此頁使用示範戰報，不讀寫遊戲存檔。</p><div>{([["host","我軍 · 青藍箭紋"],["enemy","敵軍 · 赤紅菱紋"]] as const).map(([side,label])=><button key={side} className={faction===side?"selected":""} onClick={()=>{setFaction(side);setClip("Idle");setScrub(0);setWire(false);setPaused(false);setStatus("載入模型…");}}>{label}</button>)}</div><div className="asset-viewport" ref={mount}/><p role="status">{status}</p><div>{clips.map(c=><button key={c} className={c===clip?'selected':''} onClick={()=>{setClip(c);setScrub(0);setPaused(false);controls.current?.pause(false);controls.current?.play(c);}}>{labels[c]??c}</button>)}<button onClick={()=>{setPaused(!paused);controls.current?.pause(!paused);}}>{paused?'繼續動畫':'暫停動畫'}</button><button onClick={()=>{setWire(!wire);controls.current?.wire(!wire);}}>{wire?'顯示材質':'檢查線框'}</button><label style={{display:"block",margin:"12px 4px"}}>動作進度（拖曳逐格檢查接縫） <input aria-label="動作進度" type="range" min="0" max="1" step=".01" value={scrub} onChange={e=>{const value=Number(e.target.value);setScrub(value);setPaused(true);controls.current?.scrub(value);}}/></label></div><p><a href={base+(faction==='host'?'wei-infantry.glb':'enemy-infantry.glb')} download>下載 GLB</a> · <a href={base+'manifest.json'}>網格／動畫規格</a></p><div className="asset-grid">{[['connected-body','T Pose：圓身比例／卸除裝備'],['t-pose','T Pose：穿甲'],['front','正面'],['side','側面'],['back','背面'],['infantry-uv-layout','UV 線稿'],['infantry-basecolor','我軍 UV 塗裝'],['infantry-enemy-basecolor','敵軍 UV 塗裝'],['enemy-hero','敵軍模型'],['infantry-orm','AO／粗糙度／金屬度'],['infantry-normal','切線空間 Normal']].map(([file,title])=><figure key={file}><a href={base+file+'.png'} target="_blank" rel="noreferrer"><img src={base+file+'.png'} alt={title}/></a><figcaption>{title}</figcaption></figure>)}</div><button onClick={()=>{setDemo(true);setReplay(n=>n+1);}}>播放隊形與技能演出示範</button>{demo&&<div className="demo-shell"><div className="battle-demo"><BattleTheater key={replay} {...fixture} initialPlaying={false} enabled onFinished={()=>{}}/></div></div>}</main>;
+}

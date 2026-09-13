@@ -12,20 +12,27 @@
     "verify:modules": "tsx scripts/verify-modules.ts",
     "verify": "npm run typecheck && npm run verify:discipline && npm run verify:content && npm run verify:modules",
     "sim": "tsx scripts/simulate.ts",
+    "sim:fast": "tsx scripts/simulate-fast.ts",
     "dev": "vite",
-    "build": "npm run content:build && tsc --noEmit -p tsconfig.json && vite build"
+    "build": "npm run content:build && tsc --noEmit -p tsconfig.json && vite build",
+    "game": "npm run build && electron .",
+    "game:launch": "electron ."
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "@types/three": "^0.185.4",
     "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^44.3.0",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
     "vite": "^6.0.7"
   },
   "dependencies": {
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
-  }
+    "react-dom": "^19.0.0",
+    "three": "^0.186.0"
+  },
+  "main": "electron/main.cjs"
 }
