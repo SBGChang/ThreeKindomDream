@@ -1,0 +1,1231 @@
+{
+  "seedFamilies": "9000..9007, subsequent lives add 100; identical seeds across strategies",
+  "contentSHA256": "1ee63e47f31ab5bd527241ca6fc7659994f5ee025684b5a6d5b35a2c29787e60",
+  "totalRuns": 642,
+  "totalActions": 45264,
+  "totalEvents": 30934,
+  "totalScenes": 20019,
+  "actualStagesCleared": 22897,
+  "reportedStagesCleared": 0,
+  "byMode": {
+    "greedy-gain": {
+      "journeys": 8,
+      "runs": 39,
+      "actions": 2808,
+      "firstTopLives": [
+        6,
+        2,
+        4,
+        6,
+        1,
+        2,
+        1,
+        1
+      ],
+      "firstSummitLives": [
+        4,
+        5,
+        4,
+        6,
+        3,
+        3,
+        7,
+        5
+      ],
+      "both": 17,
+      "topNarrative": 17,
+      "kongming": 18,
+      "firstPoints": [
+        11628,
+        11628
+      ],
+      "firstMeanDepth": 3.03,
+      "meanDepth": 3.51,
+      "firstBoth": 3,
+      "firstMeanUpgrades": 15.38,
+      "firstMeanItems": 17.75,
+      "firstMeanFragments": 7.25,
+      "firstMeanEarned": 8962.13,
+      "firstMeanSpent": 8762.5,
+      "firstMeanMoney": 199.63,
+      "firstMeanEvents": 43.5,
+      "firstMeanUnique": 29.38,
+      "maxNoSkillTurns": 0,
+      "firstMeanDepthByChapter": [
+        1.88,
+        2,
+        1.88,
+        1.75,
+        2.38,
+        3.5,
+        4,
+        5,
+        4.88
+      ],
+      "endings": {
+        "ending:shu.reunion": 21,
+        "ending:pillar": 10,
+        "ending:shu.dawn": 8
+      }
+    },
+    "focus-martial": {
+      "journeys": 8,
+      "runs": 240,
+      "actions": 17280,
+      "firstTopLives": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "firstSummitLives": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "both": 119,
+      "topNarrative": 0,
+      "kongming": 119,
+      "firstPoints": [
+        7300,
+        9655
+      ],
+      "firstMeanDepth": 2.97,
+      "meanDepth": 5.4,
+      "firstBoth": 0,
+      "firstMeanUpgrades": 2.63,
+      "firstMeanItems": 25.25,
+      "firstMeanFragments": 8.38,
+      "firstMeanEarned": 9215.63,
+      "firstMeanSpent": 7341.88,
+      "firstMeanMoney": 1873.75,
+      "firstMeanEvents": 46.63,
+      "firstMeanUnique": 16.88,
+      "maxNoSkillTurns": 0,
+      "firstMeanDepthByChapter": [
+        2.88,
+        2.13,
+        2,
+        1.5,
+        2.63,
+        3.63,
+        3.25,
+        5,
+        3.75
+      ],
+      "endings": {
+        "ending:general": 3,
+        "ending:shu.reunion": 210,
+        "ending:grand-general": 19,
+        "ending:shu.dawn": 8
+      }
+    },
+    "focus-civil": {
+      "journeys": 8,
+      "runs": 240,
+      "actions": 17280,
+      "firstTopLives": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "firstSummitLives": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "both": 0,
+      "topNarrative": 0,
+      "kongming": 0,
+      "firstPoints": [
+        7300,
+        7510
+      ],
+      "firstMeanDepth": 2.07,
+      "meanDepth": 3.23,
+      "firstBoth": 0,
+      "firstMeanUpgrades": 3,
+      "firstMeanItems": 24.38,
+      "firstMeanFragments": 8.13,
+      "firstMeanEarned": 8150.25,
+      "firstMeanSpent": 7171.88,
+      "firstMeanMoney": 978.38,
+      "firstMeanEvents": 45,
+      "firstMeanUnique": 16.88,
+      "maxNoSkillTurns": 0,
+      "firstMeanDepthByChapter": [
+        2.25,
+        2,
+        1.88,
+        1.63,
+        1.88,
+        2.25,
+        2.5,
+        2.38,
+        1.88
+      ],
+      "endings": {
+        "ending:minister": 8,
+        "ending:chancellor": 205,
+        "ending:shu.reunion": 27
+      }
+    },
+    "no-battle": {
+      "journeys": 8,
+      "runs": 24,
+      "actions": 1728,
+      "firstTopLives": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "firstSummitLives": [
+        null,
+        null,
+        null,
+        null,
+        3,
+        null,
+        null,
+        null
+      ],
+      "both": 0,
+      "topNarrative": 0,
+      "kongming": 0,
+      "firstPoints": [
+        11628,
+        11628
+      ],
+      "firstMeanDepth": 0,
+      "meanDepth": 0,
+      "firstBoth": 0,
+      "firstMeanUpgrades": 12.5,
+      "firstMeanItems": 16.5,
+      "firstMeanFragments": 7.5,
+      "firstMeanEarned": 7643.38,
+      "firstMeanSpent": 7526.25,
+      "firstMeanMoney": 117.13,
+      "firstMeanEvents": 43.25,
+      "firstMeanUnique": 29.13,
+      "maxNoSkillTurns": 0,
+      "firstMeanDepthByChapter": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "endings": {
+        "ending:pillar": 24
+      }
+    },
+    "no-spend": {
+      "journeys": 8,
+      "runs": 24,
+      "actions": 1728,
+      "firstTopLives": [
+        1,
+        2,
+        2,
+        null,
+        2,
+        1,
+        1,
+        1
+      ],
+      "firstSummitLives": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        3,
+        null,
+        null
+      ],
+      "both": 12,
+      "topNarrative": 12,
+      "kongming": 13,
+      "firstPoints": [
+        11628,
+        11628
+      ],
+      "firstMeanDepth": 3.36,
+      "meanDepth": 3.43,
+      "firstBoth": 4,
+      "firstMeanUpgrades": 0,
+      "firstMeanItems": 0,
+      "firstMeanFragments": 0,
+      "firstMeanEarned": 9346,
+      "firstMeanSpent": 2928.75,
+      "firstMeanMoney": 6417.25,
+      "firstMeanEvents": 45,
+      "firstMeanUnique": 29.5,
+      "maxNoSkillTurns": 0,
+      "firstMeanDepthByChapter": [
+        1.88,
+        1.75,
+        2.13,
+        1.88,
+        3,
+        4.75,
+        4.5,
+        5.38,
+        5
+      ],
+      "endings": {
+        "ending:shu.reunion": 14,
+        "ending:pillar": 5,
+        "ending:shu.dawn": 5
+      }
+    },
+    "blind-story": {
+      "journeys": 8,
+      "runs": 24,
+      "actions": 1728,
+      "firstTopLives": [
+        null,
+        2,
+        null,
+        null,
+        1,
+        2,
+        1,
+        1
+      ],
+      "firstSummitLives": [
+        null,
+        null,
+        null,
+        null,
+        3,
+        3,
+        null,
+        null
+      ],
+      "both": 9,
+      "topNarrative": 9,
+      "kongming": 10,
+      "firstPoints": [
+        11628,
+        11628
+      ],
+      "firstMeanDepth": 3.03,
+      "meanDepth": 3.24,
+      "firstBoth": 3,
+      "firstMeanUpgrades": 15.38,
+      "firstMeanItems": 17.75,
+      "firstMeanFragments": 7.25,
+      "firstMeanEarned": 8962.13,
+      "firstMeanSpent": 8762.5,
+      "firstMeanMoney": 199.63,
+      "firstMeanEvents": 43.5,
+      "firstMeanUnique": 29.38,
+      "maxNoSkillTurns": 0,
+      "firstMeanDepthByChapter": [
+        1.88,
+        2,
+        1.88,
+        1.75,
+        2.38,
+        3.5,
+        4,
+        5,
+        4.88
+      ],
+      "endings": {
+        "ending:shu.reunion": 13,
+        "ending:pillar": 7,
+        "ending:shu.dawn": 4
+      }
+    },
+    "wei": {
+      "journeys": 8,
+      "runs": 24,
+      "actions": 768,
+      "firstTopLives": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "firstSummitLives": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "both": 0,
+      "topNarrative": 0,
+      "kongming": 0,
+      "firstPoints": [
+        5508,
+        8168
+      ],
+      "firstMeanDepth": 2.22,
+      "meanDepth": 2.72,
+      "firstBoth": 0,
+      "firstMeanUpgrades": 8.38,
+      "firstMeanItems": 4.5,
+      "firstMeanFragments": 2.5,
+      "firstMeanEarned": 2909.63,
+      "firstMeanSpent": 2840.63,
+      "firstMeanMoney": 69,
+      "firstMeanEvents": 23.63,
+      "firstMeanUnique": 21.25,
+      "maxNoSkillTurns": 0,
+      "firstMeanDepthByChapter": [
+        1.88,
+        2.63,
+        2.38,
+        2
+      ],
+      "endings": {
+        "ending:pillar": 21,
+        "ending:minister": 1,
+        "ending:chancellor": 2
+      }
+    },
+    "recovered": {
+      "journeys": 16,
+      "runs": 16,
+      "actions": 1152,
+      "firstTopLives": [
+        31,
+        31,
+        31,
+        31,
+        31,
+        31,
+        31,
+        31,
+        31,
+        31,
+        31,
+        31,
+        31,
+        31,
+        31,
+        31
+      ],
+      "firstSummitLives": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "both": 16,
+      "topNarrative": 16,
+      "kongming": 16,
+      "firstPoints": [
+        14928,
+        15828
+      ],
+      "firstMeanDepth": 6.19,
+      "meanDepth": 6.19,
+      "firstBoth": 16,
+      "firstMeanUpgrades": 17.25,
+      "firstMeanItems": 3.75,
+      "firstMeanFragments": 0,
+      "firstMeanEarned": 16912.38,
+      "firstMeanSpent": 8965.94,
+      "firstMeanMoney": 7946.44,
+      "firstMeanEvents": 51.38,
+      "firstMeanUnique": 31.81,
+      "maxNoSkillTurns": 0,
+      "firstMeanDepthByChapter": [
+        5.38,
+        5,
+        6.19,
+        5.13,
+        6.38,
+        6.75,
+        7,
+        7,
+        6.88
+      ],
+      "endings": {
+        "ending:shu.reunion": 8,
+        "ending:shu.dawn": 8
+      }
+    },
+    "finale": {
+      "journeys": 8,
+      "runs": 11,
+      "actions": 792,
+      "firstTopLives": [
+        6,
+        2,
+        4,
+        6,
+        1,
+        2,
+        1,
+        1
+      ],
+      "firstSummitLives": [
+        4,
+        5,
+        4,
+        6,
+        3,
+        3,
+        7,
+        5
+      ],
+      "both": 10,
+      "topNarrative": 10,
+      "kongming": 10,
+      "firstPoints": [
+        14628,
+        15528
+      ],
+      "firstMeanDepth": 4.35,
+      "meanDepth": 4.36,
+      "firstBoth": 7,
+      "firstMeanUpgrades": 15.63,
+      "firstMeanItems": 25,
+      "firstMeanFragments": 7.13,
+      "firstMeanEarned": 11470.63,
+      "firstMeanSpent": 11055.63,
+      "firstMeanMoney": 415,
+      "firstMeanEvents": 49.25,
+      "firstMeanUnique": 31,
+      "maxNoSkillTurns": 0,
+      "firstMeanDepthByChapter": [
+        2.5,
+        3,
+        4.13,
+        3,
+        3.75,
+        5,
+        5.75,
+        6,
+        6
+      ],
+      "endings": {
+        "ending:shu.reunion": 10,
+        "ending:pillar": 1
+      }
+    }
+  },
+  "accountingChecked": 642,
+  "integrityErrors": [],
+  "repeatIdentical": true,
+  "teaching": {
+    "lessons": 15786,
+    "compensated": 4890,
+    "money": 1364640
+  },
+  "representative": [
+    {
+      "life": 1,
+      "depths": [
+        2,
+        2,
+        2,
+        1,
+        2,
+        2,
+        4,
+        6,
+        4
+      ],
+      "career": {
+        "civil": 5,
+        "martial": 5
+      },
+      "ending": "ending:shu.reunion",
+      "milestones": [
+        "shu.guanyu-rescued"
+      ],
+      "money": 7,
+      "earned": 8512,
+      "spent": 8505,
+      "points": 11628,
+      "lessons": {
+        "lessons": 19,
+        "compensated": 6,
+        "money": 1260
+      },
+      "upgrades": 19,
+      "items": 15,
+      "fragments": 5,
+      "firstCapChapter": 4,
+      "nextCareerCap": 10
+    },
+    {
+      "life": 2,
+      "depths": [
+        2,
+        3,
+        4,
+        2,
+        2,
+        5,
+        6,
+        4,
+        2
+      ],
+      "career": {
+        "civil": 7,
+        "martial": 10
+      },
+      "ending": "ending:pillar",
+      "milestones": [],
+      "money": 404,
+      "earned": 8434,
+      "spent": 8030,
+      "points": 13728,
+      "lessons": {
+        "lessons": 21,
+        "compensated": 4,
+        "money": 780
+      },
+      "upgrades": 15,
+      "items": 17,
+      "fragments": 7,
+      "firstCapChapter": 8,
+      "nextCareerCap": 12
+    },
+    {
+      "life": 3,
+      "depths": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        4,
+        4,
+        4,
+        4
+      ],
+      "career": {
+        "civil": 8,
+        "martial": 10
+      },
+      "ending": "ending:pillar",
+      "milestones": [],
+      "money": 486,
+      "earned": 9111,
+      "spent": 8625,
+      "points": 14028,
+      "lessons": {
+        "lessons": 17,
+        "compensated": 7,
+        "money": 1440
+      },
+      "upgrades": 14,
+      "items": 18,
+      "fragments": 9,
+      "firstCapChapter": 0,
+      "nextCareerCap": 12
+    },
+    {
+      "life": 4,
+      "depths": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        5,
+        4,
+        4
+      ],
+      "career": {
+        "civil": 7,
+        "martial": 12
+      },
+      "ending": "ending:pillar",
+      "milestones": [],
+      "money": 95,
+      "earned": 9095,
+      "spent": 9000,
+      "points": 14328,
+      "lessons": {
+        "lessons": 19,
+        "compensated": 6,
+        "money": 1260
+      },
+      "upgrades": 19,
+      "items": 15,
+      "fragments": 8,
+      "firstCapChapter": 9,
+      "nextCareerCap": 12
+    },
+    {
+      "life": 5,
+      "depths": [
+        1,
+        2,
+        3,
+        2,
+        3,
+        4,
+        3,
+        6,
+        4
+      ],
+      "career": {
+        "civil": 8,
+        "martial": 11
+      },
+      "ending": "ending:shu.reunion",
+      "milestones": [
+        "shu.guanyu-rescued"
+      ],
+      "money": 21,
+      "earned": 8156,
+      "spent": 8135,
+      "points": 14328,
+      "lessons": {
+        "lessons": 19,
+        "compensated": 4,
+        "money": 780
+      },
+      "upgrades": 11,
+      "items": 20,
+      "fragments": 6,
+      "firstCapChapter": 0,
+      "nextCareerCap": 12
+    },
+    {
+      "life": 6,
+      "depths": [
+        4,
+        2,
+        4,
+        3,
+        2,
+        6,
+        4,
+        7,
+        7
+      ],
+      "career": {
+        "civil": 9,
+        "martial": 11
+      },
+      "ending": "ending:shu.dawn",
+      "milestones": [
+        "shu.guanyu-rescued",
+        "shu.kongming-rested"
+      ],
+      "money": 24,
+      "earned": 9969,
+      "spent": 9945,
+      "points": 14628,
+      "lessons": {
+        "lessons": 25,
+        "compensated": 8,
+        "money": 1680
+      },
+      "upgrades": 16,
+      "items": 22,
+      "fragments": 8,
+      "firstCapChapter": 0,
+      "nextCareerCap": 12
+    }
+  ],
+  "definitionKinds": {
+    "glowTier": 4,
+    "aptitudeGrade": 7,
+    "aptitudeCost": 1,
+    "trainingAction": 8,
+    "trainingCurve": 1,
+    "eventYieldCurve": 1,
+    "attrLine": 1,
+    "affinityStage": 5,
+    "affinityCurve": 1,
+    "linkBonus": 1,
+    "notableStar": 1,
+    "attributeCap": 1,
+    "gameRules": 1,
+    "checkRule": 1,
+    "growthRule": 1,
+    "battleRule": 1,
+    "trait": 10,
+    "skill": 14,
+    "enemy": 19,
+    "campaign": 12,
+    "talent": 11,
+    "shopItem": 13,
+    "settlementFormula": 1,
+    "paramPool": 5,
+    "dcCurve": 3,
+    "item": 13,
+    "itemPool": 1,
+    "event": 117,
+    "chapter": 12,
+    "chapterSequence": 3,
+    "storyChapter": 12,
+    "careerRank": 24,
+    "ending": 11,
+    "notable": 18,
+    "notablePool": 2,
+    "faction": 2
+  },
+  "notableEventsByPackAndRarity": {
+    "pack:wei/3": 12,
+    "pack:wei/4": 12,
+    "pack:wei/5": 7,
+    "pack:wei/1": 12,
+    "pack:wei/2": 12,
+    "pack:shu/1": 6
+  },
+  "preparationOptions": [
+    {
+      "node": "S4.A",
+      "first": "pact",
+      "chosen": "pact"
+    },
+    {
+      "node": "S5.B",
+      "first": "handover",
+      "chosen": "handover"
+    },
+    {
+      "node": "S6.A",
+      "first": "corridor",
+      "chosen": "corridor"
+    },
+    {
+      "node": "S6.B",
+      "first": "handover",
+      "chosen": "handover"
+    },
+    {
+      "node": "S7.A",
+      "first": "rescue",
+      "chosen": "rescue"
+    },
+    {
+      "node": "S7.B",
+      "first": "pact",
+      "chosen": "pact"
+    },
+    {
+      "node": "S8.A",
+      "first": "delegate",
+      "chosen": "delegate"
+    },
+    {
+      "node": "S8.B",
+      "first": "handover",
+      "chosen": "handover"
+    }
+  ],
+  "completedMainJourneys": [
+    {
+      "id": "greedy-gain-1",
+      "firstSameLifeMaximumAndCollection": 8,
+      "lastLife": 8,
+      "lastCareer": {
+        "civil": 10,
+        "martial": 12
+      },
+      "lastEnding": "ending:shu.reunion",
+      "lastMilestones": [
+        "shu.guanyu-rescued",
+        "shu.kongming-rested"
+      ],
+      "success": true
+    },
+    {
+      "id": "greedy-gain-2",
+      "firstSameLifeMaximumAndCollection": 5,
+      "lastLife": 6,
+      "lastCareer": {
+        "civil": 11,
+        "martial": 12
+      },
+      "lastEnding": "ending:shu.reunion",
+      "lastMilestones": [
+        "shu.guanyu-rescued",
+        "shu.kongming-rested"
+      ],
+      "success": true
+    },
+    {
+      "id": "greedy-gain-3",
+      "firstSameLifeMaximumAndCollection": 4,
+      "lastLife": 6,
+      "lastCareer": {
+        "civil": 9,
+        "martial": 12
+      },
+      "lastEnding": "ending:shu.reunion",
+      "lastMilestones": [
+        "shu.guanyu-rescued",
+        "shu.kongming-rested"
+      ],
+      "success": true
+    },
+    {
+      "id": "greedy-gain-4",
+      "firstSameLifeMaximumAndCollection": 6,
+      "lastLife": 7,
+      "lastCareer": {
+        "civil": 9,
+        "martial": 12
+      },
+      "lastEnding": "ending:shu.reunion",
+      "lastMilestones": [
+        "shu.guanyu-rescued",
+        "shu.kongming-rested"
+      ],
+      "success": true
+    },
+    {
+      "id": "greedy-gain-5",
+      "firstSameLifeMaximumAndCollection": 3,
+      "lastLife": 4,
+      "lastCareer": {
+        "civil": 9,
+        "martial": 12
+      },
+      "lastEnding": "ending:shu.reunion",
+      "lastMilestones": [
+        "shu.guanyu-rescued",
+        "shu.kongming-rested"
+      ],
+      "success": true
+    },
+    {
+      "id": "greedy-gain-6",
+      "firstSameLifeMaximumAndCollection": 3,
+      "lastLife": 5,
+      "lastCareer": {
+        "civil": 9,
+        "martial": 12
+      },
+      "lastEnding": "ending:shu.reunion",
+      "lastMilestones": [
+        "shu.guanyu-rescued",
+        "shu.kongming-rested"
+      ],
+      "success": true
+    },
+    {
+      "id": "greedy-gain-7",
+      "firstSameLifeMaximumAndCollection": 7,
+      "lastLife": 8,
+      "lastCareer": {
+        "civil": 9,
+        "martial": 12
+      },
+      "lastEnding": "ending:shu.reunion",
+      "lastMilestones": [
+        "shu.guanyu-rescued",
+        "shu.kongming-rested"
+      ],
+      "success": true
+    },
+    {
+      "id": "greedy-gain-8",
+      "firstSameLifeMaximumAndCollection": 5,
+      "lastLife": 6,
+      "lastCareer": {
+        "civil": 9,
+        "martial": 12
+      },
+      "lastEnding": "ending:shu.reunion",
+      "lastMilestones": [
+        "shu.guanyu-rescued",
+        "shu.kongming-rested"
+      ],
+      "success": true
+    },
+    {
+      "id": "focus-martial-1",
+      "firstSameLifeMaximumAndCollection": 31,
+      "lastLife": 31,
+      "lastCareer": {
+        "civil": 10,
+        "martial": 12
+      },
+      "lastEnding": "ending:shu.reunion",
+      "lastMilestones": [
+        "shu.guanyu-rescued",
+        "shu.kongming-rested"
+      ],
+      "success": true
+    },
+    {
+      "id": "focus-martial-2",
+      "firstSameLifeMaximumAndCollection": 31,
+      "lastLife": 31,
+      "lastCareer": {
+        "civil": 9,
+        "martial": 12
+      },
+      "lastEnding": "ending:shu.reunion",
+      "lastMilestones": [
+        "shu.guanyu-rescued",
+        "shu.kongming-rested"
+      ],
+      "success": true
+    },
+    {
+      "id": "focus-martial-3",
+      "firstSameLifeMaximumAndCollection": 31,
+      "lastLife": 31,
+      "lastCareer": {
+        "civil": 12,
+        "martial": 12
+      },
+      "lastEnding": "ending:shu.reunion",
+      "lastMilestones": [
+        "shu.guanyu-rescued",
+        "shu.kongming-rested"
+      ],
+      "success": true
+    },
+    {
+      "id": "focus-martial-4",
+      "firstSameLifeMaximumAndCollection": 31,
+      "lastLife": 31,
+      "lastCareer": {
+        "civil": 9,
+        "martial": 12
+      },
+      "lastEnding": "ending:shu.reunion",
+      "lastMilestones": [
+        "shu.guanyu-rescued",
+        "shu.kongming-rested"
+      ],
+      "success": true
+    },
+    {
+      "id": "focus-martial-5",
+      "firstSameLifeMaximumAndCollection": 31,
+      "lastLife": 31,
+      "lastCareer": {
+        "civil": 12,
+        "martial": 12
+      },
+      "lastEnding": "ending:shu.reunion",
+      "lastMilestones": [
+        "shu.guanyu-rescued",
+        "shu.kongming-rested"
+      ],
+      "success": true
+    },
+    {
+      "id": "focus-martial-6",
+      "firstSameLifeMaximumAndCollection": 31,
+      "lastLife": 31,
+      "lastCareer": {
+        "civil": 11,
+        "martial": 12
+      },
+      "lastEnding": "ending:shu.reunion",
+      "lastMilestones": [
+        "shu.guanyu-rescued",
+        "shu.kongming-rested"
+      ],
+      "success": true
+    },
+    {
+      "id": "focus-martial-7",
+      "firstSameLifeMaximumAndCollection": 31,
+      "lastLife": 31,
+      "lastCareer": {
+        "civil": 12,
+        "martial": 12
+      },
+      "lastEnding": "ending:shu.reunion",
+      "lastMilestones": [
+        "shu.guanyu-rescued",
+        "shu.kongming-rested"
+      ],
+      "success": true
+    },
+    {
+      "id": "focus-martial-8",
+      "firstSameLifeMaximumAndCollection": 31,
+      "lastLife": 31,
+      "lastCareer": {
+        "civil": 9,
+        "martial": 12
+      },
+      "lastEnding": "ending:shu.reunion",
+      "lastMilestones": [
+        "shu.guanyu-rescued",
+        "shu.kongming-rested"
+      ],
+      "success": true
+    },
+    {
+      "id": "focus-civil-1",
+      "firstSameLifeMaximumAndCollection": 31,
+      "lastLife": 31,
+      "lastCareer": {
+        "civil": 10,
+        "martial": 12
+      },
+      "lastEnding": "ending:shu.dawn",
+      "lastMilestones": [
+        "shu.guanyu-rescued",
+        "shu.kongming-rested"
+      ],
+      "success": true
+    },
+    {
+      "id": "focus-civil-2",
+      "firstSameLifeMaximumAndCollection": 31,
+      "lastLife": 31,
+      "lastCareer": {
+        "civil": 9,
+        "martial": 12
+      },
+      "lastEnding": "ending:shu.dawn",
+      "lastMilestones": [
+        "shu.guanyu-rescued",
+        "shu.kongming-rested"
+      ],
+      "success": true
+    },
+    {
+      "id": "focus-civil-3",
+      "firstSameLifeMaximumAndCollection": 31,
+      "lastLife": 31,
+      "lastCareer": {
+        "civil": 12,
+        "martial": 12
+      },
+      "lastEnding": "ending:shu.dawn",
+      "lastMilestones": [
+        "shu.guanyu-rescued",
+        "shu.kongming-rested"
+      ],
+      "success": true
+    },
+    {
+      "id": "focus-civil-4",
+      "firstSameLifeMaximumAndCollection": 31,
+      "lastLife": 31,
+      "lastCareer": {
+        "civil": 9,
+        "martial": 12
+      },
+      "lastEnding": "ending:shu.dawn",
+      "lastMilestones": [
+        "shu.guanyu-rescued",
+        "shu.kongming-rested"
+      ],
+      "success": true
+    },
+    {
+      "id": "focus-civil-5",
+      "firstSameLifeMaximumAndCollection": 31,
+      "lastLife": 31,
+      "lastCareer": {
+        "civil": 12,
+        "martial": 12
+      },
+      "lastEnding": "ending:shu.dawn",
+      "lastMilestones": [
+        "shu.guanyu-rescued",
+        "shu.kongming-rested"
+      ],
+      "success": true
+    },
+    {
+      "id": "focus-civil-6",
+      "firstSameLifeMaximumAndCollection": 31,
+      "lastLife": 31,
+      "lastCareer": {
+        "civil": 11,
+        "martial": 12
+      },
+      "lastEnding": "ending:shu.dawn",
+      "lastMilestones": [
+        "shu.guanyu-rescued",
+        "shu.kongming-rested"
+      ],
+      "success": true
+    },
+    {
+      "id": "focus-civil-7",
+      "firstSameLifeMaximumAndCollection": 31,
+      "lastLife": 31,
+      "lastCareer": {
+        "civil": 12,
+        "martial": 12
+      },
+      "lastEnding": "ending:shu.dawn",
+      "lastMilestones": [
+        "shu.guanyu-rescued",
+        "shu.kongming-rested"
+      ],
+      "success": true
+    },
+    {
+      "id": "focus-civil-8",
+      "firstSameLifeMaximumAndCollection": 31,
+      "lastLife": 31,
+      "lastCareer": {
+        "civil": 9,
+        "martial": 12
+      },
+      "lastEnding": "ending:shu.dawn",
+      "lastMilestones": [
+        "shu.guanyu-rescued",
+        "shu.kongming-rested"
+      ],
+      "success": true
+    }
+  ]
+}

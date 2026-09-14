@@ -1,6 +1,7 @@
 import { Session } from './session.js';
 import { defs, wiring, emptyMeta, emptyDraft } from './bootstrap.js';
 import { seed } from '../contracts/core/ids.js';
+import { emptyStory } from '../modules/story.js';
 /** Isolated fixture for UI regression review. Never reads or writes player saves. */
 export function economyReview(): Session {
   const base = emptyMeta(),
@@ -28,7 +29,8 @@ export function economyReview(): Session {
           .map((d) => [String(d.itemId), { tier: 0, fragments: 0 }]),
       ),
     };
-  const s = Session.start(wiring, meta, emptyDraft(meta, defs), seed(4242));
+  const initial = Session.start(wiring, meta, emptyDraft(meta, defs), seed(4242));
+  const s = Session.restore(wiring, {...initial.current, story:emptyStory(false)});
   for (let i = 0; i < 8; i++) {
     s.selectSlot(0);
     while (s.pendingEvent)
@@ -65,6 +67,7 @@ export function runLayoutReview(): Session {
   return Session.restore(wiring, {
     ...state,
     attributes: { values: { lead: 33.02, war: 25.54, int: 18.71, pol: 70.25 } },
+    story: emptyStory(false),
     roster: {
       members: ids.map((notableId, i) => ({
         notableId,

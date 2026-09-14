@@ -123,6 +123,7 @@ const OWNS: Readonly<Record<string, readonly string[]>> = {
   'ability.ts': ['abilities'],
   // ㉝ 擁有 campaign。career／attributes／roster 一律經各自的 Query。
   'campaign.ts': ['campaign'],
+  'story.ts': ['story'],
 };
 const SLICE_READ = /(?:ctx|tc)\.state\.([a-zA-Z]+)/g;
 for (const f of files) {

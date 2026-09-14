@@ -1,4 +1,5 @@
 import { EventDialogue } from './EventDialogue.js';
+import { StoryDialogue } from './StoryDialogue.js';
 import { eventRewardLines, type EventReceipt } from './event-receipt.js';
 import { NotableDetail } from './NotableDetail.js';
 import {
@@ -174,32 +175,12 @@ export function ScreenRun({
     const r = s.current.turn.training;
     // 先讀結果再推進 —— advance 會清掉 turn.training。
     if (r !== null) {
-      /*
-        同格共事教了什麼，要【寫在回合紀錄裡】（D63）。
-        解鎖是一件發生過的事，不是一個狀態 —— 沒有這一行，
-        玩家只會發現選單裡莫名其妙多了一項，不知道是誰給的。
-      */
-      const taught = s
-        .taughtThisTurn()
-        .map((x) => {
-          const who = t(
-            defs.reader('notable').get(String(x.notableId)).nameKey,
-          );
-          const what =
-            x.skill !== null
-              ? t(defs.reader('skill').get(String(x.skill)).nameKey)
-              : x.trait === null
-                ? ''
-                : t(defs.reader('trait').get(String(x.trait)).nameKey);
-          return what === '' ? '' : `　✎${who}教了〈${what}〉`;
-        })
-        .join('');
       const growth = s.current.attributes.values[r.attr] - before[r.attr];
       stamp(
         `【${profile.label}・${profile.action}】` +
           `${t(`glow.${r.finalGlow}`)}${r.upgraded ? '⬆' : ''}` +
           ` ${t(`attr.${r.attr}.short`)}經驗+${Math.round(r.growthGained*100)} · 薪水+${r.salary}` +
-          `　${t(`merit.${r.meritGained.line}`)}+${r.meritGained.amount}${taught}`,
+          `　${t(`merit.${r.meritGained.line}`)}+${r.meritGained.amount}`,
       );
     }
     let started = false;
@@ -264,11 +245,12 @@ export function ScreenRun({
     settle();
   };
   const dialogueOffer = receipt?.offer ?? pending;
+  const storyChoice = !animating && !dialogueOffer ? s.storyChoice : null;
   return (
     <div
       inert={concealed}
       aria-hidden={concealed || undefined}
-      className={`run-screen ${concealed ? 'utility-open' : ''} ${!animating && dialogueOffer ? 'dialogue-playing' : ''} ${animating ? 'is-performing' : ''} ${performance ? 'task-playing' : animating ? 'task-growth' : ''}`}
+      className={`run-screen ${concealed ? 'utility-open' : ''} ${!animating && (dialogueOffer || storyChoice) ? 'dialogue-playing' : ''} ${animating ? 'is-performing' : ''} ${performance ? 'task-playing' : animating ? 'task-growth' : ''}`}
     >
       <Hud
         s={s}
@@ -310,7 +292,7 @@ export function ScreenRun({
           </div>;
         })}
       </div>
-      <Participants s={s} index={selected} onInspect={setInspect} concealed={Boolean(dialogueOffer) || concealed || animating}/>
+      <Participants s={s} index={selected} onInspect={setInspect} concealed={Boolean(dialogueOffer || storyChoice) || concealed || animating}/>
       <button
         ref={journalTrigger}
         className="journal-toggle"
@@ -320,7 +302,7 @@ export function ScreenRun({
       >
         <span className="journal-art-icon" aria-hidden="true" />
       </button>
-      {!animating && dialogueOffer ? (
+      {storyChoice ? <StoryDialogue key={storyChoice.id} s={s} source={storyChoice} onDone={option => { if(option) { s.chooseStory(storyChoice.id, option); settle(); } }}/> : !animating && dialogueOffer ? (
         <EventDialogue
           key={String(dialogueOffer.eventDefId)}
           s={s}

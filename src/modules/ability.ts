@@ -4,8 +4,7 @@
 //   特性  可收藏多條、同時啟用四條 → 稀缺在金錢與啟用格
 //   技能  戰役中的行動，只有 3 格 → 稀缺在格數（編組決策）
 //
-// 本模組【不 handle 任何指令】：學習的唯一入口在 learning.ts，
-// 這樣「產出總和 − 消耗總和 ＝ 餘額」才是可斷言的不變量。
+// 本模組只持有能力；教學發放由 growth.ts 處理，付費升級由 learning.ts 記帳。
 import type { RunContext } from '../contracts/core/context.js';
 import type { Attr } from '../contracts/core/primitives.js';
 import { ATTRS } from '../contracts/core/primitives.js';
@@ -33,7 +32,7 @@ export const hasTrait = (id: TraitId, ctx: RunContext): boolean =>
 export const hasSkill = (id: SkillId, ctx: RunContext): boolean =>
   ctx.state.abilities.skills.some((x) => String(x) === String(id));
 
-/** 只由 ㉜ 在扣款成功後呼叫。重複由 ㉜ 擋下（23 §4.1）。 */
+/** 基礎持有操作；教學與付費訓練各自控制等級和帳本。 */
 export function addTrait(id: TraitId, ctx: RunContext): RunState {
   if (hasTrait(id, ctx)) return ctx.state;
   return {

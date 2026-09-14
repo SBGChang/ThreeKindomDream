@@ -947,22 +947,22 @@
       95,
       125,
       160,
-      220,
-      300,
-      400,
-      540,
-      720
+      160,
+      160,
+      165,
+      170,
+      175
     ],
     "enemyTroopsByChapter": [
       515,
       920,
       1700,
       4210,
-      10400,
-      25800,
-      64000,
-      158000,
-      392000
+      4500,
+      4700,
+      4900,
+      5100,
+      5300
     ],
     "id": "battle:main",
     "kind": "battleRule",
@@ -3142,8 +3142,8 @@
         "descKey": "item.mengde.tier.5",
         "effects": [
           {
-            "funcType": "UnlockGrant",
-            "referId": 9201
+            "funcType": "StatModifier",
+            "referId": 9104
           }
         ],
         "fragmentCost": 12,
@@ -3300,8 +3300,8 @@
         "descKey": "item.fengxiao.tier.5",
         "effects": [
           {
-            "funcType": "UnlockGrant",
-            "referId": 9202
+            "funcType": "StatModifier",
+            "referId": 9102
           }
         ],
         "fragmentCost": 12,
@@ -8423,6 +8423,217 @@
     "factionId": null,
     "id": "seq:camp",
     "kind": "chapterSequence",
+    "packId": "pack:core",
+    "schemaVersion": 1
+  },
+  {
+    "aftermaths": [
+      {
+        "requirements": [
+          {
+            "kind": "choice",
+            "node": "C0.B",
+            "option": "return"
+          }
+        ],
+        "scene": {
+          "beats": [
+            {
+              "speaker": null,
+              "textKey": "C0.after.return.line.0"
+            },
+            {
+              "speaker": "阿禾",
+              "textKey": "C0.after.return.line.1"
+            },
+            {
+              "speaker": null,
+              "textKey": "C0.after.return.line.2"
+            },
+            {
+              "speaker": "皇甫嵩",
+              "textKey": "C0.after.return.line.3"
+            },
+            {
+              "speaker": null,
+              "textKey": "C0.after.return.line.4"
+            }
+          ],
+          "bodyKey": "C0.after.return.body",
+          "id": "C0.after.return",
+          "teachings": [
+            {
+              "skill": null,
+              "trait": "trait:chenyi"
+            }
+          ],
+          "titleKey": "C0.after.return.title"
+        }
+      },
+      {
+        "requirements": [],
+        "scene": {
+          "beats": [
+            {
+              "speaker": null,
+              "textKey": "C0.after.line.0"
+            },
+            {
+              "speaker": "皇甫嵩",
+              "textKey": "C0.after.line.1"
+            },
+            {
+              "speaker": null,
+              "textKey": "C0.after.line.2"
+            }
+          ],
+          "bodyKey": "C0.after.body",
+          "id": "C0.after",
+          "teachings": [
+            {
+              "skill": null,
+              "trait": "trait:chenyi"
+            }
+          ],
+          "titleKey": "C0.after.title"
+        }
+      }
+    ],
+    "battleVariants": [
+      {
+        "briefKeys": [
+          "C0.stage.0",
+          "C0.stage.1",
+          "C0.stage.2",
+          "C0.stage.3",
+          "C0.stage.4",
+          "C0.stage.5",
+          "C0.stage.6"
+        ],
+        "requirements": []
+      }
+    ],
+    "chapterId": "ch:camp.yellowturban",
+    "id": "story:camp.yellowturban",
+    "kind": "storyChapter",
+    "milestones": [],
+    "nodes": [
+      {
+        "beats": [
+          {
+            "speaker": null,
+            "textKey": "C0.A.line.0"
+          },
+          {
+            "speaker": "阿禾",
+            "textKey": "C0.A.line.1"
+          }
+        ],
+        "bodyKey": "C0.A.body",
+        "id": "C0.A",
+        "options": [
+          {
+            "consequenceKey": "C0.A.shelter.hint",
+            "id": "shelter",
+            "labelKey": "C0.A.shelter.label",
+            "response": {
+              "beats": [
+                {
+                  "speaker": null,
+                  "textKey": "C0.A.shelter.response.line.0"
+                },
+                {
+                  "speaker": "你",
+                  "textKey": "C0.A.shelter.response.line.1"
+                },
+                {
+                  "speaker": null,
+                  "textKey": "C0.A.shelter.response.line.2"
+                }
+              ],
+              "bodyKey": "C0.A.shelter.response.body",
+              "id": "C0.A.shelter.response",
+              "titleKey": "C0.A.shelter.response.title"
+            }
+          },
+          {
+            "consequenceKey": "C0.A.secure.hint",
+            "id": "secure",
+            "labelKey": "C0.A.secure.label",
+            "response": {
+              "beats": [
+                {
+                  "speaker": null,
+                  "textKey": "C0.A.secure.response.line.0"
+                },
+                {
+                  "speaker": "你",
+                  "textKey": "C0.A.secure.response.line.1"
+                },
+                {
+                  "speaker": null,
+                  "textKey": "C0.A.secure.response.line.2"
+                }
+              ],
+              "bodyKey": "C0.A.secure.response.body",
+              "id": "C0.A.secure.response",
+              "titleKey": "C0.A.secure.response.title"
+            }
+          }
+        ],
+        "responseTiming": "immediate",
+        "titleKey": "C0.A.title",
+        "turn": 2
+      },
+      {
+        "beats": [
+          {
+            "speaker": null,
+            "textKey": "C0.B.line.0"
+          }
+        ],
+        "bodyKey": "C0.B.body",
+        "id": "C0.B",
+        "options": [
+          {
+            "consequenceKey": "C0.B.return.hint",
+            "id": "return",
+            "labelKey": "C0.B.return.label"
+          },
+          {
+            "consequenceKey": "C0.B.handover.hint",
+            "id": "handover",
+            "labelKey": "C0.B.handover.label"
+          }
+        ],
+        "responseTiming": "chapterEnd",
+        "titleKey": "C0.B.title",
+        "turn": 6
+      }
+    ],
+    "opening": {
+      "beats": [
+        {
+          "speaker": null,
+          "textKey": "C0.opening.line.0"
+        },
+        {
+          "speaker": "阿禾",
+          "textKey": "C0.opening.line.1"
+        },
+        {
+          "speaker": null,
+          "textKey": "C0.opening.line.2"
+        },
+        {
+          "speaker": "皇甫嵩",
+          "textKey": "C0.opening.line.3"
+        }
+      ],
+      "bodyKey": "C0.opening.body",
+      "id": "C0.opening",
+      "titleKey": "C0.opening.title"
+    },
     "packId": "pack:core",
     "schemaVersion": 1
   },

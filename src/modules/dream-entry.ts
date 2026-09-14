@@ -233,7 +233,8 @@ export function rollStartAttrs(ctx: TurnContext): RunState {
 }
 
 const SKELETON = (meta: MetaState, config: DreamEntryConfig, seed: Seed): RunState => ({
-  schemaVersion: 3,
+  story: emptyStory(),
+  schemaVersion: 4,
   seed,
   rngCursors: emptyCursors(),
   metaSnapshot: meta,
@@ -270,6 +271,8 @@ const SKELETON = (meta: MetaState, config: DreamEntryConfig, seed: Seed): RunSta
   charges: {},
   ending: null,
 });
+
+import { emptyStory } from './story.js';
 
 export const emptyMeta = (): MetaState => ({
   schemaVersion: 1,

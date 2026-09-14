@@ -13,7 +13,7 @@ export function ScreenLearn({ s, bump, onBack }: { s: Session; bump: () => void;
   const reason = (o: LearningOffer): string => o.status === 'max' ? '已精通此項所學' : o.status === 'battle' ? '事件或戰鬥結束後可訓練' : o.status === 'locked' ? '尚待傳授：' + (o.teachers.join('、') || '戰役秘笈') : o.status === 'chapter' ? '第 ' + o.chapterNeed + ' 章開放' : o.status === 'funds' ? '還差 ' + (o.cost - s.money) + ' 錢' : o.status === 'attribute' ? '能力尚未達標' : '條件齊備，可開始訓練';
   return <section className="run-service training-service" aria-label="訓練">
     <ServiceHeader title="訓練" subtitle="磨練所學 · 不消耗回合" onBack={onBack} />
-    <aside className="service-host"><CharacterArt name="于禁" /><div className="host-words"><b>熟能生巧</b><p>常階直接學習；良、絕階須先取得傳授。</p><small>技能可選三招出陣<br/>特性可同時啟用四條</small></div></aside>
+    <aside className="service-host"><CharacterArt name="于禁" /><div className="host-words"><b>熟能生巧</b><p>人物事件與劇情中獲得傳授，再到此處升級。</p><small>技能可選三招出陣<br/>特性可同時啟用四條</small></div></aside>
     <div className="training-book">
       <div className="course-index">
         <div className="service-tabs" aria-label="訓練類型">{(['skill','trait'] as const).map(key => <button key={key} aria-pressed={tab === key} onClick={() => {setTab(key);setPage(0);setNotice('');}}>{key === 'skill' ? '技能' : '特性'}{key === 'trait' && <small>{s.current.abilities.activeTraits?.length ?? 0}/4</small>}</button>)}</div>
@@ -22,6 +22,7 @@ export function ScreenLearn({ s, bump, onBack }: { s: Session; bump: () => void;
         </button>)}</div>
         <ServicePager page={page} total={Math.ceil(all.length / 6)} onPage={setPage} label="課程分頁" />
       </div>
+      {!course && <article className="course-detail course-empty"><h2>尚無已解鎖的{tab === 'skill' ? '技能' : '特性'}</h2><p>與人物相遇、經歷劇情，獲得傳授後便會記入此冊。</p><p>重複教學直接突破一級；已滿級則折為金錢。</p></article>}
       {course && <article className="course-detail" key={course.id}>
         <span className="service-kicker">{tab === 'skill' ? '兵法招式' : '修身特性'} · {{common:'常',fine:'良',peerless:'絕'}[course.tier]}階</span>
         <h2>{course.name}</h2><p className="course-description">{course.description}</p>
@@ -29,7 +30,7 @@ export function ScreenLearn({ s, bump, onBack }: { s: Session; bump: () => void;
         <p className="course-effect">效果倍率 <b>×{course.power.toFixed(2)}</b>{course.level < course.maxLevel && <> → <strong>×{course.nextPower.toFixed(2)}</strong></>}</p>
         {course.level < course.maxLevel && <div className="course-requirements"><span className={course.value >= course.need ? 'met' : ''}>{t('attr.'+course.attr+'.short')} {course.value} / {course.need}</span>{course.secondaryNeed > 0 && <span className={course.secondaryValue >= course.secondaryNeed ? 'met' : ''}>{t('attr.'+course.secondary+'.short')} {course.secondaryValue} / {course.secondaryNeed}</span>}<span className={s.current.progress.chapter >= course.chapterNeed ? 'met' : ''}>第 {course.chapterNeed} 章</span></div>}
         <p className="course-status">{reason(course)}</p>
-        <div className="course-purchase"><button className="service-buy" disabled={course.status !== 'ready'} onClick={() => {if(s.upgradeAbility(course.id))setNotice(course.name+'升至 '+(course.level+1)+' 級，支付 '+course.cost+' 錢');bump();}}>{course.status === 'max' ? '已精通' : (course.level ? '升級' : '學習')+' · '+course.cost+' 錢'}</button>
+        <div className="course-purchase"><button className="service-buy" disabled={course.status !== 'ready'} onClick={() => {if(s.upgradeAbility(course.id))setNotice(course.name+'升至 '+(course.level+1)+' 級，支付 '+course.cost+' 錢');bump();}}>{course.status === 'max' ? '已精通' : '升級'+' · '+course.cost+' 錢'}</button>
         {tab === 'trait' && course.level > 0 && <button aria-pressed={course.active} disabled={course.status === 'battle' || (!course.active && (s.current.abilities.activeTraits?.length ?? 0) >= 4)} onClick={() => {s.toggleTrait(course.id as TraitId);bump();}}>{course.active ? '停用特性' : '啟用特性'}</button>}</div>
       </article>}
     </div>

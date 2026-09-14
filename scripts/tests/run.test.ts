@@ -155,17 +155,22 @@ export function run(): void {
       driveRun(fighting, policy);
       eq(saved.current, fighting.current);
     });
-    it('傳授只開放課程，重複傳授不免費學習或升級', () => {
+    it('傳授直接習得並逐級突破，滿級教學折金', () => {
       const initial = newSession(3).current;
       const skill = defs.reader('skill').all().find(x => !initial.abilities.skills.includes(x.skillId))!;
       const trait = defs.reader('trait').all()[0]!;
-      let state = grantUnlock(trait.traitId, skill.skillId, { state: initial, defs });
-      eq(state.abilities.levels?.[String(skill.skillId)], undefined);
-      ok(!state.abilities.skills.includes(skill.skillId), '傳授不得繞過付費訓練');
-      for (let i = 0; i < 7; i++) state = grantUnlock(trait.traitId, skill.skillId, { state, defs });
-      eq(state.abilities.levels?.[String(skill.skillId)], undefined);
-      eq(state.abilities.levels?.[String(trait.traitId)], undefined);
-      eq(state.growth, { ...initial.growth, unlockedSkills: state.growth.unlockedSkills, unlockedTraits: state.growth.unlockedTraits });
+      let state = grantUnlock(trait.traitId, skill.skillId, { state: initial, defs }, 'test/first');
+      eq(state.abilities.levels?.[String(skill.skillId)], 1);
+      ok(state.abilities.skills.includes(skill.skillId), '傳授立即取得技能');
+      eq(state.economy.money, initial.economy.money);
+      for (let i = 0; i < 2; i++) state = grantUnlock(trait.traitId, skill.skillId, { state, defs }, 'test/repeat/' + i);
+      eq(state.abilities.levels?.[String(skill.skillId)], 3);
+      eq(state.abilities.levels?.[String(trait.traitId)], 3);
+      const full = state;
+      state = grantUnlock(trait.traitId, skill.skillId, { state, defs }, 'test/full');
+      const rule = defs.single('growthRule').economy;
+      eq(state.economy.money-full.economy.money, rule.skillPrices[skill.tier].at(-1)!+rule.traitPrices[trait.tier].at(-1)!);
+      eq(grantUnlock(trait.traitId, skill.skillId, { state, defs }, 'test/full'), state);
     });
     it('升級扣金錢、保留能力數值，且戰鬥倍率生效', () => {
       const base = newSession(3).current;
@@ -196,18 +201,15 @@ export function run(): void {
       ok(!s.upgradeAbility(blocked.id), '出陣後不可升級');
       eq(s.current, before);
     });
-    it('傳授課程仍需支付訓練費才能取得 Lv1', () => {
+    it('舊存檔已傳授項目補為 Lv1，不再次收費', () => {
       const base = newSession(3).current;
       const skill = defs.reader('skill').all().find(x => !base.abilities.skills.includes(x.skillId))!;
       const s = Session.restore(wiring, { ...base,
-        attributes: { values: { lead: 95, war: 95, int: 95, pol: 95 } },
         growth: { ...base.growth, unlockedSkills: [skill.skillId] } });
-      const offer = s.learningOffers().find(x => x.id === skill.skillId)!;
-      eq(offer.status, 'ready');
-      ok(offer.cost>0, '課程需要費用');
-      ok(s.upgradeAbility(skill.skillId), '已解鎖技能必須有可用入口');
-      ok(s.current.abilities.skills.includes(skill.skillId), '取得後必須能配置出陣');
       eq(s.abilityLevel(skill.skillId), 1);
+      ok(s.current.abilities.skills.includes(skill.skillId), '傳授的技能可以直接配置');
+      eq(s.money, base.economy.money);
+      eq(Session.restore(wiring, s.current).current, s.current);
     });
   });
   describe('turn · 回合座標（15 §1.1）', () => {
@@ -1337,8 +1339,8 @@ export function run(): void {
     });
 
     it('訓練購入後改報下一級，資金不足不得扣款',()=>{
-      const s=newSession(4242),offer=s.learningOffers().find(o=>o.status==='ready');
-      ok(offer!==undefined,'必須有常階可購');if(!offer)return;
+      const base=newSession(4242).current,s=Session.restore(wiring,{...base,attributes:{values:{lead:95,war:95,int:95,pol:95}},economy:{...base.economy,money:200}}),offer=s.learningOffers().find(o=>o.status==='ready');
+      ok(offer!==undefined,'必須有已習得技能可升級');if(!offer)return;
       const before=s.money;ok(s.upgradeAbility(offer.id),'付費學習');eq(s.money,before-offer.cost);
       const next=s.learningOffers().find(o=>o.id===offer.id)!;eq(next.level,offer.level+1);
       const state=s.current;ok(!s.upgradeAbility(offer.id),'不夠錢時拒絕');eq(s.current,state);

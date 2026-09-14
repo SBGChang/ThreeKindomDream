@@ -13,6 +13,7 @@ import {
   validateTrainingActions, validateYieldCurves,
 } from './tables.js';
 import { createCtx } from './types.js';
+import { validateStory } from './story.js';
 import type { ValidateInput, ValidationError } from './types.js';
 
 export type { ValidateInput, ValidationError, Rec } from './types.js';
@@ -39,6 +40,7 @@ export function validateAll(input: ValidateInput): readonly ValidationError[] {
   validateEvents(c);
   validateItems(c);
   validateChapters(c);
+  validateStory(c);
   validateEndings(c);
   validateShop(c);
   validateFactions(c);

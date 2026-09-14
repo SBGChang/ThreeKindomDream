@@ -1,0 +1,9 @@
+.story-review-nav { position:absolute; z-index:60; left:28px; top:136px; max-width:1060px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; padding:7px 10px; background:#12252dec; border:1px solid #bd985a; border-radius:4px; color:#ead6a8; font-size:13px; }
+.game-stage .story-review-nav select,.game-stage .story-review-nav button { font-size:13px; padding:5px 8px; height:32px; max-width:280px; color:#fff0cc; background:#293d42; border:1px solid #aa8750; border-image:none; box-shadow:none; }
+.story-review-nav a { color:#ffdf91; padding:5px; }
+.story-cast-review { position:absolute; inset:8px; display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(3,1fr); gap:8px; }
+.story-cast-review figure { margin:0; position:relative; display:flex; align-items:center; justify-content:center; gap:20px; background:#183039df; border:1px solid #b79a60; overflow:hidden; }
+.story-cast-review figure:nth-child(even) { background:#e9d2a3ec; }
+.story-cast-review .character-halfbody { width:150px; height:205px; object-fit:contain; }
+.story-cast-review .character-face { width:95px; height:105px; object-fit:cover; }
+.story-cast-review figcaption { color:white; position:absolute; bottom:5px; right:28px; text-shadow:1px 1px black; }

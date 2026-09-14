@@ -12,11 +12,12 @@ export const battleRule: BattleRuleDef = coreDef('battleRule', 'battle:main', {
   actorDivisor: 50,
 
   enemyTroopsByChapter: [
-    515, 920, 1700, 4210, 10400, 25800, 64000, 158000, 392000,
+    // 金幣版 72 回合敘事可達性校準；前四章保留，樣本見 docs/narrative/gold-story-balance.json。
+    515, 920, 1700, 4210, 4500, 4700, 4900, 5100, 5300,
   ],
 
   enemyDamageByChapter: [
-    65, 95, 125, 160, 220, 300, 400, 540, 720,
+    65, 95, 125, 160, 160, 160, 165, 170, 175,
   ],
   supplyPerTroop: 1,
   rallyRatio: 0.35,

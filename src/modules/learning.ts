@@ -36,12 +36,11 @@ export function offers(
   ctx: RunContext,
   fx: EffectResolver,
 ): readonly LearningOffer[] {
-  const rule = economyRule(ctx),
-    grants = fx.unlockGrants(ctx);
+  const rule = economyRule(ctx);
   return [
     ...ctx.defs.reader('skill').all(),
     ...ctx.defs.reader('trait').all(),
-  ].map((def) => {
+  ].flatMap((def): LearningOffer[] => {
     const kind = def.kind,
       id = kind === 'skill' ? def.skillId : def.traitId;
     const owned =
@@ -49,13 +48,11 @@ export function offers(
         ? ability.hasSkill(id as SkillId, ctx)
         : ability.hasTrait(id as TraitId, ctx);
     const level = owned ? ability.levelOf(id, ctx) : 0;
-    const unlocked =
-      def.tier === 'common' ||
+    const unlocked = owned ||
       (kind === 'skill'
-        ? ctx.state.growth.unlockedSkills.includes(id as SkillId) ||
-          grants.some((g) => g.skill === id)
-        : ctx.state.growth.unlockedTraits.includes(id as TraitId) ||
-          grants.some((g) => g.trait === id));
+        ? ctx.state.growth.unlockedSkills.includes(id as SkillId)
+        : ctx.state.growth.unlockedTraits.includes(id as TraitId));
+    if (!unlocked) return [];
     const attr =
       kind === 'skill'
         ? def.action.actorAttr
@@ -111,7 +108,7 @@ export function offers(
           : n.abilities.traits.some((x) => x === id),
       )
       .map((n) => ctx.defs.text(String(n.nameKey)));
-    return {
+    return [{
       id,
       kind,
       tier: def.tier,
@@ -133,7 +130,7 @@ export function offers(
       nextPower: powers[level] ?? powers.at(-1)!,
       active:
         kind === 'trait' && ability.activeTraits(ctx).includes(id as TraitId),
-    };
+    }];
   });
 }
 export function upgrade(

@@ -4,19 +4,17 @@ import type {
   AttrGradeBand,
   GrowthRuleDef,
 } from '../contracts/core/definitions.js';
-import type { NotableId, SkillId, TraitId } from '../contracts/core/ids.js';
+import type { SkillId, TraitId } from '../contracts/core/ids.js';
 import type {
-  AbilityTier,
-  AffinityStage,
   AptitudeGrade,
   Attr,
   AttrGrade,
 } from '../contracts/core/primitives.js';
-import { AFFINITY_STAGES } from '../contracts/core/primitives.js';
+
 import type { RunState } from '../contracts/core/state.js';
 import * as ability from './ability.js';
 import type { EffectResolver } from './effect.js';
-import { stageOf } from './roster-query.js';
+import { economyRule, purse, transact } from './economy.js';
 import { attrCapOf, attributeBalance, statQuery, setGrownAttribute } from './stats.js';
 
 const rule = (ctx: RunContext): GrowthRuleDef => ctx.defs.single('growthRule');
@@ -88,101 +86,38 @@ export const attrCap = (attr: Attr, ctx: RunContext): number =>
 export const aptitudeOf = (attr: Attr, ctx: RunContext): AptitudeGrade =>
   ctx.state.config.aptitudes[attr];
 
-function meetsTeachStage(
-  tier: AbilityTier,
-  stage: AffinityStage,
-  ctx: RunContext,
-): boolean {
-  const need = rule(ctx).teachStage[tier];
-  return AFFINITY_STAGES.indexOf(stage) >= AFFINITY_STAGES.indexOf(need);
-}
-
-export interface Taught {
-  readonly notableId: NotableId;
-  readonly trait: TraitId | null;
-  readonly skill: SkillId | null;
-}
-
-/**
- * **同格共事 → 他教你一項**（D63）★★ 解鎖的主要來源
- *
- * 玩家選了某一格，而那一格站著的名士好感已達該階門檻時，
- * 他從自己表上挑【一項你還沒解鎖的】教給你。
- *
- * ── 三個設計決定 ───────────────────────────────
- * 一 · **一次最多一項。** 否則第一次同格就把他整張表倒給你，
- *      「跟誰混久了學到什麼」就沒有節奏。
- * 二 · **綁在同格上。** 同格本來就是好感的來源（19 §5），
- *      所以「跟他相處 → 好感漲 → 他教你更難的東西」是同一條線，
- *      不需要第二套機制。
- * 三 · **由低階往高階教。** 常階最先，因為它的好感門檻最低；
- *      玩家因此看得到一條「越熟學得越好」的順序。
- *
- * 不消耗 RNG：教什麼是決定性的（表上第一個還沒解鎖的）。
- * 隨機會讓「我知道他能教我什麼」變成「我不知道他這次給不給」，
- * 而那條線的價值正是【可以計畫】。
- */
-export function teachFromSlot(
-  standing: readonly NotableId[],
-  ctx: RunContext,
-): { readonly state: RunState; readonly taught: readonly Taught[] } {
-  let state = ctx.state;
-  const taught: Taught[] = [];
-  for (const id of standing) {
-    const at: RunContext = { state, defs: ctx.defs };
-    const nd = ctx.defs.reader('notable').get(String(id));
-    const stage = stageOf(id, at);
-    const star = at.state.metaSnapshot.notableCodex[String(id)]?.star ?? 0;
-
-    // 技能先於特質 —— 沒有招就打不出傷害，那是玩家最先需要的東西。
-    const skill = nd.abilities.skills
-      .filter((r) => r.star <= star)
-      .map((r) => ability.skillDef(r.skillId, at))
-      .filter((d) => meetsTeachStage(d.tier, stage, at))
-      .find(
-        (d) =>
-          !at.state.growth.unlockedSkills.some(
-            (x) => String(x) === String(d.skillId),
-          ),
-      );
-    if (skill !== undefined) {
-      state = grantUnlock(null, skill.skillId, at);
-      taught.push({ notableId: id, trait: null, skill: skill.skillId });
-      continue;
-    }
-    const trait = nd.abilities.traits
-      .map((tid) => ability.traitDef(tid, at))
-      .filter((d) => meetsTeachStage(d.tier, stage, at))
-      .find(
-        (d) =>
-          !at.state.growth.unlockedTraits.some(
-            (x) => String(x) === String(d.traitId),
-          ),
-      );
-    if (trait !== undefined) {
-      state = grantUnlock(trait.traitId, null, at);
-      taught.push({ notableId: id, trait: trait.traitId, skill: null });
-    }
-  }
-  return { state, taught };
-}
-
+/** Authored teaching: learn Lv1, improve one level, or cash out an already-mastered ability.
+ * The source key makes the whole reward (including free levels) replay-safe. */
 export function grantUnlock(
-  trait: TraitId | null,
-  skill: SkillId | null,
-  ctx: RunContext,
+  trait: TraitId | null, skill: SkillId | null, ctx: RunContext,
+  source = 'manual/' + ctx.state.progress.turn + '/' + purse(ctx).ledger.length,
 ): RunState {
-  const g = ctx.state.growth;
-  const traits =
-    trait !== null && !g.unlockedTraits.some((x) => String(x) === String(trait))
-      ? [...g.unlockedTraits, trait]
-      : g.unlockedTraits;
-  const skills =
-    skill !== null && !g.unlockedSkills.some((x) => String(x) === String(skill))
-      ? [...g.unlockedSkills, skill]
-      : g.unlockedSkills;
-  return {
-    ...ctx.state,
-    growth: { ...g, unlockedTraits: traits, unlockedSkills: skills },
-  };
+  let state = ctx.state;
+  for (const [kind, id] of [['skill', skill], ['trait', trait]] as const) {
+    if (id === null) continue;
+    const at = { ...ctx, state }, rule = economyRule(at);
+    const def = kind === 'skill' ? ability.skillDef(id as SkillId, at) : ability.traitDef(id as TraitId, at);
+    const owned = kind === 'skill' ? ability.hasSkill(id as SkillId, at) : ability.hasTrait(id as TraitId, at);
+    const level = owned ? ability.levelOf(id, at) : 0;
+    const prices = (kind === 'skill' ? rule.skillPrices : rule.traitPrices)[def.tier];
+    const max = rule.primaryNeeds[def.tier].length;
+    const key = 'teaching/' + source + '/' + id;
+    if (purse(at).ledger.some(entry => entry.id === key)) continue;
+    const mastered = level >= max;
+    state = transact(key, mastered ? prices.at(-1)! : 0,
+      ctx.defs.text(String(def.nameKey)) + (mastered ? ' · 滿級教學折金' : ' · 傳授'), at);
+    if (mastered) continue;
+    const g = state.growth;
+    state = kind === 'skill' ? ability.addSkill(id as SkillId, { ...ctx, state }) : ability.addTrait(id as TraitId, { ...ctx, state });
+    const active = [...ability.activeTraits({ ...ctx, state })];
+    if (kind === 'trait' && !active.includes(id as TraitId) && active.length < rule.activeTraits) active.push(id as TraitId);
+    state = { ...state,
+      growth: { ...g,
+        unlockedSkills: kind === 'skill' && !g.unlockedSkills.includes(id as SkillId) ? [...g.unlockedSkills, id as SkillId] : g.unlockedSkills,
+        unlockedTraits: kind === 'trait' && !g.unlockedTraits.includes(id as TraitId) ? [...g.unlockedTraits, id as TraitId] : g.unlockedTraits,
+      },
+      abilities: { ...state.abilities, activeTraits: active, levels: { ...state.abilities.levels, [String(id)]: level + 1 } },
+    };
+  }
+  return state;
 }

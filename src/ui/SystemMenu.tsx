@@ -49,6 +49,16 @@ export function SystemMenu({ onClose, onHome, beforeExit }: {
     return () => { document.removeEventListener('fullscreenchange', sync); window.removeEventListener('resize', sync); };
   }, []);
   const go = (next: Page) => { setMessage(''); setPage(next); };
+  const back = () => {
+    if (busy) return;
+    if (page === 'menu' || page === 'exited') onClose();
+    else go('menu');
+  };
+  useEffect(() => {
+    const context = (event: MouseEvent) => { event.preventDefault(); back(); };
+    window.addEventListener('contextmenu', context);
+    return () => window.removeEventListener('contextmenu', context);
+  }, [page, busy, onClose]);
   const update = (change: Partial<SystemPreferences>) => {
     const next = { ...prefs, ...change }; setPrefs(next); applySystemPreferences(next);
     try { saveSystemPreferences(next); setMessage(''); } catch { setMessage('本次設定已套用，但無法儲存至裝置。'); }
@@ -80,7 +90,7 @@ export function SystemMenu({ onClose, onHome, beforeExit }: {
   return <div className="game-modal system-overlay" onClickCapture={event => {
     if ((event.target as HTMLElement).closest('button')) playMenuSound(prefs.sfx);
   }} onKeyDown={event => {
-    if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); if (!busy) { if (page === 'menu') onClose(); else if (page !== 'exited') go('menu'); } }
+    if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); back(); }
     if (event.key === 'Tab') {
       const controls = [...(panel.current?.querySelectorAll<HTMLElement>('button:not(:disabled),input:not(:disabled),select:not(:disabled)') ?? [])];
       const first = controls[0], last = controls.at(-1);

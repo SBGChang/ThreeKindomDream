@@ -8,6 +8,7 @@ import type {
   GlowTier, MeritKind, OptionTier, Phase, Rarity, SkillKind,
 } from './primitives.js';
 import type { Condition, EffectRef } from './effects.js';
+import type { StoryChapterDef, StoryRequirement } from './story.js';
 
 export type DefinitionKind =
   | 'glowTier' | 'aptitudeGrade' | 'trainingAction' | 'trainingCurve'
@@ -21,7 +22,7 @@ export type DefinitionKind =
   | 'shopItem' | 'settlementFormula' | 'gameRules'
   // ── ㉜ 養成兌現 ／ ㉓ 特質與技能 ／ ㉝ 戰役（RFC-01）★ ──
   | 'growthRule' | 'trait' | 'skill'
-  | 'battleRule' | 'enemy' | 'campaign';
+  | 'battleRule' | 'enemy' | 'campaign' | 'storyChapter';
 
 export interface DefHeader {
   readonly id: string;
@@ -390,12 +391,7 @@ export type EventReward =
    * 一次性改寫本輪的規則（賈詡的「★1／★2 委託直接升為 ★3」）。
    */
   | { readonly kind: 'boon'; readonly ref: EffectRef }
-  /**
-   * 讓一項特質或技能進入【可學清單】（32 §5）★
-   *
-   * 舊制的 `skill` 獎勵是白給的；RFC-01 D35 之後一切都要先解鎖再花經驗學。
-   * 於是「你能學什麼」與「你買不買得起」是兩道獨立的門。
-   */
+  /** 教學獎勵：首次直接取得 Lv1，重複突破一級，已滿級改發該能力的折金。 */
   | { readonly kind: 'unlock'; readonly trait: TraitId | null; readonly skill: SkillId | null };
 
 /**
@@ -640,6 +636,7 @@ export type EndingTrigger =
   | { readonly kind: 'sequenceCompleted' }
   | { readonly kind: 'noFactionEligible' };
 export interface EndingDef extends DefHeader {
+  readonly storyRequirements?: readonly StoryRequirement[];
   readonly kind: 'ending';
   readonly ending: EndingId;
   /**
@@ -947,6 +944,7 @@ export interface CampaignDef extends DefHeader {
 
 /** Definition kind → 型別對照。Registry 以此提供型別安全的 Reader。 */
 export interface DefByKind {
+  storyChapter: StoryChapterDef;
   glowTier: GlowTierDef; aptitudeGrade: AptitudeGradeDef;
   trainingAction: TrainingActionDef; trainingCurve: TrainingCurveDef;
   affinityStage: AffinityStageDef; affinityCurve: AffinityCurveDef;

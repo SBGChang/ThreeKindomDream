@@ -41,9 +41,12 @@ export function validateEconomy(c: Ctx): void {
   table('shopChapterCaps', 4, true);
   table('interactionFragmentCaps', 9, true);
   table('traitPower', 3);
+  const sequences = c.rows('chapterSequence');
+  const commonLength = c.list(sequences.find(s => s['factionId'] === null)?.['chapters']).length;
+  const routeLength = commonLength + Math.max(0, ...sequences.filter(s => s['factionId'] !== null).map(s => c.list(s['chapters']).length));
   for (const name of ['fixedSalary', 'fixedGrowth'])
     if (
-      c.list(r[name]).length < c.rows('chapter').length ||
+      c.list(r[name]).length < routeLength ||
       c.list(r[name]).some((v) => !numeric(v))
     )
       c.push('rule', 'economy', name, null, '每章必須有非負數值');

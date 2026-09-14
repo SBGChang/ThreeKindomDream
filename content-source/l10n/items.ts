@@ -62,7 +62,7 @@ export const itemTexts: Record<string, string> = {
   'item.mengde.tier.2': '曹操的同框加成再 +25%',
   'item.mengde.tier.3': '統御的基礎成長 +0.4',
   'item.mengde.tier.4': '曹操的起始好感 +20',
-  'item.mengde.tier.5': '解鎖〈節制〉—— 需於訓練中付費學習',
+  'item.mengde.tier.5': '統系已解鎖技能與特性的訓練費 −20%',
 
   'item.halberd.name': '短戟',
   'item.halberd.desc': '他慣用的那一對。「賊來十步，乃呼我。」',
@@ -80,7 +80,7 @@ export const itemTexts: Record<string, string> = {
   'item.fengxiao.tier.2': '郭嘉的起始好感 +20',
   'item.fengxiao.tier.3': '人物事件機率 +25%',
   'item.fengxiao.tier.4': '郭嘉的同框加成再 +25%',
-  'item.fengxiao.tier.5': '解鎖〈料敵〉—— 需於訓練中付費學習',
+  'item.fengxiao.tier.5': '智系已解鎖技能與特性的訓練費 −20%',
 
   'item.wangzuo.name': '王佐印綬',
   'item.wangzuo.desc': '他從來沒有掛上去過。那個位子他讓給了別人。',

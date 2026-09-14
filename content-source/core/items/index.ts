@@ -147,7 +147,7 @@ const named: readonly ItemDef[] = [
     [ref('LinkAmplify', FX.amplifyCaocao25)],
     [ref('SlotBaseAdd', FX.itemBaseLead4)],
     [ref('AffinityGrant', FX.startCaocao20)],
-    [ref('UnlockGrant', FX.unlockBingfa)],
+    [ref('StatModifier', FX.learnLeadOff20)],
   ]),
 
   /**
@@ -170,7 +170,7 @@ const named: readonly ItemDef[] = [
     [ref('AffinityGrant', FX.startGuojia20)],
     [ref('EncounterChance', FX.encItem25)],
     [ref('LinkAmplify', FX.amplifyGuojia25)],
-    [ref('UnlockGrant', FX.unlockLiaodi)],
+    [ref('StatModifier', FX.learnIntOff20)],
   ]),
 
   /**

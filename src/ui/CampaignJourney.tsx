@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { Session } from '../app/session.js';
 import { defs, t } from '../app/bootstrap.js';
 import { BattleTheater, type ReplayData } from './BattleTheater.js';
+import { PendingStory } from './StoryDialogue.js';
 
 type Scene = 'enter' | 'combat' | 'cheer' | 'choice' | 'march' | 'close' | 'open' | 'retreat' | 'summary';
 export function CampaignJourney({s,bump,onDone}:{s:Session;bump:()=>void;onDone:()=>void}):React.ReactElement {
@@ -61,7 +62,7 @@ export function CampaignJourney({s,bump,onDone}:{s:Session;bump:()=>void;onDone:
     {battle&&<BattleTheater key={sequence.current} {...battle} background={background} finished={resumed.current} enabled={scene==='combat'} onFinished={()=>setScene(battle.defeated?'retreat':'cheer')}/>}
     <div className="battle-curtain" aria-hidden="true"/>
     {scene==='cheer'&&<div className="victory-call" role="status">敵陣已破！全軍萬勝！</div>}
-    {scene==='choice'&&<div className="march-choice"><h2>{next?'全軍待命':'七關盡破 · 凱旋而歸'}</h2><p>已通過 {depth} 關 · 保住 {reward} 錢</p>{next&&<p>下一關：{next.boss?t(next.boss.nameKey):'敵軍'} · 兵量 {next.enemyTroops}。戰敗時已得獎勵減半。</p>}<div><button onClick={()=>setScene('retreat')}>{next?'撤軍':'凱旋撤軍'}</button>{next&&<button className="primary" onClick={()=>setScene('march')}>繼續 · 全軍前進</button>}</div></div>}
+    {scene==='choice' && (s.storyScene ? <PendingStory s={s} bump={bump}/> : <div className="march-choice"><h2>{next?'全軍待命':'七關盡破 · 凱旋而歸'}</h2><p>已通過 {depth} 關 · 保住 {reward} 錢</p>{next&&<p>下一關：{next.boss?t(next.boss.nameKey):'敵軍'} · 兵量 {next.enemyTroops}。戰敗時已得獎勵減半。</p>}<div><button onClick={()=>setScene('retreat')}>{next?'撤軍':'凱旋撤軍'}</button>{next&&<button className="primary" onClick={()=>setScene('march')}>繼續 · 全軍前進</button>}</div></div>)}
     {scene==='summary'&&<div className="campaign-settlement" role="dialog" aria-label="戰役結算"><span>戰役結算</span><h1>{battle?.defeated?'敗軍收整':depth<total?'全軍撤回':'凱旋歸營'}</h1><p>通過 {depth} 關</p><strong>獲得 {reward} 錢</strong><p>能力隨本次戰役磨練成長</p>{battle?.defeated&&<p>已得獎勵減半後入帳。</p>}<button className="primary" onClick={onDone}>繼續行旅 →</button></div>}
   </div>;
 }

@@ -24,6 +24,9 @@ export function summarize(run: RunState, defs: DefinitionRegistry): RunSummary {
   const ending = run.ending;
   if (ending === null) throw new Error('尚未達成結局，不可結算');
   const ctx = { state: run, defs };
+  const chapterDepths = { ...run.story.depths };
+  if (run.campaign) chapterDepths[String(run.progress.chapterId)] = Math.max(
+    chapterDepths[String(run.progress.chapterId)] ?? 0, run.campaign.clearedStages);
   const notables: { notableId: NotableId; finalStage: AffinityStage }[] =
     run.roster.members.map((m) => ({
       notableId: m.notableId,
@@ -48,7 +51,9 @@ export function summarize(run: RunState, defs: DefinitionRegistry): RunSummary {
     attributes: run.attributes,
     learnedTraits: run.abilities.traits,
     learnedSkills: run.abilities.skills,
-    stagesCleared: run.campaign?.clearedStages ?? 0,
+    chapterDepths,
+    completedRoutes: run.story.milestones,
+    stagesCleared: Object.values(chapterDepths).reduce((total, depth) => total + depth, 0),
   };
 }
 
@@ -92,9 +97,11 @@ export function settle(
     points: items.meta.points + points,
     runIndex: items.meta.runIndex + 1,
     settledSeeds: [...items.meta.settledSeeds, summary.seed],
-    collection: { seenEvents, reachedEndings },
+    collection: { ...items.meta.collection, seenEvents, reachedEndings,
+      completedRoutes: [...new Set([...(items.meta.collection.completedRoutes ?? []), ...(summary.completedRoutes ?? [])])] },
     stats: {
       ...items.meta.stats,
+      stagesCleared: (items.meta.stats.stagesCleared ?? 0) + summary.stagesCleared,
       runsStarted: items.meta.stats.runsStarted,
       runsFullDream: items.meta.stats.runsFullDream + (summary.isFullDream ? 1 : 0),
       chaptersPassed: items.meta.stats.chaptersPassed + summary.chaptersPassed,

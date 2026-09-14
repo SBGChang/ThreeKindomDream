@@ -1,6 +1,8 @@
 import type { Session } from '../app/session.js';
 import { useId } from 'react';
 import type { DialogueHeader } from './dialogue-header.js';
+import { RealmIcon, RealmStars } from './RealmArt.js';
+import { UiSymbol } from './UiSymbol.js';
 
 function ChapterArt(): React.ReactElement {
   const clip = useId().replace(/:/g, '');
@@ -78,7 +80,13 @@ export function RunFooter({
           <span className="footer-turn-divider">/</span><span className="footer-turn-total">8</span><span>回合</span>
         </span>
       </div>
-      {dialogue ? <div className="footer-event"><span>{dialogue.kind} <small>{'★'.repeat(dialogue.rarity)}</small></span><h1>{dialogue.title}</h1></div> : <div className="footer-money">
+      {dialogue ? <div className="footer-event">
+        <span className="footer-event-kind" role="img" aria-label={dialogue.kind} title={dialogue.kind}>
+          {dialogue.kind === '主線劇情' ? <RealmIcon name="book"/> : <UiSymbol name={dialogue.kind === '委託' ? 'commission' : 'event'}/>}
+        </span>
+        {dialogue.rarity > 0 && <RealmStars count={dialogue.rarity}/>}
+        <h1>{dialogue.title}</h1>
+      </div> : <div className="footer-money">
         <span>金錢</span>
         <i className="footer-coins">
           <GoldIcon />
@@ -92,7 +100,7 @@ export function RunFooter({
           onClick={() => onGo(active === 'learn' ? 'run' : 'learn')}
         >
           <span className="footer-art" aria-hidden="true" />
-          訓練
+          <span className="footer-label">訓練</span>
         </button>
         <button
           className="footer-button footer-market"
@@ -103,7 +111,7 @@ export function RunFooter({
           <i>
             <GoldIcon shop />
           </i>
-          商店
+          <span className="footer-label">商店</span>
         </button>
         <button
           className="footer-button footer-vault"
@@ -111,7 +119,7 @@ export function RunFooter({
           onClick={() => onGo(active === 'vault' ? 'run' : 'vault')}
         >
           <span className="footer-art" aria-hidden="true" />
-          器物
+          <span className="footer-label">器物</span>
         </button>
         <button
           className="footer-button footer-settings"
@@ -119,7 +127,7 @@ export function RunFooter({
           aria-label="遊戲設定"
         >
           <span className="footer-art" aria-hidden="true" />
-          選單
+          <span className="footer-label">選單</span>
         </button>
       </nav>}
       {notice && (

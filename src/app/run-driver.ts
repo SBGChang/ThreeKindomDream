@@ -5,6 +5,7 @@ import type { FactionId, NotableId } from '../contracts/core/ids.js';
 
 /** Headless policies drive the exact Session methods called by the player interface. */
 export interface RunPolicy {
+  chooseStory?(s: Session): string;
   chooseFaction?(s: Session): FactionId | null;
   chooseSuperiors?(s: Session): readonly NotableId[];
   chooseSlot(s: Session): SlotIndex;
@@ -19,7 +20,17 @@ export function driveRun(s: Session, policy: RunPolicy): DriveResult {
   const depths: number[] = [];
   for (let guard = 0; guard < 1000 && !s.isOver; guard++) {
     if(s.needsChapterCamp){s.continueChapter();continue;}
-    if (s.needsFactionChoice) {
+    if (s.needsEndingChoice) {
+      const ending = s.storyEndingOptions()[0];
+      if (!ending) throw new Error('沒有可紀念的改命結局');
+      s.chooseStoryEnding(String(ending.ending));
+    } else if (s.storyScene) {
+      s.acknowledgeStory(s.storyScene.id);
+    } else if (s.storyChoice) {
+      const option = policy.chooseStory?.(s) ?? s.storyChoice.options[0]?.id;
+      if (!option) throw new Error('主線缺少選項');
+      s.chooseStory(s.storyChoice.id, option);
+    } else if (s.needsFactionChoice) {
       const faction = policy.chooseFaction ? policy.chooseFaction(s) : s.factionOptions().find(x => x.eligible)?.factionId;
       if (faction) s.chooseFaction(faction); else s.noFactionAvailable();
     } else if (s.needsSuperiors) {
@@ -34,6 +45,7 @@ export function driveRun(s: Session, policy: RunPolicy): DriveResult {
         const result = s.engage();
         if (result.defeated) break;
         cleared++;
+        while (s.current.story.scenes.length > 0 && s.needsCampaign) s.acknowledgeStory(s.current.story.scenes[0]!.id);
       }
       if (s.needsCampaign) s.withdraw();
       depths.push(cleared);
@@ -44,7 +56,7 @@ export function driveRun(s: Session, policy: RunPolicy): DriveResult {
         if (++events > 64) throw new Error('事件佇列未收斂');
         s.resolveEvent(policy.chooseOption(s, s.pendingEvent));
       }
-      s.advance();
+      if (s.canAdvance()) s.advance();
     }
   }
   if (!s.isOver) throw new Error('策略未完成一輪');

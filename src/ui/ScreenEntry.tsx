@@ -45,7 +45,7 @@ export function ScreenEntry({ meta, onEnter, onBack }: Props): React.ReactElemen
 
 
   return <section className={"dream-entry entry-tabbed theme-"+tab}>
-    <header className="entry-heading"><div><RealmIcon name="glow"/><h1>入夢</h1></div><button type="button" className="entry-art-back" aria-label="返回天命" title="返回天命" onClick={onBack}><img src="/art/ui/entry/button-back-v2.png" alt="" draggable={false}/></button></header>
+    <header className="entry-heading"><div><RealmIcon name="glow"/><h1>入夢</h1></div><button type="button" data-game-back className="entry-art-back" aria-label="返回天命" title="返回天命" onClick={onBack}><img src="/art/ui/entry/button-back-v2.png" alt="" draggable={false}/></button></header>
     <nav className="entry-tabs" role="tablist" aria-label="入夢準備">{ENTRY_TABS.map((it,i)=><button key={it.id} id={'entry-tab-'+it.id} role="tab" aria-selected={tab===it.id} aria-controls={'entry-panel-'+it.id} tabIndex={tab===it.id?0:-1} onClick={()=>setTab(it.id)} onKeyDown={e=>{const direction=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(direction||e.key==='Home'||e.key==='End'){e.preventDefault();const next=ENTRY_TABS[e.key==='Home'?0:e.key==='End'?ENTRY_TABS.length-1:(i+direction+ENTRY_TABS.length)%ENTRY_TABS.length]!;setTab(next.id);document.getElementById('entry-tab-'+next.id)?.focus();}}}><RealmIcon name={it.icon}/><span>{it.name}</span></button>)}</nav>
     <div className="entry-scene" style={{backgroundImage:"url('/art/ui/entry/"+tab+"-v2.png')"}}>
     {tab==='aptitude'&&<div className="entry-incarnation"><CharacterArt name="主將"/></div>}

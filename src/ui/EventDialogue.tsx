@@ -354,7 +354,7 @@ export function EventDialogue({
             {phase === 'rewards'
               ? '獲得與變化'
               : beat.speaker === null
-                ? '旁白'
+                ? '系統'
                 : actors[beat.speaker]?.name}
           </div>
           {phase !== 'rewards' && (

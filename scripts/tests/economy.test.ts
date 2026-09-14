@@ -131,7 +131,7 @@ export function run() {
     });
     it('學習第五條特性不超過四條啟用，可自由替換', () => {
       let state = newSession(77).current;
-      for (const d of defs.reader('trait').all())
+      for (const d of defs.reader('trait').all().slice(0, 5))
         state = grantUnlock(d.traitId, null, { state, defs });
       const s = Session.restore(wiring, {
         ...state,

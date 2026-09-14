@@ -5,6 +5,7 @@ import type { Attr } from '../contracts/core/primitives.js';
 import type { EndingOutcome, RunState } from '../contracts/core/state.js';
 import { evaluateCondition } from './effect-core.js';
 import { statQuery } from './stats.js';
+import { meetsStory } from './story.js';
 
 const readStat = statQuery.read.bind(statQuery);
 export const hasEnded = (ctx: RunContext): boolean => ctx.state.ending !== null;
@@ -19,14 +20,15 @@ export function candidatesFor(
     .filter((e) => triggerMatches(e, trigger))
     .filter((e) => e.factionId === null || e.factionId === ctx.state.faction)
     .filter((e) => e.requirements.every((c) => evaluateCondition(c, ctx, readStat)))
+    .filter((e) => meetsStory(e.storyRequirements ?? [], ctx))
     .slice()
     .sort((a, b) => b.priority - a.priority);
 }
 
 /** 永不回 null —— 兜底結局的存在由載入期驗證保證，不是執行期 fallback（25 §3.1）。 */
-export function resolveEnding(trigger: EndingTrigger, ctx: RunContext): EndingOutcome {
+export function resolveEnding(trigger: EndingTrigger, ctx: RunContext, selectedId?: string): EndingOutcome {
   const cands = candidatesFor(trigger, ctx);
-  const best = cands[0];
+  const best = selectedId === undefined ? cands[0] : cands.find(e => String(e.ending) === selectedId && (e.storyRequirements?.length ?? 0) > 0);
   if (best === undefined) {
     throw new Error(
       `結局判定失敗：trigger=${trigger.kind} 無任何候選。`
@@ -37,7 +39,9 @@ export function resolveEnding(trigger: EndingTrigger, ctx: RunContext): EndingOu
     endingId: best.ending,
     titleKey: best.titleKey,
     bodyKey: best.bodyKey,
-    pointsMultiplier: best.pointsMultiplier,
+    pointsMultiplier: (best.storyRequirements?.length ?? 0) > 0
+      ? Math.max(best.pointsMultiplier, cands.find(e => e.factionId === null)?.pointsMultiplier ?? best.pointsMultiplier)
+      : best.pointsMultiplier,
     isFullDream: best.endingKind === 'fullDream',
   };
 }

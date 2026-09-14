@@ -383,9 +383,9 @@
 .run-footer .footer-event {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 14px;
   margin: 13px 24px 13px 12px;
-  padding: 0 24px;
+  padding: 0 18px;
   border: 2px solid #d7af60;
   border-radius: 9px;
   background: linear-gradient(100deg,#322413,#241909e8);
@@ -393,8 +393,15 @@
   color: #ffe6a0;
   min-width: 0;
 }
-.footer-event > span { font: bold 16px 'Microsoft JhengHei',sans-serif; white-space: nowrap; }
-.footer-event small { display: block; font-size: 12px; letter-spacing: 2px; margin-top: 2px; }
+.footer-event .footer-event-kind {
+  display: grid;
+  place-items: center;
+  flex: 0 0 44px;
+  height: 44px;
+}
+.footer-event-kind > :is(.ui-symbol, .realm-icon) { width: 44px; height: 44px; }
+.footer-event .painted-stars { display: flex; align-items: center; gap: 2px; flex-shrink: 0; margin: 0; }
+.footer-event .painted-stars .realm-icon { width: 25px; height: 25px; }
 .footer-event h1 { margin: 0; font: bold 29px 'DFKai-SB',serif; text-shadow: 1px 2px #150d05; color: #ffedb8; }
 .run-footer .footer-chapter > span {
   white-space: nowrap;
@@ -506,7 +513,7 @@
   min-width: 0;
   height: 88px;
   margin: 0;
-  padding: 0 6px 0 57px;
+  padding: 0;
   font:
     900 23px 'DFKai-SB',
     'KaiTi',
@@ -519,6 +526,35 @@
 }
 .game-stage > .game-bottom.run-footer nav button.footer-button::before {
   display: none;
+}
+/* Each atlas slice includes different outer margins; the last also contains the corner ornament.
+   Align the highlight to the painted inner rim, and center text in its own icon-free area. */
+.run-footer .footer-learn {
+  --rim-left: 1px;
+  --rim-right: 12px;
+  --label-left: 63px;
+  --label-right: 20px;
+}
+.run-footer .footer-market,
+.run-footer .footer-vault {
+  --rim-left: -1px;
+  --rim-right: 10px;
+  --label-left: 64px;
+  --label-right: 18px;
+}
+.run-footer .footer-settings {
+  --rim-left: 0px;
+  --rim-right: 23px;
+  --label-left: 57px;
+  --label-right: 30px;
+}
+.run-footer .footer-label {
+  position: absolute;
+  inset: 14px var(--label-right) 16px var(--label-left);
+  display: grid;
+  place-items: center;
+  line-height: 1;
+  pointer-events: none;
 }
 .game-stage > .game-bottom.run-footer .footer-learn > .footer-art {
   background-size: 833.333% 400% !important;
@@ -563,7 +599,7 @@
 .game-stage > .game-bottom.run-footer nav button.footer-button::after {
   content: '';
   position: absolute;
-  inset: 14px 7px;
+  inset: 13px var(--rim-right) 15px var(--rim-left);
   pointer-events: none;
   opacity: 0;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 126 60' preserveAspectRatio='none'%3E%3Cpath d='M12 2H114L124 12V48L114 58H12L2 48V12Z' fill='none' stroke='%23fff4ad' stroke-width='2.5'/%3E%3C/svg%3E") center/100% 100% no-repeat;

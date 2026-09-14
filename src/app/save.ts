@@ -1,6 +1,7 @@
 import type { RunState } from '../contracts/core/state.js';
 import { Session } from './session.js';
 import type { Wiring } from './composition.js';
+import { migrateStoryRun } from './story-save.js';
 
 const KEY = 'sgd.run.v3';
 const OLD_KEY = 'sgd.run.v2';
@@ -13,7 +14,7 @@ export function saveRun(session: Session | null, log: readonly string[]): void {
   else
     localStorage.setItem(
       KEY,
-      JSON.stringify({ version: 3, state: session.current, log }),
+      JSON.stringify({ version: 4, state: session.current, log }),
     );
 }
 /** Validate before construction; storage errors never prevent opening the app. */
@@ -39,7 +40,7 @@ export function restoreRun(w: Wiring): {
     };
     const s = saved.state;
     if (
-      saved.version !== 3 ||
+      ![3, 4].includes(saved.version) ||
       s === null ||
       typeof s !== 'object' ||
       !s.economy ||
@@ -78,7 +79,7 @@ export function restoreRun(w: Wiring): {
     for (const m of s.roster.members)
       w.defs.reader('notable').get(String(m.notableId));
     return {
-      session: Session.restore(w, s),
+      session: Session.restore(w, migrateStoryRun(s, saved.version, w.defs)),
       log: Array.isArray(saved.log)
         ? saved.log.filter((v): v is string => typeof v === 'string')
         : [],

@@ -32,6 +32,7 @@ import { preview, resolveCheck, specForMinor } from './check.js';
 import { careerService } from './career.js';
 import { grantGrowth, grantUnlock, previewGrowth } from './growth.js';
 import { statQuery, type StatWriter } from './stats.js';
+import { scheduledStory } from './story.js';
 
 import { balance, economyRule, transact } from './economy.js';
 import * as stories from './stories.js';
@@ -412,7 +413,7 @@ export function openBeats(ctx: TurnContext, fx: EffectResolver): RunState {
     if (result === null) throw new Error('固定事件已選但未留下結果');
     return enqueue(drawCommission(result.attr, result.finalGlow, ctx, fx), ctx);
   }
-  if (slot.hasEncounter && !resolvedKind('notable', ctx)) {
+  if (slot.hasEncounter && !scheduledStory(ctx) && !resolvedKind('notable', ctx)) {
     if ((ctx.state.turn.encounterCandidates ?? encounterPool(ctx)).length === 0)
       return ctx.state;
     return enqueue(drawEncounter(ctx, fx), ctx);
@@ -521,7 +522,7 @@ export function resolveHead(
         continue;
       }
       if (r.kind === 'unlock') {
-        state = grantUnlock(r.trait, r.skill, at());
+        state = grantUnlock(r.trait, r.skill, at(), 'event/' + ctx.state.progress.turn + '/' + def.eventDefId + '/' + rewardIndex);
         continue;
       }
       if (r.kind === 'money') {

@@ -3,6 +3,9 @@
  * half-body art share the same destination scale; artwork is never stretched.
  */
 export const PORTRAIT_FRAMING: Readonly<Record<string, readonly [number, number, number]>> = {
+  liubei: [.55,.30,.38], guanyu: [.58,.31,.38], zhangfei: [.55,.31,.37],
+  zhaoyun: [.58,.38,.32], zhugeliang: [.53,.32,.36], jiangwan: [.55,.31,.36],
+  pangtong: [.55,.30,.37], huangzhong: [.54,.33,.37], lusu: [.54,.30,.37],
   "caocao": [
     0.54,
     0.33,

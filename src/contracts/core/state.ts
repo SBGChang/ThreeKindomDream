@@ -5,6 +5,7 @@ import type {
 } from './ids.js';
 import type { EffectRef, EffectTrace } from './effects.js';
 import type { EventReward } from './definitions.js';
+import type { StoryState as ChapterStoryState } from './story.js';
 import type {
   AffinityStage, AptitudeGrade, Attr, CareerLine,
   GlowTier, MeritKind, OptionTier, Phase, Rarity, RngCursors, SkillKind, SlotIndex,
@@ -34,6 +35,7 @@ export interface ShopState {
 }
 
 export interface LifetimeStats {
+  readonly stagesCleared?: number;
   readonly runsStarted: number;
   readonly runsFullDream: number;
   readonly chaptersPassed: number;
@@ -46,6 +48,8 @@ export interface LifetimeStats {
 }
 
 export interface CollectionState {
+  /** Completed story routes survive even when another ending is chosen for this life. */
+  readonly completedRoutes?: readonly string[];
   readonly seenEvents: readonly EventDefId[];
   readonly reachedEndings: readonly EndingId[];
 }
@@ -381,6 +385,7 @@ export interface StoryState {
 export interface RunState {
   readonly economy: EconomyState;
   readonly stories: StoryState;
+  readonly story: ChapterStoryState;
   readonly schemaVersion: number;
   readonly seed: Seed;
   readonly rngCursors: RngCursors;
@@ -426,7 +431,9 @@ export interface RunSummary {
   /** 本輪學過什麼。⑫ 收集圖鑑用（23 §7.5）。 */
   readonly learnedTraits: readonly TraitId[];
   readonly learnedSkills: readonly SkillId[];
-  /** 每場戰役打到第幾關。深度是這個設計的主要度量（33）。 */
+  readonly chapterDepths?: Readonly<Record<string, number>>;
+  readonly completedRoutes?: readonly string[];
+  /** 本輪各章已通過關數合計；單場深度由 chapterDepths 判斷。 */
   readonly stagesCleared: number;
 }
 

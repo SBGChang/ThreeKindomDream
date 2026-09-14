@@ -3,10 +3,12 @@ import { Session } from './session.js';
 import { seed } from '../contracts/core/ids.js';
 import { optionStates } from '../modules/commission.js';
 import { storyRarity } from '../modules/stories.js';
+import { emptyStory } from '../modules/story.js';
 /** Real offers and settlement in an isolated session; no player storage is touched. */
 export function dialogueReview(scene: string): Session {
   const meta = emptyMeta(),
-    s = Session.start(wiring, meta, emptyDraft(meta, defs), seed(77));
+    initial = Session.start(wiring, meta, emptyDraft(meta, defs), seed(77)),
+    s = Session.restore(wiring, {...initial.current, story:emptyStory(false)});
   s.selectSlot(0);
   const state = s.current,
     event = defs

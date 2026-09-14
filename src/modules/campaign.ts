@@ -23,6 +23,7 @@ import { careerService } from './career.js';
 import { consumeCharge, type EffectResolver } from './effect.js';
 import { rosterIds, stageOf } from './roster-query.js';
 import { statQuery } from './stats.js';
+import { stageStoryKeys } from './story.js';
 
 const rule = (ctx: RunContext): BattleRuleDef => ctx.defs.single('battleRule');
 
@@ -36,7 +37,9 @@ export const campaignFor = (chapterId: ChapterId, ctx: RunContext): CampaignDef 
 export const currentCampaign = (ctx: RunContext): CampaignDef => {
   const st = ctx.state.campaign;
   if (st === null) throw new Error('目前不在戰役中');
-  return ctx.defs.reader('campaign').get(String(st.campaignId));
+  const def = ctx.defs.reader('campaign').get(String(st.campaignId));
+  const keys = stageStoryKeys(ctx);
+  return keys ? { ...def, stages: def.stages.map((s, i) => ({ ...s, briefKey: keys[i] ?? s.briefKey })) } : def;
 };
 
 export const stageCount = (ctx: RunContext): number => currentCampaign(ctx).stages.length;
@@ -252,7 +255,7 @@ export function hostPower(ctx: RunContext, fx: EffectResolver): number {
     return fx.resolve(targetId(`battle.damage.${a.kind}`), raw, ctx) * weight;
   };
 
-  const casts = r.castChances.reduce((n, c) => n + c, 0);
+  const casts = expectedDistinctCasts(r.castChances, st.loadout.skills.length);
   const mine = st.loadout.skills.length === 0 ? 0
     : st.loadout.skills.reduce((n, id) => n + dmgOf(id, me, 1, true), 0)
       / st.loadout.skills.length * casts;
@@ -264,6 +267,21 @@ export function hostPower(ctx: RunContext, fx: EffectResolver): number {
   }, 0);
 
   return Math.round(mine + aid);
+}
+
+/** E[min(successful cast rolls, equipped skills)]; matches pickDistinct's upper bound. */
+export function expectedDistinctCasts(chances: readonly number[], equipped: number): number {
+  let distribution = [1];
+  for (const [index, chance] of chances.entries()) {
+    const probability = index === 0 ? 1 : chance;
+    const next = Array<number>(distribution.length + 1).fill(0);
+    distribution.forEach((weight, count) => {
+      next[count] = next[count]! + weight * (1 - probability);
+      next[count + 1] = next[count + 1]! + weight * probability;
+    });
+    distribution = next;
+  }
+  return distribution.reduce((total, probability, count) => total + probability * Math.min(count, equipped), 0);
 }
 
 /**

@@ -30,6 +30,7 @@ import { stageOf as rosterStageOf } from '../modules/roster-query.js';
 import { settle, summarize, type SettlementResult } from '../modules/settlement.js';
 import * as training from '../modules/training.js';
 import * as turn from '../modules/turn.js';
+import * as story from '../modules/story.js';
 import type { Wiring } from './composition.js';
 
 const defsAttrMax = (ctx: RC): number => ctx.defs.single('attributeCap').attrMax;
@@ -62,13 +63,18 @@ export class Session {
   get current(): RunState { return this.state; }
   static restore(w: Wiring, state: RunState): Session {
     const s = new Session(w, state);
+    // Earlier saves recorded teaching as a locked Lv0 course; preserve it as a learned Lv1.
+    for (const id of state.growth.unlockedSkills) if (!ability.hasSkill(id, s.ctx))
+      s.state = growth.grantUnlock(null, id, s.ctx, 'legacy/' + id);
+    for (const id of state.growth.unlockedTraits) if (!ability.hasTrait(id, s.ctx))
+      s.state = growth.grantUnlock(id, null, s.ctx, 'legacy/' + id);
     // Recompute displayed prices/eligibility after a content update without redrawing events.
     const pending = state.turn.pending.map(offer => {
       const def = w.defs.reader('event').get(String(offer.eventDefId));
       const rarity = stories.storyRarity(def);
       return { ...offer, rarity, optionStates: commission.optionStates(def, rarity, s.ctx, w.fx) };
     });
-    s.state = { ...state, turn: { ...state.turn, pending } };
+    s.state = { ...s.state, turn: { ...s.state.turn, pending } };
     return s;
   }
   learningOffers(): readonly learning.LearningOffer[] { return learning.offers(this.ctx, this.w.fx); }
@@ -107,6 +113,39 @@ export class Session {
    */
   get pendingEvent(): EventOffer | null { return commission.head(this.ctx); }
 
+  get storyScene() { return story.pendingScene(this.ctx); }
+  previewStoryTeachings(scene: import('../contracts/core/story.js').StoryScene): RunState {
+    return story.grantStoryTeachings(scene, this.ctx);
+  }
+  get storyChapter() { return story.chapterStory(this.ctx); }
+  get needsEndingChoice(): boolean { return story.awaitingEndingChoice(this.ctx); }
+  storyEndingOptions() {
+    return this.needsEndingChoice ? ending.candidatesFor(ending.SEQUENCE_DONE, this.ctx).filter(e => (e.storyRequirements?.length ?? 0) > 0) : [];
+  }
+  chooseStoryEnding(id: string): void {
+    if (!this.needsEndingChoice) throw new Error('尚未到紀念結局的時刻');
+    const outcome = ending.resolveEnding(ending.SEQUENCE_DONE, this.ctx, id);
+    this.state = { ...story.setEndingChoice(false, this.ctx), ending: outcome };
+  }
+  get storyChoice() {
+    return this.hasActed && !this.pendingEvent && !this.storyScene ? story.unchosenStory(this.ctx) : null;
+  }
+  storyProgress() { return story.storyHistory(this.ctx); }
+  storyMeets(requirements: readonly import('../contracts/core/story.js').StoryRequirement[]): boolean {
+    return story.meetsStory(requirements, this.ctx);
+  }
+  chooseStory(nodeId: string, optionId: string): void {
+    if (!this.storyChoice || this.needsCampaign || this.isOver) throw new Error('現在不能選擇主線');
+    this.state = story.commitStory(nodeId, optionId, this.ctx);
+  }
+  acknowledgeStory(sceneId: string): void {
+    this.state = story.acknowledgeStory(sceneId, this.ctx);
+    if (!this.storyScene && story.awaitingChapterClose(this.ctx)) {
+      this.state = story.finishStoryChapter(this.ctx);
+      this.state = economy.setCamp(true, this.ctx);
+    }
+  }
+
   private rng(): DeterministicRng {
     return createRng(this.state.seed, this.state.rngCursors);
   }
@@ -122,8 +161,9 @@ export class Session {
     this.mutate(tc => stories.updateWait(commission.encounterPool(tc),tc));
     this.mutate((tc) => ({
       ...tc.state,
-      turn: { ...tc.state.turn, slots: training.generate(tc, this.w.fx), encounterCandidates: commission.encounterPool(tc).map(e=>e.eventDefId) },
+      turn: { ...tc.state.turn, slots: training.generate(tc, this.w.fx).map(slot => story.scheduledStory(tc) ? { ...slot, hasEncounter: false } : slot), encounterCandidates: commission.encounterPool(tc).map(e=>e.eventDefId) },
     }));
+    this.state = story.enterStory(this.ctx);
   }
 
   /**
@@ -176,30 +216,9 @@ export class Session {
     const slot = training.slotAt(index, this.ctx);
     const attr = slot.attr;
     this.mutate((tc) => training.select(index, tc, this.w.fx, this.w.writer));
-    /**
-     * **同格共事 → 他教你一項**（D63）★
-     *
-     * 解鎖必須是【發生過的事】，不是一個狀態查詢。舊版靠「好感夠就自動可學」，
-     * 而起始好感 20 就已經達到常階門檻 —— 第一回合就有七項可學，
-     * 玩家什麼都還沒做。那讓 D35（一切都要先解鎖）名存實亡。
-     *
-     * 放在 `training.select` 之後、事件之前：教學是【選了這一格】的後果，
-     * 與好感成長同一個來源。
-     */
-    this.lastTaught = [];
-    this.mutate((tc) => {
-      const r = growth.teachFromSlot(slot.notables, tc);
-      this.lastTaught = r.taught;
-      return r.state;
-    });
     this.mutate((tc) => commission.openBeats(tc, this.w.fx));
     this.mutate((tc) => turn.tally(attr, tc));
   }
-
-  /** 上一次選格時【誰教了你什麼】。呈現層要把它寫進回合紀錄（D63）。 */
-  private lastTaught: readonly growth.Taught[] = [];
-
-  taughtThisTurn(): readonly growth.Taught[] { return this.lastTaught; }
 
   /**
    * 回合裡第二個決定：待處理事件用哪個方法度過。
@@ -291,6 +310,7 @@ export class Session {
    * `ui/` 不得直接 import `modules/`，而它需要這個型別去演戰鬥（D67）。
    */
   engage(): campaign.StageOutcome {
+    if (this.storyScene) throw new Error('請先確認戰役中的劇情成果');
     const box: { value: campaign.StageOutcome | null } = { value: null };
     this.mutate((tc) => {
       const r = campaign.engage(tc, this.w.fx);
@@ -299,6 +319,8 @@ export class Session {
     });
     const outcome = box.value;
     if (outcome === null) throw new Error('戰役結算未回傳結果');
+    this.state = story.recordStoryDepth(this.state.progress.chapterId,
+      this.state.campaign?.clearedStages ?? 0, this.ctx);
     // 戰敗【不再夢醒】—— ㉝ 已把 banked 減半，這裡走與收兵相同的收尾。
     if (outcome.defeated) this.closeCampaign();
     return outcome;
@@ -321,6 +343,7 @@ export class Session {
       const out = this.engage();
       if (out.defeated) return { cleared, stopped: 'defeat' };
       cleared += 1;
+      if (this.storyScene) return { cleared, stopped: 'threat' };
     }
     return { cleared, stopped: 'done' };
   }
@@ -344,6 +367,8 @@ export class Session {
    * 收尾只有一條路，「戰敗的章節到底算不算過」就不可能有兩種答案。
    */
   private closeCampaign(): void {
+    this.state = story.recordStoryDepth(this.state.progress.chapterId,
+      this.state.campaign?.clearedStages ?? 0, this.ctx);
     const banked = campaign.bankedOf(this.ctx);
     this.mutate((tc) => this.applyRewards(banked, tc.state, tc));
     this.mutate((tc) => careerService.reevaluate({ state: tc.state, defs: tc.defs }));
@@ -359,7 +384,8 @@ export class Session {
         },
       };
     });
-    this.state=economy.setCamp(true,this.ctx);
+    this.state = story.closeStoryChapter(this.ctx);
+    if (!story.awaitingChapterClose(this.ctx)) this.state=economy.setCamp(true,this.ctx);
   }
 
   /** 已保住的獎勵入帳。戰敗時走的是同一條，只是 `banked` 已在 ㉝ 減半。 */
@@ -376,7 +402,7 @@ export class Session {
         s = roster.addAffinity(r.notableId, r.amount, at());
 
       } else if (r.kind === 'unlock') {
-        s = growth.grantUnlock(r.trait, r.skill, at());
+        s = growth.grantUnlock(r.trait, r.skill, at(), 'campaign/' + tc.state.progress.chapter + '/' + rewardIndex);
       } else if (r.kind === 'item') {
         const out = item.acquire(r.itemId, { ...tc, state: s });
         s = out.state;
@@ -439,7 +465,9 @@ export class Session {
       this.stepTurn();
       this.refreshSlots();
     } else {
-      this.mutate((tc) => ending.reachEnding(ending.SEQUENCE_DONE, tc));
+      const candidates = ending.candidatesFor(ending.SEQUENCE_DONE, this.ctx).filter(e => (e.storyRequirements?.length ?? 0) > 0);
+      if (candidates.length > 1) this.state = story.setEndingChoice(true, this.ctx);
+      else this.mutate((tc) => ending.reachEnding(ending.SEQUENCE_DONE, tc));
     }
   }
 

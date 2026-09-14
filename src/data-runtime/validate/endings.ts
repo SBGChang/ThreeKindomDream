@@ -21,7 +21,8 @@ export function validateEndings(c: Ctx): void {
     const hasFallback = endings.some((e) => {
       const trig = (e['trigger'] ?? {}) as Rec;
       if (trig['kind'] !== kind) return false;
-      return c.list(e['requirements']).length === 0;
+      return e['factionId'] === null && c.list(e['requirements']).length === 0
+        && c.list(e['storyRequirements']).length === 0;
     });
     if (!hasFallback) {
       c.push('rule', 'endings', kind, null,

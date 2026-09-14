@@ -3330,6 +3330,11 @@
             "amount": 11,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:jiezhi",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -3353,6 +3358,11 @@
             "amount": 11,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:jiezhi",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -3427,6 +3437,11 @@
             "amount": 11,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:xianzhen",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -3450,6 +3465,11 @@
             "amount": 11,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:xianzhen",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -3524,6 +3544,11 @@
             "amount": 5,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:jiezhi",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -3547,6 +3572,11 @@
             "amount": 5,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:jiezhi",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -3621,6 +3651,11 @@
             "amount": 11,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:xianzhen",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -3644,6 +3679,11 @@
             "amount": 11,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:xianzhen",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -3718,6 +3758,11 @@
             "amount": 5,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tuzhen",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -3741,6 +3786,11 @@
             "amount": 5,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tuzhen",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -3815,6 +3865,11 @@
             "amount": 5,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tuzhen",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -3838,6 +3893,11 @@
             "amount": 5,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tuzhen",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -3912,6 +3972,11 @@
             "amount": 11,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:shuiyan",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -3935,6 +4000,11 @@
             "amount": 11,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:shuiyan",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -4009,6 +4079,11 @@
             "amount": 11,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:huoji",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -4032,6 +4107,11 @@
             "amount": 11,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:huoji",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -4106,6 +4186,11 @@
             "amount": 5,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:shuiyan",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -4129,6 +4214,11 @@
             "amount": 5,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:shuiyan",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -4203,6 +4293,11 @@
             "amount": 11,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tuntian",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -4226,6 +4321,11 @@
             "amount": 11,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tuntian",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -4300,6 +4400,11 @@
             "amount": 5,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tuntian",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -4323,6 +4428,11 @@
             "amount": 5,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tuntian",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -4397,6 +4507,11 @@
             "amount": 5,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tuntian",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -4420,6 +4535,11 @@
             "amount": 5,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tuntian",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -4499,6 +4619,11 @@
             "chance": 1,
             "itemId": "item:bow",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:linzhen"
           }
         ],
         "tier": "story"
@@ -4527,6 +4652,11 @@
             "chance": 1,
             "itemId": "item:bow",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:linzhen"
           }
         ],
         "tier": "story"
@@ -4606,6 +4736,11 @@
             "chance": 1,
             "itemId": "item:seal",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:chenyi"
           }
         ],
         "tier": "story"
@@ -4634,6 +4769,11 @@
             "chance": 1,
             "itemId": "item:seal",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:chenyi"
           }
         ],
         "tier": "story"
@@ -4713,6 +4853,11 @@
             "chance": 1,
             "itemId": "item:spear",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:danshi"
           }
         ],
         "tier": "story"
@@ -4741,6 +4886,11 @@
             "chance": 1,
             "itemId": "item:spear",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:danshi"
           }
         ],
         "tier": "story"
@@ -4820,6 +4970,11 @@
             "chance": 1,
             "itemId": "item:bow",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:danshi"
           }
         ],
         "tier": "story"
@@ -4848,6 +5003,11 @@
             "chance": 1,
             "itemId": "item:bow",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:danshi"
           }
         ],
         "tier": "story"
@@ -4927,6 +5087,11 @@
             "chance": 1,
             "itemId": "item:bamboo",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:jimin"
           }
         ],
         "tier": "story"
@@ -4955,6 +5120,11 @@
             "chance": 1,
             "itemId": "item:bamboo",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:jimin"
           }
         ],
         "tier": "story"
@@ -5034,6 +5204,11 @@
             "chance": 1,
             "itemId": "item:seal",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:zhechong"
           }
         ],
         "tier": "story"
@@ -5062,6 +5237,11 @@
             "chance": 1,
             "itemId": "item:seal",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:zhechong"
           }
         ],
         "tier": "story"
@@ -5141,6 +5321,11 @@
             "chance": 1,
             "itemId": "item:bamboo",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:liande"
           }
         ],
         "tier": "story"
@@ -5169,6 +5354,11 @@
             "chance": 1,
             "itemId": "item:bamboo",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:liande"
           }
         ],
         "tier": "story"
@@ -5243,6 +5433,11 @@
             "amount": 20,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:linzhen"
           }
         ],
         "tier": "story"
@@ -5266,6 +5461,11 @@
             "amount": 20,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:linzhen"
           }
         ],
         "tier": "story"
@@ -5345,6 +5545,11 @@
             "chance": 1,
             "itemId": "item:mengde",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:zhirong",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -5373,6 +5578,11 @@
             "chance": 1,
             "itemId": "item:mengde",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:zhirong",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -5447,6 +5657,11 @@
             "amount": 20,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:liaodi"
           }
         ],
         "tier": "story"
@@ -5470,6 +5685,11 @@
             "amount": 20,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:liaodi"
           }
         ],
         "tier": "story"
@@ -5549,6 +5769,11 @@
             "chance": 1,
             "itemId": "item:fengxiao",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:lianhuan",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -5577,6 +5802,11 @@
             "chance": 1,
             "itemId": "item:fengxiao",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:lianhuan",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -5651,6 +5881,11 @@
             "amount": 20,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:zhechong"
           }
         ],
         "tier": "story"
@@ -5674,6 +5909,11 @@
             "amount": 20,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:zhechong"
           }
         ],
         "tier": "story"
@@ -5753,6 +5993,11 @@
             "chance": 1,
             "itemId": "item:wangzuo",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:wangzuo",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -5781,6 +6026,11 @@
             "chance": 1,
             "itemId": "item:wangzuo",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:wangzuo",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -5860,6 +6110,11 @@
             "chance": 1,
             "itemId": "item:qinggang",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:xianzhen",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -5888,6 +6143,11 @@
             "chance": 1,
             "itemId": "item:qinggang",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:xianzhen",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -5967,6 +6227,11 @@
             "chance": 1,
             "itemId": "item:xiaoyaojin",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:wanrenzhi",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -5995,6 +6260,11 @@
             "chance": 1,
             "itemId": "item:xiaoyaojin",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:wanrenzhi",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -6069,6 +6339,11 @@
             "amount": 20,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:linzhen"
           }
         ],
         "tier": "story"
@@ -6092,6 +6367,11 @@
             "amount": 20,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:linzhen"
           }
         ],
         "tier": "story"
@@ -6176,6 +6456,11 @@
             "chance": 1,
             "itemId": "item:halberd",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:zhirong",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -6204,6 +6489,11 @@
             "chance": 1,
             "itemId": "item:halberd",
             "kind": "item"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:zhirong",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -6282,6 +6572,11 @@
             "amount": 20,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:zhechong"
           }
         ],
         "tier": "story"
@@ -6305,6 +6600,11 @@
             "amount": 20,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:zhechong"
           }
         ],
         "tier": "story"
@@ -6394,6 +6694,11 @@
             "amount": 10,
             "kind": "affinity",
             "notableId": null
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:wanrenzhi",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -6427,6 +6732,11 @@
             "amount": 10,
             "kind": "affinity",
             "notableId": null
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:wanrenzhi",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -6508,6 +6818,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:haoling",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -6528,6 +6843,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:haoling",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -6592,6 +6912,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:chenyi"
           }
         ],
         "tier": "story"
@@ -6612,6 +6937,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:chenyi"
           }
         ],
         "tier": "story"
@@ -6678,6 +7008,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tuzhen",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -6698,6 +7033,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tuzhen",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -6762,6 +7102,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:danshi"
           }
         ],
         "tier": "story"
@@ -6782,6 +7127,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:danshi"
           }
         ],
         "tier": "story"
@@ -6848,6 +7198,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:haoling",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -6868,6 +7223,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:haoling",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -6932,6 +7292,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:chenyi"
           }
         ],
         "tier": "story"
@@ -6952,6 +7317,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:chenyi"
           }
         ],
         "tier": "story"
@@ -7018,6 +7388,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tuzhen",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -7038,6 +7413,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tuzhen",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -7102,6 +7482,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:danshi"
           }
         ],
         "tier": "story"
@@ -7122,6 +7507,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:danshi"
           }
         ],
         "tier": "story"
@@ -7188,6 +7578,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tuzhen",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -7208,6 +7603,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tuzhen",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -7272,6 +7672,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:danshi"
           }
         ],
         "tier": "story"
@@ -7292,6 +7697,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:danshi"
           }
         ],
         "tier": "story"
@@ -7400,6 +7810,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tuzhen",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -7420,6 +7835,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tuzhen",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -7484,6 +7904,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:danshi"
           }
         ],
         "tier": "story"
@@ -7504,6 +7929,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "martial"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:danshi"
           }
         ],
         "tier": "story"
@@ -7570,6 +8000,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:huoji",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -7590,6 +8025,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:huoji",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -7654,6 +8094,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:jimin"
           }
         ],
         "tier": "story"
@@ -7674,6 +8119,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:jimin"
           }
         ],
         "tier": "story"
@@ -7740,6 +8190,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:huoji",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -7760,6 +8215,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:huoji",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -7824,6 +8284,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:gangbi"
           }
         ],
         "tier": "story"
@@ -7844,6 +8309,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:gangbi"
           }
         ],
         "tier": "story"
@@ -7910,6 +8380,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:huoji",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -7930,6 +8405,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:huoji",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -7994,6 +8474,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:jimin"
           }
         ],
         "tier": "story"
@@ -8014,6 +8499,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:jimin"
           }
         ],
         "tier": "story"
@@ -8080,6 +8570,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:fumin",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -8100,6 +8595,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:fumin",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -8164,6 +8664,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:liande"
           }
         ],
         "tier": "story"
@@ -8184,6 +8689,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:liande"
           }
         ],
         "tier": "story"
@@ -8250,6 +8760,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:fumin",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -8270,6 +8785,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:fumin",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -8334,6 +8854,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:liande"
           }
         ],
         "tier": "story"
@@ -8354,6 +8879,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:liande"
           }
         ],
         "tier": "story"
@@ -8420,6 +8950,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:fumin",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -8440,6 +8975,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:fumin",
+            "trait": null
           }
         ],
         "tier": "story"
@@ -8504,6 +9044,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:liande"
           }
         ],
         "tier": "story"
@@ -8524,6 +9069,11 @@
             "amount": 1,
             "kind": "merit",
             "merit": "civil"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:liande"
           }
         ],
         "tier": "story"
@@ -8599,6 +9149,500 @@
     "factionId": "faction:wei",
     "id": "seq:wei",
     "kind": "chapterSequence",
+    "packId": "pack:wei",
+    "schemaVersion": 1
+  },
+  {
+    "aftermaths": [
+      {
+        "requirements": [],
+        "scene": {
+          "beats": [
+            {
+              "speaker": null,
+              "textKey": "W1.after.line.0"
+            },
+            {
+              "speaker": "曹操",
+              "textKey": "W1.after.line.1"
+            },
+            {
+              "speaker": null,
+              "textKey": "W1.after.line.2"
+            }
+          ],
+          "bodyKey": "W1.after.body",
+          "id": "W1.after",
+          "titleKey": "W1.after.title"
+        }
+      }
+    ],
+    "battleVariants": [],
+    "chapterId": "ch:wei.hulao",
+    "id": "story:wei.hulao",
+    "kind": "storyChapter",
+    "milestones": [],
+    "nodes": [
+      {
+        "beats": [
+          {
+            "speaker": null,
+            "textKey": "W1.A.line.0"
+          },
+          {
+            "speaker": "曹操",
+            "textKey": "W1.A.line.1"
+          }
+        ],
+        "bodyKey": "W1.A.body",
+        "id": "W1.A",
+        "options": [
+          {
+            "consequenceKey": "W1.A.vanguard.hint",
+            "id": "vanguard",
+            "labelKey": "W1.A.vanguard.label",
+            "response": {
+              "beats": [
+                {
+                  "speaker": null,
+                  "textKey": "W1.A.vanguard.response.line.0"
+                },
+                {
+                  "speaker": "曹操",
+                  "textKey": "W1.A.vanguard.response.line.1"
+                }
+              ],
+              "bodyKey": "W1.A.vanguard.response.body",
+              "id": "W1.A.vanguard.response",
+              "titleKey": "W1.A.vanguard.response.title"
+            }
+          },
+          {
+            "consequenceKey": "W1.A.supply.hint",
+            "id": "supply",
+            "labelKey": "W1.A.supply.label",
+            "response": {
+              "beats": [
+                {
+                  "speaker": null,
+                  "textKey": "W1.A.supply.response.line.0"
+                },
+                {
+                  "speaker": "荀彧",
+                  "textKey": "W1.A.supply.response.line.1"
+                }
+              ],
+              "bodyKey": "W1.A.supply.response.body",
+              "id": "W1.A.supply.response",
+              "titleKey": "W1.A.supply.response.title"
+            }
+          }
+        ],
+        "responseTiming": "immediate",
+        "titleKey": "W1.A.title",
+        "turn": 2
+      },
+      {
+        "beats": [
+          {
+            "speaker": null,
+            "textKey": "W1.B.line.0"
+          }
+        ],
+        "bodyKey": "W1.B.body",
+        "id": "W1.B",
+        "options": [
+          {
+            "consequenceKey": "W1.B.shelter.hint",
+            "id": "shelter",
+            "labelKey": "W1.B.shelter.label",
+            "response": {
+              "beats": [
+                {
+                  "speaker": null,
+                  "textKey": "W1.B.shelter.response.line.0"
+                }
+              ],
+              "bodyKey": "W1.B.shelter.response.body",
+              "id": "W1.B.shelter.response",
+              "titleKey": "W1.B.shelter.response.title"
+            }
+          },
+          {
+            "consequenceKey": "W1.B.handover.hint",
+            "id": "handover",
+            "labelKey": "W1.B.handover.label",
+            "response": {
+              "beats": [
+                {
+                  "speaker": null,
+                  "textKey": "W1.B.handover.response.line.0"
+                }
+              ],
+              "bodyKey": "W1.B.handover.response.body",
+              "id": "W1.B.handover.response",
+              "titleKey": "W1.B.handover.response.title"
+            }
+          }
+        ],
+        "responseTiming": "chapterEnd",
+        "titleKey": "W1.B.title",
+        "turn": 6
+      }
+    ],
+    "opening": {
+      "beats": [
+        {
+          "speaker": null,
+          "textKey": "W1.opening.line.0"
+        },
+        {
+          "speaker": "曹操",
+          "textKey": "W1.opening.line.1"
+        },
+        {
+          "speaker": null,
+          "textKey": "W1.opening.line.2"
+        },
+        {
+          "speaker": "曹操",
+          "textKey": "W1.opening.line.3"
+        }
+      ],
+      "bodyKey": "W1.opening.body",
+      "id": "W1.opening",
+      "titleKey": "W1.opening.title"
+    },
+    "packId": "pack:wei",
+    "schemaVersion": 1
+  },
+  {
+    "aftermaths": [
+      {
+        "requirements": [],
+        "scene": {
+          "beats": [
+            {
+              "speaker": null,
+              "textKey": "W2.after.line.0"
+            },
+            {
+              "speaker": "郭嘉",
+              "textKey": "W2.after.line.1"
+            }
+          ],
+          "bodyKey": "W2.after.body",
+          "id": "W2.after",
+          "titleKey": "W2.after.title"
+        }
+      }
+    ],
+    "battleVariants": [],
+    "chapterId": "ch:wei.guandu",
+    "id": "story:wei.guandu",
+    "kind": "storyChapter",
+    "milestones": [],
+    "nodes": [
+      {
+        "beats": [
+          {
+            "speaker": null,
+            "textKey": "W2.A.line.0"
+          }
+        ],
+        "bodyKey": "W2.A.body",
+        "id": "W2.A",
+        "options": [
+          {
+            "consequenceKey": "W2.A.granary.hint",
+            "id": "granary",
+            "labelKey": "W2.A.granary.label",
+            "response": {
+              "beats": [
+                {
+                  "speaker": null,
+                  "textKey": "W2.A.granary.response.line.0"
+                }
+              ],
+              "bodyKey": "W2.A.granary.response.body",
+              "id": "W2.A.granary.response",
+              "titleKey": "W2.A.granary.response.title"
+            }
+          },
+          {
+            "consequenceKey": "W2.A.raid.hint",
+            "id": "raid",
+            "labelKey": "W2.A.raid.label",
+            "response": {
+              "beats": [
+                {
+                  "speaker": null,
+                  "textKey": "W2.A.raid.response.line.0"
+                }
+              ],
+              "bodyKey": "W2.A.raid.response.body",
+              "id": "W2.A.raid.response",
+              "titleKey": "W2.A.raid.response.title"
+            }
+          }
+        ],
+        "responseTiming": "immediate",
+        "titleKey": "W2.A.title",
+        "turn": 2
+      },
+      {
+        "beats": [
+          {
+            "speaker": null,
+            "textKey": "W2.B.line.0"
+          },
+          {
+            "speaker": "曹操",
+            "textKey": "W2.B.line.1"
+          }
+        ],
+        "bodyKey": "W2.B.body",
+        "id": "W2.B",
+        "options": [
+          {
+            "consequenceKey": "W2.B.verify.hint",
+            "id": "verify",
+            "labelKey": "W2.B.verify.label",
+            "response": {
+              "beats": [
+                {
+                  "speaker": null,
+                  "textKey": "W2.B.verify.response.line.0"
+                },
+                {
+                  "speaker": "曹操",
+                  "textKey": "W2.B.verify.response.line.1"
+                },
+                {
+                  "speaker": null,
+                  "textKey": "W2.B.verify.response.line.2"
+                }
+              ],
+              "bodyKey": "W2.B.verify.response.body",
+              "id": "W2.B.verify.response",
+              "titleKey": "W2.B.verify.response.title"
+            }
+          },
+          {
+            "consequenceKey": "W2.B.handover.hint",
+            "id": "handover",
+            "labelKey": "W2.B.handover.label",
+            "response": {
+              "beats": [
+                {
+                  "speaker": null,
+                  "textKey": "W2.B.handover.response.line.0"
+                }
+              ],
+              "bodyKey": "W2.B.handover.response.body",
+              "id": "W2.B.handover.response",
+              "titleKey": "W2.B.handover.response.title"
+            }
+          }
+        ],
+        "responseTiming": "chapterEnd",
+        "titleKey": "W2.B.title",
+        "turn": 6
+      }
+    ],
+    "opening": {
+      "beats": [
+        {
+          "speaker": null,
+          "textKey": "W2.opening.line.0"
+        },
+        {
+          "speaker": "郭嘉",
+          "textKey": "W2.opening.line.1"
+        }
+      ],
+      "bodyKey": "W2.opening.body",
+      "id": "W2.opening",
+      "titleKey": "W2.opening.title"
+    },
+    "packId": "pack:wei",
+    "schemaVersion": 1
+  },
+  {
+    "aftermaths": [
+      {
+        "requirements": [
+          {
+            "id": "wei.guojia-saved",
+            "kind": "milestone"
+          }
+        ],
+        "scene": {
+          "beats": [
+            {
+              "speaker": null,
+              "textKey": "W3.after.saved.line.0"
+            },
+            {
+              "speaker": "郭嘉",
+              "textKey": "W3.after.saved.line.1"
+            },
+            {
+              "speaker": null,
+              "textKey": "W3.after.saved.line.2"
+            }
+          ],
+          "bodyKey": "W3.after.saved.body",
+          "id": "W3.after.saved",
+          "titleKey": "W3.after.saved.title"
+        }
+      },
+      {
+        "requirements": [],
+        "scene": {
+          "beats": [
+            {
+              "speaker": null,
+              "textKey": "W3.after.line.0"
+            }
+          ],
+          "bodyKey": "W3.after.body",
+          "id": "W3.after",
+          "titleKey": "W3.after.title"
+        }
+      }
+    ],
+    "battleVariants": [],
+    "chapterId": "ch:wei.hebei",
+    "id": "story:wei.hebei",
+    "kind": "storyChapter",
+    "milestones": [
+      {
+        "hintKey": "W3.rescue.hint",
+        "id": "wei.guojia-saved",
+        "minCleared": 4,
+        "requirements": [
+          {
+            "kind": "choice",
+            "node": "W3.A",
+            "option": "relay"
+          },
+          {
+            "kind": "choice",
+            "node": "W3.B",
+            "option": "rest"
+          }
+        ],
+        "scene": {
+          "beats": [
+            {
+              "speaker": null,
+              "textKey": "W3.rescue.line.0"
+            }
+          ],
+          "bodyKey": "W3.rescue.body",
+          "id": "W3.rescue",
+          "titleKey": "W3.rescue.title"
+        }
+      }
+    ],
+    "nodes": [
+      {
+        "beats": [
+          {
+            "speaker": null,
+            "textKey": "W3.A.line.0"
+          }
+        ],
+        "bodyKey": "W3.A.body",
+        "id": "W3.A",
+        "options": [
+          {
+            "consequenceKey": "W3.A.relay.hint",
+            "id": "relay",
+            "labelKey": "W3.A.relay.label",
+            "response": {
+              "beats": [
+                {
+                  "speaker": null,
+                  "textKey": "W3.A.relay.response.line.0"
+                },
+                {
+                  "speaker": "郭嘉",
+                  "textKey": "W3.A.relay.response.line.1"
+                }
+              ],
+              "bodyKey": "W3.A.relay.response.body",
+              "id": "W3.A.relay.response",
+              "titleKey": "W3.A.relay.response.title"
+            }
+          },
+          {
+            "consequenceKey": "W3.A.pursuit.hint",
+            "id": "pursuit",
+            "labelKey": "W3.A.pursuit.label",
+            "response": {
+              "beats": [
+                {
+                  "speaker": null,
+                  "textKey": "W3.A.pursuit.response.line.0"
+                }
+              ],
+              "bodyKey": "W3.A.pursuit.response.body",
+              "id": "W3.A.pursuit.response",
+              "titleKey": "W3.A.pursuit.response.title"
+            }
+          }
+        ],
+        "responseTiming": "immediate",
+        "titleKey": "W3.A.title",
+        "turn": 2
+      },
+      {
+        "beats": [
+          {
+            "speaker": null,
+            "textKey": "W3.B.line.0"
+          },
+          {
+            "speaker": "郭嘉",
+            "textKey": "W3.B.line.1"
+          }
+        ],
+        "bodyKey": "W3.B.body",
+        "id": "W3.B",
+        "options": [
+          {
+            "consequenceKey": "W3.B.rest.hint",
+            "id": "rest",
+            "labelKey": "W3.B.rest.label"
+          },
+          {
+            "consequenceKey": "W3.B.handover.hint",
+            "id": "handover",
+            "labelKey": "W3.B.handover.label"
+          }
+        ],
+        "responseTiming": "chapterEnd",
+        "titleKey": "W3.B.title",
+        "turn": 6
+      }
+    ],
+    "opening": {
+      "beats": [
+        {
+          "speaker": null,
+          "textKey": "W3.opening.line.0"
+        },
+        {
+          "speaker": "郭嘉",
+          "textKey": "W3.opening.line.1"
+        }
+      ],
+      "bodyKey": "W3.opening.body",
+      "id": "W3.opening",
+      "titleKey": "W3.opening.title"
+    },
     "packId": "pack:wei",
     "schemaVersion": 1
   },

@@ -1,4 +1,5 @@
 import { attributeProgress } from '../contracts/core/attribute-progress.js';
+import { teachingRewardLines } from './teaching-receipt.js';
 import type { DefinitionRegistry } from '../data-runtime/registry.js';
 import type {
   EventOffer,
@@ -33,9 +34,11 @@ export function eventRewardLines(
     };
   add('委託投入', -cost, '金錢');
   add('薪水', result.salary ?? 0, '金錢');
+  const teaching = teachingRewardLines(before, after, defs);
+  const teachingMoney = teaching.filter(row => row.note === '金錢').reduce((total, row) => total + (row.amount ?? 0), 0);
   add(
     '額外報酬',
-    after.economy.money - before.economy.money - (result.salary ?? 0) + cost,
+    after.economy.money - before.economy.money - (result.salary ?? 0) + cost - teachingMoney,
     '金錢',
   );
   for (const attr of ['lead', 'war', 'int', 'pol'] as const) {
@@ -68,20 +71,7 @@ export function eventRewardLines(
       count - (before.items.fragments?.[id] ?? 0),
       '碎片',
     );
-  for (const id of after.growth.unlockedSkills.filter(
-    (x) => !before.growth.unlockedSkills.includes(x),
-  ))
-    rows.push({
-      label: text(String(defs.reader('skill').get(String(id)).nameKey)),
-      note: '領悟技能 · 可於訓練中學習',
-    });
-  for (const id of after.growth.unlockedTraits.filter(
-    (x) => !before.growth.unlockedTraits.includes(x),
-  ))
-    rows.push({
-      label: text(String(defs.reader('trait').get(String(id)).nameKey)),
-      note: '領悟特性 · 可於訓練中學習',
-    });
+  rows.push(...teaching);
   if (after.boons.length > before.boons.length)
     rows.push({ label: '本輪加成', note: '已生效' });
   for (const line of ['civil', 'martial'] as const)

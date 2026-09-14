@@ -35,10 +35,32 @@ export function GameFrame({ meta, session, active, onGo, saveNotice, children, o
     return () => { stopLanguage(); document.removeEventListener('play', apply, true); document.removeEventListener('loadedmetadata', apply, true); };
   }, []);
   useEffect(() => { const resize = (): void => { setScale(Math.min(innerWidth / 1280, innerHeight / 800)); setViewportHeight(innerHeight); }; addEventListener('resize', resize); return () => removeEventListener('resize', resize); }, []);
-  useEffect(() => { const key = (e: KeyboardEvent): void => { if (settings || document.querySelector('.is-performing')) return; if (e.key === 'Escape') { if (['learn','market','vault'].includes(active)) onGo('run'); else if (document.querySelector<HTMLButtonElement>('.run-screen .panel-close')) document.querySelector<HTMLButtonElement>('.run-screen .panel-close')?.click(); else if (active !== 'run' && session) onGo('run'); else setSettings(true); } }; addEventListener('keydown', key); return () => removeEventListener('keydown', key); }, [settings, active, session, onGo]);
+  useEffect(() => {
+    const back = (): void => {
+      // SystemMenu owns its nested pages. Never dismiss an unresolved story or battle.
+      if (settings) return;
+      const stage = document.querySelector('.game-stage');
+      const modal = [...(stage?.querySelectorAll<HTMLElement>('[aria-modal="true"]') ?? [])].at(-1);
+      if (modal) { modal.querySelector<HTMLButtonElement>('button[data-game-back]:not(:disabled)')?.click(); return; }
+      if (stage?.querySelector('.is-performing') || dialogueHeader || active === 'battle') return;
+      const control = stage?.querySelector<HTMLButtonElement>('button[data-game-back]:not(:disabled)');
+      if (control && !control.closest('[inert]')) { control.click(); return; }
+      if (['learn', 'market', 'vault'].includes(active)) onGo('run');
+      else if (!session && active !== 'destiny') onGo('destiny');
+      else setSettings(true);
+    };
+    const key = (event: KeyboardEvent): void => {
+      if (event.key !== 'Escape' || event.defaultPrevented) return;
+      event.preventDefault(); back();
+    };
+    const context = (event: MouseEvent): void => { event.preventDefault(); back(); };
+    window.addEventListener('keydown', key);
+    window.addEventListener('contextmenu', context);
+    return () => { window.removeEventListener('keydown', key); window.removeEventListener('contextmenu', context); };
+  }, [settings, active, session, onGo, dialogueHeader]);
   const locked = active === 'battle' || session !== null && (session.needsFactionChoice && !session.needsChapterCamp || session.needsSuperiors || session.isOver);
-  const chapter = session ? t(defs.reader('chapter').get(String(session.current.progress.chapterId)).titleKey) : '輪迴之間';
-  const runChrome = session !== null && ['run', 'camp', 'learn', 'market', 'vault'].includes(active) && !locked;
+  const chapter = session ? t(defs.reader('chapter').get(String(session.current.progress.chapterId)).titleKey).split('：')[0]! : '輪迴之間';
+  const runChrome = session !== null && (dialogueHeader !== null || ['run', 'camp', 'learn', 'market', 'vault'].includes(active) && !locked);
   const nav = session ? [['run','行旅'], ['learn','訓練'], ['market','商店'], ['vault','器物']] : [['destiny','天命'], ['notables','風雲錄'], ['shop','天命閣'], ['items','天工閣']];
   const scene = session?.needsCampaign || active === 'battle' ? `backgrounds/bg-battle-${Math.max(1,Math.min(4,session?.current.progress.chapter??1))}` : session ? (session.current.progress.phase === 'camp' ? 'backgrounds/bg-drill' : 'backgrounds/bg-hall') : 'backgrounds/bg-destiny';
   return <DialogueHeaderContext.Provider value={setDialogueHeader}><div className="game-viewport"><div className={`game-stage ${session ? 'in-dream' : 'out-dream'} ${dialogueHeader ? 'has-dialogue' : ''}`} style={{ transform: `scale(${scale})`, ...(dialogueHeader ? { top: (800 * scale - viewportHeight) / 2 } : {}), backgroundImage: `url('${art(scene)}')` }}>

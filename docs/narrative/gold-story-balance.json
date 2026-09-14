@@ -1,0 +1,452 @@
+{
+  "seedFrom": 9000,
+  "count": 12,
+  "reports": [
+    {
+      "star": 0,
+      "policy": "greedy-gain",
+      "runs": 12,
+      "meanDepth": [
+        2.5,
+        2,
+        2.17,
+        1.92,
+        2.92,
+        4.92,
+        4.92,
+        5.83,
+        4.83
+      ],
+      "guanyu": 10,
+      "kongming": 6,
+      "both": 5,
+      "examples": [
+        {
+          "seed": 9000,
+          "depths": [
+            4,
+            2,
+            2,
+            2,
+            2,
+            4,
+            6,
+            6,
+            5
+          ],
+          "milestones": [
+            "shu.guanyu-rescued",
+            "shu.kongming-rested"
+          ],
+          "ending": "ending:shu.reunion"
+        },
+        {
+          "seed": 9001,
+          "depths": [
+            2,
+            2,
+            1,
+            2,
+            2,
+            6,
+            4,
+            4,
+            6
+          ],
+          "milestones": [
+            "shu.kongming-rested"
+          ],
+          "ending": "ending:shu.dawn"
+        }
+      ]
+    },
+    {
+      "star": 0,
+      "policy": "focus-martial",
+      "runs": 12,
+      "meanDepth": [
+        3.17,
+        2.17,
+        2.25,
+        1.67,
+        2.58,
+        3.75,
+        3.5,
+        4,
+        3
+      ],
+      "guanyu": 2,
+      "kongming": 0,
+      "both": 0,
+      "examples": [
+        {
+          "seed": 9001,
+          "depths": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            6,
+            6,
+            6,
+            4
+          ],
+          "milestones": [
+            "shu.guanyu-rescued"
+          ],
+          "ending": "ending:shu.reunion"
+        },
+        {
+          "seed": 9002,
+          "depths": [
+            4,
+            4,
+            4,
+            2,
+            6,
+            5,
+            4,
+            6,
+            4
+          ],
+          "milestones": [
+            "shu.guanyu-rescued"
+          ],
+          "ending": "ending:shu.reunion"
+        }
+      ]
+    },
+    {
+      "star": 0,
+      "policy": "focus-civil",
+      "runs": 12,
+      "meanDepth": [
+        2.67,
+        2,
+        1.92,
+        1.42,
+        1.92,
+        2.25,
+        2.17,
+        2.25,
+        2
+      ],
+      "guanyu": 0,
+      "kongming": 0,
+      "both": 0,
+      "examples": []
+    },
+    {
+      "star": 3,
+      "policy": "greedy-gain",
+      "runs": 12,
+      "meanDepth": [
+        3.17,
+        2,
+        2.92,
+        2.5,
+        3.83,
+        5,
+        4.75,
+        5.67,
+        4.92
+      ],
+      "guanyu": 9,
+      "kongming": 6,
+      "both": 6,
+      "examples": [
+        {
+          "seed": 9000,
+          "depths": [
+            4,
+            2,
+            4,
+            2,
+            4,
+            6,
+            6,
+            7,
+            7
+          ],
+          "milestones": [
+            "shu.guanyu-rescued",
+            "shu.kongming-rested"
+          ],
+          "ending": "ending:shu.reunion"
+        },
+        {
+          "seed": 9001,
+          "depths": [
+            4,
+            2,
+            2,
+            2,
+            4,
+            4,
+            4,
+            6,
+            4
+          ],
+          "milestones": [
+            "shu.guanyu-rescued"
+          ],
+          "ending": "ending:shu.reunion"
+        }
+      ]
+    },
+    {
+      "star": 3,
+      "policy": "focus-martial",
+      "runs": 12,
+      "meanDepth": [
+        3.92,
+        2.58,
+        3.25,
+        2.83,
+        3.83,
+        5.17,
+        5,
+        5.42,
+        4.17
+      ],
+      "guanyu": 9,
+      "kongming": 3,
+      "both": 3,
+      "examples": [
+        {
+          "seed": 9000,
+          "depths": [
+            5,
+            2,
+            2,
+            2,
+            4,
+            4,
+            4,
+            5,
+            4
+          ],
+          "milestones": [
+            "shu.guanyu-rescued"
+          ],
+          "ending": "ending:shu.reunion"
+        },
+        {
+          "seed": 9001,
+          "depths": [
+            4,
+            3,
+            3,
+            4,
+            4,
+            6,
+            6,
+            6,
+            6
+          ],
+          "milestones": [
+            "shu.guanyu-rescued",
+            "shu.kongming-rested"
+          ],
+          "ending": "ending:shu.reunion"
+        }
+      ]
+    },
+    {
+      "star": 3,
+      "policy": "focus-civil",
+      "runs": 12,
+      "meanDepth": [
+        3.25,
+        2.17,
+        2.33,
+        1.75,
+        2.25,
+        2.92,
+        2.92,
+        2.92,
+        2.08
+      ],
+      "guanyu": 0,
+      "kongming": 0,
+      "both": 0,
+      "examples": []
+    },
+    {
+      "star": 5,
+      "policy": "greedy-gain",
+      "runs": 12,
+      "meanDepth": [
+        3.75,
+        2.67,
+        3.58,
+        2.75,
+        4.75,
+        5.75,
+        5,
+        5.75,
+        5.58
+      ],
+      "guanyu": 8,
+      "kongming": 8,
+      "both": 7,
+      "examples": [
+        {
+          "seed": 9000,
+          "depths": [
+            5,
+            4,
+            6,
+            4,
+            7,
+            7,
+            7,
+            7,
+            7
+          ],
+          "milestones": [
+            "shu.guanyu-rescued",
+            "shu.kongming-rested"
+          ],
+          "ending": "ending:shu.reunion"
+        },
+        {
+          "seed": 9001,
+          "depths": [
+            3,
+            2,
+            2,
+            2,
+            4,
+            6,
+            4,
+            6,
+            6
+          ],
+          "milestones": [
+            "shu.guanyu-rescued",
+            "shu.kongming-rested"
+          ],
+          "ending": "ending:shu.reunion"
+        }
+      ]
+    },
+    {
+      "star": 5,
+      "policy": "focus-martial",
+      "runs": 12,
+      "meanDepth": [
+        4.17,
+        3.42,
+        4.17,
+        3.25,
+        4.83,
+        6.08,
+        5.5,
+        5.25,
+        4.58
+      ],
+      "guanyu": 7,
+      "kongming": 4,
+      "both": 4,
+      "examples": [
+        {
+          "seed": 9000,
+          "depths": [
+            6,
+            2,
+            4,
+            4,
+            5,
+            6,
+            6,
+            5,
+            6
+          ],
+          "milestones": [
+            "shu.guanyu-rescued",
+            "shu.kongming-rested"
+          ],
+          "ending": "ending:shu.reunion"
+        },
+        {
+          "seed": 9001,
+          "depths": [
+            3,
+            2,
+            4,
+            5,
+            6,
+            7,
+            7,
+            7,
+            6
+          ],
+          "milestones": [
+            "shu.guanyu-rescued",
+            "shu.kongming-rested"
+          ],
+          "ending": "ending:shu.reunion"
+        }
+      ]
+    },
+    {
+      "star": 5,
+      "policy": "focus-civil",
+      "runs": 12,
+      "meanDepth": [
+        3.67,
+        2.75,
+        3.08,
+        2.25,
+        3.25,
+        4.17,
+        3.42,
+        3.33,
+        3.17
+      ],
+      "guanyu": 2,
+      "kongming": 1,
+      "both": 0,
+      "examples": [
+        {
+          "seed": 9001,
+          "depths": [
+            4,
+            2,
+            2,
+            2,
+            4,
+            4,
+            4,
+            5,
+            4
+          ],
+          "milestones": [
+            "shu.guanyu-rescued"
+          ],
+          "ending": "ending:shu.reunion"
+        },
+        {
+          "seed": 9002,
+          "depths": [
+            4,
+            3,
+            4,
+            2,
+            4,
+            6,
+            4,
+            5,
+            2
+          ],
+          "milestones": [
+            "shu.guanyu-rescued"
+          ],
+          "ending": "ending:shu.reunion"
+        }
+      ]
+    }
+  ]
+}

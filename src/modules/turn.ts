@@ -8,6 +8,7 @@ import type { ActionTally, RunState, TurnProgress } from '../contracts/core/stat
 import { hasSelected } from './training.js';
 import { isClear } from './commission.js';
 import { hasEnded } from './ending.js';
+import { pendingScene, unchosenStory, awaitingChapterClose, awaitingEndingChoice } from './story.js';
 
 export const sequenceOf = (
   faction: FactionId | null, ctx: RunContext,
@@ -102,6 +103,7 @@ export const hasActed = (ctx: RunContext): boolean => hasSelected(ctx);
  * 委託的守門是「佇列非空」，見 canAdvance。
  */
 export function assertActable(ctx: RunContext): void {
+  if (pendingScene(ctx) || awaitingChapterClose(ctx) || awaitingEndingChoice(ctx)) throw new Error('請先完成主線演出');
   if (hasEnded(ctx) || ctx.state.progress.pendingCampaign || ctx.state.progress.pendingFactionChoice || ctx.state.progress.pendingSuperiorAssign) {
     throw new Error('請先完成目前階段');
   }
@@ -123,6 +125,7 @@ export function tally(attr: Attr, ctx: RunContext): RunState {
  * 因此追加武將事件不需要在這裡多一個分支 —— 它只是讓佇列又非空了。
  */
 export const canAdvance = (ctx: RunContext): boolean => !hasEnded(ctx)
+  && !pendingScene(ctx) && !unchosenStory(ctx) && !awaitingChapterClose(ctx) && !awaitingEndingChoice(ctx)
   && !ctx.state.progress.pendingCampaign && !ctx.state.progress.pendingFactionChoice
   && !ctx.state.progress.pendingSuperiorAssign && hasSelected(ctx) && isClear(ctx);
 
