@@ -233,7 +233,7 @@ export function rollStartAttrs(ctx: TurnContext): RunState {
 }
 
 const SKELETON = (meta: MetaState, config: DreamEntryConfig, seed: Seed): RunState => ({
-  schemaVersion: 1,
+  schemaVersion: 3,
   seed,
   rngCursors: emptyCursors(),
   metaSnapshot: meta,
@@ -244,6 +244,8 @@ const SKELETON = (meta: MetaState, config: DreamEntryConfig, seed: Seed): RunSta
     turnInChapter: 1, phase: 'camp', chaptersPassed: 0,
     pendingCampaign: false, pendingFactionChoice: false, pendingSuperiorAssign: false,
   },
+  economy: {money:0,earned:0,spent:0,ledger:[],market:{chapter:0,offers:[],target:null,fragmentBought:false},chapterCamp:false},
+  stories: {history:{},tracked:null,waitingSince:null},
   faction: null,
   // 起始四維在 `rollStartAttrs` 擲（需要 RNG，SKELETON 沒有）。
   attributes: { values: { lead: 0, war: 0, int: 0, pol: 0 } },
@@ -252,13 +254,13 @@ const SKELETON = (meta: MetaState, config: DreamEntryConfig, seed: Seed): RunSta
   roster: { members: [] },
   // 四類經驗池與解鎖清單（32 §2）。屬性從 0 開始，只能花經驗買。
   growth: {
-    exp: { lead: 0, war: 0, int: 0, pol: 0 },
+
     unlockedTraits: [], unlockedSkills: [],
-    spent: { lead: 0, war: 0, int: 0, pol: 0 },
+
   },
-  abilities: { traits: [], skills: [] },
+  abilities: { traits: [], skills: [], activeTraits: [], levels: {} },
   campaign: null,
-  items: { count: {} },
+  items: { count: {}, naturalCounts: {}, fragments: {} },
   boons: [],
   turn: {
     slots: [], selected: null, training: null,

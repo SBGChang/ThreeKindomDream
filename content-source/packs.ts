@@ -41,8 +41,13 @@ import { weiNotableEvents } from './wei/notable-events.js';
 import { weiCampaigns, weiEnemies } from './wei/campaigns.js';
 import { weiNotables, weiSuperiorPool } from './wei/notables.js';
 
+import { variedCommissions,variedTexts } from './core/events/varied.js';
+import { earlyStories,earlyTexts } from './wei/early-stories.js';
 import { zhTW } from './l10n/index.js';
+import { withDialogue, dialogueTexts } from './dialogue.js';
 
+const coreDialogueEvents = [...coreCommissions, ...variedCommissions].map(withDialogue);
+const weiDialogueEvents = [...weiCommissions, ...weiNotableCommissions, ...weiNotableEvents, ...earlyStories].map(withDialogue);
 const corePack: AuthoredPack = {
   packId: CORE,
   version: '0.1.0',
@@ -58,14 +63,14 @@ const corePack: AuthoredPack = {
     ...talents, ...shopItems, settlementFormula,
     ...paramPools, ...dcCurves,
     ...coreItems, ...coreItemPools,
-    ...coreCommissions,
+    ...coreDialogueEvents,
     ...campChapters, campSequence,
     ...careerRanks,
     ...coreEndings,
   ],
   effects: coreEffects,
   // GREYBOX：文案暫時全部掛在 core。正式版應隨各 pack 拆分（06 §2.1）。
-  texts: zhTW,
+  texts: {...zhTW,...earlyTexts,...variedTexts,...dialogueTexts},
 };
 
 const weiPack: AuthoredPack = {
@@ -76,7 +81,7 @@ const weiPack: AuthoredPack = {
   defs: [
     ...weiNotables, weiSuperiorPool,
     weiFaction,
-    ...weiCommissions, ...weiNotableCommissions, ...weiNotableEvents,
+    ...weiDialogueEvents,
     ...weiChapters, weiSequence,
     ...weiEnemies, ...weiCampaigns,
   ],

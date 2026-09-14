@@ -20,15 +20,15 @@ import { t } from '../app/bootstrap.js';
 export function CampaignRoad({ s }: { readonly s: Session }): React.ReactElement | null {
   const rows = s.stageRows();
   if (rows.length === 0) return null;
-  const top = Math.max(...rows.map((r) => r.exp), 1);
+  const top = Math.max(...rows.map((r) => r.salary), 1);
 
   return (
     <div className="road">
       {rows.map((r) => {
-        const h = 14 + Math.round(56 * (Math.cbrt(r.exp) / Math.cbrt(top)));
+        const h = 14 + Math.round(56 * (Math.cbrt(r.salary) / Math.cbrt(top)));
         const state = r.cleared ? 'done' : (r.current ? 'now' : 'far');
         return (
-          <div className={`road-step ${state}`} key={r.index} title={`${t(r.brief)} · 本關 ${r.exp} 經驗 · 累計 ${r.cumulative} 經驗`}>
+          <div className={`road-step ${state}`} key={r.index} title={`${t(r.brief)} · 本關 ${r.salary} 錢 · 累計 ${r.cumulative} 錢`}>
             <div className="road-bar-wrap">
               <div className="road-bar" style={{ height: `${h}px` }} />
             </div>

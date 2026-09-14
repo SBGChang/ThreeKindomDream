@@ -224,6 +224,13 @@ const multi: readonly Spec[] = [
     merit: 'martial', amount: BIG, item: 'wuzi', affinityAll: 10 },
 ];
 
-export const weiNotableEvents: readonly EventDef[] = [
+const specs: readonly Spec[] = [
   ...entries, ...seconds, ...chains, ...relicChains, ...multi,
-].map(event);
+];
+export const weiNotableEvents: readonly EventDef[] = specs.map(s=> {
+  const original=event(s);
+  const preceding=specs.find(p=>p.chain===s.chain&&p.step===s.step-1);
+  const previous=preceding?[eventDefId('event:wei.'+preceding.name)]:s.cast.map(c=>eventDefId('event:wei.'+String(c.notableId).split(':')[1]+'-familiar'));
+  const rarity = (s.cast.some(c=>c.minStage==='sworn')?5:s.cast.some(c=>c.minStage==='close')?4:3) as 3|4|5;
+  return {...original, progression:{rarity,previous}, mechanic:'relationship'};
+});

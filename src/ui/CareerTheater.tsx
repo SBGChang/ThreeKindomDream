@@ -11,9 +11,23 @@ function art(file:string,key=false):Promise<HTMLCanvasElement>{
  });cache.set(id,promise);return promise;
 }
 export function preloadCareerTheater(tier:number):Promise<unknown>{return Promise.all([art('stage-'+tier+'.png'),art('frames.png',true)]);}
+// Painted costumes cross the nominal 362px atlas columns. These bounds follow
+// the transparent gaps in the 1448px-wide source, excluding neighbouring capes.
+const wardrobeBounds = {
+ martial: [[0,362],[362,690],[696,1038],[1040,1448]],
+ civil: [[0,362],[362,724],[724,1068],[1076,1448]],
+} as const;
 export function CareerHero({profile}:{profile:CareerPresentation}):React.ReactElement{
  const ref=useRef<HTMLCanvasElement>(null);
- useEffect(()=>{let alive=true;void art(profile.line==='civil'&&profile.tier===2?'wardrobe-hat-fixed.png':'wardrobe.png',true).then(im=>{if(!alive||!ref.current)return;const c=ref.current,w=im.width/4,h=im.height/2;c.width=Math.round(w);c.height=Math.round(h);c.getContext('2d')!.drawImage(im,profile.tier*w,(profile.line==='civil'?1:0)*h,w,h,0,0,c.width,c.height);}).catch(()=>{});return()=>{alive=false;};},[profile.tier,profile.line]);
+ useEffect(()=>{let alive=true;void art(profile.line==='civil'&&profile.tier===2?'wardrobe-hat-fixed.png':'wardrobe.png',true).then(im=>{
+  if(!alive||!ref.current)return;
+  const c=ref.current,w=im.width/4,h=im.height/2,[left,right]=wardrobeBounds[profile.line][profile.tier],ratio=im.width/1448,
+   sx=left*ratio,sw=(right-left)*ratio,scale=Math.min(1,w/sw),dw=sw*scale,dh=h*scale;
+  c.width=Math.round(w);c.height=Math.round(h);
+  // Keep existing in-cell placement; fit overhanging capes without cutting them off.
+  const dx=Math.max(0,Math.min(w-dw,sx-profile.tier*w));
+  c.getContext('2d')!.drawImage(im,sx,(profile.line==='civil'?1:0)*h,sw,h,dx,h-dh,dw,dh);
+ }).catch(()=>{});return()=>{alive=false;};},[profile.tier,profile.line]);
  return <canvas ref={ref} className="character-halfbody career-hero-art" role="img" aria-label={'主角：'+(profile.line==='civil'?'文職':'武職')+CAREER_LABELS[profile.tier]+'造型'}/>;
 }
 export function CareerTheater({profile,paused=false,frameOverride,onReady}:{profile:CareerPresentation;paused?:boolean;frameOverride?:number;onReady?:()=>void}):React.ReactElement{

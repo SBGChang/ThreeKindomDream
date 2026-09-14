@@ -22,10 +22,11 @@
 .run-screen .scene-caption>span{font-size:11px;letter-spacing:6px;color:#ffedc3}
 .run-screen .scene-caption h1{font-size:30px;margin:5px 0;color:#fff0c8;font-weight:900}
 .run-screen .scene-caption p{font-size:13px;margin:7px}
-.training-stage{position:absolute;top:100px;left:282px;right:280px;height:466px;pointer-events:none}
+.training-stage{position:absolute;top:100px;left:282px;right:280px;height:620px;pointer-events:none;isolation:isolate;z-index:1}
 .training-ink{position:absolute;inset:90px 25px 50px;background:linear-gradient(140deg,#652723aa,#381b1877);clip-path:polygon(8% 14%,86% 0,95% 22%,100% 68%,24% 96%,0 79%);transform:rotate(-7deg)}
-.training-hero{position:absolute;left:12px;top:0;width:330px;height:475px;z-index:2}
-.training-partner{position:absolute;left:274px;top:65px;width:280px;height:402px;z-index:1}
+.training-hero{position:absolute;left:239px;top:188px;width:300px;height:432px;z-index:30}
+.training-partner{position:absolute;transform-origin:center bottom;transition:left .25s ease,top .25s ease,width .25s ease,height .25s ease;}
+@media(prefers-reduced-motion:reduce){.training-partner{transition:none}}
 .training-stage .character-halfbody,.training-stage .caocao-rig{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 7px 3px #24110b88)}
 .participants{position:absolute;top:46px;right:18px;width:264px;padding:17px 13px 14px;border:3px solid #98713f;border-radius:11px;background:#421b16;box-shadow:0 4px 0 #20100c;isolation:isolate;z-index:4}
 .participants:before{content:'';position:absolute;inset:0;border:19px solid transparent;border-image:url('../../public/art/ui/ui-hud-command-v1.png') 160 fill / 19px;z-index:-1;pointer-events:none}

@@ -55,7 +55,7 @@ export const gameRules: GameRulesDef = coreDef('gameRules', 'rules:main', {
    * 一回合四格至少一格全中約 11.8% —— 一輪 32 回合平均碰到 3.8 次。
    * 稀有到值得記住，又不會整輪遇不到。
    */
-  encounterChance: 0.5,
+  encounterChance: 0.35,
   /**
    * 可攜帶進場的道具格數（23 §5）。
    *

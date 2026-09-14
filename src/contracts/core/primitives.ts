@@ -132,7 +132,7 @@ export type StatPath =
    */
   | `affinity.${string}`;
 
-export type RngStream =
+export type RngStream = 'market.stock'
   | 'glow.base'
   | 'glow.upgrade'
   | 'notable.slot'
@@ -165,7 +165,7 @@ export const RNG_STREAMS: readonly RngStream[] = [
   'glow.base', 'glow.upgrade', 'notable.slot', 'notable.roster',
   'event.rarity', 'event.draw', 'event.params', 'event.notable',
   'check.roll', 'slot.flag', 'item.drop', 'attr.start',
-  'battle.cast', 'battle.pick', 'battle.command', 'battle.enemy', 'battle.drop',
+  'battle.cast', 'battle.pick', 'battle.command', 'battle.enemy', 'battle.drop', 'market.stock',
 ];
 
 export type RngCursors = Readonly<Record<RngStream, number>>;

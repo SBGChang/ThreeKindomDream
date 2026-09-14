@@ -75,7 +75,7 @@ export const heldItems = (ctx: RunContext): readonly ItemId[] =>
  */
 export function canAcquire(id: ItemId, ctx: RunContext): boolean {
   const def = ctx.defs.reader('item').get(String(id));
-  return heldCount(id, ctx) < def.perRunCap;
+  return (ctx.state.items.naturalCounts?.[String(id)]??0) < def.perRunCap;
 }
 
 /**
@@ -85,14 +85,16 @@ export function canAcquire(id: ItemId, ctx: RunContext): boolean {
  * 這裡不靜靜吞掉：「拿不到」是玩家該看見的結果（§2.2）。
  */
 export function acquire(
-  id: ItemId, ctx: RunContext,
+  id: ItemId, ctx: RunContext, source: 'natural'|'market' = 'natural',
 ): { readonly state: RunState; readonly gain: ItemGain | null } {
-  if (!canAcquire(id, ctx)) return { state: ctx.state, gain: null };
+  if (source === 'natural' && !canAcquire(id, ctx)) return { state: ctx.state, gain: null };
   const before = heldCount(id, ctx);
   return {
     state: {
       ...ctx.state,
-      items: { count: { ...ctx.state.items.count, [String(id)]: before + 1 } },
+      items: { ...ctx.state.items, count: { ...ctx.state.items.count, [String(id)]: before + 1 },
+          naturalCounts:{...ctx.state.items.naturalCounts,[String(id)]:(ctx.state.items.naturalCounts?.[String(id)]??0)+(source==='natural'?1:0)},
+          fragments:{...ctx.state.items.fragments,[String(id)]:(ctx.state.items.fragments?.[String(id)]??0)+(before>0?1:0)} },
     },
     gain: { itemId: id, duplicate: before > 0 },
   };
@@ -105,7 +107,7 @@ export function seedCarried(ctx: RunContext): RunState {
   for (const id of ctx.state.config.carriedItems.slice(0, limit)) {
     count[String(id)] = (count[String(id)] ?? 0) + 1;
   }
-  return { ...ctx.state, items: { count } };
+  return { ...ctx.state, items: { count, naturalCounts:{}, fragments:{} } };
 }
 
 /** 一個道具池的可抽清單。上限已滿者不在其中 —— 抽出來卻拿不到是假獎勵。 */
@@ -152,16 +154,17 @@ export function awardItemFragments(
   acquired: Readonly<Record<string, number>>,
   meta: MetaState,
   defs: DefinitionRegistry,
+  explicitFragments?:Readonly<Record<string,number>>,
 ): { meta: MetaState; gained: Record<string, number>; raised: Record<string, number> } {
   const codex: Record<string, ItemCodexEntry> = { ...meta.itemCodex };
   const gained: Record<string, number> = {};
   const raised: Record<string, number> = {};
 
-  for (const [key, times] of Object.entries(acquired)) {
+  for (const [key, times] of Object.entries({...acquired,...Object.fromEntries(Object.keys(explicitFragments??{}).map(k=>[k,Math.max(1,acquired[k]??0)]))})) {
     if (times <= 0) continue;
     const def: ItemDef = defs.reader('item').get(key);
     const cur = codex[key] ?? EMPTY;
-    const dup = times - 1;
+    const dup = explicitFragments?.[key] ?? (explicitFragments===undefined?times-1:0);
     if (dup > 0) gained[key] = dup;
 
     let tier = cur.tier;
@@ -179,3 +182,7 @@ export function awardItemFragments(
 
   return { meta: { ...meta, itemCodex: codex }, gained, raised };
 }
+
+export function addFragments(id:ItemId,amount:number,ctx:RunContext):RunState{return {...ctx.state,items:{...ctx.state.items,fragments:{...ctx.state.items.fragments,[String(id)]:(ctx.state.items.fragments?.[String(id)]??0)+amount}}};}
+export const pendingFragments=(ctx:RunContext)=>ctx.state.items.fragments??{};
+export const discovered=(id:ItemId,ctx:RunContext)=>heldCount(id,ctx)>0||ctx.state.metaSnapshot.itemCodex[String(id)]!==undefined;

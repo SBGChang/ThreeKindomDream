@@ -1,10 +1,10 @@
 // ㉓ 特質與技能。持有本輪已學的兩種能力（23）。
 //
 // 兩種能力刻意用【不同種類的稀缺】（23 §1）：
-//   特質  常駐被動，不佔格 → 稀缺在經驗總量（經濟決策）
+//   特性  可收藏多條、同時啟用四條 → 稀缺在金錢與啟用格
 //   技能  戰役中的行動，只有 3 格 → 稀缺在格數（編組決策）
 //
-// 本模組【不 handle 任何指令】：學習的唯一入口在 ㉜，
+// 本模組【不 handle 任何指令】：學習的唯一入口在 learning.ts，
 // 這樣「產出總和 − 消耗總和 ＝ 餘額」才是可斷言的不變量。
 import type { RunContext } from '../contracts/core/context.js';
 import type { Attr } from '../contracts/core/primitives.js';
@@ -16,6 +16,7 @@ import type { SkillId, TraitId } from '../contracts/core/ids.js';
 import type { RunState } from '../contracts/core/state.js';
 import type { EffectSource } from './effect.js';
 
+export const activeTraits = (ctx:RunContext):readonly TraitId[] => ctx.state.abilities.activeTraits ?? ctx.state.abilities.traits.slice(0,ctx.defs.single('growthRule').economy.activeTraits);
 export const traits = (ctx: RunContext): readonly TraitId[] => ctx.state.abilities.traits;
 export const skills = (ctx: RunContext): readonly SkillId[] => ctx.state.abilities.skills;
 export const levelOf = (id: SkillId | TraitId, ctx: RunContext): number => ctx.state.abilities.levels?.[String(id)] ?? 1;
@@ -91,8 +92,8 @@ export const skillDef = (id: SkillId, ctx: RunContext): SkillDef =>
  */
 export function traitEffectSource(): EffectSource {
   return {
-    collect: (ctx: RunContext): readonly ResolvedEffectRef[] => ctx.state.abilities.traits
+    collect: (ctx: RunContext): readonly ResolvedEffectRef[] => activeTraits(ctx)
       .flatMap((id) => traitDef(id, ctx).effects
-        .map((ref) => ({ ...ref, magnitude: powerOf(id, ctx), sourceId: `trait/${String(id)}` }))),
+        .map((ref) => ({ ...ref, magnitude: ctx.defs.single('growthRule').economy.traitPower[levelOf(id,ctx)-1] ?? 1, sourceId: `trait/${String(id)}` }))),
   };
 }

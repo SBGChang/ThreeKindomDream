@@ -62,7 +62,7 @@ const item = (
   perRunCap,
   nameKey: k(`item.${name}.name`),
   descKey: k(`item.${name}.desc`),
-  tiers: ladder(name, rows),
+  tiers: ladder(name, rows).map((row,i)=>({...row,fragmentCost:([0,...(rarity<=2?[3,5,8,12,18]:rarity===3?[3,4,6,9,12]:rarity===4?[2,4,6,8,12]:[2,3,4,6,9])][i]??0)})),
 });
 
 // ══ 廣域 · 不限對象 ══════════════════════════════════
@@ -80,7 +80,7 @@ const broad: readonly ItemDef[] = [
     [ref('CurrencyBonus', FX.meritCivil5)],
     [ref('SlotBaseAdd', FX.itemBaseInt3)],
     [ref('GlowBaseWeight', FX.glowIntShift)],
-    [ref('StatModifier', FX.learnBandShift1)],
+    [ref('GainMultiplier', FX.gainInt15)],
   ]),
 
   /** 鐵槍 ★1 · 武線入門。夏侯惇〈太壽陂〉掉。 */
@@ -246,7 +246,9 @@ const named: readonly ItemDef[] = [
   ]),
 ];
 
-export const coreItems: readonly ItemDef[] = [...broad, ...classed, ...named];
+export const coreItems: readonly ItemDef[] = [...broad, ...classed, ...named,
+ item('ledger',1,UNLIMITED,Array.from({length:6},()=>[ref('CurrencyBonus',FX.meritCivil5)])),
+ item('rations',2,UNLIMITED,Array.from({length:6},()=>[ref('CurrencyBonus',FX.meritMartial5)]))];
 
 /**
  * 低階道具池（23 §6）★
@@ -259,6 +261,8 @@ export const coreItemPools: readonly ItemPoolDef[] = [
   coreDef('itemPool', 'pool:item.low', {
     poolId: itemPoolId('pool:item.low'),
     entries: [
+      {itemId:itemId('item:ledger'),weight:15},
+      {itemId:itemId('item:rations'),weight:15},
       { itemId: itemId('item:bamboo'), weight: 30 },
       { itemId: itemId('item:spear'), weight: 30 },
       { itemId: itemId('item:bow'), weight: 20 },

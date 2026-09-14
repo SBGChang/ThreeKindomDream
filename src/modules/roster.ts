@@ -4,9 +4,11 @@ import type { NotableId } from '../contracts/core/ids.js';
 import type { NotableTarget } from '../contracts/core/effects.js';
 import type { RosterMember, RunState } from '../contracts/core/state.js';
 import type { AffinityGrantOutcome, EffectResolver } from './effect.js';
+import { economyRule } from './economy.js';
+import { bondLevelOf } from './faction.js';
 import { ATTRS } from '../contracts/core/primitives.js';
 import {
-  baseOf, companionCandidates, link, maxAffinity, rosterIds, withRoster,
+  baseOf, companionCandidates, link, maxAffinity, rosterIds, superiorCandidates, withRoster,
 } from './roster-query.js';
 
 export * from './roster-query.js';
@@ -44,7 +46,7 @@ function applyGrants(
     const add = grants
       .filter((g) => grantHits(g, m.notableId, staged))
       .reduce((sum, g) => sum + g.amount, 0);
-    return { ...m, affinity: Math.min(cap, m.affinity + add) };
+    return { ...m, affinity: Math.min(cap, m.affinity + Math.min(economyRule(ctx).startBonusCap,add)) };
   });
 }
 
@@ -72,11 +74,17 @@ export function assembleCompanions(ctx: TurnContext, fx: EffectResolver): RunSta
  * 少了這條，同一個人會在一輪裡出現兩次 —— 好感度分裂成兩筆、站位分配把他算兩次、
  * 事件鏈也會重複觸發。
  */
+export function newcomerBonus(ctx:RunContext):number {
+ const r=economyRule(ctx),level=ctx.state.faction===null?0:bondLevelOf(ctx.state.faction,ctx);
+ return Math.round((r.newcomerBonus[level]??r.newcomerBonus.at(-1)!)*Math.min(r.compensationTurns,Math.max(0,ctx.state.progress.turn-1))/r.compensationTurns);
+}
 export function assignSuperiors(
   chosen: readonly NotableId[], ctx: TurnContext, fx: EffectResolver,
 ): RunState {
   if (ctx.state.faction === null) throw new Error('未入陣營，不可分配上司');
   const rules = ctx.defs.single('gameRules');
+  const candidates=superiorCandidates(ctx);
+  if(new Set(chosen).size!==chosen.length||chosen.length>bondLevelOf(ctx.state.faction,ctx)||chosen.some(id=>!candidates.includes(id)))throw new Error('上司名額或人選不合法');
   const faction = ctx.defs.reader('faction').get(String(ctx.state.faction));
   const pool = ctx.defs.reader('notablePool').get(String(faction.superiorPoolId));
   const taken = new Set([...rosterIds(ctx).map(String), ...chosen.map(String)]);
@@ -95,7 +103,10 @@ export function assignSuperiors(
     notableId: id, affinity: seed, origin: 'superior',
   }));
   // 補正只套在【新加入的人】身上 —— 已在陣容者早就套過，再套一次是重複發放。
-  return withRoster(ctx, [...ctx.state.roster.members, ...applyGrants(added, ctx, fx)]);
+  const r=economyRule(ctx);
+  const bonus=newcomerBonus(ctx);
+  const newcomers=applyGrants(added,ctx,fx).map(m=>({...m,affinity:Math.min(r.newcomerCap,m.affinity+bonus),entryBonus:bonus,cooperations:0,interactionTurns:[]}));
+  return withRoster(ctx,[...ctx.state.roster.members,...newcomers]);
 }
 
 /**
@@ -136,31 +147,24 @@ export function distributeSlots(
  * 成長率【逐人】計算：道具與天命可以指名某位（或某一類）加速，
  * 而站位效果全部卡在好感 60 —— 加快成長＝提早解鎖整個站位層。
  */
-export function gainAffinity(
-  ids: readonly NotableId[], ctx: RunContext, fx: EffectResolver,
-): RunState {
-  const perTraining = link(ctx).gainPerTraining;
-  const cap = maxAffinity(ctx);
-  return withRoster(ctx, ctx.state.roster.members.map((m) => {
-    if (!ids.includes(m.notableId)) return m;
-    const gain = Math.round(perTraining * fx.affinityGrowthMul(m.notableId, ctx));
-    return { ...m, affinity: Math.min(cap, m.affinity + gain) };
-  }));
+export function gainAffinity(ids:readonly NotableId[],ctx:RunContext,fx:EffectResolver):RunState {
+ let state=ctx.state;
+ for(const id of ids)state=addAffinity(id,Math.round(link(ctx).gainPerTraining*fx.affinityGrowthMul(id,ctx)),{...ctx,state});
+ return withRoster({...ctx,state},state.roster.members.map(m=>ids.includes(m.notableId)?{...m,cooperations:(m.cooperations??0)+1}:m));
 }
-
-export function addAffinity(id: NotableId, amount: number, ctx: RunContext): RunState {
-  const cap = maxAffinity(ctx);
-  return withRoster(ctx, ctx.state.roster.members.map((m) => (
-    m.notableId === id ? { ...m, affinity: Math.min(cap, m.affinity + amount) } : m
-  )));
+export function addAffinity(id:NotableId,amount:number,ctx:RunContext,interaction=true):RunState {
+ const turn=ctx.state.progress.turn;
+ return withRoster(ctx,ctx.state.roster.members.map(m=>{
+  if(m.notableId!==id)return m;
+  const prior=m.lastGainTurn===turn?(m.gainedThisTurn??0):0;
+  const gain=Math.max(0,Math.min(amount,economyRule(ctx).affinityTurnCap-prior));
+  return {...m,affinity:Math.min(maxAffinity(ctx),m.affinity+gain),lastGainTurn:turn,gainedThisTurn:prior+gain,
+   interactionTurns:interaction?[...new Set([...(m.interactionTurns??[]),turn])]:(m.interactionTurns??[])};
+ }));
 }
-
-/** 全員加好感。陳群〈定品〉那種【當局獎勵】走這條（23 §8）。 */
-export function addAffinityAll(amount: number, ctx: RunContext): RunState {
-  const cap = maxAffinity(ctx);
-  return withRoster(ctx, ctx.state.roster.members.map(
-    (m) => ({ ...m, affinity: Math.min(cap, m.affinity + amount) }),
-  ));
+export function addAffinityAll(amount:number,ctx:RunContext):RunState {
+ let state=ctx.state;
+ for(const m of ctx.state.roster.members)state=addAffinity(m.notableId,amount,{...ctx,state},false);
+ return state;
 }
-
 export type { NotableTarget };

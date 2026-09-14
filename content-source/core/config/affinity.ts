@@ -68,7 +68,7 @@ export const linkBonus: LinkBonusDef = coreDef('linkBonus', 'link:main', {
    * 名士那層延遲七到十個回合才開，道具那層第一回合就開。
    */
   linkStage: 'close',
-  gainPerTraining: 6,
+  gainPerTraining: 4,
   /**
    * 站位分配的基礎權重。四格都是它，偏好完全由 `SlotBias` 疊上去（19 §4）★
    *

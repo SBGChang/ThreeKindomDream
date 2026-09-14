@@ -1,14 +1,38 @@
-import { ArtControl } from './ArtControl.js';
 import { useState } from 'react';
 import type { Session, LearningOffer } from '../app/session.js';
+import type { TraitId } from '../contracts/core/ids.js';
 import { t } from '../app/bootstrap.js';
-import { Hud } from './Hud.js';
-export function ScreenLearn({ s, bump, onBack }: { readonly s: Session; readonly bump: () => void; readonly onBack: () => void }): React.ReactElement {
-  const [tab, setTab] = useState<'skill' | 'trait'>('skill'); const [showAll, setShowAll] = useState(false); const [notice, setNotice] = useState('');
-  const all = s.learningOffers(); const visible = all.filter(x => x.kind === tab && (showAll || x.level > 0 || x.status !== 'locked'));
-  const reason = (o: LearningOffer): string => o.status === 'locked' ? `傳授來源：${o.teachers.join('、') || '深關獎勵'}` : o.status === 'attribute' ? `需${t(`attr.${o.attr}.short`)} ${o.need}，目前 ${o.value}` : o.status === 'funds' ? `還差 ${Math.max(0, o.cost - s.learningExp)} 學習點` : o.status === 'battle' ? '本場配置已鎖定，下場戰前可再修習' : o.status === 'max' ? '此生已臻化境' : `需${t(`attr.${o.attr}.short`)} ${o.need} · 已達成`;
-  return <><div className="page-heading"><div><span className="eyebrow">修習堂 · 不消耗行動</span><h1>將所學，化為所長</h1></div><ArtControl kind="back" label="返回" onClick={onBack}/></div><p className="page-intro">能力隨歷練自然成長。把學習點留給你想精進的招式與特性。</p><Hud s={s} />
-    <div className="learning-toolbar"><div className="segmented"><button className={tab === 'skill' ? 'sel' : ''} onClick={() => { setTab('skill'); }}>技能 <small>{all.filter(x => x.kind === 'skill' && x.level > 0).length}</small></button><button className={tab === 'trait' ? 'sel' : ''} onClick={() => { setTab('trait'); }}>特性 <small>{all.filter(x => x.kind === 'trait' && x.level > 0).length}</small></button></div><label className="toggle-label"><input type="checkbox" checked={showAll} onChange={e => { setShowAll(e.target.checked); }} />顯示尚未學會</label></div>
-    <div role="status" className="inline-notice">{notice || (tab === 'skill' ? '已學會的技能可在戰前選三招出陣。' : '特性常駐生效，不占出陣招式格。')}</div>
-    {visible.length === 0 ? <div className="empty-state"><span>學</span><h2>此生，尚待名師相授</h2><p>與名士同格共事，有機會學會他擅長的技能與特性。</p><button onClick={() => { setShowAll(true); }}>看看誰能傳授</button></div> : <div className="ability-grid">{visible.map(o => <article key={String(o.id)} className={`ability-card ${o.level === 0 ? 'unlearned' : ''}`}><div className="ability-head"><span className={`ability-mark attr-${o.attr}`}>{t(`attr.${o.attr}.short`)}</span><div><span className="eyebrow">{o.kind === 'skill' ? '出陣技能' : '常駐特性'}</span><h2>{o.name}</h2></div><b className="level-label">{o.level === 0 ? '未習得' : `Lv.${o.level}`}</b></div><div className="level-steps" aria-label={`等級 ${o.level}，最高 ${o.maxLevel}`}>{Array.from({ length: o.maxLevel }, (_, i) => <i key={i} className={i < o.level ? 'filled' : ''} />)}</div><p className="ability-desc">{o.description}</p>{o.level > 0 && <div className="upgrade-preview"><span>效果強度</span><b>×{o.power.toFixed(2)}</b>{o.level < o.maxLevel && <><span>→</span><strong>×{o.nextPower.toFixed(2)}</strong></>}</div>}<p className={`requirement ${o.status === 'ready' ? 'ok' : ''}`}>{reason(o)}</p><button className={o.status === 'ready' ? 'primary' : ''} disabled={o.status !== 'ready'} onClick={() => { const done = s.upgradeAbility(o.id); setNotice(done ? `${o.name}已提升至 Lv.${o.level + 1}，消耗 ${o.cost} 學習點。` : '目前無法升級，請確認能力與學習點。'); bump(); }}>{o.status === 'locked' ? '等待名士傳授' : o.status === 'max' ? '已達最高等級' : `升至 Lv.${o.level + 1}　·　${o.cost} 學習點`}</button></article>)}</div>}</>;
+import { CharacterArt } from './CharacterArt.js';
+import { ServiceHeader, ServicePager } from './ServiceUI.js';
+
+export function ScreenLearn({ s, bump, onBack }: { s: Session; bump: () => void; onBack: () => void }): React.ReactElement {
+  const [tab, setTab] = useState<'skill' | 'trait'>('skill');
+  const [page, setPage] = useState(0), [selected, setSelected] = useState(''), [notice, setNotice] = useState('');
+  const all = s.learningOffers().filter(o => o.kind === tab).sort((a,b) => ({common:0,fine:1,peerless:2}[a.tier] - {common:0,fine:1,peerless:2}[b.tier]));
+  const rows = all.slice(page * 6, page * 6 + 6), course = rows.find(o => o.id === selected) ?? rows[0];
+  const reason = (o: LearningOffer): string => o.status === 'max' ? '已精通此項所學' : o.status === 'battle' ? '事件或戰鬥結束後可訓練' : o.status === 'locked' ? '尚待傳授：' + (o.teachers.join('、') || '戰役秘笈') : o.status === 'chapter' ? '第 ' + o.chapterNeed + ' 章開放' : o.status === 'funds' ? '還差 ' + (o.cost - s.money) + ' 錢' : o.status === 'attribute' ? '能力尚未達標' : '條件齊備，可開始訓練';
+  return <section className="run-service training-service" aria-label="訓練">
+    <ServiceHeader title="訓練" subtitle="磨練所學 · 不消耗回合" onBack={onBack} />
+    <aside className="service-host"><CharacterArt name="于禁" /><div className="host-words"><b>熟能生巧</b><p>常階直接學習；良、絕階須先取得傳授。</p><small>技能可選三招出陣<br/>特性可同時啟用四條</small></div></aside>
+    <div className="training-book">
+      <div className="course-index">
+        <div className="service-tabs" aria-label="訓練類型">{(['skill','trait'] as const).map(key => <button key={key} aria-pressed={tab === key} onClick={() => {setTab(key);setPage(0);setNotice('');}}>{key === 'skill' ? '技能' : '特性'}{key === 'trait' && <small>{s.current.abilities.activeTraits?.length ?? 0}/4</small>}</button>)}</div>
+        <div className="course-list">{rows.map(o => <button className="course-entry" key={o.id} aria-pressed={course?.id === o.id} onClick={() => {setSelected(o.id);setNotice('');}}>
+          <span className={'entry-stat-icon entry-stat-' + o.attr}/><span><b>{o.name}</b><small>{{common:'常',fine:'良',peerless:'絕'}[o.tier]}階 · {o.active ? '已啟用' : o.level ? '已習得' : o.status === 'locked' ? '未傳授' : '未習得'}</small></span><strong>{o.level}<small>/{o.maxLevel}</small></strong>
+        </button>)}</div>
+        <ServicePager page={page} total={Math.ceil(all.length / 6)} onPage={setPage} label="課程分頁" />
+      </div>
+      {course && <article className="course-detail" key={course.id}>
+        <span className="service-kicker">{tab === 'skill' ? '兵法招式' : '修身特性'} · {{common:'常',fine:'良',peerless:'絕'}[course.tier]}階</span>
+        <h2>{course.name}</h2><p className="course-description">{course.description}</p>
+        <div className="course-progression"><div><small>目前等級</small><b>{course.level}<em>/{course.maxLevel}</em></b></div><span>→</span><div><small>{course.status === 'max' ? '已達上限' : '下次訓練'}</small><b>{Math.min(course.level + 1, course.maxLevel)}<em>級</em></b></div></div>
+        <p className="course-effect">效果倍率 <b>×{course.power.toFixed(2)}</b>{course.level < course.maxLevel && <> → <strong>×{course.nextPower.toFixed(2)}</strong></>}</p>
+        {course.level < course.maxLevel && <div className="course-requirements"><span className={course.value >= course.need ? 'met' : ''}>{t('attr.'+course.attr+'.short')} {course.value} / {course.need}</span>{course.secondaryNeed > 0 && <span className={course.secondaryValue >= course.secondaryNeed ? 'met' : ''}>{t('attr.'+course.secondary+'.short')} {course.secondaryValue} / {course.secondaryNeed}</span>}<span className={s.current.progress.chapter >= course.chapterNeed ? 'met' : ''}>第 {course.chapterNeed} 章</span></div>}
+        <p className="course-status">{reason(course)}</p>
+        <div className="course-purchase"><button className="service-buy" disabled={course.status !== 'ready'} onClick={() => {if(s.upgradeAbility(course.id))setNotice(course.name+'升至 '+(course.level+1)+' 級，支付 '+course.cost+' 錢');bump();}}>{course.status === 'max' ? '已精通' : (course.level ? '升級' : '學習')+' · '+course.cost+' 錢'}</button>
+        {tab === 'trait' && course.level > 0 && <button aria-pressed={course.active} disabled={course.status === 'battle' || (!course.active && (s.current.abilities.activeTraits?.length ?? 0) >= 4)} onClick={() => {s.toggleTrait(course.id as TraitId);bump();}}>{course.active ? '停用特性' : '啟用特性'}</button>}</div>
+      </article>}
+    </div>
+    <p className="service-notice" role="status">{notice}</p>
+  </section>;
 }

@@ -28,6 +28,7 @@ export function summarize(run: RunState, defs: DefinitionRegistry): RunSummary {
     run.roster.members.map((m) => ({
       notableId: m.notableId,
       finalStage: stageForValue(m.affinity, ctx),
+      ...(m.entryBonus!==undefined?{interactionCap:defs.single('growthRule').economy.interactionFragmentCaps[Math.min(m.interactionTurns?.length??0,8)]!}:{}),
     }));
 
   return {
@@ -41,7 +42,7 @@ export function summarize(run: RunState, defs: DefinitionRegistry): RunSummary {
     factionId: run.faction,
     notables,
     seenUniqueEvents: run.turn.seenUniqueIds,
-    itemsAcquired: run.items.count,
+    itemsAcquired: run.items.count, pendingItemFragments:run.items.fragments??{},
     actions: run.actions,
     glowResults: run.metaSnapshot.stats.glowResults,
     attributes: run.attributes,
@@ -75,7 +76,7 @@ export function settle(
 
   const points = computeSettlementPoints(summary, defs);
   const frag = awardNotableFragments(summary.notables, summary.isFullDream, meta, defs);
-  const items = awardItemFragments(summary.itemsAcquired, frag.meta, defs);
+  const items = awardItemFragments(summary.itemsAcquired, frag.meta, defs, summary.pendingItemFragments);
 
   const seenEvents = [...new Set([
     ...items.meta.collection.seenEvents.map(String),

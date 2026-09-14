@@ -31,7 +31,7 @@
     ],
     "schemaVersion": 1,
     "tier": "silver",
-    "yieldMul": 1.3
+    "yieldMul": 1.15
   },
   {
     "baseWeight": 16,
@@ -42,13 +42,13 @@
     "rarityWeights": [
       6,
       28,
-      50,
+      48,
       16,
-      0
+      2
     ],
     "schemaVersion": 1,
     "tier": "gold",
-    "yieldMul": 1.7
+    "yieldMul": 1.35
   },
   {
     "baseWeight": 4,
@@ -59,13 +59,13 @@
     "rarityWeights": [
       0,
       8,
-      37,
-      55,
-      0
+      32,
+      50,
+      10
     ],
     "schemaVersion": 1,
     "tier": "red",
-    "yieldMul": 2.2
+    "yieldMul": 1.6
   },
   {
     "attrCap": 59,
@@ -75,7 +75,7 @@
     "packId": "pack:core",
     "schemaVersion": 1,
     "shiftSteps": -2,
-    "yieldMul": 0.7
+    "yieldMul": 0.85
   },
   {
     "attrCap": 67,
@@ -85,7 +85,7 @@
     "packId": "pack:core",
     "schemaVersion": 1,
     "shiftSteps": -1,
-    "yieldMul": 0.85
+    "yieldMul": 0.92
   },
   {
     "attrCap": 75,
@@ -105,7 +105,7 @@
     "packId": "pack:core",
     "schemaVersion": 1,
     "shiftSteps": 1,
-    "yieldMul": 1.15
+    "yieldMul": 1.06
   },
   {
     "attrCap": 88,
@@ -115,7 +115,7 @@
     "packId": "pack:core",
     "schemaVersion": 1,
     "shiftSteps": 2,
-    "yieldMul": 1.3
+    "yieldMul": 1.12
   },
   {
     "attrCap": 94,
@@ -125,7 +125,7 @@
     "packId": "pack:core",
     "schemaVersion": 1,
     "shiftSteps": 3,
-    "yieldMul": 1.45
+    "yieldMul": 1.18
   },
   {
     "attrCap": 100,
@@ -135,7 +135,7 @@
     "packId": "pack:core",
     "schemaVersion": 1,
     "shiftSteps": 4,
-    "yieldMul": 1.6
+    "yieldMul": 1.25
   },
   {
     "cumulativeCost": {
@@ -412,7 +412,7 @@
     "schemaVersion": 1
   },
   {
-    "gainPerTraining": 6,
+    "gainPerTraining": 4,
     "id": "link:main",
     "kind": "linkBonus",
     "linkStage": "close",
@@ -483,7 +483,7 @@
     "commissionChance": 0.5,
     "companionCount": 3,
     "designateBase": 0,
-    "encounterChance": 0.5,
+    "encounterChance": 0.35,
     "id": "rules:main",
     "kind": "gameRules",
     "packId": "pack:core",
@@ -505,89 +505,416 @@
   {
     "bands": [
       {
-        "costPerPoint": 4,
         "grade": "G",
         "max": 0,
         "min": 0
       },
       {
-        "costPerPoint": 4,
         "grade": "F",
         "max": 19,
         "min": 1
       },
       {
-        "costPerPoint": 8,
         "grade": "E",
         "max": 39,
         "min": 20
       },
       {
-        "costPerPoint": 16,
         "grade": "D",
         "max": 59,
         "min": 40
       },
       {
-        "costPerPoint": 28,
         "grade": "C",
         "max": 74,
         "min": 60
       },
       {
-        "costPerPoint": 44,
         "grade": "B",
         "max": 84,
         "min": 75
       },
       {
-        "costPerPoint": 76,
         "grade": "A",
         "max": 94,
         "min": 85
       },
       {
-        "costPerPoint": 136,
         "grade": "S",
         "max": 100,
         "min": 95
       }
     ],
+    "economy": {
+      "activeTraits": 4,
+      "affinityTurnCap": 8,
+      "attendance": [
+        20,
+        25,
+        30,
+        35,
+        40
+      ],
+      "campaignSalary": [
+        15,
+        20,
+        25,
+        35,
+        45,
+        60,
+        80
+      ],
+      "commissionAbility": [
+        24,
+        36,
+        50,
+        66,
+        82
+      ],
+      "commissionBonus": [
+        30,
+        55,
+        90,
+        130,
+        180
+      ],
+      "commissionChapter": [
+        1,
+        1,
+        2,
+        3,
+        4
+      ],
+      "commissionCooldown": 5,
+      "commissionGrowth": [
+        0.6,
+        0.8,
+        1,
+        1.2,
+        1.4
+      ],
+      "commissionMerit": [
+        12,
+        20,
+        32,
+        48,
+        68
+      ],
+      "commissionRank": [
+        1,
+        2,
+        3,
+        5,
+        8
+      ],
+      "compensationTurns": 16,
+      "discountFloor": 0.6,
+      "extraGrowthCap": 0.2,
+      "fixedGrowth": [
+        2.4,
+        2.55,
+        2.7,
+        2.85,
+        3,
+        3.15,
+        3.3,
+        3.45,
+        3.6
+      ],
+      "fixedGrowthCap": 6,
+      "fixedSalary": [
+        20,
+        25,
+        30,
+        35,
+        40,
+        45,
+        50,
+        55,
+        60
+      ],
+      "fragmentPrices": [
+        60,
+        100,
+        180,
+        300,
+        480
+      ],
+      "growthBands": [
+        {
+          "max": 40,
+          "ratio": 1
+        },
+        {
+          "max": 60,
+          "ratio": 0.8
+        },
+        {
+          "max": 75,
+          "ratio": 0.6
+        },
+        {
+          "max": 85,
+          "ratio": 0.4
+        },
+        {
+          "max": 95,
+          "ratio": 0.25
+        },
+        {
+          "max": 100,
+          "ratio": 0.15
+        }
+      ],
+      "interactionFragmentCaps": [
+        0,
+        5,
+        5,
+        15,
+        15,
+        15,
+        30,
+        30,
+        50
+      ],
+      "investmentCosts": [
+        50,
+        90,
+        145,
+        205,
+        280
+      ],
+      "itemPrices": [
+        120,
+        200,
+        340,
+        560,
+        900
+      ],
+      "legacyBaseRatio": 0.1,
+      "lessonChapters": {
+        "common": [
+          1,
+          1,
+          2
+        ],
+        "fine": [
+          2,
+          2,
+          3
+        ],
+        "peerless": [
+          3,
+          4,
+          4
+        ]
+      },
+      "newcomerBonus": [
+        12,
+        24,
+        36,
+        48
+      ],
+      "newcomerCap": 90,
+      "optionDc": {
+        "high": 1.2,
+        "low": 0.55,
+        "mid": 0.9,
+        "story": 0.9
+      },
+      "optionReward": {
+        "high": 1.7,
+        "low": 0.4,
+        "mid": 1,
+        "story": 1
+      },
+      "practiceRatio": {
+        "high": 1.3,
+        "low": 0.5,
+        "mid": 1,
+        "story": 1
+      },
+      "primaryNeeds": {
+        "common": [
+          20,
+          35,
+          50
+        ],
+        "fine": [
+          40,
+          55,
+          70
+        ],
+        "peerless": [
+          65,
+          80,
+          90
+        ]
+      },
+      "secondaryNeeds": {
+        "common": [
+          0,
+          0,
+          0
+        ],
+        "fine": [
+          25,
+          35,
+          45
+        ],
+        "peerless": [
+          40,
+          50,
+          60
+        ]
+      },
+      "shopChapterCaps": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "shopSlots": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "shopWeights": [
+        [
+          55,
+          30,
+          12,
+          3,
+          0
+        ],
+        [
+          45,
+          32,
+          17,
+          5,
+          1
+        ],
+        [
+          35,
+          32,
+          22,
+          9,
+          2
+        ],
+        [
+          25,
+          30,
+          25,
+          15,
+          5
+        ]
+      ],
+      "skillPrices": {
+        "common": [
+          100,
+          160,
+          240
+        ],
+        "fine": [
+          260,
+          360,
+          500
+        ],
+        "peerless": [
+          650,
+          850,
+          1100
+        ]
+      },
+      "standingGrowth": {
+        "acquainted": 0.03,
+        "close": 0.08,
+        "friendly": 0.05,
+        "stranger": 0,
+        "sworn": 0.1
+      },
+      "standingGrowthCap": 0.3,
+      "startBonusCap": 40,
+      "startingMoney": 120,
+      "storyAffinity": [
+        0,
+        20,
+        40,
+        60,
+        80
+      ],
+      "storyAffinityGain": [
+        3,
+        5
+      ],
+      "storyChapter": [
+        1,
+        1,
+        2,
+        3,
+        4
+      ],
+      "storyCooldown": 2,
+      "storyCooperations": [
+        0,
+        1,
+        2,
+        4,
+        6
+      ],
+      "storyGrowth": [
+        0.4,
+        0.6,
+        0.8,
+        1,
+        1.2
+      ],
+      "storyMerit": [
+        4,
+        8,
+        12,
+        18,
+        26
+      ],
+      "storyPity": 3,
+      "storySalary": [
+        25,
+        35,
+        50,
+        70,
+        100
+      ],
+      "traitPower": [
+        0.6,
+        0.8,
+        1
+      ],
+      "traitPrices": {
+        "common": [
+          80,
+          120,
+          180
+        ],
+        "fine": [
+          220,
+          300,
+          420
+        ],
+        "peerless": [
+          520,
+          700,
+          900
+        ]
+      }
+    },
     "id": "growth:main",
     "kind": "growthRule",
     "learning": {
       "power": [
         1,
-        1.2,
-        1.45,
-        1.75,
-        2.1
-      ],
-      "requirements": [
-        20,
-        40,
-        60,
-        75,
-        90
-      ],
-      "skillCosts": [
-        0,
-        80,
-        160,
-        300,
-        500
-      ],
-      "tierCost": {
-        "common": 1,
-        "fine": 1.25,
-        "peerless": 1.5
-      },
-      "traitCosts": [
-        0,
-        60,
-        120,
-        240,
-        420
+        1.18,
+        1.38
       ]
     },
     "packId": "pack:core",
@@ -616,15 +943,15 @@
     },
     "crossLineRatio": 0.5,
     "enemyDamageByChapter": [
-      23,
-      40,
-      100,
-      240,
-      380,
-      600,
-      950,
-      1500,
-      2370
+      65,
+      95,
+      125,
+      160,
+      220,
+      300,
+      400,
+      540,
+      720
     ],
     "enemyTroopsByChapter": [
       515,
@@ -1205,24 +1532,28 @@
         "damageMul": 0.45,
         "rewards": [
           {
-            "amount": 8,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 8,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 8,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 8,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 15,
+            "kind": "money"
           }
         ],
         "troopsMul": 0.66
@@ -1233,24 +1564,28 @@
         "damageMul": 0.51,
         "rewards": [
           {
-            "amount": 15,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 15,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 15,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 15,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 20,
+            "kind": "money"
           }
         ],
         "troopsMul": 0.76
@@ -1261,24 +1596,28 @@
         "damageMul": 0.58,
         "rewards": [
           {
-            "amount": 23,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 23,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 23,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 23,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 25,
+            "kind": "money"
           }
         ],
         "troopsMul": 0.87
@@ -1289,24 +1628,28 @@
         "damageMul": 0.66,
         "rewards": [
           {
-            "amount": 30,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 30,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 30,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 30,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 35,
+            "kind": "money"
           }
         ],
         "troopsMul": 1
@@ -1317,24 +1660,28 @@
         "damageMul": 0.74,
         "rewards": [
           {
-            "amount": 38,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 38,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 38,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 38,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 45,
+            "kind": "money"
           },
           {
             "kind": "unlock",
@@ -1350,24 +1697,28 @@
         "damageMul": 0.84,
         "rewards": [
           {
-            "amount": 45,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 45,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 45,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 45,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 60,
+            "kind": "money"
           },
           {
             "kind": "unlock",
@@ -1383,24 +1734,28 @@
         "damageMul": 0.95,
         "rewards": [
           {
-            "amount": 53,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 53,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 53,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 53,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 80,
+            "kind": "money"
           },
           {
             "kind": "unlock",
@@ -1602,6 +1957,76 @@
     "packId": "pack:core",
     "schemaVersion": 1,
     "talentId": "talent:keen-eye"
+  },
+  {
+    "category": "bond",
+    "descKey": "shop.marketSlots.desc",
+    "id": "shop:marketSlots",
+    "item": "shop:marketSlots",
+    "kind": "shopItem",
+    "levels": [
+      {
+        "cost": 400,
+        "grant": {
+          "kind": "marketSlots"
+        },
+        "level": 1
+      },
+      {
+        "cost": 900,
+        "grant": {
+          "kind": "marketSlots"
+        },
+        "level": 2
+      },
+      {
+        "cost": 1800,
+        "grant": {
+          "kind": "marketSlots"
+        },
+        "level": 3
+      }
+    ],
+    "nameKey": "shop.marketSlots.name",
+    "packId": "pack:core",
+    "requiresItems": [],
+    "requiresPack": null,
+    "schemaVersion": 1
+  },
+  {
+    "category": "bond",
+    "descKey": "shop.marketQuality.desc",
+    "id": "shop:marketQuality",
+    "item": "shop:marketQuality",
+    "kind": "shopItem",
+    "levels": [
+      {
+        "cost": 500,
+        "grant": {
+          "kind": "marketQuality"
+        },
+        "level": 1
+      },
+      {
+        "cost": 1200,
+        "grant": {
+          "kind": "marketQuality"
+        },
+        "level": 2
+      },
+      {
+        "cost": 2400,
+        "grant": {
+          "kind": "marketQuality"
+        },
+        "level": 3
+      }
+    ],
+    "nameKey": "shop.marketQuality.name",
+    "packId": "pack:core",
+    "requiresItems": [],
+    "requiresPack": null,
+    "schemaVersion": 1
   },
   {
     "category": "aptitude",
@@ -2282,7 +2707,7 @@
             "referId": 4901
           }
         ],
-        "fragmentCost": 2,
+        "fragmentCost": 3,
         "tier": 1
       },
       {
@@ -2293,7 +2718,7 @@
             "referId": 7018
           }
         ],
-        "fragmentCost": 4,
+        "fragmentCost": 5,
         "tier": 2
       },
       {
@@ -2304,7 +2729,7 @@
             "referId": 4352
           }
         ],
-        "fragmentCost": 7,
+        "fragmentCost": 8,
         "tier": 3
       },
       {
@@ -2315,18 +2740,18 @@
             "referId": 2904
           }
         ],
-        "fragmentCost": 11,
+        "fragmentCost": 12,
         "tier": 4
       },
       {
         "descKey": "item.bamboo.tier.5",
         "effects": [
           {
-            "funcType": "StatModifier",
-            "referId": 9111
+            "funcType": "GainMultiplier",
+            "referId": 4902
           }
         ],
-        "fragmentCost": 16,
+        "fragmentCost": 18,
         "tier": 5
       }
     ]
@@ -2361,7 +2786,7 @@
             "referId": 4903
           }
         ],
-        "fragmentCost": 2,
+        "fragmentCost": 3,
         "tier": 1
       },
       {
@@ -2372,7 +2797,7 @@
             "referId": 7019
           }
         ],
-        "fragmentCost": 4,
+        "fragmentCost": 5,
         "tier": 2
       },
       {
@@ -2383,7 +2808,7 @@
             "referId": 4354
           }
         ],
-        "fragmentCost": 7,
+        "fragmentCost": 8,
         "tier": 3
       },
       {
@@ -2394,7 +2819,7 @@
             "referId": 2901
           }
         ],
-        "fragmentCost": 11,
+        "fragmentCost": 12,
         "tier": 4
       },
       {
@@ -2405,7 +2830,7 @@
             "referId": 4904
           }
         ],
-        "fragmentCost": 16,
+        "fragmentCost": 18,
         "tier": 5
       }
     ]
@@ -2440,7 +2865,7 @@
             "referId": 4905
           }
         ],
-        "fragmentCost": 2,
+        "fragmentCost": 3,
         "tier": 1
       },
       {
@@ -2451,7 +2876,7 @@
             "referId": 4218
           }
         ],
-        "fragmentCost": 4,
+        "fragmentCost": 5,
         "tier": 2
       },
       {
@@ -2462,7 +2887,7 @@
             "referId": 4354
           }
         ],
-        "fragmentCost": 7,
+        "fragmentCost": 8,
         "tier": 3
       },
       {
@@ -2473,7 +2898,7 @@
             "referId": 3014
           }
         ],
-        "fragmentCost": 11,
+        "fragmentCost": 12,
         "tier": 4
       },
       {
@@ -2484,7 +2909,7 @@
             "referId": 5104
           }
         ],
-        "fragmentCost": 16,
+        "fragmentCost": 18,
         "tier": 5
       }
     ]
@@ -2519,7 +2944,7 @@
             "referId": 4357
           }
         ],
-        "fragmentCost": 2,
+        "fragmentCost": 3,
         "tier": 1
       },
       {
@@ -2530,7 +2955,7 @@
             "referId": 4504
           }
         ],
-        "fragmentCost": 4,
+        "fragmentCost": 5,
         "tier": 2
       },
       {
@@ -2541,7 +2966,7 @@
             "referId": 7012
           }
         ],
-        "fragmentCost": 7,
+        "fragmentCost": 8,
         "tier": 3
       },
       {
@@ -2552,7 +2977,7 @@
             "referId": 4014
           }
         ],
-        "fragmentCost": 11,
+        "fragmentCost": 12,
         "tier": 4
       },
       {
@@ -2563,7 +2988,7 @@
             "referId": 4703
           }
         ],
-        "fragmentCost": 16,
+        "fragmentCost": 18,
         "tier": 5
       }
     ]
@@ -2620,7 +3045,7 @@
             "referId": 7016
           }
         ],
-        "fragmentCost": 7,
+        "fragmentCost": 6,
         "tier": 3
       },
       {
@@ -2631,7 +3056,7 @@
             "referId": 2901
           }
         ],
-        "fragmentCost": 11,
+        "fragmentCost": 8,
         "tier": 4
       },
       {
@@ -2642,7 +3067,7 @@
             "referId": 4505
           }
         ],
-        "fragmentCost": 16,
+        "fragmentCost": 12,
         "tier": 5
       }
     ]
@@ -2677,7 +3102,7 @@
             "referId": 4907
           }
         ],
-        "fragmentCost": 2,
+        "fragmentCost": 3,
         "tier": 1
       },
       {
@@ -2699,7 +3124,7 @@
             "referId": 4358
           }
         ],
-        "fragmentCost": 7,
+        "fragmentCost": 6,
         "tier": 3
       },
       {
@@ -2710,7 +3135,7 @@
             "referId": 5011
           }
         ],
-        "fragmentCost": 11,
+        "fragmentCost": 9,
         "tier": 4
       },
       {
@@ -2721,7 +3146,7 @@
             "referId": 9201
           }
         ],
-        "fragmentCost": 16,
+        "fragmentCost": 12,
         "tier": 5
       }
     ]
@@ -2756,7 +3181,7 @@
             "referId": 4355
           }
         ],
-        "fragmentCost": 2,
+        "fragmentCost": 3,
         "tier": 1
       },
       {
@@ -2778,7 +3203,7 @@
             "referId": 5112
           }
         ],
-        "fragmentCost": 7,
+        "fragmentCost": 6,
         "tier": 3
       },
       {
@@ -2789,7 +3214,7 @@
             "referId": 4604
           }
         ],
-        "fragmentCost": 11,
+        "fragmentCost": 9,
         "tier": 4
       },
       {
@@ -2800,7 +3225,7 @@
             "referId": 4606
           }
         ],
-        "fragmentCost": 16,
+        "fragmentCost": 12,
         "tier": 5
       }
     ]
@@ -2857,7 +3282,7 @@
             "referId": 4605
           }
         ],
-        "fragmentCost": 7,
+        "fragmentCost": 6,
         "tier": 3
       },
       {
@@ -2868,7 +3293,7 @@
             "referId": 4213
           }
         ],
-        "fragmentCost": 11,
+        "fragmentCost": 8,
         "tier": 4
       },
       {
@@ -2879,7 +3304,7 @@
             "referId": 9202
           }
         ],
-        "fragmentCost": 16,
+        "fragmentCost": 12,
         "tier": 5
       }
     ]
@@ -2936,7 +3361,7 @@
             "referId": 5114
           }
         ],
-        "fragmentCost": 7,
+        "fragmentCost": 6,
         "tier": 3
       },
       {
@@ -2947,7 +3372,7 @@
             "referId": 4024
           }
         ],
-        "fragmentCost": 11,
+        "fragmentCost": 8,
         "tier": 4
       },
       {
@@ -2958,7 +3383,7 @@
             "referId": 4704
           }
         ],
-        "fragmentCost": 16,
+        "fragmentCost": 12,
         "tier": 5
       }
     ]
@@ -3015,7 +3440,7 @@
             "referId": 4214
           }
         ],
-        "fragmentCost": 7,
+        "fragmentCost": 6,
         "tier": 3
       },
       {
@@ -3026,7 +3451,7 @@
             "referId": 4908
           }
         ],
-        "fragmentCost": 11,
+        "fragmentCost": 8,
         "tier": 4
       },
       {
@@ -3037,7 +3462,7 @@
             "referId": 4402
           }
         ],
-        "fragmentCost": 16,
+        "fragmentCost": 12,
         "tier": 5
       }
     ]
@@ -3107,7 +3532,7 @@
             "referId": 4217
           }
         ],
-        "fragmentCost": 4,
+        "fragmentCost": 3,
         "tier": 2
       },
       {
@@ -3118,7 +3543,7 @@
             "referId": 7017
           }
         ],
-        "fragmentCost": 7,
+        "fragmentCost": 4,
         "tier": 3
       },
       {
@@ -3137,7 +3562,7 @@
             "referId": 5016
           }
         ],
-        "fragmentCost": 11,
+        "fragmentCost": 6,
         "tier": 4
       },
       {
@@ -3156,13 +3581,179 @@
             "referId": 4508
           }
         ],
-        "fragmentCost": 16,
+        "fragmentCost": 9,
+        "tier": 5
+      }
+    ]
+  },
+  {
+    "descKey": "item.ledger.desc",
+    "id": "item:ledger",
+    "itemId": "item:ledger",
+    "kind": "item",
+    "nameKey": "item.ledger.name",
+    "packId": "pack:core",
+    "perRunCap": 99,
+    "rarity": 1,
+    "schemaVersion": 1,
+    "tiers": [
+      {
+        "descKey": "item.ledger.tier.0",
+        "effects": [
+          {
+            "funcType": "CurrencyBonus",
+            "referId": 7018
+          }
+        ],
+        "fragmentCost": 0,
+        "tier": 0
+      },
+      {
+        "descKey": "item.ledger.tier.1",
+        "effects": [
+          {
+            "funcType": "CurrencyBonus",
+            "referId": 7018
+          }
+        ],
+        "fragmentCost": 3,
+        "tier": 1
+      },
+      {
+        "descKey": "item.ledger.tier.2",
+        "effects": [
+          {
+            "funcType": "CurrencyBonus",
+            "referId": 7018
+          }
+        ],
+        "fragmentCost": 5,
+        "tier": 2
+      },
+      {
+        "descKey": "item.ledger.tier.3",
+        "effects": [
+          {
+            "funcType": "CurrencyBonus",
+            "referId": 7018
+          }
+        ],
+        "fragmentCost": 8,
+        "tier": 3
+      },
+      {
+        "descKey": "item.ledger.tier.4",
+        "effects": [
+          {
+            "funcType": "CurrencyBonus",
+            "referId": 7018
+          }
+        ],
+        "fragmentCost": 12,
+        "tier": 4
+      },
+      {
+        "descKey": "item.ledger.tier.5",
+        "effects": [
+          {
+            "funcType": "CurrencyBonus",
+            "referId": 7018
+          }
+        ],
+        "fragmentCost": 18,
+        "tier": 5
+      }
+    ]
+  },
+  {
+    "descKey": "item.rations.desc",
+    "id": "item:rations",
+    "itemId": "item:rations",
+    "kind": "item",
+    "nameKey": "item.rations.name",
+    "packId": "pack:core",
+    "perRunCap": 99,
+    "rarity": 2,
+    "schemaVersion": 1,
+    "tiers": [
+      {
+        "descKey": "item.rations.tier.0",
+        "effects": [
+          {
+            "funcType": "CurrencyBonus",
+            "referId": 7019
+          }
+        ],
+        "fragmentCost": 0,
+        "tier": 0
+      },
+      {
+        "descKey": "item.rations.tier.1",
+        "effects": [
+          {
+            "funcType": "CurrencyBonus",
+            "referId": 7019
+          }
+        ],
+        "fragmentCost": 3,
+        "tier": 1
+      },
+      {
+        "descKey": "item.rations.tier.2",
+        "effects": [
+          {
+            "funcType": "CurrencyBonus",
+            "referId": 7019
+          }
+        ],
+        "fragmentCost": 5,
+        "tier": 2
+      },
+      {
+        "descKey": "item.rations.tier.3",
+        "effects": [
+          {
+            "funcType": "CurrencyBonus",
+            "referId": 7019
+          }
+        ],
+        "fragmentCost": 8,
+        "tier": 3
+      },
+      {
+        "descKey": "item.rations.tier.4",
+        "effects": [
+          {
+            "funcType": "CurrencyBonus",
+            "referId": 7019
+          }
+        ],
+        "fragmentCost": 12,
+        "tier": 4
+      },
+      {
+        "descKey": "item.rations.tier.5",
+        "effects": [
+          {
+            "funcType": "CurrencyBonus",
+            "referId": 7019
+          }
+        ],
+        "fragmentCost": 18,
         "tier": 5
       }
     ]
   },
   {
     "entries": [
+      {
+        "itemId": "item:ledger",
+        "weight": 15
+      },
+      {
+        "itemId": "item:rations",
+        "weight": 15
+      },
       {
         "itemId": "item:bamboo",
         "weight": 30
@@ -3189,6 +3780,18 @@
   {
     "bodyKey": "event.lead.1.muster.body",
     "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.lead.1.muster.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:lead.1.muster",
     "id": "event:lead.1.muster",
     "kind": "event",
@@ -3299,6 +3902,18 @@
   {
     "bodyKey": "event.lead.2.escort.body",
     "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.lead.2.escort.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:lead.2.escort",
     "id": "event:lead.2.escort",
     "kind": "event",
@@ -3427,6 +4042,18 @@
   {
     "bodyKey": "event.lead.3.quell.body",
     "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.lead.3.quell.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:lead.3.quell",
     "id": "event:lead.3.quell",
     "kind": "event",
@@ -3551,6 +4178,18 @@
   {
     "bodyKey": "event.lead.4.campaign.body",
     "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.lead.4.campaign.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:lead.4.campaign",
     "id": "event:lead.4.campaign",
     "kind": "event",
@@ -3671,6 +4310,18 @@
   {
     "bodyKey": "event.war.1.strays.body",
     "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.war.1.strays.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:war.1.strays",
     "id": "event:war.1.strays",
     "kind": "event",
@@ -3785,6 +4436,18 @@
   {
     "bodyKey": "event.war.2.stronghold.body",
     "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.war.2.stronghold.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:war.2.stronghold",
     "id": "event:war.2.stronghold",
     "kind": "event",
@@ -3909,6 +4572,18 @@
   {
     "bodyKey": "event.war.3.duel.body",
     "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.war.3.duel.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:war.3.duel",
     "id": "event:war.3.duel",
     "kind": "event",
@@ -4029,6 +4704,18 @@
   {
     "bodyKey": "event.war.4.banner.body",
     "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.war.4.banner.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:war.4.banner",
     "id": "event:war.4.banner",
     "kind": "event",
@@ -4149,6 +4836,18 @@
   {
     "bodyKey": "event.int.1.archive.body",
     "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.int.1.archive.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:int.1.archive",
     "id": "event:int.1.archive",
     "kind": "event",
@@ -4259,6 +4958,18 @@
   {
     "bodyKey": "event.int.2.ledger.body",
     "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.int.2.ledger.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:int.2.ledger",
     "id": "event:int.2.ledger",
     "kind": "event",
@@ -4383,6 +5094,18 @@
   {
     "bodyKey": "event.int.3.counsel.body",
     "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.int.3.counsel.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:int.3.counsel",
     "id": "event:int.3.counsel",
     "kind": "event",
@@ -4503,6 +5226,18 @@
   {
     "bodyKey": "event.int.4.stratagem.body",
     "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.int.4.stratagem.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:int.4.stratagem",
     "id": "event:int.4.stratagem",
     "kind": "event",
@@ -4623,6 +5358,18 @@
   {
     "bodyKey": "event.pol.1.dispute.body",
     "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.pol.1.dispute.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:pol.1.dispute",
     "id": "event:pol.1.dispute",
     "kind": "event",
@@ -4733,6 +5480,18 @@
   {
     "bodyKey": "event.pol.2.farming.body",
     "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.pol.2.farming.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:pol.2.farming",
     "id": "event:pol.2.farming",
     "kind": "event",
@@ -4853,6 +5612,18 @@
   {
     "bodyKey": "event.pol.3.survey.body",
     "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.pol.3.survey.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:pol.3.survey",
     "id": "event:pol.3.survey",
     "kind": "event",
@@ -4973,6 +5744,18 @@
   {
     "bodyKey": "event.pol.4.pacify.body",
     "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.pol.4.pacify.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:pol.4.pacify",
     "id": "event:pol.4.pacify",
     "kind": "event",
@@ -5091,6 +5874,2537 @@
     "weight": 30
   },
   {
+    "bodyKey": "event.work.0.body",
+    "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.work.0.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:work.0",
+    "id": "event:work.0",
+    "kind": "event",
+    "mechanic": "investment",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.work.0.opt.0",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "pol",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.work.0.opt.1",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 2,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": null,
+        "labelKey": "event.work.0.opt.2",
+        "moneyCost": 50,
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 3,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 0.2,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:core",
+    "paramSlots": [],
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.work.0.title",
+    "trigger": {
+      "attr": "lead",
+      "kind": "commission",
+      "rarity": 1
+    },
+    "unique": false,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.work.1.body",
+    "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.work.1.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:work.1",
+    "id": "event:work.1",
+    "kind": "event",
+    "mechanic": "investment",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.work.1.opt.0",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "int",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.work.1.opt.1",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 2,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": null,
+        "labelKey": "event.work.1.opt.2",
+        "moneyCost": 90,
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 3,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 0.2,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:core",
+    "paramSlots": [],
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.work.1.title",
+    "trigger": {
+      "attr": "lead",
+      "kind": "commission",
+      "rarity": 2
+    },
+    "unique": false,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.work.2.body",
+    "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.work.2.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:work.2",
+    "id": "event:work.2",
+    "kind": "event",
+    "mechanic": "investment",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.work.2.opt.0",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "pol",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.work.2.opt.1",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 2,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": null,
+        "labelKey": "event.work.2.opt.2",
+        "moneyCost": 90,
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 3,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 0.2,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:core",
+    "paramSlots": [],
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.work.2.title",
+    "trigger": {
+      "attr": "lead",
+      "kind": "commission",
+      "rarity": 2
+    },
+    "unique": false,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.work.3.body",
+    "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.work.3.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:work.3",
+    "id": "event:work.3",
+    "kind": "event",
+    "mechanic": "investment",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.work.3.opt.0",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "war",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.work.3.opt.1",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 2,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": null,
+        "labelKey": "event.work.3.opt.2",
+        "moneyCost": 145,
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 3,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 0.2,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:core",
+    "paramSlots": [],
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.work.3.title",
+    "trigger": {
+      "attr": "lead",
+      "kind": "commission",
+      "rarity": 3
+    },
+    "unique": false,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.work.4.body",
+    "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.work.4.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:work.4",
+    "id": "event:work.4",
+    "kind": "event",
+    "mechanic": "investment",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.work.4.opt.0",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "int",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.work.4.opt.1",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 2,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": null,
+        "labelKey": "event.work.4.opt.2",
+        "moneyCost": 205,
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 3,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 0.2,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:core",
+    "paramSlots": [],
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.work.4.title",
+    "trigger": {
+      "attr": "lead",
+      "kind": "commission",
+      "rarity": 4
+    },
+    "unique": false,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.work.5.body",
+    "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.work.5.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:work.5",
+    "id": "event:work.5",
+    "kind": "event",
+    "mechanic": "investment",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.work.5.opt.0",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "pol",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.work.5.opt.1",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 2,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": null,
+        "labelKey": "event.work.5.opt.2",
+        "moneyCost": 280,
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 3,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 0.2,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:core",
+    "paramSlots": [],
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.work.5.title",
+    "trigger": {
+      "attr": "lead",
+      "kind": "commission",
+      "rarity": 5
+    },
+    "unique": false,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.work.6.body",
+    "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.work.6.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:work.6",
+    "id": "event:work.6",
+    "kind": "event",
+    "mechanic": "investment",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.work.6.opt.0",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "lead",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.work.6.opt.1",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 2,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": null,
+        "labelKey": "event.work.6.opt.2",
+        "moneyCost": 50,
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 3,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 0.2,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:core",
+    "paramSlots": [],
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.work.6.title",
+    "trigger": {
+      "attr": "war",
+      "kind": "commission",
+      "rarity": 1
+    },
+    "unique": false,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.work.7.body",
+    "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.work.7.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:work.7",
+    "id": "event:work.7",
+    "kind": "event",
+    "mechanic": "investment",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.work.7.opt.0",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "int",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.work.7.opt.1",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 2,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": null,
+        "labelKey": "event.work.7.opt.2",
+        "moneyCost": 90,
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 3,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 0.2,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:core",
+    "paramSlots": [],
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.work.7.title",
+    "trigger": {
+      "attr": "war",
+      "kind": "commission",
+      "rarity": 2
+    },
+    "unique": false,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.work.8.body",
+    "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.work.8.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:work.8",
+    "id": "event:work.8",
+    "kind": "event",
+    "mechanic": "investment",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.work.8.opt.0",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "lead",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.work.8.opt.1",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 2,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": null,
+        "labelKey": "event.work.8.opt.2",
+        "moneyCost": 90,
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 3,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 0.2,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:core",
+    "paramSlots": [],
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.work.8.title",
+    "trigger": {
+      "attr": "war",
+      "kind": "commission",
+      "rarity": 2
+    },
+    "unique": false,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.work.9.body",
+    "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.work.9.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:work.9",
+    "id": "event:work.9",
+    "kind": "event",
+    "mechanic": "investment",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.work.9.opt.0",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "pol",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.work.9.opt.1",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 2,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": null,
+        "labelKey": "event.work.9.opt.2",
+        "moneyCost": 145,
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 3,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 0.2,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:core",
+    "paramSlots": [],
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.work.9.title",
+    "trigger": {
+      "attr": "war",
+      "kind": "commission",
+      "rarity": 3
+    },
+    "unique": false,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.work.10.body",
+    "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.work.10.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:work.10",
+    "id": "event:work.10",
+    "kind": "event",
+    "mechanic": "investment",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.work.10.opt.0",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "int",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.work.10.opt.1",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 2,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": null,
+        "labelKey": "event.work.10.opt.2",
+        "moneyCost": 205,
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 3,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 0.2,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:core",
+    "paramSlots": [],
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.work.10.title",
+    "trigger": {
+      "attr": "war",
+      "kind": "commission",
+      "rarity": 4
+    },
+    "unique": false,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.work.11.body",
+    "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.work.11.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:work.11",
+    "id": "event:work.11",
+    "kind": "event",
+    "mechanic": "investment",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.work.11.opt.0",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "lead",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.work.11.opt.1",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 2,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": null,
+        "labelKey": "event.work.11.opt.2",
+        "moneyCost": 280,
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 3,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "chance": 0.2,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:core",
+    "paramSlots": [],
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.work.11.title",
+    "trigger": {
+      "attr": "war",
+      "kind": "commission",
+      "rarity": 5
+    },
+    "unique": false,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.work.12.body",
+    "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "moves": [
+            {
+              "actor": 1,
+              "duration": 900,
+              "path": [
+                {
+                  "x": 77
+                },
+                {
+                  "x": 66
+                }
+              ]
+            }
+          ],
+          "speaker": 1,
+          "textKey": "dialogue.report.arrive"
+        },
+        {
+          "speaker": null,
+          "textKey": "dialogue.report.inspect"
+        },
+        {
+          "speaker": 0,
+          "textKey": "dialogue.report.hero"
+        }
+      ],
+      "keywords": [
+        "dialogue.term.report",
+        "dialogue.term.messenger",
+        "dialogue.term.east",
+        "dialogue.term.west"
+      ],
+      "outcomes": [
+        {
+          "beats": [
+            {
+              "moves": [
+                {
+                  "actor": 0,
+                  "duration": 2400,
+                  "path": [
+                    {
+                      "x": 28
+                    },
+                    {
+                      "x": 63
+                    },
+                    {
+                      "x": 24
+                    },
+                    {
+                      "x": 70
+                    },
+                    {
+                      "x": 33
+                    }
+                  ]
+                },
+                {
+                  "actor": 1,
+                  "duration": 2400,
+                  "path": [
+                    {
+                      "x": 66
+                    },
+                    {
+                      "x": 91
+                    },
+                    {
+                      "x": 49
+                    },
+                    {
+                      "x": 97
+                    },
+                    {
+                      "x": 72
+                    }
+                  ]
+                }
+              ],
+              "speaker": null,
+              "textKey": "dialogue.report.chase"
+            },
+            {
+              "speaker": 1,
+              "textKey": "dialogue.report.return"
+            }
+          ],
+          "option": 2
+        }
+      ]
+    },
+    "eventDefId": "event:work.12",
+    "id": "event:work.12",
+    "kind": "event",
+    "mechanic": "investment",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.work.12.opt.0",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "pol",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.work.12.opt.1",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 2,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": null,
+        "labelKey": "event.work.12.opt.2",
+        "moneyCost": 50,
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 3,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "chance": 0.2,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:core",
+    "paramSlots": [],
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.work.12.title",
+    "trigger": {
+      "attr": "int",
+      "kind": "commission",
+      "rarity": 1
+    },
+    "unique": false,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.work.13.body",
+    "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.work.13.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:work.13",
+    "id": "event:work.13",
+    "kind": "event",
+    "mechanic": "investment",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.work.13.opt.0",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "lead",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.work.13.opt.1",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 2,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": null,
+        "labelKey": "event.work.13.opt.2",
+        "moneyCost": 90,
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 3,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "chance": 0.2,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:core",
+    "paramSlots": [],
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.work.13.title",
+    "trigger": {
+      "attr": "int",
+      "kind": "commission",
+      "rarity": 2
+    },
+    "unique": false,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.work.14.body",
+    "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.work.14.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:work.14",
+    "id": "event:work.14",
+    "kind": "event",
+    "mechanic": "investment",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.work.14.opt.0",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "war",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.work.14.opt.1",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 2,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": null,
+        "labelKey": "event.work.14.opt.2",
+        "moneyCost": 90,
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 3,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "chance": 0.2,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:core",
+    "paramSlots": [],
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.work.14.title",
+    "trigger": {
+      "attr": "int",
+      "kind": "commission",
+      "rarity": 2
+    },
+    "unique": false,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.work.15.body",
+    "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.work.15.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:work.15",
+    "id": "event:work.15",
+    "kind": "event",
+    "mechanic": "investment",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.work.15.opt.0",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "pol",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.work.15.opt.1",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 2,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": null,
+        "labelKey": "event.work.15.opt.2",
+        "moneyCost": 145,
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 3,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "chance": 0.2,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:core",
+    "paramSlots": [],
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.work.15.title",
+    "trigger": {
+      "attr": "int",
+      "kind": "commission",
+      "rarity": 3
+    },
+    "unique": false,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.work.16.body",
+    "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.work.16.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:work.16",
+    "id": "event:work.16",
+    "kind": "event",
+    "mechanic": "investment",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.work.16.opt.0",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "lead",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.work.16.opt.1",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 2,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": null,
+        "labelKey": "event.work.16.opt.2",
+        "moneyCost": 205,
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 3,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "chance": 0.2,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:core",
+    "paramSlots": [],
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.work.16.title",
+    "trigger": {
+      "attr": "int",
+      "kind": "commission",
+      "rarity": 4
+    },
+    "unique": false,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.work.17.body",
+    "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.work.17.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:work.17",
+    "id": "event:work.17",
+    "kind": "event",
+    "mechanic": "investment",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.work.17.opt.0",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "pol",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.work.17.opt.1",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 2,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": null,
+        "labelKey": "event.work.17.opt.2",
+        "moneyCost": 280,
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 3,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "chance": 0.2,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:core",
+    "paramSlots": [],
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.work.17.title",
+    "trigger": {
+      "attr": "int",
+      "kind": "commission",
+      "rarity": 5
+    },
+    "unique": false,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.work.18.body",
+    "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.work.18.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:work.18",
+    "id": "event:work.18",
+    "kind": "event",
+    "mechanic": "investment",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.work.18.opt.0",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "int",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.work.18.opt.1",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 2,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": null,
+        "labelKey": "event.work.18.opt.2",
+        "moneyCost": 50,
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 3,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "chance": 0.2,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:core",
+    "paramSlots": [],
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.work.18.title",
+    "trigger": {
+      "attr": "pol",
+      "kind": "commission",
+      "rarity": 1
+    },
+    "unique": false,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.work.19.body",
+    "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.work.19.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:work.19",
+    "id": "event:work.19",
+    "kind": "event",
+    "mechanic": "investment",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.work.19.opt.0",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "lead",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.work.19.opt.1",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 2,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": null,
+        "labelKey": "event.work.19.opt.2",
+        "moneyCost": 90,
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 3,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "chance": 0.2,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:core",
+    "paramSlots": [],
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.work.19.title",
+    "trigger": {
+      "attr": "pol",
+      "kind": "commission",
+      "rarity": 2
+    },
+    "unique": false,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.work.20.body",
+    "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.work.20.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:work.20",
+    "id": "event:work.20",
+    "kind": "event",
+    "mechanic": "investment",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.work.20.opt.0",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "int",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.work.20.opt.1",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 2,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": null,
+        "labelKey": "event.work.20.opt.2",
+        "moneyCost": 90,
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 3,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "chance": 0.2,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:core",
+    "paramSlots": [],
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.work.20.title",
+    "trigger": {
+      "attr": "pol",
+      "kind": "commission",
+      "rarity": 2
+    },
+    "unique": false,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.work.21.body",
+    "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.work.21.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:work.21",
+    "id": "event:work.21",
+    "kind": "event",
+    "mechanic": "investment",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.work.21.opt.0",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "lead",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.work.21.opt.1",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 2,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": null,
+        "labelKey": "event.work.21.opt.2",
+        "moneyCost": 145,
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 3,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "chance": 0.2,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:core",
+    "paramSlots": [],
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.work.21.title",
+    "trigger": {
+      "attr": "pol",
+      "kind": "commission",
+      "rarity": 3
+    },
+    "unique": false,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.work.22.body",
+    "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.work.22.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:work.22",
+    "id": "event:work.22",
+    "kind": "event",
+    "mechanic": "investment",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.work.22.opt.0",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "int",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.work.22.opt.1",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 2,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": null,
+        "labelKey": "event.work.22.opt.2",
+        "moneyCost": 205,
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 3,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "chance": 0.2,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:core",
+    "paramSlots": [],
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.work.22.title",
+    "trigger": {
+      "attr": "pol",
+      "kind": "commission",
+      "rarity": 4
+    },
+    "unique": false,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.work.23.body",
+    "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.work.23.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:work.23",
+    "id": "event:work.23",
+    "kind": "event",
+    "mechanic": "investment",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.work.23.opt.0",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "low"
+      },
+      {
+        "check": {
+          "attr": "lead",
+          "dcCurveId": "dc:normal"
+        },
+        "labelKey": "event.work.23.opt.1",
+        "moneyCost": 0,
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 2,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "mid"
+      },
+      {
+        "check": null,
+        "labelKey": "event.work.23.opt.2",
+        "moneyCost": 280,
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 3,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "chance": 0.2,
+            "kind": "itemPool",
+            "poolId": "pool:item.low"
+          }
+        ],
+        "tier": "high"
+      }
+    ],
+    "packId": "pack:core",
+    "paramSlots": [],
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.work.23.title",
+    "trigger": {
+      "attr": "pol",
+      "kind": "commission",
+      "rarity": 5
+    },
+    "unique": false,
+    "weight": 100
+  },
+  {
     "chapterId": "ch:camp.yellowturban",
     "factionId": null,
     "id": "ch:camp.yellowturban",
@@ -5125,136 +8439,136 @@
     "trainingBaseAdd": 0
   },
   {
-    "hostScale": 1.5,
+    "hostScale": 1.25,
     "id": "rank:civil.2",
     "kind": "careerRank",
     "level": 2,
     "line": "civil",
     "nameKey": "career.civil.2",
     "packId": "pack:core",
-    "requiredMerit": 95,
+    "requiredMerit": 35,
     "schemaVersion": 1,
-    "trainingBaseAdd": 1
+    "trainingBaseAdd": 0
   },
   {
-    "hostScale": 2.2,
+    "hostScale": 1.55,
     "id": "rank:civil.3",
     "kind": "careerRank",
     "level": 3,
     "line": "civil",
     "nameKey": "career.civil.3",
     "packId": "pack:core",
-    "requiredMerit": 191,
+    "requiredMerit": 80,
     "schemaVersion": 1,
-    "trainingBaseAdd": 1
+    "trainingBaseAdd": 0
   },
   {
-    "hostScale": 3.1,
+    "hostScale": 1.9,
     "id": "rank:civil.4",
     "kind": "careerRank",
     "level": 4,
     "line": "civil",
     "nameKey": "career.civil.4",
     "packId": "pack:core",
-    "requiredMerit": 286,
+    "requiredMerit": 135,
     "schemaVersion": 1,
-    "trainingBaseAdd": 2
+    "trainingBaseAdd": 0
   },
   {
-    "hostScale": 4.2,
+    "hostScale": 2.3,
     "id": "rank:civil.5",
     "kind": "careerRank",
     "level": 5,
     "line": "civil",
     "nameKey": "career.civil.5",
     "packId": "pack:core",
-    "requiredMerit": 382,
+    "requiredMerit": 205,
     "schemaVersion": 1,
-    "trainingBaseAdd": 2
+    "trainingBaseAdd": 0
   },
   {
-    "hostScale": 5.6,
+    "hostScale": 2.8,
     "id": "rank:civil.6",
     "kind": "careerRank",
     "level": 6,
     "line": "civil",
     "nameKey": "career.civil.6",
     "packId": "pack:core",
-    "requiredMerit": 477,
+    "requiredMerit": 290,
     "schemaVersion": 1,
-    "trainingBaseAdd": 3
+    "trainingBaseAdd": 0
   },
   {
-    "hostScale": 7.2,
+    "hostScale": 3.4,
     "id": "rank:civil.7",
     "kind": "careerRank",
     "level": 7,
     "line": "civil",
     "nameKey": "career.civil.7",
     "packId": "pack:core",
-    "requiredMerit": 573,
+    "requiredMerit": 390,
     "schemaVersion": 1,
-    "trainingBaseAdd": 3
+    "trainingBaseAdd": 0
   },
   {
-    "hostScale": 9.1,
+    "hostScale": 4.1,
     "id": "rank:civil.8",
     "kind": "careerRank",
     "level": 8,
     "line": "civil",
     "nameKey": "career.civil.8",
     "packId": "pack:core",
-    "requiredMerit": 668,
+    "requiredMerit": 510,
     "schemaVersion": 1,
-    "trainingBaseAdd": 4
+    "trainingBaseAdd": 0
   },
   {
-    "hostScale": 11.3,
+    "hostScale": 4.9,
     "id": "rank:civil.9",
     "kind": "careerRank",
     "level": 9,
     "line": "civil",
     "nameKey": "career.civil.9",
     "packId": "pack:core",
-    "requiredMerit": 764,
+    "requiredMerit": 650,
     "schemaVersion": 1,
-    "trainingBaseAdd": 4
+    "trainingBaseAdd": 0
   },
   {
-    "hostScale": 13.8,
+    "hostScale": 5.8,
     "id": "rank:civil.10",
     "kind": "careerRank",
     "level": 10,
     "line": "civil",
     "nameKey": "career.civil.10",
     "packId": "pack:core",
-    "requiredMerit": 859,
+    "requiredMerit": 810,
     "schemaVersion": 1,
-    "trainingBaseAdd": 5
+    "trainingBaseAdd": 0
   },
   {
-    "hostScale": 16.6,
+    "hostScale": 6.8,
     "id": "rank:civil.11",
     "kind": "careerRank",
     "level": 11,
     "line": "civil",
     "nameKey": "career.civil.11",
     "packId": "pack:core",
-    "requiredMerit": 955,
+    "requiredMerit": 990,
     "schemaVersion": 1,
-    "trainingBaseAdd": 5
+    "trainingBaseAdd": 0
   },
   {
-    "hostScale": 19.8,
+    "hostScale": 8,
     "id": "rank:civil.12",
     "kind": "careerRank",
     "level": 12,
     "line": "civil",
     "nameKey": "career.civil.12",
     "packId": "pack:core",
-    "requiredMerit": 1050,
+    "requiredMerit": 1190,
     "schemaVersion": 1,
-    "trainingBaseAdd": 6
+    "trainingBaseAdd": 0
   },
   {
     "hostScale": 1,
@@ -5269,136 +8583,136 @@
     "trainingBaseAdd": 0
   },
   {
-    "hostScale": 1.5,
+    "hostScale": 1.25,
     "id": "rank:martial.2",
     "kind": "careerRank",
     "level": 2,
     "line": "martial",
     "nameKey": "career.martial.2",
     "packId": "pack:core",
-    "requiredMerit": 95,
+    "requiredMerit": 35,
     "schemaVersion": 1,
-    "trainingBaseAdd": 1
+    "trainingBaseAdd": 0
   },
   {
-    "hostScale": 2.2,
+    "hostScale": 1.55,
     "id": "rank:martial.3",
     "kind": "careerRank",
     "level": 3,
     "line": "martial",
     "nameKey": "career.martial.3",
     "packId": "pack:core",
-    "requiredMerit": 191,
+    "requiredMerit": 80,
     "schemaVersion": 1,
-    "trainingBaseAdd": 1
+    "trainingBaseAdd": 0
   },
   {
-    "hostScale": 3.1,
+    "hostScale": 1.9,
     "id": "rank:martial.4",
     "kind": "careerRank",
     "level": 4,
     "line": "martial",
     "nameKey": "career.martial.4",
     "packId": "pack:core",
-    "requiredMerit": 286,
+    "requiredMerit": 135,
     "schemaVersion": 1,
-    "trainingBaseAdd": 2
+    "trainingBaseAdd": 0
   },
   {
-    "hostScale": 4.2,
+    "hostScale": 2.3,
     "id": "rank:martial.5",
     "kind": "careerRank",
     "level": 5,
     "line": "martial",
     "nameKey": "career.martial.5",
     "packId": "pack:core",
-    "requiredMerit": 382,
+    "requiredMerit": 205,
     "schemaVersion": 1,
-    "trainingBaseAdd": 2
+    "trainingBaseAdd": 0
   },
   {
-    "hostScale": 5.6,
+    "hostScale": 2.8,
     "id": "rank:martial.6",
     "kind": "careerRank",
     "level": 6,
     "line": "martial",
     "nameKey": "career.martial.6",
     "packId": "pack:core",
-    "requiredMerit": 477,
+    "requiredMerit": 290,
     "schemaVersion": 1,
-    "trainingBaseAdd": 3
+    "trainingBaseAdd": 0
   },
   {
-    "hostScale": 7.2,
+    "hostScale": 3.4,
     "id": "rank:martial.7",
     "kind": "careerRank",
     "level": 7,
     "line": "martial",
     "nameKey": "career.martial.7",
     "packId": "pack:core",
-    "requiredMerit": 573,
+    "requiredMerit": 390,
     "schemaVersion": 1,
-    "trainingBaseAdd": 3
+    "trainingBaseAdd": 0
   },
   {
-    "hostScale": 9.1,
+    "hostScale": 4.1,
     "id": "rank:martial.8",
     "kind": "careerRank",
     "level": 8,
     "line": "martial",
     "nameKey": "career.martial.8",
     "packId": "pack:core",
-    "requiredMerit": 668,
+    "requiredMerit": 510,
     "schemaVersion": 1,
-    "trainingBaseAdd": 4
+    "trainingBaseAdd": 0
   },
   {
-    "hostScale": 11.3,
+    "hostScale": 4.9,
     "id": "rank:martial.9",
     "kind": "careerRank",
     "level": 9,
     "line": "martial",
     "nameKey": "career.martial.9",
     "packId": "pack:core",
-    "requiredMerit": 764,
+    "requiredMerit": 650,
     "schemaVersion": 1,
-    "trainingBaseAdd": 4
+    "trainingBaseAdd": 0
   },
   {
-    "hostScale": 13.8,
+    "hostScale": 5.8,
     "id": "rank:martial.10",
     "kind": "careerRank",
     "level": 10,
     "line": "martial",
     "nameKey": "career.martial.10",
     "packId": "pack:core",
-    "requiredMerit": 859,
+    "requiredMerit": 810,
     "schemaVersion": 1,
-    "trainingBaseAdd": 5
+    "trainingBaseAdd": 0
   },
   {
-    "hostScale": 16.6,
+    "hostScale": 6.8,
     "id": "rank:martial.11",
     "kind": "careerRank",
     "level": 11,
     "line": "martial",
     "nameKey": "career.martial.11",
     "packId": "pack:core",
-    "requiredMerit": 955,
+    "requiredMerit": 990,
     "schemaVersion": 1,
-    "trainingBaseAdd": 5
+    "trainingBaseAdd": 0
   },
   {
-    "hostScale": 19.8,
+    "hostScale": 8,
     "id": "rank:martial.12",
     "kind": "careerRank",
     "level": 12,
     "line": "martial",
     "nameKey": "career.martial.12",
     "packId": "pack:core",
-    "requiredMerit": 1050,
+    "requiredMerit": 1190,
     "schemaVersion": 1,
-    "trainingBaseAdd": 6
+    "trainingBaseAdd": 0
   },
   {
     "bodyKey": "ending.pillar.body",

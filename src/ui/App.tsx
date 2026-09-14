@@ -11,12 +11,11 @@ import { ScreenDestiny, type MetaView } from './ScreenDestiny.js';
 import { ScreenEnd } from './ScreenEnd.js';
 import { ScreenEntry } from './ScreenEntry.js';
 import { ScreenFaction, ScreenSuperiors } from './ScreenPick.js';
-import { ScreenLearn } from './ScreenLearn.js';
-import { ScreenRun } from './ScreenRun.js';
+import { ScreenCamp } from './ScreenMarket.js';
+import { RunWorkspace } from './RunWorkspace.js';
 import { ScreenShop } from './ScreenShop.js';
-import { ScreenVault } from './ScreenVault.js';
 
-type RunView = 'run' | 'learn' | 'vault';
+type RunView = 'run' | 'learn' | 'vault' | 'market';
 export function App(): React.ReactElement {
   const [restored] = useState(() => restoreRun(wiring));
   const [meta, setMeta] = useState<MetaState>(loadMeta);
@@ -25,6 +24,7 @@ export function App(): React.ReactElement {
   const [metaView, setMetaView] = useState<MetaView>('destiny');
   const [runView, setRunView] = useState<RunView>('run');
   const [replay, setReplay] = useState(false);
+  const [atMainMenu, setAtMainMenu] = useState(false);
   const [log, setLog] = useState<readonly string[]>(restored.log);
   const [saveNotice, setSaveNotice] = useState(restored.notice);
   const phase = session === null ? 'meta' : session.isOver ? 'ending' : session.needsFactionChoice ? 'faction'
@@ -45,28 +45,33 @@ export function App(): React.ReactElement {
   const back = (): void => { setRunView('run'); };
   const home = (): void => { setMetaView('destiny'); };
   const learn = (): void => { setRunView('learn'); };
+  const preserveProgress = (): void => {
+    // An unreadable save is kept intact until a new run is explicitly started.
+    if (session !== null) saveRun(session, log);
+  };
   const screen = (): React.ReactElement => {
-    if (session === null) {
-      if (metaView === 'entry') return <ScreenEntry meta={meta} onEnter={config => { setLog([]); setRunView('run'); setMetaView('destiny'); setSession(startRun(meta, config)); }} onBack={home} />;
+    if (session === null || atMainMenu) {
+      if (metaView === 'entry') return <ScreenEntry meta={meta} onEnter={config => { setLog([]); setAtMainMenu(false); setRunView('run'); setMetaView('destiny'); setSession(startRun(meta, config)); }} onBack={home} />;
       if (metaView === 'shop') return <ScreenShop meta={meta} onMeta={commitMeta} onBack={home} />;
       if (metaView === 'notables') return <ScreenNotableCodex meta={meta} onBack={home} />;
       if (metaView === 'items') return <ScreenItemCodex meta={meta} onBack={home} />;
-      return <ScreenDestiny meta={meta} onGo={setMetaView} onReset={() => { try { resetMeta(); saveRun(null, []); setMeta(loadMeta()); bump(); } catch { setSaveNotice('無法清除存檔'); } }} />;
+      return <ScreenDestiny meta={meta} {...(session ? { onResume: () => setAtMainMenu(false) } : {})} onGo={setMetaView} onReset={() => { try { resetMeta(); saveRun(null, []); setMeta(loadMeta()); bump(); } catch { setSaveNotice('無法清除存檔'); } }} />;
     }
     if (replay) return <CampaignJourney s={session} bump={bump} onDone={() => { setReplay(false); bump(); }} />;
     if (session.isOver) return <ScreenEnd s={session} meta={meta} onSettled={m => { commitMeta(m); setSession(null); home(); }} />;
-    if (session.needsFactionChoice) return <ScreenFaction s={session} bump={bump} />;
+    if (session.needsChapterCamp && runView==='run') return <ScreenCamp s={session} bump={bump} onLearn={learn} onMarket={()=>setRunView('market')}/>;
+    if (session.needsFactionChoice && !session.needsChapterCamp) return <ScreenFaction s={session} bump={bump} />;
     if (session.needsSuperiors) return <ScreenSuperiors s={session} bump={bump} />;
-    if (runView === 'learn') return <ScreenLearn s={session} bump={bump} onBack={back} />;
-    if (runView === 'vault') return <ScreenVault s={session} onBack={back} />;
+    if (runView !== 'run') return <RunWorkspace s={session} view={runView} bump={bump} log={log} onLog={pushLog} onGo={view => setRunView(view as RunView)} />;
     if (session.needsCampaign) return <ScreenCampaign s={session} bump={bump} onDepart={() => setReplay(true)} onLearn={learn} />;
-    return <ScreenRun s={session} bump={bump} log={log} onLog={pushLog} onLearn={learn} onVault={() => { setRunView('vault'); }} />;
+    return <RunWorkspace s={session} view={runView} bump={bump} log={log} onLog={pushLog} onGo={view => setRunView(view as RunView)} />;
   };
-  const sceneScreen = replay || (phase === 'campaign' && runView === 'run') || (session === null ? ['destiny','notables','shop','items','entry'].includes(metaView) : !replay && !session.isOver && !session.needsFactionChoice && !session.needsSuperiors && !session.needsCampaign && runView === 'run');
-  return <GameFrame meta={meta} session={session} active={replay ? 'battle' : session === null ? metaView : runView} saveNotice={saveNotice}
+  const sceneScreen = (phase === 'campaign' && runView === 'run' && !session?.needsChapterCamp) || atMainMenu || (session !== null && ['learn','market','vault'].includes(runView)) || replay || (session === null ? ['destiny','notables','shop','items','entry'].includes(metaView) : !replay && !session.isOver && !session.needsFactionChoice && !session.needsSuperiors && !session.needsCampaign && !session.needsChapterCamp && runView === 'run');
+  return <GameFrame meta={meta} session={atMainMenu ? null : session} active={atMainMenu ? metaView : replay ? 'battle' : session === null ? metaView : session.needsChapterCamp&&runView==='run'?'camp':runView} saveNotice={saveNotice}
+    beforeExit={preserveProgress} onReturnHome={() => { setMetaView('destiny'); setAtMainMenu(true); }}
     onGo={view => {
       if (replay) return;
-      if (session === null) setMetaView(view as MetaView);
+      if (session === null || atMainMenu) setMetaView(view as MetaView);
       else setRunView(view as RunView);
     }}>{sceneScreen ? screen() : <section className={"game-sheet"}>{screen()}</section>}</GameFrame>;
 }

@@ -115,6 +115,11 @@ export interface CareerState { readonly civil: number; readonly martial: number 
  * 存第二份只會多一個可能不一致的真相（同 15 §2.1 的理由）。
  */
 export interface RosterMember {
+  readonly cooperations?: number;
+  readonly interactionTurns?: readonly number[];
+  readonly lastGainTurn?: number;
+  readonly gainedThisTurn?: number;
+  readonly entryBonus?: number;
   readonly notableId: NotableId;
   readonly affinity: number;
   readonly origin: 'companion' | 'superior';
@@ -145,10 +150,11 @@ export interface TrainingSlot {
   readonly hasEncounter: boolean;
 }
 export interface TrainingResult {
+  readonly salary: number;
   readonly finalGlow: GlowTier;
   readonly upgraded: boolean;
   readonly attr: Attr;
-  readonly expGained: number;
+  readonly growthGained: number;
   /** 固定事件自己的功績產出。走 attrLine 對應的那一條（16 §4.2）。 */
   readonly meritGained: MeritGain;
 }
@@ -156,18 +162,21 @@ export interface TrainingResult {
  * 一筆經驗產出。RFC-01 D32 之後 ⑯ 與 ⑰ 產出的是【經驗】而不是屬性點 ——
  * 屬性只能經 ㉜ 花經驗買。型別改名讓那件事在呼叫端就看得見。
  */
-export interface ExpGain { readonly attr: Attr; readonly amount: number }
+export interface AttributeGain { readonly attr: Attr; readonly amount: number }
 
 export interface MeritGain { readonly line: CareerLine; readonly amount: number }
 
 export interface OptionState {
+  readonly salary?: number;
+  readonly failureSalary?: number;
+  readonly moneyCost?: number;
   /** 三檔之一。UI 靠它把「高條件高報酬」直接說出來（17 §5）。 */
   readonly tier: OptionTier;
   readonly enabled: boolean;
   readonly blockedReasonKeys: readonly L10nKey[];
   readonly successRate: number | null;
   /** 事上磨練的預期產出（成功時）。 */
-  readonly practicePreview: readonly ExpGain[];
+  readonly practicePreview: readonly AttributeGain[];
   /** 功績的預期產出（成功時）。委託是功績的主要來源，必須看得見。 */
   readonly meritPreview: readonly MeritGain[];
 }
@@ -191,10 +200,12 @@ export interface ItemGain {
 }
 
 export interface EventResolution {
+  readonly salary?: number;
+  readonly resultKey?: L10nKey;
   readonly eventDefId: EventDefId;
   readonly optionIndex: number;
   readonly passed: boolean;
-  readonly practiceExp: readonly ExpGain[];
+  readonly practiceGrowth: readonly AttributeGain[];
   readonly meritGained: readonly MeritGain[];
   readonly itemsGained: readonly ItemGain[];
 }
@@ -211,6 +222,7 @@ export interface EventResolution {
  * 永遠是同一條判断（佇列空了沒有），不需要為每種追加事件長出一個 if。
  */
 export interface TurnState {
+  readonly encounterCandidates?: readonly EventDefId[];
   readonly slots: readonly TrainingSlot[];
   readonly selected: SlotIndex | null;
   readonly training: TrainingResult | null;
@@ -235,6 +247,8 @@ export type ActionTally = Readonly<Record<Attr, number>>;
  * `perRunCap` 用它擋；碎片也用它判斷 —— 第二次以後才算重複。
  */
 export interface ItemRunState {
+  readonly naturalCounts?: Readonly<Record<string,number>>;
+  readonly fragments?: Readonly<Record<string,number>>;
   readonly count: Readonly<Record<string, number>>;
 }
 
@@ -262,19 +276,14 @@ export type BoonState = readonly EffectRef[];
  * 解鎖清單只在本輪有效。跨輪的預先解鎖若要做，走 ⑨ 天命商店（D37）。
  */
 export interface GrowthState {
-  /** Independent learning currency; optional only for older saved states. */
-  readonly learningExp?: number;
-  readonly learningSpent?: number;
-  readonly exp: Readonly<Record<Attr, number>>;
   readonly unlockedTraits: readonly TraitId[];
   readonly unlockedSkills: readonly SkillId[];
-  /** 本輪累計花掉的經驗。用於斷言「產出 − 消耗 ＝ 餘額」（32 §9）。 */
-  readonly spent: Readonly<Record<Attr, number>>;
 }
 
 // ── ㉓ 特質與技能（23 §2.4）★ ─────────────────────────
 /** 只存 ID。效果、消耗、戰役行為全由 Definition 現算。 */
 export interface AbilityState {
+  readonly activeTraits?: readonly TraitId[];
   readonly levels?: Readonly<Record<string, number>>;
   readonly traits: readonly TraitId[];
   readonly skills: readonly SkillId[];
@@ -358,7 +367,20 @@ export interface EndingOutcome {
   readonly isFullDream: boolean;
 }
 
+export interface MarketOffer { readonly id:string; readonly itemId:ItemId; readonly price:number; readonly bought:boolean }
+export interface EconomyState {
+  readonly money:number; readonly earned:number; readonly spent:number;
+  readonly ledger:readonly {readonly id:string;readonly amount:number;readonly label:string}[];
+  readonly market:{readonly chapter:number;readonly offers:readonly MarketOffer[];readonly target:ItemId|null;readonly fragmentBought:boolean};
+  readonly chapterCamp:boolean;
+}
+export interface StoryState {
+  readonly history:Readonly<Record<string,{readonly turn:number;readonly chapter:number;readonly option:number;readonly passed:boolean}>>;
+  readonly tracked:NotableId|null; readonly waitingSince:number|null;
+}
 export interface RunState {
+  readonly economy: EconomyState;
+  readonly stories: StoryState;
   readonly schemaVersion: number;
   readonly seed: Seed;
   readonly rngCursors: RngCursors;
@@ -393,9 +415,10 @@ export interface RunSummary {
   readonly chaptersPassed: number;
   readonly turnsPlayed: number;
   readonly factionId: FactionId | null;
-  readonly notables: readonly { readonly notableId: NotableId; readonly finalStage: AffinityStage }[];
+  readonly notables: readonly { readonly notableId: NotableId; readonly finalStage: AffinityStage; readonly interactionCap?:number }[];
   readonly seenUniqueEvents: readonly EventDefId[];
   /** 每件道具本輪獲得次數。第二次以後才產碎片，換算在 ㉖（23 §7）。 */
+  readonly pendingItemFragments?: Readonly<Record<string,number>>;
   readonly itemsAcquired: Readonly<Record<string, number>>;
   readonly actions: ActionTally;
   readonly glowResults: Readonly<Record<GlowTier, number>>;

@@ -370,6 +370,7 @@ export interface AptitudeCostDef extends DefHeader {
 
 // ── 事件 ──────────────────────────────────────────────
 export type EventReward =
+  | { readonly kind: 'money'; readonly amount: number }
   | { readonly kind: 'merit'; readonly merit: MeritKind; readonly amount: number }
   /**
    * 劇情級的一次性【屬性】躍升。手寫、不縮放 —— 極少用。
@@ -377,7 +378,6 @@ export type EventReward =
    */
   | { readonly kind: 'attr'; readonly attr: Attr; readonly amount: number }
   /** 經驗獎勵。戰役與事件的成長產出都走這條（32 §2）。 */
-  | { readonly kind: 'exp'; readonly attr: Attr; readonly amount: number }
   | { readonly kind: 'affinity'; readonly notableId: NotableId | null; readonly amount: number }
   /** 指名一件道具。`chance` ＝ 1 為保證（鏈末事件），< 1 為機率（人物委託）。 */
   | { readonly kind: 'item'; readonly itemId: ItemId; readonly chance: number }
@@ -412,6 +412,8 @@ export interface EventPractice {
 }
 
 export interface EventOptionDef {
+  readonly moneyCost?: number;
+  readonly resultKey?: L10nKey;
   /** 三檔之一。同一則委託必須各有一個，由載入期驗證強制（17 §5）。 */
   readonly tier: OptionTier;
   readonly labelKey: L10nKey;
@@ -465,6 +467,9 @@ export type EventTrigger =
   };
 
 export interface EventDef extends DefHeader {
+  readonly dialogue?: import('./dialogue.js').EventDialogueDef;
+  readonly progression?: { readonly rarity: Rarity; readonly previous: readonly EventDefId[]; readonly choice?: { readonly event: EventDefId; readonly option: number } };
+  readonly mechanic?: 'duty' | 'method' | 'investment' | 'chain' | 'relationship' | 'chapter';
   readonly kind: 'event';
   readonly eventDefId: EventDefId;
   readonly trigger: EventTrigger;
@@ -658,6 +663,7 @@ export interface EndingDef extends DefHeader {
 
 // ── 元層 ──────────────────────────────────────────────
 export type ShopGrant =
+  | { readonly kind: 'marketSlots' | 'marketQuality' }
   | { readonly kind: 'aptitudeCap'; readonly attr: Attr; readonly toGrade: AptitudeGrade }
   | { readonly kind: 'aptitudePoints'; readonly delta: number }
   /**
@@ -754,37 +760,52 @@ export interface ItemPoolDef extends DefHeader {
 }
 
 // ── ㉜ 養成兌現（32）★ ────────────────────────────────
-/**
- * 一個價格帶 ＝ 一個等級（32 §3.1）。
- *
- * 邊界對齊是刻意的：玩家看到「武 B」就知道下一階要付約多少，
- * 不必在 UI 另外解釋一條成本曲線。
- */
-export interface AttrCostBand {
+/** 能力的顯示評級；成長遞減另外由 economy.growthBands 定義。 */
+export interface AttrGradeBand {
   readonly grade: AttrGrade;
   readonly min: number;
   readonly max: number;
-  readonly costPerPoint: number;
+}
+export interface EconomyRule {
+  readonly startingMoney: number;
+  readonly investmentCosts: readonly number[];
+  readonly fixedSalary: readonly number[]; readonly attendance: readonly number[];
+  readonly commissionBonus: readonly number[]; readonly storySalary: readonly number[]; readonly campaignSalary: readonly number[];
+  readonly commissionMerit: readonly number[]; readonly storyMerit: readonly number[];
+  readonly optionReward: Readonly<Record<OptionTier,number>>; readonly optionDc: Readonly<Record<OptionTier,number>>;
+  readonly commissionAbility: readonly number[]; readonly commissionRank: readonly number[];
+  readonly commissionChapter: readonly number[]; readonly storyChapter: readonly number[];
+  readonly storyAffinity: readonly number[]; readonly storyCooperations: readonly number[];
+  readonly storyCooldown:number; readonly commissionCooldown:number; readonly storyPity:number;
+  readonly fixedGrowth: readonly number[]; readonly growthBands: readonly {readonly max:number;readonly ratio:number}[];
+  readonly fixedGrowthCap:number; readonly extraGrowthCap:number; readonly standingGrowthCap:number;
+  readonly standingGrowth: Readonly<Record<AffinityStage,number>>; readonly legacyBaseRatio:number;
+  readonly commissionGrowth:readonly number[]; readonly storyGrowth:readonly number[];
+  readonly practiceRatio:Readonly<Record<OptionTier,number>>;
+ readonly discountFloor:number; readonly activeTraits:number;
+  readonly skillPrices:Readonly<Record<AbilityTier,readonly number[]>>; readonly traitPrices:Readonly<Record<AbilityTier,readonly number[]>>;
+  readonly primaryNeeds:Readonly<Record<AbilityTier,readonly number[]>>; readonly secondaryNeeds:Readonly<Record<AbilityTier,readonly number[]>>;
+  readonly lessonChapters:Readonly<Record<AbilityTier,readonly number[]>>; readonly traitPower:readonly number[];
+  readonly newcomerBonus:readonly number[]; readonly compensationTurns:number; readonly newcomerCap:number; readonly startBonusCap:number;
+  readonly affinityTurnCap:number; readonly storyAffinityGain:readonly number[]; readonly interactionFragmentCaps:readonly number[];
+  readonly shopSlots:readonly number[]; readonly shopWeights:readonly (readonly number[])[]; readonly shopChapterCaps:readonly number[];
+  readonly itemPrices:readonly number[]; readonly fragmentPrices:readonly number[];
 }
 export interface GrowthRuleDef extends DefHeader {
+  readonly economy: EconomyRule;
   readonly learning: {
-    readonly skillCosts: readonly number[];
-    readonly traitCosts: readonly number[];
-    readonly requirements: readonly number[];
     readonly power: readonly number[];
-    readonly tierCost: Readonly<Record<AbilityTier, number>>;
   };
   readonly kind: 'growthRule';
   /** 依 min 遞增、無洞無重疊、覆蓋 0..attrMax。由載入期驗證強制。 */
-  readonly bands: readonly AttrCostBand[];
+  readonly bands: readonly AttrGradeBand[];
   /** 向名士學該階能力所需的好感階（32 §5）。階越高，要越熟。 */
   readonly teachStage: Readonly<Record<AbilityTier, AffinityStage>>;
   /**
    * 入夢時的起始四維範圍（逐維獨立擲）★
    *
    * **不是 0。** 全 0 開局有三個問題：第一場戰役打不出任何傷害、
-   * 等級表上四個 G 看不出角色性格、而 F 帶（每點 1 經驗）便宜到
-   * 前 20 點根本不構成決定。
+   * 等級表上四個 G 看不出角色性格、也缺乏專長差異。
    *
    * 15–30 讓玩家一開始就是【一個有底子但沒專精的人】，
    * 而四維各自不同也讓「這一輪我是誰」從第一個畫面就成立。

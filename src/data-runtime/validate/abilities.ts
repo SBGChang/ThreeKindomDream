@@ -14,20 +14,20 @@ const checkCost = (c: Ctx, file: string, row: Rec, id: string): void => {
   const tier = c.s(row['tier']);
   const want = COST_CLASSES[tier];
   if (pairs.length === 0) {
-    c.push('rule', file, 'cost', id, '消耗為空 —— 免費的能力讓經驗失去職責');
+    c.push('rule', file, 'cost', id, '能力專長權重不可為空');
     return;
   }
   if (want !== undefined && pairs.length !== want) {
     c.push('rule', file, 'cost', id,
-      `${tier} 階應吃 ${want} 類經驗，實得 ${pairs.length} 類`,
-      '混合消耗是 32 §4.1 的機制本體：類數少一類，專精者的天花板就消失');
+      `${tier} 階應有 ${want} 類專長權重，實得 ${pairs.length} 類`,
+      '權重用於推導訓練營的主要與次要能力門檻');
   }
   for (const [attr, amount] of pairs) {
     if (!ATTRS.includes(attr as Attr)) {
       c.push('reference', file, `cost.${attr}`, id, `未知的維度: ${attr}`);
     }
     if (!(c.n(amount) > 0)) {
-      c.push('rule', file, `cost.${attr}`, id, `消耗必須 > 0（實得 ${c.n(amount)}）`);
+      c.push('rule', file, `cost.${attr}`, id, `專長權重必須 > 0（實得 ${c.n(amount)}）`);
     }
   }
 };
@@ -52,18 +52,12 @@ export function validateAbilities(c: Ctx): void {
   for (const row of c.rows('growthRule')) {
     const id = c.s(row['id']);
     const learning = row['learning'] as Rec | undefined;
-    for (const field of ['skillCosts', 'traitCosts', 'requirements', 'power']) {
+    for (const field of ['power']) {
       const values = learning?.[field];
-      const valid = Array.isArray(values) && values.length === 5
+      const valid = Array.isArray(values) && values.length === 3
         && values.every((v, i) => typeof v === 'number' && Number.isFinite(v) && v >= 0
           && (i === 0 || v > values[i - 1]));
-      if (!valid) c.push('rule', 'growthRule', `learning.${field}`, id, '需要五個有限、非負、嚴格遞增的等級數值');
-    }
-    const tiers = learning?.['tierCost'] as Rec | undefined;
-    for (const tier of ['common', 'fine', 'peerless']) {
-      const value = tiers?.[tier];
-      if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0)
-        c.push('rule', 'growthRule', `learning.tierCost.${tier}`, id, '能力階級費用倍率必須為有限正數');
+      if (!valid) c.push('rule', 'growthRule', `learning.${field}`, id, '需要三個有限、非負、嚴格遞增的等級數值');
     }
   }
   for (const row of c.rows('trait')) {

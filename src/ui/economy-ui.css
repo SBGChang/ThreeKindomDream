@@ -1,0 +1,6 @@
+/* Chapter transition retains its own camp presentation. Run services live in run-services.css. */
+.chapter-camp { text-align:center; padding:30px; }
+.chapter-camp > .character-halfbody { display:block; margin:0 auto; height:230px; width:auto; object-fit:contain; }
+.chapter-camp h1 { font-size:34px; }
+.chapter-camp > div:last-child { display:flex; gap:16px; justify-content:center; margin-top:30px; }
+.view-camp .game-sheet { height:100%; overflow:hidden; }

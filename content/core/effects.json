@@ -1156,13 +1156,13 @@
     "1101": {
       "condition": null,
       "op": "mulPct",
-      "target": "training.exp.int",
+      "target": "training.growth.int",
       "value": 0.2
     },
     "1102": {
       "condition": null,
       "op": "mulPct",
-      "target": "training.exp.all",
+      "target": "training.growth.all",
       "value": 0.08
     },
     "1103": {
@@ -1174,7 +1174,7 @@
     "1104": {
       "condition": null,
       "op": "mulPct",
-      "target": "training.exp.war",
+      "target": "training.growth.war",
       "value": 0.25
     },
     "9001": {

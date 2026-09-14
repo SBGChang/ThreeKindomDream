@@ -71,7 +71,7 @@ interface Bound { readonly ref: ResolvedEffectRef; readonly def: EffectDef }
 
 /**
  * `<prefix>.all` 對該前綴下的每個 target 都生效
- * —— training.exp.all 涵蓋 training.exp.war，event.practice.all 涵蓋 event.practice.war。
+ * —— training.growth.all 涵蓋 training.growth.war，event.practice.all 涵蓋 event.practice.war。
  */
 const WILDCARD = 'all';
 const matchesTarget = (defTarget: string, wanted: string): boolean => {

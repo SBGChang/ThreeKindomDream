@@ -58,7 +58,7 @@ export function ScreenSuperiors({ s, bump }: Props): React.ReactElement {
 
   return (
     <>
-      <h1>入朝</h1>
+      <h1>入朝</h1><p>新加入的三位上司各獲得 <strong>+{s.newcomerBonus()} 起始好感</strong>，補足錯過的同行時日。天命「勢力緣分」可強化這份補償；故事仍需逐段經歷。</p>
       <p className="body">{speech === null ? '' : t(speech)}</p>
       <p className="sub mono">
         {`勢力緣分 ${quota}／3　可自選 ${quota} 位，其餘 ${total - quota} 位由主公分配`}

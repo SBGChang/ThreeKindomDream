@@ -18,6 +18,7 @@ export function driveRun(s: Session, policy: RunPolicy): DriveResult {
   let actions = 0;
   const depths: number[] = [];
   for (let guard = 0; guard < 1000 && !s.isOver; guard++) {
+    if(s.needsChapterCamp){s.continueChapter();continue;}
     if (s.needsFactionChoice) {
       const faction = policy.chooseFaction ? policy.chooseFaction(s) : s.factionOptions().find(x => x.eligible)?.factionId;
       if (faction) s.chooseFaction(faction); else s.noFactionAvailable();

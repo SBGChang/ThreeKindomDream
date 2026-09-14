@@ -1,4 +1,5 @@
 import { FUNC_TYPES } from '../../contracts/core/effects.js';
+import { validateEconomy } from './economy.js';
 import { validateAbilities } from './abilities.js';
 import { validateCeilings } from './ceilings.js';
 import { validateChapters } from './chapters.js';
@@ -32,6 +33,7 @@ export function validateAll(input: ValidateInput): readonly ValidationError[] {
   }
 
   validateAbilities(c);
+  validateEconomy(c);
   validateCeilings(c);
   validateNotables(c);
   validateEvents(c);
