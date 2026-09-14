@@ -1,0 +1,13 @@
+{
+  "tool": "built-in image_gen",
+  "assets": [
+    {
+      "path": "public/art/ui/campaign/troops-icon-v1.png",
+      "prompt": "Use case: stylized-concept. Production asset for a cute chibi Three Kingdoms strategy game UI. A single isolated inventory icon on REAL fully transparent alpha background, square canvas. Warm dark brown thick ink outline, rounded chunky proportions, crisp hand-painted cel shading, no fine surface texture. Fill 85 percent of canvas and stay fully inside edges. Must be clearly recognizable at 24 pixels. No text, numbers, border, tile, backdrop, glow, scenery, watermark. Subject: one ancient Chinese infantry helmet with rounded dark teal steel dome, small brass forehead plate, warm brown cheek guards and a short red cloth tassel. Front three-quarter view. Simple strong silhouette, no person or face."
+    },
+    {
+      "path": "public/art/ui/campaign/supply-icon-v1.png",
+      "prompt": "Use case: stylized-concept. Production asset for a cute chibi Three Kingdoms strategy game UI. A single isolated inventory icon on REAL fully transparent alpha background, square canvas. Warm dark brown thick ink outline, rounded chunky proportions, crisp hand-painted cel shading, no fine surface texture. Fill 85 percent of canvas and stay fully inside edges. Must be clearly recognizable at 24 pixels. No text, numbers, border, tile, backdrop, glow, scenery, watermark. Subject: one squat ochre cloth sack full of visible cream-colored rice grains, rolled open rim, tied small red cord around neck, two short golden rice stalks leaning against its side. Front three-quarter view. Simple bold silhouette, warm golden highlights."
+    }
+  ]
+}

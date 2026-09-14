@@ -1,3 +1,4 @@
+import { validBattleSnapshot } from './realtime-battle-model.js';
 import type { RunState } from '../contracts/core/state.js';
 import { Session } from './session.js';
 import type { Wiring } from './composition.js';
@@ -72,6 +73,7 @@ export function restoreRun(w: Wiring): {
       !Number.isFinite(s.seed)
     )
       throw new Error('存檔格式不符');
+    if(s.campaign?.realtime&&!validBattleSnapshot(s.campaign.realtime))throw new Error('即時戰役存檔格式不符');
     w.defs.reader('chapter').get(String(s.progress.chapterId));
     for (const id of s.abilities.skills) w.defs.reader('skill').get(String(id));
     for (const id of s.abilities.traits) w.defs.reader('trait').get(String(id));

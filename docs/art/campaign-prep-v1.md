@@ -1,5 +1,7 @@
 # 出戰整備 v1
 
+目前接入新版金錢及 60 秒連續波次戰役，見 [即時戰役接入](campaign-realtime-integration.md)。下方保留視覺迭代紀錄，舊七關及學習點敘述不代表目前規則。
+
 2026-09-14。依 three-kingdom-ui 原則、入夢 aptitude-v2 場景構圖、養成 record-board-v2 能力板與 name-card-v2 名帖重製。這是已接入的改版，仍待使用者評價風格。
 
 ## 版面與互動

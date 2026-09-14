@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import type { Session } from '../app/session.js';
 import { defs, t } from '../app/bootstrap.js';
+const RealtimeBattle = lazy(()=>import('./RealtimeBattleDemo.js').then(m=>({default:m.RealtimeBattle})));
 import { BattleTheater, type ReplayData } from './BattleTheater.js';
 
 type Scene = 'enter' | 'combat' | 'cheer' | 'choice' | 'march' | 'close' | 'open' | 'retreat' | 'summary';
-export function CampaignJourney({s,bump,onDone}:{s:Session;bump:()=>void;onDone:()=>void}):React.ReactElement {
+function LegacyCampaignJourney({s,bump,onDone}:{s:Session;bump:()=>void;onDone:()=>void}):React.ReactElement {
   const [battle,setBattle]=useState<ReplayData|null>(null);
   const [scene,setScene]=useState<Scene>('enter');
   const [reward,setReward]=useState(0),[depth,setDepth]=useState(0);
@@ -64,4 +65,10 @@ export function CampaignJourney({s,bump,onDone}:{s:Session;bump:()=>void;onDone:
     {scene==='choice'&&<div className="march-choice"><h2>{next?'全軍待命':'七關盡破 · 凱旋而歸'}</h2><p>已通過 {depth} 關 · 保住 {reward} 錢</p>{next&&<p>下一關：{next.boss?t(next.boss.nameKey):'敵軍'} · 兵量 {next.enemyTroops}。戰敗時已得獎勵減半。</p>}<div><button onClick={()=>setScene('retreat')}>{next?'撤軍':'凱旋撤軍'}</button>{next&&<button className="primary" onClick={()=>setScene('march')}>繼續 · 全軍前進</button>}</div></div>}
     {scene==='summary'&&<div className="campaign-settlement" role="dialog" aria-label="戰役結算"><span>戰役結算</span><h1>{battle?.defeated?'敗軍收整':depth<total?'全軍撤回':'凱旋歸營'}</h1><p>通過 {depth} 關</p><strong>獲得 {reward} 錢</strong><p>能力隨本次戰役磨練成長</p>{battle?.defeated&&<p>已得獎勵減半後入帳。</p>}<button className="primary" onClick={onDone}>繼續行旅 →</button></div>}
   </div>;
+}
+
+/** New departures use live combat; already-settled legacy saves retain their pending decision. */
+export function CampaignJourney(props:{s:Session;bump:()=>void;onDone:()=>void}):React.ReactElement {
+ const [legacy]=useState(()=>{const st=props.s.campaignState();return !!st&&!st.realtime&&st.log.length>0;});
+ return legacy?<LegacyCampaignJourney {...props}/>:<Suspense fallback={<p role="status">軍隊集結中…</p>}><RealtimeBattle campaign={props.s} bump={props.bump} onDone={props.onDone}/></Suspense>;
 }

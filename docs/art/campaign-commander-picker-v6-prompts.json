@@ -1,0 +1,29 @@
+{
+  "generator": "Built-in image_gen",
+  "assets": [
+    {
+      "file": "public/art/ui/campaign/muster-stage-v6.png",
+      "source": "C:/Users/DerekHChang/.codex/generated_images/01a09c1b-d08c-72b0-89d8-a72a9cb1cd97/exec-9a69527d-8363-46e4-ae9b-4e4767fb0332.png",
+      "prompt": "Use case: stylized-concept. Production PNG for a cute chibi Three Kingdoms 2D strategy game. Thick warm dark brown hand ink outlines, chunky friendly forms, crisp cel shading, teal cloth, warm wood and ivory parchment, restrained bronze accents. True transparent alpha outside the object, no checkerboard, no words, text, letters, numbers or watermark. A landscape 3:2 EMPTY illustrated military commander selection board inside a tent, frontal view, intended 1110x740 pixels. A broad near-rectangular ivory parchment stretched in a slim sturdy wood frame. The top edge has an integrated blank warm wooden title crest, centered x14-45%,y5-14%. LEFT page x7-49%,y17-78% is entirely clean flat parchment reserved for six character stands; RIGHT area x56-92%,y16-74% has a very pale muted teal cloth backdrop fading to warm ivory at bottom, with two slim short decorative banner poles at far right edge only, reserved for one large separately composited character. No individual card frames or boxes. Bottom x8-91%,y82-92% has a continuous low wood rail with broad empty pale parchment area directly above it for lineup controls. Central divide only a faint ink flourish, no wall. Perspective nearly flat, edges rectangular not trapezoid. Outer silhouette contained within 3% transparent margins. No characters, weapons, symbols or buttons painted in. Entire illustration is an independent UI stage, not a full scene.",
+      "cornerAlpha": 0
+    },
+    {
+      "file": "public/art/ui/campaign/command-button-v6.png",
+      "source": "C:/Users/DerekHChang/.codex/generated_images/01a09c1b-d08c-72b0-89d8-a72a9cb1cd97/exec-355aa2d0-0a4a-4ea4-86c6-cea32a25f101.png",
+      "prompt": "Use case: stylized-concept. Production PNG for a cute chibi Three Kingdoms 2D strategy game. Thick warm dark brown hand ink outlines, chunky friendly forms, crisp cel shading, teal cloth, warm wood and ivory parchment, restrained bronze accents. True transparent alpha outside the object, no checkerboard, no words, text, letters, numbers or watermark. One blank wide horizontal military command plaque, aspect ratio 3:1, shown front-on. Teal lacquer wooden face with a slightly irregular hand-carved outline, dark brown wood edging, small understated bronze corner caps and one short red cord knot on each end. Broad flat blank light teal center x15-85%,y24-76% reserved for dynamic cream label. No inner card border, no gloss or giant ornate gold. Fully self-contained illustrated button on transparent background with soft small painted underside shadow. Designed to be readable at 180x60 px.",
+      "cornerAlpha": 0
+    },
+    {
+      "file": "public/art/ui/campaign/enlisted-seal-v6.png",
+      "source": "C:/Users/DerekHChang/.codex/generated_images/01a09c1b-d08c-72b0-89d8-a72a9cb1cd97/exec-6cf21e49-683a-4555-b628-51403a50cfd4.png",
+      "prompt": "Use case: stylized-concept. Production PNG for a cute chibi Three Kingdoms 2D strategy game. Thick warm dark brown hand ink outlines, chunky friendly forms, crisp cel shading, teal cloth, warm wood and ivory parchment, restrained bronze accents. True transparent alpha outside the object, no checkerboard, no words, text, letters, numbers or watermark. One small round vermilion wax seal with a CLEAR ivory-gold CHECK MARK embedded in its face, short pair of red ribbon tails below. Uneven handmade wax edge, chunky bold check mark, warm gold highlights and dark brown outline. Square transparent canvas, seal fills 85%, complete silhouette contained. This is the selected/enlisted status icon at 28 pixels. Only check symbol, no text or other marks.",
+      "cornerAlpha": 0
+    },
+    {
+      "file": "public/art/ui/campaign/command-controls-v6.png",
+      "source": "C:/Users/DerekHChang/.codex/generated_images/01a09c1b-d08c-72b0-89d8-a72a9cb1cd97/exec-e3dfa815-ed28-4910-8ab2-e8e8f6bc9994.png",
+      "prompt": "Use case: stylized-concept. Production PNG for a cute chibi Three Kingdoms 2D strategy game. Thick warm dark brown hand ink outlines, chunky friendly forms, crisp cel shading, teal cloth, warm wood and ivory parchment, restrained bronze accents. True transparent alpha outside the object, no checkerboard, no words, text, letters, numbers or watermark. A production UI sprite ATLAS on transparent background, canvas aspect ratio 3:1, exactly THREE equal square cells in one horizontal row with generous separate margins. First cell centered: a left pointing chunky ivory arrow carved on a small dark wooden round token. Second cell centered: a matching right pointing ivory arrow on the identical dark wooden round token. Third cell centered: an ivory X close symbol carved on the identical dark wooden round token. Round tokens with warm bronze rim, bold outlines, same diameter and front-on view. All cells share size and baseline, each token fills 75% of its cell, no overlap between cells. All backgrounds fully transparent, no text, no extra elements. Symbols must be clear at 36 pixels per token.",
+      "cornerAlpha": 0
+    }
+  ]
+}

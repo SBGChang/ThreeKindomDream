@@ -1,0 +1,23 @@
+{
+  "generator": "Built-in image_gen",
+  "asset": "public/art/ui/campaign/tactic-level-v9.png",
+  "source": "C:/Users/DerekHChang/.codex/generated_images/01a09c1b-d08c-72b0-89d8-a72a9cb1cd97/exec-8605a3f4-df40-4942-9420-d34de4686fc3.png",
+  "prompt": "Use case: stylized-concept. A production transparent PNG for cute chibi Three Kingdoms game UI. One small square skill-level insignia: rounded bronze shield medallion with a thick friendly dark-brown ink outline, dark jade enamel center entirely blank for a dynamic ivory number, a tiny embossed gold upward chevron on the top rim, two short warm red ribbon tips below. Frontal, compact, restrained bronze edging, crisp warm cel shading, chunky readable at 46x46 pixels. Object fits inside square canvas with 7% transparent margin. Central blank dark teal number safe area x30-70%, y27-66%. True transparent alpha outside entire silhouette. No words, letters, numbers, watermark, checkerboard or scenic background. Not a glossy realistic metal object; match hand illustrated cute military camp art.",
+  "size": [
+    1254,
+    1254
+  ],
+  "cornerAlpha": 0,
+  "changes": [
+    "Skill tier colors on catalog and inspected title: common ivory, fine jade, peerless gold; preserve name outline.",
+    "Actual skill level in art medallion, accessible level label, no Lv text.",
+    "Highlight existing effect numbers without changing description content; separate supply/cooldown colors.",
+    "Footer confirmation text simplified to 確定; existing equip/remove/replace actions preserved."
+  ],
+  "validation": [
+    "TypeScript",
+    "Long buff description spacing",
+    "Confirmation closes and returns focus",
+    "Support skills do not show an inapplicable host level"
+  ]
+}

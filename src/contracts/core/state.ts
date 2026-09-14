@@ -1,3 +1,4 @@
+import type { BattleState } from './realtime-battle.js';
 import type {
   CampaignId, ChapterId, ChargeId, EndingId, EventDefId, FactionId, ItemId,
   L10nKey, NotableId, ParamPoolId, Seed, ShopItemId, SkillId, TalentId, TraitId,
@@ -346,6 +347,8 @@ export interface BattleLogEntry {
 }
 
 export interface CampaignState {
+  /** Persist the live battle, including paused cinematics and completed results. */
+  readonly realtime?: BattleState;
   readonly campaignId: CampaignId;
   readonly phase: CampaignPhase;
   readonly loadout: BattleLoadout | null;

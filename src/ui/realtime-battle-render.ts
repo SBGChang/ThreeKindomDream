@@ -1,12 +1,13 @@
+import { loadCharacterSprite } from './CharacterArt.js';
 import { COMMAND_LEAD, COMMANDERS, type BattleState, type Troop, type Cinematic, type Commander } from './realtime-battle-model.js';
-export type BattleImages=Record<string,HTMLImageElement>;
+export type BattleImages=Record<string,HTMLImageElement|HTMLCanvasElement>;
 const root='./art/units/battle-demo/';
 export const BATTLE_ASSETS:Record<string,string>={background:'./art/backgrounds/bg-battle-1.png',run:root+'run-atlas.png',slash:root+'slash-atlas.png',hurt:root+'hurt-atlas.png','enemy-run':root+'enemy-run-atlas.png','enemy-slash':root+'enemy-slash-atlas.png','enemy-hurt':root+'enemy-hurt-atlas.png',mounted:root+'mounted-atlas.png',drum:root+'drum-atlas.png',charge:'./art/units/sequences-v2/charge-atlas.png',ignite:'./art/units/sequences-v2/ignite-atlas.png'};
 const clamp=(v:number)=>Math.max(0,Math.min(1,v));
 for(const commander of COMMANDERS)BATTLE_ASSETS['commander-'+commander.id]=root+'commanders/'+commander.id+'-atlas.png';
 const ease=(v:number)=>{const t=clamp(v);return t*t*(3-2*t);};
 const mix=(a:number,b:number,t:number)=>a+(b-a)*t;
-export function loadBattleImages():Promise<BattleImages>{return Promise.all(Object.entries(BATTLE_ASSETS).map(([key,src])=>new Promise<[string,HTMLImageElement]>((resolve,reject)=>{const img=new Image();img.onload=()=>resolve([key,img]);img.onerror=()=>reject(new Error(`素材載入失敗：${key}`));img.src=src;}))).then(Object.fromEntries);}
+export async function loadBattleImages(background?:string,commanders:readonly Commander[]=[]):Promise<BattleImages>{const images:BattleImages=await Promise.all(Object.entries({...BATTLE_ASSETS,...(background?{background}:{})}).map(([key,src])=>new Promise<[string,HTMLImageElement]>((resolve,reject)=>{const img=new Image();img.onload=()=>resolve([key,img]);img.onerror=()=>reject(new Error(`素材載入失敗：${key}`));img.src=src;}))).then(Object.fromEntries);await Promise.all(commanders.filter(c=>c.portrait&&!images['commander-'+c.id]).map(async c=>{images['portrait-'+c.id]=await loadCharacterSprite(`./art/characters-v2/${c.portrait}.png`);}));return images;}
 function sprite(ctx:CanvasRenderingContext2D,images:BattleImages,name:string,frame:number,x:number,y:number,size=150,flip=false,alpha=1,filter='none') {
  const img=images[name];if(!img)return;
  const cell=img.width/4,rows=Math.round(img.height/cell),f=Math.min(rows*4-1,Math.max(0,Math.floor(frame)));
@@ -76,7 +77,9 @@ function commanderArt(ctx:CanvasRenderingContext2D,images:BattleImages,g:Command
  const frame=g.pose==='move'?16+Math.floor(time*18)%16:g.pose==='cheer'?8+Math.min(7,Math.floor(Math.max(0,time-.7)/1.4*8)):active?Math.min(7,Math.floor(time/1.15*8)):Math.min(7,Math.floor((time%5.5)/1.6*8));
  const opacity=s.cinematic&&!active?.35:1,size=185;
  shadow(ctx,g.x,g.y,size,opacity);
- sprite(ctx,images,'commander-'+g.id,frame,g.x,g.y,size,g.flip,opacity);
+ const portrait=images['portrait-'+g.id];
+ if(portrait){ctx.save();ctx.globalAlpha=opacity;const h=175,w=h*portrait.width/portrait.height;const bob=g.pose==='move'?Math.sin(time*12)*4:active?-Math.sin(Math.min(1,time/1.15)*Math.PI)*8:0;ctx.drawImage(portrait,g.x-w/2,g.y-h+bob,w,h);ctx.restore();}
+ else sprite(ctx,images,'commander-'+g.id,frame,g.x,g.y,size,g.flip,opacity);
  ctx.save();ctx.globalAlpha=opacity;ctx.font='bold 16px Microsoft JhengHei';ctx.textAlign='center';ctx.lineWidth=4;ctx.strokeStyle='#16120e';ctx.fillStyle=g.side==='ally'?'#ffe7b3':'#ffa58d';ctx.strokeText(g.name,g.x,g.y+19);ctx.fillText(g.name,g.x,g.y+19);ctx.restore();
 }
 function cinematicArt(ctx:CanvasRenderingContext2D,images:BattleImages,c:Cinematic){

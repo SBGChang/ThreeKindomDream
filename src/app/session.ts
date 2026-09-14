@@ -1,3 +1,7 @@
+import { CHARGES } from '../contracts/core/effects.js';
+import { consumeCharge } from '../modules/effect.js';
+import { campaignBattle, realtimeRewards, realtimeSkill } from './realtime-campaign.js';
+import { armyCount, castSkill, rallyArmy, startBattle, tickBattle, type BattleState } from './realtime-battle-model.js';
 // 局內 session：持有 RunState、處理指令、把 RNG cursor 寫回。
 import type { RunContext, TurnContext } from '../contracts/core/context.js';
 import type { FactionId, ItemId as ItemIdT, NotableId, Seed } from '../contracts/core/ids.js';
@@ -11,6 +15,7 @@ import type {
   BattleLoadout, DreamEntryConfig, EventOffer, MetaState, RunState, RunSummary,
 } from '../contracts/core/state.js';
 import { createRng, type DeterministicRng } from '../kernel/rng.js';
+import { statQuery } from '../modules/stats.js';
 import { careerService } from '../modules/career.js';
 import * as ability from '../modules/ability.js';
 import * as campaign from '../modules/campaign.js';
@@ -62,6 +67,7 @@ export class Session {
   get current(): RunState { return this.state; }
   static restore(w: Wiring, state: RunState): Session {
     const s = new Session(w, state);
+    if(state.campaign?.realtime?.status==='running')state={...state,campaign:{...state.campaign,realtime:{...state.campaign.realtime,status:'paused'}}};
     // Recompute displayed prices/eligibility after a content update without redrawing events.
     const pending = state.turn.pending.map(offer => {
       const def = w.defs.reader('event').get(String(offer.eventDefId));
@@ -279,6 +285,45 @@ export class Session {
       ...tc, state: campaign.begin(tc.state.progress.chapterId, tc, this.w.fx),
     }));
   }
+  realtimeSkillInfo(id:SkillId,notable?:NotableId):ReturnType<typeof realtimeSkill> {
+    const nd=notable?this.w.defs.reader('notable').get(String(notable)):null;
+    const attrs=nd?.abilities.attrs??{lead:statQuery.attr('lead',this.ctx),war:statQuery.attr('war',this.ctx),int:statQuery.attr('int',this.ctx),pol:statQuery.attr('pol',this.ctx)};
+    return realtimeSkill(this.ctx,this.w.fx,id,nd?this.w.defs.text(String(nd.nameKey)):'主角',0,!!nd,attrs);
+  }
+  campaignWaveTroops(index:number):number { return campaign.nextStagePreview(this.ctx,index)?.enemyTroops??0; }
+  /** Live battle is part of the save. Re-entering never rerolls or replenishes it. */
+  startRealtimeCampaign(): BattleState {
+    const st=this.state.campaign;
+    if(!st||st.phase!=='awaitingDecision'||!st.loadout)throw new Error('請先完成出戰配置');
+    if(st.realtime)return st.realtime;
+    if(st.log.length)throw new Error('舊版戰役須先完成原有走留決策');
+    const realtime=campaignBattle(this.ctx,this.w.fx);startBattle(realtime);
+    this.state={...this.state,campaign:{...st,realtime}};return realtime;
+  }
+  advanceRealtimeCampaign(delta:number):void {
+    const st=this.state.campaign,b=st?.realtime;
+    if(!st||!b)return;
+    tickBattle(b,delta);
+    if(b.status==='running'&&b.phase==='fallen'&&b.defeated==='ally'&&!st.rallied&&this.w.fx.chargesOf(CHARGES.majorRetry,this.ctx)>0){
+      rallyArmy(b,this.w.defs.single('battleRule').rallyRatio);
+      this.state={...consumeCharge(CHARGES.majorRetry,this.ctx),campaign:{...st,rallied:true,realtime:b}};
+    }
+  }
+  castRealtimeSkill(id:string):boolean {
+    const b=this.state.campaign?.realtime;return b?castSkill(b,id):false;
+  }
+  pauseRealtimeCampaign(paused:boolean):void {
+    const b=this.state.campaign?.realtime;
+    if(b&&(b.status==='running'||b.status==='paused'))b.status=paused?'paused':'running';
+  }
+  realtimeCampaignResult(): ReturnType<typeof realtimeRewards> { return realtimeRewards(this.ctx); }
+  settleRealtimeCampaign():void {
+    const st=this.state.campaign,b=st?.realtime;
+    if(!st||!b||b.status!=='finished')throw new Error('戰役尚未結束');
+    const result=realtimeRewards(this.ctx);
+    this.state={...this.state,campaign:{...st,phase:'resolved',clearedStages:result.cleared,banked:result.rewards,host:{...st.host,troops:armyCount(b,'ally'),supply:Math.floor(b.supply)}}};
+    this.closeCampaign();
+  }
   rememberCampaign(loadout: BattleLoadout): void {
     if (this.state.campaign?.phase !== 'configuring') return;
     this.state = { ...this.state, campaign: { ...this.state.campaign, loadout } };
@@ -291,6 +336,7 @@ export class Session {
    * `ui/` 不得直接 import `modules/`，而它需要這個型別去演戰鬥（D67）。
    */
   engage(): campaign.StageOutcome {
+    if(this.state.campaign?.realtime)throw new Error('即時戰役不能使用舊版逐關結算');
     const box: { value: campaign.StageOutcome | null } = { value: null };
     this.mutate((tc) => {
       const r = campaign.engage(tc, this.w.fx);
@@ -333,6 +379,7 @@ export class Session {
    * 它拿不到任何獎勵，但章節照過；膽小的懲罰是難看的結局，不是死亡（D7）。
    */
   withdraw(): void {
+    if(this.state.campaign?.realtime)throw new Error('請先完成即時戰役結算');
     this.mutate((tc) => campaign.withdraw(tc));
     this.closeCampaign();
   }

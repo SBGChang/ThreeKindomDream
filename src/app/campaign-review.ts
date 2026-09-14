@@ -14,6 +14,7 @@ export function campaignReviewSession(sample: string): Session {
   const highestMerit = Math.max(...defs.reader('careerRank').all().map(x => x.requiredMerit));
   const state = {
     ...initial,
+    economy:{...initial.economy,money:2000,earned:2000,chapterCamp:false},
     config: { ...initial.config, careerCap: veteran ? highestRank : initial.config.careerCap },
     career: veteran ? { civil: highestRank, martial: highestRank } : initial.career,
     currencies: veteran ? { merit: { civil: highestMerit, martial: highestMerit } } : initial.currencies,

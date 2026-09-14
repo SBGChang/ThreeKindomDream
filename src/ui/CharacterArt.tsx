@@ -10,7 +10,7 @@ export const CHARACTERS: Readonly<Record<string,string>> = {
 };
 const images=new Map<string,Promise<HTMLCanvasElement>>();
 /** Match the source game's chroma-key convention without modifying original artwork. */
-function loadSprite(src:string):Promise<HTMLCanvasElement>{
+export function loadCharacterSprite(src:string):Promise<HTMLCanvasElement>{
   const cached=images.get(src);if(cached)return cached;
   const promise=new Promise<HTMLCanvasElement>((resolve,reject)=>{
     const im=new Image();im.onload=()=>{
@@ -25,7 +25,7 @@ function loadSprite(src:string):Promise<HTMLCanvasElement>{
 export function CharacterArt({name,portrait=false}:{name:string;portrait?:boolean}):React.ReactElement{
   const ref=useRef<HTMLCanvasElement>(null),id=CHARACTERS[name]??'npc_soldier';
   const src=`./art/characters-v2/${id}.png`;
-  useEffect(()=>{let active=true;void loadSprite(src).then(im=>{
+  useEffect(()=>{let active=true;void loadCharacterSprite(src).then(im=>{
     if(!active||!ref.current)return;const c=ref.current,ctx=c.getContext('2d')!;
     if(portrait){drawPortrait(ctx,im,id);}
     else {c.width=im.width;c.height=im.height;ctx.drawImage(im,0,0);}
