@@ -1,0 +1,11 @@
+{
+  "tool": "built-in image_gen",
+  "assets": [
+    {
+      "file": "public/art/ui/campaign/camp-tabs-v3.png",
+      "reference": "public/art/ui/campaign/camp-v1.png",
+      "usage": "Full 1280×800 stage background. Rectangular front-facing board; blank integrated title crest. Title and chapter rendered by UI; two interactive tabs below. Three near-square stands display at approximately 187×187, skill icons 86×86.",
+      "prompt": "Edit this game scene. Preserve the left military tent scenery, lighting, color style, all right-side itinerary scroll and scenery and the bottom foreground desk. Replace ONLY the large central sloping parchment board and its immediate table support with a FRONT-ON RECTANGULAR command board: perfectly vertical parallel left and right edges, perfectly horizontal top and bottom, same width at top and bottom, NO trapezoid, NO foreshortening. Image remains landscape 16:10. New central rectangular board OUTER BOUNDS x26.5%..76.5%, y6%..84%, a slim chunky dark chestnut wooden rim containing a large clean warm ivory paper interior. Integrate an EMPTY wooden title crest into the middle of its top edge: width x36%..67%, height y5%..19%; gently rounded shoulders, cream trim, main dark chestnut blank TITLE SAFE AREA x40%..64%, y10%..16% for large program-rendered Chinese title. The title crest and main frame are one coherent crafted object, modest rounded wooden details, no ornate gold. Below header, keep HUGE blank paper interior x29%..74%, y23%..79% for interactive Tabs and 3 large cards; NO drawn tabs, NO inner boxes. Remove the old trapezoid paper and the red hanging cloth under it; the new rectangle replaces them, not layered on top of the old board. Keep background compositional regions outside central board unchanged; left hero later overlays left, itinerary later overlays right. Draw no text, no letters, no numbers, no characters, no icons. Match existing cheerful chibi strategy-game hand-inked dark outlines and warm crisp cel shading."
+    }
+  ]
+}

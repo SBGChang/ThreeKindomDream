@@ -62,7 +62,7 @@ export function App(): React.ReactElement {
     if (session.needsCampaign) return <ScreenCampaign s={session} bump={bump} onDepart={() => setReplay(true)} onLearn={learn} />;
     return <ScreenRun s={session} bump={bump} log={log} onLog={pushLog} onLearn={learn} onVault={() => { setRunView('vault'); }} />;
   };
-  const sceneScreen = replay || (session === null ? ['destiny','notables','shop','items','entry'].includes(metaView) : !replay && !session.isOver && !session.needsFactionChoice && !session.needsSuperiors && !session.needsCampaign && runView === 'run');
+  const sceneScreen = replay || (phase === 'campaign' && runView === 'run') || (session === null ? ['destiny','notables','shop','items','entry'].includes(metaView) : !replay && !session.isOver && !session.needsFactionChoice && !session.needsSuperiors && !session.needsCampaign && runView === 'run');
   return <GameFrame meta={meta} session={session} active={replay ? 'battle' : session === null ? metaView : runView} saveNotice={saveNotice}
     onGo={view => {
       if (replay) return;
