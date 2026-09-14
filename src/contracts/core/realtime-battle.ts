@@ -1,0 +1,8 @@
+export type Side = 'ally' | 'enemy';
+export type SkillKind = 'fire' | 'charge' | 'mounted' | 'pincer' | 'inspire';
+export interface DemoSkill { id:string; name:string; owner:string; key:string; kind:SkillKind; cost:number; cd:number; damage:number; description:string; effect?:'damage'|'heal'|'buff'|'debuff'; power?:number; effectDuration?:number; support?:boolean }
+export interface Troop {id:number;side:Side;hp:number;maxHp:number;x:number;y:number;homeX:number;lane:number;attack:number;targetId:number;struck:boolean;pose:'guard'|'run'|'slash'|'hit'|'dead';poseTime:number;deathTime:number;hitTime:number;seed:number}
+export type WavePhase='entry'|'reveal'|'start'|'combat'|'fallen'|'flee'|'cheer'|'exit'|'fade-out'|'fade-in';
+export interface Commander {id:string;name:string;side:Side;x:number;y:number;homeX:number;pose:'command'|'cheer'|'move';poseTime:number;flip:boolean; portrait?:string}
+export interface Cinematic {skill:DemoSkill;time:number;impacted:boolean;targetX:number;targetY:number;damage:number}
+export interface BattleState {skills:readonly DemoSkill[];groupSize:number;supplyMax:number;regen:number;allyAttack:number;enemyAttack:number;buffPower:number;debuff:number;debuffPower:number;waveTroops:readonly number[];waveNames:readonly string[];units:Troop[];commanders:Commander[];phase:WavePhase;phaseTime:number;defeated:Side|null;enemyInitial:number;time:number;duration:number;supply:number;kills:number;lost:number;initial:number;nextId:number;wave:number;cooldowns:Record<string,number>;buff:number;cinematic:Cinematic|null;status:'ready'|'running'|'paused'|'finished';reason:string;castCount:number;traitUntil:number;traitReady:boolean;log:string[]}

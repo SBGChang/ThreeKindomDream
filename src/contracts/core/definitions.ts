@@ -853,6 +853,7 @@ export interface SkillDef extends DefHeader {
 
 // ── ㉝ 戰役（33）★ ────────────────────────────────────
 export interface BattleRuleDef extends DefHeader {
+  readonly realtime: { readonly duration:number; readonly supplyRegenRatio:number; readonly attackDivisor:number; readonly enemyAttackDivisor:number; readonly effectSeconds:number; readonly skillCost:Readonly<Record<SkillKind,number>>; readonly skillCooldown:Readonly<Record<SkillKind,number>> };
   readonly kind: 'battleRule';
   /**
    * 主角每回合的施放機率，index ＝ 第幾招（33 §4.1）。

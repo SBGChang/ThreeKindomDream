@@ -1,3 +1,4 @@
+import { CampaignReview } from './CampaignReview.js';
 import { EconomyReview } from './EconomyReview.js';
 import { RealmReview } from './RealmReview.js';
 import { InspectionReview } from './InspectionTheater.js';
@@ -17,7 +18,7 @@ const UnitSequenceReview = lazy(()=>import('./UnitSequenceReview.js').then(m=>({
 const StoryReview = lazy(()=>import('./StoryReview.js').then(m=>({default:m.StoryReview})));
 const RealtimeBattleDemo = lazy(()=>import('./RealtimeBattleDemo.js').then(m=>({default:m.RealtimeBattleDemo})));
 if (el === null) throw new Error('#root 不存在');
-createRoot(el).render(<StrictMode><GameInput><Suspense fallback={<p>載入驗收頁…</p>}>{new URLSearchParams(location.search).get('art')==='story'?<StoryReview/>:new URLSearchParams(location.search).get('art')==='story-play'?<App preview/>:new URLSearchParams(location.search).get('art')==='battle-demo'?<RealtimeBattleDemo/>:['unit-motion','unit-sequence'].includes(new URLSearchParams(location.search).get('art')??'')?<UnitSequenceReview/>:new URLSearchParams(location.search).get('art')==='unit-rig'?<UnitMotionReview/>:import.meta.env.DEV&&['economy','layout','dialogue'].includes(new URLSearchParams(location.search).get('art')??'')?<EconomyReview/>:new URLSearchParams(location.search).get('art')==='realms'?<RealmReview/>:['inspection','career'].includes(new URLSearchParams(location.search).get('art')??'')?<InspectionReview/>:new URLSearchParams(location.search).get('art')==='rig'?<RigReview/>:new URLSearchParams(location.search).get('art')==='soldier'?<SoldierReview/>:new URLSearchParams(location.search).get('art')==='gallery'?<ArtGallery/>:<App />}</Suspense></GameInput></StrictMode>);
+createRoot(el).render(<StrictMode><GameInput><Suspense fallback={<p>載入驗收頁…</p>}>{new URLSearchParams(location.search).get('art')==='campaign'?<CampaignReview/>:new URLSearchParams(location.search).get('art')==='story'?<StoryReview/>:new URLSearchParams(location.search).get('art')==='story-play'?<App preview/>:new URLSearchParams(location.search).get('art')==='battle-demo'?<RealtimeBattleDemo/>:['unit-motion','unit-sequence'].includes(new URLSearchParams(location.search).get('art')??'')?<UnitSequenceReview/>:new URLSearchParams(location.search).get('art')==='unit-rig'?<UnitMotionReview/>:import.meta.env.DEV&&['economy','layout','dialogue'].includes(new URLSearchParams(location.search).get('art')??'')?<EconomyReview/>:new URLSearchParams(location.search).get('art')==='realms'?<RealmReview/>:['inspection','career'].includes(new URLSearchParams(location.search).get('art')??'')?<InspectionReview/>:new URLSearchParams(location.search).get('art')==='rig'?<RigReview/>:new URLSearchParams(location.search).get('art')==='soldier'?<SoldierReview/>:new URLSearchParams(location.search).get('art')==='gallery'?<ArtGallery/>:<App />}</Suspense></GameInput></StrictMode>);
 import './game.css';
 import './art.css';
 
@@ -47,3 +48,5 @@ import './run-refresh.css';
 
 import './run-services.css';
 import './system-menu.css';
+
+import './campaign-prep.css';

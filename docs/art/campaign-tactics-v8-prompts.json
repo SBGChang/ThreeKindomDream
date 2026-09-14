@@ -1,0 +1,61 @@
+{
+  "generator": "Built-in image_gen",
+  "assets": [
+    {
+      "key": "soothe",
+      "name": "撫民",
+      "prompt": "Use case: stylized-concept. Production transparent PNG for a cute chibi Three Kingdoms 2D strategy game. Warm bold brown ink outlines, rounded expressive shapes, crisp hand-painted cel shading, warm ivory, teal and vermilion with restrained gold accents. REAL transparent alpha background. No text, letters, numbers, watermarks, logos or checkerboard. One square compact action vignette, expressive oversized heads and small bodies, dramatic circular sweeping composition, complete figures and effects inside square with small transparent margins, no scenic rectangle, no UI frame or plaque. Match cute action trading-card illustration. Intended display 140px thumbnail and 220px detail. A compassionate chibi civil official in jade robes and small black scholar cap kneels forward offering a bowl of rice to a weary little soldier, another small soldier rises behind him, bright jade healing ribbons and golden grain curl around the group. Large kind determined face, bowl and supportive gesture prominent.",
+      "path": "public/art/ui/campaign/tactic-soothe-v8.png",
+      "source": "C:/Users/DerekHChang/.codex/generated_images/01a09c1b-d08c-72b0-89d8-a72a9cb1cd97/exec-71086ce7-740d-491c-8943-10b16b4c45f7.png"
+    },
+    {
+      "key": "farm",
+      "name": "屯田",
+      "prompt": "Use case: stylized-concept. Production transparent PNG for a cute chibi Three Kingdoms 2D strategy game. Warm bold brown ink outlines, rounded expressive shapes, crisp hand-painted cel shading, warm ivory, teal and vermilion with restrained gold accents. REAL transparent alpha background. No text, letters, numbers, watermarks, logos or checkerboard. One square compact action vignette, expressive oversized heads and small bodies, dramatic circular sweeping composition, complete figures and effects inside square with small transparent margins, no scenic rectangle, no UI frame or plaque. Match cute action trading-card illustration. Intended display 140px thumbnail and 220px detail. An energetic chibi civil official in green robes and scholar cap holding a wooden hoe, two tiny helmeted soldiers harvesting ripe wheat beside full rice sacks. A dynamic circular golden wheat and jade life-energy sweep around the group. Official prominent, warm vigorous expression.",
+      "path": "public/art/ui/campaign/tactic-farm-v8.png",
+      "source": "C:/Users/DerekHChang/.codex/generated_images/01a09c1b-d08c-72b0-89d8-a72a9cb1cd97/exec-566f3e83-5267-47a5-9b91-27f5e6be5d94.png"
+    },
+    {
+      "key": "advisor",
+      "name": "王佐",
+      "prompt": "Use case: stylized-concept. Production transparent PNG for a cute chibi Three Kingdoms 2D strategy game. Warm bold brown ink outlines, rounded expressive shapes, crisp hand-painted cel shading, warm ivory, teal and vermilion with restrained gold accents. REAL transparent alpha background. No text, letters, numbers, watermarks, logos or checkerboard. One square compact action vignette, expressive oversized heads and small bodies, dramatic circular sweeping composition, complete figures and effects inside square with small transparent margins, no scenic rectangle, no UI frame or plaque. Match cute action trading-card illustration. Intended display 140px thumbnail and 220px detail. A wise confident chibi grand minister in ivory and deep jade robes, tall dark ceremonial scholar cap, raising a bamboo command tablet with one hand and an open palm with the other. Two tiny revitalized soldiers stand in radiant golden jade healing aura, flowing jade ribbons and a small auspicious gold phoenix-shaped light arc sweep upward. Powerful support, not attack.",
+      "path": "public/art/ui/campaign/tactic-advisor-v8.png",
+      "source": "C:/Users/DerekHChang/.codex/generated_images/01a09c1b-d08c-72b0-89d8-a72a9cb1cd97/exec-16328e12-cd99-4432-b374-6f79969d143f.png"
+    },
+    {
+      "key": "command",
+      "name": "號令",
+      "prompt": "Use case: stylized-concept. Production transparent PNG for a cute chibi Three Kingdoms 2D strategy game. Warm bold brown ink outlines, rounded expressive shapes, crisp hand-painted cel shading, warm ivory, teal and vermilion with restrained gold accents. REAL transparent alpha background. No text, letters, numbers, watermarks, logos or checkerboard. One square compact action vignette, expressive oversized heads and small bodies, dramatic circular sweeping composition, complete figures and effects inside square with small transparent margins, no scenic rectangle, no UI frame or plaque. Match cute action trading-card illustration. Intended display 140px thumbnail and 220px detail. A bold chibi armored commander in dark teal armor with red cape raises a bronze command baton and points decisively forward, two tiny spearmen rush past him, red command flags and a sharp golden forward momentum arc form the vignette. Clear commander-ordering-charge story, heroic cute determined expression.",
+      "path": "public/art/ui/campaign/tactic-command-v8.png",
+      "source": "C:/Users/DerekHChang/.codex/generated_images/01a09c1b-d08c-72b0-89d8-a72a9cb1cd97/exec-4d14fa89-aa65-4adc-a581-044138650fc9.png"
+    },
+    {
+      "key": "discord",
+      "name": "亂辭",
+      "prompt": "Use case: stylized-concept. Production transparent PNG for a cute chibi Three Kingdoms 2D strategy game. Warm bold brown ink outlines, rounded expressive shapes, crisp hand-painted cel shading, warm ivory, teal and vermilion with restrained gold accents. REAL transparent alpha background. No text, letters, numbers, watermarks, logos or checkerboard. One square compact action vignette, expressive oversized heads and small bodies, dramatic circular sweeping composition, complete figures and effects inside square with small transparent margins, no scenic rectangle, no UI frame or plaque. Match cute action trading-card illustration. Intended display 140px thumbnail and 220px detail. A clever mischievous chibi civil strategist in violet and ivory robes unfurls a completely blank paper scroll and gestures to argue, purple curling confusing sound waves spiral toward two small enemy soldiers facing opposite directions with dizzy expressions. Floating blank paper slips and purple jade sparks, no written symbols.",
+      "path": "public/art/ui/campaign/tactic-discord-v8.png",
+      "source": "C:/Users/DerekHChang/.codex/generated_images/01a09c1b-d08c-72b0-89d8-a72a9cb1cd97/exec-0e8a8947-22f5-436a-b51f-965da78d38bc.png"
+    },
+    {
+      "key": "inspire",
+      "name": "鼓舞",
+      "prompt": "Use case: stylized-concept. Production transparent PNG for a cute chibi Three Kingdoms 2D strategy game. Warm bold brown ink outlines, rounded expressive shapes, crisp hand-painted cel shading, warm ivory, teal and vermilion with restrained gold accents. REAL transparent alpha background. No text, letters, numbers, watermarks, logos or checkerboard. One square compact action vignette, expressive oversized heads and small bodies, dramatic circular sweeping composition, complete figures and effects inside square with small transparent margins, no scenic rectangle, no UI frame or plaque. Match cute action trading-card illustration. Intended display 140px thumbnail and 220px detail. An exuberant chibi red-armored commander joyfully strikes a large round vermilion war drum with two drumsticks. Two tiny cheerful allied spearmen rally behind him, radiant orange-gold sound arcs and red pennants sweep around the scene. Prominent cute fierce smiling face, drum unmistakable, uplifting energetic action.",
+      "path": "public/art/ui/campaign/tactic-inspire-v8.png",
+      "source": "C:/Users/DerekHChang/.codex/generated_images/01a09c1b-d08c-72b0-89d8-a72a9cb1cd97/exec-92f163b7-e073-496a-b306-511241d7cacd.png"
+    },
+    {
+      "key": "discipline",
+      "name": "節制",
+      "prompt": "Use case: stylized-concept. Production transparent PNG for a cute chibi Three Kingdoms 2D strategy game. Warm bold brown ink outlines, rounded expressive shapes, crisp hand-painted cel shading, warm ivory, teal and vermilion with restrained gold accents. REAL transparent alpha background. No text, letters, numbers, watermarks, logos or checkerboard. One square compact action vignette, expressive oversized heads and small bodies, dramatic circular sweeping composition, complete figures and effects inside square with small transparent margins, no scenic rectangle, no UI frame or plaque. Match cute action trading-card illustration. Intended display 140px thumbnail and 220px detail. A stern cute chibi teal-armored commander holds a bronze command tablet and raises a firm stop palm. Two tiny enemy attackers are slowed behind a sweeping pale blue defensive command aura and an orderly row of allied shields. Controlled disciplined composition with steel-blue and teal restraint effects, no chains, no text.",
+      "path": "public/art/ui/campaign/tactic-discipline-v8.png",
+      "source": "C:/Users/DerekHChang/.codex/generated_images/01a09c1b-d08c-72b0-89d8-a72a9cb1cd97/exec-e83014a0-e07c-4f0f-b592-8247b9cc8734.png"
+    },
+    {
+      "key": "marshal",
+      "name": "治戎",
+      "prompt": "Use case: stylized-concept. Production transparent PNG for a cute chibi Three Kingdoms 2D strategy game. Warm bold brown ink outlines, rounded expressive shapes, crisp hand-painted cel shading, warm ivory, teal and vermilion with restrained gold accents. REAL transparent alpha background. No text, letters, numbers, watermarks, logos or checkerboard. One square compact action vignette, expressive oversized heads and small bodies, dramatic circular sweeping composition, complete figures and effects inside square with small transparent margins, no scenic rectangle, no UI frame or plaque. Match cute action trading-card illustration. Intended display 140px thumbnail and 220px detail. A confident chibi elite armored marshal in dark teal and gold armor with flowing crimson cloak plants a large teal military standard while neatly arrayed tiny allied spearmen and shields surge forward in formation. Broad golden martial aura, dramatic crescent energy sweep and strong organized army silhouette. More powerful elite rally than a simple charge, no drum.",
+      "path": "public/art/ui/campaign/tactic-marshal-v8.png",
+      "source": "C:/Users/DerekHChang/.codex/generated_images/01a09c1b-d08c-72b0-89d8-a72a9cb1cd97/exec-b0654449-791a-421b-942e-ea941a252ccc.png"
+    }
+  ]
+}

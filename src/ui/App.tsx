@@ -71,7 +71,7 @@ export function App({ preview = false }: { preview?: boolean }): React.ReactElem
     if (session.needsCampaign) return <ScreenCampaign s={session} bump={bump} onDepart={() => setReplay(true)} onLearn={learn} />;
     return <RunWorkspace s={session} view={runView} bump={bump} log={log} onLog={pushLog} onGo={view => setRunView(view as RunView)} />;
   };
-  const sceneScreen = atMainMenu || (session !== null && ['learn','market','vault'].includes(runView)) || replay || (session === null ? ['destiny','notables','shop','items','entry'].includes(metaView) : !replay && !session.isOver && !session.needsFactionChoice && !session.needsSuperiors && !session.needsCampaign && !session.needsChapterCamp && runView === 'run');
+  const sceneScreen = (phase === 'campaign' && runView === 'run' && !session?.needsChapterCamp) || atMainMenu || (session !== null && ['learn','market','vault'].includes(runView)) || replay || (session === null ? ['destiny','notables','shop','items','entry'].includes(metaView) : !replay && !session.isOver && !session.needsFactionChoice && !session.needsSuperiors && !session.needsCampaign && !session.needsChapterCamp && runView === 'run');
   return <GameFrame meta={meta} session={atMainMenu ? null : session} active={atMainMenu ? metaView : replay ? 'battle' : session === null ? metaView : session.needsChapterCamp&&runView==='run'?'camp':runView} saveNotice={preview ? '故事試玩・不寫入存檔' : saveNotice}
     beforeExit={preserveProgress} onReturnHome={() => { setMetaView('destiny'); setAtMainMenu(true); }}
     onGo={view => {

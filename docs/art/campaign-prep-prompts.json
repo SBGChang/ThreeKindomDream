@@ -1,0 +1,16 @@
+{
+  "tool": "built-in image_gen",
+  "created": "2026-09-14",
+  "assets": [
+    {
+      "file": "public/art/ui/campaign/camp-v1.png",
+      "usage": "1280×800 full-stage military preparation scene; opaque background. Center paper x=392..915,y=168..580; itinerary x=1004..1197,y=164..560. All names, values and controls rendered in React.",
+      "prompt": "Use case: stylized-concept. Production game environment asset for a cute Three Kingdoms raising game, landscape 16:10 1536x960. Q-style clean thick dark brown outlines, rounded chunky objects, readable flat warm cel shading like a lively Japanese baseball raising simulation. Interior of an open military command tent at sunrise, indigo teal canvas roof at top corners, small red banners, countryside army tents visible outside on LEFT. No characters. Layout specifically supports 1280x800 interactive UI: LEFT 0-28% empty packed-earth standing space for a full-body chibi hero, with small supply sacks and spear rack at very far left; CENTER 29-74% a FRONT-FACING large warm cream rectangular blank parchment sheet clipped to a low dark timber campaign desk, extending from y=16% to y=84%, very large clean flat empty paper content safe area (x=32-71%, y=20-80%), simple modest edges; RIGHT 76-98% a separate tall pale parchment military itinerary hanging from two slim bamboo rods, x=77-98%, y=17-84%, blank safe area x=80-95%, y=24-79%. Bottom 86-100% quiet wood desk lip and sandy floor for controls, top middle 8-15% quiet canvas for heading. Painted objects fit the interactive layout without perspective distortion of paper. A few rolled maps at far corners only. Cheerful confident expedition mood, sage/teal canvas, warm ivory papers, terracotta and chestnut. No text, no symbols on paper, no letters, no numbers, no UI buttons, no watermarks. Do not draw rows, grids or boxes inside papers. Not photorealistic, not ornate gold, not gritty."
+    },
+    {
+      "file": "public/art/ui/campaign/depart-v1.png",
+      "usage": "248×87 departure button, real PNG alpha, no baked text. Center-left label and unchanged geometry across hover/focus/active.",
+      "prompt": "Use case: stylized-concept. One standalone illustrated game button, transparent PNG with real alpha. Cute Three Kingdoms game, thick clean dark brown outline, chunky rounded shapes and warm crisp cel shading. Single horizontal vermilion red lacquer command plaque with a thick chestnut wood backing, modest ivory edge accent, a tiny tied red tassel at left, stylized spear-tip arrow pointing right incorporated into the right edge, no gold ornament. Width to height ratio of the actual object 3:1. Entire object fully visible centered with 8% transparent safety margin. Large flat clean red face center-left is a TEXT SAFE AREA for dynamic Chinese text added later in code. Absolutely NO TEXT NO LETTERS NO NUMBERS. A cohesive crafted physical object with readable rim thickness and soft grounding shadow, cheerful energetic and approachable, not realistic, not ornate. Intended display 220x76 CSS px, normal state; hover brightness handled in code. Transparent background."
+    }
+  ]
+}

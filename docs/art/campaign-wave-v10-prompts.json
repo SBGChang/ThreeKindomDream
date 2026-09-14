@@ -1,0 +1,17 @@
+{
+  "generator": "Built-in image_gen",
+  "assets": [
+    {
+      "path": "public/art/ui/campaign/wave-flag-v10.png",
+      "source": "C:/Users/DerekHChang/.codex/generated_images/01a09c1b-d08c-72b0-89d8-a72a9cb1cd97/exec-5daea6c1-62e9-454a-bef4-b7846771b772.png",
+      "prompt": "Use case: stylized-concept. Production transparent PNG UI for cute chibi Three Kingdoms game. One small upright military checkpoint pennant, roughly square canvas, chunky dark brown ink outlines, warm cel shading, a short bronze wood crossbar and a vermilion red fabric flag with shallow forked tail. Front-on, no perspective. Entire blank rich red flag face reserved for dynamic ivory numeral, safe area x28-72%,y25-65%. Bold simple silhouette readable at 34x38 pixels, very restrained gold cloth edging. No pole extending far away, no hanging long tassels, no text, number, letter, watermark or checkerboard. True transparent alpha outside with 7% margin. Independent small UI badge, not a scene.",
+      "cornerAlpha": 0
+    },
+    {
+      "path": "public/art/ui/campaign/wave-briefing-v10.png",
+      "source": "C:/Users/DerekHChang/.codex/generated_images/01a09c1b-d08c-72b0-89d8-a72a9cb1cd97/exec-a0ca6f5e-35be-446c-952c-a70958425696.png",
+      "prompt": "Use case: stylized-concept. Production landscape 3:2 illustrated UI background for cute chibi Three Kingdoms strategy game, intended 1050x700. Warm thick brown ink outlines, rounded forms, crisp cel shading, ivory parchment, muted teal military tent cloth and warm wood, restrained bronze. An unfolded wide military intelligence map scroll on a shallow wooden field table, FRONT-ON near rectangular composition. Blank integrated wooden title crest at top center x33-67%,y6-16%. Left half x9-43%,y20-72% contains a very pale desaturated teal miniature distant battlefield with faint hills and two little camp banners at extreme left, entirely empty foreground reserved for separately composited large character. Right half x52-91%,y21-68% entirely BLANK flat warm ivory parchment reserved for gameplay facts, NO drawn icons or section boxes. Bottom x12-90%,y73-91% clean blank ivory parchment for short rules at left and confirmation button at far right. Slim wood scroll rollers at far left and right edges and restrained tied red cords. No people, soldiers, weapons, cards, lettering, words, numbers, grid lines or UI buttons painted into art. No central book crease. True transparent alpha outside complete contained rectangular scroll-table silhouette, 3% transparent outer margin. Do not paint generic web panels; this is one cohesive hand illustrated military intelligence scroll.",
+      "cornerAlpha": 0
+    }
+  ]
+}

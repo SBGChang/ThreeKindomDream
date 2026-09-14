@@ -1,0 +1,13 @@
+{
+  "tool": "built-in image_gen",
+  "assets": [
+    {
+      "path": "public/art/ui/campaign/enemy-squad-v1.png",
+      "prompt": "Use case: stylized-concept. Asset type: transparent PNG enemy troop token for a cute Three Kingdoms strategy game's parchment military briefing. Draw a compact bust of TWO chibi yellow-turban foot soldiers, one larger determined round-faced soldier in foreground with yellow cloth headband tied at side, dark brown lamellar armor, a small wooden round shield at bottom; second smaller soldier peeking behind with short spear diagonally rising. Bold warm dark-brown ink outlines, hand-painted crisp cel shading, chunky expressive silhouette, warm ochre cloth, muted dark teal armor accents, polished 2D mobile-game art. Front three-quarter view. Fill 85 percent of square canvas, all objects fully contained, no ground or scenery. Must remain clear at 48px. NO text, numbers, labels, border/frame, glow, white backdrop, watermark. Real fully transparent alpha background."
+    },
+    {
+      "path": "public/art/ui/campaign/hourglass-v1.png",
+      "prompt": "Use case: stylized-concept. Asset type: transparent PNG timer icon for a cute Three Kingdoms game's parchment military briefing. One chunky upright ancient wooden hourglass with golden sand, dark warm carved wood supports, small red cloth ribbon tied around upper corner, polished stylized 2D game illustration. Bold warm brown ink outlines, crisp hand-painted cel shading, readable simple silhouette and large glass bulb, tiny tasteful warm highlight. Three-quarter front view. Fill 85 percent of square canvas, centered fully contained. Must be readable at 48px. No text, numbers, symbols, frame, ground, scenery, halo, white background or watermark. Real fully transparent alpha background."
+    }
+  ]
+}

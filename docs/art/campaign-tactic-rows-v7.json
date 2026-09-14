@@ -1,0 +1,12 @@
+{
+  "generator": "Built-in image_gen",
+  "asset": "public/art/ui/campaign/tactic-row-v7.png",
+  "source": "C:/Users/DerekHChang/.codex/generated_images/01a09c1b-d08c-72b0-89d8-a72a9cb1cd97/exec-94fcb9dc-f8ef-4284-9fa4-ad671657095b.png",
+  "prompt": "Use case: stylized-concept. Production transparent PNG UI asset for a cute chibi Three Kingdoms strategy game. One wide HORIZONTAL blank parchment scroll for a skill row, complete object front-on, wide aspect ratio 4:1. Warm dark brown bold hand ink outlines, rounded carved wood rollers at LEFT and RIGHT short ends, ivory cream parchment, small restrained gold end caps and short red cord tassels, crisp warm cel shading matching cute illustrated military camp UI. Entire scroll inside canvas with 3% transparent margin. Broad uninterrupted blank paper safe area x12-87%, y18-82%. Left third reserved for a separately composited character skill illustration, right two thirds reserved for a dynamic large skill name. Only faint cloud curls at paper corners. NO separate name plaque, NO inset card frame, NO characters, NO weapons, NO words, letters or numbers. True transparent alpha outside silhouette, no solid background, no checkerboard or watermark. This is a reusable standalone wide row background, not a complete screen. Final display about 520x130 pixels; favor readable chunky shapes and short side rollers over fine details.",
+  "actualSize": [
+    1983,
+    793
+  ],
+  "cornerAlpha": 0,
+  "layout": "Three vertical rows, 390 × 150 each; native-aspect scroll uses contain. Art left, skill name right; no added description."
+}

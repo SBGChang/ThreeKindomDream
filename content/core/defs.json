@@ -969,6 +969,27 @@
     "maxTurns": 120,
     "packId": "pack:core",
     "rallyRatio": 0.35,
+    "realtime": {
+      "attackDivisor": 50,
+      "duration": 60,
+      "effectSeconds": 3,
+      "enemyAttackDivisor": 65,
+      "skillCooldown": {
+        "buff": 18,
+        "debuff": 15,
+        "heal": 12,
+        "magic": 12,
+        "physical": 10
+      },
+      "skillCost": {
+        "buff": 25,
+        "debuff": 25,
+        "heal": 26,
+        "magic": 35,
+        "physical": 30
+      },
+      "supplyRegenRatio": 0.012
+    },
     "schemaVersion": 1,
     "supplyBase": 120,
     "supplyPerTroop": 1,
