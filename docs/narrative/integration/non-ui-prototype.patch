@@ -1,0 +1,5929 @@
+diff --git a/content-source/core/config/battle.ts b/content-source/core/config/battle.ts
+index 8fab2d8..e7c55da 100644
+--- a/content-source/core/config/battle.ts
++++ b/content-source/core/config/battle.ts
+@@ -156,7 +156,10 @@ export const battleRule: BattleRuleDef = coreDef('battleRule', 'battle:main', {
+    * 代價是戰鬥變長（滿七關約 55 回合）。掃蕩與戰報預設收起就是為了它。
+    */
+   enemyTroopsByChapter: [
+-    515, 920, 1700, 4210, 10400, 25800, 64000, 158000, 392000,
++    // 2026-09-14：後五章以 story-balance.ts 的 72 回合蜀線實測重訂。
++    // 原指數延伸使零至五星都無法抵達第八、九章救援關；前四章保留。
++    // 固定曲線、不讀玩家即時能力；完整樣本與限制見 docs/narrative/IMPLEMENTATION.md。
++    515, 920, 1700, 4210, 7000, 10000, 13000, 16000, 19000,
+   ],
+   /**
+    * 敵方每回合輸出 ＝ 一關要掉多少血 ★ ＝ 有效軍勢 / 5.29（見上方反推）
+@@ -176,7 +179,7 @@ export const battleRule: BattleRuleDef = coreDef('battleRule', 'battle:main', {
+    * 正是玩家要的「一開始大概只能打到 2、3 關就打不下去」。
+    */
+   enemyDamageByChapter: [
+-    23, 40, 100, 240, 380, 600, 950, 1500, 2370,
++    23, 40, 100, 240, 380, 430, 480, 530, 580,
+   ],
+   // 恢復 1 點軍勢消耗 1 點糧秣 —— 於是【糧量就是「你能把軍隊填回多少」】。
+   // 有效血量 = 兵量 + 糧量 ×（政 / 50），三條官途在政 = 50 時完全相等，
+diff --git a/content-source/packs.ts b/content-source/packs.ts
+index 9df93e3..0bdbab5 100644
+--- a/content-source/packs.ts
++++ b/content-source/packs.ts
+@@ -42,6 +42,8 @@ import { weiCampaigns, weiEnemies } from './wei/campaigns.js';
+ import { weiNotables, weiSuperiorPool } from './wei/notables.js';
+ 
+ import { zhTW } from './l10n/index.js';
++import { SHU } from './shu/pack-id.js';
++import { shuDefs, shuTexts } from './shu/index.js';
+ 
+ const corePack: AuthoredPack = {
+   packId: CORE,
+@@ -86,5 +88,8 @@ const weiPack: AuthoredPack = {
+ 
+ export const AUTHORED_MANIFEST: AuthoredManifest = {
+   runtimeVersion: '0.1.0',
+-  packs: [corePack, weiPack],
++  packs: [corePack, weiPack, {
++    packId: SHU, version: '0.1.0', requiredPacks: [CORE], loadOrder: 20,
++    defs: shuDefs, effects: {}, texts: shuTexts,
++  }],
+ };
+diff --git a/content-source/shu/index.ts b/content-source/shu/index.ts
+new file mode 100644
+index 0000000..fd5d501
+--- /dev/null
++++ b/content-source/shu/index.ts
+@@ -0,0 +1,111 @@
++import type { CampaignDef, ChapterDef, EndingDef, EnemyDef, EventDef, NotableDef, ShopItemDef } from '../../src/contracts/core/definitions.js';
++import type { Attr, Rarity } from '../../src/contracts/core/primitives.js';
++import { campaignId, chapterId, effectId, endingId, enemyId, eventChainId, eventDefId, notableId, notablePoolId, shopItemId, skillId, traitId } from '../../src/contracts/core/ids.js';
++import { asKey } from '../authoring.js';
++import { buildStages } from '../core/campaigns/build.js';
++import { notableBase } from '../core/config/notable-base.js';
++import { FX } from '../core/effects/ids.js';
++import { SHU, SHU_F, shuDef } from './pack-id.js';
++import { shuScript } from './script.js';
++import { choice, milestone, shuStories, shuStoryTexts } from './story.js';
++
++const texts: Record<string, string> = { ...shuStoryTexts };
++const k = (key: string, body: string) => { texts[key] = body; return asKey(key); };
++const roster: readonly { slug: string; name: string; attr: Attr; rarity: Rarity; stats: readonly [number, number, number, number]; skills: readonly string[]; traits: readonly string[]; story: string }[] = [
++  { slug: 'liubei', name: '劉備', attr: 'lead', rarity: 5, stats: [92, 76, 78, 88], skills: ['guwu', 'haoling', 'jiezhi'], traits: ['chenyi', 'liande'], story: '劉備正一個個問新兵的姓名。你問他記得住多少，他將名簿遞來：「記得多少，就多記一個。」你坐到他身旁，替下一個人騰出位置。' },
++  { slug: 'guanyu', name: '關羽', attr: 'war', rarity: 5, stats: [90, 97, 72, 62], skills: ['tuzhen', 'xianzhen', 'wanrenzhi'], traits: ['danshi', 'linzhen'], story: '關羽替小兵削好一把木刀，抬頭卻見你看得入神。他把另一段木頭遞來：「鋒要直，握柄卻不可傷人。」原來大刀之外，他也有這樣細緻的手藝。' },
++  { slug: 'zhangfei', name: '張飛', attr: 'lead', rarity: 4, stats: [86, 96, 56, 42], skills: ['guwu', 'haoling', 'xianzhen'], traits: ['danshi', 'linzhen'], story: '張飛嘴上嚷著新兵畫旗太慢，手裡卻替每人調好墨。你湊近一看，他把最細的幾筆都留給自己：「旗畫清楚，戰場上才能找著自己人。」' },
++  { slug: 'zhaoyun', name: '趙雲', attr: 'war', rarity: 4, stats: [89, 94, 76, 69], skills: ['tuzhen', 'xianzhen', 'jiezhi'], traits: ['chenyi', 'danshi'], story: '趙雲牽著走失的小馬回營，主人卻以為牠早已丟了。他朝你笑：「多回頭找一次，也許就在下一個轉彎。」你接過韁繩，把這句話記住。' },
++  { slug: 'zhugeliang', name: '諸葛亮', attr: 'int', rarity: 5, stats: [91, 40, 99, 96], skills: ['huoji', 'shuiyan', 'lianhuan'], traits: ['jimin', 'liaodi'], story: '風箏第三次落到樹上，孔明盯著它難得語塞。你去搬梯，他還在比劃竹骨的重量。等風箏終於飛起來，你們一起笑得像從未帶過兵的孩子。' },
++  { slug: 'jiangwan', name: '蔣琬', attr: 'pol', rarity: 3, stats: [68, 42, 83, 93], skills: ['fumin', 'luanci', 'tuntian'], traits: ['liande', 'zhechong'], story: '最不起眼的案上，堆著明天每一隊兵需要的糧單。蔣琬將它們分給幾名年輕書吏，自己只留一份。他問你：「若我有一天不在，這裡也該照常運轉，對吧？」' },
++];
++const boosts = { lead: FX.linkLead15, war: FX.linkWar15, int: FX.linkInt15, pol: FX.linkPol15 };
++const biases = { lead: FX.biasSelfLead15, war: FX.biasSelfWar15, int: FX.biasSelfInt18, pol: FX.biasSelfPol16 };
++export const shuNotables: readonly NotableDef[] = roster.map(r => shuDef('notable', `notable:${r.slug}`, {
++  notableId: notableId(`notable:${r.slug}`), factionId: SHU_F, rarity: r.rarity,
++  nameKey: k(`notable.${r.slug}.name`, r.name), base: notableBase(r.rarity, r.attr),
++  abilities: { attrs: { lead: r.stats[0], war: r.stats[1], int: r.stats[2], pol: r.stats[3] },
++    traits: r.traits.map(x => traitId(`trait:${x}`)),
++    skills: r.skills.map((x, i) => ({ star: [0, 2, 4][i]!, skillId: skillId(`skill:${x}`) })),
++  },
++  unlocks: [
++    { star: 0, funcType: 'LinkBonus', referId: effectId(FX.linkAll10), descKey: k(`notable.${r.slug}.link`, '同格共事加成 +10%（好感達知交後生效）') },
++    { star: 1, funcType: 'LinkBonus', referId: effectId(boosts[r.attr]), descKey: k(`notable.${r.slug}.specialty`, '專長格同框加成 +15%') },
++    { star: 2, funcType: 'SlotBias', referId: effectId(biases[r.attr]), descKey: k(`notable.${r.slug}.bias`, '更常出現在自己的專長格') },
++    { star: 3, funcType: 'LinkBonus', referId: effectId(boosts[r.attr]), descKey: asKey(`notable.${r.slug}.specialty`) },
++    { star: 5, funcType: 'LinkBonus', referId: effectId(boosts[r.attr]), descKey: asKey(`notable.${r.slug}.specialty`) },
++  ],
++}));
++
++const superiors = shuDef('notablePool', 'pool:shu.superiors', {
++  poolId: notablePoolId('pool:shu.superiors'), factionId: SHU_F,
++  entries: roster.map(r => ({ notableId: notableId(`notable:${r.slug}`), weight: 10, requirements: [] })),
++});
++const faction = shuDef('faction', 'faction:shu', {
++  faction: SHU_F, lordId: notableId('notable:liubei'), superiorPoolId: superiors.poolId, requirements: [],
++  nameKey: k('faction.shu.name', '蜀 · 劉備'), rejectReasonKey: k('faction.shu.reject', '願意同行，便有你的位置。'),
++  bondSpeechKeys: [0, 1, 2, 3].map(n => k(`lord.shu.bond.${n}`, n === 0
++    ? '劉備：「這幾位往後與你同行。先認識人，事情一起做。」'
++    : `劉備：「故人的情分一直記著。${n} 位同伴由你自己選，餘下的我來安排。」`)),
++});
++const bond: ShopItemDef = shuDef('shopItem', 'shop:bond.shu', {
++  item: shopItemId('shop:bond.shu'), category: 'bond', requiresItems: [], requiresPack: SHU,
++  nameKey: k('shop.bond.shu.name', '蜀漢緣分'), descKey: k('shop.bond.shu.desc', '入蜀時可自行挑選更多同行上司。'),
++  levels: [600, 1500, 3200].map((cost, i) => ({ level: i + 1, cost,
++    grant: { kind: 'factionBond', faction: SHU_F, toLevel: i + 1 } })),
++});
++const chapters: readonly ChapterDef[] = shuScript.map((r, i) => shuDef('chapter', `ch:shu.${r.slug}`, {
++  chapterId: chapterId(`ch:shu.${r.slug}`), factionId: SHU_F, order: i + 1, length: 8,
++  titleKey: k(`chapter.shu.${r.slug}.title`, r.title), onPass: null,
++}));
++const sequence = shuDef('chapterSequence', 'seq:shu', { factionId: SHU_F, chapters: chapters.map(c => c.chapterId) });
++const enemyRows = [
++  ['shu.lubu', '呂布', 80, 98, 40, 35, 'wanrenzhi'],
++  ['shu.cao-vanguard', '曹軍前鋒', 80, 85, 65, 45, 'xianzhen'],
++  ['shu.cao-archers', '曹軍弩陣', 78, 72, 84, 55, 'huoji'],
++  ['shu.yizhou-guard', '益州守軍', 78, 80, 70, 65, 'jiezhi'],
++  ['shu.xiahouyuan', '夏侯淵', 88, 90, 62, 50, 'xianzhen'],
++  ['shu.wu-pursuit', '江東追軍', 86, 82, 80, 55, 'shuiyan'],
++  ['shu.simayi', '司馬懿', 92, 45, 98, 86, 'lianhuan'],
++] as const;
++const enemies: readonly EnemyDef[] = enemyRows.map(([slug, name, lead, war, int, pol, skill]) => shuDef('enemy', `enemy:${slug}`, {
++  enemyId: enemyId(`enemy:${slug}`), nameKey: k(`enemy.${slug}.name`, name), attrs: { lead, war, int, pol }, skillId: skillId(`skill:${skill}`),
++}));
++const bossSlugs = ['shu.lubu', 'shu.cao-vanguard', 'shu.cao-vanguard', 'shu.cao-archers', 'shu.yizhou-guard', 'shu.xiahouyuan', 'shu.wu-pursuit', 'shu.simayi'];
++const campaigns: readonly CampaignDef[] = shuScript.map((r, i) => {
++  r.stages.forEach((label, j) => k(`campaign.shu.${r.slug}.stage.${j}`, label));
++  return shuDef('campaign', `campaign:shu.${r.slug}`, { campaignId: campaignId(`campaign:shu.${r.slug}`),
++    chapterId: chapterId(`ch:shu.${r.slug}`), enemyNotables: [],
++    stages: buildStages({ slug: `shu.${r.slug}`, bosses: [null, null, enemyId(`enemy:${bossSlugs[i]}`), null, enemyId(`enemy:${bossSlugs[i]}`), null, enemyId(`enemy:${bossSlugs[i]}`)],
++      deepUnlocks: [null, null, null, { kind: 'unlock', trait: traitId('trait:chenyi'), skill: null },
++        { kind: 'unlock', trait: null, skill: skillId('skill:jiezhi') }, null,
++        { kind: 'unlock', trait: null, skill: skillId(i >= 6 ? 'skill:lianhuan' : 'skill:xianzhen') }],
++    }),
++  });
++});
++const encounters: readonly EventDef[] = roster.map(r => shuDef('event', `event:shu.${r.slug}.companionship`, {
++  eventDefId: eventDefId(`event:shu.${r.slug}.companionship`),
++  trigger: { kind: 'notable', chainId: eventChainId(`chain:shu.${r.slug}`), step: 0,
++    cast: [{ notableId: notableId(`notable:${r.slug}`), minStage: 'acquainted' }] },
++  unique: true, collectible: true, weight: 100, paramSlots: [], requirements: [{ type: 'faction', value: SHU_F }],
++  titleKey: k(`event.shu.${r.slug}.title`, `${r.name}・並肩小事`), bodyKey: k(`event.shu.${r.slug}.body`, r.story),
++  options: ['一起動手', '請他教我'].map((label, i) => ({ tier: 'story',
++    labelKey: k(`event.shu.${r.slug}.${i}`, label), requirements: [], check: null,
++    practice: [{ attr: r.attr, weight: 1.5 }],
++    rewards: [{ kind: 'merit', merit: r.attr === 'war' || r.attr === 'lead' ? 'martial' : 'civil', amount: 8 },
++      { kind: 'affinity', notableId: notableId(`notable:${r.slug}`), amount: 5 }],
++  })),
++}));
++const endings: readonly EndingDef[] = [
++  shuDef('ending', 'ending:shu.reunion', { ending: endingId('ending:shu.reunion'), endingKind: 'fullDream', factionId: SHU_F,
++    trigger: { kind: 'sequenceCompleted' }, requirements: [], storyRequirements: [milestone('shu.guanyu-rescued'), choice('S7.B', 'pact')], priority: 604,
++    titleKey: k('ending.shu.reunion.title', '桃園再聚'),
++    bodyKey: k('ending.shu.reunion.body', '張飛一把掀開酒壇封泥，嚷著誰都不許少喝。關羽正要板起臉，被劉備先按回座位。桌上多擺了一只碗，位置就在三人之間。\n\n你還站在門口，劉備已向你招手：「這席，等的就是你。」\n\n落花飄進酒裡。你曾在別人的故事裡見過這場相逢，如今終於能親自坐下，聽他們把明天說得很長。'), pointsMultiplier: 1.8, collectible: true }),
++  shuDef('ending', 'ending:shu.dawn', { ending: endingId('ending:shu.dawn'), endingKind: 'fullDream', factionId: SHU_F,
++    trigger: { kind: 'sequenceCompleted' }, requirements: [], storyRequirements: [milestone('shu.kongming-rested'), choice('S8.B', 'handover')], priority: 603,
++    titleKey: k('ending.shu.dawn.title', '漢室再曉'),
++    bodyKey: k('ending.shu.dawn.body', '重修的糧道、接棒的新軍、數次並肩完成的戰役，終於通向多年後的舊都。漢旗重新升上城頭，百姓的歡呼從城門一路推到階前。\n\n你回身去找那個總在最後收拾地圖的人，卻見孔明早已站在陽光下。他收起羽扇，朝你鄭重一揖。\n\n「這一次，亮看見了。」\n\n你伸手扶住他。晨鼓響起，你們一起向前。'), pointsMultiplier: 1.8, collectible: true }),
++];
++
++export const shuDefs = [...shuNotables, superiors, faction, bond, ...chapters, sequence, ...enemies, ...campaigns, ...encounters, ...shuStories, ...endings];
++export const shuTexts = texts;
+diff --git a/content-source/shu/pack-id.ts b/content-source/shu/pack-id.ts
+new file mode 100644
+index 0000000..a256917
+--- /dev/null
++++ b/content-source/shu/pack-id.ts
+@@ -0,0 +1,5 @@
++import { factionId, packId } from '../../src/contracts/core/ids.js';
++import { defBuilder } from '../authoring.js';
++export const SHU = packId('pack:shu');
++export const SHU_F = factionId('faction:shu');
++export const shuDef = defBuilder(SHU);
+diff --git a/content-source/shu/script.ts b/content-source/shu/script.ts
+new file mode 100644
+index 0000000..ef3fde5
+--- /dev/null
++++ b/content-source/shu/script.ts
+@@ -0,0 +1,411 @@
++// Authored first-edition Shu chapter scenes. Edit here; runtime never reads design documents.
++export const shuScript = [
++  {
++    "stages": [
++      "關外亂兵",
++      "友軍缺口",
++      "華雄前陣",
++      "斷旗坡",
++      "西涼騎陣",
++      "呂布前鋒",
++      "呂布突擊"
++    ],
++    "title": "虎牢相逢：沒有自己的營，也有自己的兄弟",
++    "opening": "盟軍帳外，張飛正為分不到軍糧吵得滿臉通紅。劉備把自己的餅掰成幾份，連你的那份也算進去：「先吃。餓著，可守不住旗。」",
++    "nodes": [
++      {
++        "turn": 2,
++        "options": [
++          {
++            "label": "請戰救受困友軍",
++            "consequence": "你帶兵補入缺口，關羽抬刀與你並行：「跟好。」結果：記護民，保住友軍隊伍。",
++            "id": "rescue"
++          },
++          {
++            "label": "修整破損軍械",
++            "consequence": "你把各營丟棄的兵器修成能用的傢伙。張飛試了槍，大笑：「這下不欠他們了！」結果：後勤／軍械路線前置。",
++            "id": "repair"
++          }
++        ],
++        "title": "輪不到的軍功",
++        "id": "S1.A"
++      },
++      {
++        "turn": 6,
++        "options": [
++          {
++            "label": "把傷兵記入自己名簿",
++            "consequence": "劉備看完，將名簿合上：「都算我們的。」結果：記護民。",
++            "id": "shelter"
++          },
++          {
++            "label": "教新隊長分段接防",
++            "consequence": "你讓隊長輪流守旗，關羽第一次直接向他們交代任務；記交接。",
++            "id": "handover"
++          }
++        ],
++        "title": "沒人認領的傷兵",
++        "id": "S1.B"
++      }
++    ],
++    "code": "S1",
++    "slug": "hulao"
++  },
++  {
++    "stages": [
++      "城外哨營",
++      "糧道",
++      "城門爭奪",
++      "巷戰",
++      "家眷護送",
++      "追騎",
++      "突圍接應"
++    ],
++    "title": "徐州風雨：我們總得有個家",
++    "opening": "城裡第一次有人喊你們「自家兵」。張飛高興得在地圖上圈出酒坊，趙雲卻先圈了井與城門：「守住這些，他們才喊得久。」",
++    "nodes": [
++      {
++        "turn": 2,
++        "options": [
++          {
++            "label": "修倉安置流民",
++            "consequence": "你把可耕地與糧種一併造冊；記護民，仁政國策前置。",
++            "id": "granary"
++          },
++          {
++            "label": "重整城防隊伍",
++            "consequence": "你把新舊部曲編入共同守備；軍事國策前置。",
++            "id": "defend"
++          }
++        ],
++        "title": "新領地的第一件事",
++        "id": "S2.A"
++      },
++      {
++        "turn": 6,
++        "options": [
++          {
++            "label": "分路護送家眷",
++            "consequence": "你親自折返最後一條巷子，帶出困住的百姓；記護民。",
++            "id": "shelter"
++          },
++          {
++            "label": "讓年輕隊長領一支撤隊",
++            "consequence": "你給他真實權責，趙雲護住另一翼；記交接。",
++            "id": "handover"
++          }
++        ],
++        "title": "守城失利，必須撤走",
++        "id": "S2.B"
++      }
++    ],
++    "code": "S2",
++    "slug": "xuzhou"
++  },
++  {
++    "stages": [
++      "村口散兵",
++      "廢車道",
++      "追騎",
++      "橋前陣",
++      "張飛側翼",
++      "渡口護送",
++      "趙雲歸途接應"
++    ],
++    "title": "長坂：回頭的那一騎",
++    "opening": "諸葛亮第一次把地圖攤到你面前。你還沒聽完那個遙遠的天下，斥候已帶來追兵的消息。趙雲翻身上馬：「大的計畫先放著。眼前這些人，得先過河。」",
++    "nodes": [
++      {
++        "turn": 2,
++        "options": [
++          {
++            "label": "折返接人",
++            "consequence": "你領步卒拆車架、架便橋，為趙雲留接應點；記護民。",
++            "id": "rescue"
++          },
++          {
++            "label": "奪側翼高地",
++            "consequence": "你用旗號引走部分追騎，張飛得以縮短正面防線；軍事前置。",
++            "id": "flank"
++          }
++        ],
++        "title": "道路被車隊堵死",
++        "id": "S3.A"
++      },
++      {
++        "turn": 6,
++        "options": [
++          {
++            "label": "留舟接最後一隊",
++            "consequence": "劉備已催你登船，你把纜繩重新扣回樁上：「還有一隊。」記護民。",
++            "id": "shelter"
++          },
++          {
++            "label": "交新隊長維持渡序",
++            "consequence": "你去接趙雲，他接住渡口；記交接。",
++            "id": "handover"
++          }
++        ],
++        "title": "到渡口後",
++        "id": "S3.B"
++      }
++    ],
++    "code": "S3",
++    "slug": "changban"
++  },
++  {
++    "stages": [
++      "江口前哨",
++      "曹軍游舟",
++      "南岸營",
++      "火線側翼",
++      "聯軍接應",
++      "曹軍退道",
++      "江陵外圍"
++    ],
++    "title": "赤壁借勢：有人願與我們同戰",
++    "opening": "江東帳上有人問，劉備還剩多少兵。你正要起身，魯肅先將兩張地圖推在一起：「先問，合在一起能做什麼。」諸葛亮朝你點頭。",
++    "nodes": [
++      {
++        "turn": 2,
++        "options": [
++          {
++            "label": "定下互援與通航約章",
++            "consequence": "共同確認糧船、軍使與撤退通道，具體到旗號和停靠處。結果：D-S1 第一準備。",
++            "id": "pact"
++          },
++          {
++            "label": "優先爭取己方作戰空間",
++            "consequence": "確保劉備軍有可立功的戰線。結果：軍事國策前置；維持普通聯盟。",
++            "id": "position"
++          }
++        ],
++        "title": "聯軍約定",
++        "id": "S4.A"
++      },
++      {
++        "turn": 6,
++        "options": [
++          {
++            "label": "自領救援船隊",
++            "consequence": "你照盟約接起兩軍落水者；記護民。",
++            "id": "shelter"
++          },
++          {
++            "label": "讓兩軍副將共掌接應",
++            "consequence": "一支旗令就能叫動兩家的舟船；記交接，培養跨營信任。",
++            "id": "handover"
++          }
++        ],
++        "title": "火起時誰去接人",
++        "id": "S4.B"
++      }
++    ],
++    "code": "S4",
++    "slug": "chibi"
++  },
++  {
++    "stages": [
++      "山口營",
++      "涪城外道",
++      "雒城前陣",
++      "險隘",
++      "成都糧路",
++      "城外精兵",
++      "護民入城"
++    ],
++    "title": "入蜀：讓天下之計有一個落腳處",
++    "opening": "龐統把成都的位置一指：「地方很好，問題是人家還住在裡頭。」劉備沉默片刻，望向你：「進城之後，得讓人知道我們為何而來。」",
++    "nodes": [
++      {
++        "turn": 2,
++        "options": [
++          {
++            "label": "保留地方糧籍，修復水利",
++            "consequence": "不因換旗打散耕作，為新政提供基礎；記護民、仁政前置。",
++            "id": "granary"
++          },
++          {
++            "label": "先穩住山口與武庫",
++            "consequence": "整編交通與軍備，為漢中提供軍事前置。",
++            "id": "arsenal"
++          }
++        ],
++        "title": "進軍以後怎麼生活",
++        "id": "S5.A"
++      },
++      {
++        "turn": 6,
++        "options": [
++          {
++            "label": "讓新舊官吏共同交接",
++            "consequence": "你不把所有公文收進自己案上，明定各署承辦；記交接，D-S2 第一準備。",
++            "id": "handover"
++          },
++          {
++            "label": "由自己巡迴統籌",
++            "consequence": "迅速處理急務，取得當章收益；分工改命尚缺前置。",
++            "id": "personal"
++          }
++        ],
++        "title": "把事情交給誰",
++        "id": "S5.B"
++      }
++    ],
++    "code": "S5",
++    "slug": "yizhou"
++  },
++  {
++    "stages": [
++      "山麓哨寨",
++      "弩台",
++      "定軍山隘",
++      "黃忠接戰",
++      "曹軍糧道",
++      "反攻精銳",
++      "漢水接應"
++    ],
++    "title": "漢中：這座山，我們一起拿下",
++    "opening": "黃忠試弓時，年輕人還在估山有多高。他放下弓，對你說：「我只管前頭那一箭。後頭的事，信你。」",
++    "nodes": [
++      {
++        "turn": 2,
++        "options": [
++          {
++            "label": "開漢中至荊州的接力聯絡",
++            "consequence": "預留關津、驛舟與援軍名額，放棄一份當章進攻獎勵；D-S1 第二準備。",
++            "id": "corridor"
++          },
++          {
++            "label": "集中精兵奪山",
++            "consequence": "支援黃忠與法正的突破方案；軍事國策前置。",
++            "id": "assault"
++          }
++        ],
++        "title": "山戰與後路",
++        "id": "S6.A"
++      },
++      {
++        "turn": 6,
++        "options": [
++          {
++            "label": "建立可替換的糧運班底",
++            "consequence": "讓蔣琬等人能在無主帥逐筆批示時運轉後勤；記交接，D-S2 第二準備。",
++            "id": "handover"
++          },
++          {
++            "label": "由你親守前線倉道",
++            "consequence": "強化當章前線供給；軍事國策前置。",
++            "id": "guard"
++          }
++        ],
++        "title": "誰掌握糧道",
++        "id": "S6.B"
++      }
++    ],
++    "code": "S6",
++    "slug": "hanzhong"
++  },
++  {
++    "stages": [
++      "漢水哨線",
++      "斷信驛",
++      "江陵外道",
++      "夜渡口",
++      "散兵接應",
++      "麥城外圍",
++      "關羽突圍"
++    ],
++    "title": "荊州烽火：二哥，這次換我來接你",
++    "opening": "最初是捷報，接著是斷信，最後只有一個滿身泥水的傳令兵。帳內突然安靜。你展開早已備好的水路圖，手指落在麥城之外。",
++    "nodes": [
++      {
++        "turn": 2,
++        "options": [
++          {
++            "label": "啟用盟約與接力水路",
++            "consequence": "需 S4.A=`pact`、S6.A=`corridor`，才能啟動完整 D-S1 挑戰。你把令旗往案上一按：「我知道他在哪裡。」無準備時可救散兵，明示尚不能救關羽。",
++            "id": "rescue"
++          },
++          {
++            "label": "集中保住西岸防線",
++            "consequence": "穩定蜀軍退路，走常規命運，不把選項寫成懦弱。",
++            "id": "defend"
++          }
++        ],
++        "title": "今夜是否出援",
++        "id": "S7.A"
++      },
++      {
++        "turn": 6,
++        "options": [
++          {
++            "label": "以活人為先，重修盟約",
++            "consequence": "若救援成功，關羽與你一起交出報復軍令，換俘虜與停戰；D-S1 完整收束。若未成功，演劉備東征、夷陵受挫後接受此約。",
++            "id": "pact"
++          },
++          {
++            "label": "交下一代整訓國軍",
++            "consequence": "記交接。成功救援後未締新約只算階段改寫；常規線則在夷陵之後保留部曲與經驗，不永久封死下一章。",
++            "id": "handover"
++          }
++        ],
++        "title": "戰後要追回什麼",
++        "id": "S7.B"
++      }
++    ],
++    "code": "S7",
++    "slug": "jingzhou"
++  },
++  {
++    "stages": [
++      "祁山外寨",
++      "隴道守備",
++      "前軍脫困",
++      "糧道攻防",
++      "渭水接應",
++      "司馬軍前鋒",
++      "五丈原對陣"
++    ],
++    "title": "北伐星火：丞相，剩下的路一起走",
++    "opening": "大帳還亮著。諸葛亮把最後一卷軍報移到燈下，發現你已坐在對面。你放下自己的那一份：「今夜，一人一半。」",
++    "nodes": [
++      {
++        "turn": 2,
++        "options": [
++          {
++            "label": "啟用分工與輪值",
++            "consequence": "需 S5.B、S6.B 都是 `handover`，才能接起 D-S2。你帶來的是能運作的人與規程，沒有拿仙丹逼孔明睡覺。",
++            "id": "delegate"
++          },
++          {
++            "label": "集中資源決戰前線",
++            "consequence": "追求常規軍事圓夢，北伐基線保留，軍事國策前置。",
++            "id": "advance"
++          }
++        ],
++        "title": "把重擔接過來",
++        "id": "S8.A"
++      },
++      {
++        "turn": 6,
++        "options": [
++          {
++            "label": "交接軍政，接受輪休",
++            "consequence": "記交接；D-S2 最終承諾。孔明把一半批示交給蔣琬，又把另一半推給你：「既如此，別讓我明早來替你補。」",
++            "id": "handover"
++          },
++          {
++            "label": "親領決勝先鋒",
++            "consequence": "把自己的主結局定位在前線功業；沒有交接閉環則不宣告孔明長期得以卸重。",
++            "id": "vanguard"
++          }
++        ],
++        "title": "軍令留給明天",
++        "id": "S8.B"
++      }
++    ],
++    "code": "S8",
++    "slug": "northern"
++  }
++] as const;
+diff --git a/content-source/shu/story.ts b/content-source/shu/story.ts
+new file mode 100644
+index 0000000..19a703b
+--- /dev/null
++++ b/content-source/shu/story.ts
+@@ -0,0 +1,109 @@
++import type { StoryChapterDef, StoryRequirement, StoryScene } from '../../src/contracts/core/story.js';
++import { chapterId } from '../../src/contracts/core/ids.js';
++import { asKey } from '../authoring.js';
++import { shuDef } from './pack-id.js';
++import { shuScript } from './script.js';
++
++export const shuStoryTexts: Record<string, string> = {};
++const text = (key: string, body: string) => { shuStoryTexts[key] = body; return asKey(key); };
++const scene = (id: string, title: string, body: string): StoryScene => ({ id,
++  titleKey: text(`${id}.title`, title), bodyKey: text(`${id}.body`, body) });
++export const choice = (node: string, option: string): StoryRequirement => ({ kind: 'choice', node, option });
++export const milestone = (id: string): StoryRequirement => ({ kind: 'milestone', id });
++export const rescuePrep = [choice('S4.A', 'pact'), choice('S6.A', 'corridor')];
++export const rescueActive = [...rescuePrep, choice('S7.A', 'rescue')];
++export const dawnPrep = [choice('S5.B', 'handover'), choice('S6.B', 'handover')];
++export const dawnActive = [...dawnPrep, choice('S8.A', 'delegate')];
++
++const aftermath = [
++  '夜裡，你們圍著小小的火。劉備問你願不願同行，張飛搶著說：「飯都吃了，還問！」關羽替你把鬆掉的槍纓重新繫好。你終於有了一面願意跟隨的旗。',
++  '徐州的城門漸漸消失在身後。劉備望著離去的人潮，你將名簿交給他：「地方還能再找，這些人，我們帶出來了。」趙雲領著失散的隊伍從另一條路追了上來。',
++  '趙雲自煙塵中奔回，看見你留的旗，勒馬笑了一下：「就知道你在。」船隊在下游重新集合，你們一個個點起歸來的名字。',
++  '江上的火終於熄了。你與江東兵將同一條船推上岸，誰也沒先問旗號。兩家的傷兵同坐一灶。魯肅將航路圖交給你：「這條路，往後也留著。」',
++  '成都終於開門。劉備邀你在府衙吃飯，卻仍習慣把餅分開。空下的席位留給未能走到這裡的龐統；眾人舉杯後，把他未完的地圖攤開。',
++  '黃忠的箭旗在山頂展開。你與劉備並肩望向北方，後方的接應隊陸續抵達。黃忠笑著向你招手：「這座山拿下了，後面的路，也一起走！」',
++  '關羽未能從荊州歸來。其後數年，劉備東征，夷陵受挫；你將歸來的部曲重新編整，把傷兵送回家。失去的人不能忘，活著的人還需要你。未接通援路的缺口，已留在行旅手記。',
++  '五丈原的軍帳漸漸安靜。孔明未能親眼看見那張地圖走到最後，你與下一代將領把它繼續攤平。天色將亮，新的接應隊仍會依約出發。',
++];
++
++const optionHints: Readonly<Record<string, string>> = {
++  'S4.A.pact': '預備改命：訂下互援與通航，為日後荊州接應留下通道。',
++  'S6.A.corridor': '預備改命：接通援路。與赤壁盟約一同完成，才能在荊州救回關羽。',
++  'S7.A.rescue': '若已備盟約與援路：第 5 關可接回關羽。若準備不足，本次只能救援散兵。',
++  'S7.B.pact': '戰後承諾：若接回關羽，重立盟約，讓兄弟重聚的未來延續。',
++  'S5.B.handover': '預備改命：培養官署接班人，替孔明接住軍政重擔。',
++  'S6.B.handover': '預備改命：建立可輪替的糧運班底，與入蜀交接共同支撐北伐。',
++  'S8.A.delegate': '若已備兩次交接：本章第 5 關可穩住補給，讓孔明真正休養。',
++  'S8.B.handover': '戰後承諾：公開交接、執行輪休，讓續燈的成果持續。',
++};
++
++const nodeBodies: Readonly<Record<string, string>> = {
++  'S1.A': '傳令兵從盟軍大帳出來，連你們的名字都沒念。張飛氣得一拍桌，關羽卻看向遠處斷掉的旗：「等他們分軍功，那邊的人就回不來了。」你攤開殘缺的軍圖，決定先做一件誰也攔不住的事。',
++  'S1.B': '幾名傷兵扶著彼此走到營前，原來的隊伍已經散了。有人小聲問：「這裡……還收人嗎？」劉備把位置讓出來。大戰將至，你要先安排他們的去處，或教會新隊長接防。',
++  'S2.A': '府衙的鑰匙交到手裡，桌上立刻堆滿求援的木牘。倉頂漏雨、城門缺守，哪一件都不能等。趙雲已備好馬：「你先辦哪件，我就跟你去哪裡。」',
++  'S2.B': '城上的號角急促起來，最壞的消息終於送到。張飛提矛要去城門，卻被你攔住：「你守住後面，我把人帶出去。」撤退將至，你在名簿上圈出第一批應受護送的人。',
++  'S3.A': '斷軸的車橫在道中央，身後的塵頭越來越近。趙雲翻身上馬，問你：「後面還有人，接不接？」你望向兩側山坡；回頭接人與搶先護住側翼，都得有人立即動身。',
++  'S3.B': '渡口的船一艘艘離岸，遠處還有旗影在奔跑。船夫催你上船，你卻把纜繩又握緊了一分。此刻得先定好接應：留下最後一艘舟，或讓新隊長接手混亂的渡序。',
++  'S4.A': '兩家的旗第一次插在同一張地圖旁。有人只談分守哪段江岸，魯肅卻問：「若有一日是你們受困，我們從哪裡來？」你提起筆，這紙約定可以只管眼前，也可以替將來留一條路。',
++  'S4.B': '火船還沒離岸，江風已把軍旗吹得獵獵作響。周瑜說，進攻的人都有了，還差接人的船。你將燈掛上船頭：「火一起，總得有人往回走。」船隊由你親領，還是先教兩軍副將共同調度？',
++  'S5.A': '山口後是等待春耕的田，軍報旁卻壓著武庫的清單。劉備看了許久：「得有地方站穩，也得讓人願意讓我們站在這裡。」你準備先去修復糧籍與水利，或安定山口和軍械。',
++  'S5.B': '孔明案上的燈比別處都晚熄。你抱來新一疊文書，他揉了揉眉心，仍伸手要接。你把木牘按住：「丞相，這些事不能永遠只有您會。」是安排新舊官吏交接，還是先由你巡迴承擔？',
++  'S6.A': '黃忠指著山頂的敵旗，笑說自己還能先登。你卻發現，漢中到荊州的報信仍會斷在兩處山道。眼前要奪山，遠處也有人等著援手；這一回，你想先把哪條路打開？',
++  'S6.B': '糧隊的老隊長連走三夜，靠著糧車就睡著了。孔明要叫醒他問路，你拿起木牌：「路不能只記在一個人腦裡。」你可以建立輪替班底，也可以親自守住這段最吃緊的倉道。',
++  'S7.A': '急報濕透了半張紙，剩下的字仍看得清：關將軍受困。你展開赤壁的約章與漢中的路簿；能不能把它們接成一條援路，就看這些年留了什麼。出發之前，先定今晚的目標。',
++  'S7.B': '救援隊正在點燈，劉備站在江邊，沒有催你。他只問：「若接得回來，往後還讓兄弟走到這一步嗎？」人尚未歸來，你先把戰後的承諾說清：重修盟約，或交託下一代整軍。',
++  'S8.A': '軍帳裡的燈又亮了一夜。孔明伸手去拿下一封軍報，你先接住了它：「我們跟著您走了這麼遠，不是只學會等您的命令。」你要啟用早先培養的輪值班底，還是將力量壓向前線？',
++  'S8.B': '黎明前，孔明把軍令推到你面前：「這一仗之後，你想怎麼走？」你知道接住一夜還不夠，還要有人接得住明天。是正式交接軍政、落實輪休，還是親領先鋒決戰？',
++};
++
++export const shuStories: readonly StoryChapterDef[] = shuScript.map((raw, index) => {
++  const prefix = `story.shu.${raw.slug}`;
++  const milestones: StoryChapterDef['milestones'] = raw.code === 'S7' ? [{
++    id: 'shu.guanyu-rescued', minCleared: 5, requirements: rescueActive,
++    hintKey: text(`${prefix}.hint`, '麥城回馬｜赤壁訂盟約、漢中備援路，本章選救援並通過第 5 關。'),
++    scene: scene(`${prefix}.rescue`, '二哥，援軍到了！', '河道旁的旗號終於亮起。你把槍杆探向岸邊：「二哥！別看後面，看這裡！」關羽躍上船，你們並肩擋開追兵。\n\n關羽已救出。繼續挑戰或收兵，都不會失去這份成果。'),
++  }] : raw.code === 'S8' ? [{
++    id: 'shu.kongming-rested', minCleared: 5, requirements: dawnActive,
++    hintKey: text(`${prefix}.hint`, '五丈原續燈｜入蜀與漢中皆選交接，本章啟用輪值並通過第 5 關。'),
++    scene: scene(`${prefix}.dawn`, '丞相，這次換我們撐住', '接應隊依約越過渭水，前後軍完成輪換。你把批示簿按下：「您教我們這麼久，也該讓我們真的會一回。」孔明看著營外的旗，終於把筆交到你手上。\n\n指揮接力已穩住。這份成果不會因後續敗退被抹去。'),
++  }] : [];
++  const variants: StoryChapterDef['aftermaths'][number][] = [];
++  if (raw.code === 'S7') {
++    variants.push({ requirements: [milestone('shu.guanyu-rescued'), choice('S7.B', 'pact')],
++      scene: scene(`${prefix}.reunion`, '這一次，我們一起回去', '關羽朝你深深一揖，隨後與你一同重訂盟約。劉備親自出營迎接，張飛的笑聲遠遠傳來。這條夢中的道路不再走向夷陵復仇，你們要帶著活著的人繼續向前。') });
++    variants.push({ requirements: [milestone('shu.guanyu-rescued')],
++      scene: scene(`${prefix}.alive`, '人回來了，約還未定', '關羽平安歸營，兄弟先聚在一桌。荊州的爭端尚未化解，這一輪你沒有完成重修盟約的承諾。救回他的成果保留；後續仍須整軍與協商。') });
++  }
++  if (raw.code === 'S8') {
++    variants.push({ requirements: [milestone('shu.kongming-rested'), choice('S8.B', 'handover'), milestone('shu.guanyu-rescued')],
++      scene: scene(`${prefix}.both`, '晨光裡的兩面旗', '清晨，你在營外找到孔明，他正笑著將風箏線交給孩子。關羽在不遠處等下一次軍議，看見你便抬手相招。這一次，你們都能等到明天。') });
++    variants.push({ requirements: [milestone('shu.kongming-rested'), choice('S8.B', 'handover')],
++      scene: scene(`${prefix}.rest`, '天亮了，丞相', '清晨，孔明第一次沒有獨坐案前。軍署與糧隊依新令輪值，年輕將領來向你回報。他站在帳外，看著晨光說：「看來，真的可以交給你們了。」') });
++    variants.push({ requirements: [milestone('shu.kongming-rested')],
++      scene: scene(`${prefix}.partial`, '接住這一夜', '你穩住本次補給，孔明得以暫歇。長期輪值尚未正式交接，他仍須回到軍案前。這一夜的接力會留下紀錄，但尚未完成續燈的全部承諾。') });
++    variants.push({ requirements: [milestone('shu.guanyu-rescued')],
++      scene: scene(`${prefix}.carry`, '替故人把路走完', '孔明未能走過這一夜。關羽與你並肩站在軍帳外，接過他未完成的圖：「前頭的路，咱們一起走。」你保住的重聚並未失去，而新的承諾仍在。') });
++  }
++  variants.push({ requirements: [], scene: scene(`${prefix}.after`, raw.title, aftermath[index]!) });
++  const normalStages = raw.code === 'S7'
++    ? ['漢水哨線', '斷信驛', '江陵外道', '夜渡口', '散兵接應', '西岸撤離', '退軍接應'] : [...raw.stages];
++  return shuDef('storyChapter', `story:shu.${raw.slug}`, {
++    chapterId: chapterId(`ch:shu.${raw.slug}`),
++    opening: scene(`${prefix}.opening`, raw.title, raw.opening),
++    nodes: raw.nodes.map(n => ({ id: n.id, turn: n.turn,
++      titleKey: text(`${prefix}.${n.id}.title`, n.title),
++      bodyKey: text(`${prefix}.${n.id}.body`, nodeBodies[n.id]!),
++      options: n.options.map(o => ({ id: o.id,
++        labelKey: text(`${prefix}.${n.id}.${o.id}.label`, o.label),
++        consequenceKey: text(`${prefix}.${n.id}.${o.id}.hint`, optionHints[`${n.id}.${o.id}`]
++          ?? (o.id === 'handover' ? '把責任交給下一代，留下本章的交接紀錄。' : '留下這一章的選擇，讓歸營後的承諾有跡可循。')),
++      })),
++    })), milestones, aftermaths: variants,
++    battleVariants: [
++      ...(raw.code === 'S7' ? [{ requirements: rescueActive, briefKeys: [
++        '漢水哨線', '斷信驛', '江陵外道', '夜渡口', '接回關羽', '麥城外圍・同袍接應', '與關羽並肩斷後',
++      ].map((label, i) => text(`${prefix}.rescue.stage.${i}`, label)) }] : []),
++      { requirements: [], briefKeys: normalStages.map((label, i) => text(`${prefix}.stage.${i}`, label)) },
++    ],
++  });
++});
+diff --git a/content/core/defs.json b/content/core/defs.json
+index ade18c1..2d38765 100644
+--- a/content/core/defs.json
++++ b/content/core/defs.json
+@@ -621,21 +621,21 @@
+       100,
+       240,
+       380,
+-      600,
+-      950,
+-      1500,
+-      2370
++      430,
++      480,
++      530,
++      580
+     ],
+     "enemyTroopsByChapter": [
+       515,
+       920,
+       1700,
+       4210,
+-      10400,
+-      25800,
+-      64000,
+-      158000,
+-      392000
++      7000,
++      10000,
++      13000,
++      16000,
++      19000
+     ],
+     "id": "battle:main",
+     "kind": "battleRule",
+diff --git a/content/manifest.json b/content/manifest.json
+index 7b1aab3..49317c1 100644
+--- a/content/manifest.json
++++ b/content/manifest.json
+@@ -17,6 +17,16 @@
+         "pack:core"
+       ],
+       "version": "0.1.0"
++    },
++    {
++      "defCount": 49,
++      "dir": "shu",
++      "loadOrder": 20,
++      "packId": "pack:shu",
++      "requiredPacks": [
++        "pack:core"
++      ],
++      "version": "0.1.0"
+     }
+   ],
+   "runtimeVersion": "0.1.0"
+diff --git a/content/shu/defs.json b/content/shu/defs.json
+new file mode 100644
+index 0000000..cc5b948
+--- /dev/null
++++ b/content/shu/defs.json
+@@ -0,0 +1,3846 @@
++[
++  {
++    "abilities": {
++      "attrs": {
++        "int": 78,
++        "lead": 92,
++        "pol": 88,
++        "war": 76
++      },
++      "skills": [
++        {
++          "skillId": "skill:guwu",
++          "star": 0
++        },
++        {
++          "skillId": "skill:haoling",
++          "star": 2
++        },
++        {
++          "skillId": "skill:jiezhi",
++          "star": 4
++        }
++      ],
++      "traits": [
++        "trait:chenyi",
++        "trait:liande"
++      ]
++    },
++    "base": {
++      "specialty": "lead",
++      "specialtyWeight": 1
++    },
++    "factionId": "faction:shu",
++    "id": "notable:liubei",
++    "kind": "notable",
++    "nameKey": "notable.liubei.name",
++    "notableId": "notable:liubei",
++    "packId": "pack:shu",
++    "rarity": 5,
++    "schemaVersion": 1,
++    "unlocks": [
++      {
++        "descKey": "notable.liubei.link",
++        "funcType": "LinkBonus",
++        "referId": 4101,
++        "star": 0
++      },
++      {
++        "descKey": "notable.liubei.specialty",
++        "funcType": "LinkBonus",
++        "referId": 4111,
++        "star": 1
++      },
++      {
++        "descKey": "notable.liubei.bias",
++        "funcType": "SlotBias",
++        "referId": 4001,
++        "star": 2
++      },
++      {
++        "descKey": "notable.liubei.specialty",
++        "funcType": "LinkBonus",
++        "referId": 4111,
++        "star": 3
++      },
++      {
++        "descKey": "notable.liubei.specialty",
++        "funcType": "LinkBonus",
++        "referId": 4111,
++        "star": 5
++      }
++    ]
++  },
++  {
++    "abilities": {
++      "attrs": {
++        "int": 72,
++        "lead": 90,
++        "pol": 62,
++        "war": 97
++      },
++      "skills": [
++        {
++          "skillId": "skill:tuzhen",
++          "star": 0
++        },
++        {
++          "skillId": "skill:xianzhen",
++          "star": 2
++        },
++        {
++          "skillId": "skill:wanrenzhi",
++          "star": 4
++        }
++      ],
++      "traits": [
++        "trait:danshi",
++        "trait:linzhen"
++      ]
++    },
++    "base": {
++      "specialty": "war",
++      "specialtyWeight": 1
++    },
++    "factionId": "faction:shu",
++    "id": "notable:guanyu",
++    "kind": "notable",
++    "nameKey": "notable.guanyu.name",
++    "notableId": "notable:guanyu",
++    "packId": "pack:shu",
++    "rarity": 5,
++    "schemaVersion": 1,
++    "unlocks": [
++      {
++        "descKey": "notable.guanyu.link",
++        "funcType": "LinkBonus",
++        "referId": 4101,
++        "star": 0
++      },
++      {
++        "descKey": "notable.guanyu.specialty",
++        "funcType": "LinkBonus",
++        "referId": 4113,
++        "star": 1
++      },
++      {
++        "descKey": "notable.guanyu.bias",
++        "funcType": "SlotBias",
++        "referId": 4002,
++        "star": 2
++      },
++      {
++        "descKey": "notable.guanyu.specialty",
++        "funcType": "LinkBonus",
++        "referId": 4113,
++        "star": 3
++      },
++      {
++        "descKey": "notable.guanyu.specialty",
++        "funcType": "LinkBonus",
++        "referId": 4113,
++        "star": 5
++      }
++    ]
++  },
++  {
++    "abilities": {
++      "attrs": {
++        "int": 56,
++        "lead": 86,
++        "pol": 42,
++        "war": 96
++      },
++      "skills": [
++        {
++          "skillId": "skill:guwu",
++          "star": 0
++        },
++        {
++          "skillId": "skill:haoling",
++          "star": 2
++        },
++        {
++          "skillId": "skill:xianzhen",
++          "star": 4
++        }
++      ],
++      "traits": [
++        "trait:danshi",
++        "trait:linzhen"
++      ]
++    },
++    "base": {
++      "specialty": "lead",
++      "specialtyWeight": 1
++    },
++    "factionId": "faction:shu",
++    "id": "notable:zhangfei",
++    "kind": "notable",
++    "nameKey": "notable.zhangfei.name",
++    "notableId": "notable:zhangfei",
++    "packId": "pack:shu",
++    "rarity": 4,
++    "schemaVersion": 1,
++    "unlocks": [
++      {
++        "descKey": "notable.zhangfei.link",
++        "funcType": "LinkBonus",
++        "referId": 4101,
++        "star": 0
++      },
++      {
++        "descKey": "notable.zhangfei.specialty",
++        "funcType": "LinkBonus",
++        "referId": 4111,
++        "star": 1
++      },
++      {
++        "descKey": "notable.zhangfei.bias",
++        "funcType": "SlotBias",
++        "referId": 4001,
++        "star": 2
++      },
++      {
++        "descKey": "notable.zhangfei.specialty",
++        "funcType": "LinkBonus",
++        "referId": 4111,
++        "star": 3
++      },
++      {
++        "descKey": "notable.zhangfei.specialty",
++        "funcType": "LinkBonus",
++        "referId": 4111,
++        "star": 5
++      }
++    ]
++  },
++  {
++    "abilities": {
++      "attrs": {
++        "int": 76,
++        "lead": 89,
++        "pol": 69,
++        "war": 94
++      },
++      "skills": [
++        {
++          "skillId": "skill:tuzhen",
++          "star": 0
++        },
++        {
++          "skillId": "skill:xianzhen",
++          "star": 2
++        },
++        {
++          "skillId": "skill:jiezhi",
++          "star": 4
++        }
++      ],
++      "traits": [
++        "trait:chenyi",
++        "trait:danshi"
++      ]
++    },
++    "base": {
++      "specialty": "war",
++      "specialtyWeight": 1
++    },
++    "factionId": "faction:shu",
++    "id": "notable:zhaoyun",
++    "kind": "notable",
++    "nameKey": "notable.zhaoyun.name",
++    "notableId": "notable:zhaoyun",
++    "packId": "pack:shu",
++    "rarity": 4,
++    "schemaVersion": 1,
++    "unlocks": [
++      {
++        "descKey": "notable.zhaoyun.link",
++        "funcType": "LinkBonus",
++        "referId": 4101,
++        "star": 0
++      },
++      {
++        "descKey": "notable.zhaoyun.specialty",
++        "funcType": "LinkBonus",
++        "referId": 4113,
++        "star": 1
++      },
++      {
++        "descKey": "notable.zhaoyun.bias",
++        "funcType": "SlotBias",
++        "referId": 4002,
++        "star": 2
++      },
++      {
++        "descKey": "notable.zhaoyun.specialty",
++        "funcType": "LinkBonus",
++        "referId": 4113,
++        "star": 3
++      },
++      {
++        "descKey": "notable.zhaoyun.specialty",
++        "funcType": "LinkBonus",
++        "referId": 4113,
++        "star": 5
++      }
++    ]
++  },
++  {
++    "abilities": {
++      "attrs": {
++        "int": 99,
++        "lead": 91,
++        "pol": 96,
++        "war": 40
++      },
++      "skills": [
++        {
++          "skillId": "skill:huoji",
++          "star": 0
++        },
++        {
++          "skillId": "skill:shuiyan",
++          "star": 2
++        },
++        {
++          "skillId": "skill:lianhuan",
++          "star": 4
++        }
++      ],
++      "traits": [
++        "trait:jimin",
++        "trait:liaodi"
++      ]
++    },
++    "base": {
++      "specialty": "int",
++      "specialtyWeight": 1
++    },
++    "factionId": "faction:shu",
++    "id": "notable:zhugeliang",
++    "kind": "notable",
++    "nameKey": "notable.zhugeliang.name",
++    "notableId": "notable:zhugeliang",
++    "packId": "pack:shu",
++    "rarity": 5,
++    "schemaVersion": 1,
++    "unlocks": [
++      {
++        "descKey": "notable.zhugeliang.link",
++        "funcType": "LinkBonus",
++        "referId": 4101,
++        "star": 0
++      },
++      {
++        "descKey": "notable.zhugeliang.specialty",
++        "funcType": "LinkBonus",
++        "referId": 4116,
++        "star": 1
++      },
++      {
++        "descKey": "notable.zhugeliang.bias",
++        "funcType": "SlotBias",
++        "referId": 4003,
++        "star": 2
++      },
++      {
++        "descKey": "notable.zhugeliang.specialty",
++        "funcType": "LinkBonus",
++        "referId": 4116,
++        "star": 3
++      },
++      {
++        "descKey": "notable.zhugeliang.specialty",
++        "funcType": "LinkBonus",
++        "referId": 4116,
++        "star": 5
++      }
++    ]
++  },
++  {
++    "abilities": {
++      "attrs": {
++        "int": 83,
++        "lead": 68,
++        "pol": 93,
++        "war": 42
++      },
++      "skills": [
++        {
++          "skillId": "skill:fumin",
++          "star": 0
++        },
++        {
++          "skillId": "skill:luanci",
++          "star": 2
++        },
++        {
++          "skillId": "skill:tuntian",
++          "star": 4
++        }
++      ],
++      "traits": [
++        "trait:liande",
++        "trait:zhechong"
++      ]
++    },
++    "base": {
++      "specialty": "pol",
++      "specialtyWeight": 1
++    },
++    "factionId": "faction:shu",
++    "id": "notable:jiangwan",
++    "kind": "notable",
++    "nameKey": "notable.jiangwan.name",
++    "notableId": "notable:jiangwan",
++    "packId": "pack:shu",
++    "rarity": 3,
++    "schemaVersion": 1,
++    "unlocks": [
++      {
++        "descKey": "notable.jiangwan.link",
++        "funcType": "LinkBonus",
++        "referId": 4101,
++        "star": 0
++      },
++      {
++        "descKey": "notable.jiangwan.specialty",
++        "funcType": "LinkBonus",
++        "referId": 4117,
++        "star": 1
++      },
++      {
++        "descKey": "notable.jiangwan.bias",
++        "funcType": "SlotBias",
++        "referId": 4004,
++        "star": 2
++      },
++      {
++        "descKey": "notable.jiangwan.specialty",
++        "funcType": "LinkBonus",
++        "referId": 4117,
++        "star": 3
++      },
++      {
++        "descKey": "notable.jiangwan.specialty",
++        "funcType": "LinkBonus",
++        "referId": 4117,
++        "star": 5
++      }
++    ]
++  },
++  {
++    "entries": [
++      {
++        "notableId": "notable:liubei",
++        "requirements": [],
++        "weight": 10
++      },
++      {
++        "notableId": "notable:guanyu",
++        "requirements": [],
++        "weight": 10
++      },
++      {
++        "notableId": "notable:zhangfei",
++        "requirements": [],
++        "weight": 10
++      },
++      {
++        "notableId": "notable:zhaoyun",
++        "requirements": [],
++        "weight": 10
++      },
++      {
++        "notableId": "notable:zhugeliang",
++        "requirements": [],
++        "weight": 10
++      },
++      {
++        "notableId": "notable:jiangwan",
++        "requirements": [],
++        "weight": 10
++      }
++    ],
++    "factionId": "faction:shu",
++    "id": "pool:shu.superiors",
++    "kind": "notablePool",
++    "packId": "pack:shu",
++    "poolId": "pool:shu.superiors",
++    "schemaVersion": 1
++  },
++  {
++    "bondSpeechKeys": [
++      "lord.shu.bond.0",
++      "lord.shu.bond.1",
++      "lord.shu.bond.2",
++      "lord.shu.bond.3"
++    ],
++    "faction": "faction:shu",
++    "id": "faction:shu",
++    "kind": "faction",
++    "lordId": "notable:liubei",
++    "nameKey": "faction.shu.name",
++    "packId": "pack:shu",
++    "rejectReasonKey": "faction.shu.reject",
++    "requirements": [],
++    "schemaVersion": 1,
++    "superiorPoolId": "pool:shu.superiors"
++  },
++  {
++    "category": "bond",
++    "descKey": "shop.bond.shu.desc",
++    "id": "shop:bond.shu",
++    "item": "shop:bond.shu",
++    "kind": "shopItem",
++    "levels": [
++      {
++        "cost": 600,
++        "grant": {
++          "faction": "faction:shu",
++          "kind": "factionBond",
++          "toLevel": 1
++        },
++        "level": 1
++      },
++      {
++        "cost": 1500,
++        "grant": {
++          "faction": "faction:shu",
++          "kind": "factionBond",
++          "toLevel": 2
++        },
++        "level": 2
++      },
++      {
++        "cost": 3200,
++        "grant": {
++          "faction": "faction:shu",
++          "kind": "factionBond",
++          "toLevel": 3
++        },
++        "level": 3
++      }
++    ],
++    "nameKey": "shop.bond.shu.name",
++    "packId": "pack:shu",
++    "requiresItems": [],
++    "requiresPack": "pack:shu",
++    "schemaVersion": 1
++  },
++  {
++    "chapterId": "ch:shu.hulao",
++    "factionId": "faction:shu",
++    "id": "ch:shu.hulao",
++    "kind": "chapter",
++    "length": 8,
++    "onPass": null,
++    "order": 1,
++    "packId": "pack:shu",
++    "schemaVersion": 1,
++    "titleKey": "chapter.shu.hulao.title"
++  },
++  {
++    "chapterId": "ch:shu.xuzhou",
++    "factionId": "faction:shu",
++    "id": "ch:shu.xuzhou",
++    "kind": "chapter",
++    "length": 8,
++    "onPass": null,
++    "order": 2,
++    "packId": "pack:shu",
++    "schemaVersion": 1,
++    "titleKey": "chapter.shu.xuzhou.title"
++  },
++  {
++    "chapterId": "ch:shu.changban",
++    "factionId": "faction:shu",
++    "id": "ch:shu.changban",
++    "kind": "chapter",
++    "length": 8,
++    "onPass": null,
++    "order": 3,
++    "packId": "pack:shu",
++    "schemaVersion": 1,
++    "titleKey": "chapter.shu.changban.title"
++  },
++  {
++    "chapterId": "ch:shu.chibi",
++    "factionId": "faction:shu",
++    "id": "ch:shu.chibi",
++    "kind": "chapter",
++    "length": 8,
++    "onPass": null,
++    "order": 4,
++    "packId": "pack:shu",
++    "schemaVersion": 1,
++    "titleKey": "chapter.shu.chibi.title"
++  },
++  {
++    "chapterId": "ch:shu.yizhou",
++    "factionId": "faction:shu",
++    "id": "ch:shu.yizhou",
++    "kind": "chapter",
++    "length": 8,
++    "onPass": null,
++    "order": 5,
++    "packId": "pack:shu",
++    "schemaVersion": 1,
++    "titleKey": "chapter.shu.yizhou.title"
++  },
++  {
++    "chapterId": "ch:shu.hanzhong",
++    "factionId": "faction:shu",
++    "id": "ch:shu.hanzhong",
++    "kind": "chapter",
++    "length": 8,
++    "onPass": null,
++    "order": 6,
++    "packId": "pack:shu",
++    "schemaVersion": 1,
++    "titleKey": "chapter.shu.hanzhong.title"
++  },
++  {
++    "chapterId": "ch:shu.jingzhou",
++    "factionId": "faction:shu",
++    "id": "ch:shu.jingzhou",
++    "kind": "chapter",
++    "length": 8,
++    "onPass": null,
++    "order": 7,
++    "packId": "pack:shu",
++    "schemaVersion": 1,
++    "titleKey": "chapter.shu.jingzhou.title"
++  },
++  {
++    "chapterId": "ch:shu.northern",
++    "factionId": "faction:shu",
++    "id": "ch:shu.northern",
++    "kind": "chapter",
++    "length": 8,
++    "onPass": null,
++    "order": 8,
++    "packId": "pack:shu",
++    "schemaVersion": 1,
++    "titleKey": "chapter.shu.northern.title"
++  },
++  {
++    "chapters": [
++      "ch:shu.hulao",
++      "ch:shu.xuzhou",
++      "ch:shu.changban",
++      "ch:shu.chibi",
++      "ch:shu.yizhou",
++      "ch:shu.hanzhong",
++      "ch:shu.jingzhou",
++      "ch:shu.northern"
++    ],
++    "factionId": "faction:shu",
++    "id": "seq:shu",
++    "kind": "chapterSequence",
++    "packId": "pack:shu",
++    "schemaVersion": 1
++  },
++  {
++    "attrs": {
++      "int": 40,
++      "lead": 80,
++      "pol": 35,
++      "war": 98
++    },
++    "enemyId": "enemy:shu.lubu",
++    "id": "enemy:shu.lubu",
++    "kind": "enemy",
++    "nameKey": "enemy.shu.lubu.name",
++    "packId": "pack:shu",
++    "schemaVersion": 1,
++    "skillId": "skill:wanrenzhi"
++  },
++  {
++    "attrs": {
++      "int": 65,
++      "lead": 80,
++      "pol": 45,
++      "war": 85
++    },
++    "enemyId": "enemy:shu.cao-vanguard",
++    "id": "enemy:shu.cao-vanguard",
++    "kind": "enemy",
++    "nameKey": "enemy.shu.cao-vanguard.name",
++    "packId": "pack:shu",
++    "schemaVersion": 1,
++    "skillId": "skill:xianzhen"
++  },
++  {
++    "attrs": {
++      "int": 84,
++      "lead": 78,
++      "pol": 55,
++      "war": 72
++    },
++    "enemyId": "enemy:shu.cao-archers",
++    "id": "enemy:shu.cao-archers",
++    "kind": "enemy",
++    "nameKey": "enemy.shu.cao-archers.name",
++    "packId": "pack:shu",
++    "schemaVersion": 1,
++    "skillId": "skill:huoji"
++  },
++  {
++    "attrs": {
++      "int": 70,
++      "lead": 78,
++      "pol": 65,
++      "war": 80
++    },
++    "enemyId": "enemy:shu.yizhou-guard",
++    "id": "enemy:shu.yizhou-guard",
++    "kind": "enemy",
++    "nameKey": "enemy.shu.yizhou-guard.name",
++    "packId": "pack:shu",
++    "schemaVersion": 1,
++    "skillId": "skill:jiezhi"
++  },
++  {
++    "attrs": {
++      "int": 62,
++      "lead": 88,
++      "pol": 50,
++      "war": 90
++    },
++    "enemyId": "enemy:shu.xiahouyuan",
++    "id": "enemy:shu.xiahouyuan",
++    "kind": "enemy",
++    "nameKey": "enemy.shu.xiahouyuan.name",
++    "packId": "pack:shu",
++    "schemaVersion": 1,
++    "skillId": "skill:xianzhen"
++  },
++  {
++    "attrs": {
++      "int": 80,
++      "lead": 86,
++      "pol": 55,
++      "war": 82
++    },
++    "enemyId": "enemy:shu.wu-pursuit",
++    "id": "enemy:shu.wu-pursuit",
++    "kind": "enemy",
++    "nameKey": "enemy.shu.wu-pursuit.name",
++    "packId": "pack:shu",
++    "schemaVersion": 1,
++    "skillId": "skill:shuiyan"
++  },
++  {
++    "attrs": {
++      "int": 98,
++      "lead": 92,
++      "pol": 86,
++      "war": 45
++    },
++    "enemyId": "enemy:shu.simayi",
++    "id": "enemy:shu.simayi",
++    "kind": "enemy",
++    "nameKey": "enemy.shu.simayi.name",
++    "packId": "pack:shu",
++    "schemaVersion": 1,
++    "skillId": "skill:lianhuan"
++  },
++  {
++    "campaignId": "campaign:shu.hulao",
++    "chapterId": "ch:shu.hulao",
++    "enemyNotables": [],
++    "id": "campaign:shu.hulao",
++    "kind": "campaign",
++    "packId": "pack:shu",
++    "schemaVersion": 1,
++    "stages": [
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.hulao.stage.0",
++        "damageMul": 0.45,
++        "rewards": [
++          {
++            "amount": 8,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 8,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 8,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 8,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 0.66
++      },
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.hulao.stage.1",
++        "damageMul": 0.51,
++        "rewards": [
++          {
++            "amount": 15,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 15,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 15,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 15,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 0.76
++      },
++      {
++        "boss": "enemy:shu.lubu",
++        "briefKey": "campaign.shu.hulao.stage.2",
++        "damageMul": 0.58,
++        "rewards": [
++          {
++            "amount": 23,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 23,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 23,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 23,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 0.87
++      },
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.hulao.stage.3",
++        "damageMul": 0.66,
++        "rewards": [
++          {
++            "amount": 30,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 30,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 30,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 30,
++            "attr": "pol",
++            "kind": "exp"
++          },
++          {
++            "kind": "unlock",
++            "skill": null,
++            "trait": "trait:chenyi"
++          }
++        ],
++        "troopsMul": 1
++      },
++      {
++        "boss": "enemy:shu.lubu",
++        "briefKey": "campaign.shu.hulao.stage.4",
++        "damageMul": 0.74,
++        "rewards": [
++          {
++            "amount": 38,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 38,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 38,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 38,
++            "attr": "pol",
++            "kind": "exp"
++          },
++          {
++            "kind": "unlock",
++            "skill": "skill:jiezhi",
++            "trait": null
++          }
++        ],
++        "troopsMul": 1.15
++      },
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.hulao.stage.5",
++        "damageMul": 0.84,
++        "rewards": [
++          {
++            "amount": 45,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 45,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 45,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 45,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 1.32
++      },
++      {
++        "boss": "enemy:shu.lubu",
++        "briefKey": "campaign.shu.hulao.stage.6",
++        "damageMul": 0.95,
++        "rewards": [
++          {
++            "amount": 53,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 53,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 53,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 53,
++            "attr": "pol",
++            "kind": "exp"
++          },
++          {
++            "kind": "unlock",
++            "skill": "skill:xianzhen",
++            "trait": null
++          }
++        ],
++        "troopsMul": 1.52
++      }
++    ]
++  },
++  {
++    "campaignId": "campaign:shu.xuzhou",
++    "chapterId": "ch:shu.xuzhou",
++    "enemyNotables": [],
++    "id": "campaign:shu.xuzhou",
++    "kind": "campaign",
++    "packId": "pack:shu",
++    "schemaVersion": 1,
++    "stages": [
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.xuzhou.stage.0",
++        "damageMul": 0.45,
++        "rewards": [
++          {
++            "amount": 8,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 8,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 8,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 8,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 0.66
++      },
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.xuzhou.stage.1",
++        "damageMul": 0.51,
++        "rewards": [
++          {
++            "amount": 15,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 15,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 15,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 15,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 0.76
++      },
++      {
++        "boss": "enemy:shu.cao-vanguard",
++        "briefKey": "campaign.shu.xuzhou.stage.2",
++        "damageMul": 0.58,
++        "rewards": [
++          {
++            "amount": 23,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 23,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 23,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 23,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 0.87
++      },
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.xuzhou.stage.3",
++        "damageMul": 0.66,
++        "rewards": [
++          {
++            "amount": 30,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 30,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 30,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 30,
++            "attr": "pol",
++            "kind": "exp"
++          },
++          {
++            "kind": "unlock",
++            "skill": null,
++            "trait": "trait:chenyi"
++          }
++        ],
++        "troopsMul": 1
++      },
++      {
++        "boss": "enemy:shu.cao-vanguard",
++        "briefKey": "campaign.shu.xuzhou.stage.4",
++        "damageMul": 0.74,
++        "rewards": [
++          {
++            "amount": 38,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 38,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 38,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 38,
++            "attr": "pol",
++            "kind": "exp"
++          },
++          {
++            "kind": "unlock",
++            "skill": "skill:jiezhi",
++            "trait": null
++          }
++        ],
++        "troopsMul": 1.15
++      },
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.xuzhou.stage.5",
++        "damageMul": 0.84,
++        "rewards": [
++          {
++            "amount": 45,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 45,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 45,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 45,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 1.32
++      },
++      {
++        "boss": "enemy:shu.cao-vanguard",
++        "briefKey": "campaign.shu.xuzhou.stage.6",
++        "damageMul": 0.95,
++        "rewards": [
++          {
++            "amount": 53,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 53,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 53,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 53,
++            "attr": "pol",
++            "kind": "exp"
++          },
++          {
++            "kind": "unlock",
++            "skill": "skill:xianzhen",
++            "trait": null
++          }
++        ],
++        "troopsMul": 1.52
++      }
++    ]
++  },
++  {
++    "campaignId": "campaign:shu.changban",
++    "chapterId": "ch:shu.changban",
++    "enemyNotables": [],
++    "id": "campaign:shu.changban",
++    "kind": "campaign",
++    "packId": "pack:shu",
++    "schemaVersion": 1,
++    "stages": [
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.changban.stage.0",
++        "damageMul": 0.45,
++        "rewards": [
++          {
++            "amount": 8,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 8,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 8,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 8,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 0.66
++      },
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.changban.stage.1",
++        "damageMul": 0.51,
++        "rewards": [
++          {
++            "amount": 15,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 15,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 15,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 15,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 0.76
++      },
++      {
++        "boss": "enemy:shu.cao-vanguard",
++        "briefKey": "campaign.shu.changban.stage.2",
++        "damageMul": 0.58,
++        "rewards": [
++          {
++            "amount": 23,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 23,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 23,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 23,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 0.87
++      },
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.changban.stage.3",
++        "damageMul": 0.66,
++        "rewards": [
++          {
++            "amount": 30,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 30,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 30,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 30,
++            "attr": "pol",
++            "kind": "exp"
++          },
++          {
++            "kind": "unlock",
++            "skill": null,
++            "trait": "trait:chenyi"
++          }
++        ],
++        "troopsMul": 1
++      },
++      {
++        "boss": "enemy:shu.cao-vanguard",
++        "briefKey": "campaign.shu.changban.stage.4",
++        "damageMul": 0.74,
++        "rewards": [
++          {
++            "amount": 38,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 38,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 38,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 38,
++            "attr": "pol",
++            "kind": "exp"
++          },
++          {
++            "kind": "unlock",
++            "skill": "skill:jiezhi",
++            "trait": null
++          }
++        ],
++        "troopsMul": 1.15
++      },
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.changban.stage.5",
++        "damageMul": 0.84,
++        "rewards": [
++          {
++            "amount": 45,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 45,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 45,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 45,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 1.32
++      },
++      {
++        "boss": "enemy:shu.cao-vanguard",
++        "briefKey": "campaign.shu.changban.stage.6",
++        "damageMul": 0.95,
++        "rewards": [
++          {
++            "amount": 53,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 53,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 53,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 53,
++            "attr": "pol",
++            "kind": "exp"
++          },
++          {
++            "kind": "unlock",
++            "skill": "skill:xianzhen",
++            "trait": null
++          }
++        ],
++        "troopsMul": 1.52
++      }
++    ]
++  },
++  {
++    "campaignId": "campaign:shu.chibi",
++    "chapterId": "ch:shu.chibi",
++    "enemyNotables": [],
++    "id": "campaign:shu.chibi",
++    "kind": "campaign",
++    "packId": "pack:shu",
++    "schemaVersion": 1,
++    "stages": [
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.chibi.stage.0",
++        "damageMul": 0.45,
++        "rewards": [
++          {
++            "amount": 8,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 8,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 8,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 8,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 0.66
++      },
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.chibi.stage.1",
++        "damageMul": 0.51,
++        "rewards": [
++          {
++            "amount": 15,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 15,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 15,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 15,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 0.76
++      },
++      {
++        "boss": "enemy:shu.cao-archers",
++        "briefKey": "campaign.shu.chibi.stage.2",
++        "damageMul": 0.58,
++        "rewards": [
++          {
++            "amount": 23,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 23,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 23,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 23,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 0.87
++      },
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.chibi.stage.3",
++        "damageMul": 0.66,
++        "rewards": [
++          {
++            "amount": 30,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 30,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 30,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 30,
++            "attr": "pol",
++            "kind": "exp"
++          },
++          {
++            "kind": "unlock",
++            "skill": null,
++            "trait": "trait:chenyi"
++          }
++        ],
++        "troopsMul": 1
++      },
++      {
++        "boss": "enemy:shu.cao-archers",
++        "briefKey": "campaign.shu.chibi.stage.4",
++        "damageMul": 0.74,
++        "rewards": [
++          {
++            "amount": 38,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 38,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 38,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 38,
++            "attr": "pol",
++            "kind": "exp"
++          },
++          {
++            "kind": "unlock",
++            "skill": "skill:jiezhi",
++            "trait": null
++          }
++        ],
++        "troopsMul": 1.15
++      },
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.chibi.stage.5",
++        "damageMul": 0.84,
++        "rewards": [
++          {
++            "amount": 45,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 45,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 45,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 45,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 1.32
++      },
++      {
++        "boss": "enemy:shu.cao-archers",
++        "briefKey": "campaign.shu.chibi.stage.6",
++        "damageMul": 0.95,
++        "rewards": [
++          {
++            "amount": 53,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 53,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 53,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 53,
++            "attr": "pol",
++            "kind": "exp"
++          },
++          {
++            "kind": "unlock",
++            "skill": "skill:xianzhen",
++            "trait": null
++          }
++        ],
++        "troopsMul": 1.52
++      }
++    ]
++  },
++  {
++    "campaignId": "campaign:shu.yizhou",
++    "chapterId": "ch:shu.yizhou",
++    "enemyNotables": [],
++    "id": "campaign:shu.yizhou",
++    "kind": "campaign",
++    "packId": "pack:shu",
++    "schemaVersion": 1,
++    "stages": [
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.yizhou.stage.0",
++        "damageMul": 0.45,
++        "rewards": [
++          {
++            "amount": 8,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 8,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 8,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 8,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 0.66
++      },
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.yizhou.stage.1",
++        "damageMul": 0.51,
++        "rewards": [
++          {
++            "amount": 15,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 15,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 15,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 15,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 0.76
++      },
++      {
++        "boss": "enemy:shu.yizhou-guard",
++        "briefKey": "campaign.shu.yizhou.stage.2",
++        "damageMul": 0.58,
++        "rewards": [
++          {
++            "amount": 23,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 23,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 23,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 23,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 0.87
++      },
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.yizhou.stage.3",
++        "damageMul": 0.66,
++        "rewards": [
++          {
++            "amount": 30,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 30,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 30,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 30,
++            "attr": "pol",
++            "kind": "exp"
++          },
++          {
++            "kind": "unlock",
++            "skill": null,
++            "trait": "trait:chenyi"
++          }
++        ],
++        "troopsMul": 1
++      },
++      {
++        "boss": "enemy:shu.yizhou-guard",
++        "briefKey": "campaign.shu.yizhou.stage.4",
++        "damageMul": 0.74,
++        "rewards": [
++          {
++            "amount": 38,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 38,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 38,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 38,
++            "attr": "pol",
++            "kind": "exp"
++          },
++          {
++            "kind": "unlock",
++            "skill": "skill:jiezhi",
++            "trait": null
++          }
++        ],
++        "troopsMul": 1.15
++      },
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.yizhou.stage.5",
++        "damageMul": 0.84,
++        "rewards": [
++          {
++            "amount": 45,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 45,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 45,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 45,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 1.32
++      },
++      {
++        "boss": "enemy:shu.yizhou-guard",
++        "briefKey": "campaign.shu.yizhou.stage.6",
++        "damageMul": 0.95,
++        "rewards": [
++          {
++            "amount": 53,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 53,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 53,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 53,
++            "attr": "pol",
++            "kind": "exp"
++          },
++          {
++            "kind": "unlock",
++            "skill": "skill:xianzhen",
++            "trait": null
++          }
++        ],
++        "troopsMul": 1.52
++      }
++    ]
++  },
++  {
++    "campaignId": "campaign:shu.hanzhong",
++    "chapterId": "ch:shu.hanzhong",
++    "enemyNotables": [],
++    "id": "campaign:shu.hanzhong",
++    "kind": "campaign",
++    "packId": "pack:shu",
++    "schemaVersion": 1,
++    "stages": [
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.hanzhong.stage.0",
++        "damageMul": 0.45,
++        "rewards": [
++          {
++            "amount": 8,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 8,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 8,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 8,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 0.66
++      },
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.hanzhong.stage.1",
++        "damageMul": 0.51,
++        "rewards": [
++          {
++            "amount": 15,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 15,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 15,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 15,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 0.76
++      },
++      {
++        "boss": "enemy:shu.xiahouyuan",
++        "briefKey": "campaign.shu.hanzhong.stage.2",
++        "damageMul": 0.58,
++        "rewards": [
++          {
++            "amount": 23,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 23,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 23,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 23,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 0.87
++      },
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.hanzhong.stage.3",
++        "damageMul": 0.66,
++        "rewards": [
++          {
++            "amount": 30,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 30,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 30,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 30,
++            "attr": "pol",
++            "kind": "exp"
++          },
++          {
++            "kind": "unlock",
++            "skill": null,
++            "trait": "trait:chenyi"
++          }
++        ],
++        "troopsMul": 1
++      },
++      {
++        "boss": "enemy:shu.xiahouyuan",
++        "briefKey": "campaign.shu.hanzhong.stage.4",
++        "damageMul": 0.74,
++        "rewards": [
++          {
++            "amount": 38,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 38,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 38,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 38,
++            "attr": "pol",
++            "kind": "exp"
++          },
++          {
++            "kind": "unlock",
++            "skill": "skill:jiezhi",
++            "trait": null
++          }
++        ],
++        "troopsMul": 1.15
++      },
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.hanzhong.stage.5",
++        "damageMul": 0.84,
++        "rewards": [
++          {
++            "amount": 45,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 45,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 45,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 45,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 1.32
++      },
++      {
++        "boss": "enemy:shu.xiahouyuan",
++        "briefKey": "campaign.shu.hanzhong.stage.6",
++        "damageMul": 0.95,
++        "rewards": [
++          {
++            "amount": 53,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 53,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 53,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 53,
++            "attr": "pol",
++            "kind": "exp"
++          },
++          {
++            "kind": "unlock",
++            "skill": "skill:xianzhen",
++            "trait": null
++          }
++        ],
++        "troopsMul": 1.52
++      }
++    ]
++  },
++  {
++    "campaignId": "campaign:shu.jingzhou",
++    "chapterId": "ch:shu.jingzhou",
++    "enemyNotables": [],
++    "id": "campaign:shu.jingzhou",
++    "kind": "campaign",
++    "packId": "pack:shu",
++    "schemaVersion": 1,
++    "stages": [
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.jingzhou.stage.0",
++        "damageMul": 0.45,
++        "rewards": [
++          {
++            "amount": 8,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 8,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 8,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 8,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 0.66
++      },
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.jingzhou.stage.1",
++        "damageMul": 0.51,
++        "rewards": [
++          {
++            "amount": 15,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 15,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 15,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 15,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 0.76
++      },
++      {
++        "boss": "enemy:shu.wu-pursuit",
++        "briefKey": "campaign.shu.jingzhou.stage.2",
++        "damageMul": 0.58,
++        "rewards": [
++          {
++            "amount": 23,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 23,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 23,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 23,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 0.87
++      },
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.jingzhou.stage.3",
++        "damageMul": 0.66,
++        "rewards": [
++          {
++            "amount": 30,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 30,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 30,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 30,
++            "attr": "pol",
++            "kind": "exp"
++          },
++          {
++            "kind": "unlock",
++            "skill": null,
++            "trait": "trait:chenyi"
++          }
++        ],
++        "troopsMul": 1
++      },
++      {
++        "boss": "enemy:shu.wu-pursuit",
++        "briefKey": "campaign.shu.jingzhou.stage.4",
++        "damageMul": 0.74,
++        "rewards": [
++          {
++            "amount": 38,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 38,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 38,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 38,
++            "attr": "pol",
++            "kind": "exp"
++          },
++          {
++            "kind": "unlock",
++            "skill": "skill:jiezhi",
++            "trait": null
++          }
++        ],
++        "troopsMul": 1.15
++      },
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.jingzhou.stage.5",
++        "damageMul": 0.84,
++        "rewards": [
++          {
++            "amount": 45,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 45,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 45,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 45,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 1.32
++      },
++      {
++        "boss": "enemy:shu.wu-pursuit",
++        "briefKey": "campaign.shu.jingzhou.stage.6",
++        "damageMul": 0.95,
++        "rewards": [
++          {
++            "amount": 53,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 53,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 53,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 53,
++            "attr": "pol",
++            "kind": "exp"
++          },
++          {
++            "kind": "unlock",
++            "skill": "skill:lianhuan",
++            "trait": null
++          }
++        ],
++        "troopsMul": 1.52
++      }
++    ]
++  },
++  {
++    "campaignId": "campaign:shu.northern",
++    "chapterId": "ch:shu.northern",
++    "enemyNotables": [],
++    "id": "campaign:shu.northern",
++    "kind": "campaign",
++    "packId": "pack:shu",
++    "schemaVersion": 1,
++    "stages": [
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.northern.stage.0",
++        "damageMul": 0.45,
++        "rewards": [
++          {
++            "amount": 8,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 8,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 8,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 8,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 0.66
++      },
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.northern.stage.1",
++        "damageMul": 0.51,
++        "rewards": [
++          {
++            "amount": 15,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 15,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 15,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 15,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 0.76
++      },
++      {
++        "boss": "enemy:shu.simayi",
++        "briefKey": "campaign.shu.northern.stage.2",
++        "damageMul": 0.58,
++        "rewards": [
++          {
++            "amount": 23,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 23,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 23,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 23,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 0.87
++      },
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.northern.stage.3",
++        "damageMul": 0.66,
++        "rewards": [
++          {
++            "amount": 30,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 30,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 30,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 30,
++            "attr": "pol",
++            "kind": "exp"
++          },
++          {
++            "kind": "unlock",
++            "skill": null,
++            "trait": "trait:chenyi"
++          }
++        ],
++        "troopsMul": 1
++      },
++      {
++        "boss": "enemy:shu.simayi",
++        "briefKey": "campaign.shu.northern.stage.4",
++        "damageMul": 0.74,
++        "rewards": [
++          {
++            "amount": 38,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 38,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 38,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 38,
++            "attr": "pol",
++            "kind": "exp"
++          },
++          {
++            "kind": "unlock",
++            "skill": "skill:jiezhi",
++            "trait": null
++          }
++        ],
++        "troopsMul": 1.15
++      },
++      {
++        "boss": null,
++        "briefKey": "campaign.shu.northern.stage.5",
++        "damageMul": 0.84,
++        "rewards": [
++          {
++            "amount": 45,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 45,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 45,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 45,
++            "attr": "pol",
++            "kind": "exp"
++          }
++        ],
++        "troopsMul": 1.32
++      },
++      {
++        "boss": "enemy:shu.simayi",
++        "briefKey": "campaign.shu.northern.stage.6",
++        "damageMul": 0.95,
++        "rewards": [
++          {
++            "amount": 53,
++            "attr": "lead",
++            "kind": "exp"
++          },
++          {
++            "amount": 53,
++            "attr": "war",
++            "kind": "exp"
++          },
++          {
++            "amount": 53,
++            "attr": "int",
++            "kind": "exp"
++          },
++          {
++            "amount": 53,
++            "attr": "pol",
++            "kind": "exp"
++          },
++          {
++            "kind": "unlock",
++            "skill": "skill:lianhuan",
++            "trait": null
++          }
++        ],
++        "troopsMul": 1.52
++      }
++    ]
++  },
++  {
++    "bodyKey": "event.shu.liubei.body",
++    "collectible": true,
++    "eventDefId": "event:shu.liubei.companionship",
++    "id": "event:shu.liubei.companionship",
++    "kind": "event",
++    "options": [
++      {
++        "check": null,
++        "labelKey": "event.shu.liubei.0",
++        "practice": [
++          {
++            "attr": "lead",
++            "weight": 1.5
++          }
++        ],
++        "requirements": [],
++        "rewards": [
++          {
++            "amount": 8,
++            "kind": "merit",
++            "merit": "martial"
++          },
++          {
++            "amount": 5,
++            "kind": "affinity",
++            "notableId": "notable:liubei"
++          }
++        ],
++        "tier": "story"
++      },
++      {
++        "check": null,
++        "labelKey": "event.shu.liubei.1",
++        "practice": [
++          {
++            "attr": "lead",
++            "weight": 1.5
++          }
++        ],
++        "requirements": [],
++        "rewards": [
++          {
++            "amount": 8,
++            "kind": "merit",
++            "merit": "martial"
++          },
++          {
++            "amount": 5,
++            "kind": "affinity",
++            "notableId": "notable:liubei"
++          }
++        ],
++        "tier": "story"
++      }
++    ],
++    "packId": "pack:shu",
++    "paramSlots": [],
++    "requirements": [
++      {
++        "type": "faction",
++        "value": "faction:shu"
++      }
++    ],
++    "schemaVersion": 1,
++    "titleKey": "event.shu.liubei.title",
++    "trigger": {
++      "cast": [
++        {
++          "minStage": "acquainted",
++          "notableId": "notable:liubei"
++        }
++      ],
++      "chainId": "chain:shu.liubei",
++      "kind": "notable",
++      "step": 0
++    },
++    "unique": true,
++    "weight": 100
++  },
++  {
++    "bodyKey": "event.shu.guanyu.body",
++    "collectible": true,
++    "eventDefId": "event:shu.guanyu.companionship",
++    "id": "event:shu.guanyu.companionship",
++    "kind": "event",
++    "options": [
++      {
++        "check": null,
++        "labelKey": "event.shu.guanyu.0",
++        "practice": [
++          {
++            "attr": "war",
++            "weight": 1.5
++          }
++        ],
++        "requirements": [],
++        "rewards": [
++          {
++            "amount": 8,
++            "kind": "merit",
++            "merit": "martial"
++          },
++          {
++            "amount": 5,
++            "kind": "affinity",
++            "notableId": "notable:guanyu"
++          }
++        ],
++        "tier": "story"
++      },
++      {
++        "check": null,
++        "labelKey": "event.shu.guanyu.1",
++        "practice": [
++          {
++            "attr": "war",
++            "weight": 1.5
++          }
++        ],
++        "requirements": [],
++        "rewards": [
++          {
++            "amount": 8,
++            "kind": "merit",
++            "merit": "martial"
++          },
++          {
++            "amount": 5,
++            "kind": "affinity",
++            "notableId": "notable:guanyu"
++          }
++        ],
++        "tier": "story"
++      }
++    ],
++    "packId": "pack:shu",
++    "paramSlots": [],
++    "requirements": [
++      {
++        "type": "faction",
++        "value": "faction:shu"
++      }
++    ],
++    "schemaVersion": 1,
++    "titleKey": "event.shu.guanyu.title",
++    "trigger": {
++      "cast": [
++        {
++          "minStage": "acquainted",
++          "notableId": "notable:guanyu"
++        }
++      ],
++      "chainId": "chain:shu.guanyu",
++      "kind": "notable",
++      "step": 0
++    },
++    "unique": true,
++    "weight": 100
++  },
++  {
++    "bodyKey": "event.shu.zhangfei.body",
++    "collectible": true,
++    "eventDefId": "event:shu.zhangfei.companionship",
++    "id": "event:shu.zhangfei.companionship",
++    "kind": "event",
++    "options": [
++      {
++        "check": null,
++        "labelKey": "event.shu.zhangfei.0",
++        "practice": [
++          {
++            "attr": "lead",
++            "weight": 1.5
++          }
++        ],
++        "requirements": [],
++        "rewards": [
++          {
++            "amount": 8,
++            "kind": "merit",
++            "merit": "martial"
++          },
++          {
++            "amount": 5,
++            "kind": "affinity",
++            "notableId": "notable:zhangfei"
++          }
++        ],
++        "tier": "story"
++      },
++      {
++        "check": null,
++        "labelKey": "event.shu.zhangfei.1",
++        "practice": [
++          {
++            "attr": "lead",
++            "weight": 1.5
++          }
++        ],
++        "requirements": [],
++        "rewards": [
++          {
++            "amount": 8,
++            "kind": "merit",
++            "merit": "martial"
++          },
++          {
++            "amount": 5,
++            "kind": "affinity",
++            "notableId": "notable:zhangfei"
++          }
++        ],
++        "tier": "story"
++      }
++    ],
++    "packId": "pack:shu",
++    "paramSlots": [],
++    "requirements": [
++      {
++        "type": "faction",
++        "value": "faction:shu"
++      }
++    ],
++    "schemaVersion": 1,
++    "titleKey": "event.shu.zhangfei.title",
++    "trigger": {
++      "cast": [
++        {
++          "minStage": "acquainted",
++          "notableId": "notable:zhangfei"
++        }
++      ],
++      "chainId": "chain:shu.zhangfei",
++      "kind": "notable",
++      "step": 0
++    },
++    "unique": true,
++    "weight": 100
++  },
++  {
++    "bodyKey": "event.shu.zhaoyun.body",
++    "collectible": true,
++    "eventDefId": "event:shu.zhaoyun.companionship",
++    "id": "event:shu.zhaoyun.companionship",
++    "kind": "event",
++    "options": [
++      {
++        "check": null,
++        "labelKey": "event.shu.zhaoyun.0",
++        "practice": [
++          {
++            "attr": "war",
++            "weight": 1.5
++          }
++        ],
++        "requirements": [],
++        "rewards": [
++          {
++            "amount": 8,
++            "kind": "merit",
++            "merit": "martial"
++          },
++          {
++            "amount": 5,
++            "kind": "affinity",
++            "notableId": "notable:zhaoyun"
++          }
++        ],
++        "tier": "story"
++      },
++      {
++        "check": null,
++        "labelKey": "event.shu.zhaoyun.1",
++        "practice": [
++          {
++            "attr": "war",
++            "weight": 1.5
++          }
++        ],
++        "requirements": [],
++        "rewards": [
++          {
++            "amount": 8,
++            "kind": "merit",
++            "merit": "martial"
++          },
++          {
++            "amount": 5,
++            "kind": "affinity",
++            "notableId": "notable:zhaoyun"
++          }
++        ],
++        "tier": "story"
++      }
++    ],
++    "packId": "pack:shu",
++    "paramSlots": [],
++    "requirements": [
++      {
++        "type": "faction",
++        "value": "faction:shu"
++      }
++    ],
++    "schemaVersion": 1,
++    "titleKey": "event.shu.zhaoyun.title",
++    "trigger": {
++      "cast": [
++        {
++          "minStage": "acquainted",
++          "notableId": "notable:zhaoyun"
++        }
++      ],
++      "chainId": "chain:shu.zhaoyun",
++      "kind": "notable",
++      "step": 0
++    },
++    "unique": true,
++    "weight": 100
++  },
++  {
++    "bodyKey": "event.shu.zhugeliang.body",
++    "collectible": true,
++    "eventDefId": "event:shu.zhugeliang.companionship",
++    "id": "event:shu.zhugeliang.companionship",
++    "kind": "event",
++    "options": [
++      {
++        "check": null,
++        "labelKey": "event.shu.zhugeliang.0",
++        "practice": [
++          {
++            "attr": "int",
++            "weight": 1.5
++          }
++        ],
++        "requirements": [],
++        "rewards": [
++          {
++            "amount": 8,
++            "kind": "merit",
++            "merit": "civil"
++          },
++          {
++            "amount": 5,
++            "kind": "affinity",
++            "notableId": "notable:zhugeliang"
++          }
++        ],
++        "tier": "story"
++      },
++      {
++        "check": null,
++        "labelKey": "event.shu.zhugeliang.1",
++        "practice": [
++          {
++            "attr": "int",
++            "weight": 1.5
++          }
++        ],
++        "requirements": [],
++        "rewards": [
++          {
++            "amount": 8,
++            "kind": "merit",
++            "merit": "civil"
++          },
++          {
++            "amount": 5,
++            "kind": "affinity",
++            "notableId": "notable:zhugeliang"
++          }
++        ],
++        "tier": "story"
++      }
++    ],
++    "packId": "pack:shu",
++    "paramSlots": [],
++    "requirements": [
++      {
++        "type": "faction",
++        "value": "faction:shu"
++      }
++    ],
++    "schemaVersion": 1,
++    "titleKey": "event.shu.zhugeliang.title",
++    "trigger": {
++      "cast": [
++        {
++          "minStage": "acquainted",
++          "notableId": "notable:zhugeliang"
++        }
++      ],
++      "chainId": "chain:shu.zhugeliang",
++      "kind": "notable",
++      "step": 0
++    },
++    "unique": true,
++    "weight": 100
++  },
++  {
++    "bodyKey": "event.shu.jiangwan.body",
++    "collectible": true,
++    "eventDefId": "event:shu.jiangwan.companionship",
++    "id": "event:shu.jiangwan.companionship",
++    "kind": "event",
++    "options": [
++      {
++        "check": null,
++        "labelKey": "event.shu.jiangwan.0",
++        "practice": [
++          {
++            "attr": "pol",
++            "weight": 1.5
++          }
++        ],
++        "requirements": [],
++        "rewards": [
++          {
++            "amount": 8,
++            "kind": "merit",
++            "merit": "civil"
++          },
++          {
++            "amount": 5,
++            "kind": "affinity",
++            "notableId": "notable:jiangwan"
++          }
++        ],
++        "tier": "story"
++      },
++      {
++        "check": null,
++        "labelKey": "event.shu.jiangwan.1",
++        "practice": [
++          {
++            "attr": "pol",
++            "weight": 1.5
++          }
++        ],
++        "requirements": [],
++        "rewards": [
++          {
++            "amount": 8,
++            "kind": "merit",
++            "merit": "civil"
++          },
++          {
++            "amount": 5,
++            "kind": "affinity",
++            "notableId": "notable:jiangwan"
++          }
++        ],
++        "tier": "story"
++      }
++    ],
++    "packId": "pack:shu",
++    "paramSlots": [],
++    "requirements": [
++      {
++        "type": "faction",
++        "value": "faction:shu"
++      }
++    ],
++    "schemaVersion": 1,
++    "titleKey": "event.shu.jiangwan.title",
++    "trigger": {
++      "cast": [
++        {
++          "minStage": "acquainted",
++          "notableId": "notable:jiangwan"
++        }
++      ],
++      "chainId": "chain:shu.jiangwan",
++      "kind": "notable",
++      "step": 0
++    },
++    "unique": true,
++    "weight": 100
++  },
++  {
++    "aftermaths": [
++      {
++        "requirements": [],
++        "scene": {
++          "bodyKey": "story.shu.hulao.after.body",
++          "id": "story.shu.hulao.after",
++          "titleKey": "story.shu.hulao.after.title"
++        }
++      }
++    ],
++    "battleVariants": [
++      {
++        "briefKeys": [
++          "story.shu.hulao.stage.0",
++          "story.shu.hulao.stage.1",
++          "story.shu.hulao.stage.2",
++          "story.shu.hulao.stage.3",
++          "story.shu.hulao.stage.4",
++          "story.shu.hulao.stage.5",
++          "story.shu.hulao.stage.6"
++        ],
++        "requirements": []
++      }
++    ],
++    "chapterId": "ch:shu.hulao",
++    "id": "story:shu.hulao",
++    "kind": "storyChapter",
++    "milestones": [],
++    "nodes": [
++      {
++        "bodyKey": "story.shu.hulao.S1.A.body",
++        "id": "S1.A",
++        "options": [
++          {
++            "consequenceKey": "story.shu.hulao.S1.A.rescue.hint",
++            "id": "rescue",
++            "labelKey": "story.shu.hulao.S1.A.rescue.label"
++          },
++          {
++            "consequenceKey": "story.shu.hulao.S1.A.repair.hint",
++            "id": "repair",
++            "labelKey": "story.shu.hulao.S1.A.repair.label"
++          }
++        ],
++        "titleKey": "story.shu.hulao.S1.A.title",
++        "turn": 2
++      },
++      {
++        "bodyKey": "story.shu.hulao.S1.B.body",
++        "id": "S1.B",
++        "options": [
++          {
++            "consequenceKey": "story.shu.hulao.S1.B.shelter.hint",
++            "id": "shelter",
++            "labelKey": "story.shu.hulao.S1.B.shelter.label"
++          },
++          {
++            "consequenceKey": "story.shu.hulao.S1.B.handover.hint",
++            "id": "handover",
++            "labelKey": "story.shu.hulao.S1.B.handover.label"
++          }
++        ],
++        "titleKey": "story.shu.hulao.S1.B.title",
++        "turn": 6
++      }
++    ],
++    "opening": {
++      "bodyKey": "story.shu.hulao.opening.body",
++      "id": "story.shu.hulao.opening",
++      "titleKey": "story.shu.hulao.opening.title"
++    },
++    "packId": "pack:shu",
++    "schemaVersion": 1
++  },
++  {
++    "aftermaths": [
++      {
++        "requirements": [],
++        "scene": {
++          "bodyKey": "story.shu.xuzhou.after.body",
++          "id": "story.shu.xuzhou.after",
++          "titleKey": "story.shu.xuzhou.after.title"
++        }
++      }
++    ],
++    "battleVariants": [
++      {
++        "briefKeys": [
++          "story.shu.xuzhou.stage.0",
++          "story.shu.xuzhou.stage.1",
++          "story.shu.xuzhou.stage.2",
++          "story.shu.xuzhou.stage.3",
++          "story.shu.xuzhou.stage.4",
++          "story.shu.xuzhou.stage.5",
++          "story.shu.xuzhou.stage.6"
++        ],
++        "requirements": []
++      }
++    ],
++    "chapterId": "ch:shu.xuzhou",
++    "id": "story:shu.xuzhou",
++    "kind": "storyChapter",
++    "milestones": [],
++    "nodes": [
++      {
++        "bodyKey": "story.shu.xuzhou.S2.A.body",
++        "id": "S2.A",
++        "options": [
++          {
++            "consequenceKey": "story.shu.xuzhou.S2.A.granary.hint",
++            "id": "granary",
++            "labelKey": "story.shu.xuzhou.S2.A.granary.label"
++          },
++          {
++            "consequenceKey": "story.shu.xuzhou.S2.A.defend.hint",
++            "id": "defend",
++            "labelKey": "story.shu.xuzhou.S2.A.defend.label"
++          }
++        ],
++        "titleKey": "story.shu.xuzhou.S2.A.title",
++        "turn": 2
++      },
++      {
++        "bodyKey": "story.shu.xuzhou.S2.B.body",
++        "id": "S2.B",
++        "options": [
++          {
++            "consequenceKey": "story.shu.xuzhou.S2.B.shelter.hint",
++            "id": "shelter",
++            "labelKey": "story.shu.xuzhou.S2.B.shelter.label"
++          },
++          {
++            "consequenceKey": "story.shu.xuzhou.S2.B.handover.hint",
++            "id": "handover",
++            "labelKey": "story.shu.xuzhou.S2.B.handover.label"
++          }
++        ],
++        "titleKey": "story.shu.xuzhou.S2.B.title",
++        "turn": 6
++      }
++    ],
++    "opening": {
++      "bodyKey": "story.shu.xuzhou.opening.body",
++      "id": "story.shu.xuzhou.opening",
++      "titleKey": "story.shu.xuzhou.opening.title"
++    },
++    "packId": "pack:shu",
++    "schemaVersion": 1
++  },
++  {
++    "aftermaths": [
++      {
++        "requirements": [],
++        "scene": {
++          "bodyKey": "story.shu.changban.after.body",
++          "id": "story.shu.changban.after",
++          "titleKey": "story.shu.changban.after.title"
++        }
++      }
++    ],
++    "battleVariants": [
++      {
++        "briefKeys": [
++          "story.shu.changban.stage.0",
++          "story.shu.changban.stage.1",
++          "story.shu.changban.stage.2",
++          "story.shu.changban.stage.3",
++          "story.shu.changban.stage.4",
++          "story.shu.changban.stage.5",
++          "story.shu.changban.stage.6"
++        ],
++        "requirements": []
++      }
++    ],
++    "chapterId": "ch:shu.changban",
++    "id": "story:shu.changban",
++    "kind": "storyChapter",
++    "milestones": [],
++    "nodes": [
++      {
++        "bodyKey": "story.shu.changban.S3.A.body",
++        "id": "S3.A",
++        "options": [
++          {
++            "consequenceKey": "story.shu.changban.S3.A.rescue.hint",
++            "id": "rescue",
++            "labelKey": "story.shu.changban.S3.A.rescue.label"
++          },
++          {
++            "consequenceKey": "story.shu.changban.S3.A.flank.hint",
++            "id": "flank",
++            "labelKey": "story.shu.changban.S3.A.flank.label"
++          }
++        ],
++        "titleKey": "story.shu.changban.S3.A.title",
++        "turn": 2
++      },
++      {
++        "bodyKey": "story.shu.changban.S3.B.body",
++        "id": "S3.B",
++        "options": [
++          {
++            "consequenceKey": "story.shu.changban.S3.B.shelter.hint",
++            "id": "shelter",
++            "labelKey": "story.shu.changban.S3.B.shelter.label"
++          },
++          {
++            "consequenceKey": "story.shu.changban.S3.B.handover.hint",
++            "id": "handover",
++            "labelKey": "story.shu.changban.S3.B.handover.label"
++          }
++        ],
++        "titleKey": "story.shu.changban.S3.B.title",
++        "turn": 6
++      }
++    ],
++    "opening": {
++      "bodyKey": "story.shu.changban.opening.body",
++      "id": "story.shu.changban.opening",
++      "titleKey": "story.shu.changban.opening.title"
++    },
++    "packId": "pack:shu",
++    "schemaVersion": 1
++  },
++  {
++    "aftermaths": [
++      {
++        "requirements": [],
++        "scene": {
++          "bodyKey": "story.shu.chibi.after.body",
++          "id": "story.shu.chibi.after",
++          "titleKey": "story.shu.chibi.after.title"
++        }
++      }
++    ],
++    "battleVariants": [
++      {
++        "briefKeys": [
++          "story.shu.chibi.stage.0",
++          "story.shu.chibi.stage.1",
++          "story.shu.chibi.stage.2",
++          "story.shu.chibi.stage.3",
++          "story.shu.chibi.stage.4",
++          "story.shu.chibi.stage.5",
++          "story.shu.chibi.stage.6"
++        ],
++        "requirements": []
++      }
++    ],
++    "chapterId": "ch:shu.chibi",
++    "id": "story:shu.chibi",
++    "kind": "storyChapter",
++    "milestones": [],
++    "nodes": [
++      {
++        "bodyKey": "story.shu.chibi.S4.A.body",
++        "id": "S4.A",
++        "options": [
++          {
++            "consequenceKey": "story.shu.chibi.S4.A.pact.hint",
++            "id": "pact",
++            "labelKey": "story.shu.chibi.S4.A.pact.label"
++          },
++          {
++            "consequenceKey": "story.shu.chibi.S4.A.position.hint",
++            "id": "position",
++            "labelKey": "story.shu.chibi.S4.A.position.label"
++          }
++        ],
++        "titleKey": "story.shu.chibi.S4.A.title",
++        "turn": 2
++      },
++      {
++        "bodyKey": "story.shu.chibi.S4.B.body",
++        "id": "S4.B",
++        "options": [
++          {
++            "consequenceKey": "story.shu.chibi.S4.B.shelter.hint",
++            "id": "shelter",
++            "labelKey": "story.shu.chibi.S4.B.shelter.label"
++          },
++          {
++            "consequenceKey": "story.shu.chibi.S4.B.handover.hint",
++            "id": "handover",
++            "labelKey": "story.shu.chibi.S4.B.handover.label"
++          }
++        ],
++        "titleKey": "story.shu.chibi.S4.B.title",
++        "turn": 6
++      }
++    ],
++    "opening": {
++      "bodyKey": "story.shu.chibi.opening.body",
++      "id": "story.shu.chibi.opening",
++      "titleKey": "story.shu.chibi.opening.title"
++    },
++    "packId": "pack:shu",
++    "schemaVersion": 1
++  },
++  {
++    "aftermaths": [
++      {
++        "requirements": [],
++        "scene": {
++          "bodyKey": "story.shu.yizhou.after.body",
++          "id": "story.shu.yizhou.after",
++          "titleKey": "story.shu.yizhou.after.title"
++        }
++      }
++    ],
++    "battleVariants": [
++      {
++        "briefKeys": [
++          "story.shu.yizhou.stage.0",
++          "story.shu.yizhou.stage.1",
++          "story.shu.yizhou.stage.2",
++          "story.shu.yizhou.stage.3",
++          "story.shu.yizhou.stage.4",
++          "story.shu.yizhou.stage.5",
++          "story.shu.yizhou.stage.6"
++        ],
++        "requirements": []
++      }
++    ],
++    "chapterId": "ch:shu.yizhou",
++    "id": "story:shu.yizhou",
++    "kind": "storyChapter",
++    "milestones": [],
++    "nodes": [
++      {
++        "bodyKey": "story.shu.yizhou.S5.A.body",
++        "id": "S5.A",
++        "options": [
++          {
++            "consequenceKey": "story.shu.yizhou.S5.A.granary.hint",
++            "id": "granary",
++            "labelKey": "story.shu.yizhou.S5.A.granary.label"
++          },
++          {
++            "consequenceKey": "story.shu.yizhou.S5.A.arsenal.hint",
++            "id": "arsenal",
++            "labelKey": "story.shu.yizhou.S5.A.arsenal.label"
++          }
++        ],
++        "titleKey": "story.shu.yizhou.S5.A.title",
++        "turn": 2
++      },
++      {
++        "bodyKey": "story.shu.yizhou.S5.B.body",
++        "id": "S5.B",
++        "options": [
++          {
++            "consequenceKey": "story.shu.yizhou.S5.B.handover.hint",
++            "id": "handover",
++            "labelKey": "story.shu.yizhou.S5.B.handover.label"
++          },
++          {
++            "consequenceKey": "story.shu.yizhou.S5.B.personal.hint",
++            "id": "personal",
++            "labelKey": "story.shu.yizhou.S5.B.personal.label"
++          }
++        ],
++        "titleKey": "story.shu.yizhou.S5.B.title",
++        "turn": 6
++      }
++    ],
++    "opening": {
++      "bodyKey": "story.shu.yizhou.opening.body",
++      "id": "story.shu.yizhou.opening",
++      "titleKey": "story.shu.yizhou.opening.title"
++    },
++    "packId": "pack:shu",
++    "schemaVersion": 1
++  },
++  {
++    "aftermaths": [
++      {
++        "requirements": [],
++        "scene": {
++          "bodyKey": "story.shu.hanzhong.after.body",
++          "id": "story.shu.hanzhong.after",
++          "titleKey": "story.shu.hanzhong.after.title"
++        }
++      }
++    ],
++    "battleVariants": [
++      {
++        "briefKeys": [
++          "story.shu.hanzhong.stage.0",
++          "story.shu.hanzhong.stage.1",
++          "story.shu.hanzhong.stage.2",
++          "story.shu.hanzhong.stage.3",
++          "story.shu.hanzhong.stage.4",
++          "story.shu.hanzhong.stage.5",
++          "story.shu.hanzhong.stage.6"
++        ],
++        "requirements": []
++      }
++    ],
++    "chapterId": "ch:shu.hanzhong",
++    "id": "story:shu.hanzhong",
++    "kind": "storyChapter",
++    "milestones": [],
++    "nodes": [
++      {
++        "bodyKey": "story.shu.hanzhong.S6.A.body",
++        "id": "S6.A",
++        "options": [
++          {
++            "consequenceKey": "story.shu.hanzhong.S6.A.corridor.hint",
++            "id": "corridor",
++            "labelKey": "story.shu.hanzhong.S6.A.corridor.label"
++          },
++          {
++            "consequenceKey": "story.shu.hanzhong.S6.A.assault.hint",
++            "id": "assault",
++            "labelKey": "story.shu.hanzhong.S6.A.assault.label"
++          }
++        ],
++        "titleKey": "story.shu.hanzhong.S6.A.title",
++        "turn": 2
++      },
++      {
++        "bodyKey": "story.shu.hanzhong.S6.B.body",
++        "id": "S6.B",
++        "options": [
++          {
++            "consequenceKey": "story.shu.hanzhong.S6.B.handover.hint",
++            "id": "handover",
++            "labelKey": "story.shu.hanzhong.S6.B.handover.label"
++          },
++          {
++            "consequenceKey": "story.shu.hanzhong.S6.B.guard.hint",
++            "id": "guard",
++            "labelKey": "story.shu.hanzhong.S6.B.guard.label"
++          }
++        ],
++        "titleKey": "story.shu.hanzhong.S6.B.title",
++        "turn": 6
++      }
++    ],
++    "opening": {
++      "bodyKey": "story.shu.hanzhong.opening.body",
++      "id": "story.shu.hanzhong.opening",
++      "titleKey": "story.shu.hanzhong.opening.title"
++    },
++    "packId": "pack:shu",
++    "schemaVersion": 1
++  },
++  {
++    "aftermaths": [
++      {
++        "requirements": [
++          {
++            "id": "shu.guanyu-rescued",
++            "kind": "milestone"
++          },
++          {
++            "kind": "choice",
++            "node": "S7.B",
++            "option": "pact"
++          }
++        ],
++        "scene": {
++          "bodyKey": "story.shu.jingzhou.reunion.body",
++          "id": "story.shu.jingzhou.reunion",
++          "titleKey": "story.shu.jingzhou.reunion.title"
++        }
++      },
++      {
++        "requirements": [
++          {
++            "id": "shu.guanyu-rescued",
++            "kind": "milestone"
++          }
++        ],
++        "scene": {
++          "bodyKey": "story.shu.jingzhou.alive.body",
++          "id": "story.shu.jingzhou.alive",
++          "titleKey": "story.shu.jingzhou.alive.title"
++        }
++      },
++      {
++        "requirements": [],
++        "scene": {
++          "bodyKey": "story.shu.jingzhou.after.body",
++          "id": "story.shu.jingzhou.after",
++          "titleKey": "story.shu.jingzhou.after.title"
++        }
++      }
++    ],
++    "battleVariants": [
++      {
++        "briefKeys": [
++          "story.shu.jingzhou.rescue.stage.0",
++          "story.shu.jingzhou.rescue.stage.1",
++          "story.shu.jingzhou.rescue.stage.2",
++          "story.shu.jingzhou.rescue.stage.3",
++          "story.shu.jingzhou.rescue.stage.4",
++          "story.shu.jingzhou.rescue.stage.5",
++          "story.shu.jingzhou.rescue.stage.6"
++        ],
++        "requirements": [
++          {
++            "kind": "choice",
++            "node": "S4.A",
++            "option": "pact"
++          },
++          {
++            "kind": "choice",
++            "node": "S6.A",
++            "option": "corridor"
++          },
++          {
++            "kind": "choice",
++            "node": "S7.A",
++            "option": "rescue"
++          }
++        ]
++      },
++      {
++        "briefKeys": [
++          "story.shu.jingzhou.stage.0",
++          "story.shu.jingzhou.stage.1",
++          "story.shu.jingzhou.stage.2",
++          "story.shu.jingzhou.stage.3",
++          "story.shu.jingzhou.stage.4",
++          "story.shu.jingzhou.stage.5",
++          "story.shu.jingzhou.stage.6"
++        ],
++        "requirements": []
++      }
++    ],
++    "chapterId": "ch:shu.jingzhou",
++    "id": "story:shu.jingzhou",
++    "kind": "storyChapter",
++    "milestones": [
++      {
++        "hintKey": "story.shu.jingzhou.hint",
++        "id": "shu.guanyu-rescued",
++        "minCleared": 5,
++        "requirements": [
++          {
++            "kind": "choice",
++            "node": "S4.A",
++            "option": "pact"
++          },
++          {
++            "kind": "choice",
++            "node": "S6.A",
++            "option": "corridor"
++          },
++          {
++            "kind": "choice",
++            "node": "S7.A",
++            "option": "rescue"
++          }
++        ],
++        "scene": {
++          "bodyKey": "story.shu.jingzhou.rescue.body",
++          "id": "story.shu.jingzhou.rescue",
++          "titleKey": "story.shu.jingzhou.rescue.title"
++        }
++      }
++    ],
++    "nodes": [
++      {
++        "bodyKey": "story.shu.jingzhou.S7.A.body",
++        "id": "S7.A",
++        "options": [
++          {
++            "consequenceKey": "story.shu.jingzhou.S7.A.rescue.hint",
++            "id": "rescue",
++            "labelKey": "story.shu.jingzhou.S7.A.rescue.label"
++          },
++          {
++            "consequenceKey": "story.shu.jingzhou.S7.A.defend.hint",
++            "id": "defend",
++            "labelKey": "story.shu.jingzhou.S7.A.defend.label"
++          }
++        ],
++        "titleKey": "story.shu.jingzhou.S7.A.title",
++        "turn": 2
++      },
++      {
++        "bodyKey": "story.shu.jingzhou.S7.B.body",
++        "id": "S7.B",
++        "options": [
++          {
++            "consequenceKey": "story.shu.jingzhou.S7.B.pact.hint",
++            "id": "pact",
++            "labelKey": "story.shu.jingzhou.S7.B.pact.label"
++          },
++          {
++            "consequenceKey": "story.shu.jingzhou.S7.B.handover.hint",
++            "id": "handover",
++            "labelKey": "story.shu.jingzhou.S7.B.handover.label"
++          }
++        ],
++        "titleKey": "story.shu.jingzhou.S7.B.title",
++        "turn": 6
++      }
++    ],
++    "opening": {
++      "bodyKey": "story.shu.jingzhou.opening.body",
++      "id": "story.shu.jingzhou.opening",
++      "titleKey": "story.shu.jingzhou.opening.title"
++    },
++    "packId": "pack:shu",
++    "schemaVersion": 1
++  },
++  {
++    "aftermaths": [
++      {
++        "requirements": [
++          {
++            "id": "shu.kongming-rested",
++            "kind": "milestone"
++          },
++          {
++            "kind": "choice",
++            "node": "S8.B",
++            "option": "handover"
++          },
++          {
++            "id": "shu.guanyu-rescued",
++            "kind": "milestone"
++          }
++        ],
++        "scene": {
++          "bodyKey": "story.shu.northern.both.body",
++          "id": "story.shu.northern.both",
++          "titleKey": "story.shu.northern.both.title"
++        }
++      },
++      {
++        "requirements": [
++          {
++            "id": "shu.kongming-rested",
++            "kind": "milestone"
++          },
++          {
++            "kind": "choice",
++            "node": "S8.B",
++            "option": "handover"
++          }
++        ],
++        "scene": {
++          "bodyKey": "story.shu.northern.rest.body",
++          "id": "story.shu.northern.rest",
++          "titleKey": "story.shu.northern.rest.title"
++        }
++      },
++      {
++        "requirements": [
++          {
++            "id": "shu.kongming-rested",
++            "kind": "milestone"
++          }
++        ],
++        "scene": {
++          "bodyKey": "story.shu.northern.partial.body",
++          "id": "story.shu.northern.partial",
++          "titleKey": "story.shu.northern.partial.title"
++        }
++      },
++      {
++        "requirements": [
++          {
++            "id": "shu.guanyu-rescued",
++            "kind": "milestone"
++          }
++        ],
++        "scene": {
++          "bodyKey": "story.shu.northern.carry.body",
++          "id": "story.shu.northern.carry",
++          "titleKey": "story.shu.northern.carry.title"
++        }
++      },
++      {
++        "requirements": [],
++        "scene": {
++          "bodyKey": "story.shu.northern.after.body",
++          "id": "story.shu.northern.after",
++          "titleKey": "story.shu.northern.after.title"
++        }
++      }
++    ],
++    "battleVariants": [
++      {
++        "briefKeys": [
++          "story.shu.northern.stage.0",
++          "story.shu.northern.stage.1",
++          "story.shu.northern.stage.2",
++          "story.shu.northern.stage.3",
++          "story.shu.northern.stage.4",
++          "story.shu.northern.stage.5",
++          "story.shu.northern.stage.6"
++        ],
++        "requirements": []
++      }
++    ],
++    "chapterId": "ch:shu.northern",
++    "id": "story:shu.northern",
++    "kind": "storyChapter",
++    "milestones": [
++      {
++        "hintKey": "story.shu.northern.hint",
++        "id": "shu.kongming-rested",
++        "minCleared": 5,
++        "requirements": [
++          {
++            "kind": "choice",
++            "node": "S5.B",
++            "option": "handover"
++          },
++          {
++            "kind": "choice",
++            "node": "S6.B",
++            "option": "handover"
++          },
++          {
++            "kind": "choice",
++            "node": "S8.A",
++            "option": "delegate"
++          }
++        ],
++        "scene": {
++          "bodyKey": "story.shu.northern.dawn.body",
++          "id": "story.shu.northern.dawn",
++          "titleKey": "story.shu.northern.dawn.title"
++        }
++      }
++    ],
++    "nodes": [
++      {
++        "bodyKey": "story.shu.northern.S8.A.body",
++        "id": "S8.A",
++        "options": [
++          {
++            "consequenceKey": "story.shu.northern.S8.A.delegate.hint",
++            "id": "delegate",
++            "labelKey": "story.shu.northern.S8.A.delegate.label"
++          },
++          {
++            "consequenceKey": "story.shu.northern.S8.A.advance.hint",
++            "id": "advance",
++            "labelKey": "story.shu.northern.S8.A.advance.label"
++          }
++        ],
++        "titleKey": "story.shu.northern.S8.A.title",
++        "turn": 2
++      },
++      {
++        "bodyKey": "story.shu.northern.S8.B.body",
++        "id": "S8.B",
++        "options": [
++          {
++            "consequenceKey": "story.shu.northern.S8.B.handover.hint",
++            "id": "handover",
++            "labelKey": "story.shu.northern.S8.B.handover.label"
++          },
++          {
++            "consequenceKey": "story.shu.northern.S8.B.vanguard.hint",
++            "id": "vanguard",
++            "labelKey": "story.shu.northern.S8.B.vanguard.label"
++          }
++        ],
++        "titleKey": "story.shu.northern.S8.B.title",
++        "turn": 6
++      }
++    ],
++    "opening": {
++      "bodyKey": "story.shu.northern.opening.body",
++      "id": "story.shu.northern.opening",
++      "titleKey": "story.shu.northern.opening.title"
++    },
++    "packId": "pack:shu",
++    "schemaVersion": 1
++  },
++  {
++    "bodyKey": "ending.shu.reunion.body",
++    "collectible": true,
++    "ending": "ending:shu.reunion",
++    "endingKind": "fullDream",
++    "factionId": "faction:shu",
++    "id": "ending:shu.reunion",
++    "kind": "ending",
++    "packId": "pack:shu",
++    "pointsMultiplier": 1.8,
++    "priority": 604,
++    "requirements": [],
++    "schemaVersion": 1,
++    "storyRequirements": [
++      {
++        "id": "shu.guanyu-rescued",
++        "kind": "milestone"
++      },
++      {
++        "kind": "choice",
++        "node": "S7.B",
++        "option": "pact"
++      }
++    ],
++    "titleKey": "ending.shu.reunion.title",
++    "trigger": {
++      "kind": "sequenceCompleted"
++    }
++  },
++  {
++    "bodyKey": "ending.shu.dawn.body",
++    "collectible": true,
++    "ending": "ending:shu.dawn",
++    "endingKind": "fullDream",
++    "factionId": "faction:shu",
++    "id": "ending:shu.dawn",
++    "kind": "ending",
++    "packId": "pack:shu",
++    "pointsMultiplier": 1.8,
++    "priority": 603,
++    "requirements": [],
++    "schemaVersion": 1,
++    "storyRequirements": [
++      {
++        "id": "shu.kongming-rested",
++        "kind": "milestone"
++      },
++      {
++        "kind": "choice",
++        "node": "S8.B",
++        "option": "handover"
++      }
++    ],
++    "titleKey": "ending.shu.dawn.title",
++    "trigger": {
++      "kind": "sequenceCompleted"
++    }
++  }
++]
+diff --git a/content/shu/effects.json b/content/shu/effects.json
+new file mode 100644
+index 0000000..0967ef4
+--- /dev/null
++++ b/content/shu/effects.json
+@@ -0,0 +1 @@
++{}
+diff --git a/content/shu/texts.json b/content/shu/texts.json
+new file mode 100644
+index 0000000..7e61c25
+--- /dev/null
++++ b/content/shu/texts.json
+@@ -0,0 +1,342 @@
++{
++  "campaign.shu.changban.stage.0": "村口散兵",
++  "campaign.shu.changban.stage.1": "廢車道",
++  "campaign.shu.changban.stage.2": "追騎",
++  "campaign.shu.changban.stage.3": "橋前陣",
++  "campaign.shu.changban.stage.4": "張飛側翼",
++  "campaign.shu.changban.stage.5": "渡口護送",
++  "campaign.shu.changban.stage.6": "趙雲歸途接應",
++  "campaign.shu.chibi.stage.0": "江口前哨",
++  "campaign.shu.chibi.stage.1": "曹軍游舟",
++  "campaign.shu.chibi.stage.2": "南岸營",
++  "campaign.shu.chibi.stage.3": "火線側翼",
++  "campaign.shu.chibi.stage.4": "聯軍接應",
++  "campaign.shu.chibi.stage.5": "曹軍退道",
++  "campaign.shu.chibi.stage.6": "江陵外圍",
++  "campaign.shu.hanzhong.stage.0": "山麓哨寨",
++  "campaign.shu.hanzhong.stage.1": "弩台",
++  "campaign.shu.hanzhong.stage.2": "定軍山隘",
++  "campaign.shu.hanzhong.stage.3": "黃忠接戰",
++  "campaign.shu.hanzhong.stage.4": "曹軍糧道",
++  "campaign.shu.hanzhong.stage.5": "反攻精銳",
++  "campaign.shu.hanzhong.stage.6": "漢水接應",
++  "campaign.shu.hulao.stage.0": "關外亂兵",
++  "campaign.shu.hulao.stage.1": "友軍缺口",
++  "campaign.shu.hulao.stage.2": "華雄前陣",
++  "campaign.shu.hulao.stage.3": "斷旗坡",
++  "campaign.shu.hulao.stage.4": "西涼騎陣",
++  "campaign.shu.hulao.stage.5": "呂布前鋒",
++  "campaign.shu.hulao.stage.6": "呂布突擊",
++  "campaign.shu.jingzhou.stage.0": "漢水哨線",
++  "campaign.shu.jingzhou.stage.1": "斷信驛",
++  "campaign.shu.jingzhou.stage.2": "江陵外道",
++  "campaign.shu.jingzhou.stage.3": "夜渡口",
++  "campaign.shu.jingzhou.stage.4": "散兵接應",
++  "campaign.shu.jingzhou.stage.5": "麥城外圍",
++  "campaign.shu.jingzhou.stage.6": "關羽突圍",
++  "campaign.shu.northern.stage.0": "祁山外寨",
++  "campaign.shu.northern.stage.1": "隴道守備",
++  "campaign.shu.northern.stage.2": "前軍脫困",
++  "campaign.shu.northern.stage.3": "糧道攻防",
++  "campaign.shu.northern.stage.4": "渭水接應",
++  "campaign.shu.northern.stage.5": "司馬軍前鋒",
++  "campaign.shu.northern.stage.6": "五丈原對陣",
++  "campaign.shu.xuzhou.stage.0": "城外哨營",
++  "campaign.shu.xuzhou.stage.1": "糧道",
++  "campaign.shu.xuzhou.stage.2": "城門爭奪",
++  "campaign.shu.xuzhou.stage.3": "巷戰",
++  "campaign.shu.xuzhou.stage.4": "家眷護送",
++  "campaign.shu.xuzhou.stage.5": "追騎",
++  "campaign.shu.xuzhou.stage.6": "突圍接應",
++  "campaign.shu.yizhou.stage.0": "山口營",
++  "campaign.shu.yizhou.stage.1": "涪城外道",
++  "campaign.shu.yizhou.stage.2": "雒城前陣",
++  "campaign.shu.yizhou.stage.3": "險隘",
++  "campaign.shu.yizhou.stage.4": "成都糧路",
++  "campaign.shu.yizhou.stage.5": "城外精兵",
++  "campaign.shu.yizhou.stage.6": "護民入城",
++  "chapter.shu.changban.title": "長坂：回頭的那一騎",
++  "chapter.shu.chibi.title": "赤壁借勢：有人願與我們同戰",
++  "chapter.shu.hanzhong.title": "漢中：這座山，我們一起拿下",
++  "chapter.shu.hulao.title": "虎牢相逢：沒有自己的營，也有自己的兄弟",
++  "chapter.shu.jingzhou.title": "荊州烽火：二哥，這次換我來接你",
++  "chapter.shu.northern.title": "北伐星火：丞相，剩下的路一起走",
++  "chapter.shu.xuzhou.title": "徐州風雨：我們總得有個家",
++  "chapter.shu.yizhou.title": "入蜀：讓天下之計有一個落腳處",
++  "ending.shu.dawn.body": "重修的糧道、接棒的新軍、數次並肩完成的戰役，終於通向多年後的舊都。漢旗重新升上城頭，百姓的歡呼從城門一路推到階前。\n\n你回身去找那個總在最後收拾地圖的人，卻見孔明早已站在陽光下。他收起羽扇，朝你鄭重一揖。\n\n「這一次，亮看見了。」\n\n你伸手扶住他。晨鼓響起，你們一起向前。",
++  "ending.shu.dawn.title": "漢室再曉",
++  "ending.shu.reunion.body": "張飛一把掀開酒壇封泥，嚷著誰都不許少喝。關羽正要板起臉，被劉備先按回座位。桌上多擺了一只碗，位置就在三人之間。\n\n你還站在門口，劉備已向你招手：「這席，等的就是你。」\n\n落花飄進酒裡。你曾在別人的故事裡見過這場相逢，如今終於能親自坐下，聽他們把明天說得很長。",
++  "ending.shu.reunion.title": "桃園再聚",
++  "enemy.shu.cao-archers.name": "曹軍弩陣",
++  "enemy.shu.cao-vanguard.name": "曹軍前鋒",
++  "enemy.shu.lubu.name": "呂布",
++  "enemy.shu.simayi.name": "司馬懿",
++  "enemy.shu.wu-pursuit.name": "江東追軍",
++  "enemy.shu.xiahouyuan.name": "夏侯淵",
++  "enemy.shu.yizhou-guard.name": "益州守軍",
++  "event.shu.guanyu.0": "一起動手",
++  "event.shu.guanyu.1": "請他教我",
++  "event.shu.guanyu.body": "關羽替小兵削好一把木刀，抬頭卻見你看得入神。他把另一段木頭遞來：「鋒要直，握柄卻不可傷人。」原來大刀之外，他也有這樣細緻的手藝。",
++  "event.shu.guanyu.title": "關羽・並肩小事",
++  "event.shu.jiangwan.0": "一起動手",
++  "event.shu.jiangwan.1": "請他教我",
++  "event.shu.jiangwan.body": "最不起眼的案上，堆著明天每一隊兵需要的糧單。蔣琬將它們分給幾名年輕書吏，自己只留一份。他問你：「若我有一天不在，這裡也該照常運轉，對吧？」",
++  "event.shu.jiangwan.title": "蔣琬・並肩小事",
++  "event.shu.liubei.0": "一起動手",
++  "event.shu.liubei.1": "請他教我",
++  "event.shu.liubei.body": "劉備正一個個問新兵的姓名。你問他記得住多少，他將名簿遞來：「記得多少，就多記一個。」你坐到他身旁，替下一個人騰出位置。",
++  "event.shu.liubei.title": "劉備・並肩小事",
++  "event.shu.zhangfei.0": "一起動手",
++  "event.shu.zhangfei.1": "請他教我",
++  "event.shu.zhangfei.body": "張飛嘴上嚷著新兵畫旗太慢，手裡卻替每人調好墨。你湊近一看，他把最細的幾筆都留給自己：「旗畫清楚，戰場上才能找著自己人。」",
++  "event.shu.zhangfei.title": "張飛・並肩小事",
++  "event.shu.zhaoyun.0": "一起動手",
++  "event.shu.zhaoyun.1": "請他教我",
++  "event.shu.zhaoyun.body": "趙雲牽著走失的小馬回營，主人卻以為牠早已丟了。他朝你笑：「多回頭找一次，也許就在下一個轉彎。」你接過韁繩，把這句話記住。",
++  "event.shu.zhaoyun.title": "趙雲・並肩小事",
++  "event.shu.zhugeliang.0": "一起動手",
++  "event.shu.zhugeliang.1": "請他教我",
++  "event.shu.zhugeliang.body": "風箏第三次落到樹上，孔明盯著它難得語塞。你去搬梯，他還在比劃竹骨的重量。等風箏終於飛起來，你們一起笑得像從未帶過兵的孩子。",
++  "event.shu.zhugeliang.title": "諸葛亮・並肩小事",
++  "faction.shu.name": "蜀 · 劉備",
++  "faction.shu.reject": "願意同行，便有你的位置。",
++  "lord.shu.bond.0": "劉備：「這幾位往後與你同行。先認識人，事情一起做。」",
++  "lord.shu.bond.1": "劉備：「故人的情分一直記著。1 位同伴由你自己選，餘下的我來安排。」",
++  "lord.shu.bond.2": "劉備：「故人的情分一直記著。2 位同伴由你自己選，餘下的我來安排。」",
++  "lord.shu.bond.3": "劉備：「故人的情分一直記著。3 位同伴由你自己選，餘下的我來安排。」",
++  "notable.guanyu.bias": "更常出現在自己的專長格",
++  "notable.guanyu.link": "同格共事加成 +10%（好感達知交後生效）",
++  "notable.guanyu.name": "關羽",
++  "notable.guanyu.specialty": "專長格同框加成 +15%",
++  "notable.jiangwan.bias": "更常出現在自己的專長格",
++  "notable.jiangwan.link": "同格共事加成 +10%（好感達知交後生效）",
++  "notable.jiangwan.name": "蔣琬",
++  "notable.jiangwan.specialty": "專長格同框加成 +15%",
++  "notable.liubei.bias": "更常出現在自己的專長格",
++  "notable.liubei.link": "同格共事加成 +10%（好感達知交後生效）",
++  "notable.liubei.name": "劉備",
++  "notable.liubei.specialty": "專長格同框加成 +15%",
++  "notable.zhangfei.bias": "更常出現在自己的專長格",
++  "notable.zhangfei.link": "同格共事加成 +10%（好感達知交後生效）",
++  "notable.zhangfei.name": "張飛",
++  "notable.zhangfei.specialty": "專長格同框加成 +15%",
++  "notable.zhaoyun.bias": "更常出現在自己的專長格",
++  "notable.zhaoyun.link": "同格共事加成 +10%（好感達知交後生效）",
++  "notable.zhaoyun.name": "趙雲",
++  "notable.zhaoyun.specialty": "專長格同框加成 +15%",
++  "notable.zhugeliang.bias": "更常出現在自己的專長格",
++  "notable.zhugeliang.link": "同格共事加成 +10%（好感達知交後生效）",
++  "notable.zhugeliang.name": "諸葛亮",
++  "notable.zhugeliang.specialty": "專長格同框加成 +15%",
++  "shop.bond.shu.desc": "入蜀時可自行挑選更多同行上司。",
++  "shop.bond.shu.name": "蜀漢緣分",
++  "story.shu.changban.S3.A.body": "斷軸的車橫在道中央，身後的塵頭越來越近。趙雲翻身上馬，問你：「後面還有人，接不接？」你望向兩側山坡；回頭接人與搶先護住側翼，都得有人立即動身。",
++  "story.shu.changban.S3.A.flank.hint": "留下這一章的選擇，讓歸營後的承諾有跡可循。",
++  "story.shu.changban.S3.A.flank.label": "奪側翼高地",
++  "story.shu.changban.S3.A.rescue.hint": "留下這一章的選擇，讓歸營後的承諾有跡可循。",
++  "story.shu.changban.S3.A.rescue.label": "折返接人",
++  "story.shu.changban.S3.A.title": "道路被車隊堵死",
++  "story.shu.changban.S3.B.body": "渡口的船一艘艘離岸，遠處還有旗影在奔跑。船夫催你上船，你卻把纜繩又握緊了一分。此刻得先定好接應：留下最後一艘舟，或讓新隊長接手混亂的渡序。",
++  "story.shu.changban.S3.B.handover.hint": "把責任交給下一代，留下本章的交接紀錄。",
++  "story.shu.changban.S3.B.handover.label": "交新隊長維持渡序",
++  "story.shu.changban.S3.B.shelter.hint": "留下這一章的選擇，讓歸營後的承諾有跡可循。",
++  "story.shu.changban.S3.B.shelter.label": "留舟接最後一隊",
++  "story.shu.changban.S3.B.title": "到渡口後",
++  "story.shu.changban.after.body": "趙雲自煙塵中奔回，看見你留的旗，勒馬笑了一下：「就知道你在。」船隊在下游重新集合，你們一個個點起歸來的名字。",
++  "story.shu.changban.after.title": "長坂：回頭的那一騎",
++  "story.shu.changban.opening.body": "諸葛亮第一次把地圖攤到你面前。你還沒聽完那個遙遠的天下，斥候已帶來追兵的消息。趙雲翻身上馬：「大的計畫先放著。眼前這些人，得先過河。」",
++  "story.shu.changban.opening.title": "長坂：回頭的那一騎",
++  "story.shu.changban.stage.0": "村口散兵",
++  "story.shu.changban.stage.1": "廢車道",
++  "story.shu.changban.stage.2": "追騎",
++  "story.shu.changban.stage.3": "橋前陣",
++  "story.shu.changban.stage.4": "張飛側翼",
++  "story.shu.changban.stage.5": "渡口護送",
++  "story.shu.changban.stage.6": "趙雲歸途接應",
++  "story.shu.chibi.S4.A.body": "兩家的旗第一次插在同一張地圖旁。有人只談分守哪段江岸，魯肅卻問：「若有一日是你們受困，我們從哪裡來？」你提起筆，這紙約定可以只管眼前，也可以替將來留一條路。",
++  "story.shu.chibi.S4.A.pact.hint": "預備改命：訂下互援與通航，為日後荊州接應留下通道。",
++  "story.shu.chibi.S4.A.pact.label": "定下互援與通航約章",
++  "story.shu.chibi.S4.A.position.hint": "留下這一章的選擇，讓歸營後的承諾有跡可循。",
++  "story.shu.chibi.S4.A.position.label": "優先爭取己方作戰空間",
++  "story.shu.chibi.S4.A.title": "聯軍約定",
++  "story.shu.chibi.S4.B.body": "火船還沒離岸，江風已把軍旗吹得獵獵作響。周瑜說，進攻的人都有了，還差接人的船。你將燈掛上船頭：「火一起，總得有人往回走。」船隊由你親領，還是先教兩軍副將共同調度？",
++  "story.shu.chibi.S4.B.handover.hint": "把責任交給下一代，留下本章的交接紀錄。",
++  "story.shu.chibi.S4.B.handover.label": "讓兩軍副將共掌接應",
++  "story.shu.chibi.S4.B.shelter.hint": "留下這一章的選擇，讓歸營後的承諾有跡可循。",
++  "story.shu.chibi.S4.B.shelter.label": "自領救援船隊",
++  "story.shu.chibi.S4.B.title": "火起時誰去接人",
++  "story.shu.chibi.after.body": "江上的火終於熄了。你與江東兵將同一條船推上岸，誰也沒先問旗號。兩家的傷兵同坐一灶。魯肅將航路圖交給你：「這條路，往後也留著。」",
++  "story.shu.chibi.after.title": "赤壁借勢：有人願與我們同戰",
++  "story.shu.chibi.opening.body": "江東帳上有人問，劉備還剩多少兵。你正要起身，魯肅先將兩張地圖推在一起：「先問，合在一起能做什麼。」諸葛亮朝你點頭。",
++  "story.shu.chibi.opening.title": "赤壁借勢：有人願與我們同戰",
++  "story.shu.chibi.stage.0": "江口前哨",
++  "story.shu.chibi.stage.1": "曹軍游舟",
++  "story.shu.chibi.stage.2": "南岸營",
++  "story.shu.chibi.stage.3": "火線側翼",
++  "story.shu.chibi.stage.4": "聯軍接應",
++  "story.shu.chibi.stage.5": "曹軍退道",
++  "story.shu.chibi.stage.6": "江陵外圍",
++  "story.shu.hanzhong.S6.A.assault.hint": "留下這一章的選擇，讓歸營後的承諾有跡可循。",
++  "story.shu.hanzhong.S6.A.assault.label": "集中精兵奪山",
++  "story.shu.hanzhong.S6.A.body": "黃忠指著山頂的敵旗，笑說自己還能先登。你卻發現，漢中到荊州的報信仍會斷在兩處山道。眼前要奪山，遠處也有人等著援手；這一回，你想先把哪條路打開？",
++  "story.shu.hanzhong.S6.A.corridor.hint": "預備改命：接通援路。與赤壁盟約一同完成，才能在荊州救回關羽。",
++  "story.shu.hanzhong.S6.A.corridor.label": "開漢中至荊州的接力聯絡",
++  "story.shu.hanzhong.S6.A.title": "山戰與後路",
++  "story.shu.hanzhong.S6.B.body": "糧隊的老隊長連走三夜，靠著糧車就睡著了。孔明要叫醒他問路，你拿起木牌：「路不能只記在一個人腦裡。」你可以建立輪替班底，也可以親自守住這段最吃緊的倉道。",
++  "story.shu.hanzhong.S6.B.guard.hint": "留下這一章的選擇，讓歸營後的承諾有跡可循。",
++  "story.shu.hanzhong.S6.B.guard.label": "由你親守前線倉道",
++  "story.shu.hanzhong.S6.B.handover.hint": "預備改命：建立可輪替的糧運班底，與入蜀交接共同支撐北伐。",
++  "story.shu.hanzhong.S6.B.handover.label": "建立可替換的糧運班底",
++  "story.shu.hanzhong.S6.B.title": "誰掌握糧道",
++  "story.shu.hanzhong.after.body": "黃忠的箭旗在山頂展開。你與劉備並肩望向北方，後方的接應隊陸續抵達。黃忠笑著向你招手：「這座山拿下了，後面的路，也一起走！」",
++  "story.shu.hanzhong.after.title": "漢中：這座山，我們一起拿下",
++  "story.shu.hanzhong.opening.body": "黃忠試弓時，年輕人還在估山有多高。他放下弓，對你說：「我只管前頭那一箭。後頭的事，信你。」",
++  "story.shu.hanzhong.opening.title": "漢中：這座山，我們一起拿下",
++  "story.shu.hanzhong.stage.0": "山麓哨寨",
++  "story.shu.hanzhong.stage.1": "弩台",
++  "story.shu.hanzhong.stage.2": "定軍山隘",
++  "story.shu.hanzhong.stage.3": "黃忠接戰",
++  "story.shu.hanzhong.stage.4": "曹軍糧道",
++  "story.shu.hanzhong.stage.5": "反攻精銳",
++  "story.shu.hanzhong.stage.6": "漢水接應",
++  "story.shu.hulao.S1.A.body": "傳令兵從盟軍大帳出來，連你們的名字都沒念。張飛氣得一拍桌，關羽卻看向遠處斷掉的旗：「等他們分軍功，那邊的人就回不來了。」你攤開殘缺的軍圖，決定先做一件誰也攔不住的事。",
++  "story.shu.hulao.S1.A.repair.hint": "留下這一章的選擇，讓歸營後的承諾有跡可循。",
++  "story.shu.hulao.S1.A.repair.label": "修整破損軍械",
++  "story.shu.hulao.S1.A.rescue.hint": "留下這一章的選擇，讓歸營後的承諾有跡可循。",
++  "story.shu.hulao.S1.A.rescue.label": "請戰救受困友軍",
++  "story.shu.hulao.S1.A.title": "輪不到的軍功",
++  "story.shu.hulao.S1.B.body": "幾名傷兵扶著彼此走到營前，原來的隊伍已經散了。有人小聲問：「這裡……還收人嗎？」劉備把位置讓出來。大戰將至，你要先安排他們的去處，或教會新隊長接防。",
++  "story.shu.hulao.S1.B.handover.hint": "把責任交給下一代，留下本章的交接紀錄。",
++  "story.shu.hulao.S1.B.handover.label": "教新隊長分段接防",
++  "story.shu.hulao.S1.B.shelter.hint": "留下這一章的選擇，讓歸營後的承諾有跡可循。",
++  "story.shu.hulao.S1.B.shelter.label": "把傷兵記入自己名簿",
++  "story.shu.hulao.S1.B.title": "沒人認領的傷兵",
++  "story.shu.hulao.after.body": "夜裡，你們圍著小小的火。劉備問你願不願同行，張飛搶著說：「飯都吃了，還問！」關羽替你把鬆掉的槍纓重新繫好。你終於有了一面願意跟隨的旗。",
++  "story.shu.hulao.after.title": "虎牢相逢：沒有自己的營，也有自己的兄弟",
++  "story.shu.hulao.opening.body": "盟軍帳外，張飛正為分不到軍糧吵得滿臉通紅。劉備把自己的餅掰成幾份，連你的那份也算進去：「先吃。餓著，可守不住旗。」",
++  "story.shu.hulao.opening.title": "虎牢相逢：沒有自己的營，也有自己的兄弟",
++  "story.shu.hulao.stage.0": "關外亂兵",
++  "story.shu.hulao.stage.1": "友軍缺口",
++  "story.shu.hulao.stage.2": "華雄前陣",
++  "story.shu.hulao.stage.3": "斷旗坡",
++  "story.shu.hulao.stage.4": "西涼騎陣",
++  "story.shu.hulao.stage.5": "呂布前鋒",
++  "story.shu.hulao.stage.6": "呂布突擊",
++  "story.shu.jingzhou.S7.A.body": "急報濕透了半張紙，剩下的字仍看得清：關將軍受困。你展開赤壁的約章與漢中的路簿；能不能把它們接成一條援路，就看這些年留了什麼。出發之前，先定今晚的目標。",
++  "story.shu.jingzhou.S7.A.defend.hint": "留下這一章的選擇，讓歸營後的承諾有跡可循。",
++  "story.shu.jingzhou.S7.A.defend.label": "集中保住西岸防線",
++  "story.shu.jingzhou.S7.A.rescue.hint": "若已備盟約與援路：第 5 關可接回關羽。若準備不足，本次只能救援散兵。",
++  "story.shu.jingzhou.S7.A.rescue.label": "啟用盟約與接力水路",
++  "story.shu.jingzhou.S7.A.title": "今夜是否出援",
++  "story.shu.jingzhou.S7.B.body": "救援隊正在點燈，劉備站在江邊，沒有催你。他只問：「若接得回來，往後還讓兄弟走到這一步嗎？」人尚未歸來，你先把戰後的承諾說清：重修盟約，或交託下一代整軍。",
++  "story.shu.jingzhou.S7.B.handover.hint": "把責任交給下一代，留下本章的交接紀錄。",
++  "story.shu.jingzhou.S7.B.handover.label": "交下一代整訓國軍",
++  "story.shu.jingzhou.S7.B.pact.hint": "戰後承諾：若接回關羽，重立盟約，讓兄弟重聚的未來延續。",
++  "story.shu.jingzhou.S7.B.pact.label": "以活人為先，重修盟約",
++  "story.shu.jingzhou.S7.B.title": "戰後要追回什麼",
++  "story.shu.jingzhou.after.body": "關羽未能從荊州歸來。其後數年，劉備東征，夷陵受挫；你將歸來的部曲重新編整，把傷兵送回家。失去的人不能忘，活著的人還需要你。未接通援路的缺口，已留在行旅手記。",
++  "story.shu.jingzhou.after.title": "荊州烽火：二哥，這次換我來接你",
++  "story.shu.jingzhou.alive.body": "關羽平安歸營，兄弟先聚在一桌。荊州的爭端尚未化解，這一輪你沒有完成重修盟約的承諾。救回他的成果保留；後續仍須整軍與協商。",
++  "story.shu.jingzhou.alive.title": "人回來了，約還未定",
++  "story.shu.jingzhou.hint": "麥城回馬｜赤壁訂盟約、漢中備援路，本章選救援並通過第 5 關。",
++  "story.shu.jingzhou.opening.body": "最初是捷報，接著是斷信，最後只有一個滿身泥水的傳令兵。帳內突然安靜。你展開早已備好的水路圖，手指落在麥城之外。",
++  "story.shu.jingzhou.opening.title": "荊州烽火：二哥，這次換我來接你",
++  "story.shu.jingzhou.rescue.body": "河道旁的旗號終於亮起。你把槍杆探向岸邊：「二哥！別看後面，看這裡！」關羽躍上船，你們並肩擋開追兵。\n\n關羽已救出。繼續挑戰或收兵，都不會失去這份成果。",
++  "story.shu.jingzhou.rescue.stage.0": "漢水哨線",
++  "story.shu.jingzhou.rescue.stage.1": "斷信驛",
++  "story.shu.jingzhou.rescue.stage.2": "江陵外道",
++  "story.shu.jingzhou.rescue.stage.3": "夜渡口",
++  "story.shu.jingzhou.rescue.stage.4": "接回關羽",
++  "story.shu.jingzhou.rescue.stage.5": "麥城外圍・同袍接應",
++  "story.shu.jingzhou.rescue.stage.6": "與關羽並肩斷後",
++  "story.shu.jingzhou.rescue.title": "二哥，援軍到了！",
++  "story.shu.jingzhou.reunion.body": "關羽朝你深深一揖，隨後與你一同重訂盟約。劉備親自出營迎接，張飛的笑聲遠遠傳來。這條夢中的道路不再走向夷陵復仇，你們要帶著活著的人繼續向前。",
++  "story.shu.jingzhou.reunion.title": "這一次，我們一起回去",
++  "story.shu.jingzhou.stage.0": "漢水哨線",
++  "story.shu.jingzhou.stage.1": "斷信驛",
++  "story.shu.jingzhou.stage.2": "江陵外道",
++  "story.shu.jingzhou.stage.3": "夜渡口",
++  "story.shu.jingzhou.stage.4": "散兵接應",
++  "story.shu.jingzhou.stage.5": "西岸撤離",
++  "story.shu.jingzhou.stage.6": "退軍接應",
++  "story.shu.northern.S8.A.advance.hint": "留下這一章的選擇，讓歸營後的承諾有跡可循。",
++  "story.shu.northern.S8.A.advance.label": "集中資源決戰前線",
++  "story.shu.northern.S8.A.body": "軍帳裡的燈又亮了一夜。孔明伸手去拿下一封軍報，你先接住了它：「我們跟著您走了這麼遠，不是只學會等您的命令。」你要啟用早先培養的輪值班底，還是將力量壓向前線？",
++  "story.shu.northern.S8.A.delegate.hint": "若已備兩次交接：本章第 5 關可穩住補給，讓孔明真正休養。",
++  "story.shu.northern.S8.A.delegate.label": "啟用分工與輪值",
++  "story.shu.northern.S8.A.title": "把重擔接過來",
++  "story.shu.northern.S8.B.body": "黎明前，孔明把軍令推到你面前：「這一仗之後，你想怎麼走？」你知道接住一夜還不夠，還要有人接得住明天。是正式交接軍政、落實輪休，還是親領先鋒決戰？",
++  "story.shu.northern.S8.B.handover.hint": "戰後承諾：公開交接、執行輪休，讓續燈的成果持續。",
++  "story.shu.northern.S8.B.handover.label": "交接軍政，接受輪休",
++  "story.shu.northern.S8.B.title": "軍令留給明天",
++  "story.shu.northern.S8.B.vanguard.hint": "留下這一章的選擇，讓歸營後的承諾有跡可循。",
++  "story.shu.northern.S8.B.vanguard.label": "親領決勝先鋒",
++  "story.shu.northern.after.body": "五丈原的軍帳漸漸安靜。孔明未能親眼看見那張地圖走到最後，你與下一代將領把它繼續攤平。天色將亮，新的接應隊仍會依約出發。",
++  "story.shu.northern.after.title": "北伐星火：丞相，剩下的路一起走",
++  "story.shu.northern.both.body": "清晨，你在營外找到孔明，他正笑著將風箏線交給孩子。關羽在不遠處等下一次軍議，看見你便抬手相招。這一次，你們都能等到明天。",
++  "story.shu.northern.both.title": "晨光裡的兩面旗",
++  "story.shu.northern.carry.body": "孔明未能走過這一夜。關羽與你並肩站在軍帳外，接過他未完成的圖：「前頭的路，咱們一起走。」你保住的重聚並未失去，而新的承諾仍在。",
++  "story.shu.northern.carry.title": "替故人把路走完",
++  "story.shu.northern.dawn.body": "接應隊依約越過渭水，前後軍完成輪換。你把批示簿按下：「您教我們這麼久，也該讓我們真的會一回。」孔明看著營外的旗，終於把筆交到你手上。\n\n指揮接力已穩住。這份成果不會因後續敗退被抹去。",
++  "story.shu.northern.dawn.title": "丞相，這次換我們撐住",
++  "story.shu.northern.hint": "五丈原續燈｜入蜀與漢中皆選交接，本章啟用輪值並通過第 5 關。",
++  "story.shu.northern.opening.body": "大帳還亮著。諸葛亮把最後一卷軍報移到燈下，發現你已坐在對面。你放下自己的那一份：「今夜，一人一半。」",
++  "story.shu.northern.opening.title": "北伐星火：丞相，剩下的路一起走",
++  "story.shu.northern.partial.body": "你穩住本次補給，孔明得以暫歇。長期輪值尚未正式交接，他仍須回到軍案前。這一夜的接力會留下紀錄，但尚未完成續燈的全部承諾。",
++  "story.shu.northern.partial.title": "接住這一夜",
++  "story.shu.northern.rest.body": "清晨，孔明第一次沒有獨坐案前。軍署與糧隊依新令輪值，年輕將領來向你回報。他站在帳外，看著晨光說：「看來，真的可以交給你們了。」",
++  "story.shu.northern.rest.title": "天亮了，丞相",
++  "story.shu.northern.stage.0": "祁山外寨",
++  "story.shu.northern.stage.1": "隴道守備",
++  "story.shu.northern.stage.2": "前軍脫困",
++  "story.shu.northern.stage.3": "糧道攻防",
++  "story.shu.northern.stage.4": "渭水接應",
++  "story.shu.northern.stage.5": "司馬軍前鋒",
++  "story.shu.northern.stage.6": "五丈原對陣",
++  "story.shu.xuzhou.S2.A.body": "府衙的鑰匙交到手裡，桌上立刻堆滿求援的木牘。倉頂漏雨、城門缺守，哪一件都不能等。趙雲已備好馬：「你先辦哪件，我就跟你去哪裡。」",
++  "story.shu.xuzhou.S2.A.defend.hint": "留下這一章的選擇，讓歸營後的承諾有跡可循。",
++  "story.shu.xuzhou.S2.A.defend.label": "重整城防隊伍",
++  "story.shu.xuzhou.S2.A.granary.hint": "留下這一章的選擇，讓歸營後的承諾有跡可循。",
++  "story.shu.xuzhou.S2.A.granary.label": "修倉安置流民",
++  "story.shu.xuzhou.S2.A.title": "新領地的第一件事",
++  "story.shu.xuzhou.S2.B.body": "城上的號角急促起來，最壞的消息終於送到。張飛提矛要去城門，卻被你攔住：「你守住後面，我把人帶出去。」撤退將至，你在名簿上圈出第一批應受護送的人。",
++  "story.shu.xuzhou.S2.B.handover.hint": "把責任交給下一代，留下本章的交接紀錄。",
++  "story.shu.xuzhou.S2.B.handover.label": "讓年輕隊長領一支撤隊",
++  "story.shu.xuzhou.S2.B.shelter.hint": "留下這一章的選擇，讓歸營後的承諾有跡可循。",
++  "story.shu.xuzhou.S2.B.shelter.label": "分路護送家眷",
++  "story.shu.xuzhou.S2.B.title": "守城失利，必須撤走",
++  "story.shu.xuzhou.after.body": "徐州的城門漸漸消失在身後。劉備望著離去的人潮，你將名簿交給他：「地方還能再找，這些人，我們帶出來了。」趙雲領著失散的隊伍從另一條路追了上來。",
++  "story.shu.xuzhou.after.title": "徐州風雨：我們總得有個家",
++  "story.shu.xuzhou.opening.body": "城裡第一次有人喊你們「自家兵」。張飛高興得在地圖上圈出酒坊，趙雲卻先圈了井與城門：「守住這些，他們才喊得久。」",
++  "story.shu.xuzhou.opening.title": "徐州風雨：我們總得有個家",
++  "story.shu.xuzhou.stage.0": "城外哨營",
++  "story.shu.xuzhou.stage.1": "糧道",
++  "story.shu.xuzhou.stage.2": "城門爭奪",
++  "story.shu.xuzhou.stage.3": "巷戰",
++  "story.shu.xuzhou.stage.4": "家眷護送",
++  "story.shu.xuzhou.stage.5": "追騎",
++  "story.shu.xuzhou.stage.6": "突圍接應",
++  "story.shu.yizhou.S5.A.arsenal.hint": "留下這一章的選擇，讓歸營後的承諾有跡可循。",
++  "story.shu.yizhou.S5.A.arsenal.label": "先穩住山口與武庫",
++  "story.shu.yizhou.S5.A.body": "山口後是等待春耕的田，軍報旁卻壓著武庫的清單。劉備看了許久：「得有地方站穩，也得讓人願意讓我們站在這裡。」你準備先去修復糧籍與水利，或安定山口和軍械。",
++  "story.shu.yizhou.S5.A.granary.hint": "留下這一章的選擇，讓歸營後的承諾有跡可循。",
++  "story.shu.yizhou.S5.A.granary.label": "保留地方糧籍，修復水利",
++  "story.shu.yizhou.S5.A.title": "進軍以後怎麼生活",
++  "story.shu.yizhou.S5.B.body": "孔明案上的燈比別處都晚熄。你抱來新一疊文書，他揉了揉眉心，仍伸手要接。你把木牘按住：「丞相，這些事不能永遠只有您會。」是安排新舊官吏交接，還是先由你巡迴承擔？",
++  "story.shu.yizhou.S5.B.handover.hint": "預備改命：培養官署接班人，替孔明接住軍政重擔。",
++  "story.shu.yizhou.S5.B.handover.label": "讓新舊官吏共同交接",
++  "story.shu.yizhou.S5.B.personal.hint": "留下這一章的選擇，讓歸營後的承諾有跡可循。",
++  "story.shu.yizhou.S5.B.personal.label": "由自己巡迴統籌",
++  "story.shu.yizhou.S5.B.title": "把事情交給誰",
++  "story.shu.yizhou.after.body": "成都終於開門。劉備邀你在府衙吃飯，卻仍習慣把餅分開。空下的席位留給未能走到這裡的龐統；眾人舉杯後，把他未完的地圖攤開。",
++  "story.shu.yizhou.after.title": "入蜀：讓天下之計有一個落腳處",
++  "story.shu.yizhou.opening.body": "龐統把成都的位置一指：「地方很好，問題是人家還住在裡頭。」劉備沉默片刻，望向你：「進城之後，得讓人知道我們為何而來。」",
++  "story.shu.yizhou.opening.title": "入蜀：讓天下之計有一個落腳處",
++  "story.shu.yizhou.stage.0": "山口營",
++  "story.shu.yizhou.stage.1": "涪城外道",
++  "story.shu.yizhou.stage.2": "雒城前陣",
++  "story.shu.yizhou.stage.3": "險隘",
++  "story.shu.yizhou.stage.4": "成都糧路",
++  "story.shu.yizhou.stage.5": "城外精兵",
++  "story.shu.yizhou.stage.6": "護民入城"
++}
+diff --git a/scripts/story-balance.ts b/scripts/story-balance.ts
+new file mode 100644
+index 0000000..f8aff79
+--- /dev/null
++++ b/scripts/story-balance.ts
+@@ -0,0 +1,37 @@
++/** Real 72-turn journeys, without changing attributes, troops, choices or rewards in saved state. */
++import { Session } from '../src/app/session.js';
++import { driveRun } from '../src/app/run-driver.js';
++import { factionId, seed } from '../src/contracts/core/ids.js';
++import type { MetaState } from '../src/contracts/core/state.js';
++import { emptyDraft, emptyMeta } from '../src/modules/dream-entry.js';
++import { defs, wiring } from './tests/harness.js';
++import { POLICIES } from './lib/policies.js';
++
++const count = Number(process.argv[2] ?? 12);
++const prepared: Record<string, string> = { 'S4.A': 'pact', 'S5.B': 'handover', 'S6.A': 'corridor',
++  'S6.B': 'handover', 'S7.A': 'rescue', 'S7.B': 'pact', 'S8.A': 'delegate', 'S8.B': 'handover' };
++const reports = [];
++for (const star of [0, 3, 5]) {
++  for (const name of ['greedy-gain', 'focus-martial', 'focus-civil']) {
++    const policy = POLICIES.find(p => p.name === name)!;
++    const runs: { seed: number; depths: readonly number[]; milestones: readonly string[]; ending: unknown }[] = [];
++    for (let n = 0; n < count; n++) {
++      const base = emptyMeta();
++      const meta: MetaState = star === 0 ? base : { ...base, notableCodex: Object.fromEntries(defs.reader('notable').all()
++        .map(d => [d.notableId, { star, fragments: 0, unlocked: true }])) };
++      const s = Session.start(wiring, meta, emptyDraft(meta, defs), seed(9000 + n));
++      const result = driveRun(s, { ...policy, chooseFaction: () => factionId('faction:shu'),
++        chooseStory: run => prepared[run.storyChoice!.id] ?? run.storyChoice!.options[0]!.id });
++      runs.push({ seed: 9000 + n, depths: result.depths, milestones: s.storyProgress().milestones,
++        ending: s.current.ending?.endingId });
++    }
++    reports.push({ star, policy: name, runs: count,
++      meanDepth: Array.from({ length: 9 }, (_, i) => Number((runs.reduce((sum, r) => sum + r.depths[i]!, 0) / count).toFixed(2))),
++      guanyu: runs.filter(r => r.milestones.includes('shu.guanyu-rescued')).length,
++      kongming: runs.filter(r => r.milestones.includes('shu.kongming-rested')).length,
++      both: runs.filter(r => r.milestones.length === 2).length,
++      examples: runs.filter(r => r.milestones.length).slice(0, 2),
++    });
++  }
++}
++console.log(JSON.stringify({ seedFrom: 9000, count, reports }, null, 2));
+diff --git a/scripts/tests/story.test.ts b/scripts/tests/story.test.ts
+new file mode 100644
+index 0000000..ab45b71
+--- /dev/null
++++ b/scripts/tests/story.test.ts
+@@ -0,0 +1,149 @@
++import { Session } from '../../src/app/session.js';
++import { driveRun } from '../../src/app/run-driver.js';
++import { migrateStoryRun } from '../../src/app/story-save.js';
++import { chapterId, factionId, skillId } from '../../src/contracts/core/ids.js';
++import { emptyStory } from '../../src/modules/story.js';
++import { describe, eq, it, ok, throws } from '../lib/tinytest.js';
++import { defs, newSession, wiring, META } from './harness.js';
++import { POLICIES } from '../lib/policies.js';
++
++const SHU = factionId('faction:shu');
++const readyChoices = { 'S4.A': 'pact', 'S5.B': 'handover', 'S6.A': 'corridor', 'S6.B': 'handover',
++  'S7.A': 'rescue', 'S7.B': 'pact', 'S8.A': 'delegate', 'S8.B': 'handover' };
++function pickStory(s: Session, choices: Readonly<Record<string, string>>): void {
++  const node = s.storyChoice;
++  if (node) s.chooseStory(node.id, choices[node.id] ?? node.options[0]!.id);
++}
++function acknowledge(s: Session): void {
++  while (s.storyScene) s.acknowledgeStory(s.storyScene.id);
++}
++function march(s: Session, choices: Readonly<Record<string, string>>): void {
++  if (s.storyScene) { acknowledge(s); return; }
++  if (s.needsFactionChoice) { s.chooseFaction(SHU); return; }
++  if (s.needsSuperiors) { s.assignSuperiors([]); return; }
++  if (s.needsCampaign) { s.configureCampaign({ skills: [], commanders: [] }); s.withdraw(); return; }
++  if (!s.hasActed) s.selectSlot(0);
++  while (s.pendingEvent) s.resolveEvent(0);
++  pickStory(s, choices);
++  if (s.canAdvance()) s.advance();
++}
++function atCampaign(slug: string, choices: Readonly<Record<string, string>> = readyChoices): Session {
++  const s = newSession(782);
++  for (let i = 0; i < 400 && !(s.needsCampaign && s.current.progress.chapterId === `ch:shu.${slug}`); i++) march(s, choices);
++  eq(s.current.progress.chapterId, chapterId(`ch:shu.${slug}`));
++  ok(s.needsCampaign, '應抵達指定戰役');
++  return s;
++}
++/** Explicit battle fixture: four prior victories, strong fifth-stage rescue. */
++function fifthStage(s: Session): Session {
++  const state = s.current, campaign = state.campaign;
++  if (!campaign) throw new Error('fixture requires campaign');
++  return Session.restore(wiring, { ...state,
++    abilities: { ...state.abilities, skills: [skillId('skill:tuzhen')] },
++    attributes: { values: { lead: 100, war: 100, int: 100, pol: 100 } },
++    campaign: { ...campaign, phase: 'awaitingDecision', clearedStages: 4,
++      loadout: { skills: [skillId('skill:tuzhen')], commanders: [] },
++      host: { troops: 1_000_000, troopsMax: 1_000_000, supply: 1_000_000, supplyMax: 1_000_000, buffs: [] } },
++  });
++}
++
++export function run(): void {
++  describe('敘事狀態與可玩蜀篇', () => {
++    it('零星正常養成、不改狀態，能從黃巾完成兩條改命', () => {
++      const s = newSession(9000);
++      const policy = POLICIES.find(p => p.name === 'greedy-gain')!;
++      const result = driveRun(s, { ...policy, chooseFaction: () => SHU,
++        chooseStory: run => readyChoices[run.storyChoice!.id as keyof typeof readyChoices] ?? run.storyChoice!.options[0]!.id });
++      eq(result.actions, 72);
++      ok(result.depths[7]! >= 5 && result.depths[8]! >= 5, '兩次救援關實際通過');
++      eq(s.storyProgress().milestones, ['shu.guanyu-rescued', 'shu.kongming-rested']);
++      eq(String(s.current.ending?.endingId), 'ending:shu.reunion');
++    });
++    it('正常入口跑完 72 回合、16 個選擇，零關收兵也有完整收束', () => {
++      const s = newSession(2026);
++      const result = driveRun(s, { chooseFaction: () => SHU, chooseSlot: () => 0, chooseOption: () => 0,
++        spend: () => {}, chooseLoadout: () => ({ skills: [], commanders: [] }), chooseEngage: () => false });
++      eq(result.actions, 72); eq(s.current.progress.chaptersPassed, 9);
++      eq(Object.keys(s.current.story.choices).length, 16);
++      eq(s.current.story.seenScenes.length, 16);
++      eq(s.current.story.milestones, []);
++      ok(s.isOver, '保底結局應可達');
++      const result1 = s.settle(META), result2 = s.settle(result1.meta);
++      eq(result2.pointsGained, 0); eq(result2.meta, result1.meta);
++    });
++    it('尚未行動不得答主線；選項只提交一次，R6 尚未救出人物', () => {
++      const source = atCampaign('jingzhou');
++      const s = Session.restore(wiring, { ...source.current, campaign: null,
++        progress: { ...source.current.progress, turnInChapter: 6, pendingCampaign: false },
++        turn: { ...source.current.turn, selected: null, pending: [] },
++        story: { ...source.current.story, choices: Object.fromEntries(Object.entries(source.current.story.choices).filter(([id]) => id !== 'S7.B')) },
++      });
++      throws(() => s.chooseStory('S7.B', 'pact'), '未行動不得選');
++      s.selectSlot(0); while (s.pendingEvent) s.resolveEvent(0);
++      ok(!s.canAdvance(), '主線尚未回答必須擋住回合');
++      s.chooseStory('S7.B', 'pact');
++      throws(() => s.chooseStory('S7.B', 'handover'), '不得重答');
++      eq(s.current.story.milestones, []);
++      ok(s.canAdvance(), '委託與主線清完才推進');
++    });
++    it('沒有前置，戰役情境不冒充救關羽，五關也不會誤授改命', () => {
++      const s = fifthStage(atCampaign('jingzhou', { ...readyChoices, 'S4.A': 'position' }));
++      ok(defs.text(String(s.campaignDef().stages[6]!.briefKey)).includes('退軍'), '準備不足應為守岸情境');
++      ok(s.engage().cleared, 'fixture 第五關應取勝');
++      eq(s.current.story.milestones, []);
++    });
++    it('第五關救出，讀檔後第六關敗退，關羽仍在而深度仍是五', () => {
++      let s = fifthStage(atCampaign('jingzhou'));
++      ok(defs.text(String(s.campaignDef().stages[4]!.briefKey)).includes('關羽'), '救援情境第五關標示關羽');
++      ok(s.engage().cleared, '第五關應取勝');
++      ok(s.current.story.milestones.includes('shu.guanyu-rescued'), '立即保留救援');
++      throws(() => s.engage(), '未確認救援不可繼續攻擊');
++      const saved = JSON.parse(JSON.stringify(s.current));
++      s = Session.restore(wiring, migrateStoryRun(saved, 3, defs));
++      ok(s.storyScene !== null, '待播救援須恢復'); acknowledge(s);
++      const campaign = s.current.campaign!;
++      s = Session.restore(wiring, { ...s.current, campaign: { ...campaign,
++        loadout: { skills: [], commanders: [] }, host: { ...campaign.host, troops: 1, supply: 0 } } });
++      ok(s.engage().defeated, '第六關應敗退');
++      eq(s.current.story.depths['ch:shu.jingzhou'], 5);
++      ok(s.current.story.milestones.includes('shu.guanyu-rescued'), '敗退不得收回救援');
++      eq(s.current.progress.chapterId, chapterId('ch:shu.jingzhou'));
++      ok(s.current.story.awaitingChapterClose, '未播章末前不可切章');
++      acknowledge(s);
++      eq(s.current.progress.chapterId, chapterId('ch:shu.northern'));
++    });
++    it('救出但未立約，章末承認存活，結局不冒充桃園再聚', () => {
++      const s = fifthStage(atCampaign('jingzhou', { ...readyChoices, 'S7.B': 'handover' }));
++      s.engage(); acknowledge(s); s.withdraw();
++      ok(defs.text(String(s.storyScene!.bodyKey)).includes('平安歸營'), '應顯示存活但未完成承諾');
++      for (let i = 0; i < 80 && !s.isOver; i++) march(s, { ...readyChoices, 'S7.B': 'handover' });
++      ok(String(s.current.ending?.endingId) !== 'ending:shu.reunion', '不可發完整改命結局');
++    });
++    it('兩條改命能共存，末章演完才選主結局，無效選擇被拒絕', () => {
++      let s = fifthStage(atCampaign('jingzhou'));
++      s.engage(); acknowledge(s); s.withdraw(); acknowledge(s);
++      for (let i = 0; i < 50 && !s.needsCampaign; i++) march(s, readyChoices);
++      s = fifthStage(s); s.engage(); acknowledge(s); s.withdraw();
++      ok(!s.isOver, '末章演出前不可夢醒');
++      ok(!s.needsEndingChoice, '回應尚未播放');
++      acknowledge(s);
++      ok(s.needsEndingChoice, '兩改命應能紀念其一');
++      s = Session.restore(wiring, migrateStoryRun(JSON.parse(JSON.stringify(s.current)), 3, defs));
++      ok(s.needsEndingChoice, '讀檔後保留雙結局選擇');
++      eq(s.storyEndingOptions().length, 2);
++      throws(() => s.chooseStoryEnding('ending:chancellor'), '不能越權指定結局');
++      s.chooseStoryEnding('ending:shu.dawn');
++      eq(String(s.current.ending?.endingId), 'ending:shu.dawn');
++      eq(s.current.story.milestones.length, 2);
++      throws(() => s.chooseStoryEnding('ending:shu.reunion'), '不得二次結局');
++    });
++    it('v2 只補明示停用的敘事狀態；v3 的未知選項與異常深度拒載', () => {
++      const state = newSession(5).current;
++      eq(migrateStoryRun(state, 2, defs).story, emptyStory(false));
++      throws(() => migrateStoryRun({ ...state, story: { ...state.story, choices: { 'S1.A': 'bad' } } }, 3, defs), '未知選項');
++      throws(() => migrateStoryRun({ ...state, story: { ...state.story, depths: { 'ch:shu.jingzhou': 8 } } }, 3, defs), '不存在第八關');
++      throws(() => migrateStoryRun({ ...state, story: { ...state.story, scenes: [{ id: 'bad', titleKey: '' as never, bodyKey: '' as never }] } }, 3, defs), '未知場景');
++      throws(() => migrateStoryRun({ ...state, story: { ...state.story, awaitingEndingChoice: true } }, 3, defs), '未達末章不得等待選結局');
++    });
++  });
++}
+diff --git a/scripts/verify-discipline.ts b/scripts/verify-discipline.ts
+index b60014d..dc50cf5 100644
+--- a/scripts/verify-discipline.ts
++++ b/scripts/verify-discipline.ts
+@@ -119,6 +119,7 @@ const OWNS: Readonly<Record<string, readonly string[]>> = {
+   'ability.ts': ['abilities'],
+   // ㉝ 擁有 campaign。career／attributes／roster 一律經各自的 Query。
+   'campaign.ts': ['campaign'],
++  'story.ts': ['story'],
+ };
+ const SLICE_READ = /(?:ctx|tc)\.state\.([a-zA-Z]+)/g;
+ for (const f of files) {
+diff --git a/scripts/verify-modules.ts b/scripts/verify-modules.ts
+index 5fa1961..97314dd 100644
+--- a/scripts/verify-modules.ts
++++ b/scripts/verify-modules.ts
+@@ -2,7 +2,9 @@
+ import { report } from './lib/tinytest.js';
+ import { run as pure } from './tests/pure.test.js';
+ import { run as runtime } from './tests/run.test.js';
++import { run as story } from './tests/story.test.js';
+ 
+ pure();
+ runtime();
++story();
+ report();
+diff --git a/src/app/run-driver.ts b/src/app/run-driver.ts
+index 0c372a9..3a3693e 100644
+--- a/src/app/run-driver.ts
++++ b/src/app/run-driver.ts
+@@ -5,6 +5,7 @@ import type { FactionId, NotableId } from '../contracts/core/ids.js';
+ 
+ /** Headless policies drive the exact Session methods called by the player interface. */
+ export interface RunPolicy {
++  chooseStory?(s: Session): string;
+   chooseFaction?(s: Session): FactionId | null;
+   chooseSuperiors?(s: Session): readonly NotableId[];
+   chooseSlot(s: Session): SlotIndex;
+@@ -18,7 +19,17 @@ export function driveRun(s: Session, policy: RunPolicy): DriveResult {
+   let actions = 0;
+   const depths: number[] = [];
+   for (let guard = 0; guard < 1000 && !s.isOver; guard++) {
+-    if (s.needsFactionChoice) {
++    if (s.needsEndingChoice) {
++      const ending = s.storyEndingOptions()[0];
++      if (!ending) throw new Error('沒有可紀念的改命結局');
++      s.chooseStoryEnding(String(ending.ending));
++    } else if (s.storyScene) {
++      s.acknowledgeStory(s.storyScene.id);
++    } else if (s.storyChoice) {
++      const option = policy.chooseStory?.(s) ?? s.storyChoice.options[0]?.id;
++      if (!option) throw new Error('主線缺少選項');
++      s.chooseStory(s.storyChoice.id, option);
++    } else if (s.needsFactionChoice) {
+       const faction = policy.chooseFaction ? policy.chooseFaction(s) : s.factionOptions().find(x => x.eligible)?.factionId;
+       if (faction) s.chooseFaction(faction); else s.noFactionAvailable();
+     } else if (s.needsSuperiors) {
+@@ -33,6 +44,7 @@ export function driveRun(s: Session, policy: RunPolicy): DriveResult {
+         const result = s.engage();
+         if (result.defeated) break;
+         cleared++;
++        while (s.current.story.scenes.length > 0 && s.needsCampaign) s.acknowledgeStory(s.current.story.scenes[0]!.id);
+       }
+       if (s.needsCampaign) s.withdraw();
+       depths.push(cleared);
+@@ -43,7 +55,7 @@ export function driveRun(s: Session, policy: RunPolicy): DriveResult {
+         if (++events > 64) throw new Error('事件佇列未收斂');
+         s.resolveEvent(policy.chooseOption(s, s.pendingEvent));
+       }
+-      s.advance();
++      if (s.canAdvance()) s.advance();
+     }
+   }
+   if (!s.isOver) throw new Error('策略未完成一輪');
+diff --git a/src/app/save.ts b/src/app/save.ts
+index 1b46e32..56a6519 100644
+--- a/src/app/save.ts
++++ b/src/app/save.ts
+@@ -1,12 +1,13 @@
+ import type { RunState } from '../contracts/core/state.js';
+ import { Session } from './session.js';
+ import type { Wiring } from './composition.js';
++import { migrateStoryRun } from './story-save.js';
+ 
+ const KEY = 'sgd.run.v2';
+ export interface SavedRun { readonly state: RunState; readonly log: readonly string[] }
+ export function saveRun(session: Session | null, log: readonly string[]): void {
+   if (session === null) localStorage.removeItem(KEY);
+-  else localStorage.setItem(KEY, JSON.stringify({ version: 2, state: session.current, log }));
++  else localStorage.setItem(KEY, JSON.stringify({ version: 3, state: session.current, log }));
+ }
+ /** Validate before construction; storage errors never prevent opening the app. */
+ export function restoreRun(w: Wiring): { session: Session | null; log: readonly string[]; notice: string } {
+@@ -15,7 +16,7 @@ export function restoreRun(w: Wiring): { session: Session | null; log: readonly
+     if (raw === null) return { session: null, log: [], notice: '' };
+     const saved = JSON.parse(raw) as { version: number; state: RunState; log: unknown };
+     const s = saved.state;
+-    if (saved.version !== 2 || s === null || typeof s !== 'object'
++    if (![2, 3].includes(saved.version) || s === null || typeof s !== 'object'
+       || !s.progress || !s.config || !s.attributes?.values || !s.growth?.exp || !s.growth?.spent
+       || !s.metaSnapshot?.shop || !s.currencies?.merit || !s.career || !s.items?.count
+       || !Array.isArray(s.roster?.members) || !Array.isArray(s.abilities?.skills)
+@@ -25,7 +26,7 @@ export function restoreRun(w: Wiring): { session: Session | null; log: readonly
+     for (const id of s.abilities.skills) w.defs.reader('skill').get(String(id));
+     for (const id of s.abilities.traits) w.defs.reader('trait').get(String(id));
+     for (const m of s.roster.members) w.defs.reader('notable').get(String(m.notableId));
+-    return { session: Session.restore(w, s), log: Array.isArray(saved.log) ? saved.log.filter((v): v is string => typeof v === 'string') : [], notice: '' };
++    return { session: Session.restore(w, migrateStoryRun(s, saved.version, w.defs)), log: Array.isArray(saved.log) ? saved.log.filter((v): v is string => typeof v === 'string') : [], notice: '' };
+   } catch {
+     return { session: null, log: [], notice: '未能讀取本輪存檔' };
+   }
+diff --git a/src/app/session.ts b/src/app/session.ts
+index 72400dc..a1fa4b7 100644
+--- a/src/app/session.ts
++++ b/src/app/session.ts
+@@ -27,6 +27,7 @@ import { stageOf as rosterStageOf } from '../modules/roster-query.js';
+ import { settle, summarize, type SettlementResult } from '../modules/settlement.js';
+ import * as training from '../modules/training.js';
+ import * as turn from '../modules/turn.js';
++import * as story from '../modules/story.js';
+ import type { Wiring } from './composition.js';
+ 
+ const defsAttrMax = (ctx: RC): number => ctx.defs.single('attributeCap').attrMax;
+@@ -82,6 +83,36 @@ export class Session {
+    */
+   get pendingEvent(): EventOffer | null { return commission.head(this.ctx); }
+ 
++  get storyScene() { return story.pendingScene(this.ctx); }
++  get storyChapter() { return story.chapterStory(this.ctx); }
++  get needsEndingChoice(): boolean { return story.awaitingEndingChoice(this.ctx); }
++  storyEndingOptions() {
++    return this.needsEndingChoice ? ending.candidatesFor(ending.SEQUENCE_DONE, this.ctx).filter(e => (e.storyRequirements?.length ?? 0) > 0) : [];
++  }
++  chooseStoryEnding(id: string): void {
++    if (!this.needsEndingChoice) throw new Error('尚未到紀念結局的時刻');
++    const outcome = ending.resolveEnding(ending.SEQUENCE_DONE, this.ctx, id);
++    this.state = { ...story.setEndingChoice(false, this.ctx), ending: outcome };
++  }
++  get storyChoice() {
++    return this.hasActed && !this.pendingEvent && !this.storyScene ? story.unchosenStory(this.ctx) : null;
++  }
++  storyProgress() { return story.storyHistory(this.ctx); }
++  storyMeets(requirements: readonly import('../contracts/core/story.js').StoryRequirement[]): boolean {
++    return story.meetsStory(requirements, this.ctx);
++  }
++  chooseStory(nodeId: string, optionId: string): void {
++    if (!this.storyChoice || this.needsCampaign || this.isOver) throw new Error('現在不能選擇主線');
++    this.state = story.commitStory(nodeId, optionId, this.ctx);
++  }
++  acknowledgeStory(sceneId: string): void {
++    this.state = story.acknowledgeStory(sceneId, this.ctx);
++    if (!this.storyScene && story.awaitingChapterClose(this.ctx)) {
++      this.state = story.finishStoryChapter(this.ctx);
++      this.afterChapterPassed();
++    }
++  }
++
+   private rng(): DeterministicRng {
+     return createRng(this.state.seed, this.state.rngCursors);
+   }
+@@ -95,8 +126,10 @@ export class Session {
+   private refreshSlots(): void {
+     this.mutate((tc) => ({
+       ...tc.state,
+-      turn: { ...tc.state.turn, slots: training.generate(tc, this.w.fx) },
++      turn: { ...tc.state.turn, slots: training.generate(tc, this.w.fx)
++        .map(slot => story.scheduledStory(tc) ? { ...slot, hasEncounter: false } : slot) },
+     }));
++    this.state = story.enterStory(this.ctx);
+   }
+ 
+   /**
+@@ -263,6 +296,7 @@ export class Session {
+    * `ui/` 不得直接 import `modules/`，而它需要這個型別去演戰鬥（D67）。
+    */
+   engage(): campaign.StageOutcome {
++    if (this.storyScene) throw new Error('請先確認戰役中的劇情成果');
+     const box: { value: campaign.StageOutcome | null } = { value: null };
+     this.mutate((tc) => {
+       const r = campaign.engage(tc, this.w.fx);
+@@ -271,6 +305,8 @@ export class Session {
+     });
+     const outcome = box.value;
+     if (outcome === null) throw new Error('戰役結算未回傳結果');
++    this.state = story.recordStoryDepth(this.state.progress.chapterId,
++      this.state.campaign?.clearedStages ?? 0, this.ctx);
+     // 戰敗【不再夢醒】—— ㉝ 已把 banked 減半，這裡走與收兵相同的收尾。
+     if (outcome.defeated) this.closeCampaign();
+     return outcome;
+@@ -293,6 +329,7 @@ export class Session {
+       const out = this.engage();
+       if (out.defeated) return { cleared, stopped: 'defeat' };
+       cleared += 1;
++      if (this.storyScene) return { cleared, stopped: 'threat' };
+     }
+     return { cleared, stopped: 'done' };
+   }
+@@ -316,6 +353,8 @@ export class Session {
+    * 收尾只有一條路，「戰敗的章節到底算不算過」就不可能有兩種答案。
+    */
+   private closeCampaign(): void {
++    this.state = story.recordStoryDepth(this.state.progress.chapterId,
++      this.state.campaign?.clearedStages ?? 0, this.ctx);
+     const banked = campaign.bankedOf(this.ctx);
+     this.mutate((tc) => this.applyRewards(banked, tc.state, tc));
+     this.mutate((tc) => careerService.reevaluate({ state: tc.state, defs: tc.defs }));
+@@ -331,7 +370,8 @@ export class Session {
+         },
+       };
+     });
+-    this.afterChapterPassed();
++    this.state = story.closeStoryChapter(this.ctx);
++    if (!story.awaitingChapterClose(this.ctx)) this.afterChapterPassed();
+   }
+ 
+   /** 已保住的獎勵入帳。戰敗時走的是同一條，只是 `banked` 已在 ㉝ 減半。 */
+@@ -447,7 +487,9 @@ export class Session {
+       this.stepTurn();
+       this.refreshSlots();
+     } else {
+-      this.mutate((tc) => ending.reachEnding(ending.SEQUENCE_DONE, tc));
++      const candidates = ending.candidatesFor(ending.SEQUENCE_DONE, this.ctx).filter(e => (e.storyRequirements?.length ?? 0) > 0);
++      if (candidates.length > 1) this.state = story.setEndingChoice(true, this.ctx);
++      else this.mutate((tc) => ending.reachEnding(ending.SEQUENCE_DONE, tc));
+     }
+   }
+ 
+diff --git a/src/app/story-save.ts b/src/app/story-save.ts
+new file mode 100644
+index 0000000..192d4ed
+--- /dev/null
++++ b/src/app/story-save.ts
+@@ -0,0 +1,55 @@
++import type { RunState } from '../contracts/core/state.js';
++import type { DefinitionRegistry } from '../data-runtime/registry.js';
++import { emptyStory } from '../modules/story.js';
++import { candidatesFor, SEQUENCE_DONE } from '../modules/ending.js';
++import { sequenceOf } from '../modules/turn.js';
++
++/** Legacy runs finish without retroactively inserting missed plot decisions. */
++export function migrateStoryRun(state: RunState, version: number, defs: DefinitionRegistry): RunState {
++  if (version === 2) return { ...state, story: emptyStory(false) };
++  if (version !== 3) throw new Error('不支援的本輪存檔版本');
++  const story = state.story;
++  if (!story || typeof story.enabled !== 'boolean' || typeof story.awaitingChapterClose !== 'boolean' || typeof story.awaitingEndingChoice !== 'boolean'
++    || !story.choices || typeof story.choices !== 'object' || Array.isArray(story.choices)
++    || !story.depths || typeof story.depths !== 'object' || Array.isArray(story.depths)
++    || !Array.isArray(story.milestones) || !Array.isArray(story.scenes) || !Array.isArray(story.seenScenes)) {
++    throw new Error('主線存檔格式不符');
++  }
++  const chapters = defs.reader('storyChapter').all();
++  const nodes = new Map(chapters.flatMap(c => c.nodes).map(n => [n.id, n]));
++  const milestoneIds = new Set(chapters.flatMap(c => c.milestones.map(m => m.id)));
++  const scenes = new Map(chapters.flatMap(c => [c.opening, ...c.aftermaths.map(a => a.scene), ...c.milestones.map(m => m.scene)])
++    .map(s => [s.id, s]));
++  for (const [node, option] of Object.entries(story.choices)) {
++    if (!nodes.get(node)?.options.some(o => o.id === option)) throw new Error('主線選擇不屬於目前內容');
++  }
++  for (const id of story.milestones) if (!milestoneIds.has(id)) throw new Error('救援紀錄不存在');
++  for (const id of story.seenScenes) if (!scenes.has(id)) throw new Error('劇情紀錄不存在');
++  for (const [id, depth] of Object.entries(story.depths)) {
++    const campaign = defs.reader('campaign').all().find(c => c.chapterId === id);
++    if (!campaign || !Number.isInteger(depth) || depth < 0 || depth > campaign.stages.length) throw new Error('戰役深度不合法');
++  }
++  for (const scene of story.scenes) {
++    const def = scenes.get(scene?.id);
++    if (!def || def.bodyKey !== scene.bodyKey || def.titleKey !== scene.titleKey) throw new Error('待播劇情不存在');
++  }
++  if (new Set(story.milestones).size !== story.milestones.length
++    || new Set([...story.seenScenes, ...story.scenes.map(s => s.id)]).size !== story.seenScenes.length + story.scenes.length) {
++    throw new Error('主線紀錄重複');
++  }
++  if (!story.enabled && (story.awaitingChapterClose || story.awaitingEndingChoice || story.scenes.length)) {
++    throw new Error('舊局不得等待新主線');
++  }
++  if (story.awaitingChapterClose && (story.scenes.length === 0 || state.progress.pendingCampaign || state.ending)) {
++    throw new Error('章末演出狀態不一致');
++  }
++  if (story.awaitingEndingChoice) {
++    const ctx = { state, defs };
++    if (state.ending || state.campaign || state.progress.pendingCampaign || story.awaitingChapterClose || story.scenes.length
++      || state.progress.chapterId !== sequenceOf(state.faction, ctx).at(-1)
++      || candidatesFor(SEQUENCE_DONE, ctx).filter(e => (e.storyRequirements?.length ?? 0) > 0).length < 2) {
++      throw new Error('主結局選擇狀態不一致');
++    }
++  }
++  return state;
++}
+diff --git a/src/contracts/core/definitions.ts b/src/contracts/core/definitions.ts
+index 3ea79fb..326637e 100644
+--- a/src/contracts/core/definitions.ts
++++ b/src/contracts/core/definitions.ts
+@@ -8,6 +8,7 @@ import type {
+   GlowTier, MeritKind, OptionTier, Phase, Rarity, SkillKind,
+ } from './primitives.js';
+ import type { Condition, EffectRef } from './effects.js';
++import type { StoryChapterDef, StoryRequirement } from './story.js';
+ 
+ export type DefinitionKind =
+   | 'glowTier' | 'aptitudeGrade' | 'trainingAction' | 'trainingCurve'
+@@ -21,7 +22,7 @@ export type DefinitionKind =
+   | 'shopItem' | 'settlementFormula' | 'gameRules'
+   // ── ㉜ 養成兌現 ／ ㉓ 特質與技能 ／ ㉝ 戰役（RFC-01）★ ──
+   | 'growthRule' | 'trait' | 'skill'
+-  | 'battleRule' | 'enemy' | 'campaign';
++  | 'battleRule' | 'enemy' | 'campaign' | 'storyChapter';
+ 
+ export interface DefHeader {
+   readonly id: string;
+@@ -635,6 +636,7 @@ export type EndingTrigger =
+   | { readonly kind: 'sequenceCompleted' }
+   | { readonly kind: 'noFactionEligible' };
+ export interface EndingDef extends DefHeader {
++  readonly storyRequirements?: readonly StoryRequirement[];
+   readonly kind: 'ending';
+   readonly ending: EndingId;
+   /**
+@@ -926,6 +928,7 @@ export interface CampaignDef extends DefHeader {
+ 
+ /** Definition kind → 型別對照。Registry 以此提供型別安全的 Reader。 */
+ export interface DefByKind {
++  storyChapter: StoryChapterDef;
+   glowTier: GlowTierDef; aptitudeGrade: AptitudeGradeDef;
+   trainingAction: TrainingActionDef; trainingCurve: TrainingCurveDef;
+   affinityStage: AffinityStageDef; affinityCurve: AffinityCurveDef;
+diff --git a/src/contracts/core/state.ts b/src/contracts/core/state.ts
+index 59acade..21f2827 100644
+--- a/src/contracts/core/state.ts
++++ b/src/contracts/core/state.ts
+@@ -5,6 +5,7 @@ import type {
+ } from './ids.js';
+ import type { EffectRef, EffectTrace } from './effects.js';
+ import type { EventReward } from './definitions.js';
++import type { StoryState } from './story.js';
+ import type {
+   AffinityStage, AptitudeGrade, Attr, CareerLine,
+   GlowTier, MeritKind, OptionTier, Phase, Rarity, RngCursors, SkillKind, SlotIndex,
+@@ -359,6 +360,7 @@ export interface EndingOutcome {
+ }
+ 
+ export interface RunState {
++  readonly story: StoryState;
+   readonly schemaVersion: number;
+   readonly seed: Seed;
+   readonly rngCursors: RngCursors;
+diff --git a/src/contracts/core/story.ts b/src/contracts/core/story.ts
+new file mode 100644
+index 0000000..3e622c2
+--- /dev/null
++++ b/src/contracts/core/story.ts
+@@ -0,0 +1,64 @@
++import type { DefHeader } from './definitions.js';
++import type { ChapterId, L10nKey } from './ids.js';
++
++export type StoryRequirement =
++  | { readonly kind: 'choice'; readonly node: string; readonly option: string }
++  | { readonly kind: 'milestone'; readonly id: string };
++
++export interface StoryScene {
++  readonly id: string;
++  readonly titleKey: L10nKey;
++  readonly bodyKey: L10nKey;
++}
++
++export interface StoryOption {
++  readonly id: string;
++  readonly labelKey: L10nKey;
++  readonly consequenceKey: L10nKey;
++}
++
++export interface StoryNode {
++  readonly id: string;
++  readonly turn: number;
++  readonly titleKey: L10nKey;
++  readonly bodyKey: L10nKey;
++  readonly options: readonly StoryOption[];
++}
++
++export interface StoryMilestone {
++  readonly id: string;
++  readonly minCleared: number;
++  readonly requirements: readonly StoryRequirement[];
++  readonly scene: StoryScene;
++  readonly hintKey: L10nKey;
++}
++
++export interface StoryChapterDef extends DefHeader {
++  readonly kind: 'storyChapter';
++  readonly chapterId: ChapterId;
++  readonly opening: StoryScene;
++  readonly nodes: readonly StoryNode[];
++  readonly milestones: readonly StoryMilestone[];
++  /** First matching variant wins; the final unconditional scene is mandatory. */
++  readonly aftermaths: readonly {
++    readonly requirements: readonly StoryRequirement[];
++    readonly scene: StoryScene;
++  }[];
++  /** Only the situation changes; the campaign's seven-stage rules stay identical. */
++  readonly battleVariants: readonly {
++    readonly requirements: readonly StoryRequirement[];
++    readonly briefKeys: readonly L10nKey[];
++  }[];
++}
++
++export interface StoryState {
++  /** false is an explicit migration policy for already-started legacy runs. */
++  readonly enabled: boolean;
++  readonly choices: Readonly<Record<string, string>>;
++  readonly milestones: readonly string[];
++  readonly depths: Readonly<Record<string, number>>;
++  readonly scenes: readonly StoryScene[];
++  readonly seenScenes: readonly string[];
++  readonly awaitingChapterClose: boolean;
++  readonly awaitingEndingChoice: boolean;
++}
+diff --git a/src/data-runtime/validate/endings.ts b/src/data-runtime/validate/endings.ts
+index f2b5775..207deb5 100644
+--- a/src/data-runtime/validate/endings.ts
++++ b/src/data-runtime/validate/endings.ts
+@@ -21,7 +21,8 @@ export function validateEndings(c: Ctx): void {
+     const hasFallback = endings.some((e) => {
+       const trig = (e['trigger'] ?? {}) as Rec;
+       if (trig['kind'] !== kind) return false;
+-      return c.list(e['requirements']).length === 0;
++      return e['factionId'] === null && c.list(e['requirements']).length === 0
++        && c.list(e['storyRequirements']).length === 0;
+     });
+     if (!hasFallback) {
+       c.push('rule', 'endings', kind, null,
+diff --git a/src/data-runtime/validate/index.ts b/src/data-runtime/validate/index.ts
+index e31fc67..fe5a9ff 100644
+--- a/src/data-runtime/validate/index.ts
++++ b/src/data-runtime/validate/index.ts
+@@ -12,6 +12,7 @@ import {
+   validateTrainingActions, validateYieldCurves,
+ } from './tables.js';
+ import { createCtx } from './types.js';
++import { validateStory } from './story.js';
+ import type { ValidateInput, ValidationError } from './types.js';
+ 
+ export type { ValidateInput, ValidationError, Rec } from './types.js';
+@@ -37,6 +38,7 @@ export function validateAll(input: ValidateInput): readonly ValidationError[] {
+   validateEvents(c);
+   validateItems(c);
+   validateChapters(c);
++  validateStory(c);
+   validateEndings(c);
+   validateShop(c);
+   validateFactions(c);
+diff --git a/src/data-runtime/validate/story.ts b/src/data-runtime/validate/story.ts
+new file mode 100644
+index 0000000..1d88bd0
+--- /dev/null
++++ b/src/data-runtime/validate/story.ts
+@@ -0,0 +1,79 @@
++import type { Ctx, Rec } from './types.js';
++
++export function validateStory(c: Ctx): void {
++  const nodes = new Map<string, { row: Rec; chapter: string }>();
++  const milestones = new Set<string>();
++  const scenes = new Set<string>();
++  const chapters = new Map(c.rows('chapter').map(d => [c.s(d['chapterId']), d]));
++  const storyOwners = new Set<string>();
++  for (const d of c.rows('storyChapter')) {
++    const id = c.s(d['id']), chapter = c.s(d['chapterId']);
++    if (!chapters.has(chapter)) c.push('reference', 'story', 'chapterId', id, '主線章節不存在');
++    if (storyOwners.has(chapter)) c.push('rule', 'story', 'chapterId', id, '每章只能一份主線');
++    storyOwners.add(chapter);
++    const turns = new Set<number>();
++    for (const node of c.arr(d['nodes'])) {
++      const nid = c.s(node['id']), at = c.n(node['turn']);
++      if (!nid || nodes.has(nid)) c.push('rule', 'story', 'nodes.id', id, '主線節點 ID 必須唯一');
++      nodes.set(nid, { row: node, chapter });
++      if (!Number.isInteger(at) || at < 1 || at > c.n(chapters.get(chapter)?.['length']) || turns.has(at))
++        c.push('rule', 'story', 'nodes.turn', id, '主線回合必須在章內且不重複');
++      turns.add(at);
++      c.text(node['titleKey'], 'story', 'node.titleKey', id);
++      c.text(node['bodyKey'], 'story', 'node.bodyKey', id);
++      const options = c.arr(node['options']);
++      if (options.length < 2 || new Set(options.map(o => c.s(o['id']))).size !== options.length)
++        c.push('rule', 'story', 'options', id, '主線至少兩個不同選項');
++      for (const o of options) {
++        c.text(o['labelKey'], 'story', 'option.labelKey', id);
++        c.text(o['consequenceKey'], 'story', 'option.consequenceKey', id);
++      }
++    }
++    const campaign = c.rows('campaign').find(x => x['chapterId'] === chapter);
++    for (const m of c.arr(d['milestones'])) {
++      const mid = c.s(m['id']);
++      if (!mid || milestones.has(mid)) c.push('rule', 'story', 'milestones.id', id, '里程碑 ID 必須唯一');
++      milestones.add(mid);
++      if (!Number.isInteger(m['minCleared']) || c.n(m['minCleared']) < 1 || c.n(m['minCleared']) > c.list(campaign?.['stages']).length)
++        c.push('rule', 'story', 'minCleared', id, '改命門檻必須是戰役內可抵達的關卡');
++      c.text(m['hintKey'], 'story', 'hintKey', id);
++    }
++    const afters = c.arr(d['aftermaths']);
++    if (!afters.length || c.list(afters.at(-1)?.['requirements']).length !== 0)
++      c.push('rule', 'story', 'aftermaths', id, '章末最後一筆必須是無條件場景');
++    for (const s of [d['opening'], ...afters.map(x => x['scene']), ...c.arr(d['milestones']).map(x => x['scene'])]) {
++      if (!s || typeof s !== 'object') { c.push('schema', 'story', 'scene', id, '場景格式不符'); continue; }
++      const scene = s as Rec, sid = c.s(scene['id']);
++      if (!sid || scenes.has(sid)) c.push('rule', 'story', 'scene.id', id, '場景 ID 必須唯一');
++      scenes.add(sid);
++      c.text(scene['titleKey'], 'story', 'scene.titleKey', id);
++      c.text(scene['bodyKey'], 'story', 'scene.bodyKey', id);
++    }
++    const variants = c.arr(d['battleVariants']);
++    if (variants.length && c.list(variants.at(-1)?.['requirements']).length !== 0)
++      c.push('rule', 'story', 'battleVariants', id, '戰役情境最後一筆必須無條件');
++    for (const v of variants) {
++      if (c.list(v['briefKeys']).length !== c.list(campaign?.['stages']).length)
++        c.push('rule', 'story', 'briefKeys', id, '戰役情境數須與實際關卡數相同');
++      for (const key of c.list(v['briefKeys'])) c.text(key, 'story', 'briefKeys', id);
++    }
++  }
++  const check = (reqs: unknown, id: string): void => {
++    if (!Array.isArray(reqs)) { c.push('schema', 'story', 'requirements', id, '主線條件須為陣列'); return; }
++    for (const r of c.arr(reqs)) {
++      if (r['kind'] === 'choice') {
++        const node = nodes.get(c.s(r['node']));
++        if (!node || !c.arr(node.row['options']).some(o => o['id'] === r['option']))
++          c.push('reference', 'story', 'requirements', id, `主線選項不存在: ${c.s(r['node'])}/${c.s(r['option'])}`);
++      } else if (r['kind'] === 'milestone') {
++        if (!milestones.has(c.s(r['id']))) c.push('reference', 'story', 'requirements', id, '里程碑不存在');
++      } else c.push('schema', 'story', 'requirements.kind', id, '未知主線條件');
++    }
++  };
++  for (const d of c.rows('storyChapter')) {
++    for (const row of [...c.arr(d['milestones']), ...c.arr(d['aftermaths']), ...c.arr(d['battleVariants'])])
++      check(row['requirements'], c.s(d['id']));
++  }
++  for (const ending of c.rows('ending')) if (ending['storyRequirements'] !== undefined)
++    check(ending['storyRequirements'], c.s(ending['id']));
++}
+diff --git a/src/modules/campaign.ts b/src/modules/campaign.ts
+index 3cf27c0..99eda6b 100644
+--- a/src/modules/campaign.ts
++++ b/src/modules/campaign.ts
+@@ -23,6 +23,7 @@ import { careerService } from './career.js';
+ import { consumeCharge, type EffectResolver } from './effect.js';
+ import { rosterIds, stageOf } from './roster-query.js';
+ import { statQuery } from './stats.js';
++import { stageStoryKeys } from './story.js';
+ 
+ const rule = (ctx: RunContext): BattleRuleDef => ctx.defs.single('battleRule');
+ 
+@@ -36,7 +37,9 @@ export const campaignFor = (chapterId: ChapterId, ctx: RunContext): CampaignDef
+ export const currentCampaign = (ctx: RunContext): CampaignDef => {
+   const st = ctx.state.campaign;
+   if (st === null) throw new Error('目前不在戰役中');
+-  return ctx.defs.reader('campaign').get(String(st.campaignId));
++  const def = ctx.defs.reader('campaign').get(String(st.campaignId));
++  const keys = stageStoryKeys(ctx);
++  return keys ? { ...def, stages: def.stages.map((s, i) => ({ ...s, briefKey: keys[i] ?? s.briefKey })) } : def;
+ };
+ 
+ export const stageCount = (ctx: RunContext): number => currentCampaign(ctx).stages.length;
+diff --git a/src/modules/commission.ts b/src/modules/commission.ts
+index 8fb2c7a..1030da2 100644
+--- a/src/modules/commission.ts
++++ b/src/modules/commission.ts
+@@ -31,6 +31,7 @@ import { preview, resolveCheck, specForMinor } from './check.js';
+ import { careerService } from './career.js';
+ import { grantExp } from './growth.js';
+ import { statQuery, type StatWriter } from './stats.js';
++import { scheduledStory } from './story.js';
+ 
+ const readStat = statQuery.read.bind(statQuery);
+ 
+@@ -440,7 +441,7 @@ export function openBeats(ctx: TurnContext, fx: EffectResolver): RunState {
+     if (result === null) throw new Error('固定事件已選但未留下結果');
+     return enqueue(drawCommission(result.attr, result.finalGlow, ctx, fx), ctx);
+   }
+-  if (slot.hasEncounter && !resolvedKind('notable', ctx)) {
++  if (slot.hasEncounter && !scheduledStory(ctx) && !resolvedKind('notable', ctx)) {
+     // 旗標是回合開始擲的，而好感只會上升、連鎖只會前進 ——
+     // 池子只會變大不會變小。這裡仍然守一下：事件的 requirements
+     // 可能帶有上限型條件，那就真的可能失效。
+diff --git a/src/modules/dream-entry.ts b/src/modules/dream-entry.ts
+index 7954052..a972c8b 100644
+--- a/src/modules/dream-entry.ts
++++ b/src/modules/dream-entry.ts
+@@ -233,6 +233,7 @@ export function rollStartAttrs(ctx: TurnContext): RunState {
+ }
+ 
+ const SKELETON = (meta: MetaState, config: DreamEntryConfig, seed: Seed): RunState => ({
++  story: emptyStory(),
+   schemaVersion: 1,
+   seed,
+   rngCursors: emptyCursors(),
+@@ -269,6 +270,8 @@ const SKELETON = (meta: MetaState, config: DreamEntryConfig, seed: Seed): RunSta
+   ending: null,
+ });
+ 
++import { emptyStory } from './story.js';
++
+ export const emptyMeta = (): MetaState => ({
+   schemaVersion: 1,
+   points: 0,
+diff --git a/src/modules/ending.ts b/src/modules/ending.ts
+index 4983b98..3fa5a47 100644
+--- a/src/modules/ending.ts
++++ b/src/modules/ending.ts
+@@ -5,6 +5,7 @@ import type { Attr } from '../contracts/core/primitives.js';
+ import type { EndingOutcome, RunState } from '../contracts/core/state.js';
+ import { evaluateCondition } from './effect-core.js';
+ import { statQuery } from './stats.js';
++import { meetsStory } from './story.js';
+ 
+ const readStat = statQuery.read.bind(statQuery);
+ export const hasEnded = (ctx: RunContext): boolean => ctx.state.ending !== null;
+@@ -19,14 +20,15 @@ export function candidatesFor(
+     .filter((e) => triggerMatches(e, trigger))
+     .filter((e) => e.factionId === null || e.factionId === ctx.state.faction)
+     .filter((e) => e.requirements.every((c) => evaluateCondition(c, ctx, readStat)))
++    .filter((e) => meetsStory(e.storyRequirements ?? [], ctx))
+     .slice()
+     .sort((a, b) => b.priority - a.priority);
+ }
+ 
+ /** 永不回 null —— 兜底結局的存在由載入期驗證保證，不是執行期 fallback（25 §3.1）。 */
+-export function resolveEnding(trigger: EndingTrigger, ctx: RunContext): EndingOutcome {
++export function resolveEnding(trigger: EndingTrigger, ctx: RunContext, selectedId?: string): EndingOutcome {
+   const cands = candidatesFor(trigger, ctx);
+-  const best = cands[0];
++  const best = selectedId === undefined ? cands[0] : cands.find(e => String(e.ending) === selectedId && (e.storyRequirements?.length ?? 0) > 0);
+   if (best === undefined) {
+     throw new Error(
+       `結局判定失敗：trigger=${trigger.kind} 無任何候選。`
+@@ -37,7 +39,9 @@ export function resolveEnding(trigger: EndingTrigger, ctx: RunContext): EndingOu
+     endingId: best.ending,
+     titleKey: best.titleKey,
+     bodyKey: best.bodyKey,
+-    pointsMultiplier: best.pointsMultiplier,
++    pointsMultiplier: (best.storyRequirements?.length ?? 0) > 0
++      ? Math.max(best.pointsMultiplier, cands.find(e => e.factionId === null)?.pointsMultiplier ?? best.pointsMultiplier)
++      : best.pointsMultiplier,
+     isFullDream: best.endingKind === 'fullDream',
+   };
+ }
+diff --git a/src/modules/story.ts b/src/modules/story.ts
+new file mode 100644
+index 0000000..d046310
+--- /dev/null
++++ b/src/modules/story.ts
+@@ -0,0 +1,86 @@
++// Narrative owns choices, irreversible rescues and chapter presentation checkpoints.
++import type { RunContext } from '../contracts/core/context.js';
++import type { RunState } from '../contracts/core/state.js';
++import type { StoryChapterDef, StoryNode, StoryRequirement, StoryScene, StoryState } from '../contracts/core/story.js';
++import type { ChapterId } from '../contracts/core/ids.js';
++
++export const emptyStory = (enabled = true): StoryState => ({
++  enabled, choices: {}, milestones: [], depths: {}, scenes: [], seenScenes: [], awaitingChapterClose: false, awaitingEndingChoice: false,
++});
++
++export const chapterStory = (ctx: RunContext): StoryChapterDef | null => ctx.state.story.enabled
++  ? ctx.defs.reader('storyChapter').all().find(d => d.chapterId === ctx.state.progress.chapterId) ?? null : null;
++
++export const meetsStory = (requirements: readonly StoryRequirement[], ctx: RunContext): boolean =>
++  requirements.length === 0 || (ctx.state.story.enabled && requirements.every(r => r.kind === 'choice'
++    ? ctx.state.story.choices[r.node] === r.option : ctx.state.story.milestones.includes(r.id)));
++
++export const scheduledStory = (ctx: RunContext): StoryNode | null => chapterStory(ctx)?.nodes
++  .find(n => n.turn === ctx.state.progress.turnInChapter) ?? null;
++
++export const unchosenStory = (ctx: RunContext): StoryNode | null => {
++  const node = scheduledStory(ctx);
++  return node && ctx.state.story.choices[node.id] === undefined ? node : null;
++};
++
++export const pendingScene = (ctx: RunContext): StoryScene | null => ctx.state.story.scenes[0] ?? null;
++export const awaitingChapterClose = (ctx: RunContext): boolean => ctx.state.story.awaitingChapterClose;
++export const awaitingEndingChoice = (ctx: RunContext): boolean => ctx.state.story.awaitingEndingChoice;
++export const setEndingChoice = (waiting: boolean, ctx: RunContext): RunState => ({
++  ...ctx.state, story: { ...ctx.state.story, awaitingEndingChoice: waiting },
++});
++
++const enqueue = (scenes: readonly StoryScene[], state: RunState): RunState => ({
++  ...state, story: { ...state.story, scenes: [...state.story.scenes,
++    ...scenes.filter(s => !state.story.seenScenes.includes(s.id) && !state.story.scenes.some(x => x.id === s.id))] },
++});
++
++export const enterStory = (ctx: RunContext): RunState => {
++  const chapter = chapterStory(ctx);
++  return chapter && ctx.state.progress.turnInChapter === 1 ? enqueue([chapter.opening], ctx.state) : ctx.state;
++};
++
++export function commitStory(nodeId: string, optionId: string, ctx: RunContext): RunState {
++  const node = unchosenStory(ctx);
++  if (pendingScene(ctx) || !node || node.id !== nodeId || !node.options.some(o => o.id === optionId)) {
++    throw new Error('主線選擇無效或已經完成');
++  }
++  return { ...ctx.state, story: { ...ctx.state.story, choices: { ...ctx.state.story.choices, [node.id]: optionId } } };
++}
++
++/** Called after every stage, before campaign.clear; later defeat must never erase a rescue. */
++export function recordStoryDepth(chapterId: ChapterId, cleared: number, ctx: RunContext): RunState {
++  if (!ctx.state.story.enabled) return ctx.state;
++  const depth = Math.max(ctx.state.story.depths[String(chapterId)] ?? 0, cleared);
++  const milestones = chapterStory(ctx)?.milestones.filter(m => depth >= m.minCleared
++    && meetsStory(m.requirements, ctx) && !ctx.state.story.milestones.includes(m.id)) ?? [];
++  const state: RunState = { ...ctx.state, story: { ...ctx.state.story,
++    depths: { ...ctx.state.story.depths, [String(chapterId)]: depth },
++    milestones: [...ctx.state.story.milestones, ...milestones.map(m => m.id)],
++  } };
++  return enqueue(milestones.map(m => m.scene), state);
++}
++
++export function closeStoryChapter(ctx: RunContext): RunState {
++  const chapter = chapterStory(ctx);
++  if (!chapter) return ctx.state;
++  const after = chapter.aftermaths.find(a => meetsStory(a.requirements, ctx));
++  if (!after) throw new Error('章末劇情缺少兜底');
++  return enqueue([after.scene], { ...ctx.state, story: { ...ctx.state.story, awaitingChapterClose: true } });
++}
++
++export function acknowledgeStory(sceneId: string, ctx: RunContext): RunState {
++  const scene = pendingScene(ctx);
++  if (!scene || scene.id !== sceneId) throw new Error('劇情場景已變更');
++  return { ...ctx.state, story: { ...ctx.state.story, scenes: ctx.state.story.scenes.slice(1),
++    seenScenes: [...ctx.state.story.seenScenes, scene.id] } };
++}
++
++export const finishStoryChapter = (ctx: RunContext): RunState => ({
++  ...ctx.state, story: { ...ctx.state.story, awaitingChapterClose: false },
++});
++
++export const stageStoryKeys = (ctx: RunContext) => chapterStory(ctx)?.battleVariants
++  .find(v => meetsStory(v.requirements, ctx))?.briefKeys;
++
++export const storyHistory = (ctx: RunContext) => ctx.state.story;
+diff --git a/src/modules/turn.ts b/src/modules/turn.ts
+index d835eff..f30037b 100644
+--- a/src/modules/turn.ts
++++ b/src/modules/turn.ts
+@@ -8,6 +8,7 @@ import type { ActionTally, RunState, TurnProgress } from '../contracts/core/stat
+ import { hasSelected } from './training.js';
+ import { isClear } from './commission.js';
+ import { hasEnded } from './ending.js';
++import { pendingScene, unchosenStory, awaitingChapterClose, awaitingEndingChoice } from './story.js';
+ 
+ export const sequenceOf = (
+   faction: FactionId | null, ctx: RunContext,
+@@ -102,6 +103,7 @@ export const hasActed = (ctx: RunContext): boolean => hasSelected(ctx);
+  * 委託的守門是「佇列非空」，見 canAdvance。
+  */
+ export function assertActable(ctx: RunContext): void {
++  if (pendingScene(ctx) || awaitingChapterClose(ctx) || awaitingEndingChoice(ctx)) throw new Error('請先完成主線演出');
+   if (hasEnded(ctx) || ctx.state.progress.pendingCampaign || ctx.state.progress.pendingFactionChoice || ctx.state.progress.pendingSuperiorAssign) {
+     throw new Error('請先完成目前階段');
+   }
+@@ -123,6 +125,7 @@ export function tally(attr: Attr, ctx: RunContext): RunState {
+  * 因此追加武將事件不需要在這裡多一個分支 —— 它只是讓佇列又非空了。
+  */
+ export const canAdvance = (ctx: RunContext): boolean => !hasEnded(ctx)
++  && !pendingScene(ctx) && !unchosenStory(ctx) && !awaitingChapterClose(ctx) && !awaitingEndingChoice(ctx)
+   && !ctx.state.progress.pendingCampaign && !ctx.state.progress.pendingFactionChoice
+   && !ctx.state.progress.pendingSuperiorAssign && hasSelected(ctx) && isClear(ctx);
+ 
