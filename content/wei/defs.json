@@ -1158,6 +1158,18 @@
   {
     "bodyKey": "event.wei.review.body",
     "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.review.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.review",
     "id": "event:wei.review",
     "kind": "event",
@@ -1273,6 +1285,18 @@
   {
     "bodyKey": "event.wei.subdue.body",
     "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.subdue.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.subdue",
     "id": "event:wei.subdue",
     "kind": "event",
@@ -1396,6 +1420,18 @@
   {
     "bodyKey": "event.wei.procure.body",
     "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.procure.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.procure",
     "id": "event:wei.procure",
     "kind": "event",
@@ -1515,6 +1551,18 @@
   {
     "bodyKey": "event.wei.reclaim.body",
     "collectible": false,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.reclaim.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.reclaim",
     "id": "event:wei.reclaim",
     "kind": "event",
@@ -1639,6 +1687,18 @@
   {
     "bodyKey": "event.wei.nc.edict.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.nc.edict.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.nc.edict",
     "id": "event:wei.nc.edict",
     "kind": "event",
@@ -1759,6 +1819,18 @@
   {
     "bodyKey": "event.wei.nc.liaocomes.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.nc.liaocomes.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.nc.liaocomes",
     "id": "event:wei.nc.liaocomes",
     "kind": "event",
@@ -1879,6 +1951,18 @@
   {
     "bodyKey": "event.wei.nc.stockade.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.nc.stockade.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.nc.stockade",
     "id": "event:wei.nc.stockade",
     "kind": "event",
@@ -1999,6 +2083,18 @@
   {
     "bodyKey": "event.wei.nc.oversee.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.nc.oversee.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.nc.oversee",
     "id": "event:wei.nc.oversee",
     "kind": "event",
@@ -2119,6 +2215,18 @@
   {
     "bodyKey": "event.wei.nc.nightguard.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.nc.nightguard.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.nc.nightguard",
     "id": "event:wei.nc.nightguard",
     "kind": "event",
@@ -2239,6 +2347,18 @@
   {
     "bodyKey": "event.wei.nc.breach.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.nc.breach.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.nc.breach",
     "id": "event:wei.nc.breach",
     "kind": "event",
@@ -2359,6 +2479,18 @@
   {
     "bodyKey": "event.wei.nc.foresee.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.nc.foresee.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.nc.foresee",
     "id": "event:wei.nc.foresee",
     "kind": "event",
@@ -2479,6 +2611,18 @@
   {
     "bodyKey": "event.wei.nc.counsel.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.nc.counsel.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.nc.counsel",
     "id": "event:wei.nc.counsel",
     "kind": "event",
@@ -2601,6 +2745,18 @@
   {
     "bodyKey": "event.wei.nc.scout.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.nc.scout.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.nc.scout",
     "id": "event:wei.nc.scout",
     "kind": "event",
@@ -2721,6 +2877,18 @@
   {
     "bodyKey": "event.wei.nc.recommend.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.nc.recommend.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.nc.recommend",
     "id": "event:wei.nc.recommend",
     "kind": "event",
@@ -2841,6 +3009,18 @@
   {
     "bodyKey": "event.wei.nc.rank.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.nc.rank.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.nc.rank",
     "id": "event:wei.nc.rank",
     "kind": "event",
@@ -2961,6 +3141,18 @@
   {
     "bodyKey": "event.wei.nc.select.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.nc.select.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.commission.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.nc.select",
     "id": "event:wei.nc.select",
     "kind": "event",
@@ -3081,9 +3273,43 @@
   {
     "bodyKey": "event.wei.caocao-summon.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "dialogue.summon.night"
+        },
+        {
+          "moves": [
+            {
+              "actor": 1,
+              "duration": 2200,
+              "path": [
+                {
+                  "x": 77
+                },
+                {
+                  "x": 62
+                },
+                {
+                  "x": 49
+                }
+              ]
+            }
+          ],
+          "speaker": 1,
+          "textKey": "dialogue.summon.approach"
+        },
+        {
+          "speaker": 0,
+          "textKey": "dialogue.summon.answer"
+        }
+      ]
+    },
     "eventDefId": "event:wei.caocao-summon",
     "id": "event:wei.caocao-summon",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -3134,6 +3360,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.caocao-familiar"
+      ],
+      "rarity": 3
+    },
     "requirements": [
       {
         "type": "faction",
@@ -3159,9 +3391,22 @@
   {
     "bodyKey": "event.wei.zhangliao-eight-hundred.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.zhangliao-eight-hundred.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.zhangliao-eight-hundred",
     "id": "event:wei.zhangliao-eight-hundred",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -3212,6 +3457,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.zhangliao-familiar"
+      ],
+      "rarity": 3
+    },
     "requirements": [
       {
         "type": "faction",
@@ -3237,9 +3488,22 @@
   {
     "bodyKey": "event.wei.yujin-camp.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.yujin-camp.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.yujin-camp",
     "id": "event:wei.yujin-camp",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -3290,6 +3554,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.yujin-familiar"
+      ],
+      "rarity": 3
+    },
     "requirements": [
       {
         "type": "faction",
@@ -3315,9 +3585,22 @@
   {
     "bodyKey": "event.wei.xiahoudun-arrow.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.xiahoudun-arrow.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.xiahoudun-arrow",
     "id": "event:wei.xiahoudun-arrow",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -3368,6 +3651,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.xiahoudun-familiar"
+      ],
+      "rarity": 3
+    },
     "requirements": [
       {
         "type": "faction",
@@ -3393,9 +3682,22 @@
   {
     "bodyKey": "event.wei.dianwei-halberds.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.dianwei-halberds.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.dianwei-halberds",
     "id": "event:wei.dianwei-halberds",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -3446,6 +3748,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.dianwei-familiar"
+      ],
+      "rarity": 3
+    },
     "requirements": [
       {
         "type": "faction",
@@ -3471,9 +3779,22 @@
   {
     "bodyKey": "event.wei.lejin-vanguard.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.lejin-vanguard.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.lejin-vanguard",
     "id": "event:wei.lejin-vanguard",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -3524,6 +3845,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.lejin-familiar"
+      ],
+      "rarity": 3
+    },
     "requirements": [
       {
         "type": "faction",
@@ -3549,9 +3876,22 @@
   {
     "bodyKey": "event.wei.guojia-wager.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.guojia-wager.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.guojia-wager",
     "id": "event:wei.guojia-wager",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -3602,6 +3942,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.guojia-familiar"
+      ],
+      "rarity": 3
+    },
     "requirements": [
       {
         "type": "faction",
@@ -3627,9 +3973,22 @@
   {
     "bodyKey": "event.wei.jiaxu-one-word.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.jiaxu-one-word.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.jiaxu-one-word",
     "id": "event:wei.jiaxu-one-word",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -3680,6 +4039,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.jiaxu-familiar"
+      ],
+      "rarity": 3
+    },
     "requirements": [
       {
         "type": "faction",
@@ -3705,9 +4070,22 @@
   {
     "bodyKey": "event.wei.chengyu-three-days.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.chengyu-three-days.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.chengyu-three-days",
     "id": "event:wei.chengyu-three-days",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -3758,6 +4136,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.chengyu-familiar"
+      ],
+      "rarity": 3
+    },
     "requirements": [
       {
         "type": "faction",
@@ -3783,9 +4167,22 @@
   {
     "bodyKey": "event.wei.xunyu-night.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.xunyu-night.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.xunyu-night",
     "id": "event:wei.xunyu-night",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -3836,6 +4233,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.xunyu-familiar"
+      ],
+      "rarity": 3
+    },
     "requirements": [
       {
         "type": "faction",
@@ -3861,9 +4264,22 @@
   {
     "bodyKey": "event.wei.chenqun-grading.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.chenqun-grading.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.chenqun-grading",
     "id": "event:wei.chenqun-grading",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -3914,6 +4330,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.chenqun-familiar"
+      ],
+      "rarity": 3
+    },
     "requirements": [
       {
         "type": "faction",
@@ -3939,9 +4361,22 @@
   {
     "bodyKey": "event.wei.maojie-recommend.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.maojie-recommend.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.maojie-recommend",
     "id": "event:wei.maojie-recommend",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -3992,6 +4427,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.maojie-familiar"
+      ],
+      "rarity": 3
+    },
     "requirements": [
       {
         "type": "faction",
@@ -4017,9 +4458,22 @@
   {
     "bodyKey": "event.wei.zhangliao-persuade.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.zhangliao-persuade.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.zhangliao-persuade",
     "id": "event:wei.zhangliao-persuade",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -4080,6 +4534,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.zhangliao-eight-hundred"
+      ],
+      "rarity": 4
+    },
     "requirements": [
       {
         "type": "faction",
@@ -4105,9 +4565,22 @@
   {
     "bodyKey": "event.wei.yujin-changxi.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.yujin-changxi.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.yujin-changxi",
     "id": "event:wei.yujin-changxi",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -4168,6 +4641,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.yujin-camp"
+      ],
+      "rarity": 4
+    },
     "requirements": [
       {
         "type": "faction",
@@ -4193,9 +4672,22 @@
   {
     "bodyKey": "event.wei.xiahoudun-farmland.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.xiahoudun-farmland.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.xiahoudun-farmland",
     "id": "event:wei.xiahoudun-farmland",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -4256,6 +4748,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.xiahoudun-arrow"
+      ],
+      "rarity": 4
+    },
     "requirements": [
       {
         "type": "faction",
@@ -4281,9 +4779,22 @@
   {
     "bodyKey": "event.wei.lejin-no-boast.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.lejin-no-boast.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.lejin-no-boast",
     "id": "event:wei.lejin-no-boast",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -4344,6 +4855,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.lejin-vanguard"
+      ],
+      "rarity": 4
+    },
     "requirements": [
       {
         "type": "faction",
@@ -4369,9 +4886,22 @@
   {
     "bodyKey": "event.wei.chengyu-hundred-thousand.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.chengyu-hundred-thousand.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.chengyu-hundred-thousand",
     "id": "event:wei.chengyu-hundred-thousand",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -4432,6 +4962,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.chengyu-three-days"
+      ],
+      "rarity": 4
+    },
     "requirements": [
       {
         "type": "faction",
@@ -4457,9 +4993,22 @@
   {
     "bodyKey": "event.wei.chenqun-nine-ranks.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.chenqun-nine-ranks.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.chenqun-nine-ranks",
     "id": "event:wei.chenqun-nine-ranks",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -4520,6 +5069,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.chenqun-grading"
+      ],
+      "rarity": 4
+    },
     "requirements": [
       {
         "type": "faction",
@@ -4545,9 +5100,22 @@
   {
     "bodyKey": "event.wei.maojie-pure-talk.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.maojie-pure-talk.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.maojie-pure-talk",
     "id": "event:wei.maojie-pure-talk",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -4608,6 +5176,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.maojie-recommend"
+      ],
+      "rarity": 4
+    },
     "requirements": [
       {
         "type": "faction",
@@ -4633,9 +5207,22 @@
   {
     "bodyKey": "event.wei.caocao-green-plum.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.caocao-green-plum.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.caocao-green-plum",
     "id": "event:wei.caocao-green-plum",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -4686,6 +5273,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.caocao-summon"
+      ],
+      "rarity": 4
+    },
     "requirements": [
       {
         "type": "faction",
@@ -4711,9 +5304,22 @@
   {
     "bodyKey": "event.wei.caocao-merit-only.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.caocao-merit-only.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.caocao-merit-only",
     "id": "event:wei.caocao-merit-only",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -4774,6 +5380,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.caocao-green-plum"
+      ],
+      "rarity": 5
+    },
     "requirements": [
       {
         "type": "faction",
@@ -4799,9 +5411,22 @@
   {
     "bodyKey": "event.wei.guojia-ten-wins.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.guojia-ten-wins.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.guojia-ten-wins",
     "id": "event:wei.guojia-ten-wins",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -4852,6 +5477,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.guojia-wager"
+      ],
+      "rarity": 4
+    },
     "requirements": [
       {
         "type": "faction",
@@ -4877,9 +5508,22 @@
   {
     "bodyKey": "event.wei.guojia-last-plan.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.guojia-last-plan.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.guojia-last-plan",
     "id": "event:wei.guojia-last-plan",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -4940,6 +5584,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.guojia-ten-wins"
+      ],
+      "rarity": 5
+    },
     "requirements": [
       {
         "type": "faction",
@@ -4965,9 +5615,22 @@
   {
     "bodyKey": "event.wei.xunyu-deep-root.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.xunyu-deep-root.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.xunyu-deep-root",
     "id": "event:wei.xunyu-deep-root",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -5018,6 +5681,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.xunyu-night"
+      ],
+      "rarity": 4
+    },
     "requirements": [
       {
         "type": "faction",
@@ -5043,9 +5712,22 @@
   {
     "bodyKey": "event.wei.xunyu-empty-box.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.xunyu-empty-box.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.xunyu-empty-box",
     "id": "event:wei.xunyu-empty-box",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -5106,6 +5788,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.xunyu-deep-root"
+      ],
+      "rarity": 5
+    },
     "requirements": [
       {
         "type": "faction",
@@ -5131,9 +5819,22 @@
   {
     "bodyKey": "event.wei.xiahoudun-one-eye.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.xiahoudun-one-eye.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.xiahoudun-one-eye",
     "id": "event:wei.xiahoudun-one-eye",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -5194,6 +5895,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.xiahoudun-farmland"
+      ],
+      "rarity": 5
+    },
     "requirements": [
       {
         "type": "faction",
@@ -5219,9 +5926,22 @@
   {
     "bodyKey": "event.wei.zhangliao-hefei.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.zhangliao-hefei.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.zhangliao-hefei",
     "id": "event:wei.zhangliao-hefei",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -5282,6 +6002,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.zhangliao-persuade"
+      ],
+      "rarity": 5
+    },
     "requirements": [
       {
         "type": "faction",
@@ -5307,9 +6033,22 @@
   {
     "bodyKey": "event.wei.wancheng-gate.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.wancheng-gate.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.wancheng-gate",
     "id": "event:wei.wancheng-gate",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -5360,6 +6099,13 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.caocao-familiar",
+        "event:wei.dianwei-familiar"
+      ],
+      "rarity": 4
+    },
     "requirements": [
       {
         "type": "faction",
@@ -5389,9 +6135,22 @@
   {
     "bodyKey": "event.wei.wancheng-halberds.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.wancheng-halberds.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.wancheng-halberds",
     "id": "event:wei.wancheng-halberds",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -5452,6 +6211,12 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.wancheng-gate"
+      ],
+      "rarity": 5
+    },
     "requirements": [
       {
         "type": "faction",
@@ -5481,9 +6246,22 @@
   {
     "bodyKey": "event.wei.two-reckonings.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.two-reckonings.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.two-reckonings",
     "id": "event:wei.two-reckonings",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -5534,6 +6312,13 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.xunyu-familiar",
+        "event:wei.jiaxu-familiar"
+      ],
+      "rarity": 4
+    },
     "requirements": [
       {
         "type": "faction",
@@ -5563,9 +6348,22 @@
   {
     "bodyKey": "event.wei.five-generals.body",
     "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.five-generals.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
     "eventDefId": "event:wei.five-generals",
     "id": "event:wei.five-generals",
     "kind": "event",
+    "mechanic": "relationship",
     "options": [
       {
         "check": null,
@@ -5636,6 +6434,14 @@
     ],
     "packId": "pack:wei",
     "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.zhangliao-familiar",
+        "event:wei.yujin-familiar",
+        "event:wei.lejin-familiar"
+      ],
+      "rarity": 5
+    },
     "requirements": [
       {
         "type": "faction",
@@ -5662,6 +6468,2088 @@
       "chainId": "chain:wuzi",
       "kind": "notable",
       "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.caocao-meeting.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.caocao-meeting.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.meeting.caocao"
+        }
+      ]
+    },
+    "eventDefId": "event:wei.caocao-meeting",
+    "id": "event:wei.caocao-meeting",
+    "kind": "event",
+    "mechanic": "relationship",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.caocao-meeting.a",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.caocao-meeting.result.a",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.caocao-meeting.b",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.caocao-meeting.result.b",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "progression": {
+      "previous": [],
+      "rarity": 1
+    },
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.caocao-meeting.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "stranger",
+          "notableId": "notable:caocao"
+        }
+      ],
+      "chainId": "chain:early.caocao",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.caocao-familiar.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.caocao-familiar.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:wei.caocao-familiar",
+    "id": "event:wei.caocao-familiar",
+    "kind": "event",
+    "mechanic": "relationship",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.caocao-familiar.a",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.caocao-familiar.result.a",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.caocao-familiar.b",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.caocao-familiar.result.b",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.caocao-meeting"
+      ],
+      "rarity": 2
+    },
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.caocao-familiar.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:caocao"
+        }
+      ],
+      "chainId": "chain:early.caocao",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.zhangliao-meeting.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.zhangliao-meeting.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.meeting.zhangliao"
+        }
+      ]
+    },
+    "eventDefId": "event:wei.zhangliao-meeting",
+    "id": "event:wei.zhangliao-meeting",
+    "kind": "event",
+    "mechanic": "relationship",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.zhangliao-meeting.a",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.zhangliao-meeting.result.a",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.zhangliao-meeting.b",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.zhangliao-meeting.result.b",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "progression": {
+      "previous": [],
+      "rarity": 1
+    },
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.zhangliao-meeting.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "stranger",
+          "notableId": "notable:zhangliao"
+        }
+      ],
+      "chainId": "chain:early.zhangliao",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.zhangliao-familiar.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.zhangliao-familiar.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:wei.zhangliao-familiar",
+    "id": "event:wei.zhangliao-familiar",
+    "kind": "event",
+    "mechanic": "relationship",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.zhangliao-familiar.a",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.zhangliao-familiar.result.a",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.zhangliao-familiar.b",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.zhangliao-familiar.result.b",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.zhangliao-meeting"
+      ],
+      "rarity": 2
+    },
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.zhangliao-familiar.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:zhangliao"
+        }
+      ],
+      "chainId": "chain:early.zhangliao",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.yujin-meeting.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.yujin-meeting.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.meeting.yujin"
+        }
+      ]
+    },
+    "eventDefId": "event:wei.yujin-meeting",
+    "id": "event:wei.yujin-meeting",
+    "kind": "event",
+    "mechanic": "relationship",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.yujin-meeting.a",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.yujin-meeting.result.a",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.yujin-meeting.b",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.yujin-meeting.result.b",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "progression": {
+      "previous": [],
+      "rarity": 1
+    },
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.yujin-meeting.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "stranger",
+          "notableId": "notable:yujin"
+        }
+      ],
+      "chainId": "chain:early.yujin",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.yujin-familiar.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.yujin-familiar.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:wei.yujin-familiar",
+    "id": "event:wei.yujin-familiar",
+    "kind": "event",
+    "mechanic": "relationship",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.yujin-familiar.a",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.yujin-familiar.result.a",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.yujin-familiar.b",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.yujin-familiar.result.b",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.yujin-meeting"
+      ],
+      "rarity": 2
+    },
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.yujin-familiar.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:yujin"
+        }
+      ],
+      "chainId": "chain:early.yujin",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.xiahoudun-meeting.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.xiahoudun-meeting.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.meeting.xiahoudun"
+        }
+      ]
+    },
+    "eventDefId": "event:wei.xiahoudun-meeting",
+    "id": "event:wei.xiahoudun-meeting",
+    "kind": "event",
+    "mechanic": "relationship",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.xiahoudun-meeting.a",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.xiahoudun-meeting.result.a",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.xiahoudun-meeting.b",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.xiahoudun-meeting.result.b",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "progression": {
+      "previous": [],
+      "rarity": 1
+    },
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.xiahoudun-meeting.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "stranger",
+          "notableId": "notable:xiahoudun"
+        }
+      ],
+      "chainId": "chain:early.xiahoudun",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.xiahoudun-familiar.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.xiahoudun-familiar.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:wei.xiahoudun-familiar",
+    "id": "event:wei.xiahoudun-familiar",
+    "kind": "event",
+    "mechanic": "relationship",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.xiahoudun-familiar.a",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.xiahoudun-familiar.result.a",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.xiahoudun-familiar.b",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.xiahoudun-familiar.result.b",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.xiahoudun-meeting"
+      ],
+      "rarity": 2
+    },
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.xiahoudun-familiar.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:xiahoudun"
+        }
+      ],
+      "chainId": "chain:early.xiahoudun",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.dianwei-meeting.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.dianwei-meeting.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.meeting.dianwei"
+        }
+      ]
+    },
+    "eventDefId": "event:wei.dianwei-meeting",
+    "id": "event:wei.dianwei-meeting",
+    "kind": "event",
+    "mechanic": "relationship",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.dianwei-meeting.a",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.dianwei-meeting.result.a",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.dianwei-meeting.b",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.dianwei-meeting.result.b",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "progression": {
+      "previous": [],
+      "rarity": 1
+    },
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.dianwei-meeting.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "stranger",
+          "notableId": "notable:dianwei"
+        }
+      ],
+      "chainId": "chain:early.dianwei",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.dianwei-familiar.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.dianwei-familiar.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:wei.dianwei-familiar",
+    "id": "event:wei.dianwei-familiar",
+    "kind": "event",
+    "mechanic": "relationship",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.dianwei-familiar.a",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.dianwei-familiar.result.a",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.dianwei-familiar.b",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.dianwei-familiar.result.b",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.dianwei-meeting"
+      ],
+      "rarity": 2
+    },
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.dianwei-familiar.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:dianwei"
+        }
+      ],
+      "chainId": "chain:early.dianwei",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.lejin-meeting.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "dialogue.ladder.arrive"
+        },
+        {
+          "moves": [
+            {
+              "actor": 1,
+              "duration": 850,
+              "path": [
+                {
+                  "opacity": 1,
+                  "rotate": 0,
+                  "x": 77,
+                  "y": 0
+                },
+                {
+                  "opacity": 0,
+                  "rotate": 65,
+                  "x": 111,
+                  "y": 440
+                }
+              ]
+            }
+          ],
+          "speaker": 1,
+          "textKey": "dialogue.ladder.fall"
+        },
+        {
+          "moves": [
+            {
+              "actor": 1,
+              "duration": 900,
+              "path": [
+                {
+                  "x": 117
+                },
+                {
+                  "x": 74
+                }
+              ]
+            }
+          ],
+          "speaker": 1,
+          "textKey": "dialogue.ladder.return"
+        },
+        {
+          "speaker": 0,
+          "textKey": "dialogue.ladder.help"
+        }
+      ]
+    },
+    "eventDefId": "event:wei.lejin-meeting",
+    "id": "event:wei.lejin-meeting",
+    "kind": "event",
+    "mechanic": "relationship",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.lejin-meeting.a",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.lejin-meeting.result.a",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.lejin-meeting.b",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.lejin-meeting.result.b",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "progression": {
+      "previous": [],
+      "rarity": 1
+    },
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.lejin-meeting.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "stranger",
+          "notableId": "notable:lejin"
+        }
+      ],
+      "chainId": "chain:early.lejin",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.lejin-familiar.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.lejin-familiar.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:wei.lejin-familiar",
+    "id": "event:wei.lejin-familiar",
+    "kind": "event",
+    "mechanic": "relationship",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.lejin-familiar.a",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.lejin-familiar.result.a",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.lejin-familiar.b",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.lejin-familiar.result.b",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "martial"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.lejin-meeting"
+      ],
+      "rarity": 2
+    },
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.lejin-familiar.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:lejin"
+        }
+      ],
+      "chainId": "chain:early.lejin",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.guojia-meeting.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.guojia-meeting.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.meeting.guojia"
+        }
+      ]
+    },
+    "eventDefId": "event:wei.guojia-meeting",
+    "id": "event:wei.guojia-meeting",
+    "kind": "event",
+    "mechanic": "relationship",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.guojia-meeting.a",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.guojia-meeting.result.a",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.guojia-meeting.b",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.guojia-meeting.result.b",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "progression": {
+      "previous": [],
+      "rarity": 1
+    },
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.guojia-meeting.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "stranger",
+          "notableId": "notable:guojia"
+        }
+      ],
+      "chainId": "chain:early.guojia",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.guojia-familiar.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.guojia-familiar.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:wei.guojia-familiar",
+    "id": "event:wei.guojia-familiar",
+    "kind": "event",
+    "mechanic": "relationship",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.guojia-familiar.a",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.guojia-familiar.result.a",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.guojia-familiar.b",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.guojia-familiar.result.b",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.guojia-meeting"
+      ],
+      "rarity": 2
+    },
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.guojia-familiar.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:guojia"
+        }
+      ],
+      "chainId": "chain:early.guojia",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.jiaxu-meeting.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.jiaxu-meeting.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.meeting.jiaxu"
+        }
+      ]
+    },
+    "eventDefId": "event:wei.jiaxu-meeting",
+    "id": "event:wei.jiaxu-meeting",
+    "kind": "event",
+    "mechanic": "relationship",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.jiaxu-meeting.a",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.jiaxu-meeting.result.a",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.jiaxu-meeting.b",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.jiaxu-meeting.result.b",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "progression": {
+      "previous": [],
+      "rarity": 1
+    },
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.jiaxu-meeting.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "stranger",
+          "notableId": "notable:jiaxu"
+        }
+      ],
+      "chainId": "chain:early.jiaxu",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.jiaxu-familiar.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.jiaxu-familiar.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:wei.jiaxu-familiar",
+    "id": "event:wei.jiaxu-familiar",
+    "kind": "event",
+    "mechanic": "relationship",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.jiaxu-familiar.a",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.jiaxu-familiar.result.a",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.jiaxu-familiar.b",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.jiaxu-familiar.result.b",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.jiaxu-meeting"
+      ],
+      "rarity": 2
+    },
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.jiaxu-familiar.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:jiaxu"
+        }
+      ],
+      "chainId": "chain:early.jiaxu",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.chengyu-meeting.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.chengyu-meeting.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.meeting.chengyu"
+        }
+      ]
+    },
+    "eventDefId": "event:wei.chengyu-meeting",
+    "id": "event:wei.chengyu-meeting",
+    "kind": "event",
+    "mechanic": "relationship",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.chengyu-meeting.a",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.chengyu-meeting.result.a",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.chengyu-meeting.b",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.chengyu-meeting.result.b",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "progression": {
+      "previous": [],
+      "rarity": 1
+    },
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.chengyu-meeting.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "stranger",
+          "notableId": "notable:chengyu"
+        }
+      ],
+      "chainId": "chain:early.chengyu",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.chengyu-familiar.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.chengyu-familiar.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:wei.chengyu-familiar",
+    "id": "event:wei.chengyu-familiar",
+    "kind": "event",
+    "mechanic": "relationship",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.chengyu-familiar.a",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.chengyu-familiar.result.a",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.chengyu-familiar.b",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.chengyu-familiar.result.b",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.chengyu-meeting"
+      ],
+      "rarity": 2
+    },
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.chengyu-familiar.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:chengyu"
+        }
+      ],
+      "chainId": "chain:early.chengyu",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.xunyu-meeting.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.xunyu-meeting.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.meeting.xunyu"
+        }
+      ]
+    },
+    "eventDefId": "event:wei.xunyu-meeting",
+    "id": "event:wei.xunyu-meeting",
+    "kind": "event",
+    "mechanic": "relationship",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.xunyu-meeting.a",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.xunyu-meeting.result.a",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.xunyu-meeting.b",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.xunyu-meeting.result.b",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "progression": {
+      "previous": [],
+      "rarity": 1
+    },
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.xunyu-meeting.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "stranger",
+          "notableId": "notable:xunyu"
+        }
+      ],
+      "chainId": "chain:early.xunyu",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.xunyu-familiar.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.xunyu-familiar.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:wei.xunyu-familiar",
+    "id": "event:wei.xunyu-familiar",
+    "kind": "event",
+    "mechanic": "relationship",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.xunyu-familiar.a",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.xunyu-familiar.result.a",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.xunyu-familiar.b",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.xunyu-familiar.result.b",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.xunyu-meeting"
+      ],
+      "rarity": 2
+    },
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.xunyu-familiar.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:xunyu"
+        }
+      ],
+      "chainId": "chain:early.xunyu",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.chenqun-meeting.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.chenqun-meeting.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.meeting.chenqun"
+        }
+      ]
+    },
+    "eventDefId": "event:wei.chenqun-meeting",
+    "id": "event:wei.chenqun-meeting",
+    "kind": "event",
+    "mechanic": "relationship",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.chenqun-meeting.a",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.chenqun-meeting.result.a",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.chenqun-meeting.b",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.chenqun-meeting.result.b",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "progression": {
+      "previous": [],
+      "rarity": 1
+    },
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.chenqun-meeting.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "stranger",
+          "notableId": "notable:chenqun"
+        }
+      ],
+      "chainId": "chain:early.chenqun",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.chenqun-familiar.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.chenqun-familiar.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:wei.chenqun-familiar",
+    "id": "event:wei.chenqun-familiar",
+    "kind": "event",
+    "mechanic": "relationship",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.chenqun-familiar.a",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.chenqun-familiar.result.a",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.chenqun-familiar.b",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.chenqun-familiar.result.b",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.chenqun-meeting"
+      ],
+      "rarity": 2
+    },
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.chenqun-familiar.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:chenqun"
+        }
+      ],
+      "chainId": "chain:early.chenqun",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.maojie-meeting.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.maojie-meeting.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.meeting.maojie"
+        }
+      ]
+    },
+    "eventDefId": "event:wei.maojie-meeting",
+    "id": "event:wei.maojie-meeting",
+    "kind": "event",
+    "mechanic": "relationship",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.maojie-meeting.a",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.maojie-meeting.result.a",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.maojie-meeting.b",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.maojie-meeting.result.b",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "progression": {
+      "previous": [],
+      "rarity": 1
+    },
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.maojie-meeting.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "stranger",
+          "notableId": "notable:maojie"
+        }
+      ],
+      "chainId": "chain:early.maojie",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wei.maojie-familiar.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wei.maojie-familiar.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:wei.maojie-familiar",
+    "id": "event:wei.maojie-familiar",
+    "kind": "event",
+    "mechanic": "relationship",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wei.maojie-familiar.a",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.maojie-familiar.result.a",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wei.maojie-familiar.b",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.wei.maojie-familiar.result.b",
+        "rewards": [
+          {
+            "amount": 1,
+            "kind": "merit",
+            "merit": "civil"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:wei.maojie-meeting"
+      ],
+      "rarity": 2
+    },
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.wei.maojie-familiar.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:maojie"
+        }
+      ],
+      "chainId": "chain:early.maojie",
+      "kind": "notable",
+      "step": 1
     },
     "unique": true,
     "weight": 100
@@ -5864,24 +8752,28 @@
         "damageMul": 0.45,
         "rewards": [
           {
-            "amount": 8,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 8,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 8,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 8,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 15,
+            "kind": "money"
           }
         ],
         "troopsMul": 0.66
@@ -5892,24 +8784,28 @@
         "damageMul": 0.51,
         "rewards": [
           {
-            "amount": 15,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 15,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 15,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 15,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 20,
+            "kind": "money"
           }
         ],
         "troopsMul": 0.76
@@ -5920,24 +8816,28 @@
         "damageMul": 0.58,
         "rewards": [
           {
-            "amount": 23,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 23,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 23,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 23,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 25,
+            "kind": "money"
           }
         ],
         "troopsMul": 0.87
@@ -5948,24 +8848,28 @@
         "damageMul": 0.66,
         "rewards": [
           {
-            "amount": 30,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 30,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 30,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 30,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 35,
+            "kind": "money"
           },
           {
             "kind": "unlock",
@@ -5981,24 +8885,28 @@
         "damageMul": 0.74,
         "rewards": [
           {
-            "amount": 38,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 38,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 38,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 38,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 45,
+            "kind": "money"
           },
           {
             "kind": "unlock",
@@ -6014,24 +8922,28 @@
         "damageMul": 0.84,
         "rewards": [
           {
-            "amount": 45,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 45,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 45,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 45,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 60,
+            "kind": "money"
           }
         ],
         "troopsMul": 1.32
@@ -6042,24 +8954,28 @@
         "damageMul": 0.95,
         "rewards": [
           {
-            "amount": 53,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 53,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 53,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 53,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 80,
+            "kind": "money"
           },
           {
             "kind": "unlock",
@@ -6086,24 +9002,28 @@
         "damageMul": 0.45,
         "rewards": [
           {
-            "amount": 8,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 8,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 8,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 8,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 15,
+            "kind": "money"
           }
         ],
         "troopsMul": 0.66
@@ -6114,24 +9034,28 @@
         "damageMul": 0.51,
         "rewards": [
           {
-            "amount": 15,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 15,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 15,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 15,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 20,
+            "kind": "money"
           }
         ],
         "troopsMul": 0.76
@@ -6142,24 +9066,28 @@
         "damageMul": 0.58,
         "rewards": [
           {
-            "amount": 23,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 23,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 23,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 23,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 25,
+            "kind": "money"
           }
         ],
         "troopsMul": 0.87
@@ -6170,24 +9098,28 @@
         "damageMul": 0.66,
         "rewards": [
           {
-            "amount": 30,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 30,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 30,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 30,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 35,
+            "kind": "money"
           },
           {
             "kind": "unlock",
@@ -6203,24 +9135,28 @@
         "damageMul": 0.74,
         "rewards": [
           {
-            "amount": 38,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 38,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 38,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 38,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 45,
+            "kind": "money"
           },
           {
             "kind": "unlock",
@@ -6236,24 +9172,28 @@
         "damageMul": 0.84,
         "rewards": [
           {
-            "amount": 45,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 45,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 45,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 45,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 60,
+            "kind": "money"
           },
           {
             "kind": "unlock",
@@ -6269,24 +9209,28 @@
         "damageMul": 0.95,
         "rewards": [
           {
-            "amount": 53,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 53,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 53,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 53,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 80,
+            "kind": "money"
           },
           {
             "kind": "unlock",
@@ -6313,24 +9257,28 @@
         "damageMul": 0.45,
         "rewards": [
           {
-            "amount": 8,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 8,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 8,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 8,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 15,
+            "kind": "money"
           }
         ],
         "troopsMul": 0.66
@@ -6341,24 +9289,28 @@
         "damageMul": 0.51,
         "rewards": [
           {
-            "amount": 15,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 15,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 15,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 15,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 20,
+            "kind": "money"
           }
         ],
         "troopsMul": 0.76
@@ -6369,24 +9321,28 @@
         "damageMul": 0.58,
         "rewards": [
           {
-            "amount": 23,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 23,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 23,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 23,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 25,
+            "kind": "money"
           }
         ],
         "troopsMul": 0.87
@@ -6397,24 +9353,28 @@
         "damageMul": 0.66,
         "rewards": [
           {
-            "amount": 30,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 30,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 30,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 30,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 35,
+            "kind": "money"
           }
         ],
         "troopsMul": 1
@@ -6425,24 +9385,28 @@
         "damageMul": 0.74,
         "rewards": [
           {
-            "amount": 38,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 38,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 38,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 38,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 45,
+            "kind": "money"
           },
           {
             "kind": "unlock",
@@ -6458,24 +9422,28 @@
         "damageMul": 0.84,
         "rewards": [
           {
-            "amount": 45,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 45,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 45,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 45,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 60,
+            "kind": "money"
           },
           {
             "kind": "unlock",
@@ -6491,24 +9459,28 @@
         "damageMul": 0.95,
         "rewards": [
           {
-            "amount": 53,
+            "amount": 0.15,
             "attr": "lead",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 53,
+            "amount": 0.15,
             "attr": "war",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 53,
+            "amount": 0.15,
             "attr": "int",
-            "kind": "exp"
+            "kind": "attr"
           },
           {
-            "amount": 53,
+            "amount": 0.15,
             "attr": "pol",
-            "kind": "exp"
+            "kind": "attr"
+          },
+          {
+            "amount": 80,
+            "kind": "money"
           },
           {
             "kind": "unlock",

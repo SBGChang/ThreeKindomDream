@@ -118,7 +118,7 @@ export const abilityTexts: Record<string, string> = {
   'abilityTier.peerless': '絕',
 
   'learnState.learnable': '可學',
-  'learnState.unaffordable': '經驗不足',
+  'learnState.unaffordable': '金錢不足',
   'learnState.learned': '已學',
   'learnState.locked': '未解鎖',
 

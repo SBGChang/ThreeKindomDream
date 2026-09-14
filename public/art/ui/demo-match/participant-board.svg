@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="324" height="324" viewBox="0 0 324 324">
+  <defs>
+    <linearGradient id="wood" x2="0" y2="1"><stop stop-color="#aa7741"/><stop offset=".28" stop-color="#85552f"/><stop offset="1" stop-color="#58351f"/></linearGradient>
+    <linearGradient id="cloth" x2="1" y2="1"><stop stop-color="#34413b"/><stop offset="1" stop-color="#242e29"/></linearGradient>
+    <linearGradient id="brass" x2="0" y2="1"><stop stop-color="#f0cb79"/><stop offset=".48" stop-color="#bc8c44"/><stop offset="1" stop-color="#805227"/></linearGradient>
+  </defs>
+  <!-- Nine-slice military folio: fixed rounded corners, opaque quiet interior. -->
+  <path d="M17 3H307Q321 3 321 17V307Q321 321 307 321H17Q3 321 3 307V17Q3 3 17 3Z" fill="url(#wood)" stroke="#2b1a10" stroke-width="6"/>
+  <path d="M18 8H306Q316 8 316 18V306Q316 316 306 316H18Q8 316 8 306V18Q8 8 18 8Z" fill="none" stroke="#d3a461" stroke-width="2"/>
+  <path d="M24 18H300Q306 18 306 24V300Q306 306 300 306H24Q18 306 18 300V24Q18 18 24 18Z" fill="url(#cloth)" stroke="#402719" stroke-width="4"/>
+  <path d="M25 23H299M25 301H299M23 25V299M301 25V299" fill="none" stroke="#89917a" stroke-opacity=".35" stroke-dasharray="3 5"/>
+  <g fill="url(#brass)" stroke="#3e2918" stroke-width="2">
+    <path d="M8 25V16Q8 8 16 8H25V15H17Q15 15 15 17V25Z"/>
+    <path d="M299 8H308Q316 8 316 16V25H309V17Q309 15 307 15H299Z"/>
+    <path d="M8 299H15V307Q15 309 17 309H25V316H16Q8 316 8 308Z"/>
+    <path d="M309 299H316V308Q316 316 308 316H299V309H307Q309 309 309 307Z"/>
+  </g>
+  <g fill="#f3d28a" stroke="#54331b" stroke-width="1.5"><circle cx="14" cy="14" r="3"/><circle cx="310" cy="14" r="3"/><circle cx="14" cy="310" r="3"/><circle cx="310" cy="310" r="3"/></g>
+</svg>

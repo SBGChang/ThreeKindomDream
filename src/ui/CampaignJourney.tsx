@@ -14,9 +14,9 @@ export function CampaignJourney({s,bump,onDone}:{s:Session;bump:()=>void;onDone:
   const engage=():void=>{
     const st=s.campaignState(),nx=s.nextStage();
     if(!st||!nx){setScene('retreat');return;}
-    const learning=s.learningExp;
+    const learning=s.money;
     const out=s.engage();
-    setReward(out.defeated?s.learningExp-learning:(s.campaignState()?.banked??[]).reduce((n,r)=>n+(r.kind==='exp'?r.amount:0),0));
+    setReward(out.defeated?s.money-learning:(s.campaignState()?.banked??[]).reduce((n,r)=>n+(r.kind==='money'?r.amount:0),0));
     setDepth(st.clearedStages+(out.cleared?1:0));
     sequence.current+=1;
     setBattle({log:out.log,troopsMax:st.host.troopsMax,enemyMax:nx.enemyTroops,startTroops:st.host.troops,startSupply:st.host.supply,
@@ -33,7 +33,7 @@ export function CampaignJourney({s,bump,onDone}:{s:Session;bump:()=>void;onDone:
     if(st&&previous&&st.log.length>0){
       resumed.current=true;
       setDepth(st.clearedStages);
-      setReward(st.banked.reduce((n,r)=>n+(r.kind==='exp'?r.amount:0),0));
+      setReward(st.banked.reduce((n,r)=>n+(r.kind==='money'?r.amount:0),0));
       const enemyLabel=previous.boss?t(previous.boss.nameKey):'敵軍';
       setBattle({log:st.log,troopsMax:st.host.troopsMax,enemyMax:previous.enemyTroops,startTroops:st.host.troops,startSupply:st.host.supply,
         commanders:(st.loadout?.commanders??[]).map(c=>({name:t(defs.reader('notable').get(String(c.notableId)).nameKey),skill:t(defs.reader('skill').get(String(c.skillId)).nameKey)})),
@@ -51,7 +51,7 @@ export function CampaignJourney({s,bump,onDone}:{s:Session;bump:()=>void;onDone:
       else if(scene==='close'){resumed.current=false;engage();setScene('open');}
       else if(scene==='open')setScene('enter');
       else if(scene==='retreat'){
-        if(!settled.current){settled.current=true;if(!battle?.defeated){const before=s.learningExp;s.withdraw();setReward(s.learningExp-before);bump();}}
+        if(!settled.current){settled.current=true;if(!battle?.defeated){const before=s.money;s.withdraw();setReward(s.money-before);bump();}}
         setScene('summary');
       }
     },delay);return()=>clearTimeout(timer);
@@ -61,7 +61,7 @@ export function CampaignJourney({s,bump,onDone}:{s:Session;bump:()=>void;onDone:
     {battle&&<BattleTheater key={sequence.current} {...battle} background={background} finished={resumed.current} enabled={scene==='combat'} onFinished={()=>setScene(battle.defeated?'retreat':'cheer')}/>}
     <div className="battle-curtain" aria-hidden="true"/>
     {scene==='cheer'&&<div className="victory-call" role="status">敵陣已破！全軍萬勝！</div>}
-    {scene==='choice'&&<div className="march-choice"><h2>{next?'全軍待命':'七關盡破 · 凱旋而歸'}</h2><p>已通過 {depth} 關 · 保住 {reward} 經驗與等量學習點</p>{next&&<p>下一關：{next.boss?t(next.boss.nameKey):'敵軍'} · 兵量 {next.enemyTroops}。戰敗時已得獎勵減半。</p>}<div><button onClick={()=>setScene('retreat')}>{next?'撤軍':'凱旋撤軍'}</button>{next&&<button className="primary" onClick={()=>setScene('march')}>繼續 · 全軍前進</button>}</div></div>}
-    {scene==='summary'&&<div className="campaign-settlement" role="dialog" aria-label="戰役結算"><span>戰役結算</span><h1>{battle?.defeated?'敗軍收整':depth<total?'全軍撤回':'凱旋歸營'}</h1><p>通過 {depth} 關</p><strong>獲得 {reward} 經驗</strong><p>同時獲得 {reward} 學習點</p>{battle?.defeated&&<p>已得獎勵減半後入帳。</p>}<button className="primary" onClick={onDone}>繼續行旅 →</button></div>}
+    {scene==='choice'&&<div className="march-choice"><h2>{next?'全軍待命':'七關盡破 · 凱旋而歸'}</h2><p>已通過 {depth} 關 · 保住 {reward} 錢</p>{next&&<p>下一關：{next.boss?t(next.boss.nameKey):'敵軍'} · 兵量 {next.enemyTroops}。戰敗時已得獎勵減半。</p>}<div><button onClick={()=>setScene('retreat')}>{next?'撤軍':'凱旋撤軍'}</button>{next&&<button className="primary" onClick={()=>setScene('march')}>繼續 · 全軍前進</button>}</div></div>}
+    {scene==='summary'&&<div className="campaign-settlement" role="dialog" aria-label="戰役結算"><span>戰役結算</span><h1>{battle?.defeated?'敗軍收整':depth<total?'全軍撤回':'凱旋歸營'}</h1><p>通過 {depth} 關</p><strong>獲得 {reward} 錢</strong><p>能力隨本次戰役磨練成長</p>{battle?.defeated&&<p>已得獎勵減半後入帳。</p>}<button className="primary" onClick={onDone}>繼續行旅 →</button></div>}
   </div>;
 }

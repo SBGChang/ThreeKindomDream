@@ -80,7 +80,8 @@ const play = (w: ReturnType<typeof mk>['w'], meta: MetaState): Row[] => {
     let full = 0;
     while (!s.isOver && guard < 220) {
       guard += 1;
-      if (s.needsFactionChoice) {
+      if (s.needsChapterCamp) { s.continueChapter(); continue; }
+    if (s.needsFactionChoice) {
         const o = s.factionOptions().filter((x) => x.eligible)[0];
         if (o === undefined) { s.noFactionAvailable(); continue; }
         s.chooseFaction(o.factionId); continue;

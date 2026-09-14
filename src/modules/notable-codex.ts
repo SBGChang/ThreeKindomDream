@@ -145,7 +145,7 @@ function affinityIndexOf(id: NotableId, ctx: RunContext): number {
  * 一次結算可能一次跨兩階（例如圓夢加倍之後）。
  */
 export function awardNotableFragments(
-  entries: readonly { notableId: NotableId; finalStage: AffinityStage }[],
+  entries: readonly { notableId: NotableId; finalStage: AffinityStage; interactionCap?:number }[],
   isFullDream: boolean,
   meta: MetaState,
   defs: DefinitionRegistry,
@@ -159,7 +159,7 @@ export function awardNotableFragments(
   for (const e of entries) {
     const key = String(e.notableId);
     const def: NotableDef = defs.reader('notable').get(key);
-    const base = curve.fragmentsByStage[e.finalStage];
+    const base = Math.min(curve.fragmentsByStage[e.finalStage], e.interactionCap??Infinity);
     const amount = Math.round(base * (isFullDream ? curve.fullDreamMultiplier : 1));
     if (amount === 0) continue;
 

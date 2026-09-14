@@ -15,6 +15,11 @@ function atlas():Promise<HTMLCanvasElement>{
 }
 export function UiSymbol({name,className=''}:{name:SymbolName;className?:string}):React.ReactElement{
  const ref=useRef<HTMLCanvasElement>(null);
- useEffect(()=>{let alive=true;void atlas().then(img=>{if(!alive||!ref.current)return;const ctx=ref.current.getContext('2d')!,w=img.width/3,h=img.height/2,i=indices[name];ctx.clearRect(0,0,128,128);ctx.drawImage(img,(i%3)*w,Math.floor(i/3)*h,w,h,0,0,128,128);}).catch(()=>{});return()=>{alive=false;};},[name]);
+ useEffect(()=>{let alive=true;void atlas().then(img=>{if(!alive||!ref.current)return;const ctx=ref.current.getContext('2d')!,w=img.width/3,h=img.height/2,i=indices[name];ctx.clearRect(0,0,128,128);
+   // The lower-row artwork crosses the nominal 512px grid line. Keep the
+   // handshake's original size and position, excluding that neighbouring ink.
+   const cropHeight=i<3?h*.875:h;
+   ctx.drawImage(img,(i%3)*w,Math.floor(i/3)*h,w,cropHeight,0,0,128,128*cropHeight/h);
+ }).catch(()=>{});return()=>{alive=false;};},[name]);
  return <canvas ref={ref} width={128} height={128} className={'ui-symbol '+className} aria-hidden="true"/>;
 }

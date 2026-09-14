@@ -23,6 +23,10 @@ const aptCap = (attr: Attr): ShopItemDef =>
   });
 
 export const shopItems: readonly ShopItemDef[] = [
+  ...(['marketSlots','marketQuality'] as const).map((kind)=>coreDef('shopItem','shop:'+kind,{
+    item:shopItemId('shop:'+kind),category:'bond' as const,nameKey:k('shop.'+kind+'.name'),descKey:k('shop.'+kind+'.desc'),requiresItems:[],requiresPack:null,
+    levels:(kind==='marketSlots'?[400,900,1800]:[500,1200,2400]).map((cost,i)=>({level:i+1,cost,grant:{kind}})),
+  })),
   aptCap('lead'), aptCap('war'), aptCap('int'), aptCap('pol'),
   /**
    * 官途 ★★ **官階那條線唯一的跨輪成長**

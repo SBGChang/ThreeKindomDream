@@ -44,10 +44,10 @@ const stands = (id: string): StandingReq => ({ kind: 'named', notableId: N(id) }
 
 export const effects: EffectTableInput = {
   StatModifier: {
-    [FX.expIntUp]: { target: T('training.exp.int'), op: 'mulPct', value: 0.20, condition: null },
-    [FX.expAllUp]: { target: T('training.exp.all'), op: 'mulPct', value: 0.08, condition: null },
+    [FX.expIntUp]: { target: T('training.growth.int'), op: 'mulPct', value: 0.20, condition: null },
+    [FX.expAllUp]: { target: T('training.growth.all'), op: 'mulPct', value: 0.08, condition: null },
     [FX.noGlowBonus]: { target: T('training.noGlowBonus'), op: 'add', value: 0.30, condition: null },
-    [FX.expWarUp]: { target: T('training.exp.war'), op: 'mulPct', value: 0.25, condition: null },
+    [FX.expWarUp]: { target: T('training.growth.war'), op: 'mulPct', value: 0.25, condition: null },
 
     // ── 戰役的五個 target（33 §5.2）★ ──────────────
     // 特質只要指到這五個之一就會在戰役中生效，不必動任何程式。

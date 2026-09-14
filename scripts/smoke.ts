@@ -32,7 +32,8 @@ let guard = 0;
 while (!s.isOver && guard < 200) {
   guard += 1;
 
-  if (s.needsFactionChoice) {
+  if (s.needsChapterCamp) { s.continueChapter(); continue; }
+    if (s.needsFactionChoice) {
     const opt = s.factionOptions().filter((o) => o.eligible)[0];
     if (opt === undefined) { s.noFactionAvailable(); continue; }
     console.log(`\n【選陣營】→ ${t(opt.nameKey)}`);
@@ -108,7 +109,7 @@ while (!s.isOver && guard < 200) {
   const r = s.current.turn.training;
   console.log(`R${turn} 【${t(slot?.labelKey)}】${t(`glow.${slot?.baseGlow}`)}`
     + `${r?.upgraded === true ? '⬆' : ' '}→${t(`glow.${r?.finalGlow}`)}`
-    + ` ${t(`attr.${r?.attr}.short`)}+${r?.expGained}`
+    + ` ${t(`attr.${r?.attr}.short`)}+${r?.growthGained}`
     + ` ${t(`merit.${r?.meritGained.line}`)}+${r?.meritGained.amount}${burst}`);
 
   // 佇列可能有兩則：委託，以及同台名士追加的武將事件。
@@ -128,7 +129,7 @@ while (!s.isOver && guard < 200) {
     const tag = def.trigger.kind === 'notable' ? '名士' : `★${offer.rarity}`;
     s.resolveEvent(pick.i);
     const res = s.current.turn.resolved.at(-1);
-    const gained = (res?.practiceExp ?? [])
+    const gained = (res?.practiceGrowth ?? [])
       .map((g) => `${t(`attr.${g.attr}.short`)}+${g.amount}`).join(' ');
     const got = (res?.meritGained ?? [])
       .map((m) => `${t(`merit.${m.line}`)}+${m.amount}`).join(' ');

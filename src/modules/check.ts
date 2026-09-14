@@ -64,12 +64,9 @@ export function successRate(
   base: number, bonus: number, dc: number, r: CheckRuleDef,
 ): number {
   const value = base + bonus;
-  const faces = r.rollMax - r.rollMin + 1;
-  if (value <= 0) return dc <= 0 ? 1 : 0;
-  const need = Math.ceil(r.rollCenter + r.rollSpread * (dc / value - 1));
-  if (need <= r.rollMin) return 1;
-  if (need > r.rollMax) return 0;
-  return (r.rollMax - need + 1) / faces;
+  let hits=0;
+  for(let face=r.rollMin;face<=r.rollMax;face++) if(rollTotal(value,face,r)>=dc)hits++;
+  return hits/(r.rollMax-r.rollMin+1);
 }
 
 export function preview(

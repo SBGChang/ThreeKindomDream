@@ -62,20 +62,7 @@ export interface HostLimits {
   readonly supplyMax: number;
 }
 
-/**
- * 兵量糧量吃 **名義階級**，與敵人同一把尺（21 §2.2）★
- *
- * ── 為什麼不是真實官階（實測抓到的第二個洞）─────────
- * 本輪上限（D59）之下，官階會在第 26 回合左右封頂。若兵量吃真實官階，
- * 封頂之後再賺的功績會**只把敵人變強**（敵人吃名義階）而不給你任何兵 ——
- * **那讓「封頂之後繼續做事」變成嚴格的壞事。**
- *
- * 分工因此收斂成一句話：
- *   名義階級（做了多少事）→ 你的規模、敵人的規模、委託的份量
- *   真實官階（頭銜）      → 稱號、結局門檻、高檔委託的資格
- *
- * 上限鎖的是**你是誰**，不是**你有多少斤兩**。
- */
+/** 兵糧隨名義官階增長；真實官階上限控制頭銜與結局。敌軍使用固定章節基準。 */
 export function hostLimits(ctx: RunContext, fx: EffectResolver): HostLimits {
   const r = rule(ctx);
   const scaleAt = (line: 'civil' | 'martial'): number => {
@@ -164,7 +151,7 @@ function halveRewards(rewards: readonly EventReward[]): readonly EventReward[] {
   const out: EventReward[] = [];
   for (const r of rewards) {
     if ('amount' in r) {
-      const amount = Math.floor(r.amount / 2);
+      const amount = r.kind==='attr'?Math.round(r.amount/2*100)/100:Math.floor(r.amount / 2);
       if (amount > 0) out.push({ ...r, amount });
     } else if ('chance' in r) {
       out.push({ ...r, chance: r.chance / 2 });
@@ -669,9 +656,9 @@ export interface StageRow {
   readonly index: number;
   readonly brief: L10nKey;
   readonly boss: EnemyDef | null;
-  /** 這一關單獨給的能力經驗，也等量成為學習點。 */
-  readonly exp: number;
-  /** 打到這一關為止的經驗累計。 */
+  /** 這一關單獨給的薪餉。 */
+  readonly salary: number;
+  /** 打到這一關為止的薪餉累計。 */
   readonly cumulative: number;
   /** 這一關有沒有唯一掉落（深處才有）。 */
   readonly unique: boolean;
@@ -679,31 +666,22 @@ export interface StageRow {
   readonly current: boolean;
 }
 
-/**
- * 七關的全貌 ★★ **獎勵曲線必須看得見**
- *
- * `REWARD_MUL` 是 1 → 45：**一場戰役的價值有八成六在第五關之後**（D12）。
- * 那是整個 push-your-luck 的張力來源，而畫面上原本只有一行
- * 「已通過 1 / 7 關」—— 玩家不可能從那行字讀出這件事。
- *
- * 回傳含【累計】而不只是單關：走留的問題是「再走一關，我手上的東西
- * 會變成幾倍」，那要拿累計去比，不是拿單關。
- */
+/** 每關與累計薪餉，供戰役路線顯示走留代價。 */
 export function stageRows(ctx: RunContext): readonly StageRow[] {
   const st = ctx.state.campaign;
   if (st === null) return [];
   const stages = currentCampaign(ctx).stages;
   let acc = 0;
   return stages.map((stage, i) => {
-    const exp = stage.rewards.reduce(
-      (n, r) => n + (r.kind === 'exp' ? r.amount : 0), 0,
+    const salary = stage.rewards.reduce(
+      (n, r) => n + (r.kind === 'money' ? r.amount : 0), 0,
     );
-    acc += exp;
+    acc += salary;
     return {
       index: i,
       brief: stage.briefKey,
       boss: stage.boss === null ? null : ctx.defs.reader('enemy').get(String(stage.boss)),
-      exp,
+      salary,
       cumulative: acc,
       unique: stage.rewards.some((r) => r.kind === 'unlock' || r.kind === 'item'),
       cleared: i < st.clearedStages,

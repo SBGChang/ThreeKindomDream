@@ -6,7 +6,7 @@ import type { NotableId as NId, SkillId, TraitId } from '../contracts/core/ids.j
 import type {
   AffinityStage, AptitudeGrade, Attr, AttrGrade, SlotIndex,
 } from '../contracts/core/primitives.js';
-import type { AttrCostBand, CampaignDef, EventReward } from '../contracts/core/definitions.js';
+import type { AttrGradeBand, CampaignDef, EventReward } from '../contracts/core/definitions.js';
 import type {
   BattleLoadout, DreamEntryConfig, EventOffer, MetaState, RunState, RunSummary,
 } from '../contracts/core/state.js';
@@ -15,6 +15,9 @@ import { careerService } from '../modules/career.js';
 import * as ability from '../modules/ability.js';
 import * as campaign from '../modules/campaign.js';
 import * as growth from '../modules/growth.js';
+import * as economy from '../modules/economy.js';
+import * as market from '../modules/market.js';
+import * as stories from '../modules/stories.js';
 import * as learning from '../modules/learning.js';
 import type { RunContext as RC } from '../contracts/core/context.js';
 import * as commission from '../modules/commission.js';
@@ -51,14 +54,36 @@ export class Session {
     });
     s.mutate((tc) => item.seedCarried(tc));
     s.mutate((tc) => roster.assembleCompanions(tc, w.fx));
+    s.mutate(tc => economy.transact('entry', economy.economyRule(tc).startingMoney, '啟程盤纏', tc));
     s.refreshSlots();
     return s;
   }
 
   get current(): RunState { return this.state; }
-  static restore(w: Wiring, state: RunState): Session { return new Session(w, state); }
+  static restore(w: Wiring, state: RunState): Session {
+    const s = new Session(w, state);
+    // Recompute displayed prices/eligibility after a content update without redrawing events.
+    const pending = state.turn.pending.map(offer => {
+      const def = w.defs.reader('event').get(String(offer.eventDefId));
+      const rarity = stories.storyRarity(def);
+      return { ...offer, rarity, optionStates: commission.optionStates(def, rarity, s.ctx, w.fx) };
+    });
+    s.state = { ...state, turn: { ...state.turn, pending } };
+    return s;
+  }
   learningOffers(): readonly learning.LearningOffer[] { return learning.offers(this.ctx, this.w.fx); }
-  get learningExp(): number { return learning.balance(this.ctx); }
+  get money(): number { return economy.balance(this.ctx); }
+  get needsChapterCamp(): boolean { return economy.inCamp(this.ctx); }
+  marketShelf() { return market.shelf(this.ctx); }
+  fragmentTargets() { return market.fragmentTargets(this.ctx); }
+  fragmentPrice(id: ItemIdT): number { return economy.economyRule(this.ctx).fragmentPrices[this.w.defs.reader('item').get(String(id)).rarity-1]!; }
+  selectFragment(id: ItemIdT): void { this.state=market.selectTarget(id,this.ctx); }
+  buyMarket(id: string): boolean { const r=market.buy(id,this.ctx);this.state=r.state;return r.ok; }
+  buyFragment(): boolean { const r=market.buyFragment(this.ctx);this.state=r.state;return r.ok; }
+  toggleTrait(id: TraitId): void { this.state=learning.toggleTrait(id,this.ctx); }
+  trackStory(id: NotableId|null): void { this.state=stories.track(id,this.ctx); }
+  storyRows(id: NotableId) { return this.w.defs.reader('event').all().filter(e=>e.trigger.kind==='notable'&&e.trigger.cast.some(c=>c.notableId===id)).map(e=>({id:e.eventDefId,title:this.w.defs.text(String(e.titleKey)),rarity:stories.storyRarity(e),blockers:stories.blockers(e,this.ctx),completed:!!stories.history(this.ctx)[String(e.eventDefId)]})).sort((a,b)=>a.rarity-b.rarity); }
+  continueChapter(): void { if(!this.needsChapterCamp)return;this.state=economy.setCamp(false,this.ctx);this.afterChapterPassed(); }
   abilityLevel(id: SkillId | TraitId): number { return ability.levelOf(id, this.ctx); }
   upgradeAbility(id: SkillId | TraitId): boolean {
     const result = learning.upgrade(id, this.ctx, this.w.fx);
@@ -93,9 +118,11 @@ export class Session {
   }
 
   private refreshSlots(): void {
+    this.mutate(tc => market.refresh(tc));
+    this.mutate(tc => stories.updateWait(commission.encounterPool(tc),tc));
     this.mutate((tc) => ({
       ...tc.state,
-      turn: { ...tc.state.turn, slots: training.generate(tc, this.w.fx) },
+      turn: { ...tc.state.turn, slots: training.generate(tc, this.w.fx), encounterCandidates: commission.encounterPool(tc).map(e=>e.eventDefId) },
     }));
   }
 
@@ -144,6 +171,7 @@ export class Session {
    * 委託與人物事件都不是另一個「選什麼」—— 它們是這個決定的後果。
    */
   selectSlot(index: SlotIndex): void {
+    if(this.needsChapterCamp)throw new Error('請先完成章末休整');
     turn.assertActable(this.ctx);
     const slot = training.slotAt(index, this.ctx);
     const attr = slot.attr;
@@ -331,7 +359,7 @@ export class Session {
         },
       };
     });
-    this.afterChapterPassed();
+    this.state=economy.setCamp(true,this.ctx);
   }
 
   /** 已保住的獎勵入帳。戰敗時走的是同一條，只是 `banked` 已在 ㉝ 減半。 */
@@ -340,13 +368,13 @@ export class Session {
   ): RunState {
     let s = from;
     const at = (): RunContext => ({ state: s, defs: tc.defs });
-    for (const r of rewards) {
+    for (const [rewardIndex,r] of rewards.entries()) {
       if (r.kind === 'merit') s = this.w.writer.grantMerit(r.merit, r.amount, at());
-      else if (r.kind === 'attr') s = this.w.writer.grantAttr(r.attr, r.amount, at());
+      else if (r.kind === 'attr') s = growth.grantGrowth(r.attr, growth.previewGrowth(r.attr,r.amount,at()),at(),this.w.fx);
+      else if (r.kind === 'money') s = economy.transact('campaign/'+tc.state.progress.chapter+'/'+rewardIndex,Math.round(r.amount),'戰役薪餉',at());
       else if (r.kind === 'affinity' && r.notableId !== null) {
         s = roster.addAffinity(r.notableId, r.amount, at());
-      } else if (r.kind === 'exp') {
-        s = growth.grantExp(r.attr, r.amount, at(), this.w.fx);
+
       } else if (r.kind === 'unlock') {
         s = growth.grantUnlock(r.trait, r.skill, at());
       } else if (r.kind === 'item') {
@@ -362,17 +390,7 @@ export class Session {
   // 學習不佔行動、隨時可做（32 §7.3）：它不是行動決策，而且數值會擋事件門檻，
   // 玩家有理由早花。三個 learn* 都不消耗 RNG —— 兌換不得引入隨機。
 
-  expOf(attr: Attr): number { return growth.expOf(attr, this.ctx); }
   gradeOf(attr: Attr): AttrGrade { return growth.gradeOf(attr, this.ctx); }
-  nextGrade(attr: Attr): growth.NextGrade | null {
-    return growth.nextGrade(attr, this.ctx, this.w.fx);
-  }
-
-  /** 從現值買到 target 的總價。UI 用它標「+1 要多少、+10 要多少」。 */
-  attrCost(attr: Attr, target: number): number {
-    return growth.attrCost(attr, target, this.ctx, this.w.fx);
-  }
-
   /** 那一維【本輪】的天花板（資質決定）。不是尺度上限 —— 見 ⑳ attrCapOf。 */
   attrCap(attr: Attr): number { return growth.attrCap(attr, this.ctx); }
 
@@ -413,32 +431,6 @@ export class Session {
     });
   }
 
-  /** 價格帶表。UI 用它生成說明文字，不寫死端點數字。 */
-  attrBands(): readonly AttrCostBand[] { return growth.bands(this.ctx); }
-
-  traitOffers(): readonly growth.TraitOffer[] {
-    return growth.learnableTraits(this.ctx, this.w.fx);
-  }
-  skillOffers(): readonly growth.SkillOffer[] {
-    return growth.learnableSkills(this.ctx, this.w.fx);
-  }
-
-  learnAttr(attr: Attr, target: number): growth.LearnResult {
-    const r = growth.learnAttr(attr, target, this.ctx, this.w.fx, this.w.writer);
-    if (r.ok) this.state = r.state;
-    return r;
-  }
-  learnTrait(id: TraitId): growth.LearnResult {
-    const r = growth.learnTrait(id, this.ctx, this.w.fx);
-    if (r.ok) this.state = r.state;
-    return r;
-  }
-  learnSkill(id: SkillId): growth.LearnResult {
-    const r = growth.learnSkill(id, this.ctx, this.w.fx);
-    if (r.ok) this.state = r.state;
-    return r;
-  }
-
   private afterChapterPassed(): void {
     if (this.state.progress.pendingFactionChoice) return;
     const seq = turn.sequenceOf(this.state.faction, this.ctx);
@@ -464,6 +456,7 @@ export class Session {
 
   superiorCandidates(): readonly NotableId[] { return roster.superiorCandidates(this.ctx); }
 
+  newcomerBonus(): number { return roster.newcomerBonus(this.ctx); }
   bondQuota(): number {
     const f = this.state.faction;
     if (f === null) return 0;
@@ -474,6 +467,7 @@ export class Session {
   }
 
   assignSuperiors(chosen: readonly NotableId[]): void {
+    if (!this.needsSuperiors || this.needsChapterCamp) return;
     this.mutate((tc) => roster.assignSuperiors(chosen, tc, this.w.fx));
     this.mutate((tc) => ({
       ...tc.state,

@@ -54,5 +54,5 @@ export const careerTalentTexts: Record<string, string> = {
   'shop.glowUpgrade.name': '升階機率',
   'shop.glowUpgrade.desc': '提高鍛鍊的升階判定機率',
   'shop.bond.wei.name': '魏 · 勢力緣分',
-  'shop.bond.wei.desc': '入朝時可自行指定的上司名額',
+  'shop.bond.wei.desc': '指定上司名額增加，並提高新三人的入隊好感；依錯過回合補償',
 };

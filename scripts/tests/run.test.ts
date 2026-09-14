@@ -36,6 +36,7 @@ import { META, defs, newSession, wiring } from './harness.js';
 const passCampaign = (s: Session): void => {
   s.configureCampaign(loadoutFor(s));
   s.withdraw();
+  s.continueChapter();
 };
 
 /** 帶上目前學到的招與好感最高的三位指揮。學不到招時三格是空的（合法）。 */
@@ -142,8 +143,8 @@ export function run(): void {
       for (let i = 0; i < 8; i++) { playTurn(partial, policy.chooseSlot(partial)); partial.advance(); }
       ok(partial.needsCampaign, '八次行動後應進入整備');
       const rows = partial.stageRows();
-      eq(rows.at(-1)?.cumulative, rows.reduce((n, row) => n + row.exp, 0));
-      ok(rows.every(row => row.exp > 0), '戰役獎勵路線不得誤讀成功績而全為零');
+      eq(rows.at(-1)?.cumulative, rows.reduce((n, row) => n + row.salary, 0));
+      ok(rows.every(row => row.salary > 0), '戰役獎勵路線不得誤讀成功績而全為零');
       const draft = loadoutFor(partial);
       partial.rememberCampaign(draft);
       const saved = Session.restore(wiring, JSON.parse(JSON.stringify(partial.current)));
@@ -154,48 +155,48 @@ export function run(): void {
       driveRun(fighting, policy);
       eq(saved.current, fighting.current);
     });
-    it('技能與特性重複獲得免費升級，最高 Lv5', () => {
+    it('傳授只開放課程，重複傳授不免費學習或升級', () => {
       const initial = newSession(3).current;
       const skill = defs.reader('skill').all().find(x => !initial.abilities.skills.includes(x.skillId))!;
       const trait = defs.reader('trait').all()[0]!;
       let state = grantUnlock(trait.traitId, skill.skillId, { state: initial, defs });
-      eq(state.abilities.levels?.[String(skill.skillId)], 1);
-      ok(state.abilities.skills.includes(skill.skillId), '首次傳授即可使用');
+      eq(state.abilities.levels?.[String(skill.skillId)], undefined);
+      ok(!state.abilities.skills.includes(skill.skillId), '傳授不得繞過付費訓練');
       for (let i = 0; i < 7; i++) state = grantUnlock(trait.traitId, skill.skillId, { state, defs });
-      eq(state.abilities.levels?.[String(skill.skillId)], 5);
-      eq(state.abilities.levels?.[String(trait.traitId)], 5);
+      eq(state.abilities.levels?.[String(skill.skillId)], undefined);
+      eq(state.abilities.levels?.[String(trait.traitId)], undefined);
       eq(state.growth, { ...initial.growth, unlockedSkills: state.growth.unlockedSkills, unlockedTraits: state.growth.unlockedTraits });
     });
-    it('升級扣獨立學習點、保留屬性經驗，且戰鬥倍率生效', () => {
+    it('升級扣金錢、保留能力數值，且戰鬥倍率生效', () => {
       const base = newSession(3).current;
       const s = Session.restore(wiring, { ...base,
         attributes: { values: { lead: 95, war: 95, int: 95, pol: 95 } },
-        growth: { ...base.growth, learningExp: 5000 } });
-      const offer = s.learningOffers().find(x => x.kind === 'skill' && x.status === 'ready')!;
+        economy: { ...base.economy, money: 5000 } });
+      const offer = s.learningOffers().find(x => x.kind === 'skill' && x.level===1 && x.status === 'ready')!;
       ok(offer !== undefined, '必須有可升級技能');
       const before = s.current;
       const ratio = battleSkill(before.abilities.skills[0]!, { state: before, defs }).action.ratio;
       ok(s.upgradeAbility(offer.id), '升級應成功');
-      eq(s.learningExp, 5000 - offer.cost);
+      eq(s.money, 5000 - offer.cost);
       eq(s.current.attributes, before.attributes);
-      eq(s.current.growth.exp, before.growth.exp);
+      eq(s.current.growth, before.growth);
       eq(s.abilityLevel(offer.id), 2);
       ok(battleSkill(before.abilities.skills[0]!, { state: s.current, defs }).action.ratio > ratio, '戰鬥技能未增强');
     });
     it('能力門檻與戰中鎖定不允許扣款', () => {
       const base = newSession(3).current;
-      const s = Session.restore(wiring, { ...base, growth: { ...base.growth, learningExp: 5000 } });
+      const s = Session.restore(wiring, { ...base, economy: { ...base.economy, money: 5000 } });
       const blocked = s.learningOffers().find(x => x.level > 0 && x.status === 'attribute')!;
       ok(blocked !== undefined, '初始能力應未達 Lv2 門檻');
       ok(!s.upgradeAbility(blocked.id), '能力不足不可升級');
-      eq(s.learningExp, 5000);
+      eq(s.money, 5000);
       for (let i = 0; i < 8; i++) { playTurn(s); s.advance(); }
       s.configureCampaign(loadoutFor(s));
       const before = s.current;
       ok(!s.upgradeAbility(blocked.id), '出陣後不可升級');
       eq(s.current, before);
     });
-    it('舊存檔或器物解鎖的能力仍可在修習堂取得 Lv1', () => {
+    it('傳授課程仍需支付訓練費才能取得 Lv1', () => {
       const base = newSession(3).current;
       const skill = defs.reader('skill').all().find(x => !base.abilities.skills.includes(x.skillId))!;
       const s = Session.restore(wiring, { ...base,
@@ -203,7 +204,7 @@ export function run(): void {
         growth: { ...base.growth, unlockedSkills: [skill.skillId] } });
       const offer = s.learningOffers().find(x => x.id === skill.skillId)!;
       eq(offer.status, 'ready');
-      eq(offer.cost, 0);
+      ok(offer.cost>0, '課程需要費用');
       ok(s.upgradeAbility(skill.skillId), '已解鎖技能必須有可用入口');
       ok(s.current.abilities.skills.includes(skill.skillId), '取得後必須能配置出陣');
       eq(s.abilityLevel(skill.skillId), 1);
@@ -578,7 +579,7 @@ export function run(): void {
     it('每則委託恰好三檔，且報酬隨檔次遞增', () => {
       const s2 = newSession(4242);
       for (const def of defs.reader('event').all()) {
-        if (def.trigger.kind !== 'commission') continue;
+        if (def.trigger.kind !== 'commission'||def.mechanic==='investment'||def.mechanic==='method') continue;
         const id = String(def.eventDefId);
         eq(def.options.length, 3);
         eq(def.options.map((o) => o.tier), ['low', 'mid', 'high']);
@@ -599,7 +600,7 @@ export function run(): void {
         dcHead.set(String(cv.curveId), cv.byTier[0] ?? -1);
       }
       for (const def of defs.reader('event').all()) {
-        if (def.trigger.kind !== 'commission') continue;
+        if (def.trigger.kind !== 'commission'||def.mechanic==='investment'||def.mechanic==='method') continue;
         const id = String(def.eventDefId);
         const merit = def.options.map(
           (opt) => opt.rewards.reduce((a, r) => a + (r.kind === 'merit' ? r.amount : 0), 0),
@@ -655,11 +656,12 @@ export function run(): void {
       ok(offer.optionStates[0]?.enabled === true, 'low 檔必須可按');
       ok(offer.optionStates[1]?.enabled === true, 'mid 檔必須可按');
       // 開局官階 1，門檻是稀有度＋1 ≥ 2 → 必鎖
-      eq(offer.optionStates[2]?.enabled, false);
+      const d=defs.reader('event').get(String(offer.eventDefId));
+      eq(offer.optionStates[2]?.enabled, d.mechanic==='investment');
     });
   });
 
-  describe('commission · 難度依官階線而非章節（17 §4）', () => {
+  describe('commission · 難度依事件星級，官階只控制可接委託', () => {
     /**
      * ★ 這條測試改推【功績】而不是 `career.civil`。
      *
@@ -667,7 +669,7 @@ export function run(): void {
      * 本輪上限封住的是頭銜與兵量，不該連「朝廷派給你多大的事」一起封住。
      * 直接寫 `career` 已經量不到任何東西（實測：兩邊都回 0.77）。
      */
-    it('同一則委託：該線【做的事越小】，DC 越低', () => {
+    it('同星委託不因官階提高而變難', () => {
       const s2 = newSession(4242);
       const base = s2.current;
       const ranks = defs.reader('careerRank').all()
@@ -696,10 +698,10 @@ export function run(): void {
       // 這正是「後期轉練文政卻永遠 0%」的修法 —— 難度跟著你在那條線的份量走。
       const low = rate(1);
       const high = rate(8);
-      ok(low > high, `文線 1 階的成功率 ${low} 應高於 8 階的 ${high}`);
+      eq(low,high);
     });
 
-    it('官階抬 base：另一線也算一半，換路不必從新兵重來（16 §4.3）', () => {
+    it('官階不再放大固定能力成長', () => {
       const s2 = newSession(4242);
       const base = s2.current;
       const gain = (civil: number, martial: number, attr: 'pol' | 'war'): number => {
@@ -711,13 +713,11 @@ export function run(): void {
       // 武官 8 階、文官 1 階時，改練政的產出【不該】掉回武官 1 階的水準
       const polAsVeteran = gain(1, 8, 'pol');
       const polAsRookie = gain(1, 1, 'pol');
-      ok(polAsVeteran > polAsRookie,
-        `武官八階改練政 ${polAsVeteran} 應高於新兵 ${polAsRookie}`);
+      eq(polAsVeteran,polAsRookie);
       // 但本行仍然更快 —— 否則專精就沒有意義。
       // 【比同一格】：不同格子的光階與站位都不一樣，跨格比較量到的是別的東西。
       const polOwnLine = gain(8, 1, 'pol');
-      ok(polOwnLine > polAsVeteran,
-        `文官八階練政 ${polOwnLine} 應高於武官八階改練政 ${polAsVeteran}`);
+      eq(polOwnLine,polAsVeteran);
       // 落差不該大到「換路等於重開」：跨行至少要有本行的六成
       ok(polAsVeteran / polOwnLine > 0.6,
         `跨行只有本行的 ${(polAsVeteran / polOwnLine).toFixed(2)} 倍，轉換道路太難`);
@@ -742,21 +742,21 @@ export function run(): void {
       ok(preview.length > 0, '預覽的磨練值不該為空');
       // 磨練入的是【經驗池】，不是屬性（D32）。屬性只能經 ㉜ 花經驗買 ——
       // 舊版這裡比對 attributes，那正是「產出直接寫進屬性」那條假設的殘留。
-      const before = Object.fromEntries(ATTRS.map(a => [a, s.current.growth.exp[a] + s.current.growth.spent[a]]));
+      const before = {...s.current.attributes.values};
       s.resolveEvent(0);
       const res = s.current.turn.resolved.at(-1);
       if (res === undefined) throw new Error('沒有結算紀錄');
-      for (const g of res.practiceExp) {
-        const delta = s.current.growth.exp[g.attr] + s.current.growth.spent[g.attr] - before[g.attr]!;
-        ok(delta >= g.amount, `${g.attr} 實際入帳 ${delta} 小於回報的 ${g.amount}`);
+      for (const g of res.practiceGrowth) {
+        const delta = s.current.attributes.values[g.attr] - before[g.attr]!;
+        near(delta,g.amount,0.00001);
       }
       // failRatio ＝ 0：**成功才有產出**。舊斷言寫的是「無論成敗都該有」，
       // 那是 failRatio 0.4 的規則 —— 而 0.4 讓最兇的選項怎麼算都贏。
       if (res.passed) {
-        eq(res.practiceExp, preview);
-        ok(res.practiceExp.length > 0, '成功卻沒有磨練產出');
+        eq(res.practiceGrowth, preview);
+        ok(res.practiceGrowth.length > 0, '成功卻沒有磨練產出');
       } else {
-        eq(res.practiceExp.length, 0, '失敗應顆粒無收');
+        eq(res.practiceGrowth.length, 0, '失敗應顆粒無收');
       }
     });
 
@@ -768,7 +768,7 @@ export function run(): void {
      * （＝ N 個基礎事件，與一關戰役同一把尺）。一則 ★3 事件本來就
      * 該勝過一回合的鍛鍊 —— 那是它稀有的意思。
      */
-    it('一則 ★N 中檔委託的經驗總量 ＝ 30N ± 1（基礎事件 × 星數）', () => {
+    it('委託直接成長遵循星級表，捨入誤差小於 0.02', () => {
       const s = newSession(4242);
       s.selectSlot(0);
       const offer = s.pendingEvent;
@@ -777,8 +777,8 @@ export function run(): void {
       if (mid < 0) return;
       const total = (offer.optionStates[mid]?.practicePreview ?? [])
         .reduce((n, g) => n + g.amount, 0);
-      const want = 30 * offer.rarity;
-      ok(Math.abs(total - want) <= 1,
+      const want = defs.single('growthRule').economy.commissionGrowth[offer.rarity-1]!;
+      ok(Math.abs(total - want) <= .02,
         `★${offer.rarity} 中檔給 ${total}，應為 ${want}`);
     });
 
@@ -1072,7 +1072,7 @@ export function run(): void {
         // ★ 量的是【經驗】不是功績（D66）——「大檢定一直以來都只是要給經驗值」。
         // 這條斷言本身沒變：越深的關獎勵必須越大，否則「夠了就停」成立。
         const val = (st: { readonly rewards: readonly EventReward[] }): number => st.rewards
-          .reduce((n, r) => n + (r.kind === 'exp' ? r.amount : 0), 0);
+          .reduce((n, r) => n + (r.kind === 'money' ? r.amount : 0), 0);
         for (let i = 1; i < c.stages.length; i += 1) {
           const prev = c.stages[i - 1];
           const cur = c.stages[i];
@@ -1126,7 +1126,7 @@ export function run(): void {
       // ★ 戰役 banked 的是【經驗】不是功績（D66）。減半的是同一批獎勵，
       // 只是幣別換了 —— 這條規則量的是「戰敗拿一半」，不是量哪一種幣。
       const bankedOf = (x: Session): number =>
-        ATTRS.reduce((n, a) => n + x.expOf(a) + x.current.growth.spent[a], 0);
+        x.money;
 
       let checked = 0;
       for (const sd of [4242, 77, 1234, 555, 9001, 31337]) {
@@ -1286,7 +1286,7 @@ export function run(): void {
   });
 
   describe('growth · 養成兌現（32）', () => {
-    it('七個價格帶對齊七個等級，且每點成本遞增', () => {
+    it('評級區間連續且覆蓋全部能力值', () => {
       const g = defs.single('growthRule');
       const cap = defs.single('attributeCap').attrMax;
       eq(cap, 100);
@@ -1298,12 +1298,11 @@ export function run(): void {
         const cur = bands[i];
         if (prev === undefined || cur === undefined) continue;
         eq(cur.min, prev.max + 1);
-        ok(cur.costPerPoint >= prev.costPerPoint, `第 ${i} 帶的單價沒有遞增`);
       }
       eq(new Set(bands.map((b) => b.grade)).size, bands.length);
     });
 
-    it('混合消耗的類數必須等於階 —— 常 1、良 2、絕 3', () => {
+    it('能力專長權重類數必須等於階 —— 常 1、良 2、絕 3', () => {
       const count = (c: Readonly<Partial<Record<Attr, number>>>): number =>
         ATTRS.filter((a) => (c[a] ?? 0) > 0).length;
       for (const tr of defs.reader('trait').all()) {
@@ -1325,34 +1324,24 @@ export function run(): void {
       }
     });
 
-    it('經驗自動提升屬性，等量累積獨立學習點', () => {
+    it('能力直接成長，薪水獨立入帳而無經驗產出', () => {
       const s = newSession(4242);
       const beforeAttr = { ...s.current.attributes.values };
       playTurn(s, 0 as SlotIndex);
       const r = s.current.turn.training;
-      ok(r !== null && r.expGained > 0, '固定事件沒有產出經驗');
+      ok(r !== null && r.growthGained > 0, '固定事件沒有產出經驗');
       if (r === null) return;
       ok(s.current.attributes.values[r.attr] > beforeAttr[r.attr], '屬性未自動成長');
-      const produced = ATTRS.reduce((n, a) => n + s.current.growth.exp[a] + s.current.growth.spent[a], 0);
-      eq(s.learningExp, produced);
+      ok(!('exp' in s.current.growth)&&!('learningExp' in s.current.growth),'不保留經驗貨幣');
+      ok(s.money>120,'固定行動與事件應支付薪水');
     });
 
-    it('學習會扣款，而且重複學是拒絕不是靜默 no-op（23 §4.1）', () => {
-      const s = newSession(4242);
-      for (let i = 0; i < 12 && !s.needsCampaign; i += 1) {
-        playTurn(s, 0 as SlotIndex);
-        s.advance();
-      }
-      const offer = s.skillOffers().find((o) => o.state === 'learnable');
-      if (offer === undefined) return;
-      const attr = ATTRS.find((a) => (offer.cost[a] ?? 0) > 0);
-      if (attr === undefined) return;
-      const before = s.expOf(attr);
-      ok(s.learnSkill(offer.def.skillId).ok, '第一次學習應該成功');
-      ok(s.expOf(attr) < before, '學習沒有扣款');
-      const again = s.learnSkill(offer.def.skillId);
-      eq(again.ok, false);
-      if (!again.ok) eq(again.reason, 'already-learned');
+    it('訓練購入後改報下一級，資金不足不得扣款',()=>{
+      const s=newSession(4242),offer=s.learningOffers().find(o=>o.status==='ready');
+      ok(offer!==undefined,'必須有常階可購');if(!offer)return;
+      const before=s.money;ok(s.upgradeAbility(offer.id),'付費學習');eq(s.money,before-offer.cost);
+      const next=s.learningOffers().find(o=>o.id===offer.id)!;eq(next.level,offer.level+1);
+      const state=s.current;ok(!s.upgradeAbility(offer.id),'不夠錢時拒絕');eq(s.current,state);
     });
 
     it('名士的能力表是合法的 —— 它同時是教學表（32 §5.1）', () => {

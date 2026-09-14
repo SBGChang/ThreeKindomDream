@@ -1,3 +1,4 @@
+import { EconomyReview } from './EconomyReview.js';
 import { RealmReview } from './RealmReview.js';
 import { InspectionReview } from './InspectionTheater.js';
 import { RigReview } from './CaocaoRig.js';
@@ -10,8 +11,11 @@ import './player.css';
 
 const el = document.getElementById('root');
 const SoldierReview = lazy(()=>import('./SoldierReview.js').then(m=>({default:m.SoldierReview})));
+const UnitMotionReview = lazy(()=>import('./UnitMotionReview.js').then(m=>({default:m.UnitMotionReview})));
+const UnitSequenceReview = lazy(()=>import('./UnitSequenceReview.js').then(m=>({default:m.UnitSequenceReview})));
+const RealtimeBattleDemo = lazy(()=>import('./RealtimeBattleDemo.js').then(m=>({default:m.RealtimeBattleDemo})));
 if (el === null) throw new Error('#root 不存在');
-createRoot(el).render(<StrictMode><Suspense fallback={<p>載入驗收頁…</p>}>{new URLSearchParams(location.search).get('art')==='realms'?<RealmReview/>:['inspection','career'].includes(new URLSearchParams(location.search).get('art')??'')?<InspectionReview/>:new URLSearchParams(location.search).get('art')==='rig'?<RigReview/>:new URLSearchParams(location.search).get('art')==='soldier'?<SoldierReview/>:new URLSearchParams(location.search).get('art')==='gallery'?<ArtGallery/>:<App />}</Suspense></StrictMode>);
+createRoot(el).render(<StrictMode><Suspense fallback={<p>載入驗收頁…</p>}>{new URLSearchParams(location.search).get('art')==='battle-demo'?<RealtimeBattleDemo/>:['unit-motion','unit-sequence'].includes(new URLSearchParams(location.search).get('art')??'')?<UnitSequenceReview/>:new URLSearchParams(location.search).get('art')==='unit-rig'?<UnitMotionReview/>:import.meta.env.DEV&&['economy','layout','dialogue'].includes(new URLSearchParams(location.search).get('art')??'')?<EconomyReview/>:new URLSearchParams(location.search).get('art')==='realms'?<RealmReview/>:['inspection','career'].includes(new URLSearchParams(location.search).get('art')??'')?<InspectionReview/>:new URLSearchParams(location.search).get('art')==='rig'?<RigReview/>:new URLSearchParams(location.search).get('art')==='soldier'?<SoldierReview/>:new URLSearchParams(location.search).get('art')==='gallery'?<ArtGallery/>:<App />}</Suspense></StrictMode>);
 import './game.css';
 import './art.css';
 
@@ -38,3 +42,6 @@ import './realm-art.css';
 import './entry-art.css';
 
 import './run-refresh.css';
+
+import './run-services.css';
+import './system-menu.css';

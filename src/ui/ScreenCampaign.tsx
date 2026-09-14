@@ -88,7 +88,7 @@ export function ScreenCampaign({ s, bump, onDepart, onLearn }: Props): React.Rea
 
     return (
       <>
-        <div className="page-heading"><div><span className="eyebrow">戰前整備 · 配置確認後出陣</span><h1>{t(chapter.titleKey)}</h1></div><button className="primary" onClick={onLearn}>戰前修習 · {s.learningExp} 點 →</button></div>
+        <div className="page-heading"><div><span className="eyebrow">戰前整備 · 配置確認後出陣</span><h1>{t(chapter.titleKey)}</h1></div><button className="primary" onClick={onLearn}>戰前訓練 · {s.money} 錢 →</button></div>
         <p className="sub">
           選好三招與同行指揮，軍隊將自動迎戰七關。
           每一關打完都可以收兵，帶著已到手的獎勵走；

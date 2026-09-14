@@ -25,13 +25,13 @@ import { coreDef } from '../pack-id.js';
 // 對照七個價格帶（32 §3.1）：D 帶頂 59、C 帶頂 74、B 帶頂 84、A 帶頂 94。
 // 每一階資質剛好開一段新的價格帶。
 export const aptitudeGrades: readonly AptitudeGradeDef[] = [
-  coreDef('aptitudeGrade', 'apt:F', { grade: 'F', shiftSteps: -2, yieldMul: 0.70, attrCap: 59 }),
-  coreDef('aptitudeGrade', 'apt:E', { grade: 'E', shiftSteps: -1, yieldMul: 0.85, attrCap: 67 }),
+  coreDef('aptitudeGrade', 'apt:F', { grade: 'F', shiftSteps: -2, yieldMul: 0.85, attrCap: 59 }),
+  coreDef('aptitudeGrade', 'apt:E', { grade: 'E', shiftSteps: -1, yieldMul: 0.92, attrCap: 67 }),
   coreDef('aptitudeGrade', 'apt:D', { grade: 'D', shiftSteps: 0, yieldMul: 1.00, attrCap: 75 }),
-  coreDef('aptitudeGrade', 'apt:C', { grade: 'C', shiftSteps: 1, yieldMul: 1.15, attrCap: 82 }),
-  coreDef('aptitudeGrade', 'apt:B', { grade: 'B', shiftSteps: 2, yieldMul: 1.30, attrCap: 88 }),
-  coreDef('aptitudeGrade', 'apt:A', { grade: 'A', shiftSteps: 3, yieldMul: 1.45, attrCap: 94 }),
-  coreDef('aptitudeGrade', 'apt:S', { grade: 'S', shiftSteps: 4, yieldMul: 1.60, attrCap: 100 }),
+  coreDef('aptitudeGrade', 'apt:C', { grade: 'C', shiftSteps: 1, yieldMul: 1.06, attrCap: 82 }),
+  coreDef('aptitudeGrade', 'apt:B', { grade: 'B', shiftSteps: 2, yieldMul: 1.12, attrCap: 88 }),
+  coreDef('aptitudeGrade', 'apt:A', { grade: 'A', shiftSteps: 3, yieldMul: 1.18, attrCap: 94 }),
+  coreDef('aptitudeGrade', 'apt:S', { grade: 'S', shiftSteps: 4, yieldMul: 1.25, attrCap: 100 }),
 ];
 
 // 累計成本：從 defaultGrade 升到該階要花多少資質點（14 §2.3）。

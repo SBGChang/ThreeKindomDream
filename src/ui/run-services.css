@@ -1,0 +1,111 @@
+/* Services share the live scene and original footer; only their working surfaces enter. */
+.game-stage > .stage-content:has(> .run-service) { inset: 0 0 96px; }
+.run-screen > :is(.player-panel,.journal-toggle,.training-stage,.command-dock,.participants) {
+  transition: transform .4s cubic-bezier(.2,.75,.25,1), opacity .3s;
+}
+.run-screen.utility-open > :is(.player-panel,.journal-toggle) { transform: translateX(-370px); opacity: 0; }
+.run-screen.utility-open > .participants { transform: translateX(370px); opacity: 0; }
+.run-screen.utility-open > .command-dock { transform: translateY(270px); opacity: 0; }
+.run-screen.utility-open > .training-stage { transform: translateY(420px); opacity: 0; }
+.run-service { position: absolute; inset: 0; z-index: 12; color: #fff0cd; font-size: 16px; animation: service-arrive .38s .12s both; }
+.run-service::before { content:''; position:absolute; inset:0; z-index:-1; pointer-events:none; background:linear-gradient(90deg,#25170755,transparent 45%,#25170722); }
+@keyframes service-arrive { from {opacity:0;transform:translateY(30px)} to {opacity:1;transform:translateY(0)} }
+.run-service h1,.run-service h2,.run-service p { margin:0; }
+.run-service h2 { color:inherit; }
+.run-service h1,.run-service h2,.run-service b { font-family:'DFKai-SB','KaiTi','Microsoft JhengHei',serif; }
+.run-service .service-heading { position:absolute; left:42px; right:38px; top:30px; height:64px; display:flex; align-items:center; justify-content:space-between; }
+.run-service .service-heading > div { display:flex; align-items:baseline; gap:24px; }
+.run-service .service-heading h1 { font-size:42px; color:#fff0bb; text-shadow:2px 3px 0 #38200c,0 0 8px #38200c; letter-spacing:.12em; }
+.run-service .service-heading p { font-size:16px; color:#fff0cd; text-shadow:1px 2px 2px #291707,0 0 5px #291707; }
+.run-service .service-heading .art-control { flex-shrink:0; }
+.game-stage .run-service button:not(.art-control) { border:1px solid #977343; border-radius:5px; box-shadow:0 3px 0 #38210c; background:linear-gradient(#f8df9c,#d9b16a); color:#432b15; font-weight:700; transition:box-shadow .15s,border-color .15s; transform:none; }
+.game-stage .run-service button:not(.art-control):hover:not(:disabled) { filter:none; transform:none; border-color:#fff2a8; box-shadow:0 0 0 2px #e5b651,0 0 10px #ffd96080; }
+.game-stage .run-service button:not(.art-control):focus-visible { outline:3px solid #ffeaa0; outline-offset:3px; }
+.run-service .service-host { position:absolute; left:10px; top:153px; bottom:38px; width:265px; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; }
+.run-service .service-host > .character-halfbody { width:250px; height:330px; object-fit:contain; filter:drop-shadow(3px 4px 0 #24150877); }
+.run-service .host-words { position:relative; width:244px; min-height:150px; flex-shrink:0; padding:18px 20px; box-sizing:border-box; background:linear-gradient(120deg,#4e301beF,#291e14f5); border:2px solid #b68a46; border-radius:18px 5px 18px 5px; box-shadow:0 4px 0 #24140c; }
+.run-service .host-words::before { content:''; position:absolute; top:-11px; left:100px; width:18px; height:18px; transform:rotate(45deg); background:#4e301b; border-left:2px solid #b68a46; border-top:2px solid #b68a46; }
+.run-service .host-words b { font-size:21px; color:#ffe29a; }
+.run-service .host-words p { font-size:15px; line-height:1.7; margin:9px 0; }
+.run-service .host-words small { font-size:12px; line-height:1.6; color:#d6c29d; }
+.run-service .service-tabs { display:flex; align-items:center; gap:10px; height:50px; flex-shrink:0; }
+.game-stage .run-service .service-tabs button { min-width:120px; height:44px; padding:0 22px; background:#382519; color:#cdb48a; border:2px solid #9f7844; border-radius:6px 6px 0 0; font-size:20px; font-family:'DFKai-SB','KaiTi',serif; }
+.game-stage .run-service .service-tabs button[aria-pressed=true] { background:linear-gradient(#a94629,#642b1e); color:#ffebad; border-color:#e8bf65; }
+.run-service .service-tabs small { font:12px 'Microsoft JhengHei',sans-serif; margin-left:10px; }
+.run-service .service-pager { display:flex; align-items:center; justify-content:center; gap:18px; height:44px; flex-shrink:0; font-size:16px; font-variant-numeric:tabular-nums; }
+.game-stage .run-service .service-pager button { width:36px; height:31px; padding:0; font-size:26px; line-height:25px; }
+.run-service .service-notice { position:absolute; left:290px; right:32px; bottom:5px; text-align:center; font-size:16px; font-weight:bold; color:#fff0b1; text-shadow:1px 1px 2px #1b110b,0 0 5px #1b110b; min-height:24px; }
+.run-service .service-kicker { font-size:13px; color:#986232; letter-spacing:.1em; }
+.game-stage .run-service button.service-buy:not(.art-control) { min-height:45px; padding:10px 18px; background:linear-gradient(#a4492c,#662c20); border:2px solid #cfa051; color:#fff1bd; text-shadow:1px 1px #311b0d; font-size:19px; }
+.game-stage .run-service button.service-buy:not(.art-control):disabled { background:#665139; color:#e1ccb0; opacity:.65; }
+/* A bound course book: an index on the left, one readable lesson on the right. */
+.training-book { position:absolute; top:114px; bottom:42px; left:291px; right:36px; display:grid; grid-template-columns:360px 1fr; background:linear-gradient(90deg,#e9ca8e,#fff0c5 36%,#b28c51 39%,#e8cb91 40%,#fae8ba 46%,#f0dca9); border:3px solid #614024; border-radius:8px 20px 20px 8px; box-shadow:0 7px 0 #5d3820,0 11px 0 #a8753d,0 14px 10px #26140888; color:#49331e; }
+.course-index { padding:16px 18px 8px; display:flex; flex-direction:column; border-right:1px solid #9c7a41; min-height:0; }
+.course-list { flex:1; display:grid; grid-template-rows:repeat(6,1fr); gap:5px; padding:8px 0; min-height:0; }
+.game-stage .run-service button.course-entry { display:flex; align-items:center; gap:10px; min-height:0; padding:6px 10px; text-align:left; border:1px solid #ab854c; background:#f9e9bd; box-shadow:none; border-radius:3px; }
+.game-stage .run-service button.course-entry[aria-pressed=true] { background:#692e22; border-color:#dca247; color:#fff0b8; box-shadow:inset 4px 0 #ffd17a; }
+.course-entry > .entry-stat-icon { width:37px; height:37px; flex-shrink:0; }
+.course-entry > span:nth-child(2) { flex:1; min-width:0; }
+.course-entry b { display:block; font-size:22px; white-space:nowrap; }
+.course-entry small { display:block; font-size:11px; font-weight:400; margin-top:3px; }
+.course-entry > strong { font:24px Georgia,serif; white-space:nowrap; }
+.course-entry > strong small { display:inline; font:13px Georgia,serif; }
+.course-detail { padding:30px 32px 22px; display:flex; flex-direction:column; min-height:0; }
+.course-detail h2 { font-size:36px; margin:9px 0 10px; color:#4b2818; }
+.course-description { font-size:16px; line-height:1.65; min-height:56px; }
+.course-progression { display:flex; align-items:center; gap:35px; margin:14px 0 10px; padding:13px 22px; border-block:1px solid #bea16c; }
+.course-progression > div { display:flex; flex-direction:column; flex:1; }
+.course-progression small { color:#7b6642; font-size:12px; }
+.course-progression b { font:38px Georgia,serif; color:#54351b; }
+.course-progression > div:last-child b { color:#23677b; }
+.course-progression em { font:14px 'Microsoft JhengHei',sans-serif; margin-left:5px; }
+.course-effect { font-size:15px; line-height:1.8; }.course-effect strong { color:#23677b; }
+.course-requirements { display:flex; flex-wrap:wrap; gap:6px 14px; margin:15px 0 0; font-size:13px; }
+.course-requirements > span { color:#a33a25; }.course-requirements > .met { color:#3b6944; }
+.course-status { font-size:14px; margin-top:10px!important; line-height:1.5; }
+.course-purchase { margin-top:auto; padding-top:14px; display:flex; gap:10px; }
+.course-purchase > button:first-child { flex:1; }.course-purchase > button { padding:8px 14px; }
+/* Merchant: goods rest on one continuous shelf, each with a hanging price card. */
+.merchant-stock { position:absolute; left:294px; right:37px; top:112px; bottom:38px; display:flex; flex-direction:column; }
+.merchant-stock > .service-tabs { margin-bottom:13px; }
+.merchant-shelf { position:relative; flex:1; min-height:0; display:grid; grid-template-columns:repeat(3,1fr); gap:18px; padding:0 10px; }
+.merchant-shelf::before { content:''; position:absolute; top:162px; left:-6px; right:-6px; height:23px; background:linear-gradient(#d5a35c,#80502c 45%,#4b2b18 48%,#694125); border:2px solid #412513; border-radius:5px; box-shadow:0 7px 9px #27160980; }
+.merchant-good { position:relative; min-width:0; display:flex; flex-direction:column; }
+.goods-display { position:relative; height:177px; flex-shrink:0; display:flex; flex-direction:column; align-items:center; justify-content:center; background:radial-gradient(ellipse at bottom,#ffdc854f,transparent 68%); }
+.run-service .service-stars { font-size:17px; color:#ffda7c; letter-spacing:4px; text-shadow:1px 2px #4a2b12; }
+.run-service .goods-display .market-relic { width:136px; height:136px; margin:0; filter:drop-shadow(3px 5px 2px #241a1580); }
+.goods-label { flex:1; min-height:0; padding:18px 18px 12px; background:linear-gradient(110deg,#f8e4b8,#ebce95); border:2px solid #927046; border-top:0; border-radius:0 0 14px 3px; color:#4e361f; display:flex; flex-direction:column; align-items:stretch; box-shadow:0 5px 8px #281b1470; }
+.goods-label h2 { font-size:28px; text-align:center; margin-bottom:12px; }
+.goods-label p { font-size:15px; line-height:1.65; flex:1; }
+.goods-label > small { font-size:12px; line-height:1.55; margin:8px 0; }
+.goods-label .goods-shortage { text-align:center; margin:5px 0 0; min-height:19px; }
+.sold-seal { position:absolute; left:50%; top:76px; transform:translateX(-50%) rotate(-12deg); border:3px double #9f3b27; background:#f9e0aeeF; color:#963324; padding:8px 14px; white-space:nowrap; font-size:25px; }
+.fragment-shop { padding:18px 20px; background:linear-gradient(120deg,#513620f2,#2d2018f2); border:3px solid #b78a48; border-radius:6px 6px 18px 6px; flex:1; display:flex; flex-direction:column; min-height:0; }
+.fragment-options { display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(2,112px); gap:12px; }
+.game-stage .run-service .fragment-options button { position:relative; display:grid; grid-template-columns:85px 1fr; grid-template-rows:1fr 1fr; align-items:center; padding:9px; background:#281c13; color:#f1d29b; border:2px solid #88623b; text-align:left; box-shadow:inset 0 3px 10px #100b0766; }
+.game-stage .run-service .fragment-options button[aria-pressed=true] { border-color:#ffdb7b; background:#694029; box-shadow:0 0 0 2px #d8a443; }
+.fragment-options .market-relic { width:78px; height:78px; grid-row:1/3; margin:0; }
+.fragment-options b { align-self:end; font-size:20px; }.fragment-options small { font-size:13px; }
+.fragment-checkout { border-top:1px solid #ae854b; margin-top:auto; padding-top:17px; display:flex; gap:15px; align-items:center; justify-content:space-between; }
+.fragment-checkout .service-kicker { color:#d5b579; }.fragment-checkout h2 { font-size:25px; margin:6px 0; }.fragment-checkout small { font-size:12px; color:#d6c3a3; }
+.fragment-checkout button { flex-shrink:0; }.fragment-empty { position:absolute; top:140px; left:40px; right:40px; text-align:center; }.fragment-empty p { margin-top:18px; line-height:1.8; }
+/* Inventory: a compartmented chest with a large, separate inspection stand. */
+.vault-collection { position:absolute; left:43px; top:120px; bottom:43px; width:680px; padding:16px 22px 9px; box-sizing:border-box; background:linear-gradient(120deg,#715033f7,#39271bf7); border:5px solid #4e301b; border-radius:12px; box-shadow:inset 0 0 0 2px #b88b4f,0 6px 0 #28170d,0 12px 15px #22180b80; display:flex; flex-direction:column; }
+.relic-drawers { display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(2,1fr); gap:12px; margin:14px 0 10px; flex:1; min-height:0; }
+.game-stage .run-service button.relic-drawer { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:10px 4px; background:radial-gradient(ellipse at center,#634324,#271a11); border:2px solid #a4783f; border-radius:4px; box-shadow:inset 0 4px 10px #160f0ac0; color:#ffe2ab; }
+.game-stage .run-service button.relic-drawer[aria-pressed=true] { border-color:#fff1a1; box-shadow:inset 0 0 0 2px #d2a354,0 0 12px #f1be5355; background:radial-gradient(ellipse at center,#916438,#412b18); }
+.relic-drawer .market-relic { width:95px; height:95px; margin:0; }.relic-drawer b { font-size:21px; margin-top:4px; }.relic-drawer small { font-size:12px; color:#e9ba6c; margin-top:5px; }
+.relic-inspection { position:absolute; left:754px; right:42px; top:118px; bottom:43px; padding:20px 35px; box-sizing:border-box; display:flex; flex-direction:column; align-items:center; text-align:center; background:linear-gradient(140deg,#f8e4b6f7,#e3c28cf7); border:2px solid #a37b42; border-radius:80px 80px 9px 9px; box-shadow:0 5px 0 #583820,0 8px 10px #24150d70; color:#513720; }
+.relic-display { width:200px; height:144px; display:grid; place-items:center; background:radial-gradient(ellipse,#fff4cd,transparent 65%); flex-shrink:0; }
+.relic-display .market-relic { width:144px; height:144px; margin:0; filter:drop-shadow(2px 6px 2px #52382244); }
+.relic-inspection h2 { font-size:32px; margin:7px 0 12px; }.vault-item-status { border-block:1px solid #ba9761; padding:7px 20px; font-size:13px; }.relic-effects { margin:14px 0!important; line-height:1.65; font-size:16px; }.fragment-tally { margin-top:auto; display:flex; align-items:center; gap:30px; font-size:14px; width:100%; justify-content:space-between; border-bottom:1px solid #b89458; padding:5px 0; }.fragment-tally b { font:28px Georgia,serif; color:#8b5122; }.vault-rule { margin-top:12px; font-size:12px; line-height:1.8; color:#79613d; }.empty-relic { font:150px Georgia,serif; color:#b18a4f; margin-top:55px; }.service-empty { position:absolute; inset:145px 65px 100px; text-align:center; }.service-empty span { display:block; font:80px Georgia,serif; color:#dbb469; }.service-empty h2 { font-size:28px; }.service-empty p { margin-top:20px; line-height:1.8; font-size:16px; }
+@media(prefers-reduced-motion:reduce) { .run-service {animation:none} .run-screen > :is(.player-panel,.journal-toggle,.training-stage,.command-dock,.participants) {transition:none} }
+
+.run-service .item-effect-pages { width:100%; margin:12px 0; min-height:90px; font-size:14px; line-height:1.5; }
+.run-service .item-effect-pages p + p { margin-top:6px; }
+.run-service .item-effect-pages nav { display:flex; justify-content:center; align-items:center; gap:10px; margin-top:8px; font-size:11px; }
+.game-stage .run-service .item-effect-pages nav button { width:25px; height:23px; padding:0; font-size:20px; line-height:18px; }
+.run-service .item-effect-pages.compact { flex:1; margin:0; min-height:72px; font-size:14px; }
+.run-service .item-effect-pages.compact > div { min-height:42px; }
+.run-service .item-effect-pages.compact p { font-size:14px; line-height:1.5; }
+.run-service .item-effect-pages.compact nav { margin-top:5px; }

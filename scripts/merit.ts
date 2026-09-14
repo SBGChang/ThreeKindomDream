@@ -83,7 +83,8 @@ const play = (world: World, policyName: string, meta: MetaState): Row[] => {
         && Math.max(s.current.career.civil, s.current.career.martial) >= cap) {
         capTurn = s.current.progress.turn;
       }
-      if (s.needsFactionChoice) {
+      if (s.needsChapterCamp) { s.continueChapter(); continue; }
+    if (s.needsFactionChoice) {
         const o = s.factionOptions().filter((x) => x.eligible)[0];
         if (o === undefined) { s.noFactionAvailable(); continue; }
         s.chooseFaction(o.factionId); continue;

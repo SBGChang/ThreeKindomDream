@@ -1,0 +1,315 @@
+/* The original travel bar moves above the scene only while a dialogue is open. */
+.game-stage > .stage-content:has(.event-dialogue) {
+  inset: 0;
+}
+.game-stage:has(.event-dialogue) > .game-bottom.run-footer {
+  transform: translateY(-712px);
+  transition: transform 0.45s ease;
+  z-index: 40;
+}
+.game-stage > .game-bottom.run-footer {
+  transition: transform 0.45s ease;
+}
+.game-stage:has(.event-dialogue) .footer-notice {
+  display: none !important;
+}
+.run-screen.dialogue-playing > .player-panel,
+.run-screen.dialogue-playing > .training-stage,
+.run-screen.dialogue-playing > .journal-toggle {
+  visibility: hidden;
+  pointer-events: none;
+}
+.game-stage .run-screen.dialogue-playing > .participants {
+  transform: translateX(calc(100% + 30px));
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.event-dialogue {
+  position: absolute;
+  inset: 0;
+  z-index: 25;
+  overflow: hidden;
+  color: #fff8ec;
+  outline: none;
+  cursor: pointer;
+}
+.event-dialogue,
+.event-dialogue button {
+  -webkit-text-stroke: 1px #0b0908;
+  paint-order: stroke fill;
+  text-shadow:
+    -1px -1px #0b0908,
+    1px -1px #0b0908,
+    -1px 1px #0b0908,
+    1px 2px #0b0908;
+}
+.dialogue-tools {
+  position: absolute;
+  right: 42px;
+  top: 110px;
+  z-index: 3;
+  display: flex;
+  gap: 12px;
+}
+.game-stage .event-dialogue .dialogue-tools button {
+  border: 1px solid #e0ba7055;
+  border-image: none;
+  background: #172731ba;
+  box-shadow: none;
+  border-radius: 3px;
+  color: #fff8ec;
+  padding: 6px 12px;
+  font-size: 13px;
+}
+.dialogue-cast {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.dialogue-actor {
+  position: absolute;
+  left: 0;
+  top: 200px;
+  width: 410px;
+  height: 540px;
+  transform-origin: 50% 75%;
+  will-change: transform;
+}
+.dialogue-actor .character-halfbody {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 6px #24150955);
+}
+.dialogue-actor.is-speaking .character-halfbody {
+  filter: drop-shadow(0 0 5px #fff0aa50) drop-shadow(0 8px 6px #24150955);
+}
+.game-stage .conversation-box {
+  position: absolute;
+  left: 26px;
+  right: 26px;
+  bottom: 8px;
+  height: 192px;
+  border: 12px solid transparent;
+  border-image: var(--paper-art) 150 / 12px;
+  background: linear-gradient(110deg, #183540, #111f2a 65%, #142631);
+  box-shadow:
+    0 -5px 25px #10222b99,
+    inset 0 0 38px #0007;
+  padding: 17px 27px 18px 150px;
+  z-index: 5;
+}
+.game-stage .conversation-box:not(:has(.dialogue-face)) {
+  padding-left: 38px;
+}
+.game-stage .conversation-box.phase-rewards { height: 244px; }
+.conversation-box::before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 8px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #e9c38188, transparent);
+}
+.dialogue-face {
+  position: absolute;
+  left: 19px;
+  top: 24px;
+  width: 108px;
+  height: 122px;
+  overflow: hidden;
+  border: 2px solid #d1ab60;
+  border-radius: 5px 5px 30px 5px;
+  background: radial-gradient(ellipse at 50% 35%, #8e7a4c, #263e49 75%);
+  box-shadow: 0 4px 8px #0006;
+}
+.dialogue-face .character-face {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.dialogue-face.is-hero .career-hero-art {
+  position: absolute;
+  width: 170px;
+  height: 256px;
+  max-width: none;
+  left: -22px;
+  top: -4px;
+  object-fit: contain;
+}
+.conversation-content {
+  min-width: 0;
+}
+.dialogue-speaker-name {
+  color: #ffd76b;
+  font:
+    bold 24px 'DFKai-SB',
+    serif;
+  letter-spacing: 2px;
+  margin: 0 0 13px;
+}
+.dialogue-line {
+  font:
+    23px/1.75 'Microsoft JhengHei',
+    sans-serif;
+  color: #fff9ee;
+  margin: 0;
+  max-width: 960px;
+}
+.dialogue-keyword {
+  color: #ffd966;
+}
+.dialogue-gain {
+  color: #70d7ff;
+}
+.dialogue-loss {
+  color: #ff7979;
+}
+.dialogue-reward-page { position: absolute; right: 24px; bottom: 12px; font-size: 12px; color: #e5dcc9; }
+.dialogue-decision {
+  position: absolute;
+  left: 350px;
+  top: 190px;
+  width: 580px;
+  padding: 16px 18px 20px;
+  z-index: 6;
+  border: 3px solid #c29b58;
+  border-radius: 12px 4px;
+  background: linear-gradient(125deg,#47382b,#241c19 75%);
+  box-shadow: 0 0 0 3px #281a13, inset 0 0 0 2px #7e634044, 0 12px 26px #09060499;
+  cursor: default;
+  animation: decision-arrive .2s ease-out both;
+}
+.dialogue-decision::before,.dialogue-decision::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #e2bf77;
+  pointer-events: none;
+}
+.dialogue-decision::before { left: 5px; top: 5px; border-right: 0; border-bottom: 0; border-radius: 5px 0 0; }
+.dialogue-decision::after { right: 5px; bottom: 5px; border-left: 0; border-top: 0; }
+.decision-heading { display:flex; align-items:center; justify-content:center; gap:18px; color:#f4d594; font:bold 23px 'DFKai-SB',serif; letter-spacing:4px; margin:2px 0 16px; }
+.decision-heading > span { color:#b39055; font-size:10px; }
+.dialogue-options { display:flex; flex-direction:column; gap:12px; }
+.dialogue-actor { transition: translate .2s ease; }
+.decision-open .dialogue-cast:has(> .dialogue-actor:last-child[data-actor="1"]) > .dialogue-actor[data-actor="0"] { translate:-70px 0; }
+.decision-open .dialogue-cast:has(> .dialogue-actor:last-child[data-actor="1"]) > .dialogue-actor[data-actor="1"] { translate:70px 0; }
+@keyframes decision-arrive { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+.game-stage .event-dialogue .dialogue-choice {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  width: 100%;
+  position: relative;
+  min-height: 82px;
+  padding: 11px 14px 11px 54px;
+  gap: 7px;
+  border: 2px solid #9b8056;
+  border-image: none;
+  border-radius: 4px;
+  background: linear-gradient(100deg, #68503a, #3d3026);
+  color: #fff8ec;
+  box-shadow: inset 0 1px 0 #f6d29b22, 0 3px 0 #160e0a;
+}
+.dialogue-choice-label {
+  font-size: 20px;
+  line-height: 1.35;
+}
+.dialogue-choice-number {
+  position: absolute;
+  left: 13px;
+  top: 14px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid #d2b370;
+  border-radius: 4px;
+  background: #241b14;
+  color: #ffdb80;
+  font:
+    bold 18px Georgia,
+    serif;
+}
+.dialogue-choice-reward {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #f3ecde;
+  padding-left: 0;
+}
+.dialogue-choice-reward > span { margin-right: 10px; }
+.dialogue-choice-reward b { margin-left: 3px; }
+.dialogue-choice-reward > b + span { margin-left: 10px; }
+.game-stage .event-dialogue button:hover:not(:disabled) {
+  filter: brightness(1.2);
+  transform: none;
+  background: #345361;
+  border-color: #d6b770;
+}
+.game-stage .event-dialogue .dialogue-choice:is(:hover,:focus-visible):not(:disabled) {
+  filter: none;
+  transform: none;
+  background: linear-gradient(100deg, #68503a, #3d3026);
+  border-color: #ffe39a;
+  box-shadow: 0 0 0 2px #c5a35755, 0 0 16px #f7c96533, inset 0 1px 0 #f6d29b22;
+  outline: none;
+}
+.game-stage .event-dialogue .dialogue-choice:disabled { opacity:1; color:#b2a48c; border-color:#75644c; background:#302820; box-shadow:inset 0 1px 0 #ffffff0a; }
+.dialogue-choice:disabled .dialogue-choice-reward { color:#baaa93; }
+.event-dialogue.is-reduced .dialogue-reward-lines p,
+.event-dialogue.is-reduced .dialogue-decision {
+  animation: none;
+}
+.event-dialogue.is-reduced .dialogue-actor { transition:none; }
+.game-stage .event-dialogue button:focus-visible {
+  outline: 2px solid #ffe499;
+  outline-offset: 2px;
+}
+.game-stage .event-dialogue button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.dialogue-reward-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.dialogue-reward-lines p {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 21px;
+  line-height: 1.35;
+  margin: 0;
+  animation: dialogue-reward-enter 0.3s ease-out both;
+}
+.dialogue-reward-marker {
+  margin-right: 15px;
+  color: #f4d896;
+}
+@keyframes dialogue-reward-enter {
+  from {
+    opacity: 0;
+    transform: translateY(9px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dialogue-decision { animation:none; }
+  .dialogue-actor { transition:none; }
+  .game-stage > .game-bottom.run-footer {
+    transition: none !important;
+  }
+  .dialogue-reward-lines p {
+    animation: none;
+  }
+}

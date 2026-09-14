@@ -1,4 +1,4 @@
-// 一輪的【收入分解】：功績與經驗各自從哪裡來。
+// 一輪的【收入分解】：功績與金錢各自從哪裡來。
 //
 // 平均值與總量都看不出病根 —— 使用者說「人物事件的好像還是過高」，
 // 要驗證那句話，就得把四個來源分開記帳：
@@ -6,7 +6,7 @@
 //   固定事件  選格子當下（training.select）
 //   委託      trigger.kind === 'commission'
 //   人物事件  trigger.kind === 'notable'
-//   戰役      engage()（D66 之後【不該有功績】，只有經驗）
+//   戰役      engage()（D66 之後【不該有功績】，只有金錢）
 //
 // 記帳方式：在每一個動作【前後】各量一次總額，差額歸給那個動作。
 // 不需要在核心埋任何 hook —— 動作邊界本來就是分得開的。
@@ -45,7 +45,7 @@ const starMeta = (star: number): MetaState => {
 
 interface Tally {
   readonly merit: Record<Src, number>;
-  readonly exp: Record<Src, number>;
+  readonly income: Record<Src, number>;
   readonly counts: Record<Src, number>;
   readonly nCivil: number;
   readonly nMartial: number;
@@ -61,16 +61,16 @@ const play = (policyName: string, meta: MetaState): Tally[] => {
   const out: Tally[] = [];
   for (let r = 0; r < RUNS; r += 1) {
     const s = Session.start(w, meta, emptyDraft(meta, defs), mkSeed(7000 + r));
-    const merit = zero(); const exp = zero(); const counts = zero();
+    const merit = zero(); const income = zero(); const counts = zero();
     const mOf = (): number =>
       s.current.currencies.merit.civil + s.current.currencies.merit.martial;
-    const eOf = (): number => ATTRS.reduce((n, a) => n + s.expOf(a), 0);
+    const eOf = (): number => s.current.economy.earned;
     /** 一個動作的收入 ＝ 它前後的差額。核心不必埋 hook。 */
     const bill = (src: Src, fn: () => void): void => {
       const m0 = mOf(); const e0 = eOf();
       fn();
       merit[src] += mOf() - m0;
-      exp[src] += eOf() - e0;
+      income[src] += eOf() - e0;
       counts[src] += 1;
     };
 
@@ -82,7 +82,8 @@ const play = (policyName: string, meta: MetaState): Tally[] => {
         && Math.max(s.current.career.civil, s.current.career.martial) >= cap) {
         capTurn = s.current.progress.turn;
       }
-      if (s.needsFactionChoice) {
+      if (s.needsChapterCamp) { s.continueChapter(); continue; }
+    if (s.needsFactionChoice) {
         const o = s.factionOptions().filter((x) => x.eligible)[0];
         if (o === undefined) { s.noFactionAvailable(); continue; }
         s.chooseFaction(o.factionId); continue;
@@ -116,7 +117,7 @@ const play = (policyName: string, meta: MetaState): Tally[] => {
       s.advance();
     }
     out.push({
-      merit, exp, counts, capTurn,
+      merit, income, counts, capTurn,
       nCivil: careerService.notionalLevel('civil', s.ctx),
       nMartial: careerService.notionalLevel('martial', s.ctx),
     });
@@ -140,14 +141,14 @@ for (const star of [0, 3, 5]) {
   for (const name of ['greedy-gain', 'balanced']) {
     const rows = play(name, starMeta(star));
     const mAll = avg(rows.map((x) => SRCS.reduce((n, s) => n + x.merit[s], 0)));
-    const eAll = avg(rows.map((x) => SRCS.reduce((n, s) => n + x.exp[s], 0)));
+    const eAll = avg(rows.map((x) => SRCS.reduce((n, s) => n + x.income[s], 0)));
     console.log(`══ ${star === 0 ? '無星' : `${star}★`}　${name}　`
       + `名義階 文${avg(rows.map((x) => x.nCivil)).toFixed(1)}`
       + `／武${avg(rows.map((x) => x.nMartial)).toFixed(1)} ══`);
-    console.log('  來源        功績   佔比    經驗   佔比    次數   每次功績');
+    console.log('  來源        功績   佔比    金錢   佔比    次數   每次功績');
     for (const s of SRCS) {
       const m = avg(rows.map((x) => x.merit[s]));
-      const e = avg(rows.map((x) => x.exp[s]));
+      const e = avg(rows.map((x) => x.income[s]));
       const c = avg(rows.map((x) => x.counts[s]));
       console.log(
         `  ${LABEL[s].padEnd(6)}${pad(m, 8)}${pct(m, mAll)}${pad(e, 8)}${pct(e, eAll)}`

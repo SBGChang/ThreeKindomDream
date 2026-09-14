@@ -1,5 +1,6 @@
 import { ATTRS, OPTION_TIERS, RARITIES } from '../../contracts/core/primitives.js';
 import type { Ctx, Rec } from './types.js';
+import { validateDialogue } from './dialogue.js';
 
 /**
  * trigger 的合法性。判別聯集讓「notable 必須有 owner」在型別層就成立，
@@ -144,6 +145,10 @@ function validateOptionTiers(c: Ctx, d: Rec, id: string): void {
     return;
   }
 
+  if(d['mechanic']==='investment'||d['mechanic']==='method'){
+    if(!opts.some(o=>c.list(o['requirements']).length===0&&c.n(o['moneyCost']??0)===0)) c.push('rule','events','options',id,'必須保留一個免費無門檻做法');
+    return;
+  }
   const byTier = new Map<string, Rec>();
   for (const o of opts) {
     const tier = c.s(o['tier']);
@@ -274,6 +279,7 @@ export function validateEvents(c: Ctx): void {
         '模板型事件不得 collectible', '模板數量隨參數池變動，會讓完成度分母失真');
     }
     validateTrigger(c, d, id, notables, stages);
+    validateDialogue(c, d, id);
 
     const slots = c.arr(d['paramSlots']);
     slots.forEach((sl, i) => {

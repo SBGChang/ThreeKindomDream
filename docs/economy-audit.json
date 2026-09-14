@@ -1,0 +1,680 @@
+{
+  "seedFrom": 1000,
+  "rows": [
+    {
+      "star": 0,
+      "policy": "greedy-gain",
+      "runs": 50,
+      "income": 3358,
+      "spent": 3255.1,
+      "money": 102.9,
+      "stories": 11.5,
+      "marketItems": 0,
+      "fragments": 0,
+      "commissions": 15.72,
+      "bestAttr": 61.19,
+      "totalAttrs": 221.49,
+      "civilMerit": 412,
+      "martialMerit": 444.82,
+      "depths": [
+        2.96,
+        3.7,
+        3.4,
+        2.92
+      ],
+      "clearRate": 0,
+      "chapters": [
+        {
+          "earned": 670.78,
+          "spent": 638.2,
+          "skills": 3.24
+        },
+        {
+          "earned": 1434.8,
+          "spent": 1397.4,
+          "skills": 5.9
+        },
+        {
+          "earned": 2277.92,
+          "spent": 2239.1,
+          "skills": 6
+        },
+        {
+          "earned": 3296.56,
+          "spent": 3255.1,
+          "skills": 6
+        }
+      ]
+    },
+    {
+      "star": 0,
+      "policy": "flag-chaser",
+      "runs": 50,
+      "income": 5227.6,
+      "spent": 5059.6,
+      "money": 168,
+      "stories": 18.26,
+      "marketItems": 0,
+      "fragments": 0,
+      "commissions": 29.76,
+      "bestAttr": 63.48,
+      "totalAttrs": 227.12,
+      "civilMerit": 724.26,
+      "martialMerit": 716.76,
+      "depths": [
+        3.78,
+        5.36,
+        5.5,
+        4.6
+      ],
+      "clearRate": 0.06,
+      "chapters": [
+        {
+          "earned": 972.9,
+          "spent": 938.4,
+          "skills": 4.72
+        },
+        {
+          "earned": 2172.76,
+          "spent": 2134.4,
+          "skills": 5.98
+        },
+        {
+          "earned": 3589.34,
+          "spent": 3548,
+          "skills": 6.06
+        },
+        {
+          "earned": 5106.42,
+          "spent": 5059.6,
+          "skills": 6.14
+        }
+      ]
+    },
+    {
+      "star": 0,
+      "policy": "focus-martial",
+      "runs": 50,
+      "income": 3429.68,
+      "spent": 2825.8,
+      "money": 603.88,
+      "stories": 11.7,
+      "marketItems": 0,
+      "fragments": 0,
+      "commissions": 16.08,
+      "bestAttr": 75,
+      "totalAttrs": 153.89,
+      "civilMerit": 55.96,
+      "martialMerit": 797.26,
+      "depths": [
+        3.46,
+        4.4,
+        3.86,
+        3.1
+      ],
+      "clearRate": 0.01,
+      "chapters": [
+        {
+          "earned": 692.44,
+          "spent": 656.2,
+          "skills": 2.32
+        },
+        {
+          "earned": 1504.44,
+          "spent": 1466.4,
+          "skills": 4.22
+        },
+        {
+          "earned": 2390.4,
+          "spent": 2274.2,
+          "skills": 5.1
+        },
+        {
+          "earned": 3362.04,
+          "spent": 2825.8,
+          "skills": 5.4
+        }
+      ]
+    },
+    {
+      "star": 0,
+      "policy": "balanced",
+      "runs": 50,
+      "income": 3136.32,
+      "spent": 3055.4,
+      "money": 80.92,
+      "stories": 11.58,
+      "marketItems": 0,
+      "fragments": 0,
+      "commissions": 16.26,
+      "bestAttr": 55.79,
+      "totalAttrs": 207.18,
+      "civilMerit": 421.88,
+      "martialMerit": 371.66,
+      "depths": [
+        2.8,
+        3.24,
+        2.76,
+        2.4
+      ],
+      "clearRate": 0,
+      "chapters": [
+        {
+          "earned": 653.06,
+          "spent": 615,
+          "skills": 3.42
+        },
+        {
+          "earned": 1397.18,
+          "spent": 1361.5,
+          "skills": 5.96
+        },
+        {
+          "earned": 2161.84,
+          "spent": 2119.3,
+          "skills": 6
+        },
+        {
+          "earned": 3091.68,
+          "spent": 3055.4,
+          "skills": 6
+        }
+      ]
+    },
+    {
+      "star": 0,
+      "policy": "market-balanced",
+      "runs": 50,
+      "income": 3086.62,
+      "spent": 3005.2,
+      "money": 81.42,
+      "stories": 11.58,
+      "marketItems": 3.38,
+      "fragments": 3.8,
+      "commissions": 16.26,
+      "bestAttr": 55.8,
+      "totalAttrs": 207.28,
+      "civilMerit": 429.02,
+      "martialMerit": 368.5,
+      "depths": [
+        2.54,
+        2.88,
+        2.52,
+        2.22
+      ],
+      "clearRate": 0,
+      "chapters": [
+        {
+          "earned": 653.06,
+          "spent": 613,
+          "skills": 1.9
+        },
+        {
+          "earned": 1382.38,
+          "spent": 1353.2,
+          "skills": 3.54
+        },
+        {
+          "earned": 2135.18,
+          "spent": 2102.1,
+          "skills": 5.36
+        },
+        {
+          "earned": 3046.74,
+          "spent": 3005.2,
+          "skills": 5.88
+        }
+      ]
+    },
+    {
+      "star": 3,
+      "policy": "greedy-gain",
+      "runs": 50,
+      "income": 4067.78,
+      "spent": 3886.8,
+      "money": 180.98,
+      "stories": 12.52,
+      "marketItems": 0,
+      "fragments": 0,
+      "commissions": 17.04,
+      "bestAttr": 64.97,
+      "totalAttrs": 235.55,
+      "civilMerit": 564.74,
+      "martialMerit": 466.36,
+      "depths": [
+        4.9,
+        6,
+        5.78,
+        4.9
+      ],
+      "clearRate": 0.27,
+      "chapters": [
+        {
+          "earned": 669.56,
+          "spent": 630.8,
+          "skills": 3.18
+        },
+        {
+          "earned": 1563.62,
+          "spent": 1532.3,
+          "skills": 6.08
+        },
+        {
+          "earned": 2663.84,
+          "spent": 2622.6,
+          "skills": 6.76
+        },
+        {
+          "earned": 3928.52,
+          "spent": 3886.8,
+          "skills": 6.9
+        }
+      ]
+    },
+    {
+      "star": 3,
+      "policy": "flag-chaser",
+      "runs": 50,
+      "income": 6138,
+      "spent": 5852.8,
+      "money": 285.2,
+      "stories": 19.96,
+      "marketItems": 0,
+      "fragments": 0,
+      "commissions": 30.26,
+      "bestAttr": 66.97,
+      "totalAttrs": 238.65,
+      "civilMerit": 931.92,
+      "martialMerit": 788.54,
+      "depths": [
+        5.94,
+        6.78,
+        6.78,
+        6.44
+      ],
+      "clearRate": 0.69,
+      "chapters": [
+        {
+          "earned": 986.84,
+          "spent": 951.6,
+          "skills": 4.72
+        },
+        {
+          "earned": 2384.56,
+          "spent": 2350.7,
+          "skills": 6.6
+        },
+        {
+          "earned": 4044.18,
+          "spent": 3998.8,
+          "skills": 7
+        },
+        {
+          "earned": 5899.3,
+          "spent": 5852.8,
+          "skills": 7.22
+        }
+      ]
+    },
+    {
+      "star": 3,
+      "policy": "focus-martial",
+      "runs": 50,
+      "income": 4088.9,
+      "spent": 3285.7,
+      "money": 803.2,
+      "stories": 12.26,
+      "marketItems": 0,
+      "fragments": 0,
+      "commissions": 16.62,
+      "bestAttr": 75,
+      "totalAttrs": 158.06,
+      "civilMerit": 69.6,
+      "martialMerit": 883.06,
+      "depths": [
+        5.3,
+        6.28,
+        6.3,
+        4.96
+      ],
+      "clearRate": 0.36,
+      "chapters": [
+        {
+          "earned": 699.62,
+          "spent": 663.4,
+          "skills": 2.3
+        },
+        {
+          "earned": 1636.38,
+          "spent": 1597.5,
+          "skills": 4.7
+        },
+        {
+          "earned": 2719.94,
+          "spent": 2578.8,
+          "skills": 5.74
+        },
+        {
+          "earned": 3943.8,
+          "spent": 3285.7,
+          "skills": 6.38
+        }
+      ]
+    },
+    {
+      "star": 3,
+      "policy": "balanced",
+      "runs": 50,
+      "income": 3712.9,
+      "spent": 3561.3,
+      "money": 151.6,
+      "stories": 12.22,
+      "marketItems": 0,
+      "fragments": 0,
+      "commissions": 16.76,
+      "bestAttr": 58.53,
+      "totalAttrs": 217.24,
+      "civilMerit": 521.88,
+      "martialMerit": 406.08,
+      "depths": [
+        4.58,
+        5.54,
+        5.28,
+        4.3
+      ],
+      "clearRate": 0.14,
+      "chapters": [
+        {
+          "earned": 653.94,
+          "spent": 618,
+          "skills": 3.4
+        },
+        {
+          "earned": 1504.26,
+          "spent": 1471.7,
+          "skills": 6.04
+        },
+        {
+          "earned": 2441.44,
+          "spent": 2404.3,
+          "skills": 6.66
+        },
+        {
+          "earned": 3602.84,
+          "spent": 3561.3,
+          "skills": 6.86
+        }
+      ]
+    },
+    {
+      "star": 3,
+      "policy": "market-balanced",
+      "runs": 50,
+      "income": 3728.56,
+      "spent": 3585.8,
+      "money": 142.76,
+      "stories": 12.22,
+      "marketItems": 3.3,
+      "fragments": 3.8,
+      "commissions": 16.76,
+      "bestAttr": 58.73,
+      "totalAttrs": 218.02,
+      "civilMerit": 539.2,
+      "martialMerit": 414.6,
+      "depths": [
+        4.44,
+        5.52,
+        5.38,
+        4.28
+      ],
+      "clearRate": 0.13,
+      "chapters": [
+        {
+          "earned": 653.94,
+          "spent": 614.4,
+          "skills": 1.88
+        },
+        {
+          "earned": 1495.18,
+          "spent": 1458.5,
+          "skills": 4.02
+        },
+        {
+          "earned": 2444.34,
+          "spent": 2410.5,
+          "skills": 5.8
+        },
+        {
+          "earned": 3625.2,
+          "spent": 3585.8,
+          "skills": 6.72
+        }
+      ]
+    },
+    {
+      "star": 5,
+      "policy": "greedy-gain",
+      "runs": 50,
+      "income": 4508.9,
+      "spent": 4288.8,
+      "money": 220.1,
+      "stories": 12.96,
+      "marketItems": 0,
+      "fragments": 0,
+      "commissions": 18.16,
+      "bestAttr": 69.47,
+      "totalAttrs": 247.48,
+      "civilMerit": 605.2,
+      "martialMerit": 532.58,
+      "depths": [
+        5.66,
+        6.64,
+        6.56,
+        5.7
+      ],
+      "clearRate": 0.56,
+      "chapters": [
+        {
+          "earned": 680.84,
+          "spent": 642.4,
+          "skills": 3.26
+        },
+        {
+          "earned": 1672.46,
+          "spent": 1635.9,
+          "skills": 6.28
+        },
+        {
+          "earned": 2909.12,
+          "spent": 2873.6,
+          "skills": 6.84
+        },
+        {
+          "earned": 4323.64,
+          "spent": 4288.8,
+          "skills": 6.98
+        }
+      ]
+    },
+    {
+      "star": 5,
+      "policy": "flag-chaser",
+      "runs": 50,
+      "income": 6418.04,
+      "spent": 6106.8,
+      "money": 311.24,
+      "stories": 20.54,
+      "marketItems": 0,
+      "fragments": 0,
+      "commissions": 30.44,
+      "bestAttr": 69.33,
+      "totalAttrs": 246.5,
+      "civilMerit": 977.02,
+      "martialMerit": 829.5,
+      "depths": [
+        6.36,
+        6.9,
+        6.94,
+        6.82
+      ],
+      "clearRate": 0.85,
+      "chapters": [
+        {
+          "earned": 992.96,
+          "spent": 958.8,
+          "skills": 4.74
+        },
+        {
+          "earned": 2465.22,
+          "spent": 2425.6,
+          "skills": 6.64
+        },
+        {
+          "earned": 4214.74,
+          "spent": 4172.8,
+          "skills": 6.96
+        },
+        {
+          "earned": 6151.24,
+          "spent": 6106.8,
+          "skills": 7.4
+        }
+      ]
+    },
+    {
+      "star": 5,
+      "policy": "focus-martial",
+      "runs": 50,
+      "income": 4451.86,
+      "spent": 3404.8,
+      "money": 1047.06,
+      "stories": 12.26,
+      "marketItems": 0,
+      "fragments": 0,
+      "commissions": 17.44,
+      "bestAttr": 75,
+      "totalAttrs": 159.41,
+      "civilMerit": 70.46,
+      "martialMerit": 958.96,
+      "depths": [
+        5.98,
+        6.62,
+        6.8,
+        5.96
+      ],
+      "clearRate": 0.65,
+      "chapters": [
+        {
+          "earned": 706.58,
+          "spent": 671.2,
+          "skills": 2.34
+        },
+        {
+          "earned": 1714.78,
+          "spent": 1682.7,
+          "skills": 5
+        },
+        {
+          "earned": 2887.68,
+          "spent": 2676.5,
+          "skills": 5.86
+        },
+        {
+          "earned": 4244.6,
+          "spent": 3404.8,
+          "skills": 6.5
+        }
+      ]
+    },
+    {
+      "star": 5,
+      "policy": "balanced",
+      "runs": 50,
+      "income": 4077.56,
+      "spent": 3867.8,
+      "money": 209.76,
+      "stories": 12.24,
+      "marketItems": 0,
+      "fragments": 0,
+      "commissions": 17.28,
+      "bestAttr": 60.61,
+      "totalAttrs": 224.79,
+      "civilMerit": 551.14,
+      "martialMerit": 442.18,
+      "depths": [
+        5.74,
+        6.02,
+        5.9,
+        5.38
+      ],
+      "clearRate": 0.42,
+      "chapters": [
+        {
+          "earned": 660.62,
+          "spent": 624.4,
+          "skills": 3.36
+        },
+        {
+          "earned": 1619.32,
+          "spent": 1584.3,
+          "skills": 6.2
+        },
+        {
+          "earned": 2613.36,
+          "spent": 2573.7,
+          "skills": 6.72
+        },
+        {
+          "earned": 3907.84,
+          "spent": 3867.8,
+          "skills": 6.88
+        }
+      ]
+    },
+    {
+      "star": 5,
+      "policy": "market-balanced",
+      "runs": 50,
+      "income": 4049.5,
+      "spent": 3844.7,
+      "money": 204.8,
+      "stories": 12.24,
+      "marketItems": 3.36,
+      "fragments": 3.8,
+      "commissions": 17.28,
+      "bestAttr": 60.67,
+      "totalAttrs": 225.15,
+      "civilMerit": 563.7,
+      "martialMerit": 446.74,
+      "depths": [
+        5.3,
+        5.96,
+        6.06,
+        5.32
+      ],
+      "clearRate": 0.4,
+      "chapters": [
+        {
+          "earned": 660.62,
+          "spent": 621.6,
+          "skills": 1.88
+        },
+        {
+          "earned": 1578.98,
+          "spent": 1543.5,
+          "skills": 4.2
+        },
+        {
+          "earned": 2580.6,
+          "spent": 2547.1,
+          "skills": 5.96
+        },
+        {
+          "earned": 3882.46,
+          "spent": 3844.7,
+          "skills": 6.52
+        }
+      ]
+    }
+  ]
+}

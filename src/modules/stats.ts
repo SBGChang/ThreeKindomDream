@@ -11,6 +11,7 @@ import type {
 import type { EffectResolver } from './effect.js';
 import type { NotableId } from '../contracts/core/ids.js';
 import { affinityOf, countAtStage } from './roster-query.js';
+import { attributeProgress } from '../contracts/core/attribute-progress.js';
 
 export interface StatQuery {
   read(path: StatPath, ctx: RunContext): number;
@@ -55,7 +56,7 @@ export function attrCapOf(attr: Attr, ctx: RunContext): number {
 export const statQuery: StatQuery = {
   read(path, ctx) {
     const [group, key] = String(path).split('.') as [string, string];
-    if (group === 'attr') return ctx.state.attributes.values[key as Attr] ?? 0;
+    if (group === 'attr') return attributeProgress(ctx.state.attributes.values[key as Attr] ?? 0).level;
     if (group === 'merit') return ctx.state.currencies.merit[key as MeritKind] ?? 0;
     if (group === 'career') return key === 'civil' ? ctx.state.career.civil : ctx.state.career.martial;
     // roster.<階段> ── 陣容中好感【已達】該階段的人數（19 §5.4）。
@@ -67,7 +68,7 @@ export const statQuery: StatQuery = {
     if (group === 'affinity') return affinityOf(key as NotableId, ctx);
     throw new Error(`未知的 StatPath: ${String(path)}`);
   },
-  attr: (a, ctx) => ctx.state.attributes.values[a],
+  attr: (a, ctx) => attributeProgress(ctx.state.attributes.values[a]).level,
   merit: (k, ctx) => ctx.state.currencies.merit[k],
   totalMerit: (ctx) => ctx.state.currencies.merit.civil + ctx.state.currencies.merit.martial,
   lineOf: (a, ctx) => attrLine(ctx).byAttr[a],
@@ -100,6 +101,9 @@ export function createStatWriter(fx: EffectResolver): StatWriter {
 /** Automatic experience conversion uses the same attribute owner and cap. */
 export function setGrownAttribute(attr: Attr, value: number, ctx: RunContext): RunState {
   return { ...ctx.state, attributes: { values: { ...ctx.state.attributes.values,
-    [attr]: Math.min(attrCapOf(attr, ctx), Math.max(statQuery.attr(attr, ctx), value)),
+    [attr]: Math.min(attrCapOf(attr, ctx), Math.max(attributeBalance(attr, ctx), value)),
   } } };
 }
+
+/** Growth carries unfinished experience forward; gameplay queries use completed levels. */
+export const attributeBalance = (attr: Attr, ctx: RunContext): number => ctx.state.attributes.values[attr];
