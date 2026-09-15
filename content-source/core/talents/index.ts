@@ -34,12 +34,12 @@ export const talents: readonly TalentDef[] = [
   coreDef('talent', 'talent:noble-house', {
     talentId: talentId('talent:noble-house'), cost: 2, exclusiveGroup: 'designate',
     nameKey: k('talent.noble-house.name'), descKey: k('talent.noble-house.desc'),
-    effects: [ref('DesignateSlots', 8001)],
+    effects: [ref('AffinityGrant', 5002)],
   }),
   coreDef('talent', 'talent:great-clan', {
     talentId: talentId('talent:great-clan'), cost: 5, exclusiveGroup: 'designate',
     nameKey: k('talent.great-clan.name'), descKey: k('talent.great-clan.desc'),
-    effects: [ref('DesignateSlots', 8002)],
+    effects: [ref('AffinityGrant', 5002), ref('AffinityGrant', 5003)],
   }),
   coreDef('talent', 'talent:precocious', {
     talentId: talentId('talent:precocious'), cost: 1, exclusiveGroup: null,

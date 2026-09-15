@@ -9,6 +9,16 @@ export function validateEconomy(c: Ctx): void {
   }
   const numeric = (v: unknown) =>
     typeof v === 'number' && Number.isFinite(v) && v >= 0;
+  const settlement = c.rows('settlementFormula')[0];
+  for (const field of ['perCareerRank', 'perChapterPassed', 'perTurnSurvived', 'fullDreamBonus', 'perStage', 'referenceChapters']) {
+    if (!numeric(settlement?.[field]) || !Number.isSafeInteger(settlement?.[field]) ||
+      (field === 'referenceChapters' && c.n(settlement?.[field]) === 0))
+      c.push('rule', 'settlementFormula', field, null, '結算需非負整數，參考章數必須大於零');
+  }
+  const bonuses = c.arr(settlement?.['endingBonuses']);
+  if (!bonuses.length || bonuses.some((v, i) => !numeric(v['multiplier']) || !numeric(v['points']) ||
+    !Number.isSafeInteger(v['points']) || (i > 0 && c.n(v['multiplier']) <= c.n(bonuses[i - 1]?.['multiplier']))))
+    c.push('rule', 'settlementFormula', 'endingBonuses', null, '結局加值需有效且依倍率遞增排列');
   const table = (name: string, length: number, integer = false) => {
     const row = c.list(r[name]);
     if (
@@ -40,7 +50,7 @@ export function validateEconomy(c: Ctx): void {
   table('newcomerBonus', 4, true);
   table('shopChapterCaps', 4, true);
   table('interactionFragmentCaps', 9, true);
-  table('traitPower', 3);
+  table('traitPower', 5);
   const sequences = c.rows('chapterSequence');
   const commonLength = c.list(sequences.find(s => s['factionId'] === null)?.['chapters']).length;
   const routeLength = commonLength + Math.max(0, ...sequences.filter(s => s['factionId'] !== null).map(s => c.list(s['chapters']).length));
@@ -75,7 +85,7 @@ export function validateEconomy(c: Ctx): void {
     for (const tier of ['common', 'fine', 'peerless']) {
       const rows = c.list((r[field] as Rec)?.[tier]);
       if (
-        rows.length !== 3 ||
+        rows.length !== 5 ||
         rows.some((v) => !numeric(v) || !Number.isSafeInteger(v)) ||
         rows.some((v, i) => i > 0 && c.n(v) < c.n(rows[i - 1]))
       )
@@ -84,7 +94,7 @@ export function validateEconomy(c: Ctx): void {
           'economy',
           field + '.' + tier,
           null,
-          '課程需要三個不遞減整數',
+          '課程需要五個不遞減整數',
         );
     }
   const weights = c.list(r['shopWeights']);

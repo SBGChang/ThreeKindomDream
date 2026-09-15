@@ -4,9 +4,9 @@ import { coreDef } from '../pack-id.js';
 /**
  * 升星階梯（GREYBOX）★ 名士系統唯一的跨局投資軸。
  *
- * ── 這張表只管【價格】★ ──────────────────────────────
+ * ── 價格、每輪碎片上限與在隊指導倍率 ────────────────────
  *
- * 星是【記憶碎片的突破】，不是稀有度。每一階給什麼是【逐人手寫】的
+ * 星是【記憶碎片的突破】，不是稀有度。角色專屬解鎖是【逐人手寫】的
  * （`NotableDef.unlocks`），不是一張全域表。
  *
  * 舊版把 `linkMultiplier` 與 `startAffinity` 放在這裡，於是同星階的所有名士
@@ -24,16 +24,18 @@ import { coreDef } from '../pack-id.js';
  * 後階不會把前階蓋掉 ——「升星反而變弱」在結構上不可能發生。
  */
 export const notableStar: NotableStarDef = coreDef('notableStar', 'star:main', {
+  perRunCap: 100, completedBase: 40, minimumAttendance: 8,
+  growthByStar: [1, 1.25, 1.65, 2.4, 3.6, 5.8],
+  meritByStar: [1, 1.1, 1.25, 1.5, 1.9, 2.6],
+  commanderLevelByStar: [1, 1, 2, 3, 4, 5],
   tiers: [
     { star: 0, fragmentCost: 0 },
-    { star: 1, fragmentCost: 20 },
-    { star: 2, fragmentCost: 35 },
-    { star: 3, fragmentCost: 60 },
-    { star: 4, fragmentCost: 100 },
-    { star: 5, fragmentCost: 160 },
+    { star: 1, fragmentCost: 100 },
+    { star: 2, fragmentCost: 100 },
+    { star: 3, fragmentCost: 200 },
+    { star: 4, fragmentCost: 300 },
+    { star: 5, fragmentCost: 500 },
   ],
-  // 成本倍率。★1 滿星 375×0.6 ≈ 225 碎片；★5 滿星 375×2.0 = 750。
-  // 一輪約產 60–120 碎片，因此 ★1 兩三輪可滿、★5 要六七輪 ——
-  // 「低星滿級 > 高星低級」在這個差距下確實成立（GDD §6.7）。
-  costByRarity: { 1: 0.6, 2: 0.8, 3: 1.0, 4: 1.4, 5: 2.0 },
+  // 稀有度不再改變培養速度；每輪每人最多 100，累計 1200 滿星。
+  costByRarity: { 1: 1, 2: 1, 3: 1, 4: 1, 5: 1 },
 });

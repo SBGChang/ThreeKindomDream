@@ -1,3 +1,4 @@
+import { guidance, routePace } from './progression.js';
 import type { RunContext, TurnContext } from '../contracts/core/context.js';
 import type {
   EventDef,
@@ -31,7 +32,7 @@ import { addAffinity, addAffinityAll, atLeastStage } from './roster.js';
 import { preview, resolveCheck, specForMinor } from './check.js';
 import { careerService } from './career.js';
 import { grantGrowth, grantUnlock, previewGrowth } from './growth.js';
-import { statQuery, type StatWriter } from './stats.js';
+import { meritMultiplier, statQuery, type StatWriter } from './stats.js';
 import { scheduledStory } from './story.js';
 
 import { balance, economyRule, transact } from './economy.js';
@@ -290,7 +291,7 @@ export function practiceYield(
           : economyRule(ctx).commissionGrowth)[rarity - 1] ?? 0) *
           p.weight) /
           Math.max(total, 1)) *
-          ratio,
+          ratio * guidance(ctx, 'growth') * routePace(ctx),
         ctx,
       ),
     }))
@@ -329,7 +330,7 @@ export const meritShown = (
 ): readonly MeritGain[] =>
   gains.map((g) => ({
     line: g.line,
-    amount: Math.round(g.amount * fx.currencyMul(`merit.${g.line}`, ctx)),
+    amount: Math.round(g.amount * meritMultiplier(g.line, ctx, fx)),
   }));
 
 export function optionStates(

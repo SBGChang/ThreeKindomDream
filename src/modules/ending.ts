@@ -5,7 +5,8 @@ import type { Attr } from '../contracts/core/primitives.js';
 import type { EndingOutcome, RunState } from '../contracts/core/state.js';
 import { evaluateCondition } from './effect-core.js';
 import { statQuery } from './stats.js';
-import { meetsStory } from './story.js';
+import { meetsStory, recordedDepth } from './story.js';
+import { routeChapters } from './progression.js';
 
 const readStat = statQuery.read.bind(statQuery);
 export const hasEnded = (ctx: RunContext): boolean => ctx.state.ending !== null;
@@ -21,6 +22,7 @@ export function candidatesFor(
     .filter((e) => e.factionId === null || e.factionId === ctx.state.faction)
     .filter((e) => e.requirements.every((c) => evaluateCondition(c, ctx, readStat)))
     .filter((e) => meetsStory(e.storyRequirements ?? [], ctx))
+    .filter(e => !e.campaignRequirements || routeChapters(ctx).every((id, i, all) => recordedDepth(id, ctx) >= (i === all.length - 1 ? e.campaignRequirements!.finalDepth : e.campaignRequirements!.priorDepth)))
     .slice()
     .sort((a, b) => b.priority - a.priority);
 }

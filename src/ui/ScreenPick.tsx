@@ -53,7 +53,7 @@ export function ScreenSuperiors({ s, bump }: Props): React.ReactElement {
   const toggle = (id: NotableId): void => {
     setPicked((cur) => (cur.includes(id)
       ? cur.filter((x) => x !== id)
-      : (cur.length < quota ? [...cur, id] : cur)));
+      : (s.canInviteSuperior(id,cur) ? [...cur, id] : cur)));
   };
 
   return (
@@ -61,7 +61,7 @@ export function ScreenSuperiors({ s, bump }: Props): React.ReactElement {
       <h1>入朝</h1><p>新加入的三位上司各獲得 <strong>+{s.newcomerBonus()} 起始好感</strong>，補足錯過的同行時日。天命「勢力緣分」可強化這份補償；故事仍需逐段經歷。</p>
       <p className="body">{speech === null ? '' : t(speech)}</p>
       <p className="sub mono">
-        {`勢力緣分 ${quota}／3　可自選 ${quota} 位，其餘 ${total - quota} 位由主公分配`}
+        {`可邀請 ${quota}／3 位；完成過同行的故人免費再邀請，其餘由主公分配`}
       </p>
 
       {quota > 0 && (
@@ -73,6 +73,7 @@ export function ScreenSuperiors({ s, bump }: Props): React.ReactElement {
               return (
                 <button
                   key={String(id)}
+                  disabled={!s.canInviteSuperior(id,picked)}
                   className={picked.includes(id) ? 'sel' : ''}
                   onClick={() => { toggle(id); }}
                 >

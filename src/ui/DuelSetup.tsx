@@ -1,0 +1,6 @@
+import {DEFAULT_DUEL_BUILD,DUEL_TRAITS,type DuelBuild,type DuelTrait} from '../app/duel-model.js';
+export type DuelBuilds={ally:DuelBuild;enemy:DuelBuild};
+export const defaultBuilds=():DuelBuilds=>({ally:{...DEFAULT_DUEL_BUILD},enemy:{...DEFAULT_DUEL_BUILD}});
+export function DuelSetup({builds,onChange}:{builds:DuelBuilds;onChange:(b:DuelBuilds)=>void}):React.ReactElement {
+  return <fieldset className="dv-setup"><legend>單挑數值試配</legend>{(['ally','enemy'] as const).map(side=><div key={side}><b>{side==='ally'?'我方':'敵方'}</b>{(['war','lead'] as const).map(key=><label key={key}>{key==='war'?'武':'統'}<input aria-label={`${side==='ally'?'我方':'敵方'}${key==='war'?'武力':'統御'}`} type="number" min="1" max="100" value={builds[side][key]} onChange={e=>{const n=Number(e.target.value);onChange({...builds,[side]:{...builds[side],[key]:Math.max(1,Math.min(100,Number.isFinite(n)?n:70))}});}}/></label>)}<label>特性<select aria-label={`${side==='ally'?'我方':'敵方'}單挑特性`} value={builds[side].trait} onChange={e=>onChange({...builds,[side]:{...builds[side],trait:e.target.value as DuelTrait}})}>{Object.entries(DUEL_TRAITS).map(([id,t])=><option key={id} value={id}>{t.name}</option>)}</select></label></div>)}<p>武力影響攻擊；統御影響防禦、體力、恢復與血量上限。<br/>休養只回體力，不回復血量。數值及特性對敵我使用同一套規則。</p></fieldset>;
+}

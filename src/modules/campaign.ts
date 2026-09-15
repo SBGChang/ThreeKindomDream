@@ -65,11 +65,11 @@ export interface HostLimits {
   readonly supplyMax: number;
 }
 
-/** 兵糧隨名義官階增長；真實官階上限控制頭銜與結局。敌軍使用固定章節基準。 */
+/** 兵糧隨實際官階增長；官途上限限制擴軍。敵軍使用固定章節基準。 */
 export function hostLimits(ctx: RunContext, fx: EffectResolver): HostLimits {
   const r = rule(ctx);
   const scaleAt = (line: 'civil' | 'martial'): number => {
-    const level = careerService.notionalLevel(line, ctx);
+    const level = careerService.rankOf(line, ctx).level;
     const rows = ctx.defs.reader('careerRank').where((x) => x.line === line);
     const hit = rows.find((x) => x.level === level);
     return hit?.hostScale ?? 1;

@@ -1,3 +1,4 @@
+import { guidance, routePace } from './progression.js';
 // ⑳ 屬性與貨幣。唯一的門檻查詢入口（20 §3）。
 //
 // 局內只剩【一種】門檻貨幣：功績，文武兩線。名聲與善惡名都已退場 ——
@@ -85,7 +86,7 @@ export function createStatWriter(fx: EffectResolver): StatWriter {
     },
 
     grantMerit(kind, amount, ctx) {
-      const mul = fx.currencyMul(`merit.${kind}` as StatPath, ctx);
+      const mul = meritMultiplier(kind, ctx, fx);
       const next = Math.max(0, ctx.state.currencies.merit[kind] + Math.round(amount * mul));
       return {
         ...ctx.state,
@@ -107,3 +108,5 @@ export function setGrownAttribute(attr: Attr, value: number, ctx: RunContext): R
 
 /** Growth carries unfinished experience forward; gameplay queries use completed levels. */
 export const attributeBalance = (attr: Attr, ctx: RunContext): number => ctx.state.attributes.values[attr];
+
+export const meritMultiplier = (kind: MeritKind, ctx:RunContext, fx:EffectResolver):number => guidance(ctx, 'merit') * routePace(ctx) * Math.min(1.1, Math.max(0.9, fx.currencyMul(`merit.${kind}`, ctx)));

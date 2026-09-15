@@ -1,3 +1,4 @@
+import { run as progressionBalance } from './tests/progression-balance.test.js';
 // 模組單元測試。釘住架構文件裡宣告的不變量。
 import {run as economy} from './tests/economy.test.js';
 import {run as dialogue} from './tests/dialogue.test.js';
@@ -17,4 +18,5 @@ story();
 storyDialogue();
 teaching();
 auditRegressions();
+progressionBalance();
 report();

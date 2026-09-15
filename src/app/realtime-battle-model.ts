@@ -10,7 +10,8 @@ export const DEMO_SKILLS:readonly DemoSkill[] = [
  {id:'inspire',name:'鼓舞',owner:'于禁',key:'E',kind:'inspire',cost:25,cd:18,damage:0,description:'擂鼓振軍威：攻擊 +50%，持續 10 秒'},
 ];
 export const COMMANDERS=[{id:'lord',name:'主角'},{id:'xiahoudun',name:'夏侯惇'},{id:'guojia',name:'郭嘉'},{id:'yujin',name:'于禁'},{id:'enemy',name:'敵軍指揮官'}] as const;
-export const COMMAND_LEAD=1.3;
+/** Commander and troops now enter the skill shot together. */
+export const COMMAND_LEAD=0;
 export const MAX_GROUP=50;
 export const CINEMATIC_LENGTH=4.2+COMMAND_LEAD;
 export function armyCount(s:BattleState,side:Side):number {return s.units.filter(u=>u.side===side).reduce((n,u)=>n+u.hp,0);}
@@ -197,8 +198,8 @@ export function tickBattle(s:BattleState,delta:number):void {
 /** Session supplies the frozen army and learned skills; demo defaults stay isolated. */
 export function createConfiguredBattle(options: {troops:number;supply:number;supplyMax:number;regen:number;duration:number;skills:readonly DemoSkill[];commanders:Commander[];waveTroops:readonly number[];waveNames:readonly string[];allyAttack:number;enemyAttack:number}):BattleState {
  const s=createBattle();Object.assign(s,options,{initial:options.troops,enemyInitial:options.waveTroops[0]??600,units:[],nextId:1,traitReady:false});
- // At large career ranks one drawn squad represents a larger equal share on both sides.
- s.groupSize=Math.max(MAX_GROUP,Math.ceil(Math.max(s.initial,...options.waveTroops)/24));
+ // One squad always represents at most fifty actual soldiers on both sides.
+ s.groupSize=MAX_GROUP;
  spawn(s,'ally',s.initial);spawn(s,'enemy',s.enemyInitial);return s;
 }
 

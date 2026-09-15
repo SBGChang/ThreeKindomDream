@@ -170,6 +170,12 @@ export interface NotableStarTierDef {
 
 export interface NotableStarDef extends DefHeader {
   readonly kind: 'notableStar';
+  readonly perRunCap: number;
+  readonly growthByStar: readonly number[];
+  readonly meritByStar: readonly number[];
+  readonly commanderLevelByStar: readonly number[];
+  readonly completedBase: number;
+  readonly minimumAttendance: number;
   readonly tiers: readonly NotableStarTierDef[];
   /** 成本倍率。★5 升一階比 ★1 貴 —— 「低星滿級 > 高星低級」靠這個成立。 */
   readonly costByRarity: Readonly<Record<Rarity, number>>;
@@ -636,6 +642,7 @@ export type EndingTrigger =
   | { readonly kind: 'sequenceCompleted' }
   | { readonly kind: 'noFactionEligible' };
 export interface EndingDef extends DefHeader {
+  readonly campaignRequirements?: {readonly finalDepth:number; readonly priorDepth:number};
   readonly storyRequirements?: readonly StoryRequirement[];
   readonly kind: 'ending';
   readonly ending: EndingId;
@@ -696,6 +703,9 @@ export interface ShopItemDef extends DefHeader {
 }
 export interface SettlementFormulaDef extends DefHeader {
   readonly kind: 'settlementFormula';
+  readonly perStage: number;
+  readonly referenceChapters: number;
+  readonly endingBonuses: readonly { readonly multiplier: number; readonly points: number }[];
   readonly perCareerRank: number;
   readonly perChapterPassed: number;
   readonly perTurnSurvived: number;
@@ -816,6 +826,7 @@ export interface GrowthRuleDef extends DefHeader {
 export type AbilityCost = Readonly<Partial<Record<Attr, number>>>;
 
 export interface TraitDef extends DefHeader {
+  readonly duelTrait?: import('./duel.js').DuelTrait;
   readonly kind: 'trait';
   readonly traitId: TraitId;
   readonly tier: AbilityTier;
@@ -853,6 +864,7 @@ export interface SkillDef extends DefHeader {
 
 // ── ㉝ 戰役（33）★ ────────────────────────────────────
 export interface BattleRuleDef extends DefHeader {
+  readonly duel:{readonly genericByChapter:readonly number[]};
   readonly realtime: { readonly duration:number; readonly supplyRegenRatio:number; readonly attackDivisor:number; readonly enemyAttackDivisor:number; readonly effectSeconds:number; readonly skillCost:Readonly<Record<SkillKind,number>>; readonly skillCooldown:Readonly<Record<SkillKind,number>> };
   readonly kind: 'battleRule';
   /**

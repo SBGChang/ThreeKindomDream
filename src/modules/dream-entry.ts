@@ -233,6 +233,7 @@ export function rollStartAttrs(ctx: TurnContext): RunState {
 }
 
 const SKELETON = (meta: MetaState, config: DreamEntryConfig, seed: Seed): RunState => ({
+  runId: `${meta.runIndex}/${seed}`,
   story: emptyStory(),
   schemaVersion: 4,
   seed,

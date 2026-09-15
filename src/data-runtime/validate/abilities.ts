@@ -49,19 +49,28 @@ const checkCost = (c: Ctx, file: string, row: Rec, id: string): void => {
  * （寫在他的 star-0 招裡），不是 def 的性質。〈號令〉是統的物理招。
  */
 export function validateAbilities(c: Ctx): void {
+  for (const row of c.rows('battleRule')) {
+    const values = (row['duel'] as Rec | undefined)?.['genericByChapter'];
+    if (!Array.isArray(values) || values.length < 8 || !values.every(v => typeof v === 'number' && Number.isFinite(v) && v >= 1 && v <= 100)) {
+      c.push('rule', 'battleRule', 'duel.genericByChapter', c.s(row['id']), '單挑指揮官數值需要至少八章、每章 1–100 的有限數值');
+    }
+  }
   for (const row of c.rows('growthRule')) {
     const id = c.s(row['id']);
     const learning = row['learning'] as Rec | undefined;
     for (const field of ['power']) {
       const values = learning?.[field];
-      const valid = Array.isArray(values) && values.length === 3
+      const valid = Array.isArray(values) && values.length === 5
         && values.every((v, i) => typeof v === 'number' && Number.isFinite(v) && v >= 0
           && (i === 0 || v > values[i - 1]));
-      if (!valid) c.push('rule', 'growthRule', `learning.${field}`, id, '需要三個有限、非負、嚴格遞增的等級數值');
+      if (!valid) c.push('rule', 'growthRule', `learning.${field}`, id, '需要五個有限、非負、嚴格遞增的等級數值');
     }
   }
   for (const row of c.rows('trait')) {
     const id = c.s(row['id']);
+    if (row['duelTrait'] !== undefined && !['momentum', 'steady', 'breathing', 'reversal'].includes(c.s(row['duelTrait']))) {
+      c.push('rule', 'trait', 'duelTrait', id, '未知的單挑特性');
+    }
     c.text(row['nameKey'], 'trait', 'nameKey', id);
     c.text(row['descKey'], 'trait', 'descKey', id);
     checkCost(c, 'trait', row, id);

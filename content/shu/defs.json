@@ -787,7 +787,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.66
+        "troopsMul": 1
       },
       {
         "boss": null,
@@ -819,7 +819,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.76
+        "troopsMul": 1.18
       },
       {
         "boss": "enemy:shu.lubu",
@@ -851,7 +851,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.87
+        "troopsMul": 1.4
       },
       {
         "boss": null,
@@ -888,7 +888,7 @@
             "trait": "trait:chenyi"
           }
         ],
-        "troopsMul": 1
+        "troopsMul": 2.4
       },
       {
         "boss": "enemy:shu.lubu",
@@ -925,7 +925,7 @@
             "trait": null
           }
         ],
-        "troopsMul": 1.15
+        "troopsMul": 3
       },
       {
         "boss": null,
@@ -957,7 +957,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 1.32
+        "troopsMul": 3.7
       },
       {
         "boss": "enemy:shu.lubu",
@@ -994,7 +994,7 @@
             "trait": null
           }
         ],
-        "troopsMul": 1.52
+        "troopsMul": 4.6
       }
     ]
   },
@@ -1037,7 +1037,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.66
+        "troopsMul": 1
       },
       {
         "boss": null,
@@ -1069,7 +1069,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.76
+        "troopsMul": 1.18
       },
       {
         "boss": "enemy:shu.cao-vanguard",
@@ -1101,7 +1101,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.87
+        "troopsMul": 1.4
       },
       {
         "boss": null,
@@ -1138,7 +1138,7 @@
             "trait": "trait:chenyi"
           }
         ],
-        "troopsMul": 1
+        "troopsMul": 2.4
       },
       {
         "boss": "enemy:shu.cao-vanguard",
@@ -1175,7 +1175,7 @@
             "trait": null
           }
         ],
-        "troopsMul": 1.15
+        "troopsMul": 3
       },
       {
         "boss": null,
@@ -1207,7 +1207,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 1.32
+        "troopsMul": 3.7
       },
       {
         "boss": "enemy:shu.cao-vanguard",
@@ -1244,7 +1244,7 @@
             "trait": null
           }
         ],
-        "troopsMul": 1.52
+        "troopsMul": 4.6
       }
     ]
   },
@@ -1287,7 +1287,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.66
+        "troopsMul": 1
       },
       {
         "boss": null,
@@ -1319,7 +1319,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.76
+        "troopsMul": 1.18
       },
       {
         "boss": "enemy:shu.cao-vanguard",
@@ -1351,7 +1351,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.87
+        "troopsMul": 1.4
       },
       {
         "boss": null,
@@ -1388,7 +1388,7 @@
             "trait": "trait:chenyi"
           }
         ],
-        "troopsMul": 1
+        "troopsMul": 2.4
       },
       {
         "boss": "enemy:shu.cao-vanguard",
@@ -1425,7 +1425,7 @@
             "trait": null
           }
         ],
-        "troopsMul": 1.15
+        "troopsMul": 3
       },
       {
         "boss": null,
@@ -1457,7 +1457,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 1.32
+        "troopsMul": 3.7
       },
       {
         "boss": "enemy:shu.cao-vanguard",
@@ -1494,7 +1494,7 @@
             "trait": null
           }
         ],
-        "troopsMul": 1.52
+        "troopsMul": 4.6
       }
     ]
   },
@@ -1537,7 +1537,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.66
+        "troopsMul": 1
       },
       {
         "boss": null,
@@ -1569,7 +1569,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.76
+        "troopsMul": 1.18
       },
       {
         "boss": "enemy:shu.cao-archers",
@@ -1601,7 +1601,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.87
+        "troopsMul": 1.4
       },
       {
         "boss": null,
@@ -1638,7 +1638,7 @@
             "trait": "trait:chenyi"
           }
         ],
-        "troopsMul": 1
+        "troopsMul": 2.4
       },
       {
         "boss": "enemy:shu.cao-archers",
@@ -1675,7 +1675,7 @@
             "trait": null
           }
         ],
-        "troopsMul": 1.15
+        "troopsMul": 3
       },
       {
         "boss": null,
@@ -1707,7 +1707,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 1.32
+        "troopsMul": 3.7
       },
       {
         "boss": "enemy:shu.cao-archers",
@@ -1744,7 +1744,7 @@
             "trait": null
           }
         ],
-        "troopsMul": 1.52
+        "troopsMul": 4.6
       }
     ]
   },
@@ -1787,7 +1787,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.66
+        "troopsMul": 1
       },
       {
         "boss": null,
@@ -1819,7 +1819,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.76
+        "troopsMul": 1.18
       },
       {
         "boss": "enemy:shu.yizhou-guard",
@@ -1851,7 +1851,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.87
+        "troopsMul": 1.4
       },
       {
         "boss": null,
@@ -1888,7 +1888,7 @@
             "trait": "trait:chenyi"
           }
         ],
-        "troopsMul": 1
+        "troopsMul": 2.4
       },
       {
         "boss": "enemy:shu.yizhou-guard",
@@ -1925,7 +1925,7 @@
             "trait": null
           }
         ],
-        "troopsMul": 1.15
+        "troopsMul": 3
       },
       {
         "boss": null,
@@ -1957,7 +1957,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 1.32
+        "troopsMul": 3.7
       },
       {
         "boss": "enemy:shu.yizhou-guard",
@@ -1994,7 +1994,7 @@
             "trait": null
           }
         ],
-        "troopsMul": 1.52
+        "troopsMul": 4.6
       }
     ]
   },
@@ -2037,7 +2037,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.66
+        "troopsMul": 1
       },
       {
         "boss": null,
@@ -2069,7 +2069,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.76
+        "troopsMul": 1.18
       },
       {
         "boss": "enemy:shu.xiahouyuan",
@@ -2101,7 +2101,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.87
+        "troopsMul": 1.4
       },
       {
         "boss": null,
@@ -2138,7 +2138,7 @@
             "trait": "trait:chenyi"
           }
         ],
-        "troopsMul": 1
+        "troopsMul": 2.4
       },
       {
         "boss": "enemy:shu.xiahouyuan",
@@ -2175,7 +2175,7 @@
             "trait": null
           }
         ],
-        "troopsMul": 1.15
+        "troopsMul": 3
       },
       {
         "boss": null,
@@ -2207,7 +2207,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 1.32
+        "troopsMul": 3.7
       },
       {
         "boss": "enemy:shu.xiahouyuan",
@@ -2244,7 +2244,7 @@
             "trait": null
           }
         ],
-        "troopsMul": 1.52
+        "troopsMul": 4.6
       }
     ]
   },
@@ -2287,7 +2287,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.66
+        "troopsMul": 1
       },
       {
         "boss": null,
@@ -2319,7 +2319,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.76
+        "troopsMul": 1.18
       },
       {
         "boss": "enemy:shu.wu-pursuit",
@@ -2351,7 +2351,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.87
+        "troopsMul": 1.4
       },
       {
         "boss": null,
@@ -2388,7 +2388,7 @@
             "trait": "trait:chenyi"
           }
         ],
-        "troopsMul": 1
+        "troopsMul": 2.4
       },
       {
         "boss": "enemy:shu.wu-pursuit",
@@ -2425,7 +2425,7 @@
             "trait": null
           }
         ],
-        "troopsMul": 1.15
+        "troopsMul": 3
       },
       {
         "boss": null,
@@ -2457,7 +2457,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 1.32
+        "troopsMul": 3.7
       },
       {
         "boss": "enemy:shu.wu-pursuit",
@@ -2494,7 +2494,7 @@
             "trait": null
           }
         ],
-        "troopsMul": 1.52
+        "troopsMul": 4.6
       }
     ]
   },
@@ -2537,7 +2537,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.66
+        "troopsMul": 1
       },
       {
         "boss": null,
@@ -2569,7 +2569,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.76
+        "troopsMul": 1.18
       },
       {
         "boss": "enemy:shu.simayi",
@@ -2601,7 +2601,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.87
+        "troopsMul": 1.4
       },
       {
         "boss": null,
@@ -2638,7 +2638,7 @@
             "trait": "trait:chenyi"
           }
         ],
-        "troopsMul": 1
+        "troopsMul": 2.4
       },
       {
         "boss": "enemy:shu.simayi",
@@ -2675,7 +2675,7 @@
             "trait": null
           }
         ],
-        "troopsMul": 1.15
+        "troopsMul": 3
       },
       {
         "boss": null,
@@ -2707,7 +2707,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 1.32
+        "troopsMul": 3.7
       },
       {
         "boss": "enemy:shu.simayi",
@@ -2744,7 +2744,7 @@
             "trait": null
           }
         ],
-        "troopsMul": 1.52
+        "troopsMul": 4.6
       }
     ]
   },
@@ -3385,6 +3385,2598 @@
     "weight": 100
   },
   {
+    "bodyKey": "event:shu.liubei.bond2.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event:shu.liubei.bond2.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:shu.liubei.bond2",
+    "id": "event:shu.liubei.bond2",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event:shu.liubei.bond2.option0",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:liubei"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:chenyi"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event:shu.liubei.bond2.option1",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 3,
+            "kind": "affinity",
+            "notableId": "notable:liubei"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:chenyi"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:shu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:shu.liubei.companionship"
+      ],
+      "rarity": 2
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:shu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event:shu.liubei.bond2.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:liubei"
+        }
+      ],
+      "chainId": "chain:shu.liubei",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event:shu.liubei.bond3.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event:shu.liubei.bond3.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:shu.liubei.bond3",
+    "id": "event:shu.liubei.bond3",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event:shu.liubei.bond3.option0",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:liubei"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:jiezhi",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event:shu.liubei.bond3.option1",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 3,
+            "kind": "affinity",
+            "notableId": "notable:liubei"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:jiezhi",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:shu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:shu.liubei.bond2"
+      ],
+      "rarity": 3
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:shu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event:shu.liubei.bond3.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "friendly",
+          "notableId": "notable:liubei"
+        }
+      ],
+      "chainId": "chain:shu.liubei",
+      "kind": "notable",
+      "step": 2
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event:shu.liubei.bond4.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event:shu.liubei.bond4.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:shu.liubei.bond4",
+    "id": "event:shu.liubei.bond4",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event:shu.liubei.bond4.option0",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:liubei"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:chenyi"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event:shu.liubei.bond4.option1",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 3,
+            "kind": "affinity",
+            "notableId": "notable:liubei"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:chenyi"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:shu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:shu.liubei.bond3"
+      ],
+      "rarity": 4
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:shu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event:shu.liubei.bond4.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "close",
+          "notableId": "notable:liubei"
+        }
+      ],
+      "chainId": "chain:shu.liubei",
+      "kind": "notable",
+      "step": 3
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event:shu.liubei.bond5.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event:shu.liubei.bond5.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:shu.liubei.bond5",
+    "id": "event:shu.liubei.bond5",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event:shu.liubei.bond5.option0",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:liubei"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:jiezhi",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event:shu.liubei.bond5.option1",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 3,
+            "kind": "affinity",
+            "notableId": "notable:liubei"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:jiezhi",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:shu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:shu.liubei.bond4"
+      ],
+      "rarity": 5
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:shu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event:shu.liubei.bond5.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "sworn",
+          "notableId": "notable:liubei"
+        }
+      ],
+      "chainId": "chain:shu.liubei",
+      "kind": "notable",
+      "step": 4
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event:shu.guanyu.bond2.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event:shu.guanyu.bond2.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:shu.guanyu.bond2",
+    "id": "event:shu.guanyu.bond2",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event:shu.guanyu.bond2.option0",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:guanyu"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:danshi"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event:shu.guanyu.bond2.option1",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 3,
+            "kind": "affinity",
+            "notableId": "notable:guanyu"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:danshi"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:shu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:shu.guanyu.companionship"
+      ],
+      "rarity": 2
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:shu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event:shu.guanyu.bond2.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:guanyu"
+        }
+      ],
+      "chainId": "chain:shu.guanyu",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event:shu.guanyu.bond3.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event:shu.guanyu.bond3.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:shu.guanyu.bond3",
+    "id": "event:shu.guanyu.bond3",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event:shu.guanyu.bond3.option0",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:guanyu"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:xianzhen",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event:shu.guanyu.bond3.option1",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 3,
+            "kind": "affinity",
+            "notableId": "notable:guanyu"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:xianzhen",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:shu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:shu.guanyu.bond2"
+      ],
+      "rarity": 3
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:shu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event:shu.guanyu.bond3.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "friendly",
+          "notableId": "notable:guanyu"
+        }
+      ],
+      "chainId": "chain:shu.guanyu",
+      "kind": "notable",
+      "step": 2
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event:shu.guanyu.bond4.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event:shu.guanyu.bond4.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:shu.guanyu.bond4",
+    "id": "event:shu.guanyu.bond4",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event:shu.guanyu.bond4.option0",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:guanyu"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:linzhen"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event:shu.guanyu.bond4.option1",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 3,
+            "kind": "affinity",
+            "notableId": "notable:guanyu"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:linzhen"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:shu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:shu.guanyu.bond3"
+      ],
+      "rarity": 4
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:shu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event:shu.guanyu.bond4.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "close",
+          "notableId": "notable:guanyu"
+        }
+      ],
+      "chainId": "chain:shu.guanyu",
+      "kind": "notable",
+      "step": 3
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event:shu.guanyu.bond5.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event:shu.guanyu.bond5.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:shu.guanyu.bond5",
+    "id": "event:shu.guanyu.bond5",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event:shu.guanyu.bond5.option0",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:guanyu"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:wanrenzhi",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event:shu.guanyu.bond5.option1",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 3,
+            "kind": "affinity",
+            "notableId": "notable:guanyu"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:wanrenzhi",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:shu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:shu.guanyu.bond4"
+      ],
+      "rarity": 5
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:shu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event:shu.guanyu.bond5.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "sworn",
+          "notableId": "notable:guanyu"
+        }
+      ],
+      "chainId": "chain:shu.guanyu",
+      "kind": "notable",
+      "step": 4
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event:shu.zhangfei.bond2.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event:shu.zhangfei.bond2.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:shu.zhangfei.bond2",
+    "id": "event:shu.zhangfei.bond2",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event:shu.zhangfei.bond2.option0",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:zhangfei"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:danshi"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event:shu.zhangfei.bond2.option1",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 3,
+            "kind": "affinity",
+            "notableId": "notable:zhangfei"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:danshi"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:shu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:shu.zhangfei.companionship"
+      ],
+      "rarity": 2
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:shu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event:shu.zhangfei.bond2.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:zhangfei"
+        }
+      ],
+      "chainId": "chain:shu.zhangfei",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event:shu.zhangfei.bond3.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event:shu.zhangfei.bond3.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:shu.zhangfei.bond3",
+    "id": "event:shu.zhangfei.bond3",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event:shu.zhangfei.bond3.option0",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:zhangfei"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:xianzhen",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event:shu.zhangfei.bond3.option1",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 3,
+            "kind": "affinity",
+            "notableId": "notable:zhangfei"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:xianzhen",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:shu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:shu.zhangfei.bond2"
+      ],
+      "rarity": 3
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:shu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event:shu.zhangfei.bond3.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "friendly",
+          "notableId": "notable:zhangfei"
+        }
+      ],
+      "chainId": "chain:shu.zhangfei",
+      "kind": "notable",
+      "step": 2
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event:shu.zhangfei.bond4.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event:shu.zhangfei.bond4.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:shu.zhangfei.bond4",
+    "id": "event:shu.zhangfei.bond4",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event:shu.zhangfei.bond4.option0",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:zhangfei"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:linzhen"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event:shu.zhangfei.bond4.option1",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 3,
+            "kind": "affinity",
+            "notableId": "notable:zhangfei"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:linzhen"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:shu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:shu.zhangfei.bond3"
+      ],
+      "rarity": 4
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:shu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event:shu.zhangfei.bond4.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "close",
+          "notableId": "notable:zhangfei"
+        }
+      ],
+      "chainId": "chain:shu.zhangfei",
+      "kind": "notable",
+      "step": 3
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event:shu.zhangfei.bond5.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event:shu.zhangfei.bond5.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:shu.zhangfei.bond5",
+    "id": "event:shu.zhangfei.bond5",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event:shu.zhangfei.bond5.option0",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:zhangfei"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:xianzhen",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event:shu.zhangfei.bond5.option1",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 3,
+            "kind": "affinity",
+            "notableId": "notable:zhangfei"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:xianzhen",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:shu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:shu.zhangfei.bond4"
+      ],
+      "rarity": 5
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:shu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event:shu.zhangfei.bond5.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "sworn",
+          "notableId": "notable:zhangfei"
+        }
+      ],
+      "chainId": "chain:shu.zhangfei",
+      "kind": "notable",
+      "step": 4
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event:shu.zhaoyun.bond2.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event:shu.zhaoyun.bond2.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:shu.zhaoyun.bond2",
+    "id": "event:shu.zhaoyun.bond2",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event:shu.zhaoyun.bond2.option0",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:zhaoyun"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:danshi"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event:shu.zhaoyun.bond2.option1",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 3,
+            "kind": "affinity",
+            "notableId": "notable:zhaoyun"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:danshi"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:shu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:shu.zhaoyun.companionship"
+      ],
+      "rarity": 2
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:shu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event:shu.zhaoyun.bond2.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:zhaoyun"
+        }
+      ],
+      "chainId": "chain:shu.zhaoyun",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event:shu.zhaoyun.bond3.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event:shu.zhaoyun.bond3.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:shu.zhaoyun.bond3",
+    "id": "event:shu.zhaoyun.bond3",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event:shu.zhaoyun.bond3.option0",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:zhaoyun"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:xianzhen",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event:shu.zhaoyun.bond3.option1",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 3,
+            "kind": "affinity",
+            "notableId": "notable:zhaoyun"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:xianzhen",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:shu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:shu.zhaoyun.bond2"
+      ],
+      "rarity": 3
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:shu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event:shu.zhaoyun.bond3.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "friendly",
+          "notableId": "notable:zhaoyun"
+        }
+      ],
+      "chainId": "chain:shu.zhaoyun",
+      "kind": "notable",
+      "step": 2
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event:shu.zhaoyun.bond4.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event:shu.zhaoyun.bond4.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:shu.zhaoyun.bond4",
+    "id": "event:shu.zhaoyun.bond4",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event:shu.zhaoyun.bond4.option0",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:zhaoyun"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:danshi"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event:shu.zhaoyun.bond4.option1",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 3,
+            "kind": "affinity",
+            "notableId": "notable:zhaoyun"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:danshi"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:shu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:shu.zhaoyun.bond3"
+      ],
+      "rarity": 4
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:shu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event:shu.zhaoyun.bond4.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "close",
+          "notableId": "notable:zhaoyun"
+        }
+      ],
+      "chainId": "chain:shu.zhaoyun",
+      "kind": "notable",
+      "step": 3
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event:shu.zhaoyun.bond5.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event:shu.zhaoyun.bond5.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:shu.zhaoyun.bond5",
+    "id": "event:shu.zhaoyun.bond5",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event:shu.zhaoyun.bond5.option0",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:zhaoyun"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:xianzhen",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event:shu.zhaoyun.bond5.option1",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 3,
+            "kind": "affinity",
+            "notableId": "notable:zhaoyun"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:xianzhen",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:shu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:shu.zhaoyun.bond4"
+      ],
+      "rarity": 5
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:shu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event:shu.zhaoyun.bond5.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "sworn",
+          "notableId": "notable:zhaoyun"
+        }
+      ],
+      "chainId": "chain:shu.zhaoyun",
+      "kind": "notable",
+      "step": 4
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event:shu.zhugeliang.bond2.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event:shu.zhugeliang.bond2.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:shu.zhugeliang.bond2",
+    "id": "event:shu.zhugeliang.bond2",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event:shu.zhugeliang.bond2.option0",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:zhugeliang"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:jimin"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event:shu.zhugeliang.bond2.option1",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 3,
+            "kind": "affinity",
+            "notableId": "notable:zhugeliang"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:jimin"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:shu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:shu.zhugeliang.companionship"
+      ],
+      "rarity": 2
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:shu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event:shu.zhugeliang.bond2.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:zhugeliang"
+        }
+      ],
+      "chainId": "chain:shu.zhugeliang",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event:shu.zhugeliang.bond3.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event:shu.zhugeliang.bond3.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:shu.zhugeliang.bond3",
+    "id": "event:shu.zhugeliang.bond3",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event:shu.zhugeliang.bond3.option0",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:zhugeliang"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:shuiyan",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event:shu.zhugeliang.bond3.option1",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 3,
+            "kind": "affinity",
+            "notableId": "notable:zhugeliang"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:shuiyan",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:shu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:shu.zhugeliang.bond2"
+      ],
+      "rarity": 3
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:shu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event:shu.zhugeliang.bond3.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "friendly",
+          "notableId": "notable:zhugeliang"
+        }
+      ],
+      "chainId": "chain:shu.zhugeliang",
+      "kind": "notable",
+      "step": 2
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event:shu.zhugeliang.bond4.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event:shu.zhugeliang.bond4.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:shu.zhugeliang.bond4",
+    "id": "event:shu.zhugeliang.bond4",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event:shu.zhugeliang.bond4.option0",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:zhugeliang"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:liaodi"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event:shu.zhugeliang.bond4.option1",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 3,
+            "kind": "affinity",
+            "notableId": "notable:zhugeliang"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:liaodi"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:shu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:shu.zhugeliang.bond3"
+      ],
+      "rarity": 4
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:shu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event:shu.zhugeliang.bond4.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "close",
+          "notableId": "notable:zhugeliang"
+        }
+      ],
+      "chainId": "chain:shu.zhugeliang",
+      "kind": "notable",
+      "step": 3
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event:shu.zhugeliang.bond5.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event:shu.zhugeliang.bond5.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:shu.zhugeliang.bond5",
+    "id": "event:shu.zhugeliang.bond5",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event:shu.zhugeliang.bond5.option0",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:zhugeliang"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:lianhuan",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event:shu.zhugeliang.bond5.option1",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 3,
+            "kind": "affinity",
+            "notableId": "notable:zhugeliang"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:lianhuan",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:shu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:shu.zhugeliang.bond4"
+      ],
+      "rarity": 5
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:shu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event:shu.zhugeliang.bond5.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "sworn",
+          "notableId": "notable:zhugeliang"
+        }
+      ],
+      "chainId": "chain:shu.zhugeliang",
+      "kind": "notable",
+      "step": 4
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event:shu.jiangwan.bond2.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event:shu.jiangwan.bond2.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:shu.jiangwan.bond2",
+    "id": "event:shu.jiangwan.bond2",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event:shu.jiangwan.bond2.option0",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:jiangwan"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:liande"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event:shu.jiangwan.bond2.option1",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 3,
+            "kind": "affinity",
+            "notableId": "notable:jiangwan"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:liande"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:shu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:shu.jiangwan.companionship"
+      ],
+      "rarity": 2
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:shu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event:shu.jiangwan.bond2.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:jiangwan"
+        }
+      ],
+      "chainId": "chain:shu.jiangwan",
+      "kind": "notable",
+      "step": 1
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event:shu.jiangwan.bond3.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event:shu.jiangwan.bond3.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:shu.jiangwan.bond3",
+    "id": "event:shu.jiangwan.bond3",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event:shu.jiangwan.bond3.option0",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:jiangwan"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tuntian",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event:shu.jiangwan.bond3.option1",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 3,
+            "kind": "affinity",
+            "notableId": "notable:jiangwan"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tuntian",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:shu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:shu.jiangwan.bond2"
+      ],
+      "rarity": 3
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:shu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event:shu.jiangwan.bond3.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "friendly",
+          "notableId": "notable:jiangwan"
+        }
+      ],
+      "chainId": "chain:shu.jiangwan",
+      "kind": "notable",
+      "step": 2
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event:shu.jiangwan.bond4.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event:shu.jiangwan.bond4.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:shu.jiangwan.bond4",
+    "id": "event:shu.jiangwan.bond4",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event:shu.jiangwan.bond4.option0",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:jiangwan"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:zhechong"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event:shu.jiangwan.bond4.option1",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 3,
+            "kind": "affinity",
+            "notableId": "notable:jiangwan"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:zhechong"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:shu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:shu.jiangwan.bond3"
+      ],
+      "rarity": 4
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:shu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event:shu.jiangwan.bond4.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "close",
+          "notableId": "notable:jiangwan"
+        }
+      ],
+      "chainId": "chain:shu.jiangwan",
+      "kind": "notable",
+      "step": 3
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event:shu.jiangwan.bond5.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event:shu.jiangwan.bond5.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:shu.jiangwan.bond5",
+    "id": "event:shu.jiangwan.bond5",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event:shu.jiangwan.bond5.option0",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:jiangwan"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tuntian",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event:shu.jiangwan.bond5.option1",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 3,
+            "kind": "affinity",
+            "notableId": "notable:jiangwan"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tuntian",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:shu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [
+        "event:shu.jiangwan.bond4"
+      ],
+      "rarity": 5
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:shu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event:shu.jiangwan.bond5.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "sworn",
+          "notableId": "notable:jiangwan"
+        }
+      ],
+      "chainId": "chain:shu.jiangwan",
+      "kind": "notable",
+      "step": 4
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
     "aftermaths": [
       {
         "requirements": [],
@@ -3516,6 +6108,22 @@
         "id": "S1.B",
         "options": [
           {
+            "consequenceKey": "story.shu.hulao.S1.B.handover.hint",
+            "id": "handover",
+            "labelKey": "story.shu.hulao.S1.B.handover.label",
+            "response": {
+              "beats": [
+                {
+                  "speaker": null,
+                  "textKey": "story.shu.hulao.S1.B.handover.response.line.0"
+                }
+              ],
+              "bodyKey": "story.shu.hulao.S1.B.handover.response.body",
+              "id": "story.shu.hulao.S1.B.handover.response",
+              "titleKey": "story.shu.hulao.S1.B.handover.response.title"
+            }
+          },
+          {
             "consequenceKey": "story.shu.hulao.S1.B.shelter.hint",
             "id": "shelter",
             "labelKey": "story.shu.hulao.S1.B.shelter.label",
@@ -3533,22 +6141,6 @@
               "bodyKey": "story.shu.hulao.S1.B.shelter.response.body",
               "id": "story.shu.hulao.S1.B.shelter.response",
               "titleKey": "story.shu.hulao.S1.B.shelter.response.title"
-            }
-          },
-          {
-            "consequenceKey": "story.shu.hulao.S1.B.handover.hint",
-            "id": "handover",
-            "labelKey": "story.shu.hulao.S1.B.handover.label",
-            "response": {
-              "beats": [
-                {
-                  "speaker": null,
-                  "textKey": "story.shu.hulao.S1.B.handover.response.line.0"
-                }
-              ],
-              "bodyKey": "story.shu.hulao.S1.B.handover.response.body",
-              "id": "story.shu.hulao.S1.B.handover.response",
-              "titleKey": "story.shu.hulao.S1.B.handover.response.title"
             }
           }
         ],
@@ -3695,22 +6287,6 @@
         "id": "S2.B",
         "options": [
           {
-            "consequenceKey": "story.shu.xuzhou.S2.B.shelter.hint",
-            "id": "shelter",
-            "labelKey": "story.shu.xuzhou.S2.B.shelter.label",
-            "response": {
-              "beats": [
-                {
-                  "speaker": null,
-                  "textKey": "story.shu.xuzhou.S2.B.shelter.response.line.0"
-                }
-              ],
-              "bodyKey": "story.shu.xuzhou.S2.B.shelter.response.body",
-              "id": "story.shu.xuzhou.S2.B.shelter.response",
-              "titleKey": "story.shu.xuzhou.S2.B.shelter.response.title"
-            }
-          },
-          {
             "consequenceKey": "story.shu.xuzhou.S2.B.handover.hint",
             "id": "handover",
             "labelKey": "story.shu.xuzhou.S2.B.handover.label",
@@ -3724,6 +6300,22 @@
               "bodyKey": "story.shu.xuzhou.S2.B.handover.response.body",
               "id": "story.shu.xuzhou.S2.B.handover.response",
               "titleKey": "story.shu.xuzhou.S2.B.handover.response.title"
+            }
+          },
+          {
+            "consequenceKey": "story.shu.xuzhou.S2.B.shelter.hint",
+            "id": "shelter",
+            "labelKey": "story.shu.xuzhou.S2.B.shelter.label",
+            "response": {
+              "beats": [
+                {
+                  "speaker": null,
+                  "textKey": "story.shu.xuzhou.S2.B.shelter.response.line.0"
+                }
+              ],
+              "bodyKey": "story.shu.xuzhou.S2.B.shelter.response.body",
+              "id": "story.shu.xuzhou.S2.B.shelter.response",
+              "titleKey": "story.shu.xuzhou.S2.B.shelter.response.title"
             }
           }
         ],
@@ -3866,6 +6458,22 @@
         "id": "S3.B",
         "options": [
           {
+            "consequenceKey": "story.shu.changban.S3.B.handover.hint",
+            "id": "handover",
+            "labelKey": "story.shu.changban.S3.B.handover.label",
+            "response": {
+              "beats": [
+                {
+                  "speaker": null,
+                  "textKey": "story.shu.changban.S3.B.handover.response.line.0"
+                }
+              ],
+              "bodyKey": "story.shu.changban.S3.B.handover.response.body",
+              "id": "story.shu.changban.S3.B.handover.response",
+              "titleKey": "story.shu.changban.S3.B.handover.response.title"
+            }
+          },
+          {
             "consequenceKey": "story.shu.changban.S3.B.shelter.hint",
             "id": "shelter",
             "labelKey": "story.shu.changban.S3.B.shelter.label",
@@ -3883,22 +6491,6 @@
               "bodyKey": "story.shu.changban.S3.B.shelter.response.body",
               "id": "story.shu.changban.S3.B.shelter.response",
               "titleKey": "story.shu.changban.S3.B.shelter.response.title"
-            }
-          },
-          {
-            "consequenceKey": "story.shu.changban.S3.B.handover.hint",
-            "id": "handover",
-            "labelKey": "story.shu.changban.S3.B.handover.label",
-            "response": {
-              "beats": [
-                {
-                  "speaker": null,
-                  "textKey": "story.shu.changban.S3.B.handover.response.line.0"
-                }
-              ],
-              "bodyKey": "story.shu.changban.S3.B.handover.response.body",
-              "id": "story.shu.changban.S3.B.handover.response",
-              "titleKey": "story.shu.changban.S3.B.handover.response.title"
             }
           }
         ],
@@ -4045,22 +6637,6 @@
         "id": "S4.B",
         "options": [
           {
-            "consequenceKey": "story.shu.chibi.S4.B.shelter.hint",
-            "id": "shelter",
-            "labelKey": "story.shu.chibi.S4.B.shelter.label",
-            "response": {
-              "beats": [
-                {
-                  "speaker": null,
-                  "textKey": "story.shu.chibi.S4.B.shelter.response.line.0"
-                }
-              ],
-              "bodyKey": "story.shu.chibi.S4.B.shelter.response.body",
-              "id": "story.shu.chibi.S4.B.shelter.response",
-              "titleKey": "story.shu.chibi.S4.B.shelter.response.title"
-            }
-          },
-          {
             "consequenceKey": "story.shu.chibi.S4.B.handover.hint",
             "id": "handover",
             "labelKey": "story.shu.chibi.S4.B.handover.label",
@@ -4074,6 +6650,22 @@
               "bodyKey": "story.shu.chibi.S4.B.handover.response.body",
               "id": "story.shu.chibi.S4.B.handover.response",
               "titleKey": "story.shu.chibi.S4.B.handover.response.title"
+            }
+          },
+          {
+            "consequenceKey": "story.shu.chibi.S4.B.shelter.hint",
+            "id": "shelter",
+            "labelKey": "story.shu.chibi.S4.B.shelter.label",
+            "response": {
+              "beats": [
+                {
+                  "speaker": null,
+                  "textKey": "story.shu.chibi.S4.B.shelter.response.line.0"
+                }
+              ],
+              "bodyKey": "story.shu.chibi.S4.B.shelter.response.body",
+              "id": "story.shu.chibi.S4.B.shelter.response",
+              "titleKey": "story.shu.chibi.S4.B.shelter.response.title"
             }
           }
         ],
@@ -4220,22 +6812,6 @@
         "id": "S5.B",
         "options": [
           {
-            "consequenceKey": "story.shu.yizhou.S5.B.handover.hint",
-            "id": "handover",
-            "labelKey": "story.shu.yizhou.S5.B.handover.label",
-            "response": {
-              "beats": [
-                {
-                  "speaker": null,
-                  "textKey": "story.shu.yizhou.S5.B.handover.response.line.0"
-                }
-              ],
-              "bodyKey": "story.shu.yizhou.S5.B.handover.response.body",
-              "id": "story.shu.yizhou.S5.B.handover.response",
-              "titleKey": "story.shu.yizhou.S5.B.handover.response.title"
-            }
-          },
-          {
             "consequenceKey": "story.shu.yizhou.S5.B.personal.hint",
             "id": "personal",
             "labelKey": "story.shu.yizhou.S5.B.personal.label",
@@ -4249,6 +6825,22 @@
               "bodyKey": "story.shu.yizhou.S5.B.personal.response.body",
               "id": "story.shu.yizhou.S5.B.personal.response",
               "titleKey": "story.shu.yizhou.S5.B.personal.response.title"
+            }
+          },
+          {
+            "consequenceKey": "story.shu.yizhou.S5.B.handover.hint",
+            "id": "handover",
+            "labelKey": "story.shu.yizhou.S5.B.handover.label",
+            "response": {
+              "beats": [
+                {
+                  "speaker": null,
+                  "textKey": "story.shu.yizhou.S5.B.handover.response.line.0"
+                }
+              ],
+              "bodyKey": "story.shu.yizhou.S5.B.handover.response.body",
+              "id": "story.shu.yizhou.S5.B.handover.response",
+              "titleKey": "story.shu.yizhou.S5.B.handover.response.title"
             }
           }
         ],
@@ -4395,22 +6987,6 @@
         "id": "S6.B",
         "options": [
           {
-            "consequenceKey": "story.shu.hanzhong.S6.B.handover.hint",
-            "id": "handover",
-            "labelKey": "story.shu.hanzhong.S6.B.handover.label",
-            "response": {
-              "beats": [
-                {
-                  "speaker": null,
-                  "textKey": "story.shu.hanzhong.S6.B.handover.response.line.0"
-                }
-              ],
-              "bodyKey": "story.shu.hanzhong.S6.B.handover.response.body",
-              "id": "story.shu.hanzhong.S6.B.handover.response",
-              "titleKey": "story.shu.hanzhong.S6.B.handover.response.title"
-            }
-          },
-          {
             "consequenceKey": "story.shu.hanzhong.S6.B.guard.hint",
             "id": "guard",
             "labelKey": "story.shu.hanzhong.S6.B.guard.label",
@@ -4424,6 +7000,22 @@
               "bodyKey": "story.shu.hanzhong.S6.B.guard.response.body",
               "id": "story.shu.hanzhong.S6.B.guard.response",
               "titleKey": "story.shu.hanzhong.S6.B.guard.response.title"
+            }
+          },
+          {
+            "consequenceKey": "story.shu.hanzhong.S6.B.handover.hint",
+            "id": "handover",
+            "labelKey": "story.shu.hanzhong.S6.B.handover.label",
+            "response": {
+              "beats": [
+                {
+                  "speaker": null,
+                  "textKey": "story.shu.hanzhong.S6.B.handover.response.line.0"
+                }
+              ],
+              "bodyKey": "story.shu.hanzhong.S6.B.handover.response.body",
+              "id": "story.shu.hanzhong.S6.B.handover.response",
+              "titleKey": "story.shu.hanzhong.S6.B.handover.response.title"
             }
           }
         ],
@@ -4643,14 +7235,14 @@
         "id": "S7.B",
         "options": [
           {
-            "consequenceKey": "story.shu.jingzhou.S7.B.pact.hint",
-            "id": "pact",
-            "labelKey": "story.shu.jingzhou.S7.B.pact.label"
-          },
-          {
             "consequenceKey": "story.shu.jingzhou.S7.B.handover.hint",
             "id": "handover",
             "labelKey": "story.shu.jingzhou.S7.B.handover.label"
+          },
+          {
+            "consequenceKey": "story.shu.jingzhou.S7.B.pact.hint",
+            "id": "pact",
+            "labelKey": "story.shu.jingzhou.S7.B.pact.label"
           }
         ],
         "responseTiming": "chapterEnd",
@@ -4904,14 +7496,14 @@
         "id": "S8.B",
         "options": [
           {
-            "consequenceKey": "story.shu.northern.S8.B.handover.hint",
-            "id": "handover",
-            "labelKey": "story.shu.northern.S8.B.handover.label"
-          },
-          {
             "consequenceKey": "story.shu.northern.S8.B.vanguard.hint",
             "id": "vanguard",
             "labelKey": "story.shu.northern.S8.B.vanguard.label"
+          },
+          {
+            "consequenceKey": "story.shu.northern.S8.B.handover.hint",
+            "id": "handover",
+            "labelKey": "story.shu.northern.S8.B.handover.label"
           }
         ],
         "responseTiming": "chapterEnd",

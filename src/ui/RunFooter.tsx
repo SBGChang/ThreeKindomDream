@@ -1,5 +1,5 @@
 import type { Session } from '../app/session.js';
-import { useId } from 'react';
+import { useEffect, useId, useLayoutEffect, useState } from 'react';
 import type { DialogueHeader } from './dialogue-header.js';
 import { RealmIcon, RealmStars } from './RealmArt.js';
 import { UiSymbol } from './UiSymbol.js';
@@ -66,8 +66,41 @@ export function RunFooter({
   notice: string;
   dialogue?: DialogueHeader | null;
 }): React.ReactElement {
+  const [shownDialogue, setShownDialogue] = useState(dialogue);
+  const [travel, setTravel] = useState<'idle' | 'out' | 'in'>('idle');
+  const [reducedMotion, setReducedMotion] = useState(() => matchMedia('(prefers-reduced-motion: reduce)').matches);
+  useEffect(() => {
+    const media = matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setReducedMotion(media.matches);
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
+  const changingEdge = Boolean(dialogue) !== Boolean(shownDialogue);
+  useLayoutEffect(() => {
+    if (reducedMotion) {
+      setShownDialogue(dialogue);
+      setTravel('idle');
+    } else if (changingEdge) {
+      // Finish leaving the current edge before relocating outside the opposite edge.
+      if (travel !== 'out') setTravel('out');
+    } else if (travel === 'idle') {
+      setShownDialogue(dialogue);
+    }
+  }, [dialogue, changingEdge, travel, reducedMotion]);
+  const moving = travel !== 'idle' || changingEdge;
   return (
-    <footer className={`game-bottom run-footer ${dialogue ? 'dialogue-footer' : ''}`} aria-label={dialogue ? '劇情資訊' : '行旅資訊與功能'}>
+    <footer className={`game-bottom run-footer ${shownDialogue ? 'dialogue-footer' : ''}`}
+      data-travel={travel} inert={moving}
+      aria-label={shownDialogue ? '劇情資訊' : '行旅資訊與功能'}
+      onAnimationEnd={(event) => {
+        if (event.target !== event.currentTarget) return;
+        if (event.animationName === 'footer-edge-out') {
+          setShownDialogue(dialogue);
+          setTravel('in');
+        } else if (event.animationName === 'footer-edge-in') {
+          setTravel('idle');
+        }
+      }}>
       <div className="footer-chapter" title={chapter}>
         <ChapterArt/>
         {chapter.split(/[·・]/).map((part, i) => (
@@ -80,12 +113,12 @@ export function RunFooter({
           <span className="footer-turn-divider">/</span><span className="footer-turn-total">8</span><span>回合</span>
         </span>
       </div>
-      {dialogue ? <div className="footer-event">
-        <span className="footer-event-kind" role="img" aria-label={dialogue.kind} title={dialogue.kind}>
-          {dialogue.kind === '主線劇情' ? <RealmIcon name="book"/> : <UiSymbol name={dialogue.kind === '委託' ? 'commission' : 'event'}/>}
+      {shownDialogue ? <div className="footer-event">
+        <span className="footer-event-kind" role="img" aria-label={shownDialogue.kind} title={shownDialogue.kind}>
+          {['主線劇情','固定行動'].includes(shownDialogue.kind) ? <RealmIcon name="book"/> : <UiSymbol name={shownDialogue.kind === '委託' ? 'commission' : 'event'}/>}
         </span>
-        {dialogue.rarity > 0 && <RealmStars count={dialogue.rarity}/>}
-        <h1>{dialogue.title}</h1>
+        {shownDialogue.rarity > 0 && <RealmStars count={shownDialogue.rarity}/>}
+        <h1>{shownDialogue.title}</h1>
       </div> : <div className="footer-money">
         <span>金錢</span>
         <i className="footer-coins">
@@ -93,7 +126,7 @@ export function RunFooter({
         </i>
         <b>{s.money.toLocaleString('en-US')}</b>
       </div>}
-      {!dialogue && <nav aria-label="遊戲功能">
+      {!shownDialogue && <nav aria-label="遊戲功能">
         <button
           className="footer-button footer-learn"
           aria-pressed={active === 'learn'}

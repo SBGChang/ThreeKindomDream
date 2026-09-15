@@ -36,7 +36,7 @@ export const gameRules: GameRulesDef = coreDef('gameRules', 'rules:main', {
   // 可【自行指定】的玩伴人數。0 ＝ 皇甫嵩三名全部替你指派（GDD §6.5）。
   // 「世家門閥」之類的天賦買回來的是選擇權，不是數值 ——
   // 因此這個基準值刻意是 0，而不是「先給一個再讓天賦加」。
-  designateBase: 0,
+  designateBase: 3,
   superiorCount: 3,
   /**
    * 委託旗標的基礎機率（15 §3）★ 每格【獨立】擲，因此四格可能全有。

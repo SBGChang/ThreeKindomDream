@@ -44,8 +44,8 @@ export const affinityCurve: AffinityCurveDef = coreDef('affinityCurve', 'affCurv
    * 「典韋二星就開得起連動、曹操二星還不行」這種設計無法表達。
    */
   baseStartAffinity: 20,
-  fragmentsByStage: { stranger: 0, acquainted: 5, friendly: 15, close: 30, sworn: 50 },
-  fullDreamMultiplier: 2,
+  fragmentsByStage: { stranger: 0, acquainted: 10, friendly: 25, close: 40, sworn: 60 },
+  fullDreamMultiplier: 1,
 });
 
 export const linkBonus: LinkBonusDef = coreDef('linkBonus', 'link:main', {

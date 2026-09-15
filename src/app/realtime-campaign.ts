@@ -7,11 +7,12 @@ import type { EffectResolver } from '../modules/effect.js';
 import * as ability from '../modules/ability.js';
 import * as campaign from '../modules/campaign.js';
 import { statQuery } from '../modules/stats.js';
+import { notableCodex } from '../modules/notable-codex.js';
 import { armyCount, createConfiguredBattle } from './realtime-battle-model.js';
 
-export const realtimeSkill=(ctx:RunContext,fx:EffectResolver,id:SkillId,owner:string,index:number,support:boolean,attrs:Readonly<Record<string,number>>):DemoSkill=>{
+export const realtimeSkill=(ctx:RunContext,fx:EffectResolver,id:SkillId,owner:string,index:number,support:boolean,attrs:Readonly<Record<string,number>>,level=1):DemoSkill=>{
   const rule=ctx.defs.single('battleRule'),rt=rule.realtime,t=(key:unknown)=>ctx.defs.text(String(key));
-  const def=support?ability.skillDef(id,ctx):ability.battleSkill(id,ctx),a=def.action;
+  const def=support?ability.skillDef(id,ctx):ability.battleSkill(id,ctx),a={...def.action,ratio:def.action.ratio*(support?(ctx.defs.single('growthRule').learning.power[level-1]??1):1)};
   const coef=(attrs[a.actorAttr]??0)/rule.actorDivisor;
   const raw=campaign.hostLimits(ctx,fx).troopsMax*a.ratio*coef;
   const damage=a.kind==='physical'||a.kind==='magic'?fx.resolve(targetId('battle.damage.'+a.kind),raw,ctx):a.kind==='heal'?fx.resolve(targetId('battle.heal'),raw,ctx):0;
@@ -30,7 +31,7 @@ export function campaignBattle(ctx:RunContext,fx:EffectResolver):BattleState {
  st.loadout.commanders.forEach((slot,i)=>{
   const nd=ctx.defs.reader('notable').get(String(slot.notableId)),name=t(nd.nameKey),art=String(nd.nameKey).split('.')[1]??'lord';
   commanders.push({id:art,name,portrait:art,side:'ally',homeX:125+((i+1)%2)*70,x:125+((i+1)%2)*70,y:350+(i+1)*78,pose:'command',poseTime:i*.35,flip:false});
-  skills.push(realtimeSkill(ctx,fx,slot.skillId,name,i,true,nd.abilities.attrs));
+  skills.push(realtimeSkill(ctx,fx,slot.skillId,name,i,true,nd.abilities.attrs,ctx.defs.single('notableStar').commanderLevelByStar[notableCodex.starOf(slot.notableId,ctx.state.metaSnapshot)]));
  });
  const waves=campaign.stageRows(ctx).map((_,i)=>campaign.nextStagePreview(ctx,i)!);
  commanders.push({id:'enemy',name:waves[0]?.boss?t(waves[0].boss.nameKey):'敵軍指揮官',side:'enemy',homeX:1470,x:1470,y:485,pose:'command',poseTime:0,flip:true});

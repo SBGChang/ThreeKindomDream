@@ -1,3 +1,4 @@
+import { limits } from '../../src/modules/dream-entry.js';
 // 局內不變量：回合座標、門檻貨幣、supersedes、結局兜底、可重播、結算冪等。
 import {
   ATTRS, SLOT_INDICES, TIER_COST_KINDS,
@@ -163,9 +164,9 @@ export function run(): void {
       eq(state.abilities.levels?.[String(skill.skillId)], 1);
       ok(state.abilities.skills.includes(skill.skillId), '傳授立即取得技能');
       eq(state.economy.money, initial.economy.money);
-      for (let i = 0; i < 2; i++) state = grantUnlock(trait.traitId, skill.skillId, { state, defs }, 'test/repeat/' + i);
-      eq(state.abilities.levels?.[String(skill.skillId)], 3);
-      eq(state.abilities.levels?.[String(trait.traitId)], 3);
+      for (let i = 0; i < 4; i++) state = grantUnlock(trait.traitId, skill.skillId, { state, defs }, 'test/repeat/' + i);
+      eq(state.abilities.levels?.[String(skill.skillId)], 5);
+      eq(state.abilities.levels?.[String(trait.traitId)], 5);
       const full = state;
       state = grantUnlock(trait.traitId, skill.skillId, { state, defs }, 'test/full');
       const rule = defs.single('growthRule').economy;
@@ -318,19 +319,12 @@ export function run(): void {
       ok(before >= 8, `入陣營時應已走過至少一章，實得 ${before}`);
     });
 
-    it('預設不可自行指定玩伴；「世家門閥」系天賦買回選擇權（14 §3）', () => {
+    it('已完成同行可免費再次邀請，席次仍為三人', () => {
       const draft = emptyDraft(META, defs);
-      eq(designateQuota(draft, defs), 0);
+      eq(designateQuota(draft, defs), 3);
 
-      const talents = defs.reader('talent').all()
-        .filter((t2) => t2.effects.some((e) => e.funcType === 'DesignateSlots'));
-      ok(talents.length > 0, '沒有任何天賦能買到指定權 —— 皇甫嵩的指派沒有出口');
-      for (const t2 of talents) {
-        const q = designateQuota({ ...draft, talents: [t2.talentId] }, defs);
-        ok(q > 0, `${String(t2.talentId)} 沒有提高指定額度`);
-        ok(q <= defs.single('gameRules').companionCount,
-          `${String(t2.talentId)} 的額度 ${q} 超過玩伴席次`);
-      }
+      eq(limits(META, defs).designatable.length, 0);
+
     });
   });
 
@@ -930,12 +924,12 @@ export function run(): void {
       ok(high > low, `滿星 ${high.toFixed(3)} 未高於未升星 ${low.toFixed(3)}`);
     });
 
-    it('升星階梯的成本隨稀有度變貴 —— 低星滿級才可能贏過高星低級', () => {
+    it('所有稀有度共用十二輪滿星成本', () => {
       const ladder = defs.single('notableStar');
       const cost = (rarity: 1 | 2 | 3 | 4 | 5): number =>
         ladder.tiers.reduce((sum, t2) => sum + t2.fragmentCost * ladder.costByRarity[rarity], 0);
-      ok(cost(1) < cost(5), '★1 滿星應比 ★5 滿星便宜');
-      ok(cost(5) > cost(1) * 2, '差距太小，稀有度就沒有取捨');
+      eq(cost(1), 1200);
+      eq(cost(5), 1200);
     });
   });
 

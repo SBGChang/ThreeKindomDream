@@ -1,3 +1,4 @@
+import { guidance, routePace } from './progression.js';
 import type { RunContext, TurnContext } from '../contracts/core/context.js';
 import type {
   GlowTierDef,
@@ -23,7 +24,7 @@ import { grantGrowth, previewGrowth } from './growth.js';
 import { economyRule, transact } from './economy.js';
 import { stageOf } from './roster-query.js';
 import { pityDue } from './stories.js';
-import { statQuery, type StatWriter } from './stats.js';
+import { meritMultiplier, statQuery, type StatWriter } from './stats.js';
 
 const curve = (ctx: RunContext): TrainingCurveDef =>
   ctx.defs.single('trainingCurve');
@@ -82,15 +83,6 @@ function aptitudeShift(attr: Attr, ctx: RunContext): number {
     .all()
     .find((g) => g.grade === grade);
   return def?.shiftSteps ?? 0;
-}
-
-function aptitudeMul(attr: Attr, ctx: RunContext): number {
-  const grade = ctx.state.config.aptitudes[attr];
-  const def = ctx.defs
-    .reader('aptitudeGrade')
-    .all()
-    .find((g) => g.grade === grade);
-  return def?.yieldMul ?? 1;
 }
 
 export function generate(
@@ -189,7 +181,7 @@ function computeGain(
         rule.legacyBaseRatio,
   );
   const raw =
-    base * glow.yieldMul * aptitudeMul(attr, ctx) * (1 + standing + extra);
+    base * glow.yieldMul * guidance(ctx, 'growth') * routePace(ctx) * (1 + standing + extra);
   return Math.min(rule.fixedGrowthCap, previewGrowth(attr, raw, ctx));
 }
 
@@ -215,7 +207,7 @@ const shownMerit = (
   fx: EffectResolver,
 ): MeritGain => ({
   line: g.line,
-  amount: Math.round(g.amount * fx.currencyMul(`merit.${g.line}`, ctx)),
+  amount: Math.round(g.amount * meritMultiplier(g.line, ctx, fx)),
 });
 
 export function select(

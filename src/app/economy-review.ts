@@ -96,3 +96,41 @@ export function fullEconomyReview(): Session {
     items: { ...state.items, count: Object.fromEntries(items.map(d => [String(d.itemId), 1])), fragments: Object.fromEntries(items.map(d => [String(d.itemId), 7])) },
   });
 }
+
+/** Isolated low-wallet state for validating unavailable purchase controls. */
+export function limitedEconomyReview(): Session {
+  const state = economyReview().current;
+  return Session.restore(wiring, { ...state, economy: { ...state.economy, money: 120, earned: state.economy.spent + 120 } });
+}
+
+/** Find a deterministic real roll; the UI still performs the action and computes its receipt. */
+export function fixedActionReview(outcome: string, withEvent = false): Session {
+  for (let value = 1; value <= 100; value++) {
+    const meta = emptyMeta();
+    const initial = Session.start(wiring, meta, emptyDraft(meta, defs), seed(value)).current;
+    const state = { ...initial, story: emptyStory(false),
+      turn: { ...initial.turn, slots: initial.turn.slots.map(slot => ({ ...slot, notables: [], hasCommission: withEvent, hasEncounter: false })) },
+    };
+    const trial = Session.restore(wiring, state);
+    trial.selectSlot(0);
+    const tier = trial.current.turn.training!.finalGlow;
+    const actual = tier === 'none' ? 'bad' : tier === 'silver' ? 'normal' : 'success';
+    if (actual === outcome) return Session.restore(wiring, state);
+  }
+  throw new Error('找不到固定行動驗收種子');
+}
+
+/** Training-only fixtures: pagination, mastered lessons and teaching-empty state. */
+export function trainingArtReview(empty = false): Session {
+  const state = economyReview().current;
+  const skills = empty ? [] : defs.reader('skill').all().map(d => d.skillId);
+  const traits = empty ? [] : defs.reader('trait').all().filter(d => d.polarity === 'positive').map(d => d.traitId);
+  return Session.restore(wiring, {
+    ...state,
+    attributes: { values: { lead: 95, war: 95, int: 95, pol: 95 } },
+    growth: { ...state.growth, unlockedSkills: skills, unlockedTraits: traits },
+    abilities: { ...state.abilities, skills, traits, activeTraits: traits.slice(0, 4),
+      levels: Object.fromEntries([...skills, ...traits].map((id, i) => [String(id), i === 0 ? 5 : 1])),
+    },
+  });
+}

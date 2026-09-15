@@ -1,4 +1,5 @@
 import type { BattleState } from './realtime-battle.js';
+import type { EncounterProgress } from './confrontation.js';
 import type {
   CampaignId, ChapterId, ChargeId, EndingId, EventDefId, FactionId, ItemId,
   L10nKey, NotableId, ParamPoolId, Seed, ShopItemId, SkillId, TalentId, TraitId,
@@ -18,6 +19,7 @@ import type {
  * 存兩份會有兩個可能不一致的真相，而「初始好感」本來就只是星階的一個面。
  */
 export interface NotableCodexEntry {
+  readonly completedWith?: boolean;
   readonly star: number;
   readonly fragments: number;
 }
@@ -65,6 +67,7 @@ export interface MetaState {
   readonly stats: LifetimeStats;
   readonly runIndex: number;
   readonly settledSeeds: readonly number[];
+  readonly settledRunIds?: readonly string[];
 }
 
 // ── RunState（夢醒即銷毀）──────────────────────────────
@@ -120,6 +123,7 @@ export interface CareerState { readonly civil: number; readonly martial: number 
  * 存第二份只會多一個可能不一致的真相（同 15 §2.1 的理由）。
  */
 export interface RosterMember {
+  readonly joinedTurn?: number;
   readonly cooperations?: number;
   readonly interactionTurns?: readonly number[];
   readonly lastGainTurn?: number;
@@ -351,6 +355,7 @@ export interface BattleLogEntry {
 }
 
 export interface CampaignState {
+  readonly confrontation?: EncounterProgress;
   /** Persist the live battle, including paused cinematics and completed results. */
   readonly realtime?: BattleState;
   readonly campaignId: CampaignId;
@@ -386,6 +391,7 @@ export interface StoryState {
   readonly tracked:NotableId|null; readonly waitingSince:number|null;
 }
 export interface RunState {
+  readonly runId?: string;
   readonly economy: EconomyState;
   readonly stories: StoryState;
   readonly story: ChapterStoryState;
@@ -415,6 +421,7 @@ export type SliceKey = keyof RunState;
 
 // ── 摘要（㉖ 結算的唯一輸入）───────────────────────────
 export interface RunSummary {
+  readonly runId?: string;
   readonly seed: Seed;
   readonly endingId: EndingId;
   readonly isFullDream: boolean;
@@ -423,7 +430,7 @@ export interface RunSummary {
   readonly chaptersPassed: number;
   readonly turnsPlayed: number;
   readonly factionId: FactionId | null;
-  readonly notables: readonly { readonly notableId: NotableId; readonly finalStage: AffinityStage; readonly interactionCap?:number }[];
+  readonly notables: readonly { readonly notableId: NotableId; readonly finalStage: AffinityStage; readonly interactionCap?:number; readonly attendance?:number }[];
   readonly seenUniqueEvents: readonly EventDefId[];
   /** 每件道具本輪獲得次數。第二次以後才產碎片，換算在 ㉖（23 §7）。 */
   readonly pendingItemFragments?: Readonly<Record<string,number>>;

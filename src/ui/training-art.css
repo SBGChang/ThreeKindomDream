@@ -1,0 +1,83 @@
+/* Painted folio and independent painted controls; game data remains live text. */
+.run-service.training-service .training-book {
+  position:absolute;left:278px;right:22px;top:100px;bottom:23px;
+  display:grid;grid-template-columns:40% 60%;color:#49301c;
+  background:url('/art/ui/training/folio-v1.png') center/100% 100% no-repeat;
+  filter:drop-shadow(0 7px 7px #21150b65);
+}
+.run-service.training-service .course-index{padding:30px 24px 128px 51px;display:flex;flex-direction:column;min-height:0;min-width:0}
+.run-service.training-service .course-list{display:grid;grid-template-rows:repeat(6,50px);gap:2px;margin-top:8px;flex:1;min-height:0}
+.run-service.training-service .service-tabs{gap:4px;height:54px}
+.game-stage .run-service.training-service .training-book button.training-control,
+.game-stage .run-service.training-service .training-book button.training-control:is(:hover,:focus-visible,:active,[aria-pressed=true],:disabled){
+  position:relative;isolation:isolate;border:0;border-radius:0;background:none;box-shadow:none;
+  transform:none;filter:none;margin:0;outline:none;
+  font-family:'DFKai-SB','KaiTi','Microsoft JhengHei',serif;
+}
+.training-control::before{
+  content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:var(--plaque-image,url('/art/ui/training/paper-control-v1.png')) center/100% 140% no-repeat;
+  transition:filter .15s;
+}
+.training-control:is(:hover,:focus-visible):not(:disabled)::before{filter:brightness(1.14) drop-shadow(0 0 3px #ffe3a1)}
+.training-control:focus-visible::before{filter:brightness(1.2) drop-shadow(0 0 5px #ffe3a1)}
+.training-control:active:not(:disabled)::before{filter:brightness(.94)}
+.game-stage .run-service.training-service button.training-control:disabled{opacity:.65;cursor:not-allowed}
+.training-control:disabled::before{filter:saturate(.25)}
+.game-stage .run-service.training-service .course-tab{display:flex;align-items:center;justify-content:center;gap:5px;flex:1;min-width:0;height:54px;padding:0 9px;color:#58381e;font-size:21px;text-shadow:none}
+.game-stage .run-service.training-service .course-tab[aria-pressed=true]{--plaque-image:url('/art/ui/training/jade-control-v1.png');color:#fff4c9;text-shadow:1px 2px #193723}
+.run-service.training-service .course-tab .realm-icon{width:28px;height:28px;flex-shrink:0}
+.run-service.training-service .course-tab small{font:12px 'Microsoft JhengHei',sans-serif;margin:0}
+.game-stage .run-service.training-service .course-entry{display:flex;align-items:center;gap:9px;min-height:0;padding:5px 48px 5px 19px;text-align:left;color:#4b2d17}
+.game-stage .run-service.training-service .course-entry[aria-pressed=true]{--plaque-image:url('/art/ui/training/jade-control-v1.png');color:#fff0be;text-shadow:1px 1px #15332b}
+.run-service.training-service .course-entry>.entry-stat-icon{width:35px;height:35px;flex:none}
+.run-service.training-service .course-entry>span:nth-child(2){flex:1;min-width:0}
+.run-service.training-service .course-entry b{display:block;font-size:19px;line-height:22px;white-space:nowrap}
+.run-service.training-service .course-entry small{display:block;font:10px/12px 'Microsoft JhengHei',sans-serif;margin-top:0}
+.run-service.training-service .course-entry>strong{font:bold 22px Georgia,serif;white-space:nowrap}
+.run-service.training-service .course-entry>strong small{display:inline;font:12px Georgia,serif}
+.run-service.training-service .course-detail{padding:37px 48px 34px 35px;display:flex;flex-direction:column;min-height:0;min-width:0}
+.run-service.training-service .course-title{display:flex;align-items:center;gap:15px;min-height:70px}
+.run-service.training-service .course-title>.entry-stat-icon{width:61px;height:61px;flex:none}
+.run-service.training-service .course-title h2{font-size:35px;margin:3px 0 0;line-height:1.2;color:#482815}
+.run-service.training-service .service-kicker{font-size:12px;color:#8b572d}
+.run-service.training-service .course-description{font-size:16px;line-height:1.65;margin:15px 0 8px;min-height:52px}
+.run-service.training-service .course-progression{display:flex;align-items:center;gap:15px;margin:8px 0;padding:12px 0;border-block:1px solid #a579414d}
+.run-service.training-service .course-progression>div:not(.realm-stars){display:flex;flex-direction:column;flex:none}
+.run-service.training-service .course-progression small{font-size:12px;color:#735733}
+.run-service.training-service .course-progression b{font:bold 33px Georgia,serif;color:#52351e}
+.run-service.training-service .course-progression em{font:13px 'Microsoft JhengHei',sans-serif;margin-left:5px}
+.run-service.training-service .course-progression>div:last-child b{color:#16708c}
+.run-service.training-service .course-progression>.realm-stars{display:flex;flex:1;gap:0;min-width:0}
+.run-service.training-service .course-progression>.realm-stars .realm-icon{width:27px;height:27px;min-width:0;flex:1;max-width:30px}
+.run-service.training-service .course-progression .unlit{filter:grayscale(1);opacity:.3}
+.run-service.training-service .course-effect{display:flex;align-items:center;gap:18px;font-size:15px;line-height:1.8;margin:8px 0}
+.run-service.training-service .course-effect b,.training-service .course-effect strong{font:bold 24px Georgia,serif}
+.run-service.training-service .course-effect strong{color:#16708c}
+.run-service.training-service .course-requirements{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:10px;font-size:14px}
+.run-service.training-service .course-requirements>span{display:flex;align-items:center;gap:5px;color:#a73723}
+.run-service.training-service .course-requirements>.met{color:#336943}
+.run-service.training-service .course-requirements .entry-stat-icon{width:25px;height:25px;flex:none}
+.run-service.training-service .course-status{font-size:13px;margin-top:7px;line-height:1.5}
+.run-service.training-service .course-wallet{display:flex;align-items:center;gap:8px;margin-top:auto;padding-top:8px;font-size:12px;color:#79562c}
+.run-service.training-service .course-wallet .realm-icon{width:29px;height:29px}
+.run-service.training-service .course-wallet b{font:bold 22px Georgia,serif;color:#4c311c}
+.run-service.training-service .course-purchase{display:flex;gap:5px;margin-top:24px;min-height:69px;flex-shrink:0}
+.game-stage .run-service.training-service .course-upgrade{--plaque-image:url('/art/ui/training/jade-control-v1.png');display:flex;align-items:center;justify-content:center;gap:14px;height:69px;flex:1;padding:0 24px;font-size:24px;color:#fff2b9;text-shadow:1px 2px #173829}
+.run-service.training-service .course-upgrade .realm-icon{width:33px;height:33px}
+.run-service.training-service .course-upgrade b{font:bold 27px Georgia,serif}
+.game-stage .run-service.training-service .course-toggle{width:148px;height:69px;padding:0 15px;font-size:19px;color:#5a371e;text-shadow:none}
+.run-service.training-service .service-host{left:10px;top:141px;bottom:29px;width:253px}
+.run-service.training-service .service-host>.character-halfbody{height:312px;width:246px}
+.run-service.training-service .host-words{width:249px;height:189px;min-height:189px;padding:51px 29px 30px;background:url('/art/ui/training/coach-v1.png') center/100% 100% no-repeat;border:0;border-radius:0;box-shadow:none;color:#4d311b;text-align:center}
+.run-service.training-service .host-words::before{display:none}
+.run-service.training-service .host-words b{display:block;font-size:20px;line-height:24px;color:#65421d}
+.run-service.training-service .host-words p{font-size:13px;line-height:18px;margin:4px 0}
+.run-service.training-service .host-words small{display:block;font-size:11px;line-height:14px;color:#755834}
+.run-service.training-service .course-empty{align-items:center;justify-content:center;text-align:center;gap:17px}
+.run-service.training-service .course-empty>.realm-icon{width:116px;height:116px}
+.run-service.training-service .course-empty h2{font-size:29px;color:#634322}
+.run-service.training-service .course-empty p{font-size:16px;line-height:1.8;color:#81633c}
+.run-service.training-service .service-pager{height:32px;margin-top:4px}
+.run-service.training-service .service-pager button{background:url('/art/ui/training/paper-control-v1.png') center/100% 140% no-repeat!important;border:0!important;box-shadow:none!important;color:#59391e!important}
+@media(prefers-reduced-motion:reduce){.training-control::before{transition:none}}

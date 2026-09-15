@@ -6,7 +6,7 @@ import { economy } from './economy.js';
 export const growthRule: GrowthRuleDef = coreDef('growthRule', 'growth:main', {
   economy,
   learning: {
-    power: [1, 1.18, 1.38],
+    power: [1, 1.2, 1.45, 1.75, 2.1],
   },
   bands: [
     { grade: 'G', min: 0, max: 0 },
@@ -26,8 +26,8 @@ export const growthRule: GrowthRuleDef = coreDef('growthRule', 'growth:main', {
    * 玩家只要記一個數字。
    */
   teachStage: { common: 'acquainted', fine: 'friendly', peerless: 'close' },
-  // 起始四維：逐維獨立擲 15–30。不是 0 ——
+  // 起始四維：逐維獨立擲 18–26。不是 0 ——
   // 全 0 開局的第一場戰役打不出任何傷害，而四個 G 也看不出角色性格。
-  startMin: 15,
-  startMax: 30,
+  startMin: 18,
+  startMax: 26,
 });

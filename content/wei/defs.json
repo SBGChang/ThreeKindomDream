@@ -9820,7 +9820,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.66
+        "troopsMul": 1
       },
       {
         "boss": null,
@@ -9852,7 +9852,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.76
+        "troopsMul": 1.18
       },
       {
         "boss": "enemy:lijue",
@@ -9884,7 +9884,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.87
+        "troopsMul": 1.4
       },
       {
         "boss": null,
@@ -9921,7 +9921,7 @@
             "trait": "trait:chenyi"
           }
         ],
-        "troopsMul": 1
+        "troopsMul": 2.4
       },
       {
         "boss": "enemy:huaxiong",
@@ -9958,7 +9958,7 @@
             "trait": null
           }
         ],
-        "troopsMul": 1.15
+        "troopsMul": 3
       },
       {
         "boss": null,
@@ -9990,7 +9990,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 1.32
+        "troopsMul": 3.7
       },
       {
         "boss": "enemy:lvbu",
@@ -10027,7 +10027,7 @@
             "trait": "trait:linzhen"
           }
         ],
-        "troopsMul": 1.52
+        "troopsMul": 4.6
       }
     ]
   },
@@ -10070,7 +10070,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.66
+        "troopsMul": 1
       },
       {
         "boss": "enemy:guotu",
@@ -10102,7 +10102,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.76
+        "troopsMul": 1.18
       },
       {
         "boss": null,
@@ -10134,7 +10134,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.87
+        "troopsMul": 1.4
       },
       {
         "boss": "enemy:yanliang",
@@ -10171,7 +10171,7 @@
             "trait": null
           }
         ],
-        "troopsMul": 1
+        "troopsMul": 2.4
       },
       {
         "boss": null,
@@ -10208,7 +10208,7 @@
             "trait": "trait:liaodi"
           }
         ],
-        "troopsMul": 1.15
+        "troopsMul": 3
       },
       {
         "boss": "enemy:shenpei",
@@ -10245,7 +10245,7 @@
             "trait": null
           }
         ],
-        "troopsMul": 1.32
+        "troopsMul": 3.7
       },
       {
         "boss": "enemy:yuanshao",
@@ -10282,7 +10282,7 @@
             "trait": "trait:zhechong"
           }
         ],
-        "troopsMul": 1.52
+        "troopsMul": 4.6
       }
     ]
   },
@@ -10325,7 +10325,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.66
+        "troopsMul": 1
       },
       {
         "boss": null,
@@ -10357,7 +10357,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.76
+        "troopsMul": 1.18
       },
       {
         "boss": "enemy:yuantan",
@@ -10389,7 +10389,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.87
+        "troopsMul": 1.4
       },
       {
         "boss": null,
@@ -10421,7 +10421,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 1
+        "troopsMul": 2.4
       },
       {
         "boss": "enemy:shenpei",
@@ -10458,7 +10458,7 @@
             "trait": "trait:wanrendi"
           }
         ],
-        "troopsMul": 1.15
+        "troopsMul": 3
       },
       {
         "boss": "enemy:tadun",
@@ -10495,7 +10495,7 @@
             "trait": null
           }
         ],
-        "troopsMul": 1.32
+        "troopsMul": 3.7
       },
       {
         "boss": "enemy:tadun",
@@ -10532,7 +10532,7 @@
             "trait": null
           }
         ],
-        "troopsMul": 1.52
+        "troopsMul": 4.6
       }
     ]
   }

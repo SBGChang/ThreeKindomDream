@@ -1,7 +1,7 @@
 import { ArtControl } from './ArtControl.js';
 
-export function ServiceHeader({ title, subtitle, onBack }: { title: string; subtitle: string; onBack: () => void }): React.ReactElement {
-  return <header className="service-heading"><div><h1>{title}</h1><p>{subtitle}</p></div>
+export function ServiceHeader({ title, subtitle, onBack }: { title: string; subtitle?: string; onBack: () => void }): React.ReactElement {
+  return <header className="service-heading"><div><h1>{title}</h1>{subtitle && <p>{subtitle}</p>}</div>
     <ArtControl kind="back" label="返回行旅" onClick={onBack} /></header>;
 }
 

@@ -31,7 +31,7 @@ const scoreItem = (id: string) => {
 function draftFor(meta: MetaState, mode: string): DreamEntryConfig {
   let draft = emptyDraft(meta, defs);
   const lim = limits(meta, defs);
-  const preferred = mode === 'focus-civil' ? ['int', 'pol', 'lead', 'war'] as const : ['war', 'lead', 'int', 'pol'] as const;
+  const preferred = mode.includes('focus-civil') ? ['int', 'pol', 'lead', 'war'] as const : ['war', 'lead', 'int', 'pol'] as const;
   for (let pass = 0; pass < 6; pass++) for (const attr of preferred) {
     const grade = APTITUDE_GRADES[APTITUDE_GRADES.indexOf(draft.aptitudes[attr]) + 1];
     if (!grade) continue;
@@ -47,15 +47,15 @@ function draftFor(meta: MetaState, mode: string): DreamEntryConfig {
   if (validate(draft,meta,defs).length) throw Error('Invalid entry draft');
   return draft;
 }
-function spendDestiny(meta: MetaState) {
+function spendDestiny(meta: MetaState, mode: string) {
   const purchases: unknown[] = [];
   for (let i=0;i<100;i++) {
-    const available = catalog(meta,defs).filter(x => x.nextLevel && !x.blockedBy.length && !String(x.item.item).includes('bond.wei'));
-    // Secure the rank ceiling first; thereafter buy affordable support, periodically save for the next rank.
-    const career = available.find(x=>String(x.item.item)==='shop:career');
-    const saveForCareer = career && (career.currentLevel < 2 || meta.runIndex % 3 !== 0);
-    const priority = (id:string) => id==='shop:glowUpgrade' ? 0.55 : id==='shop:aptPoints' ? 0.65 : id.includes('newcomer') ? 0.7 : 1;
-    const row = saveForCareer ? career : available.filter(x=>x.affordable).sort((a,b)=>(a.nextLevel!.cost*priority(String(a.item.item)))-(b.nextLevel!.cost*priority(String(b.item.item))))[0];
+    const available = catalog(meta,defs).filter(x => x.nextLevel && !x.blockedBy.length);
+    // Fund the core aptitude budget and rank ceiling before optional collection purchases.
+    const core = available.filter(x=>String(x.item.item)==='shop:career'?x.currentLevel<5:
+      String(x.item.item)==='shop:aptPoints'||String(x.item.item).startsWith('shop:aptCap.')&&x.currentLevel<2);
+    const pool=core.length?core:available;
+    const row=pool.slice().sort((a,b)=>a.nextLevel!.cost-b.nextLevel!.cost)[0];
     if (!row?.affordable || !row.nextLevel) break;
     const result = purchase(row.item.item,meta,defs);
     if (!result.ok) throw Error(result.reason);
@@ -81,7 +81,7 @@ function loadout(s:Session): BattleLoadout {
   return {skills,commanders};
 }
 function runLife(meta:MetaState, runSeed:number, mode:string, detailed:boolean) {
-  const policy=POLICIES.find(p=>p.name===mode) ?? POLICIES.find(p=>p.name==='greedy-gain')!;
+  const policy=POLICIES.find(p=>p.name===mode.replace('wei-','')) ?? POLICIES.find(p=>p.name==='greedy-gain')!;
   const draft=draftFor(meta,mode);
   const s=Session.start(wiring,meta,draft,seed(runSeed));
   const trace:Entry[]=[];
@@ -134,36 +134,44 @@ function runLife(meta:MetaState, runSeed:number, mode:string, detailed:boolean) 
       choices[node.id]=option;s.chooseStory(node.id,option);record('storyChoice',{id:node.id,option});continue;
     }
     if(s.needsFactionChoice){
-      const wanted=mode==='wei'?'faction:wei':'faction:shu';
+      const wanted=mode.startsWith('wei')?'faction:wei':'faction:shu';
       const pick=s.factionOptions().find(f=>String(f.factionId)===wanted&&f.eligible);
       if(pick)s.chooseFaction(factionId(wanted));else s.noFactionAvailable();
       record('faction',pick?.factionId??null);continue;
     }
-    if(s.needsSuperiors){s.assignSuperiors(s.superiorCandidates().slice(0,s.bondQuota()));record('superiors',s.current.roster);continue;}
+    if(s.needsSuperiors){s.assignSuperiors(s.superiorCandidates().filter(id=>meta.notableCodex[String(id)]?.completedWith).slice(0,s.bondQuota()));record('superiors',s.current.roster);continue;}
     if(s.needsCampaign){
       if(s.campaignState()?.phase==='configuring'){
         spend();s.configureCampaign(loadout(s));record('configure',{host:s.campaignState()?.host,loadout:s.campaignState()?.loadout,learning:s.learningOffers().map(r=>({id:r.id,status:r.status,level:r.level}))});
       }
-      let cleared=s.campaignState()?.clearedStages??0;
-      let defeated=false;
-      while(s.needsCampaign&&s.nextStage()!==null&&!s.storyScene){
-        if(mode==='no-battle'||!policy.chooseEngage(s))break;
-        const outlook=s.stageOutlook(),before=s.campaignState()?.host;
-        const result=s.engage();
-        if(result.cleared)cleared++;
-        defeated=result.defeated;
-        record('battle',{stage:cleared+(defeated?1:0),cleared:result.cleared,defeated,outlook,before,after:result.host,log:result.log,rewards:result.rewards});
-        if(defeated)break;
-        while(s.current.story.scenes.length){const id=s.current.story.scenes[0]!.id;s.acknowledgeStory(id);scenes++;record('battleScene',id);}
+      let cleared=0,defeated=false;
+      if(mode==='no-battle')s.withdraw();
+      else {
+        const battle=s.startRealtimeCampaign();
+        for(let frame=0;frame<120000&&battle.status!=='finished';frame++){
+          if(frame%6===0&&battle.phase==='combat'&&!battle.cinematic){
+            const allied=battle.units.filter(u=>u.side==='ally').reduce((n,u)=>n+u.hp,0);
+            const chosen=battle.skills.filter(k=>k.effect!=='heal'||battle.initial-allied>=k.damage*.5)
+              .filter(k=>k.effect!=='buff'||battle.buff<=0).filter(k=>k.effect!=='debuff'||battle.debuff<=0)
+              .sort((a,b)=>Number(b.effect==='heal'&&allied<battle.initial*.6)-Number(a.effect==='heal'&&allied<battle.initial*.6)||b.damage/b.cost-a.damage/a.cost);
+            for(const skill of chosen)if(s.castRealtimeSkill(skill.id))break;
+          }
+          s.advanceRealtimeCampaign(1/30);
+        }
+        if(battle.status!=='finished')throw Error('Live battle did not finish');
+        const result=s.realtimeCampaignResult();cleared=result.cleared;defeated=result.defeated;
+        record('battle',{time:battle.time,kills:battle.kills,lost:battle.lost,initial:battle.initial,casts:battle.castCount,result});
+        s.settleRealtimeCampaign();
       }
-      if(s.needsCampaign)s.withdraw();
       depths.push(cleared);
       const chapter={chapter:s.current.progress.chapterId,turn:s.current.progress.turn,cleared,defeated,career:s.current.career,attributes:s.current.attributes.values,money:s.money,earned:s.current.economy?.earned,spent:s.current.economy?.spent,abilities:s.current.abilities,roster:s.current.roster,items:s.current.items};
       chapters.push(chapter);record('chapterResult',chapter);continue;
     }
     if(!s.hasActed){
       spend();
-      const slot=policy.chooseSlot(s),preview=s.previewTraining(slot);
+      const slot=mode.includes('balanced') ? ([0,1,2,3] as const).slice().sort((a,b)=>{
+        const score=(i:0|1|2|3)=>{const p=s.previewTraining(i),line=p.meritGain.line;return p.expectedGain*3+(p.meritGain.amount+(p.hasCommission?18:0))*(s.current.career[line]<Math.max(s.current.career.civil,s.current.career.martial)?2:0.5)+(p.hasEncounter?3:0);};return score(b)-score(a);
+      })[0]! : policy.chooseSlot(s),preview=s.previewTraining(slot);
       if(!s.current.abilities.skills.length)noSkillTurns++;
       if(ATTRS.some(a=>s.current.attributes.values[a]>=s.attrCap(a)))capTurns++;
       s.selectSlot(slot);actions++;
@@ -198,9 +206,9 @@ function runLife(meta:MetaState, runSeed:number, mode:string, detailed:boolean) 
   const both=milestones.includes('shu.guanyu-rescued')&&milestones.includes('shu.kongming-rested');
   const result={runSeed,life:meta.runIndex+1,actions,events,failedEvents,scenes,storyPaid,upgrades,boughtItems,boughtFragments,noSkillsAtStart,noSkillTurns,capTurns,
     depths,chapters,choices,rarities,eventIds,uniqueEvents:Object.keys(eventIds).length,milestones,both,topNarrative:both&&summary.pointsMultiplier===2,
-    ending:summary.endingId,multiplier:summary.pointsMultiplier,career:s.current.career,rankSummit:Math.max(s.current.career.civil,s.current.career.martial)===12,
+    ending:summary.endingId,multiplier:summary.pointsMultiplier,career:s.current.career,rankSummit:Math.min(s.current.career.civil,s.current.career.martial)>=10,
     finalMoney:s.money,earned:s.current.economy?.earned,spent:s.current.economy?.spent,ledger:s.current.economy?.ledger,
-    stagesInSummary:summary.stagesCleared,points:settlement.pointsGained,starsRaised:settlement.starRaised,itemTiersRaised:settlement.itemTierRaised,
+    stagesInSummary:summary.stagesCleared,points:settlement.pointsGained,notableFragments:settlement.notableFragments,notableCodex:settlement.meta.notableCodex,starsRaised:settlement.starRaised,itemTiersRaised:settlement.itemTierRaised,
     config:draft,metaPurchasesBefore:meta.shop.purchased,abilities:s.current.abilities,finalStateHash:createHash('sha256').update(JSON.stringify(s.current)).digest('hex')};
   record('settlement',{...settlement,meta:undefined});
   return {result,meta:settlement.meta,trace};
@@ -217,16 +225,16 @@ for(const mode of modes)for(let family=0;family<families;family++){
   for(let life=0;life<maxLives;life++){
     // Same seeds between policies; all outcomes kept, including failures. No retry selection.
     const runSeed=9000+family+(life+initialLife)*100;
-    const out=runLife(meta,runSeed,resumeDir?'greedy-gain':mode,family===0);
+    const out=runLife(meta,runSeed,mode,family===0);
     meta=out.meta;
     if(out.result.topNarrative&&firstTop===null)firstTop=initialLife+life+1;
     if(out.result.rankSummit&&firstSummit===null)firstSummit=initialLife+life+1;
-    const bought=spendDestiny(meta);meta=bought.meta;
+    const bought=spendDestiny(meta,mode);meta=bought.meta;
     lives.push({...out.result,destinyPurchases:bought.purchases,remainingDestiny:meta.points});
     if(family===0)writeFileSync(`${output}/${id}-life-${initialLife+life+1}.json`,JSON.stringify(out.trace,null,2));
     // Full narrative maximum plus BOTH recorded endings and actual rank summit, not just its unlocked cap.
-    const maximumMet=requireSameLife ? out.result.topNarrative&&out.result.rankSummit : firstTop!==null&&firstSummit!==null;
-    if(maximumMet&&['ending:shu.reunion','ending:shu.dawn'].every(e=>meta.collection.reachedEndings.some(x=>String(x)===e)))break;
+    const maximumMet=mode.startsWith('wei') ? out.result.ending==='ending:pillar' : requireSameLife ? out.result.topNarrative&&out.result.rankSummit : firstTop!==null&&firstSummit!==null;
+    if(process.argv[8]!=='fixed'&&!mode.startsWith('wei')&&maximumMet&&['ending:shu.reunion','ending:shu.dawn'].every(e=>meta.collection.reachedEndings.some(x=>String(x)===e)))break;
   }
   const journey={id,mode,family,resumedFrom:resumeDir??null,initialLife,firstTop,firstSummit,lives,finalMeta:meta};
   journeys.push(journey);

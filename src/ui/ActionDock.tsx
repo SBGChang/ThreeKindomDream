@@ -15,12 +15,12 @@ export function ActionDock({s,onPick,selected,onPreview}:{s:Session;onPick:(i:Sl
   return <section className="action-dock command-dock" aria-label="本回合行動"><div className="dock-heading"><span>今日之令</span><small>擇一而行</small></div><div className="command-tokens">{SLOT_INDICES.map(i=>{
     const slot=s.current.turn.slots[i];if(!slot)return null;
     const pv=s.previewTraining(i),names=slot.notables.map(n=>t(defs.reader('notable').get(String(n)).nameKey));
-    const profile=careerPresentation(slot.attr,s.current.career),label=profile.label,quality=t(`glow.${slot.baseGlow}`),tip=`${id}-${i}`;
-    return <div className={`command-wrap quality-${slot.baseGlow} ${selected===i?'selected':''}`} key={i}>
-      <button className={`command-token attr-${slot.attr}`} aria-label={`${label}・${profile.action}，${quality}，預計獲得 ${Math.round(pv.expectedGain*100)} 經驗`} aria-describedby={tip} onPointerEnter={()=>onPreview(i)} onFocus={()=>onPreview(i)} aria-pressed={selected===i} onClick={()=>onPick(i)}>
+    const profile=careerPresentation(slot.attr,s.current.career),label=profile.label,tip=`${id}-${i}`;
+    return <div className={`command-wrap ${selected===i?'selected':''}`} key={i}>
+      <button className={`command-token attr-${slot.attr}`} aria-label={`${label}・${profile.action}`} aria-describedby={tip} onPointerEnter={()=>onPreview(i)} onFocus={()=>onPreview(i)} aria-pressed={selected===i} onClick={()=>onPick(i)}>
         {selected===i&&<UiSymbol name="arrow" className="selected-arrow"/>}<ActionEmblem attr={slot.attr}/>
       </button>
-      <div className="command-tooltip" id={tip} role="tooltip"><b>{label} · {profile.action}</b><span>{quality} · 預計{t(`attr.${slot.attr}.short`)}經驗 +{Math.round(pv.expectedGain*100)}</span><span>同行：{names.join('、')||'獨自磨練'}</span>{pv.hasCommission&&<span>「令」：本次有委託</span>}{pv.hasEncounter&&<span>「緣」：本次有人物事件</span>}</div>
+      <div className="command-tooltip" id={tip} role="tooltip"><b>{label} · {profile.action}</b><span>同行：{names.join('、')||'獨自磨練'}</span>{pv.hasCommission&&<span>「令」：本次有委託</span>}{pv.hasEncounter&&<span>「緣」：本次有人物事件</span>}</div>
     </div>;
   })}</div></section>;
 }

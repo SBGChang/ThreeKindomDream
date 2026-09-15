@@ -4,8 +4,8 @@ import { asKey } from '../../authoring.js';
 import { coreDef } from '../pack-id.js';
 
 const k = asKey;
-const REQUIRED = [0,35,80,135,205,290,390,510,650,810,990,1190];
-const HOST_SCALE = [1,1.25,1.55,1.9,2.3,2.8,3.4,4.1,4.9,5.8,6.8,8];
+const REQUIRED = [0,50,110,180,260,350,450,570,710,870,1050,1250];
+const HOST_SCALE = [1,1.15,1.32,1.52,1.75,2.01,2.31,2.66,3.06,3.52,4.05,4.66];
 const BASE_ADD = [0,0,0,0,0,0,0,0,0,0,0,0];
 
 const line = (l: CareerLine): readonly CareerRankDef[] =>

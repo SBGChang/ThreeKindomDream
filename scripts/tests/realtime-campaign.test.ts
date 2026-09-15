@@ -1,9 +1,11 @@
 import assert from 'node:assert/strict';
+import {duelClashDuration} from '../../src/app/duel-presentation.js';
 import { newSession, defs, wiring } from './harness.js';
 import { Session } from '../../src/app/session.js';
 import { begin } from '../../src/modules/campaign.js';
 import { armyCount, damageTroop, CINEMATIC_LENGTH } from '../../src/app/realtime-battle-model.js';
 import type { BattleState } from '../../src/contracts/core/realtime-battle.js';
+import {validEncounterProgress} from '../../src/app/confrontation-validation.js';
 
 function setup() {
  const original=newSession(4242).current;
@@ -17,6 +19,44 @@ function setup() {
 const step=(s:Session,seconds:number)=>{for(let i=0;i<Math.ceil(seconds*60);i++)s.advanceRealtimeCampaign(1/60);};
 const until=(s:Session,b:BattleState,predicate:()=>boolean)=>{for(let i=0;i<20000&&!predicate();i++)s.advanceRealtimeCampaign(1/60);assert.ok(predicate(),`${b.phase} ${b.status}`);};
 const s=setup(),b=s.startRealtimeCampaign();
+// Drive the production controller with a deterministic trigger, without bypassing duel rules.
+const duelSession=setup(),duelBattle=duelSession.startRealtimeCampaign();until(duelSession,duelBattle,()=>duelBattle.phase==='combat');
+duelSession.current.campaign!.confrontation!.nextRoll=0;duelSession.current.campaign!.confrontation!.rng=1972;
+until(duelSession,duelBattle,()=>duelSession.realtimeConfrontation()?.contest?.phase==='read');
+const selected=duelSession.realtimeConfrontation()!.participants.ally;
+const equipped=duelSession.current.campaign!.loadout!.commanders.map(slot=>defs.reader('notable').get(String(slot.notableId)));
+assert.equal(selected.build.war,Math.max(...equipped.map(n=>n.abilities.attrs.war)), 'the strongest equipped representative uses authored attributes');
+assert.equal(duelSession.castRealtimeSkill(duelBattle.skills[0]!.id),false,'duels lock battlefield skill spending');
+const clockBefore=duelBattle.time,supplyBefore=duelBattle.supply;assert(duelSession.answerRealtimeDuel(0));step(duelSession,duelClashDuration(duelSession.realtimeConfrontation()!.contest!)+.1);
+assert.equal(duelBattle.time,clockBefore);assert.equal(duelBattle.supply,supplyBefore);
+const duelSnapshot=JSON.parse(JSON.stringify(duelSession.current)),duelBefore=duelSnapshot.campaign.confrontation;
+assert(validEncounterProgress(duelBefore));assert.equal(duelBefore.contest!.duel!.history.length,1);
+const resumedDuel=Session.restore(wiring,duelSnapshot),resumedBattle=resumedDuel.startRealtimeCampaign();
+assert.equal(resumedBattle.status,'paused');assert.deepEqual(resumedDuel.current.campaign!.confrontation,duelBefore);
+const lockedAction=resumedDuel.realtimeConfrontation()!.contest!.duel!.enemyAction;
+assert.equal(resumedDuel.answerRealtimeDuel(2),false);step(resumedDuel,1);assert.equal(resumedDuel.realtimeConfrontation()!.contest!.duel!.enemyAction,lockedAction);
+resumedDuel.pauseRealtimeCampaign(false);
+const resumedWaiting=JSON.stringify(resumedDuel.current.campaign!.confrontation);
+step(resumedDuel,300);
+assert.equal(JSON.stringify(resumedDuel.current.campaign!.confrontation),resumedWaiting,'production save/resume never times out a duel decision');
+assert(resumedDuel.answerRealtimeDuel(2));assert.equal(resumedDuel.realtimeConfrontation()!.contest!.duel!.last!.enemy,lockedAction);
+const malformed=JSON.parse(JSON.stringify(duelBefore));malformed.contest.duel.ally.stamina=-1;assert.equal(validEncounterProgress(malformed),false);
+const foreign=JSON.parse(JSON.stringify(duelBefore));foreign.contest.enemyId='../unknown';assert.equal(validEncounterProgress(foreign),false);
+for(const victory of [true,false]){
+ const live=setup(),field=live.startRealtimeCampaign();until(live,field,()=>field.phase==='combat');
+ live.current.campaign!.confrontation!.nextRoll=0;live.current.campaign!.confrontation!.rng=1972;
+ until(live,field,()=>live.realtimeConfrontation()?.contest?.phase==='read');
+ const d=live.realtimeConfrontation()!.contest!.duel!,losing= victory?d.enemy:d.ally;
+ losing.injury=losing.injuryLimit-1;d.enemyAction=victory?'rest':'attack';
+ const carried={time:field.time,supply:field.supply,troops:armyCount(field,'ally')};
+ assert(live.answerRealtimeDuel(victory?0:2));
+ until(live,field,()=>victory?field.wave===2&&field.phase==='combat':field.status==='finished');
+ assert.equal(field.time,carried.time,'duel, retreat and wave transition do not consume battle time');
+ assert.equal(field.supply,carried.supply,'cinematic transition does not replenish supplies');
+ assert.equal(armyCount(field,'ally'),victory?carried.troops:0);
+ assert.equal(live.realtimeConfrontation()!.victories,victory?1:0);
+ if(!victory)assert.equal(live.realtimeCampaignResult().defeated,true);
+}
 assert.equal(b.initial,s.current.campaign!.host.troops);assert.equal(b.supply,s.current.campaign!.host.supply);
 assert.equal(b.skills.length,6);assert.equal(b.skills[0]!.name,defs.text(String(defs.reader('skill').get(String(s.current.campaign!.loadout!.skills[0])).nameKey)));
 assert.equal(s.startRealtimeCampaign(),b,'re-entering keeps the same battle');

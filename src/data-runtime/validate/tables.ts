@@ -68,8 +68,9 @@ export function validateGlow(c: Ctx): void {
         `order 必須覆蓋 0..${GLOW_TIERS.length - 1}`);
     }
     const prev = glows[i - 1];
-    if (prev !== undefined && c.n(g['yieldMul']) <= c.n(prev['yieldMul'])) {
-      c.push('rule', 'glowTiers', 'yieldMul', c.s(g['id']), 'yieldMul 必須沿 order 嚴格遞增');
+    // Gold/red share the successful fixed-action yield, but retain different event rarity weights.
+    if (c.n(g['yieldMul']) <= 0 || (prev !== undefined && c.n(g['yieldMul']) < c.n(prev['yieldMul']))) {
+      c.push('rule', 'glowTiers', 'yieldMul', c.s(g['id']), 'yieldMul 必須為正數且沿 order 不遞減');
     }
   });
   if (glows.reduce((acc, g) => acc + c.n(g['baseWeight']), 0) <= 0) {
@@ -268,7 +269,7 @@ export function validateLinkBonus(c: Ctx): void {
 }
 
 /**
- * 升星階梯（19 §5.3）。三欄都必須隨星階單調不減，且 star 欄必須是 0..N 連續 ——
+ * 升星階梯與在隊指導倍率。star 欄必須是 0..N 連續 ——
  * 缺一階會讓 `tierAt` 夾到別的列，玩家買到的東西與畫面顯示的不一致。
  */
 function validateStarLadder(c: Ctx): void {
@@ -289,25 +290,25 @@ function validateStarLadder(c: Ctx): void {
   if (first !== undefined && c.n(first['fragmentCost']) !== 0) {
     c.push('rule', 'notableStar', 'tiers[0].fragmentCost', id, '第 0 階（未升星）的成本必須為 0');
   }
-  let prevMul = -Infinity;
-  let prevAff = -Infinity;
+  for (const field of ['perRunCap', 'completedBase', 'minimumAttendance']) {
+    if (!Number.isSafeInteger(d[field]) || c.n(d[field]) <= 0)
+      c.push('rule', 'notableStar', field, id, '必須為正整數');
+  }
+  if (c.n(d['completedBase']) > c.n(d['perRunCap']))
+    c.push('rule', 'notableStar', 'completedBase', id, '完整同行的基礎獎勵不可超過每輪上限');
+  for (const field of ['growthByStar', 'meritByStar', 'commanderLevelByStar']) {
+    const values = c.list(d[field]);
+    if (values.length !== tiers.length || values.some((v, i) =>
+      typeof v !== 'number' || !Number.isFinite(v) || v <= 0 ||
+      (i > 0 && v < c.n(values[i - 1])) ||
+      (field === 'commanderLevelByStar' && (!Number.isSafeInteger(v) || v > tiers.length - 1))))
+      c.push('rule', 'notableStar', field, id, '每個星階都需有效、非遞減的倍率或技能等級');
+  }
   tiers.forEach((row, i) => {
     if (c.n(row['star']) !== i) {
       c.push('rule', 'notableStar', `tiers[${i}].star`, id,
         `star 必須等於索引（實得 ${c.n(row['star'])}）`, 'tierAt 以索引取列，跳號會取到別人');
     }
-    const mul = c.n(row['linkMultiplier']);
-    if (mul < prevMul) {
-      c.push('rule', 'notableStar', `tiers[${i}].linkMultiplier`, id,
-        `連動倍率倒退（前 ${prevMul}，本 ${mul}）`, '升星不該讓站位變弱');
-    }
-    prevMul = mul;
-    const aff = c.n(row['startAffinity']);
-    if (aff < prevAff) {
-      c.push('rule', 'notableStar', `tiers[${i}].startAffinity`, id,
-        `初始好感倒退（前 ${prevAff}，本 ${aff}）`, '否則升星會弄丟已解鎖的條目');
-    }
-    prevAff = aff;
     if (i > 0 && c.n(row['fragmentCost']) <= 0) {
       c.push('rule', 'notableStar', `tiers[${i}].fragmentCost`, id, '升星成本必須 > 0');
     }

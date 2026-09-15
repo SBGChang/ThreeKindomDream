@@ -1,3 +1,4 @@
+import { companionship } from './companionship.js';
 import type { CampaignDef, ChapterDef, EndingDef, EnemyDef, EventDef, NotableDef, ShopItemDef } from '../../src/contracts/core/definitions.js';
 import type { Attr, Rarity } from '../../src/contracts/core/primitives.js';
 import { campaignId, chapterId, effectId, endingId, enemyId, eventChainId, eventDefId, notableId, notablePoolId, shopItemId, skillId, traitId } from '../../src/contracts/core/ids.js';
@@ -83,7 +84,7 @@ const campaigns: readonly CampaignDef[] = shuScript.map((r, i) => {
     }),
   });
 });
-const encounters: readonly EventDef[] = roster.map(r => shuDef('event', `event:shu.${r.slug}.companionship`, {
+const introductions: readonly EventDef[] = roster.map(r => shuDef('event', `event:shu.${r.slug}.companionship`, {
   eventDefId: eventDefId(`event:shu.${r.slug}.companionship`),
   progression: { rarity: 1, previous: [] },
   trigger: { kind: 'notable', chainId: eventChainId(`chain:shu.${r.slug}`), step: 0,
@@ -97,6 +98,20 @@ const encounters: readonly EventDef[] = roster.map(r => shuDef('event', `event:s
       { kind: 'affinity', notableId: notableId(`notable:${r.slug}`), amount: 5 }],
   })),
 }));
+const encounters: readonly EventDef[] = [...introductions, ...roster.flatMap(r => (companionship[r.slug] ?? []).map(([title, body, first, second], i) => {
+  const rarity = (i + 2) as Rarity, slug = `event:shu.${r.slug}.bond${rarity}`;
+  const previous = i === 0 ? `event:shu.${r.slug}.companionship` : `event:shu.${r.slug}.bond${rarity-1}`;
+  return shuDef('event', slug, {
+    eventDefId:eventDefId(slug), progression:{rarity,previous:[eventDefId(previous)]},
+    trigger:{kind:'notable',chainId:eventChainId(`chain:shu.${r.slug}`),step:i+1,
+      cast:[{notableId:notableId(`notable:${r.slug}`),minStage:(['acquainted','friendly','close','sworn'] as const)[i]!}]},
+    unique:true,collectible:true,weight:100,paramSlots:[],requirements:[{type:'faction',value:SHU_F}],
+    titleKey:k(slug+'.title',title),bodyKey:k(slug+'.body',body),
+    options:[first,second].map((label,j)=>({tier:'story' as const,labelKey:k(slug+'.option'+j,label),requirements:[],check:null,
+      practice:[{attr:r.attr,weight:1}],rewards:[{kind:'merit' as const,merit:r.attr==='lead'||r.attr==='war'?'martial' as const:'civil' as const,amount:8},
+        {kind:'affinity' as const,notableId:notableId(`notable:${r.slug}`),amount:j===0?5:3}]})),
+  });
+}))];
 const endings: readonly EndingDef[] = [
   shuDef('ending', 'ending:shu.reunion', { ending: endingId('ending:shu.reunion'), endingKind: 'fullDream', factionId: SHU_F,
     trigger: { kind: 'sequenceCompleted' }, requirements: [], storyRequirements: [milestone('shu.guanyu-rescued'), choice('S7.B', 'pact')], priority: 604,

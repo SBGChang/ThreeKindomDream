@@ -1,5 +1,7 @@
 import { EventDialogue } from './EventDialogue.js';
 import { StoryDialogue } from './StoryDialogue.js';
+import { TrainingDialogue } from './TrainingDialogue.js';
+import { trainingReceipt, type TrainingReceipt } from './training-receipt.js';
 import { eventRewardLines, type EventReceipt } from './event-receipt.js';
 import { NotableDetail } from './NotableDetail.js';
 import {
@@ -65,6 +67,7 @@ export function ScreenRun({
   concealed = false,
 }: Props): React.ReactElement {
   const [receipt, setReceipt] = useState<EventReceipt | null>(null);
+  const [fixedReceipt, setFixedReceipt] = useState<TrainingReceipt | null>(null);
   const [selected, setSelected] = useState<SlotIndex>(0);
   const [journal, setJournal] = useState(false);
   const journalTrigger = useRef<HTMLButtonElement>(null);
@@ -118,7 +121,6 @@ export function ScreenRun({
   useEffect(() => {
     void preloadCareerTheater(activeProfile.tier).catch(() => {});
   }, [activeProfile.tier]);
-  const trainingPreview = activeSlot ? s.previewTraining(activeIndex) : null;
   const companions = (activeSlot?.notables ?? []).map((id, order) => ({
     id,
     order,
@@ -170,15 +172,14 @@ export function ScreenRun({
     const profile = careerPresentation(slot.attr, s.current.career);
     setGrowth(initial);
     setAnimating(true);
-    const before = { ...s.current.attributes.values };
+    const before = s.current;
     s.selectSlot(i);
     const r = s.current.turn.training;
     // 先讀結果再推進 —— advance 會清掉 turn.training。
     if (r !== null) {
-      const growth = s.current.attributes.values[r.attr] - before[r.attr];
+      setFixedReceipt(trainingReceipt(before, s.current, profile, defs));
       stamp(
         `【${profile.label}・${profile.action}】` +
-          `${t(`glow.${r.finalGlow}`)}${r.upgraded ? '⬆' : ''}` +
           ` ${t(`attr.${r.attr}.short`)}經驗+${Math.round(r.growthGained*100)} · 薪水+${r.salary}` +
           `　${t(`merit.${r.meritGained.line}`)}+${r.meritGained.amount}`,
       );
@@ -190,11 +191,8 @@ export function ScreenRun({
       timer.current = setTimeout(() => {
         setPerformance(null);
         setAnimating(false);
-        setGrowth(undefined);
-        busy.current = false;
-        for (const line of deferredLog.current) onLog(line);
-        deferredLog.current = [];
-        settle();
+        // The committed action stays on this turn until narration and receipt are read.
+        bump();
       }, THEATER_DURATION);
     };
     setPerformance({ profile, onReady });
@@ -239,31 +237,24 @@ export function ScreenRun({
 
   const finishDialogue = (): void => {
     setReceipt(null);
+    setFixedReceipt(null);
+    setGrowth(undefined);
     busy.current = false;
     for (const line of deferredLog.current) onLog(line);
     deferredLog.current = [];
     settle();
   };
   const dialogueOffer = receipt?.offer ?? pending;
-  const storyChoice = !animating && !dialogueOffer ? s.storyChoice : null;
+  const storyChoice = !animating && !fixedReceipt && !dialogueOffer ? s.storyChoice : null;
   return (
     <div
       inert={concealed}
       aria-hidden={concealed || undefined}
-      className={`run-screen ${concealed ? 'utility-open' : ''} ${!animating && (dialogueOffer || storyChoice) ? 'dialogue-playing' : ''} ${animating ? 'is-performing' : ''} ${performance ? 'task-playing' : animating ? 'task-growth' : ''}`}
+      className={`run-screen ${concealed ? 'utility-open' : ''} ${!animating && (fixedReceipt || dialogueOffer || storyChoice) ? 'dialogue-playing' : ''} ${fixedReceipt && !animating ? 'fixed-result-playing' : ''} ${animating ? 'is-performing' : ''} ${performance ? 'task-playing' : animating ? 'task-growth' : ''}`}
     >
       <Hud
         s={s}
         growth={growth}
-        preview={
-          animating
-            ? undefined
-            : pending
-              ? undefined
-              : activeSlot && trainingPreview
-                ? { [activeSlot.attr]: trainingPreview.expectedGain }
-                : undefined
-        }
       />
       {performance && <TaskPerformance {...performance} />}
       <div className="training-stage" aria-label="行動人物預覽">
@@ -292,7 +283,7 @@ export function ScreenRun({
           </div>;
         })}
       </div>
-      <Participants s={s} index={selected} onInspect={setInspect} concealed={Boolean(dialogueOffer || storyChoice) || concealed || animating}/>
+      <Participants s={s} index={selected} onInspect={setInspect} concealed={Boolean(fixedReceipt || dialogueOffer || storyChoice) || concealed || animating}/>
       <button
         ref={journalTrigger}
         className="journal-toggle"
@@ -302,7 +293,7 @@ export function ScreenRun({
       >
         <span className="journal-art-icon" aria-hidden="true" />
       </button>
-      {storyChoice ? <StoryDialogue key={storyChoice.id} s={s} source={storyChoice} onDone={option => { if(option) { s.chooseStory(storyChoice.id, option); settle(); } }}/> : !animating && dialogueOffer ? (
+      {!animating && fixedReceipt ? <TrainingDialogue receipt={fixedReceipt} onFinish={finishDialogue}/> : storyChoice ? <StoryDialogue key={storyChoice.id} s={s} source={storyChoice} onDone={option => { if(option) { s.chooseStory(storyChoice.id, option); settle(); } }}/> : !animating && dialogueOffer ? (
         <EventDialogue
           key={String(dialogueOffer.eventDefId)}
           s={s}
@@ -312,7 +303,7 @@ export function ScreenRun({
           onResolve={pickOption}
           onFinish={finishDialogue}
         />
-      ) : pending === null && !receipt ? (
+      ) : pending === null && !receipt && !fixedReceipt ? (
         <ActionDock
           s={s}
           onPick={pickSlot}

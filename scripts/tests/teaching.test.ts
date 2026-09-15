@@ -46,7 +46,7 @@ export function run(): void {
     it('只要獎勵的該招已滿級便折金，不必全部技能滿級', () => {
       let state = newSession(2).current;
       const skill = state.abilities.skills[0]!;
-      for (let i=0;i<2;i++) state=grantUnlock(null,skill,{state,defs},'level/'+i);
+      for (let i=0;i<4;i++) state=grantUnlock(null,skill,{state,defs},'level/'+i);
       const full = state;
       const paid = grantUnlock(null,skill,{state,defs},'mastered');
       eq(paid.abilities, full.abilities);
@@ -79,7 +79,7 @@ export function run(): void {
       const lesson = event.options[option]!.rewards.find(r=>r.kind==='unlock' && r.skill!==null)!;
       if (lesson.kind !== 'unlock' || !lesson.skill) throw new Error('缺少教學測試事件');
       let state = newSession(2).current;
-      for(let i=0;i<4;i++) {
+      for(let i=0;i<6;i++) {
         const s = Session.restore(wiring,{...state,
           progress:{...state.progress,turn:turnIndex(state.progress.turn+i)},
           turn:{...state.turn,pending:[{eventDefId:event.eventDefId,rarity:storyRarity(event),params:{},optionStates:[]}],encounterCandidates:[]},
@@ -90,7 +90,7 @@ export function run(): void {
         const result = state.turn.resolved.at(-1)!;
         const lines = eventRewardLines(before,state,result,defs);
         ok(lines.some(r => r.label.includes(defs.text(String(defs.reader('skill').get(lesson.skill!).nameKey)))), '教學結果有對話獎勵');
-        if (i===3) {
+        if (i===5) {
           ok(lines.some(r=>r.note==='金錢' && r.label.includes('滿級教學折金')), '滿級顯示折金');
           eq(lines.filter(r=>r.note==='金錢').reduce((sum,r)=>sum+(r.amount??0),0), state.economy.money-before.economy.money);
         }

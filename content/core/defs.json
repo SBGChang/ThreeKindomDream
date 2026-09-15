@@ -14,7 +14,7 @@
     ],
     "schemaVersion": 1,
     "tier": "none",
-    "yieldMul": 1
+    "yieldMul": 0.8
   },
   {
     "baseWeight": 35,
@@ -31,7 +31,7 @@
     ],
     "schemaVersion": 1,
     "tier": "silver",
-    "yieldMul": 1.15
+    "yieldMul": 1
   },
   {
     "baseWeight": 16,
@@ -48,7 +48,7 @@
     ],
     "schemaVersion": 1,
     "tier": "gold",
-    "yieldMul": 1.35
+    "yieldMul": 1.5
   },
   {
     "baseWeight": 4,
@@ -65,7 +65,7 @@
     ],
     "schemaVersion": 1,
     "tier": "red",
-    "yieldMul": 1.6
+    "yieldMul": 1.5
   },
   {
     "attrCap": 59,
@@ -399,13 +399,13 @@
     "baseStartAffinity": 20,
     "designateStar": 2,
     "fragmentsByStage": {
-      "acquainted": 5,
-      "close": 30,
-      "friendly": 15,
+      "acquainted": 10,
+      "close": 40,
+      "friendly": 25,
       "stranger": 0,
-      "sworn": 50
+      "sworn": 60
     },
-    "fullDreamMultiplier": 2,
+    "fullDreamMultiplier": 1,
     "id": "affCurve:main",
     "kind": "affinityCurve",
     "packId": "pack:core",
@@ -432,16 +432,43 @@
     "slotBaseWeight": 10
   },
   {
+    "commanderLevelByStar": [
+      1,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "completedBase": 40,
     "costByRarity": {
-      "1": 0.6,
-      "2": 0.8,
+      "1": 1,
+      "2": 1,
       "3": 1,
-      "4": 1.4,
-      "5": 2
+      "4": 1,
+      "5": 1
     },
+    "growthByStar": [
+      1,
+      1.25,
+      1.65,
+      2.4,
+      3.6,
+      5.8
+    ],
     "id": "star:main",
     "kind": "notableStar",
+    "meritByStar": [
+      1,
+      1.1,
+      1.25,
+      1.5,
+      1.9,
+      2.6
+    ],
+    "minimumAttendance": 8,
     "packId": "pack:core",
+    "perRunCap": 100,
     "schemaVersion": 1,
     "tiers": [
       {
@@ -449,23 +476,23 @@
         "star": 0
       },
       {
-        "fragmentCost": 20,
+        "fragmentCost": 100,
         "star": 1
       },
       {
-        "fragmentCost": 35,
+        "fragmentCost": 100,
         "star": 2
       },
       {
-        "fragmentCost": 60,
+        "fragmentCost": 200,
         "star": 3
       },
       {
-        "fragmentCost": 100,
+        "fragmentCost": 300,
         "star": 4
       },
       {
-        "fragmentCost": 160,
+        "fragmentCost": 500,
         "star": 5
       }
     ]
@@ -482,7 +509,7 @@
     "carrySlots": 2,
     "commissionChance": 0.5,
     "companionCount": 3,
-    "designateBase": 0,
+    "designateBase": 3,
     "encounterChance": 0.35,
     "id": "rules:main",
     "kind": "gameRules",
@@ -608,8 +635,8 @@
         8
       ],
       "compensationTurns": 16,
-      "discountFloor": 0.6,
-      "extraGrowthCap": 0.2,
+      "discountFloor": 0.8,
+      "extraGrowthCap": 0.1,
       "fixedGrowth": [
         2.4,
         2.55,
@@ -621,7 +648,7 @@
         3.45,
         3.6
       ],
-      "fixedGrowthCap": 6,
+      "fixedGrowthCap": 100,
       "fixedSalary": [
         20,
         25,
@@ -647,23 +674,23 @@
         },
         {
           "max": 60,
-          "ratio": 0.8
+          "ratio": 0.5
         },
         {
           "max": 75,
-          "ratio": 0.6
+          "ratio": 0.285714
         },
         {
           "max": 85,
-          "ratio": 0.4
+          "ratio": 0.181818
         },
         {
           "max": 95,
-          "ratio": 0.25
+          "ratio": 0.105263
         },
         {
           "max": 100,
-          "ratio": 0.15
+          "ratio": 0.058824
         }
       ],
       "interactionFragmentCaps": [
@@ -691,22 +718,28 @@
         560,
         900
       ],
-      "legacyBaseRatio": 0.1,
+      "legacyBaseRatio": 0.02,
       "lessonChapters": {
         "common": [
           1,
           1,
-          2
+          1,
+          1,
+          1
         ],
         "fine": [
-          2,
-          2,
-          3
+          1,
+          1,
+          1,
+          1,
+          1
         ],
         "peerless": [
-          3,
-          4,
-          4
+          1,
+          1,
+          1,
+          1,
+          1
         ]
       },
       "newcomerBonus": [
@@ -737,35 +770,47 @@
       "primaryNeeds": {
         "common": [
           20,
-          35,
-          50
+          40,
+          60,
+          75,
+          90
         ],
         "fine": [
+          20,
           40,
-          55,
-          70
+          60,
+          75,
+          90
         ],
         "peerless": [
-          65,
-          80,
+          20,
+          40,
+          60,
+          75,
           90
         ]
       },
       "secondaryNeeds": {
         "common": [
           0,
-          0,
-          0
+          25,
+          40,
+          55,
+          70
         ],
         "fine": [
+          0,
           25,
-          35,
-          45
+          40,
+          55,
+          70
         ],
         "peerless": [
+          0,
+          25,
           40,
-          50,
-          60
+          55,
+          70
         ]
       },
       "shopChapterCaps": [
@@ -812,19 +857,25 @@
       ],
       "skillPrices": {
         "common": [
-          100,
+          0,
+          80,
           160,
-          240
-        ],
-        "fine": [
-          260,
-          360,
+          300,
           500
         ],
+        "fine": [
+          0,
+          100,
+          200,
+          375,
+          625
+        ],
         "peerless": [
-          650,
-          850,
-          1100
+          0,
+          120,
+          240,
+          450,
+          750
         ]
       },
       "standingGrowth": {
@@ -834,7 +885,7 @@
         "stranger": 0,
         "sworn": 0.1
       },
-      "standingGrowthCap": 0.3,
+      "standingGrowthCap": 0.1,
       "startBonusCap": 40,
       "startingMoney": 120,
       "storyAffinity": [
@@ -886,25 +937,33 @@
         100
       ],
       "traitPower": [
-        0.6,
+        0.4,
+        0.5,
+        0.65,
         0.8,
         1
       ],
       "traitPrices": {
         "common": [
-          80,
+          0,
+          60,
           120,
-          180
-        ],
-        "fine": [
-          220,
-          300,
+          240,
           420
         ],
+        "fine": [
+          0,
+          75,
+          150,
+          300,
+          525
+        ],
         "peerless": [
-          520,
-          700,
-          900
+          0,
+          90,
+          180,
+          360,
+          630
         ]
       }
     },
@@ -913,14 +972,16 @@
     "learning": {
       "power": [
         1,
-        1.18,
-        1.38
+        1.2,
+        1.45,
+        1.75,
+        2.1
       ]
     },
     "packId": "pack:core",
     "schemaVersion": 1,
-    "startMax": 30,
-    "startMin": 15,
+    "startMax": 26,
+    "startMin": 18,
     "teachStage": {
       "common": "acquainted",
       "fine": "friendly",
@@ -942,27 +1003,39 @@
       "sworn": 0.7
     },
     "crossLineRatio": 0.5,
+    "duel": {
+      "genericByChapter": [
+        43,
+        51,
+        59,
+        67,
+        75,
+        83,
+        90,
+        90
+      ]
+    },
     "enemyDamageByChapter": [
-      65,
-      95,
-      125,
-      160,
-      160,
-      160,
-      165,
-      170,
-      175
+      38,
+      48,
+      60,
+      72,
+      74,
+      76,
+      78,
+      80,
+      82
     ],
     "enemyTroopsByChapter": [
-      515,
-      920,
-      1700,
-      4210,
-      4500,
-      4700,
-      4900,
-      5100,
-      5300
+      180,
+      280,
+      400,
+      550,
+      570,
+      590,
+      610,
+      630,
+      650
     ],
     "id": "battle:main",
     "kind": "battleRule",
@@ -1001,6 +1074,7 @@
       "war": 150
     },
     "descKey": "trait.danshi.desc",
+    "duelTrait": "momentum",
     "effects": [
       {
         "funcType": "StatModifier",
@@ -1021,6 +1095,7 @@
       "lead": 150
     },
     "descKey": "trait.chenyi.desc",
+    "duelTrait": "steady",
     "effects": [
       {
         "funcType": "StatModifier",
@@ -1041,6 +1116,7 @@
       "pol": 150
     },
     "descKey": "trait.liande.desc",
+    "duelTrait": "breathing",
     "effects": [
       {
         "funcType": "StatModifier",
@@ -1061,6 +1137,7 @@
       "int": 150
     },
     "descKey": "trait.jimin.desc",
+    "duelTrait": "reversal",
     "effects": [
       {
         "funcType": "StatModifier",
@@ -1082,6 +1159,7 @@
       "war": 220
     },
     "descKey": "trait.linzhen.desc",
+    "duelTrait": "steady",
     "effects": [
       {
         "funcType": "StatModifier",
@@ -1107,6 +1185,7 @@
       "pol": 220
     },
     "descKey": "trait.zhechong.desc",
+    "duelTrait": "breathing",
     "effects": [
       {
         "funcType": "StatModifier",
@@ -1128,6 +1207,7 @@
       "pol": 150
     },
     "descKey": "trait.liaodi.desc",
+    "duelTrait": "reversal",
     "effects": [
       {
         "funcType": "StatModifier",
@@ -1150,6 +1230,7 @@
       "war": 300
     },
     "descKey": "trait.wanrendi.desc",
+    "duelTrait": "momentum",
     "effects": [
       {
         "funcType": "StatModifier",
@@ -1172,6 +1253,7 @@
       "pol": 220
     },
     "descKey": "trait.jingwei.desc",
+    "duelTrait": "reversal",
     "effects": [
       {
         "funcType": "StatModifier",
@@ -1220,7 +1302,7 @@
       "actorAttr": "war",
       "duration": 0,
       "kind": "physical",
-      "ratio": 0.3
+      "ratio": 0.195
     },
     "cost": {
       "war": 210
@@ -1239,7 +1321,7 @@
       "actorAttr": "war",
       "duration": 0,
       "kind": "physical",
-      "ratio": 0.5
+      "ratio": 0.325
     },
     "cost": {
       "lead": 210,
@@ -1259,7 +1341,7 @@
       "actorAttr": "war",
       "duration": 0,
       "kind": "physical",
-      "ratio": 0.85
+      "ratio": 0.5525
     },
     "cost": {
       "int": 210,
@@ -1280,7 +1362,7 @@
       "actorAttr": "int",
       "duration": 0,
       "kind": "magic",
-      "ratio": 0.32
+      "ratio": 0.208
     },
     "cost": {
       "int": 210
@@ -1299,7 +1381,7 @@
       "actorAttr": "int",
       "duration": 0,
       "kind": "magic",
-      "ratio": 0.52
+      "ratio": 0.338
     },
     "cost": {
       "int": 280,
@@ -1319,7 +1401,7 @@
       "actorAttr": "int",
       "duration": 0,
       "kind": "magic",
-      "ratio": 0.88
+      "ratio": 0.572
     },
     "cost": {
       "int": 380,
@@ -1340,7 +1422,7 @@
       "actorAttr": "pol",
       "duration": 0,
       "kind": "heal",
-      "ratio": 0.28
+      "ratio": 0.182
     },
     "cost": {
       "pol": 210
@@ -1359,7 +1441,7 @@
       "actorAttr": "pol",
       "duration": 0,
       "kind": "heal",
-      "ratio": 0.46
+      "ratio": 0.299
     },
     "cost": {
       "int": 210,
@@ -1379,7 +1461,7 @@
       "actorAttr": "pol",
       "duration": 0,
       "kind": "heal",
-      "ratio": 0.75
+      "ratio": 0.4875
     },
     "cost": {
       "int": 280,
@@ -1400,7 +1482,7 @@
       "actorAttr": "lead",
       "duration": 0,
       "kind": "physical",
-      "ratio": 0.24
+      "ratio": 0.156
     },
     "cost": {
       "lead": 210
@@ -1419,7 +1501,7 @@
       "actorAttr": "pol",
       "duration": 0,
       "kind": "magic",
-      "ratio": 0.26
+      "ratio": 0.169
     },
     "cost": {
       "pol": 210
@@ -1438,7 +1520,7 @@
       "actorAttr": "lead",
       "duration": 3,
       "kind": "buff",
-      "ratio": 0.18
+      "ratio": 0.117
     },
     "cost": {
       "lead": 210
@@ -1457,7 +1539,7 @@
       "actorAttr": "lead",
       "duration": 3,
       "kind": "debuff",
-      "ratio": 0.22
+      "ratio": 0.143
     },
     "cost": {
       "lead": 280,
@@ -1477,7 +1559,7 @@
       "actorAttr": "lead",
       "duration": 4,
       "kind": "buff",
-      "ratio": 0.35
+      "ratio": 0.2275
     },
     "cost": {
       "lead": 380,
@@ -1577,7 +1659,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.66
+        "troopsMul": 1
       },
       {
         "boss": null,
@@ -1609,7 +1691,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.76
+        "troopsMul": 1.18
       },
       {
         "boss": "enemy:bocai",
@@ -1641,7 +1723,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 0.87
+        "troopsMul": 1.4
       },
       {
         "boss": null,
@@ -1673,7 +1755,7 @@
             "kind": "money"
           }
         ],
-        "troopsMul": 1
+        "troopsMul": 2.4
       },
       {
         "boss": "enemy:zhangliang",
@@ -1710,7 +1792,7 @@
             "trait": null
           }
         ],
-        "troopsMul": 1.15
+        "troopsMul": 3
       },
       {
         "boss": null,
@@ -1747,7 +1829,7 @@
             "trait": "trait:danshi"
           }
         ],
-        "troopsMul": 1.32
+        "troopsMul": 3.7
       },
       {
         "boss": "enemy:zhangjiao",
@@ -1784,7 +1866,7 @@
             "trait": null
           }
         ],
-        "troopsMul": 1.52
+        "troopsMul": 4.6
       }
     ]
   },
@@ -1861,8 +1943,8 @@
     "descKey": "talent.noble-house.desc",
     "effects": [
       {
-        "funcType": "DesignateSlots",
-        "referId": 8001
+        "funcType": "AffinityGrant",
+        "referId": 5002
       }
     ],
     "exclusiveGroup": "designate",
@@ -1878,8 +1960,12 @@
     "descKey": "talent.great-clan.desc",
     "effects": [
       {
-        "funcType": "DesignateSlots",
-        "referId": 8002
+        "funcType": "AffinityGrant",
+        "referId": 5002
+      },
+      {
+        "funcType": "AffinityGrant",
+        "referId": 5003
       }
     ],
     "exclusiveGroup": "designate",
@@ -2057,7 +2143,7 @@
     "kind": "shopItem",
     "levels": [
       {
-        "cost": 400,
+        "cost": 300,
         "grant": {
           "attr": "lead",
           "kind": "aptitudeCap",
@@ -2066,7 +2152,7 @@
         "level": 1
       },
       {
-        "cost": 1200,
+        "cost": 900,
         "grant": {
           "attr": "lead",
           "kind": "aptitudeCap",
@@ -2075,7 +2161,7 @@
         "level": 2
       },
       {
-        "cost": 3000,
+        "cost": 2400,
         "grant": {
           "attr": "lead",
           "kind": "aptitudeCap",
@@ -2098,7 +2184,7 @@
     "kind": "shopItem",
     "levels": [
       {
-        "cost": 400,
+        "cost": 300,
         "grant": {
           "attr": "war",
           "kind": "aptitudeCap",
@@ -2107,7 +2193,7 @@
         "level": 1
       },
       {
-        "cost": 1200,
+        "cost": 900,
         "grant": {
           "attr": "war",
           "kind": "aptitudeCap",
@@ -2116,7 +2202,7 @@
         "level": 2
       },
       {
-        "cost": 3000,
+        "cost": 2400,
         "grant": {
           "attr": "war",
           "kind": "aptitudeCap",
@@ -2139,7 +2225,7 @@
     "kind": "shopItem",
     "levels": [
       {
-        "cost": 400,
+        "cost": 300,
         "grant": {
           "attr": "int",
           "kind": "aptitudeCap",
@@ -2148,7 +2234,7 @@
         "level": 1
       },
       {
-        "cost": 1200,
+        "cost": 900,
         "grant": {
           "attr": "int",
           "kind": "aptitudeCap",
@@ -2157,7 +2243,7 @@
         "level": 2
       },
       {
-        "cost": 3000,
+        "cost": 2400,
         "grant": {
           "attr": "int",
           "kind": "aptitudeCap",
@@ -2180,7 +2266,7 @@
     "kind": "shopItem",
     "levels": [
       {
-        "cost": 400,
+        "cost": 300,
         "grant": {
           "attr": "pol",
           "kind": "aptitudeCap",
@@ -2189,7 +2275,7 @@
         "level": 1
       },
       {
-        "cost": 1200,
+        "cost": 900,
         "grant": {
           "attr": "pol",
           "kind": "aptitudeCap",
@@ -2198,7 +2284,7 @@
         "level": 2
       },
       {
-        "cost": 3000,
+        "cost": 2400,
         "grant": {
           "attr": "pol",
           "kind": "aptitudeCap",
@@ -2221,7 +2307,7 @@
     "kind": "shopItem",
     "levels": [
       {
-        "cost": 500,
+        "cost": 300,
         "grant": {
           "delta": 1,
           "kind": "careerCap"
@@ -2229,7 +2315,7 @@
         "level": 1
       },
       {
-        "cost": 900,
+        "cost": 500,
         "grant": {
           "delta": 1,
           "kind": "careerCap"
@@ -2237,7 +2323,7 @@
         "level": 2
       },
       {
-        "cost": 1600,
+        "cost": 800,
         "grant": {
           "delta": 1,
           "kind": "careerCap"
@@ -2245,7 +2331,7 @@
         "level": 3
       },
       {
-        "cost": 2600,
+        "cost": 1200,
         "grant": {
           "delta": 1,
           "kind": "careerCap"
@@ -2253,7 +2339,7 @@
         "level": 4
       },
       {
-        "cost": 4000,
+        "cost": 1800,
         "grant": {
           "delta": 1,
           "kind": "careerCap"
@@ -2261,7 +2347,7 @@
         "level": 5
       },
       {
-        "cost": 6000,
+        "cost": 2400,
         "grant": {
           "delta": 1,
           "kind": "careerCap"
@@ -2269,7 +2355,7 @@
         "level": 6
       },
       {
-        "cost": 9000,
+        "cost": 3000,
         "grant": {
           "delta": 1,
           "kind": "careerCap"
@@ -2299,28 +2385,44 @@
         "level": 1
       },
       {
-        "cost": 700,
+        "cost": 600,
         "grant": {
-          "delta": 2,
+          "delta": 3,
           "kind": "aptitudePoints"
         },
         "level": 2
       },
       {
-        "cost": 1400,
+        "cost": 1000,
         "grant": {
-          "delta": 3,
+          "delta": 4,
           "kind": "aptitudePoints"
         },
         "level": 3
       },
       {
-        "cost": 2600,
+        "cost": 1500,
         "grant": {
-          "delta": 3,
+          "delta": 5,
           "kind": "aptitudePoints"
         },
         "level": 4
+      },
+      {
+        "cost": 2600,
+        "grant": {
+          "delta": 8,
+          "kind": "aptitudePoints"
+        },
+        "level": 5
+      },
+      {
+        "cost": 4000,
+        "grant": {
+          "delta": 10,
+          "kind": "aptitudePoints"
+        },
+        "level": 6
       }
     ],
     "nameKey": "shop.aptPoints.name",
@@ -2337,7 +2439,7 @@
     "kind": "shopItem",
     "levels": [
       {
-        "cost": 350,
+        "cost": 500,
         "grant": {
           "delta": 2,
           "kind": "talentPoints"
@@ -2345,7 +2447,7 @@
         "level": 1
       },
       {
-        "cost": 900,
+        "cost": 1000,
         "grant": {
           "delta": 2,
           "kind": "talentPoints"
@@ -2353,12 +2455,28 @@
         "level": 2
       },
       {
-        "cost": 1800,
+        "cost": 2000,
         "grant": {
-          "delta": 3,
+          "delta": 2,
           "kind": "talentPoints"
         },
         "level": 3
+      },
+      {
+        "cost": 3500,
+        "grant": {
+          "delta": 2,
+          "kind": "talentPoints"
+        },
+        "level": 4
+      },
+      {
+        "cost": 5000,
+        "grant": {
+          "delta": 2,
+          "kind": "talentPoints"
+        },
+        "level": 5
       }
     ],
     "nameKey": "shop.talentPoints.name",
@@ -2375,7 +2493,7 @@
     "kind": "shopItem",
     "levels": [
       {
-        "cost": 500,
+        "cost": 600,
         "grant": {
           "kind": "effect",
           "ref": {
@@ -2386,7 +2504,7 @@
         "level": 1
       },
       {
-        "cost": 1300,
+        "cost": 1200,
         "grant": {
           "kind": "effect",
           "ref": {
@@ -2397,7 +2515,7 @@
         "level": 2
       },
       {
-        "cost": 2800,
+        "cost": 2200,
         "grant": {
           "kind": "effect",
           "ref": {
@@ -2408,7 +2526,7 @@
         "level": 3
       },
       {
-        "cost": 5500,
+        "cost": 3600,
         "grant": {
           "kind": "effect",
           "ref": {
@@ -2433,7 +2551,7 @@
     "kind": "shopItem",
     "levels": [
       {
-        "cost": 250,
+        "cost": 300,
         "grant": {
           "kind": "unlockTalent",
           "talentId": "talent:photographic"
@@ -2441,7 +2559,7 @@
         "level": 1
       },
       {
-        "cost": 250,
+        "cost": 500,
         "grant": {
           "kind": "unlockTalent",
           "talentId": "talent:diligence"
@@ -2449,7 +2567,7 @@
         "level": 2
       },
       {
-        "cost": 450,
+        "cost": 800,
         "grant": {
           "kind": "unlockTalent",
           "talentId": "talent:brawn"
@@ -2457,7 +2575,7 @@
         "level": 3
       },
       {
-        "cost": 600,
+        "cost": 1200,
         "grant": {
           "kind": "unlockTalent",
           "talentId": "talent:sudden-fame"
@@ -2465,7 +2583,7 @@
         "level": 4
       },
       {
-        "cost": 600,
+        "cost": 1800,
         "grant": {
           "kind": "unlockTalent",
           "talentId": "talent:wide-circle"
@@ -2473,7 +2591,7 @@
         "level": 5
       },
       {
-        "cost": 800,
+        "cost": 2600,
         "grant": {
           "kind": "unlockTalent",
           "talentId": "talent:keen-eye"
@@ -2481,7 +2599,7 @@
         "level": 6
       },
       {
-        "cost": 1500,
+        "cost": 3600,
         "grant": {
           "kind": "unlockTalent",
           "talentId": "talent:destined"
@@ -2503,7 +2621,7 @@
     "kind": "shopItem",
     "levels": [
       {
-        "cost": 600,
+        "cost": 500,
         "grant": {
           "faction": "faction:wei",
           "kind": "factionBond",
@@ -2512,7 +2630,7 @@
         "level": 1
       },
       {
-        "cost": 1500,
+        "cost": 1000,
         "grant": {
           "faction": "faction:wei",
           "kind": "factionBond",
@@ -2521,7 +2639,7 @@
         "level": 2
       },
       {
-        "cost": 3200,
+        "cost": 2000,
         "grant": {
           "faction": "faction:wei",
           "kind": "factionBond",
@@ -2537,13 +2655,33 @@
     "schemaVersion": 1
   },
   {
-    "fullDreamBonus": 1200,
+    "endingBonuses": [
+      {
+        "multiplier": 1,
+        "points": 0
+      },
+      {
+        "multiplier": 1.4,
+        "points": 100
+      },
+      {
+        "multiplier": 1.8,
+        "points": 200
+      },
+      {
+        "multiplier": 2,
+        "points": 300
+      }
+    ],
+    "fullDreamBonus": 200,
     "id": "settle:main",
     "kind": "settlementFormula",
     "packId": "pack:core",
-    "perCareerRank": 150,
-    "perChapterPassed": 250,
-    "perTurnSurvived": 12,
+    "perCareerRank": 10,
+    "perChapterPassed": 60,
+    "perStage": 10,
+    "perTurnSurvived": 10,
+    "referenceChapters": 4,
     "schemaVersion": 1
   },
   {
@@ -8671,134 +8809,134 @@
     "trainingBaseAdd": 0
   },
   {
-    "hostScale": 1.25,
+    "hostScale": 1.15,
     "id": "rank:civil.2",
     "kind": "careerRank",
     "level": 2,
     "line": "civil",
     "nameKey": "career.civil.2",
     "packId": "pack:core",
-    "requiredMerit": 35,
+    "requiredMerit": 50,
     "schemaVersion": 1,
     "trainingBaseAdd": 0
   },
   {
-    "hostScale": 1.55,
+    "hostScale": 1.32,
     "id": "rank:civil.3",
     "kind": "careerRank",
     "level": 3,
     "line": "civil",
     "nameKey": "career.civil.3",
     "packId": "pack:core",
-    "requiredMerit": 80,
+    "requiredMerit": 110,
     "schemaVersion": 1,
     "trainingBaseAdd": 0
   },
   {
-    "hostScale": 1.9,
+    "hostScale": 1.52,
     "id": "rank:civil.4",
     "kind": "careerRank",
     "level": 4,
     "line": "civil",
     "nameKey": "career.civil.4",
     "packId": "pack:core",
-    "requiredMerit": 135,
+    "requiredMerit": 180,
     "schemaVersion": 1,
     "trainingBaseAdd": 0
   },
   {
-    "hostScale": 2.3,
+    "hostScale": 1.75,
     "id": "rank:civil.5",
     "kind": "careerRank",
     "level": 5,
     "line": "civil",
     "nameKey": "career.civil.5",
     "packId": "pack:core",
-    "requiredMerit": 205,
+    "requiredMerit": 260,
     "schemaVersion": 1,
     "trainingBaseAdd": 0
   },
   {
-    "hostScale": 2.8,
+    "hostScale": 2.01,
     "id": "rank:civil.6",
     "kind": "careerRank",
     "level": 6,
     "line": "civil",
     "nameKey": "career.civil.6",
     "packId": "pack:core",
-    "requiredMerit": 290,
+    "requiredMerit": 350,
     "schemaVersion": 1,
     "trainingBaseAdd": 0
   },
   {
-    "hostScale": 3.4,
+    "hostScale": 2.31,
     "id": "rank:civil.7",
     "kind": "careerRank",
     "level": 7,
     "line": "civil",
     "nameKey": "career.civil.7",
     "packId": "pack:core",
-    "requiredMerit": 390,
+    "requiredMerit": 450,
     "schemaVersion": 1,
     "trainingBaseAdd": 0
   },
   {
-    "hostScale": 4.1,
+    "hostScale": 2.66,
     "id": "rank:civil.8",
     "kind": "careerRank",
     "level": 8,
     "line": "civil",
     "nameKey": "career.civil.8",
     "packId": "pack:core",
-    "requiredMerit": 510,
+    "requiredMerit": 570,
     "schemaVersion": 1,
     "trainingBaseAdd": 0
   },
   {
-    "hostScale": 4.9,
+    "hostScale": 3.06,
     "id": "rank:civil.9",
     "kind": "careerRank",
     "level": 9,
     "line": "civil",
     "nameKey": "career.civil.9",
     "packId": "pack:core",
-    "requiredMerit": 650,
+    "requiredMerit": 710,
     "schemaVersion": 1,
     "trainingBaseAdd": 0
   },
   {
-    "hostScale": 5.8,
+    "hostScale": 3.52,
     "id": "rank:civil.10",
     "kind": "careerRank",
     "level": 10,
     "line": "civil",
     "nameKey": "career.civil.10",
     "packId": "pack:core",
-    "requiredMerit": 810,
+    "requiredMerit": 870,
     "schemaVersion": 1,
     "trainingBaseAdd": 0
   },
   {
-    "hostScale": 6.8,
+    "hostScale": 4.05,
     "id": "rank:civil.11",
     "kind": "careerRank",
     "level": 11,
     "line": "civil",
     "nameKey": "career.civil.11",
     "packId": "pack:core",
-    "requiredMerit": 990,
+    "requiredMerit": 1050,
     "schemaVersion": 1,
     "trainingBaseAdd": 0
   },
   {
-    "hostScale": 8,
+    "hostScale": 4.66,
     "id": "rank:civil.12",
     "kind": "careerRank",
     "level": 12,
     "line": "civil",
     "nameKey": "career.civil.12",
     "packId": "pack:core",
-    "requiredMerit": 1190,
+    "requiredMerit": 1250,
     "schemaVersion": 1,
     "trainingBaseAdd": 0
   },
@@ -8815,139 +8953,143 @@
     "trainingBaseAdd": 0
   },
   {
-    "hostScale": 1.25,
+    "hostScale": 1.15,
     "id": "rank:martial.2",
     "kind": "careerRank",
     "level": 2,
     "line": "martial",
     "nameKey": "career.martial.2",
     "packId": "pack:core",
-    "requiredMerit": 35,
+    "requiredMerit": 50,
     "schemaVersion": 1,
     "trainingBaseAdd": 0
   },
   {
-    "hostScale": 1.55,
+    "hostScale": 1.32,
     "id": "rank:martial.3",
     "kind": "careerRank",
     "level": 3,
     "line": "martial",
     "nameKey": "career.martial.3",
     "packId": "pack:core",
-    "requiredMerit": 80,
+    "requiredMerit": 110,
     "schemaVersion": 1,
     "trainingBaseAdd": 0
   },
   {
-    "hostScale": 1.9,
+    "hostScale": 1.52,
     "id": "rank:martial.4",
     "kind": "careerRank",
     "level": 4,
     "line": "martial",
     "nameKey": "career.martial.4",
     "packId": "pack:core",
-    "requiredMerit": 135,
+    "requiredMerit": 180,
     "schemaVersion": 1,
     "trainingBaseAdd": 0
   },
   {
-    "hostScale": 2.3,
+    "hostScale": 1.75,
     "id": "rank:martial.5",
     "kind": "careerRank",
     "level": 5,
     "line": "martial",
     "nameKey": "career.martial.5",
     "packId": "pack:core",
-    "requiredMerit": 205,
+    "requiredMerit": 260,
     "schemaVersion": 1,
     "trainingBaseAdd": 0
   },
   {
-    "hostScale": 2.8,
+    "hostScale": 2.01,
     "id": "rank:martial.6",
     "kind": "careerRank",
     "level": 6,
     "line": "martial",
     "nameKey": "career.martial.6",
     "packId": "pack:core",
-    "requiredMerit": 290,
+    "requiredMerit": 350,
     "schemaVersion": 1,
     "trainingBaseAdd": 0
   },
   {
-    "hostScale": 3.4,
+    "hostScale": 2.31,
     "id": "rank:martial.7",
     "kind": "careerRank",
     "level": 7,
     "line": "martial",
     "nameKey": "career.martial.7",
     "packId": "pack:core",
-    "requiredMerit": 390,
+    "requiredMerit": 450,
     "schemaVersion": 1,
     "trainingBaseAdd": 0
   },
   {
-    "hostScale": 4.1,
+    "hostScale": 2.66,
     "id": "rank:martial.8",
     "kind": "careerRank",
     "level": 8,
     "line": "martial",
     "nameKey": "career.martial.8",
     "packId": "pack:core",
-    "requiredMerit": 510,
+    "requiredMerit": 570,
     "schemaVersion": 1,
     "trainingBaseAdd": 0
   },
   {
-    "hostScale": 4.9,
+    "hostScale": 3.06,
     "id": "rank:martial.9",
     "kind": "careerRank",
     "level": 9,
     "line": "martial",
     "nameKey": "career.martial.9",
     "packId": "pack:core",
-    "requiredMerit": 650,
+    "requiredMerit": 710,
     "schemaVersion": 1,
     "trainingBaseAdd": 0
   },
   {
-    "hostScale": 5.8,
+    "hostScale": 3.52,
     "id": "rank:martial.10",
     "kind": "careerRank",
     "level": 10,
     "line": "martial",
     "nameKey": "career.martial.10",
     "packId": "pack:core",
-    "requiredMerit": 810,
+    "requiredMerit": 870,
     "schemaVersion": 1,
     "trainingBaseAdd": 0
   },
   {
-    "hostScale": 6.8,
+    "hostScale": 4.05,
     "id": "rank:martial.11",
     "kind": "careerRank",
     "level": 11,
     "line": "martial",
     "nameKey": "career.martial.11",
     "packId": "pack:core",
-    "requiredMerit": 990,
+    "requiredMerit": 1050,
     "schemaVersion": 1,
     "trainingBaseAdd": 0
   },
   {
-    "hostScale": 8,
+    "hostScale": 4.66,
     "id": "rank:martial.12",
     "kind": "careerRank",
     "level": 12,
     "line": "martial",
     "nameKey": "career.martial.12",
     "packId": "pack:core",
-    "requiredMerit": 1190,
+    "requiredMerit": 1250,
     "schemaVersion": 1,
     "trainingBaseAdd": 0
   },
   {
     "bodyKey": "ending.pillar.body",
+    "campaignRequirements": {
+      "finalDepth": 7,
+      "priorDepth": 6
+    },
     "collectible": true,
     "ending": "ending:pillar",
     "endingKind": "fullDream",
@@ -8961,12 +9103,12 @@
       {
         "stat": "career.civil",
         "type": "statGte",
-        "value": 5
+        "value": 10
       },
       {
         "stat": "career.martial",
         "type": "statGte",
-        "value": 5
+        "value": 10
       }
     ],
     "schemaVersion": 1,
@@ -8977,6 +9119,10 @@
   },
   {
     "bodyKey": "ending.chancellor.body",
+    "campaignRequirements": {
+      "finalDepth": 5,
+      "priorDepth": 0
+    },
     "collectible": true,
     "ending": "ending:chancellor",
     "endingKind": "fullDream",
@@ -8990,7 +9136,7 @@
       {
         "stat": "career.civil",
         "type": "statGte",
-        "value": 6
+        "value": 10
       }
     ],
     "schemaVersion": 1,
@@ -9001,6 +9147,10 @@
   },
   {
     "bodyKey": "ending.grand-general.body",
+    "campaignRequirements": {
+      "finalDepth": 5,
+      "priorDepth": 0
+    },
     "collectible": true,
     "ending": "ending:grand-general",
     "endingKind": "fullDream",
@@ -9014,7 +9164,7 @@
       {
         "stat": "career.martial",
         "type": "statGte",
-        "value": 6
+        "value": 10
       }
     ],
     "schemaVersion": 1,

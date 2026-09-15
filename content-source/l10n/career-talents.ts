@@ -30,9 +30,9 @@ export const careerTalentTexts: Record<string, string> = {
   'talent.keen-eye.desc': '戰報顯示每一條加成的來源與數值',
 
   'talent.noble-house.name': '世家門閥',
-  'talent.noble-house.desc': '入伍時可自行指定一位同伴，其餘由皇甫嵩指派',
+  'talent.noble-house.desc': '全體同行初始好感 +8；完成過同行的人可免費再邀請',
   'talent.great-clan.name': '累世公卿',
-  'talent.great-clan.desc': '三位同伴全由你自己指定',
+  'talent.great-clan.desc': '全體同行初始好感 +18；完成過同行的人可免費再邀請',
 
   'shop.career.name': '官途',
   'shop.career.desc': '解放本輪官階能爬到的最高階（第一輪到都尉／功曹為止）',
@@ -54,5 +54,5 @@ export const careerTalentTexts: Record<string, string> = {
   'shop.glowUpgrade.name': '升階機率',
   'shop.glowUpgrade.desc': '提高鍛鍊的升階判定機率',
   'shop.bond.wei.name': '魏 · 勢力緣分',
-  'shop.bond.wei.desc': '指定上司名額增加，並提高新三人的入隊好感；依錯過回合補償',
+  'shop.bond.wei.desc': '增加首次邀請上司名額，並提高新人入隊好感；已完成同行者免費再邀請',
 };

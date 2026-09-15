@@ -53,7 +53,8 @@ export function commitStory(nodeId: string, optionId: string, ctx: RunContext): 
 
 /** Called after every stage, before campaign.clear; later defeat must never erase a rescue. */
 export function recordStoryDepth(chapterId: ChapterId, cleared: number, ctx: RunContext): RunState {
-  const depth = Math.max(ctx.state.story.depths[String(chapterId)] ?? 0, cleared);
+  const limit = ctx.defs.reader('campaign').all().find(c => c.chapterId === chapterId)?.stages.length ?? 0;
+  const depth = Math.min(limit, Math.max(ctx.state.story.depths[String(chapterId)] ?? 0, cleared));
   const milestones = (ctx.state.story.enabled ? chapterStory(ctx) : null)?.milestones.filter(m => depth >= m.minCleared
     && meetsStory(m.requirements, ctx) && !ctx.state.story.milestones.includes(m.id)) ?? [];
   const state: RunState = { ...ctx.state, story: { ...ctx.state.story,
@@ -97,3 +98,5 @@ export const stageStoryKeys = (ctx: RunContext) => chapterStory(ctx)?.battleVari
   .find(v => meetsStory(v.requirements, ctx))?.briefKeys;
 
 export const storyHistory = (ctx: RunContext) => ctx.state.story;
+
+export const recordedDepth = (id:string,ctx:RunContext):number => ctx.state.story.depths[id] ?? 0;

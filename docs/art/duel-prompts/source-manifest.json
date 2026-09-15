@@ -1,0 +1,150 @@
+{
+  "mode": "built-in image_gen",
+  "prompt": "Create ONE production 2D sprite atlas for Three Kingdoms chibi duel. Reference image is character identity ONLY: preserve face, hairstyle, beard, headdress, clothing colors and signature weapon. Draw that character riding a small matching horse, super-deformed Q proportions, bold clean dark outlines and polished cel-shaded 2D game art. EXACTLY 32 frames in 4 COLUMNS x 8 ROWS of equal SQUARE cells, 1:2 portrait image. No labels or grid. All face RIGHT, side/three-quarter battlefield view. Same full rider + horse size, identical ground baseline, generous 16% empty safety margin in EVERY cell, weapons fully inside cell. Use PERFECTLY FLAT SOLID CHROMA MAGENTA #ff00ff background throughout all empty space, no checkerboard, no floor, no shadow. Never use magenta inside character. It is a keyed source for a game engine. Rows1-2: 8-frame ATTACK ONCE: ready, wind-up, raise weapon, thrust/slash forward, follow-through, lower, return ready; horse braced, not galloping. Rows3-4: 8-frame DEFEND ONCE: raise weapon crosswise/guard forearms, brace, hold through impact, recover neutral, do not attack. Rows5-6: 8-frame REST ONCE: lower weapon, relax shoulders, deep breath chest lift, exhale, straighten, neutral. Rows7-8: 8-frame HIT ONCE: flinch from impact from right, torso recoils LEFT, pained face, bend, recover balance, return neutral. Each 8-frame clip has clear changing anatomy; no duplicating static frames. No particles or drawn text. Horse remains grounded and consistent in all four actions, rider never dismounts. Professional clean small game sprite readable at 220px. Every complete silhouette including longest weapon must occupy NO MORE THAN 68% of cell width and 76% height. Do not touch other cells.",
+  "jobs": [
+    {
+      "id": "caocao",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/caocao.png"
+    },
+    {
+      "id": "zhangliao",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/zhangliao.png"
+    },
+    {
+      "id": "yujin",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/yujin.png"
+    },
+    {
+      "id": "xiahoudun",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/xiahoudun.png"
+    },
+    {
+      "id": "dianwei",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/dianwei.png"
+    },
+    {
+      "id": "lejin",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/lejin.png"
+    },
+    {
+      "id": "guojia",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/guojia.png"
+    },
+    {
+      "id": "jiaxu",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/jiaxu.png"
+    },
+    {
+      "id": "chengyu",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/chengyu.png"
+    },
+    {
+      "id": "xunyu",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/xunyu.png"
+    },
+    {
+      "id": "chenqun",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/chenqun.png"
+    },
+    {
+      "id": "maojie",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/maojie.png"
+    },
+    {
+      "id": "huangfusong",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/huangfusong.png"
+    },
+    {
+      "id": "simayi",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/simayi.png"
+    },
+    {
+      "id": "bocai",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/bocai.png"
+    },
+    {
+      "id": "zhangliang",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/zhangliang.png"
+    },
+    {
+      "id": "zhangjiao",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/zhangjiao.png"
+    },
+    {
+      "id": "huaxiong",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/huaxiong.png"
+    },
+    {
+      "id": "lijue",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/lijue.png"
+    },
+    {
+      "id": "lvbu",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/lvbu.png"
+    },
+    {
+      "id": "yanliang",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/yanliang.png"
+    },
+    {
+      "id": "guotu",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/guotu.png"
+    },
+    {
+      "id": "yuanshao",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/yuanshao.png"
+    },
+    {
+      "id": "yuantan",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/yuantan.png"
+    },
+    {
+      "id": "shenpei",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/shenpei.png"
+    },
+    {
+      "id": "tadun",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/tadun.png"
+    },
+    {
+      "id": "npc_soldier",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-v2/npc_soldier.png"
+    },
+    {
+      "id": "liubei",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-story/liubei.png"
+    },
+    {
+      "id": "guanyu",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-story/guanyu.png"
+    },
+    {
+      "id": "zhangfei",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-story/zhangfei.png"
+    },
+    {
+      "id": "zhaoyun",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-story/zhaoyun.png"
+    },
+    {
+      "id": "zhugeliang",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-story/zhugeliang.png"
+    },
+    {
+      "id": "jiangwan",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-story/jiangwan.png"
+    },
+    {
+      "id": "pangtong",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-story/pangtong.png"
+    },
+    {
+      "id": "huangzhong",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-story/huangzhong.png"
+    },
+    {
+      "id": "lusu",
+      "reference": "C:/Users/DerekHChang/.codex/worktrees/c56b/ThreeKindomDream/public/art/characters-story/lusu.png"
+    }
+  ]
+}

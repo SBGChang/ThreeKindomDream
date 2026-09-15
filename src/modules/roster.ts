@@ -62,7 +62,7 @@ export function assembleCompanions(ctx: TurnContext, fx: EffectResolver): RunSta
 
   const seed = seedAffinity(ctx);
   const built: RosterMember[] = picked.map((id) => ({
-    notableId: id, affinity: seed, origin: 'companion',
+    notableId: id, affinity: seed, origin: 'companion', joinedTurn: ctx.state.progress.turn,
   }));
   return withRoster(ctx, applyGrants(built, ctx, fx));
 }
@@ -84,7 +84,7 @@ export function assignSuperiors(
   if (ctx.state.faction === null) throw new Error('未入陣營，不可分配上司');
   const rules = ctx.defs.single('gameRules');
   const candidates=superiorCandidates(ctx);
-  if(new Set(chosen).size!==chosen.length||chosen.length>bondLevelOf(ctx.state.faction,ctx)||chosen.some(id=>!candidates.includes(id)))throw new Error('上司名額或人選不合法');
+  if(new Set(chosen).size!==chosen.length||chosen.length>rules.superiorCount||chosen.filter(id=>!ctx.state.metaSnapshot.notableCodex[String(id)]?.completedWith).length>bondLevelOf(ctx.state.faction,ctx)||chosen.some(id=>!candidates.includes(id)))throw new Error('上司名額或人選不合法');
   const faction = ctx.defs.reader('faction').get(String(ctx.state.faction));
   const pool = ctx.defs.reader('notablePool').get(String(faction.superiorPoolId));
   const taken = new Set([...rosterIds(ctx).map(String), ...chosen.map(String)]);
@@ -100,7 +100,7 @@ export function assignSuperiors(
 
   const seed = seedAffinity(ctx);
   const added: RosterMember[] = picked.map((id) => ({
-    notableId: id, affinity: seed, origin: 'superior',
+    notableId: id, affinity: seed, origin: 'superior', joinedTurn: ctx.state.progress.turn,
   }));
   // 補正只套在【新加入的人】身上 —— 已在陣容者早就套過，再套一次是重複發放。
   const r=economyRule(ctx);

@@ -114,7 +114,7 @@ export function run() {
       eq(transact('fraction', 0.5, '零錢', ctx), a);
       eq(a.economy.earned - a.economy.spent, a.economy.money);
     });
-    it('技能與特性 Lv3 封頂且未達條件不扣款', () => {
+    it('技能與特性 Lv5 封頂且未達條件不扣款', () => {
       const base = newSession(77).current,
         skill = base.abilities.skills[0]!;
       const s = Session.restore(wiring, {
@@ -125,8 +125,10 @@ export function run() {
       });
       ok(s.upgradeAbility(skill), '升至二級');
       ok(s.upgradeAbility(skill), '升至三級');
+      ok(s.upgradeAbility(skill), '升至四級');
+      ok(s.upgradeAbility(skill), '升至五級');
       const before = s.current;
-      ok(!s.upgradeAbility(skill), '不得超過三級');
+      ok(!s.upgradeAbility(skill), '不得超過五級');
       eq(s.current, before);
     });
     it('學習第五條特性不超過四條啟用，可自由替換', () => {
@@ -160,7 +162,7 @@ export function run() {
             attributes: { values: { ...base.attributes.values, war: 39.5 } },
           },
         };
-      near(previewGrowth('war', 2, ctx), 1.7, 0.00001);
+      near(previewGrowth('war', 2, ctx), 1.25, 0.00001);
       eq(previewGrowth('war', 10000, ctx), 35.5);
     });
     it('陌生角色只有一星初遇，角色本身五星也不跳深交故事', () => {
@@ -326,24 +328,24 @@ export function run() {
       }
       eq(starts, [32, 68]);
     });
-    it('新人未互動零碎片，互動上限在圓夢倍率之前套用', () => {
+    it('同行不足八次無碎片，足額同行最高一百', () => {
       const id = defs.reader('notable').all()[0]!.notableId;
       const none = awardNotableFragments(
-        [{ notableId: id, finalStage: 'sworn', interactionCap: 0 }],
+        [{ notableId: id, finalStage: 'sworn', attendance: 7 }],
         true,
         META,
         defs,
       );
       eq(none.gained, {});
       const small = awardNotableFragments(
-        [{ notableId: id, finalStage: 'sworn', interactionCap: 5 }],
+        [{ notableId: id, finalStage: 'sworn', attendance: 8 }],
         true,
         META,
         defs,
       );
       eq(
         small.gained[String(id)],
-        5 * defs.single('affinityCurve').fullDreamMultiplier,
+        defs.single('notableStar').perRunCap,
       );
     });
     it('攜帶或購物不吃天然掉落次數，重复取得只加碎片', () => {

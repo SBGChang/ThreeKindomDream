@@ -6,6 +6,7 @@ import { FX } from '../effects/ids.js';
 import { coreDef } from '../pack-id.js';
 
 const k = asKey;
+const duelTraits:Readonly<Record<string,NonNullable<TraitDef['duelTrait']>>>={danshi:'momentum',chenyi:'steady',liande:'breathing',jimin:'reversal',linzhen:'steady',zhechong:'breathing',liaodi:'reversal',wanrendi:'momentum',jingwei:'reversal'};
 
 /** 混合消耗的產生器。偏離基準【必須寫理由】—— 否則這張表會被逐條微調淹沒。 */
 const cost = (...pairs: readonly (readonly [Attr, number])[]): AbilityCost =>
@@ -21,6 +22,7 @@ const trait = (
   descKey: k(`trait.${slug}.desc`),
   cost: c,
   polarity,
+  ...(duelTraits[slug]?{duelTrait:duelTraits[slug]}:{}),
   effects: refs.map((n) => ({ funcType: 'StatModifier' as const, referId: effectId(n) })),
 });
 
@@ -33,7 +35,7 @@ const skill = (
   nameKey: k(`skill.${slug}.name`),
   descKey: k(`skill.${slug}.desc`),
   cost: c,
-  action: { kind, actorAttr, ratio, duration },
+  action: { kind, actorAttr, ratio: ratio * 0.65, duration },
 });
 
 // ── 特質 ──────────────────────────────────────────────

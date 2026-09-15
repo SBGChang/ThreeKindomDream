@@ -3,7 +3,7 @@ import type { EnemyId, L10nKey } from '../../../src/contracts/core/ids.js';
 import { economy } from '../config/economy.js';
 import { asKey } from '../../authoring.js';
 
-const TROOPS_MUL = [0.66, 0.76, 0.87, 1.00, 1.15, 1.32, 1.52];
+const TROOPS_MUL = [1, 1.18, 1.4, 2.4, 3, 3.7, 4.6];
 
 const DAMAGE_MUL = [0.45, 0.51, 0.58, 0.66, 0.74, 0.84, 0.95];
 

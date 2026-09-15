@@ -1,4 +1,6 @@
 import { CHARGES } from '../contracts/core/effects.js';
+import {campaignConfrontation} from './campaign-confrontation.js';
+import {answerContest,tickEncounterDemo,type EncounterDemo} from './confrontation-demo.js';
 import { consumeCharge } from '../modules/effect.js';
 import { campaignBattle, realtimeRewards, realtimeSkill } from './realtime-campaign.js';
 import { armyCount, castSkill, rallyArmy, startBattle, tickBattle, type BattleState } from './realtime-battle-model.js';
@@ -307,7 +309,7 @@ export class Session {
   realtimeSkillInfo(id:SkillId,notable?:NotableId):ReturnType<typeof realtimeSkill> {
     const nd=notable?this.w.defs.reader('notable').get(String(notable)):null;
     const attrs=nd?.abilities.attrs??{lead:statQuery.attr('lead',this.ctx),war:statQuery.attr('war',this.ctx),int:statQuery.attr('int',this.ctx),pol:statQuery.attr('pol',this.ctx)};
-    return realtimeSkill(this.ctx,this.w.fx,id,nd?this.w.defs.text(String(nd.nameKey)):'主角',0,!!nd,attrs);
+    return realtimeSkill(this.ctx,this.w.fx,id,nd?this.w.defs.text(String(nd.nameKey)):'主角',0,!!nd,attrs,notable?this.w.defs.single('notableStar').commanderLevelByStar[this.state.metaSnapshot.notableCodex[String(notable)]?.star??0]:1);
   }
   campaignWaveTroops(index:number):number { return campaign.nextStagePreview(this.ctx,index)?.enemyTroops??0; }
   /** Live battle is part of the save. Re-entering never rerolls or replenishes it. */
@@ -317,20 +319,22 @@ export class Session {
     if(st.realtime)return st.realtime;
     if(st.log.length)throw new Error('舊版戰役須先完成原有走留決策');
     const realtime=campaignBattle(this.ctx,this.w.fx);startBattle(realtime);
-    this.state={...this.state,campaign:{...st,realtime}};return realtime;
+    this.state={...this.state,campaign:{...st,realtime,confrontation:campaignConfrontation(this.ctx,realtime)}};return realtime;
   }
   advanceRealtimeCampaign(delta:number):void {
     const st=this.state.campaign,b=st?.realtime;
     if(!st||!b)return;
-    tickBattle(b,delta);
+    if(st.confrontation){const encounter={...st.confrontation,battle:b};tickEncounterDemo(encounter,delta);const {battle:unused,...confrontation}=encounter;void unused;this.state={...this.state,campaign:{...st,confrontation}};}else tickBattle(b,delta);
     if(b.status==='running'&&b.phase==='fallen'&&b.defeated==='ally'&&!st.rallied&&this.w.fx.chargesOf(CHARGES.majorRetry,this.ctx)>0){
       rallyArmy(b,this.w.defs.single('battleRule').rallyRatio);
-      this.state={...consumeCharge(CHARGES.majorRetry,this.ctx),campaign:{...st,rallied:true,realtime:b}};
+      this.state={...consumeCharge(CHARGES.majorRetry,this.ctx),campaign:{...this.state.campaign!,rallied:true,realtime:b}};
     }
   }
   castRealtimeSkill(id:string):boolean {
-    const b=this.state.campaign?.realtime;return b?castSkill(b,id):false;
+    const b=this.state.campaign?.realtime;return b&&!this.state.campaign?.confrontation?.contest?castSkill(b,id):false;
   }
+  realtimeConfrontation():EncounterDemo|null {const c=this.state.campaign;return c?.realtime&&c.confrontation?{...c.confrontation,battle:c.realtime}:null;}
+  answerRealtimeDuel(choice:number):boolean {const e=this.realtimeConfrontation();if(!e||!answerContest(e,choice))return false;const {battle:unused,...confrontation}=e;void unused;this.state={...this.state,campaign:{...this.state.campaign!,confrontation}};return true;}
   pauseRealtimeCampaign(paused:boolean):void {
     const b=this.state.campaign?.realtime;
     if(b&&(b.status==='running'||b.status==='paused'))b.status=paused?'paused':'running';
@@ -531,12 +535,18 @@ export class Session {
 
   superiorCandidates(): readonly NotableId[] { return roster.superiorCandidates(this.ctx); }
 
+  canInviteSuperior(id:NotableId, picked:readonly NotableId[]):boolean {
+    if(picked.includes(id))return true;
+    if(picked.length>=this.bondQuota()||!this.superiorCandidates().includes(id))return false;
+    const known=(who:NotableId)=>!!this.state.metaSnapshot.notableCodex[String(who)]?.completedWith;
+    return known(id)||picked.filter(who=>!known(who)).length<faction.bondLevelOf(this.state.faction!,this.ctx);
+  }
   newcomerBonus(): number { return roster.newcomerBonus(this.ctx); }
   bondQuota(): number {
     const f = this.state.faction;
     if (f === null) return 0;
     return Math.min(
-      faction.bondLevelOf(f, this.ctx),
+      faction.bondLevelOf(f, this.ctx) + this.superiorCandidates().filter(id => this.state.metaSnapshot.notableCodex[String(id)]?.completedWith).length,
       this.w.defs.single('gameRules').superiorCount,
     );
   }

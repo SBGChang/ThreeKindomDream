@@ -1,14 +1,31 @@
-/* The original travel bar moves above the scene only while a dialogue is open. */
+/* The travel bar leaves its own edge before entering from the opposite edge. */
 .game-stage > .stage-content:has(.event-dialogue) {
   inset: 0;
 }
-.game-stage:has(.event-dialogue) > .game-bottom.run-footer {
-  transform: translateY(-712px);
-  transition: transform 0.45s ease;
+.game-stage > .game-bottom.run-footer {
+  --footer-edge-offset: 136px;
+}
+.game-stage > .game-bottom.run-footer.dialogue-footer {
+  top: 0;
+  bottom: auto;
+  --footer-edge-offset: -136px;
   z-index: 40;
 }
-.game-stage > .game-bottom.run-footer {
-  transition: transform 0.45s ease;
+.game-stage > .game-bottom.run-footer[data-travel="out"] {
+  animation: footer-edge-out .18s cubic-bezier(.4,0,1,1) both;
+  pointer-events: none;
+}
+.game-stage > .game-bottom.run-footer[data-travel="in"] {
+  animation: footer-edge-in .24s cubic-bezier(.16,1,.3,1) both;
+  pointer-events: none;
+}
+@keyframes footer-edge-out {
+  from { transform: translateY(0); }
+  to { transform: translateY(var(--footer-edge-offset)); }
+}
+@keyframes footer-edge-in {
+  from { transform: translateY(var(--footer-edge-offset)); }
+  to { transform: translateY(0); }
 }
 .game-stage:has(.event-dialogue) .footer-notice {
   display: none !important;
@@ -19,6 +36,8 @@
   visibility: hidden;
   pointer-events: none;
 }
+.run-screen.dialogue-playing.fixed-result-playing > .training-stage { visibility:visible; }
+.fixed-result-dialogue .conversation-box { cursor:pointer; }
 .game-stage .run-screen.dialogue-playing > .participants {
   transform: translateX(calc(100% + 30px));
   opacity: 0;

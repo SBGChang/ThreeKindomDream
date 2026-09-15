@@ -1,0 +1,57 @@
+/* Painted merchandise stands, with live effects and price text. */
+.market-service .merchant-stock{position:absolute;left:288px;right:32px;top:104px;bottom:34px;display:flex;flex-direction:column;gap:12px}
+.market-service .service-host{top:174px;bottom:88px;width:256px;justify-content:center}
+.market-service .service-host>.character-halfbody{width:258px;height:380px}
+.market-service .merchant-stock>.service-tabs{height:55px;gap:8px}
+.game-stage .run-service.market-service .merchant-stock button:not(.art-control),
+.game-stage .run-service.market-service .merchant-stock button:not(.art-control):is(:hover,:focus-visible,:active,[aria-pressed=true],:disabled){border:0;border-radius:0;box-shadow:none;outline:none;transform:none;background:none;filter:none;position:relative;isolation:isolate}
+.market-service .merchant-stock button::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:var(--market-control,url('/art/ui/training/paper-control-v1.png')) center/100% 140% no-repeat;transition:filter .15s}
+.market-service .merchant-stock button:is(:hover,:focus-visible):not(:disabled)::before{filter:brightness(1.15) drop-shadow(0 0 4px #ffdf8b)}
+.market-service .merchant-stock button:active:not(:disabled)::before{filter:brightness(.92)}
+.market-service .merchant-stock button:disabled::before{filter:saturate(.35) brightness(.78)}
+.game-stage .run-service.market-service .merchant-stock .service-tabs button{height:55px;min-width:175px;padding:0 26px;color:#624026;font-size:21px}
+.game-stage .run-service.market-service .merchant-stock .service-tabs button[aria-pressed=true]{--market-control:url('/art/ui/merchant/purchase-v1.png');color:#fff1cc;text-shadow:1px 2px #5e2511}
+.market-service .merchant-shelf{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;flex:1;min-height:0}
+.market-service .merchant-good{min-width:0;display:flex;flex-direction:column;position:relative;padding:20px 42px 27px;background:url('/art/ui/merchant/display-v1.png') center/100% 100% no-repeat;color:#56371f}
+.market-service .goods-display{height:40%;min-height:150px;display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0}
+.market-service .goods-display>.realm-stars{position:absolute;top:0;left:0;right:0;display:flex;justify-content:center;gap:1px}
+.market-service .goods-display .realm-stars .realm-icon{width:24px;height:24px}
+.market-service .goods-display>.market-relic{width:145px;height:145px;object-fit:contain;margin:20px 0 0;filter:drop-shadow(2px 5px 2px #24140977)}
+.market-service .goods-label{display:flex;flex-direction:column;flex:1;min-height:0;padding-top:16px}
+.market-service .goods-label h2{font-size:29px;text-align:center;line-height:1.15;margin:0 0 12px}
+.market-service .goods-label .item-effect-pages.compact{min-height:0;flex:1;margin:0}
+.market-service .goods-label .item-effect-pages.compact p{font-size:19px;line-height:1.65}
+.market-service .effect-gain{color:#14708d;font-size:1.25em;font-weight:900}
+.market-service .effect-loss{color:#b52d26;font-size:1.25em;font-weight:900}
+.market-service .effect-special{color:#90600a;font-weight:900}
+.market-service :is(.effect-gain,.effect-loss){display:inline-block;white-space:nowrap}
+.game-stage .run-service.market-service .merchant-stock button.service-buy{--market-control:url('/art/ui/merchant/purchase-v1.png');display:flex;align-items:center;justify-content:center;gap:9px;height:62px;min-height:62px;padding:0 16px;color:#fff0ba;font-size:24px;text-shadow:1px 2px #55280e;opacity:1}
+.market-service button.service-buy>.realm-icon{width:31px;height:31px}
+.market-service button.service-buy>b{font:700 28px Georgia,serif}
+.market-service .goods-label button.service-buy{margin-inline:-14px}
+.game-stage .run-service.market-service .merchant-stock button.service-buy.unaffordable{color:#ff9790;text-shadow:1px 2px #501d15}
+.game-stage .run-service.market-service .merchant-stock button.service-buy:disabled{opacity:1}
+.market-service .goods-shortage{font-size:11px;text-align:center;color:#b52d26}
+.market-service .duplicate-note{font-size:12px;text-align:center;margin:3px 0;color:#76512e}
+.market-service .duplicate-note strong{color:#14708d}
+.market-service .sold .goods-display>.market-relic{filter:grayscale(.8);opacity:.55}
+.market-service .service-pager{height:30px;gap:15px;color:#fff1c9;text-shadow:1px 2px #351c0a}
+.game-stage .run-service.market-service .merchant-stock .service-pager button{height:30px;color:#55361c}
+.market-service .item-effect-pages nav{font-size:10px;gap:5px;margin-top:7px;color:#765331}
+.game-stage .run-service.market-service .merchant-stock .item-effect-pages nav button{color:#68431e}
+.market-service .fragment-shop{flex:1;min-height:0;display:flex;flex-direction:column;gap:10px}
+.market-service .fragment-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,155px);gap:10px}
+.game-stage .run-service.market-service .merchant-stock .fragment-options button{display:grid;grid-template-columns:95px 1fr;grid-template-rows:1fr 1fr;padding:22px 27px;color:#53341e;text-align:left}
+.market-service .fragment-options button::before{background-size:100% 100%}
+.market-service .fragment-options button[aria-pressed=true]::before{filter:brightness(1.2) drop-shadow(0 0 5px #ffcc62)}
+.market-service .fragment-options .market-relic{grid-row:1/3;width:90px;height:90px;object-fit:contain;margin:0}
+.market-service .fragment-options b{align-self:end;font-size:20px;line-height:1.2;text-shadow:0 1px #fff0c2}
+.market-service .fragment-options small{display:flex;align-items:center;gap:4px;align-self:start;font:bold 18px Georgia,serif}
+.market-service .fragment-options small .realm-icon{width:22px;height:22px}
+.market-service .fragment-checkout{display:flex;align-items:center;justify-content:space-between;margin-top:auto;gap:20px;padding:0 14px}
+.market-service .fragment-checkout h2{font-size:26px;color:#fff0c5;text-shadow:1px 2px #482612}
+.market-service .fragment-checkout small{font-size:13px;color:#ffe0aa;text-shadow:1px 2px #482612}
+.market-service .fragment-checkout button{min-width:235px}
+.market-service .fragment-empty{text-align:center;margin:75px 20px;color:#ffe9b8;text-shadow:1px 2px #482612}
+.market-service .fragment-empty h2{font-size:28px;margin-bottom:15px}
+@media(prefers-reduced-motion:reduce){.market-service .merchant-stock button::before{transition:none}}

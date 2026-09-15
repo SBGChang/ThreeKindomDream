@@ -64,7 +64,7 @@ export function offers(
     )[0]!;
     const needs = rule.primaryNeeds[def.tier],
       need = needs[level] ?? 0,
-      secondaryNeed = rule.secondaryNeeds[def.tier][level] ?? 0,
+      secondaryNeed = (def.cost[secondary] ?? 0) > 0 ? rule.secondaryNeeds[def.tier][level] ?? 0 : 0,
       chapterNeed = rule.lessonChapters[def.tier][level] ?? 1;
     const base =
       (kind === 'skill' ? rule.skillPrices : rule.traitPrices)[def.tier][

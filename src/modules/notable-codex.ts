@@ -1,6 +1,6 @@
 // ⑩ 名士圖鑑。記憶碎片 → 星階突破 → 逐人手寫的解鎖條（10 §1）。
 //
-// 星是【突破】不是稀有度。稀有度只決定碎片單價（`costByRarity`），
+// 星是【突破】不是稀有度。各稀有度共用十二輪碎片階梯，
 // 不決定天花板 —— 低星滿級可以強過高星低級，那是刻意的。
 import type { RunContext } from '../contracts/core/context.js';
 import type { DefinitionRegistry } from '../data-runtime/registry.js';
@@ -64,7 +64,7 @@ export const notableCodex: NotableCodexQuery = {
   designatable(meta, defs) {
     const curve = defs.single('affinityCurve');
     return defs.reader('notable').all()
-      .filter((n) => this.starOf(n.notableId, meta) >= curve.designateStar)
+      .filter((n) => this.entry(n.notableId, meta).completedWith || this.starOf(n.notableId, meta) >= curve.designateStar)
       .map((n) => n.notableId);
   },
 
@@ -142,10 +142,10 @@ function affinityIndexOf(id: NotableId, ctx: RunContext): number {
  * 結算時的寫入。只有 ㉖ 可呼叫（10 §4）。
  *
  * 碎片自動換星階，餘額留在 `fragments`。用 while 而非 if ——
- * 一次結算可能一次跨兩階（例如圓夢加倍之後）。
+ * while 也處理舊存檔的餘額；新帳號每次結算不會超過每輪上限。
  */
 export function awardNotableFragments(
-  entries: readonly { notableId: NotableId; finalStage: AffinityStage; interactionCap?:number }[],
+  entries: readonly { notableId: NotableId; finalStage: AffinityStage; interactionCap?:number; attendance?:number }[],
   isFullDream: boolean,
   meta: MetaState,
   defs: DefinitionRegistry,
@@ -159,8 +159,10 @@ export function awardNotableFragments(
   for (const e of entries) {
     const key = String(e.notableId);
     const def: NotableDef = defs.reader('notable').get(key);
-    const base = Math.min(curve.fragmentsByStage[e.finalStage], e.interactionCap??Infinity);
-    const amount = Math.round(base * (isFullDream ? curve.fullDreamMultiplier : 1));
+    if ((e.attendance ?? 0) < l.minimumAttendance || gained[key] !== undefined) continue;
+    const amount = Math.min(l.perRunCap, isFullDream
+      ? l.completedBase + curve.fragmentsByStage[e.finalStage]
+      : Math.floor((e.attendance ?? 0) / l.minimumAttendance) * 10);
     if (amount === 0) continue;
 
     const cur = codex[key] ?? EMPTY;
@@ -177,7 +179,7 @@ export function awardNotableFragments(
       star += 1;
     }
     if (star !== cur.star) raised[key] = star - cur.star;
-    codex[key] = { star, fragments: frags };
+    codex[key] = { ...cur, star, fragments: star === l.tiers.length - 1 ? 0 : frags, completedWith: cur.completedWith || isFullDream };
   }
 
   return { meta: { ...meta, notableCodex: codex }, gained, raised };

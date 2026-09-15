@@ -1,0 +1,541 @@
+{
+  "date": "2026-09-14",
+  "root": "artifacts/gameplay-audit/rebalance-v2",
+  "contentManifest": {
+    "packs": [
+      {
+        "defCount": 186,
+        "dir": "core",
+        "loadOrder": 0,
+        "packId": "pack:core",
+        "requiredPacks": [],
+        "version": "0.1.0"
+      },
+      {
+        "defCount": 104,
+        "dir": "wei",
+        "loadOrder": 10,
+        "packId": "pack:wei",
+        "requiredPacks": [
+          "pack:core"
+        ],
+        "version": "0.1.0"
+      },
+      {
+        "defCount": 73,
+        "dir": "shu",
+        "loadOrder": 20,
+        "packId": "pack:shu",
+        "requiredPacks": [
+          "pack:core"
+        ],
+        "version": "0.1.0"
+      }
+    ],
+    "runtimeVersion": "0.1.0"
+  },
+  "fingerprints": {
+    "scripts/full-journey-audit.ts": "3908a1c3beddafcb5731857c0bb41efc4ea022bc9d426a0d017d91caf1568635",
+    "src/app/realtime-battle-model.ts": "e0b181ac68118c64b7ef18e6a8a5ae1524b86aa686bfbb2fa9aa376a6d77b2da",
+    "src/modules/settlement.ts": "95cbbe017271fd7b2ba4529a62a2e93c4650448d991be2a6bace0deb4e56ce34",
+    "content/core/defs.json": "4883922308a9a5b3c38b647070240814e90f053ee53241b0a4557a92a5db12e9",
+    "content/shu/defs.json": "4bf9627973064a3c562d23889c0b7cf10ef19332f9cd602e9d3470af410d4cff"
+  },
+  "method": "Real Session API journeys from emptyMeta; 1/30-second real-time battle ticks, CD/supply checks every six frames; no injected progression or player save access.",
+  "executed": {
+    "profiles": 560,
+    "lives": 1614,
+    "actions": 60048,
+    "events": 69397,
+    "campaigns": 7506
+  },
+  "freshChapters": [
+    {
+      "chapter": 1,
+      "n": 500,
+      "range": [
+        2,
+        4
+      ],
+      "mean": 2.886,
+      "clearedFour": 35,
+      "clearedFive": 0
+    },
+    {
+      "chapter": 2,
+      "n": 500,
+      "range": [
+        2,
+        4
+      ],
+      "mean": 3.158,
+      "clearedFour": 106,
+      "clearedFive": 0
+    },
+    {
+      "chapter": 3,
+      "n": 500,
+      "range": [
+        2,
+        4
+      ],
+      "mean": 3.034,
+      "clearedFour": 51,
+      "clearedFive": 0
+    },
+    {
+      "chapter": 4,
+      "n": 500,
+      "range": [
+        2,
+        4
+      ],
+      "mean": 2.822,
+      "clearedFour": 7,
+      "clearedFive": 0
+    }
+  ],
+  "modes": [
+    {
+      "mode": "wei-balanced",
+      "profiles": 8,
+      "lives": 208,
+      "firstFive": [
+        14,
+        14,
+        12,
+        12,
+        13,
+        13,
+        14,
+        13
+      ],
+      "firstHighest": [
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        13
+      ],
+      "firstLifeIncome": {
+        "n": 8,
+        "range": [
+          1070,
+          1090
+        ],
+        "mean": 1076.25
+      },
+      "firstLifeAttributes": {
+        "lead": {
+          "n": 8,
+          "range": [
+            46.32,
+            52.37
+          ],
+          "mean": 49.535000000000004
+        },
+        "war": {
+          "n": 8,
+          "range": [
+            45.34,
+            54.27
+          ],
+          "mean": 49.269999999999996
+        },
+        "int": {
+          "n": 8,
+          "range": [
+            43.35,
+            60.13
+          ],
+          "mean": 50.347500000000004
+        },
+        "pol": {
+          "n": 8,
+          "range": [
+            44.39,
+            52.64
+          ],
+          "mean": 48.39375
+        }
+      },
+      "endings": [
+        "ending:minister",
+        "ending:pillar",
+        "ending:chancellor",
+        "ending:grand-general"
+      ]
+    },
+    {
+      "mode": "balanced",
+      "profiles": 8,
+      "lives": 114,
+      "firstFive": [
+        12,
+        12,
+        null,
+        12,
+        12,
+        12,
+        12,
+        12
+      ],
+      "firstHighest": [
+        13,
+        13,
+        11,
+        14,
+        25,
+        13,
+        12,
+        13
+      ],
+      "firstLifeIncome": {
+        "n": 8,
+        "range": [
+          1031,
+          1080
+        ],
+        "mean": 1059.375
+      },
+      "firstLifeAttributes": {
+        "lead": {
+          "n": 8,
+          "range": [
+            47.85,
+            53.72
+          ],
+          "mean": 50.809999999999995
+        },
+        "war": {
+          "n": 8,
+          "range": [
+            51.37,
+            54.94
+          ],
+          "mean": 53.347500000000004
+        },
+        "int": {
+          "n": 8,
+          "range": [
+            51.56,
+            57.06
+          ],
+          "mean": 54.16875
+        },
+        "pol": {
+          "n": 8,
+          "range": [
+            45.57,
+            53.25
+          ],
+          "mean": 49.48375
+        }
+      },
+      "endings": [
+        "ending:minister",
+        "ending:shu.reunion",
+        "ending:shu.dawn"
+      ]
+    },
+    {
+      "mode": "wei-focus-civil",
+      "profiles": 8,
+      "lives": 208,
+      "firstFive": [
+        14,
+        14,
+        13,
+        13,
+        13,
+        14,
+        14,
+        14
+      ],
+      "firstHighest": [
+        13,
+        13,
+        13,
+        13,
+        13,
+        13,
+        13,
+        13
+      ],
+      "firstLifeIncome": {
+        "n": 8,
+        "range": [
+          980,
+          1020
+        ],
+        "mean": 996.25
+      },
+      "firstLifeAttributes": {
+        "lead": {
+          "n": 8,
+          "range": [
+            19.47,
+            27.81
+          ],
+          "mean": 23.034999999999997
+        },
+        "war": {
+          "n": 8,
+          "range": [
+            21.55,
+            28.68
+          ],
+          "mean": 25.4575
+        },
+        "int": {
+          "n": 8,
+          "range": [
+            75,
+            75
+          ],
+          "mean": 75
+        },
+        "pol": {
+          "n": 8,
+          "range": [
+            21.12,
+            30.31
+          ],
+          "mean": 25.791249999999998
+        }
+      },
+      "endings": [
+        "ending:minister",
+        "ending:chancellor"
+      ]
+    },
+    {
+      "mode": "wei-focus-martial",
+      "profiles": 8,
+      "lives": 208,
+      "firstFive": [
+        13,
+        13,
+        12,
+        13,
+        13,
+        15,
+        14,
+        13
+      ],
+      "firstHighest": [
+        13,
+        13,
+        13,
+        13,
+        13,
+        13,
+        13,
+        13
+      ],
+      "firstLifeIncome": {
+        "n": 8,
+        "range": [
+          1010,
+          1040
+        ],
+        "mean": 1025
+      },
+      "firstLifeAttributes": {
+        "lead": {
+          "n": 8,
+          "range": [
+            21.28,
+            29.76
+          ],
+          "mean": 25.2025
+        },
+        "war": {
+          "n": 8,
+          "range": [
+            75,
+            75
+          ],
+          "mean": 75
+        },
+        "int": {
+          "n": 8,
+          "range": [
+            21.41,
+            28.95
+          ],
+          "mean": 24.451249999999998
+        },
+        "pol": {
+          "n": 8,
+          "range": [
+            19.62,
+            29.95
+          ],
+          "mean": 24.80625
+        }
+      },
+      "endings": [
+        "ending:general",
+        "ending:grand-general",
+        "ending:minister"
+      ]
+    }
+  ],
+  "collection": [
+    {
+      "id": "wei-balanced-1",
+      "firstCoreEntry": 17,
+      "shopCompleted": 55
+    },
+    {
+      "id": "wei-balanced-2",
+      "firstCoreEntry": 16,
+      "shopCompleted": 55
+    },
+    {
+      "id": "wei-balanced-3",
+      "firstCoreEntry": 16,
+      "shopCompleted": 55
+    },
+    {
+      "id": "wei-balanced-4",
+      "firstCoreEntry": 16,
+      "shopCompleted": 55
+    }
+  ],
+  "byEntryPartyStars": {
+    "5": {
+      "battles": 872,
+      "clearedSeven": 857,
+      "clearRate": 0.9827981651376146
+    },
+    "0–<1": {
+      "battles": 41,
+      "clearedSeven": 0,
+      "clearRate": 0
+    },
+    "1–<2": {
+      "battles": 19,
+      "clearedSeven": 0,
+      "clearRate": 0
+    },
+    "2–<3": {
+      "battles": 44,
+      "clearedSeven": 14,
+      "clearRate": 0.3181818181818182
+    },
+    "3–<4": {
+      "battles": 56,
+      "clearedSeven": 34,
+      "clearRate": 0.6071428571428571
+    },
+    "4–<4.5": {
+      "battles": 74,
+      "clearedSeven": 67,
+      "clearRate": 0.9054054054054054
+    },
+    "4.5–<5": {
+      "battles": 14,
+      "clearedSeven": 14,
+      "clearRate": 1
+    }
+  },
+  "controls": [
+    {
+      "mode": "no-battle",
+      "runs": 32,
+      "firstLifeIncome": {
+        "n": 8,
+        "range": [
+          950,
+          960
+        ],
+        "mean": 958.75
+      },
+      "points": {
+        "n": 32,
+        "range": [
+          950,
+          1000
+        ],
+        "mean": 973.75
+      },
+      "highest": 0,
+      "endings": [
+        "ending:minister"
+      ]
+    },
+    {
+      "mode": "no-spend",
+      "runs": 32,
+      "firstLifeIncome": {
+        "n": 8,
+        "range": [
+          1008,
+          1049
+        ],
+        "mean": 1031
+      },
+      "points": {
+        "n": 32,
+        "range": [
+          1008,
+          1242
+        ],
+        "mean": 1079.625
+      },
+      "highest": 0,
+      "endings": [
+        "ending:minister",
+        "ending:shu.dawn"
+      ]
+    },
+    {
+      "mode": "blind-story",
+      "runs": 32,
+      "firstLifeIncome": {
+        "n": 8,
+        "range": [
+          1008,
+          1053
+        ],
+        "mean": 1036.875
+      },
+      "points": {
+        "n": 32,
+        "range": [
+          1008,
+          1169
+        ],
+        "mean": 1081.78125
+      },
+      "highest": 0,
+      "endings": [
+        "ending:minister"
+      ]
+    }
+  ],
+  "destiny": {
+    "catalogCost": 80800,
+    "observedIncome": {
+      "n": 1614,
+      "range": [
+        950,
+        1580
+      ],
+      "mean": 1253.6877323420074
+    }
+  },
+  "limitations": [
+    "Executed lives include repeated seeds across policies and the overlapping early portions of collection profiles; they are not independent samples.",
+    "Star buckets also differ in accumulated items, aptitude and destiny purchases; the rates do not isolate star strength.",
+    "The near-five bucket is small. Only four long collection profiles were used. No human reaction time or visual pacing was assessed.",
+    "The fresh fourth-wave target is aggregate; chapter two remains easier than the other chapters.",
+    "No-battle/no-spend/blind-story controls cover four lives per profile, not long-term optimum strategies.",
+    "Highest means the implemented route/career ending criteria, not completion of the unimplemented 42-achievement proposal."
+  ]
+}

@@ -27,14 +27,16 @@ export function summarize(run: RunState, defs: DefinitionRegistry): RunSummary {
   const chapterDepths = { ...run.story.depths };
   if (run.campaign) chapterDepths[String(run.progress.chapterId)] = Math.max(
     chapterDepths[String(run.progress.chapterId)] ?? 0, run.campaign.clearedStages);
-  const notables: { notableId: NotableId; finalStage: AffinityStage }[] =
+  const notables: { notableId: NotableId; finalStage: AffinityStage; attendance:number }[] =
     run.roster.members.map((m) => ({
       notableId: m.notableId,
       finalStage: stageForValue(m.affinity, ctx),
+      attendance: Math.max(0, run.progress.turn - (m.joinedTurn ?? (m.origin === 'companion' ? 1 : 9)) + 1),
       ...(m.entryBonus!==undefined?{interactionCap:defs.single('growthRule').economy.interactionFragmentCaps[Math.min(m.interactionTurns?.length??0,8)]!}:{}),
     }));
 
   return {
+    ...(run.runId ? {runId:run.runId} : {}),
     seed: run.seed,
     endingId: ending.endingId,
     isFullDream: ending.isFullDream,
@@ -57,22 +59,35 @@ export function summarize(run: RunState, defs: DefinitionRegistry): RunSummary {
   };
 }
 
+function routeLength(summary: RunSummary, defs: DefinitionRegistry): number {
+  const seq = defs.reader('chapterSequence').all();
+  return (seq.find(s => s.factionId === null)?.chapters.length ?? 1)
+    + (summary.factionId === null ? 0 : seq.find(s => s.factionId === summary.factionId)?.chapters.length ?? 0);
+}
+
+function completedLife(summary: RunSummary, defs: DefinitionRegistry): boolean {
+  return summary.factionId !== null && summary.chaptersPassed >= routeLength(summary, defs);
+}
+
 export function computeSettlementPoints(
   summary: RunSummary, defs: DefinitionRegistry,
 ): number {
   const f = defs.single('settlementFormula');
-  const raw = (summary.career.civil + summary.career.martial) * f.perCareerRank
-    + summary.chaptersPassed * f.perChapterPassed
-    + summary.turnsPlayed * f.perTurnSurvived
-    + (summary.isFullDream ? f.fullDreamBonus : 0);
-  return Math.round(raw * summary.pointsMultiplier);
+  const chapters = routeLength(summary, defs);
+  const scale = Math.min(1, f.referenceChapters / Math.max(1, chapters));
+  const completed = completedLife(summary, defs);
+  const bonus = f.endingBonuses.filter(row => summary.pointsMultiplier >= row.multiplier).at(-1)?.points ?? 0;
+  const depth = Object.values(summary.chapterDepths ?? {}).reduce((sum, n) => sum + Math.min(7, n), 0);
+  return Math.round((summary.career.civil + summary.career.martial) * f.perCareerRank
+    + (summary.chaptersPassed * f.perChapterPassed + summary.turnsPlayed * f.perTurnSurvived + depth * f.perStage) * scale
+    + (completed ? f.fullDreamBonus + bonus : 0));
 }
 
-/** 冪等：同一 seed 重複結算不重複發放（26 §5.1）。 */
+/** 同一人生只結算一次；舊存檔仍以 seed 識別，新人生允許沿用種子。 */
 export function settle(
   summary: RunSummary, meta: MetaState, defs: DefinitionRegistry,
 ): SettlementResult {
-  if (meta.settledSeeds.includes(summary.seed)) {
+  if (summary.runId ? meta.settledRunIds?.includes(summary.runId) : meta.settledSeeds.includes(summary.seed)) {
     return {
       meta, pointsGained: 0, notableFragments: {}, starRaised: {},
       itemFragments: {}, itemTierRaised: {},
@@ -80,7 +95,8 @@ export function settle(
   }
 
   const points = computeSettlementPoints(summary, defs);
-  const frag = awardNotableFragments(summary.notables, summary.isFullDream, meta, defs);
+  // 人物記憶獎勵取決於有沒有走完人生，不因普通結局而失去同行資格。
+  const frag = awardNotableFragments(summary.notables, completedLife(summary, defs), meta, defs);
   const items = awardItemFragments(summary.itemsAcquired, frag.meta, defs, summary.pendingItemFragments);
 
   const seenEvents = [...new Set([
@@ -96,7 +112,8 @@ export function settle(
     ...items.meta,
     points: items.meta.points + points,
     runIndex: items.meta.runIndex + 1,
-    settledSeeds: [...items.meta.settledSeeds, summary.seed],
+    settledSeeds: [...new Set([...items.meta.settledSeeds, summary.seed])],
+    settledRunIds: [...(items.meta.settledRunIds ?? []), ...(summary.runId ? [summary.runId] : [])],
     collection: { ...items.meta.collection, seenEvents, reachedEndings,
       completedRoutes: [...new Set([...(items.meta.collection.completedRoutes ?? []), ...(summary.completedRoutes ?? [])])] },
     stats: {

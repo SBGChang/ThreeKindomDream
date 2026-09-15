@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { economyReview, fullEconomyReview, runLayoutReview } from '../app/economy-review.js';
+import { economyReview, fullEconomyReview, limitedEconomyReview, runLayoutReview, trainingArtReview, fixedActionReview } from '../app/economy-review.js';
 import { dialogueReview } from '../app/dialogue-review.js';
 import { GameFrame } from './GameFrame.js';
 import { ScreenCamp } from './ScreenMarket.js';
@@ -14,15 +14,19 @@ export function EconomyReview(): React.ReactElement {
               new URLSearchParams(location.search).get('scene') ?? 'chase',
             )
         : new URLSearchParams(location.search).get('art') === 'layout'
-          ? runLayoutReview
-          : new URLSearchParams(location.search).get('stock') === 'full' ? fullEconomyReview : economyReview,
+          ? ['bad','normal','success'].includes(new URLSearchParams(location.search).get('fixed') ?? '')
+            ? () => fixedActionReview(new URLSearchParams(location.search).get('fixed')!, new URLSearchParams(location.search).has('event'))
+            : runLayoutReview
+        : ['full', 'empty'].includes(new URLSearchParams(location.search).get('lessons') ?? '')
+          ? () => trainingArtReview(new URLSearchParams(location.search).get('lessons') === 'empty')
+          : new URLSearchParams(location.search).get('stock') === 'full' ? fullEconomyReview : new URLSearchParams(location.search).get('stock') === 'limited' ? limitedEconomyReview : economyReview,
     ),
     [view, setView] = useState(
       ['layout', 'dialogue'].includes(
         new URLSearchParams(location.search).get('art') ?? '',
       )
         ? 'run'
-        : 'market',
+        : ['full', 'empty'].includes(new URLSearchParams(location.search).get('lessons') ?? '') ? 'learn' : 'market',
     ),
     [, update] = useState(0),
     [log, setLog] = useState<string[]>([]);

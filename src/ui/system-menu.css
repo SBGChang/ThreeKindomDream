@@ -11,7 +11,8 @@
 .system-panel .system-row{display:flex;align-items:center;justify-content:center;position:absolute;left:9.4%;width:81.2%;height:17.4%;margin:0;padding:0 14% 0 27%;border:0;border-radius:0;background:none;color:#fff3ce;box-shadow:none;font-family:'DFKai-SB','KaiTi','PMingLiU',serif;font-size:29px;font-weight:900;white-space:nowrap;text-align:center;text-shadow:2px 2px 0 #24140a,-1px -1px 0 #24140a,1px -1px 0 #24140a,-1px 1px 0 #24140a,0 3px 2px #000b}
 .system-row:nth-child(1){top:11.8%}.system-row:nth-child(2){top:31%}.system-row:nth-child(3){top:50.6%}.system-row:nth-child(4){top:70.6%}
 .system-panel .system-row:after{content:'';position:absolute;inset:0;opacity:0;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 410 100' preserveAspectRatio='none'%3E%3Cpath d='M14 3H396L407 14V86L396 97H14L3 86V14Z' fill='none' stroke='%23fff1a0' stroke-width='3'/%3E%3C/svg%3E") center/100% 100%;filter:drop-shadow(0 0 3px #ffe16e);transition:opacity .15s}
-.system-panel .system-row:is(:hover,:focus-visible,:active){background:none;box-shadow:none;border:0;outline:none;transform:none;filter:none}
+/* Keep illustrated menu rows above the generic game button hover rule. */
+.game-stage .system-panel .system-row:is(:hover,:focus-visible,:active){background:none;box-shadow:none;border:0;outline:none;transform:none;filter:none}
 .system-panel .system-row:is(:hover,:focus-visible):after{opacity:1}
 .system-panel button:hover,.system-panel button:focus-visible{outline:none;border-color:#ffdb80;box-shadow:0 0 0 2px #ffd97866,0 0 16px #e9b64b35,inset 0 1px 0 #ffffff1c;transform:none;filter:none}
 .system-panel button:active{border-color:#fff0b4;transform:none;filter:none}.system-panel button:disabled{opacity:.5;cursor:wait;box-shadow:none}

@@ -108,7 +108,7 @@ export const shuStories: readonly StoryChapterDef[] = shuScript.map((raw, index)
       titleKey: text(`${prefix}.${n.id}.title`, n.title),
       bodyKey: text(`${prefix}.${n.id}.body`, nodeBodies[n.id]!),
       beats: writer.beats(`${prefix}.${n.id}`, nodeBodies[n.id]!, shuSpeakers[n.id]),
-      options: n.options.map(o => ({ id: o.id,
+      options: (n.id.endsWith('.B') ? [...n.options].reverse() : n.options).map(o => ({ id: o.id,
         ...(n.turn === 2 && !['S7','S8'].includes(raw.code) || n.turn === 6 && !['S7','S8'].includes(raw.code) ? {
           response: writer.scene(`${prefix}.${n.id}.${o.id}.response`, n.title, o.consequence.split(/結果：|；|記護民|記交接/)[0]!.trim(),
             n.id === 'S1.A' ? [o.id === 'rescue' ? '關羽' : '張飛'] : n.id === 'S1.B' && o.id === 'shelter' ? ['劉備'] : n.id === 'S3.B' && o.id === 'shelter' ? ['你'] : []),
