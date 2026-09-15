@@ -1,0 +1,21 @@
+{
+  "status": "proposal-not-applied",
+  "formula": {"completion":400,"perAction":5,"perChapter":50,"perCareerRank":10,"perClearedStage":10,"endingBonuses":[0,100,200,300]},
+  "shop": {
+    "aptitudePoints":{"costs":[300,600,1000,1500,2600,4000],"grants":[2,3,4,5,8,10]},
+    "aptitudeCapPerAttribute":{"costs":[300,900,2400],"copies":4},
+    "career":{"costs":[300,500,800,1200,1800,2400,3000]},
+    "talentPoints":{"costs":[500,1000,2000,3500,5000],"grants":[2,2,2,2,2]},
+    "talents":{"costs":[300,500,800,1200,1800,2600,3600]},
+    "glow":{"costs":[600,1200,2200,3600,5400],"totalExtraGrowthPercent":[1,2,3,4,5]},
+    "encounterOptions":{"costs":[500,1000,2000]}
+  },
+  "referenceIncomeBands":[
+    {"throughRun":2,"ranks":6,"depth":12,"ending":0},
+    {"throughRun":4,"ranks":8,"depth":14,"ending":100},
+    {"throughRun":7,"ranks":10,"depth":16,"ending":100},
+    {"throughRun":12,"ranks":12,"depth":18,"ending":100},
+    {"throughRun":18,"ranks":16,"depth":22,"ending":200},
+    {"throughRun":1000,"ranks":20,"depth":26,"ending":300}
+  ]
+}

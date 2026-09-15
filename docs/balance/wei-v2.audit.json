@@ -1,0 +1,758 @@
+{
+  "version": "wei-v2-draft-1",
+  "scope": "Deterministic budget arithmetic only. Depths and reward averages are assumptions, NOT observed gameplay.",
+  "milestones": [
+    {
+      "income": 100,
+      "starAtEndOfRuns": [
+        1,
+        2,
+        4,
+        7,
+        12
+      ],
+      "firstRunUsingFiveStars": 13
+    },
+    {
+      "income": 80,
+      "starAtEndOfRuns": [
+        2,
+        3,
+        5,
+        9,
+        15
+      ],
+      "firstRunUsingFiveStars": 16
+    },
+    {
+      "income": 65,
+      "starAtEndOfRuns": [
+        2,
+        4,
+        7,
+        11,
+        19
+      ],
+      "firstRunUsingFiveStars": 20
+    },
+    {
+      "income": 50,
+      "starAtEndOfRuns": [
+        2,
+        4,
+        8,
+        14,
+        24
+      ],
+      "firstRunUsingFiveStars": 25
+    }
+  ],
+  "growth": {
+    "baseNonBattleExp": 1152,
+    "referenceProfiles": [
+      {
+        "star": 0,
+        "mentorship": 1,
+        "assumedDepths": [
+          2,
+          3,
+          3,
+          4
+        ],
+        "nonBattleExp": 1152,
+        "battleExp": 124,
+        "totalExpAndLearningCurrency": 1276,
+        "balanced": [
+          51,
+          51,
+          51,
+          46
+        ],
+        "balancedBeforeFinalBattle": [
+          51,
+          51,
+          51,
+          45
+        ],
+        "focusedUncapped": [
+          70,
+          43,
+          39,
+          39
+        ],
+        "focusedWithCaps": [
+          70,
+          43,
+          39,
+          39
+        ]
+      },
+      {
+        "star": 1,
+        "mentorship": 1.25,
+        "assumedDepths": [
+          3,
+          3,
+          4,
+          4
+        ],
+        "nonBattleExp": 1440,
+        "battleExp": 152,
+        "totalExpAndLearningCurrency": 1592,
+        "balanced": [
+          57,
+          57,
+          57,
+          49
+        ],
+        "balancedBeforeFinalBattle": [
+          56,
+          56,
+          56,
+          49
+        ],
+        "focusedUncapped": [
+          76,
+          46,
+          41,
+          41
+        ],
+        "focusedWithCaps": [
+          76,
+          46,
+          41,
+          41
+        ]
+      },
+      {
+        "star": 2,
+        "mentorship": 1.65,
+        "assumedDepths": [
+          3,
+          4,
+          4,
+          5
+        ],
+        "nonBattleExp": 1900.8,
+        "battleExp": 188,
+        "totalExpAndLearningCurrency": 2088.8,
+        "balanced": [
+          62,
+          62,
+          62,
+          56
+        ],
+        "balancedBeforeFinalBattle": [
+          62,
+          62,
+          62,
+          54
+        ],
+        "focusedUncapped": [
+          83,
+          51,
+          45,
+          45
+        ],
+        "focusedWithCaps": [
+          83,
+          51,
+          45,
+          45
+        ]
+      },
+      {
+        "star": 3,
+        "mentorship": 2.4,
+        "assumedDepths": [
+          4,
+          4,
+          5,
+          5
+        ],
+        "nonBattleExp": 2764.8,
+        "battleExp": 224,
+        "totalExpAndLearningCurrency": 2988.8,
+        "balanced": [
+          71,
+          71,
+          71,
+          63
+        ],
+        "balancedBeforeFinalBattle": [
+          70,
+          70,
+          70,
+          62
+        ],
+        "focusedUncapped": [
+          91,
+          59,
+          51,
+          51
+        ],
+        "focusedWithCaps": [
+          91,
+          59,
+          51,
+          51
+        ]
+      },
+      {
+        "star": 4,
+        "mentorship": 3.6,
+        "assumedDepths": [
+          5,
+          5,
+          6,
+          6
+        ],
+        "nonBattleExp": 4147.2,
+        "battleExp": 316,
+        "totalExpAndLearningCurrency": 4463.2,
+        "balanced": [
+          81,
+          81,
+          81,
+          73
+        ],
+        "balancedBeforeFinalBattle": [
+          80,
+          80,
+          80,
+          72
+        ],
+        "focusedUncapped": [
+          99,
+          67,
+          60,
+          60
+        ],
+        "focusedWithCaps": [
+          99,
+          67,
+          60,
+          60
+        ]
+      },
+      {
+        "star": 5,
+        "mentorship": 5.8,
+        "assumedDepths": [
+          7,
+          7,
+          7,
+          7
+        ],
+        "nonBattleExp": 6681.6,
+        "battleExp": 504,
+        "totalExpAndLearningCurrency": 7185.6,
+        "balanced": [
+          92,
+          92,
+          92,
+          85
+        ],
+        "balancedBeforeFinalBattle": [
+          91,
+          91,
+          91,
+          84
+        ],
+        "focusedUncapped": [
+          100,
+          79,
+          71,
+          71
+        ],
+        "focusedWithCaps": [
+          100,
+          75,
+          71,
+          71
+        ]
+      }
+    ],
+    "sensitivity": [
+      {
+        "factor": 0.8,
+        "zero": {
+          "star": 0,
+          "mentorship": 1,
+          "assumedDepths": [
+            2,
+            3,
+            3,
+            4
+          ],
+          "nonBattleExp": 921.6,
+          "battleExp": 124,
+          "totalExpAndLearningCurrency": 1045.6,
+          "balanced": [
+            47,
+            47,
+            47,
+            43
+          ],
+          "balancedBeforeFinalBattle": [
+            47,
+            47,
+            47,
+            42
+          ],
+          "focusedUncapped": [
+            65,
+            41,
+            37,
+            37
+          ],
+          "focusedWithCaps": [
+            65,
+            41,
+            37,
+            37
+          ]
+        },
+        "five": {
+          "star": 5,
+          "mentorship": 5.8,
+          "assumedDepths": [
+            7,
+            7,
+            7,
+            7
+          ],
+          "nonBattleExp": 5345.28,
+          "battleExp": 504,
+          "totalExpAndLearningCurrency": 5849.28,
+          "balanced": [
+            87,
+            87,
+            87,
+            80
+          ],
+          "balancedBeforeFinalBattle": [
+            86,
+            86,
+            86,
+            79
+          ],
+          "focusedUncapped": [
+            100,
+            75,
+            66,
+            66
+          ],
+          "focusedWithCaps": [
+            100,
+            75,
+            66,
+            66
+          ]
+        }
+      },
+      {
+        "factor": 1,
+        "zero": {
+          "star": 0,
+          "mentorship": 1,
+          "assumedDepths": [
+            2,
+            3,
+            3,
+            4
+          ],
+          "nonBattleExp": 1152,
+          "battleExp": 124,
+          "totalExpAndLearningCurrency": 1276,
+          "balanced": [
+            51,
+            51,
+            51,
+            46
+          ],
+          "balancedBeforeFinalBattle": [
+            51,
+            51,
+            51,
+            45
+          ],
+          "focusedUncapped": [
+            70,
+            43,
+            39,
+            39
+          ],
+          "focusedWithCaps": [
+            70,
+            43,
+            39,
+            39
+          ]
+        },
+        "five": {
+          "star": 5,
+          "mentorship": 5.8,
+          "assumedDepths": [
+            7,
+            7,
+            7,
+            7
+          ],
+          "nonBattleExp": 6681.6,
+          "battleExp": 504,
+          "totalExpAndLearningCurrency": 7185.6,
+          "balanced": [
+            92,
+            92,
+            92,
+            85
+          ],
+          "balancedBeforeFinalBattle": [
+            91,
+            91,
+            91,
+            84
+          ],
+          "focusedUncapped": [
+            100,
+            79,
+            71,
+            71
+          ],
+          "focusedWithCaps": [
+            100,
+            75,
+            71,
+            71
+          ]
+        }
+      },
+      {
+        "factor": 1.2,
+        "zero": {
+          "star": 0,
+          "mentorship": 1,
+          "assumedDepths": [
+            2,
+            3,
+            3,
+            4
+          ],
+          "nonBattleExp": 1382.4,
+          "battleExp": 124,
+          "totalExpAndLearningCurrency": 1506.4,
+          "balanced": [
+            55,
+            55,
+            55,
+            48
+          ],
+          "balancedBeforeFinalBattle": [
+            55,
+            55,
+            55,
+            48
+          ],
+          "focusedUncapped": [
+            75,
+            45,
+            41,
+            41
+          ],
+          "focusedWithCaps": [
+            75,
+            45,
+            41,
+            41
+          ]
+        },
+        "five": {
+          "star": 5,
+          "mentorship": 5.8,
+          "assumedDepths": [
+            7,
+            7,
+            7,
+            7
+          ],
+          "nonBattleExp": 8017.92,
+          "battleExp": 504,
+          "totalExpAndLearningCurrency": 8521.92,
+          "balanced": [
+            94,
+            94,
+            94,
+            88
+          ],
+          "balancedBeforeFinalBattle": [
+            94,
+            94,
+            94,
+            87
+          ],
+          "focusedUncapped": [
+            100,
+            84,
+            75,
+            75
+          ],
+          "focusedWithCaps": [
+            100,
+            75,
+            75,
+            75
+          ]
+        }
+      }
+    ],
+    "costFrom22": {
+      "50": 312,
+      "70": 764,
+      "85": 1392,
+      "90": 1772,
+      "92": 1924,
+      "94": 2076,
+      "95": 2212,
+      "100": 2892
+    },
+    "minimumExpFor92_92_92_85": 7164
+  },
+  "aptitude": {
+    "points": 32,
+    "pointPurchaseCost": 8800,
+    "threeAOneBCapCost": 2600,
+    "totalForThreeAOneB": 11400
+  },
+  "learning": {
+    "commonSkillTo5": 1040,
+    "commonTraitTo5": 840,
+    "threeSkillsFourTraits": 6480,
+    "threeSkillsFourTraitsWithAllPeerless": 9720,
+    "commonSkillRatios": {
+      "physical": [
+        0.22,
+        0.26,
+        0.32,
+        0.39,
+        0.46
+      ],
+      "magic": [
+        0.23,
+        0.28,
+        0.33,
+        0.4,
+        0.48
+      ],
+      "heal": [
+        0.18,
+        0.22,
+        0.26,
+        0.32,
+        0.38
+      ],
+      "buff": [
+        0.08,
+        0.1,
+        0.12,
+        0.14,
+        0.17
+      ],
+      "debuff": [
+        0.08,
+        0.1,
+        0.12,
+        0.14,
+        0.17
+      ]
+    }
+  },
+  "minorExamples": [
+    {
+      "attr": 50,
+      "chapterFourLowMidHigh": [
+        0.93,
+        0,
+        0
+      ]
+    },
+    {
+      "attr": 70,
+      "chapterFourLowMidHigh": [
+        1,
+        0.73,
+        0.02
+      ]
+    },
+    {
+      "attr": 92,
+      "chapterFourLowMidHigh": [
+        1,
+        1,
+        0.73
+      ]
+    }
+  ],
+  "enemyCandidatesNotValidated": [
+    {
+      "chapter": 1,
+      "stages": [
+        {
+          "stage": 1,
+          "troops": 300,
+          "totalDamageBudget": 12
+        },
+        {
+          "stage": 2,
+          "troops": 336,
+          "totalDamageBudget": 13
+        },
+        {
+          "stage": 3,
+          "troops": 384,
+          "totalDamageBudget": 14
+        },
+        {
+          "stage": 4,
+          "troops": 450,
+          "totalDamageBudget": 16
+        },
+        {
+          "stage": 5,
+          "troops": 540,
+          "totalDamageBudget": 19
+        },
+        {
+          "stage": 6,
+          "troops": 648,
+          "totalDamageBudget": 22
+        },
+        {
+          "stage": 7,
+          "troops": 780,
+          "totalDamageBudget": 25
+        }
+      ]
+    },
+    {
+      "chapter": 2,
+      "stages": [
+        {
+          "stage": 1,
+          "troops": 600,
+          "totalDamageBudget": 22
+        },
+        {
+          "stage": 2,
+          "troops": 672,
+          "totalDamageBudget": 24
+        },
+        {
+          "stage": 3,
+          "troops": 768,
+          "totalDamageBudget": 26
+        },
+        {
+          "stage": 4,
+          "troops": 900,
+          "totalDamageBudget": 30
+        },
+        {
+          "stage": 5,
+          "troops": 1080,
+          "totalDamageBudget": 34
+        },
+        {
+          "stage": 6,
+          "troops": 1296,
+          "totalDamageBudget": 40
+        },
+        {
+          "stage": 7,
+          "troops": 1560,
+          "totalDamageBudget": 46
+        }
+      ]
+    },
+    {
+      "chapter": 3,
+      "stages": [
+        {
+          "stage": 1,
+          "troops": 1200,
+          "totalDamageBudget": 45
+        },
+        {
+          "stage": 2,
+          "troops": 1344,
+          "totalDamageBudget": 49
+        },
+        {
+          "stage": 3,
+          "troops": 1536,
+          "totalDamageBudget": 53
+        },
+        {
+          "stage": 4,
+          "troops": 1800,
+          "totalDamageBudget": 61
+        },
+        {
+          "stage": 5,
+          "troops": 2160,
+          "totalDamageBudget": 70
+        },
+        {
+          "stage": 6,
+          "troops": 2592,
+          "totalDamageBudget": 81
+        },
+        {
+          "stage": 7,
+          "troops": 3120,
+          "totalDamageBudget": 95
+        }
+      ]
+    },
+    {
+      "chapter": 4,
+      "stages": [
+        {
+          "stage": 1,
+          "troops": 2400,
+          "totalDamageBudget": 85
+        },
+        {
+          "stage": 2,
+          "troops": 2688,
+          "totalDamageBudget": 92
+        },
+        {
+          "stage": 3,
+          "troops": 3072,
+          "totalDamageBudget": 100
+        },
+        {
+          "stage": 4,
+          "troops": 3600,
+          "totalDamageBudget": 115
+        },
+        {
+          "stage": 5,
+          "troops": 4320,
+          "totalDamageBudget": 132
+        },
+        {
+          "stage": 6,
+          "troops": 5184,
+          "totalDamageBudget": 153
+        },
+        {
+          "stage": 7,
+          "troops": 6240,
+          "totalDamageBudget": 179
+        }
+      ]
+    }
+  ]
+}

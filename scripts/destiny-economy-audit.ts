@@ -1,0 +1,32 @@
+import { readFileSync, writeFileSync } from 'node:fs';
+import { shopItems } from '../content-source/core/shop/index.js';
+import { Session } from '../src/app/session.js';
+import { compose } from '../src/app/composition.js';
+import { driveRun } from '../src/app/run-driver.js';
+import { seed } from '../src/contracts/core/ids.js';
+import { emptyDraft, emptyMeta } from '../src/modules/dream-entry.js';
+import { loadContent } from '../src/data-runtime/loader.js';
+import { diskRepository } from '../src/platform/content-repository.js';
+import { POLICIES } from './lib/policies.js';
+import { computeSettlementPoints } from '../src/modules/settlement.js';
+const p=JSON.parse(readFileSync('docs/balance/wei-destiny-v3.proposal.json','utf8').replace(/^\uFEFF/,''));
+const sum=(xs:number[]):number=>xs.reduce((a,b)=>a+b,0);
+const oldCosts=Object.fromEntries(shopItems.map(x=>[String(x.item),sum(x.levels.map(l=>l.cost))]));
+const costs=Object.fromEntries(Object.entries(p.shop).map(([id,x])=>{const v=x as {costs:number[];copies?:number};return [id,sum(v.costs)*(v.copies??1)];}));
+const maxIncome=400+32*5+4*50+24*10+28*10+300;
+const core=costs.aptitudePoints!+3*(300+900)+300+sum(p.shop.career.costs.slice(0,5));
+const mature=core+1500+1600;
+const total=sum(Object.values(costs));
+const schedule=Array.from({length:80},(_,i)=>{const b=p.referenceIncomeBands.find((v:{throughRun:number})=>v.throughRun>=i+1);return {run:i+1,income:760+b.ranks*10+b.depth*10+b.ending};});
+const sensitivity=[.8,1,1.2].map(factor=>{
+ let balance=0; const rows=schedule.map(r=>({run:r.run,income:Math.min(maxIncome,Math.round(r.income*factor)),cumulative:balance+=Math.min(maxIncome,Math.round(r.income*factor))}));
+ return {factor,coreRun:rows.find(r=>r.cumulative>=core)?.run,matureRun:rows.find(r=>r.cumulative>=mature)?.run,allRun:rows.find(r=>r.cumulative>=total)?.run,rows};
+});
+const loaded=loadContent(diskRepository());if(!loaded.ok)throw new Error(loaded.report);
+const w=compose(loaded.registry),meta=emptyMeta(),policy=POLICIES.find(p=>p.name==='flag-chaser')!;
+const measured:number[]=[];
+for(let i=0;i<100;i++){const s=Session.start(w,meta,emptyDraft(meta,w.defs),seed(1000+i));driveRun(s,policy);measured.push(computeSettlementPoints(s.summary(),w.defs));}
+measured.sort((a,b)=>a-b);
+const report={status:'proposal arithmetic; measured current runtime uses 100 independent zero-meta runs, not a purchase campaign',oldCosts,oldTotal:sum(Object.values(oldCosts)),currentIncome:{min:measured[0],p10:measured[9],median:(measured[49]!+measured[50]!)/2,p90:measured[89],max:measured[99],mean:sum(measured)/100},costs,core,mature,total,maxIncome,absoluteMinimumRunsToBuyAll:Math.ceil(total/maxIncome),sensitivity};
+writeFileSync('docs/balance/wei-destiny-v3.audit.json',JSON.stringify(report,null,2)+'\n');
+console.log(JSON.stringify({...report,sensitivity:sensitivity.map(({rows,...r})=>({...r,milestones:rows.filter(x=>[1,3,7,12,16,19,30,40,50,53].includes(x.run))}))},null,2));

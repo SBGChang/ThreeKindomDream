@@ -1,0 +1,1264 @@
+{
+  "status": "proposal arithmetic; measured current runtime uses 100 independent zero-meta runs, not a purchase campaign",
+  "oldCosts": {
+    "shop:aptCap.lead": 4600,
+    "shop:aptCap.war": 4600,
+    "shop:aptCap.int": 4600,
+    "shop:aptCap.pol": 4600,
+    "shop:career": 24600,
+    "shop:aptPoints": 5000,
+    "shop:talentPoints": 3050,
+    "shop:glowUpgrade": 10100,
+    "shop:talents": 4450,
+    "shop:bond.wei": 5300
+  },
+  "oldTotal": 70900,
+  "currentIncome": {
+    "min": 5088,
+    "p10": 5508,
+    "median": 8168,
+    "p90": 8168,
+    "max": 8168,
+    "mean": 7840.4
+  },
+  "costs": {
+    "aptitudePoints": 10000,
+    "aptitudeCapPerAttribute": 14400,
+    "career": 10000,
+    "talentPoints": 12000,
+    "talents": 10800,
+    "glow": 13000,
+    "encounterOptions": 3500
+  },
+  "core": 18500,
+  "mature": 21600,
+  "total": 73700,
+  "maxIncome": 1580,
+  "absoluteMinimumRunsToBuyAll": 47,
+  "sensitivity": [
+    {
+      "factor": 0.8,
+      "coreRun": 20,
+      "matureRun": 22,
+      "allRun": 65,
+      "rows": [
+        {
+          "run": 1,
+          "income": 752,
+          "cumulative": 752
+        },
+        {
+          "run": 2,
+          "income": 752,
+          "cumulative": 1504
+        },
+        {
+          "run": 3,
+          "income": 864,
+          "cumulative": 2368
+        },
+        {
+          "run": 4,
+          "income": 864,
+          "cumulative": 3232
+        },
+        {
+          "run": 5,
+          "income": 896,
+          "cumulative": 4128
+        },
+        {
+          "run": 6,
+          "income": 896,
+          "cumulative": 5024
+        },
+        {
+          "run": 7,
+          "income": 896,
+          "cumulative": 5920
+        },
+        {
+          "run": 8,
+          "income": 928,
+          "cumulative": 6848
+        },
+        {
+          "run": 9,
+          "income": 928,
+          "cumulative": 7776
+        },
+        {
+          "run": 10,
+          "income": 928,
+          "cumulative": 8704
+        },
+        {
+          "run": 11,
+          "income": 928,
+          "cumulative": 9632
+        },
+        {
+          "run": 12,
+          "income": 928,
+          "cumulative": 10560
+        },
+        {
+          "run": 13,
+          "income": 1072,
+          "cumulative": 11632
+        },
+        {
+          "run": 14,
+          "income": 1072,
+          "cumulative": 12704
+        },
+        {
+          "run": 15,
+          "income": 1072,
+          "cumulative": 13776
+        },
+        {
+          "run": 16,
+          "income": 1072,
+          "cumulative": 14848
+        },
+        {
+          "run": 17,
+          "income": 1072,
+          "cumulative": 15920
+        },
+        {
+          "run": 18,
+          "income": 1072,
+          "cumulative": 16992
+        },
+        {
+          "run": 19,
+          "income": 1216,
+          "cumulative": 18208
+        },
+        {
+          "run": 20,
+          "income": 1216,
+          "cumulative": 19424
+        },
+        {
+          "run": 21,
+          "income": 1216,
+          "cumulative": 20640
+        },
+        {
+          "run": 22,
+          "income": 1216,
+          "cumulative": 21856
+        },
+        {
+          "run": 23,
+          "income": 1216,
+          "cumulative": 23072
+        },
+        {
+          "run": 24,
+          "income": 1216,
+          "cumulative": 24288
+        },
+        {
+          "run": 25,
+          "income": 1216,
+          "cumulative": 25504
+        },
+        {
+          "run": 26,
+          "income": 1216,
+          "cumulative": 26720
+        },
+        {
+          "run": 27,
+          "income": 1216,
+          "cumulative": 27936
+        },
+        {
+          "run": 28,
+          "income": 1216,
+          "cumulative": 29152
+        },
+        {
+          "run": 29,
+          "income": 1216,
+          "cumulative": 30368
+        },
+        {
+          "run": 30,
+          "income": 1216,
+          "cumulative": 31584
+        },
+        {
+          "run": 31,
+          "income": 1216,
+          "cumulative": 32800
+        },
+        {
+          "run": 32,
+          "income": 1216,
+          "cumulative": 34016
+        },
+        {
+          "run": 33,
+          "income": 1216,
+          "cumulative": 35232
+        },
+        {
+          "run": 34,
+          "income": 1216,
+          "cumulative": 36448
+        },
+        {
+          "run": 35,
+          "income": 1216,
+          "cumulative": 37664
+        },
+        {
+          "run": 36,
+          "income": 1216,
+          "cumulative": 38880
+        },
+        {
+          "run": 37,
+          "income": 1216,
+          "cumulative": 40096
+        },
+        {
+          "run": 38,
+          "income": 1216,
+          "cumulative": 41312
+        },
+        {
+          "run": 39,
+          "income": 1216,
+          "cumulative": 42528
+        },
+        {
+          "run": 40,
+          "income": 1216,
+          "cumulative": 43744
+        },
+        {
+          "run": 41,
+          "income": 1216,
+          "cumulative": 44960
+        },
+        {
+          "run": 42,
+          "income": 1216,
+          "cumulative": 46176
+        },
+        {
+          "run": 43,
+          "income": 1216,
+          "cumulative": 47392
+        },
+        {
+          "run": 44,
+          "income": 1216,
+          "cumulative": 48608
+        },
+        {
+          "run": 45,
+          "income": 1216,
+          "cumulative": 49824
+        },
+        {
+          "run": 46,
+          "income": 1216,
+          "cumulative": 51040
+        },
+        {
+          "run": 47,
+          "income": 1216,
+          "cumulative": 52256
+        },
+        {
+          "run": 48,
+          "income": 1216,
+          "cumulative": 53472
+        },
+        {
+          "run": 49,
+          "income": 1216,
+          "cumulative": 54688
+        },
+        {
+          "run": 50,
+          "income": 1216,
+          "cumulative": 55904
+        },
+        {
+          "run": 51,
+          "income": 1216,
+          "cumulative": 57120
+        },
+        {
+          "run": 52,
+          "income": 1216,
+          "cumulative": 58336
+        },
+        {
+          "run": 53,
+          "income": 1216,
+          "cumulative": 59552
+        },
+        {
+          "run": 54,
+          "income": 1216,
+          "cumulative": 60768
+        },
+        {
+          "run": 55,
+          "income": 1216,
+          "cumulative": 61984
+        },
+        {
+          "run": 56,
+          "income": 1216,
+          "cumulative": 63200
+        },
+        {
+          "run": 57,
+          "income": 1216,
+          "cumulative": 64416
+        },
+        {
+          "run": 58,
+          "income": 1216,
+          "cumulative": 65632
+        },
+        {
+          "run": 59,
+          "income": 1216,
+          "cumulative": 66848
+        },
+        {
+          "run": 60,
+          "income": 1216,
+          "cumulative": 68064
+        },
+        {
+          "run": 61,
+          "income": 1216,
+          "cumulative": 69280
+        },
+        {
+          "run": 62,
+          "income": 1216,
+          "cumulative": 70496
+        },
+        {
+          "run": 63,
+          "income": 1216,
+          "cumulative": 71712
+        },
+        {
+          "run": 64,
+          "income": 1216,
+          "cumulative": 72928
+        },
+        {
+          "run": 65,
+          "income": 1216,
+          "cumulative": 74144
+        },
+        {
+          "run": 66,
+          "income": 1216,
+          "cumulative": 75360
+        },
+        {
+          "run": 67,
+          "income": 1216,
+          "cumulative": 76576
+        },
+        {
+          "run": 68,
+          "income": 1216,
+          "cumulative": 77792
+        },
+        {
+          "run": 69,
+          "income": 1216,
+          "cumulative": 79008
+        },
+        {
+          "run": 70,
+          "income": 1216,
+          "cumulative": 80224
+        },
+        {
+          "run": 71,
+          "income": 1216,
+          "cumulative": 81440
+        },
+        {
+          "run": 72,
+          "income": 1216,
+          "cumulative": 82656
+        },
+        {
+          "run": 73,
+          "income": 1216,
+          "cumulative": 83872
+        },
+        {
+          "run": 74,
+          "income": 1216,
+          "cumulative": 85088
+        },
+        {
+          "run": 75,
+          "income": 1216,
+          "cumulative": 86304
+        },
+        {
+          "run": 76,
+          "income": 1216,
+          "cumulative": 87520
+        },
+        {
+          "run": 77,
+          "income": 1216,
+          "cumulative": 88736
+        },
+        {
+          "run": 78,
+          "income": 1216,
+          "cumulative": 89952
+        },
+        {
+          "run": 79,
+          "income": 1216,
+          "cumulative": 91168
+        },
+        {
+          "run": 80,
+          "income": 1216,
+          "cumulative": 92384
+        }
+      ]
+    },
+    {
+      "factor": 1,
+      "coreRun": 16,
+      "matureRun": 19,
+      "allRun": 53,
+      "rows": [
+        {
+          "run": 1,
+          "income": 940,
+          "cumulative": 940
+        },
+        {
+          "run": 2,
+          "income": 940,
+          "cumulative": 1880
+        },
+        {
+          "run": 3,
+          "income": 1080,
+          "cumulative": 2960
+        },
+        {
+          "run": 4,
+          "income": 1080,
+          "cumulative": 4040
+        },
+        {
+          "run": 5,
+          "income": 1120,
+          "cumulative": 5160
+        },
+        {
+          "run": 6,
+          "income": 1120,
+          "cumulative": 6280
+        },
+        {
+          "run": 7,
+          "income": 1120,
+          "cumulative": 7400
+        },
+        {
+          "run": 8,
+          "income": 1160,
+          "cumulative": 8560
+        },
+        {
+          "run": 9,
+          "income": 1160,
+          "cumulative": 9720
+        },
+        {
+          "run": 10,
+          "income": 1160,
+          "cumulative": 10880
+        },
+        {
+          "run": 11,
+          "income": 1160,
+          "cumulative": 12040
+        },
+        {
+          "run": 12,
+          "income": 1160,
+          "cumulative": 13200
+        },
+        {
+          "run": 13,
+          "income": 1340,
+          "cumulative": 14540
+        },
+        {
+          "run": 14,
+          "income": 1340,
+          "cumulative": 15880
+        },
+        {
+          "run": 15,
+          "income": 1340,
+          "cumulative": 17220
+        },
+        {
+          "run": 16,
+          "income": 1340,
+          "cumulative": 18560
+        },
+        {
+          "run": 17,
+          "income": 1340,
+          "cumulative": 19900
+        },
+        {
+          "run": 18,
+          "income": 1340,
+          "cumulative": 21240
+        },
+        {
+          "run": 19,
+          "income": 1520,
+          "cumulative": 22760
+        },
+        {
+          "run": 20,
+          "income": 1520,
+          "cumulative": 24280
+        },
+        {
+          "run": 21,
+          "income": 1520,
+          "cumulative": 25800
+        },
+        {
+          "run": 22,
+          "income": 1520,
+          "cumulative": 27320
+        },
+        {
+          "run": 23,
+          "income": 1520,
+          "cumulative": 28840
+        },
+        {
+          "run": 24,
+          "income": 1520,
+          "cumulative": 30360
+        },
+        {
+          "run": 25,
+          "income": 1520,
+          "cumulative": 31880
+        },
+        {
+          "run": 26,
+          "income": 1520,
+          "cumulative": 33400
+        },
+        {
+          "run": 27,
+          "income": 1520,
+          "cumulative": 34920
+        },
+        {
+          "run": 28,
+          "income": 1520,
+          "cumulative": 36440
+        },
+        {
+          "run": 29,
+          "income": 1520,
+          "cumulative": 37960
+        },
+        {
+          "run": 30,
+          "income": 1520,
+          "cumulative": 39480
+        },
+        {
+          "run": 31,
+          "income": 1520,
+          "cumulative": 41000
+        },
+        {
+          "run": 32,
+          "income": 1520,
+          "cumulative": 42520
+        },
+        {
+          "run": 33,
+          "income": 1520,
+          "cumulative": 44040
+        },
+        {
+          "run": 34,
+          "income": 1520,
+          "cumulative": 45560
+        },
+        {
+          "run": 35,
+          "income": 1520,
+          "cumulative": 47080
+        },
+        {
+          "run": 36,
+          "income": 1520,
+          "cumulative": 48600
+        },
+        {
+          "run": 37,
+          "income": 1520,
+          "cumulative": 50120
+        },
+        {
+          "run": 38,
+          "income": 1520,
+          "cumulative": 51640
+        },
+        {
+          "run": 39,
+          "income": 1520,
+          "cumulative": 53160
+        },
+        {
+          "run": 40,
+          "income": 1520,
+          "cumulative": 54680
+        },
+        {
+          "run": 41,
+          "income": 1520,
+          "cumulative": 56200
+        },
+        {
+          "run": 42,
+          "income": 1520,
+          "cumulative": 57720
+        },
+        {
+          "run": 43,
+          "income": 1520,
+          "cumulative": 59240
+        },
+        {
+          "run": 44,
+          "income": 1520,
+          "cumulative": 60760
+        },
+        {
+          "run": 45,
+          "income": 1520,
+          "cumulative": 62280
+        },
+        {
+          "run": 46,
+          "income": 1520,
+          "cumulative": 63800
+        },
+        {
+          "run": 47,
+          "income": 1520,
+          "cumulative": 65320
+        },
+        {
+          "run": 48,
+          "income": 1520,
+          "cumulative": 66840
+        },
+        {
+          "run": 49,
+          "income": 1520,
+          "cumulative": 68360
+        },
+        {
+          "run": 50,
+          "income": 1520,
+          "cumulative": 69880
+        },
+        {
+          "run": 51,
+          "income": 1520,
+          "cumulative": 71400
+        },
+        {
+          "run": 52,
+          "income": 1520,
+          "cumulative": 72920
+        },
+        {
+          "run": 53,
+          "income": 1520,
+          "cumulative": 74440
+        },
+        {
+          "run": 54,
+          "income": 1520,
+          "cumulative": 75960
+        },
+        {
+          "run": 55,
+          "income": 1520,
+          "cumulative": 77480
+        },
+        {
+          "run": 56,
+          "income": 1520,
+          "cumulative": 79000
+        },
+        {
+          "run": 57,
+          "income": 1520,
+          "cumulative": 80520
+        },
+        {
+          "run": 58,
+          "income": 1520,
+          "cumulative": 82040
+        },
+        {
+          "run": 59,
+          "income": 1520,
+          "cumulative": 83560
+        },
+        {
+          "run": 60,
+          "income": 1520,
+          "cumulative": 85080
+        },
+        {
+          "run": 61,
+          "income": 1520,
+          "cumulative": 86600
+        },
+        {
+          "run": 62,
+          "income": 1520,
+          "cumulative": 88120
+        },
+        {
+          "run": 63,
+          "income": 1520,
+          "cumulative": 89640
+        },
+        {
+          "run": 64,
+          "income": 1520,
+          "cumulative": 91160
+        },
+        {
+          "run": 65,
+          "income": 1520,
+          "cumulative": 92680
+        },
+        {
+          "run": 66,
+          "income": 1520,
+          "cumulative": 94200
+        },
+        {
+          "run": 67,
+          "income": 1520,
+          "cumulative": 95720
+        },
+        {
+          "run": 68,
+          "income": 1520,
+          "cumulative": 97240
+        },
+        {
+          "run": 69,
+          "income": 1520,
+          "cumulative": 98760
+        },
+        {
+          "run": 70,
+          "income": 1520,
+          "cumulative": 100280
+        },
+        {
+          "run": 71,
+          "income": 1520,
+          "cumulative": 101800
+        },
+        {
+          "run": 72,
+          "income": 1520,
+          "cumulative": 103320
+        },
+        {
+          "run": 73,
+          "income": 1520,
+          "cumulative": 104840
+        },
+        {
+          "run": 74,
+          "income": 1520,
+          "cumulative": 106360
+        },
+        {
+          "run": 75,
+          "income": 1520,
+          "cumulative": 107880
+        },
+        {
+          "run": 76,
+          "income": 1520,
+          "cumulative": 109400
+        },
+        {
+          "run": 77,
+          "income": 1520,
+          "cumulative": 110920
+        },
+        {
+          "run": 78,
+          "income": 1520,
+          "cumulative": 112440
+        },
+        {
+          "run": 79,
+          "income": 1520,
+          "cumulative": 113960
+        },
+        {
+          "run": 80,
+          "income": 1520,
+          "cumulative": 115480
+        }
+      ]
+    },
+    {
+      "factor": 1.2,
+      "coreRun": 14,
+      "matureRun": 16,
+      "allRun": 49,
+      "rows": [
+        {
+          "run": 1,
+          "income": 1128,
+          "cumulative": 1128
+        },
+        {
+          "run": 2,
+          "income": 1128,
+          "cumulative": 2256
+        },
+        {
+          "run": 3,
+          "income": 1296,
+          "cumulative": 3552
+        },
+        {
+          "run": 4,
+          "income": 1296,
+          "cumulative": 4848
+        },
+        {
+          "run": 5,
+          "income": 1344,
+          "cumulative": 6192
+        },
+        {
+          "run": 6,
+          "income": 1344,
+          "cumulative": 7536
+        },
+        {
+          "run": 7,
+          "income": 1344,
+          "cumulative": 8880
+        },
+        {
+          "run": 8,
+          "income": 1392,
+          "cumulative": 10272
+        },
+        {
+          "run": 9,
+          "income": 1392,
+          "cumulative": 11664
+        },
+        {
+          "run": 10,
+          "income": 1392,
+          "cumulative": 13056
+        },
+        {
+          "run": 11,
+          "income": 1392,
+          "cumulative": 14448
+        },
+        {
+          "run": 12,
+          "income": 1392,
+          "cumulative": 15840
+        },
+        {
+          "run": 13,
+          "income": 1580,
+          "cumulative": 17420
+        },
+        {
+          "run": 14,
+          "income": 1580,
+          "cumulative": 19000
+        },
+        {
+          "run": 15,
+          "income": 1580,
+          "cumulative": 20580
+        },
+        {
+          "run": 16,
+          "income": 1580,
+          "cumulative": 22160
+        },
+        {
+          "run": 17,
+          "income": 1580,
+          "cumulative": 23740
+        },
+        {
+          "run": 18,
+          "income": 1580,
+          "cumulative": 25320
+        },
+        {
+          "run": 19,
+          "income": 1580,
+          "cumulative": 26900
+        },
+        {
+          "run": 20,
+          "income": 1580,
+          "cumulative": 28480
+        },
+        {
+          "run": 21,
+          "income": 1580,
+          "cumulative": 30060
+        },
+        {
+          "run": 22,
+          "income": 1580,
+          "cumulative": 31640
+        },
+        {
+          "run": 23,
+          "income": 1580,
+          "cumulative": 33220
+        },
+        {
+          "run": 24,
+          "income": 1580,
+          "cumulative": 34800
+        },
+        {
+          "run": 25,
+          "income": 1580,
+          "cumulative": 36380
+        },
+        {
+          "run": 26,
+          "income": 1580,
+          "cumulative": 37960
+        },
+        {
+          "run": 27,
+          "income": 1580,
+          "cumulative": 39540
+        },
+        {
+          "run": 28,
+          "income": 1580,
+          "cumulative": 41120
+        },
+        {
+          "run": 29,
+          "income": 1580,
+          "cumulative": 42700
+        },
+        {
+          "run": 30,
+          "income": 1580,
+          "cumulative": 44280
+        },
+        {
+          "run": 31,
+          "income": 1580,
+          "cumulative": 45860
+        },
+        {
+          "run": 32,
+          "income": 1580,
+          "cumulative": 47440
+        },
+        {
+          "run": 33,
+          "income": 1580,
+          "cumulative": 49020
+        },
+        {
+          "run": 34,
+          "income": 1580,
+          "cumulative": 50600
+        },
+        {
+          "run": 35,
+          "income": 1580,
+          "cumulative": 52180
+        },
+        {
+          "run": 36,
+          "income": 1580,
+          "cumulative": 53760
+        },
+        {
+          "run": 37,
+          "income": 1580,
+          "cumulative": 55340
+        },
+        {
+          "run": 38,
+          "income": 1580,
+          "cumulative": 56920
+        },
+        {
+          "run": 39,
+          "income": 1580,
+          "cumulative": 58500
+        },
+        {
+          "run": 40,
+          "income": 1580,
+          "cumulative": 60080
+        },
+        {
+          "run": 41,
+          "income": 1580,
+          "cumulative": 61660
+        },
+        {
+          "run": 42,
+          "income": 1580,
+          "cumulative": 63240
+        },
+        {
+          "run": 43,
+          "income": 1580,
+          "cumulative": 64820
+        },
+        {
+          "run": 44,
+          "income": 1580,
+          "cumulative": 66400
+        },
+        {
+          "run": 45,
+          "income": 1580,
+          "cumulative": 67980
+        },
+        {
+          "run": 46,
+          "income": 1580,
+          "cumulative": 69560
+        },
+        {
+          "run": 47,
+          "income": 1580,
+          "cumulative": 71140
+        },
+        {
+          "run": 48,
+          "income": 1580,
+          "cumulative": 72720
+        },
+        {
+          "run": 49,
+          "income": 1580,
+          "cumulative": 74300
+        },
+        {
+          "run": 50,
+          "income": 1580,
+          "cumulative": 75880
+        },
+        {
+          "run": 51,
+          "income": 1580,
+          "cumulative": 77460
+        },
+        {
+          "run": 52,
+          "income": 1580,
+          "cumulative": 79040
+        },
+        {
+          "run": 53,
+          "income": 1580,
+          "cumulative": 80620
+        },
+        {
+          "run": 54,
+          "income": 1580,
+          "cumulative": 82200
+        },
+        {
+          "run": 55,
+          "income": 1580,
+          "cumulative": 83780
+        },
+        {
+          "run": 56,
+          "income": 1580,
+          "cumulative": 85360
+        },
+        {
+          "run": 57,
+          "income": 1580,
+          "cumulative": 86940
+        },
+        {
+          "run": 58,
+          "income": 1580,
+          "cumulative": 88520
+        },
+        {
+          "run": 59,
+          "income": 1580,
+          "cumulative": 90100
+        },
+        {
+          "run": 60,
+          "income": 1580,
+          "cumulative": 91680
+        },
+        {
+          "run": 61,
+          "income": 1580,
+          "cumulative": 93260
+        },
+        {
+          "run": 62,
+          "income": 1580,
+          "cumulative": 94840
+        },
+        {
+          "run": 63,
+          "income": 1580,
+          "cumulative": 96420
+        },
+        {
+          "run": 64,
+          "income": 1580,
+          "cumulative": 98000
+        },
+        {
+          "run": 65,
+          "income": 1580,
+          "cumulative": 99580
+        },
+        {
+          "run": 66,
+          "income": 1580,
+          "cumulative": 101160
+        },
+        {
+          "run": 67,
+          "income": 1580,
+          "cumulative": 102740
+        },
+        {
+          "run": 68,
+          "income": 1580,
+          "cumulative": 104320
+        },
+        {
+          "run": 69,
+          "income": 1580,
+          "cumulative": 105900
+        },
+        {
+          "run": 70,
+          "income": 1580,
+          "cumulative": 107480
+        },
+        {
+          "run": 71,
+          "income": 1580,
+          "cumulative": 109060
+        },
+        {
+          "run": 72,
+          "income": 1580,
+          "cumulative": 110640
+        },
+        {
+          "run": 73,
+          "income": 1580,
+          "cumulative": 112220
+        },
+        {
+          "run": 74,
+          "income": 1580,
+          "cumulative": 113800
+        },
+        {
+          "run": 75,
+          "income": 1580,
+          "cumulative": 115380
+        },
+        {
+          "run": 76,
+          "income": 1580,
+          "cumulative": 116960
+        },
+        {
+          "run": 77,
+          "income": 1580,
+          "cumulative": 118540
+        },
+        {
+          "run": 78,
+          "income": 1580,
+          "cumulative": 120120
+        },
+        {
+          "run": 79,
+          "income": 1580,
+          "cumulative": 121700
+        },
+        {
+          "run": 80,
+          "income": 1580,
+          "cumulative": 123280
+        }
+      ]
+    }
+  ]
+}
