@@ -330,6 +330,8 @@ export interface NotableSkillRow {
 }
 
 export interface NotableDef extends DefHeader {
+  /** Explicit shared atlas until this character receives a dedicated duel sequence. */
+  readonly duelArtId?:string;
   readonly kind: 'notable';
   readonly notableId: NotableId;
   readonly rarity: Rarity;
@@ -826,6 +828,7 @@ export interface GrowthRuleDef extends DefHeader {
 export type AbilityCost = Readonly<Partial<Record<Attr, number>>>;
 
 export interface TraitDef extends DefHeader {
+  readonly battleTrigger?:string;
   readonly duelTrait?: import('./duel.js').DuelTrait;
   readonly kind: 'trait';
   readonly traitId: TraitId;
@@ -853,6 +856,11 @@ export interface SkillActionDef {
   readonly duration: number;
 }
 export interface SkillDef extends DefHeader {
+  /** Kept for existing saves and previously authored story lessons. */
+  readonly legacy?:boolean;
+  readonly battleMechanic?: string;
+  readonly supplyCost?:number;
+  readonly cooldownSeconds?:number;
   readonly kind: 'skill';
   readonly skillId: SkillId;
   readonly tier: AbilityTier;
@@ -925,6 +933,7 @@ export interface BattleRuleDef extends DefHeader {
 }
 
 export interface EnemyDef extends DefHeader {
+  readonly duelArtId?:string;
   readonly kind: 'enemy';
   readonly enemyId: EnemyId;
   readonly nameKey: L10nKey;

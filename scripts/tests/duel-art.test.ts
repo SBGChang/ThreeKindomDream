@@ -6,8 +6,8 @@ import {DUEL_ART_VERSIONS,DUEL_SOURCE_COLUMNS,duelFrame,keepFrameInk} from '../.
 
 const formations=new Set(['曹軍前鋒','曹軍弩陣','益州守軍','江東追軍']);
 for(const d of [...defs.reader('notable').all(),...defs.reader('enemy').all()]){
- const name=defs.text(String(d.nameKey)),id=duelActorForName(name);
- assert.ok(id!=='npc_soldier'||formations.has(name),`${name} needs its own attack/defend/rest/hit atlas`);
+ const name=defs.text(String(d.nameKey)),id=d.duelArtId??duelActorForName(name);
+ assert.ok(id!=='npc_soldier'||formations.has(name)||d.duelArtId==='npc_soldier',`${name} needs its own attack/defend/rest/hit atlas`);
 }
 for(const id of Object.keys(DUEL_ACTORS)){
  const png=readFileSync(`public/art/duel/${id}-v${DUEL_ART_VERSIONS[id]??1}.png`);

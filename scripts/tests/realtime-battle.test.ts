@@ -3,10 +3,10 @@ import { armyBarWidth, armyCount, castSkill, createBattle, createConfiguredBattl
 const advance=(s:BattleState,seconds:number)=>{for(let i=0;i<Math.ceil(seconds*60);i++)tickBattle(s,1/60);};
 const until=(s:BattleState,predicate:()=>boolean,max=30)=>{for(let i=0;i<max*60&&!predicate();i++)tickBattle(s,1/60);assert.ok(predicate(),'phase must reach expected state');};
 const fighting=(troops=400)=>{const b=createBattle(troops);startBattle(b);until(b,()=>b.phase==='combat');return b;};
-const s=createBattle(425);assert.equal(armyCount(s,'ally'),425);assert.equal(s.units.filter(u=>u.side==='ally').length,9);assert.ok(s.units.every(u=>u.hp<=50));
+const s=createBattle(425);assert.equal(armyCount(s,'ally'),425);assert.equal(s.units.filter(u=>u.side==='ally').length,10);assert.ok(s.units.every(u=>u.hp<=50));
 const large=createConfiguredBattle({troops:2425,supply:100,supplyMax:100,regen:1,duration:60,skills:[],commanders:[],waveTroops:[3100],waveNames:['大軍'],allyAttack:1,enemyAttack:1});
 assert.equal(armyCount(large,'ally'),2425);assert.equal(armyCount(large,'enemy'),3100);
-assert.equal(large.units.filter(u=>u.side==='ally').length,49);
+assert.equal(large.units.filter(u=>u.side==='ally').length,50);
 assert.ok(large.units.every(u=>u.maxHp<=50&&u.hp<=50),'正式大軍仍以每娃娃最多 50 人表示，不能放大單位血量');
 assert.ok(Math.abs(armyBarWidth(600)/armyBarWidth(400)-1.5)<1e-10);
 const victim=s.units.find(u=>u.side==='enemy')!;damageTroop(s,victim,49);assert.equal(victim.hp,1);assert.notEqual(victim.pose,'dead');damageTroop(s,victim,99);assert.equal(victim.hp,0);assert.equal(s.kills,50);damageTroop(s,victim,50);assert.equal(s.kills,50);

@@ -1,3 +1,5 @@
+import { triggeredTraits } from './triggered.js';
+import { tacticalSkills } from './tactics.js';
 import type { AbilityCost, SkillDef, TraitDef } from '../../../src/contracts/core/definitions.js';
 import type { Attr, SkillKind } from '../../../src/contracts/core/primitives.js';
 import { effectId, skillId, traitId } from '../../../src/contracts/core/ids.js';
@@ -31,6 +33,7 @@ const skill = (
   kind: SkillKind, actorAttr: Attr, ratio: number, duration: number,
 ): SkillDef => coreDef('skill', `skill:${slug}`, {
   skillId: skillId(`skill:${slug}`),
+  legacy:true,
   tier,
   nameKey: k(`skill.${slug}.name`),
   descKey: k(`skill.${slug}.desc`),
@@ -40,6 +43,7 @@ const skill = (
 
 // ── 特質 ──────────────────────────────────────────────
 export const coreTraits: readonly TraitDef[] = [
+  ...triggeredTraits,
   trait('danshi', 'common', cost(['war', 150]), 'positive', [FX.battlePhys08]),
   trait('chenyi', 'common', cost(['lead', 150]), 'positive', [FX.battleTroops08]),
   trait('liande', 'common', cost(['pol', 150]), 'positive', [FX.battleHeal12]),
@@ -73,6 +77,7 @@ export const coreTraits: readonly TraitDef[] = [
 // 四條都能贏，只是贏的方式不同。恢復與純 Buff 留給名士，
 // 那正好是你去陣容裡補位的理由。
 export const coreSkills: readonly SkillDef[] = [
+
   // 武 · 物理
   skill('tuzhen', 'common', cost(['war', 210]), 'physical', 'war', 0.30, 0),
   skill('xianzhen', 'fine', cost(['war', 280], ['lead', 210]), 'physical', 'war', 0.50, 0),
@@ -113,6 +118,7 @@ export const coreSkills: readonly SkillDef[] = [
   // 統 · Buff／Debuff。不吃糧 —— 武系靠大池子撐，統把池子的每一下打得更重。
   skill('guwu', 'common', cost(['lead', 210]), 'buff', 'lead', 0.18, 3),
   skill('jiezhi', 'fine', cost(['lead', 280], ['war', 210]), 'debuff', 'lead', 0.22, 3),
+  ...tacticalSkills,
   skill('zhirong', 'peerless', cost(['lead', 380], ['war', 280], ['pol', 210]),
     'buff', 'lead', 0.35, 4),
 ];

@@ -92,9 +92,9 @@ function timeout(c: Contest): void {
 }
 function completeRetreat(s: EncounterDemo, c: Contest): void {
   const b=s.battle,loser=c.winner==='ally'?'enemy':'ally';
-  const withdrawn=armyCount(b,loser);
+  const withdrawn=b.units.filter(u=>u.side===loser&&!u.temporary).reduce((n,u)=>n+u.hp,0);
   // Routed soldiers leave alive. Count them as driven off, never play death sprites.
-  if(loser==='enemy'){b.kills+=withdrawn;s.victories++;}else{b.lost+=withdrawn;s.retreats++;}
+  if(loser==='enemy'){b.kills+=withdrawn;(b.waveKills??={})[b.wave]=(b.waveKills[b.wave]??0)+withdrawn;s.victories++;}else{b.lost+=withdrawn;s.retreats++;}
   b.units=b.units.filter(u=>u.side!==loser);
   b.defeated=loser;b.phase='cheer';b.phaseTime=0;
   for(const u of b.units){u.pose='guard';u.poseTime=0;u.hitTime=0;}

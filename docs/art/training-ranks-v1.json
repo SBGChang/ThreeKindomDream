@@ -1,0 +1,21 @@
+{
+  "tool": "built-in image_gen",
+  "assets": [
+    {
+      "id": "common",
+      "prompt": "Use case: stylized-concept. ONE standalone small rank badge icon for a cute Three Kingdoms chibi strategy game on a parchment book. Square 1:1 image with genuinely transparent alpha background. Thick warm dark-brown outlines, rounded clean silhouette, simple two-tone cel shading, hand-painted game UI style. Compact icon readable at 32 pixels. Entire object centered in middle 72% of canvas with transparent padding. No letters, numbers, text, stars, scenery, sparkles, ribbons, realistic metal reflections, no extra frame. Subject: A simple compact bronze military badge formed by ONE broad upward chevron, with a small round bronze stud in its center. Very simple low-tier emblem.",
+      "file": "public/art/ui/training/rank-common-v1.png"
+    },
+    {
+      "id": "fine",
+      "prompt": "Use case: stylized-concept. ONE standalone small rank badge icon for a cute Three Kingdoms chibi strategy game on a parchment book. Square 1:1 image with genuinely transparent alpha background. Thick warm dark-brown outlines, rounded clean silhouette, simple two-tone cel shading, hand-painted game UI style. Compact icon readable at 32 pixels. Entire object centered in middle 72% of canvas with transparent padding. No letters, numbers, text, stars, scenery, sparkles, ribbons, realistic metal reflections, no extra frame. Subject: A compact silver military badge formed by TWO broad stacked upward chevrons, with one small jade-green diamond gem in the center of the upper chevron. Mid-tier emblem, two visible steps.",
+      "file": "public/art/ui/training/rank-fine-v1.png"
+    },
+    {
+      "id": "peerless",
+      "prompt": "Use case: stylized-concept. ONE standalone small rank badge icon for a cute Three Kingdoms chibi strategy game on a parchment book. Square 1:1 image with genuinely transparent alpha background. Thick warm dark-brown outlines, rounded clean silhouette, simple two-tone cel shading, hand-painted game UI style. Compact icon readable at 32 pixels. Entire object centered in middle 72% of canvas with transparent padding. No letters, numbers, text, stars, scenery, sparkles, ribbons, realistic metal reflections, no extra frame. Subject: A compact warm-gold military badge formed by THREE broad stacked upward chevrons, with one small crimson diamond gem in the center of the upper chevron. Highest-tier emblem, three visible steps.",
+      "file": "public/art/ui/training/rank-peerless-v1.png"
+    }
+  ],
+  "stars": "Reused RealmStars / RealmIcon talent artwork, with scoped dimmed empty slots."
+}

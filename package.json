@@ -11,7 +11,7 @@
     "verify:discipline": "tsx scripts/verify-discipline.ts",
     "verify:modules": "tsx scripts/verify-modules.ts",
     "verify": "npm run typecheck && npm run verify:discipline && npm run verify:content && npm run verify:modules && npm run verify:realtime && npm run verify:confrontation",
-    "verify:realtime": "tsx scripts/tests/realtime-battle.test.ts && tsx scripts/tests/realtime-campaign.test.ts && tsx scripts/tests/fire-particles.test.ts && tsx scripts/tests/skill-particles.test.ts",
+    "verify:realtime": "tsx scripts/tests/battlefield-layout.test.ts && tsx scripts/tests/battle-tactics.test.ts && tsx scripts/tests/wu-integration.test.ts && tsx scripts/tests/realtime-battle.test.ts && tsx scripts/tests/realtime-campaign.test.ts && tsx scripts/tests/fire-particles.test.ts && tsx scripts/tests/skill-particles.test.ts && tsx scripts/tests/battle-art.test.ts",
     "sim": "tsx scripts/simulate.ts",
     "sim:fast": "tsx scripts/simulate-fast.ts",
     "dev": "vite",

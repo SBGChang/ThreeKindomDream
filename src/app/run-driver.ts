@@ -1,3 +1,4 @@
+import { actionBlock } from './duel-model.js';
 import type { Session } from './session.js';
 import type { SlotIndex } from '../contracts/core/primitives.js';
 import type { BattleLoadout, EventOffer } from '../contracts/core/state.js';
@@ -13,9 +14,11 @@ export interface RunPolicy {
   spend(s: Session): void;
   chooseLoadout(s: Session): BattleLoadout;
   chooseEngage(s: Session): boolean;
+  chooseRealtimeSkill?(s:Session):string|null;
+  chooseDuel?(s:Session):number;
 }
 export interface DriveResult { readonly actions: number; readonly depths: readonly number[] }
-export function driveRun(s: Session, policy: RunPolicy): DriveResult {
+export function driveRun(s: Session, policy: RunPolicy, options:{battle?:'legacy'|'realtime'}={}): DriveResult {
   let actions = 0;
   const depths: number[] = [];
   for (let guard = 0; guard < 1000 && !s.isOver; guard++) {
@@ -39,6 +42,20 @@ export function driveRun(s: Session, policy: RunPolicy): DriveResult {
       if (s.campaignState()?.phase === 'configuring') {
         policy.spend(s);
         s.configureCampaign(policy.chooseLoadout(s));
+      }
+      if(options.battle==='realtime'){
+        const battle=s.startRealtimeCampaign();
+        for(let frame=0;frame<120000&&battle.status!=='finished';frame++){
+          const encounter=s.realtimeConfrontation();
+          if(encounter?.contest?.phase==='read')s.answerRealtimeDuel(policy.chooseDuel?.(s)??(encounter.contest.duel&&actionBlock(encounter.contest.duel.ally,'attack')?2:0));
+          if(frame%15===0){
+            if(policy.chooseRealtimeSkill){const id=policy.chooseRealtimeSkill(s);if(id)s.castRealtimeSkill(id);}
+            else for(const skill of battle.skills)if(s.castRealtimeSkill(skill.id))break;
+          }
+          s.advanceRealtimeCampaign(1/60);
+        }
+        if(battle.status!=='finished')throw new Error('即時戰役策略未收斂');
+        depths.push(s.realtimeCampaignResult().cleared);s.settleRealtimeCampaign();continue;
       }
       let cleared = s.campaignState()?.clearedStages ?? 0;
       while (s.needsCampaign && s.nextStage() !== null && policy.chooseEngage(s)) {

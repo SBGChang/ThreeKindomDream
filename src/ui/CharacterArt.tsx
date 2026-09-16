@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { drawPortrait } from './portrait-framing.js';
 
 export const CHARACTERS: Readonly<Record<string,string>> = {
+  '孫權':'sunquan','周瑜':'zhouyu','甘寧':'ganning',
   '劉備':'liubei','關羽':'guanyu','張飛':'zhangfei','趙雲':'zhaoyun','諸葛亮':'zhugeliang','孔明':'zhugeliang','蔣琬':'jiangwan','龐統':'pangtong','黃忠':'huangzhong','魯肅':'lusu',
   '阿禾':'npc_soldier','傷兵':'npc_soldier',
   '曹操':'caocao','張遼':'zhangliao','于禁':'yujin','夏侯惇':'xiahoudun','典韋':'dianwei','樂進':'lejin',

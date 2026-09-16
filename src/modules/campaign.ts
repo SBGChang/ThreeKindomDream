@@ -171,6 +171,8 @@ export function configure(loadout: BattleLoadout, ctx: RunContext): RunState {
   if (st === null || st.phase !== 'configuring') throw new Error('戰役已開打，配置已凍結');
   if (loadout.skills.length > 3 || new Set(loadout.skills).size !== loadout.skills.length
     || loadout.skills.some(id => !ability.hasSkill(id, ctx))) throw new Error('招式配置不合法');
+  const infantryPercent = loadout.infantryPercent ?? 60;
+  if (!Number.isInteger(infantryPercent) || infantryPercent < 0 || infantryPercent > 100) throw new Error('步兵比例須為 0 至 100 的整數');
   const eligible = eligibleCommanders(ctx);
   if (loadout.commanders.length > 3 || new Set(loadout.commanders.map(x => x.notableId)).size !== loadout.commanders.length
     || loadout.commanders.some(x => !eligible.includes(x.notableId) || !skillOptionsFor(x.notableId, ctx).includes(x.skillId))) {
@@ -178,7 +180,7 @@ export function configure(loadout: BattleLoadout, ctx: RunContext): RunState {
   }
   return {
     ...ctx.state,
-    campaign: { ...st, loadout, phase: 'awaitingDecision' },
+    campaign: { ...st, loadout: { ...loadout, infantryPercent }, phase: 'awaitingDecision' },
   };
 }
 

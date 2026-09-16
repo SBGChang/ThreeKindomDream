@@ -17,7 +17,8 @@ export const realtimeSkill=(ctx:RunContext,fx:EffectResolver,id:SkillId,owner:st
   const raw=campaign.hostLimits(ctx,fx).troopsMax*a.ratio*coef;
   const damage=a.kind==='physical'||a.kind==='magic'?fx.resolve(targetId('battle.damage.'+a.kind),raw,ctx):a.kind==='heal'?fx.resolve(targetId('battle.heal'),raw,ctx):0;
   const name=t(def.nameKey),kind=a.kind==='buff'||a.kind==='heal'?'inspire':a.kind==='magic'?'fire':a.kind==='debuff'?'pincer':'charge';
-  return {id:(support?'support-':'host-')+index,name,owner,key:(support?['Q','W','E']:['1','2','3'])[index]!,kind,cost:rt.skillCost[a.kind],cd:rt.skillCooldown[a.kind],damage:Math.max(0,Math.round(damage)),description:a.kind==='heal'?`恢復最多 ${Math.round(damage)} 兵力`:a.kind==='buff'||a.kind==='debuff'?`${a.kind==='buff'?'我軍攻擊提升':'敵軍攻擊降低'} ${Math.round(Math.min(.9,a.ratio*coef)*100)}%，持續 ${a.duration*rt.effectSeconds} 秒`:`造成 ${Math.round(damage)} 傷害`,effect:a.kind==='physical'||a.kind==='magic'?'damage':a.kind,power:Math.max(0,Math.min(.9,a.ratio*coef)),effectDuration:a.duration*rt.effectSeconds,support};
+  const visual=def.battleMechanic?(['fire','water','rocks','thunder'].includes(def.battleMechanic)?'fire':['mounted','volley','crossbow','longshot'].includes(def.battleMechanic)?'mounted':['pincer','ambush'].includes(def.battleMechanic)?'pincer':kind):kind;
+  return {...(def.battleMechanic?{mechanic:def.battleMechanic,level:support?level:ability.levelOf(id,ctx)}:{}),id:(support?'support-':'host-')+index,name,owner,key:(support?['Q','W','E']:['1','2','3'])[index]!,kind:visual,cost:def.supplyCost??rt.skillCost[a.kind],cd:def.cooldownSeconds?Math.round(def.cooldownSeconds/(1+((support?level:ability.levelOf(id,ctx))-1)*.1)*10)/10:rt.skillCooldown[a.kind],damage:Math.max(0,Math.round(damage)),description:def.battleMechanic?t(def.descKey):a.kind==='heal'?`恢復最多 ${Math.round(damage)} 兵力`:a.kind==='buff'||a.kind==='debuff'?`${a.kind==='buff'?'我軍攻擊提升':'敵軍攻擊降低'} ${Math.round(Math.min(.9,a.ratio*coef)*100)}%，持續 ${a.duration*rt.effectSeconds} 秒`:`造成 ${Math.round(damage)} 傷害`,effect:a.kind==='physical'||a.kind==='magic'?'damage':a.kind,power:Math.max(0,Math.min(.9,a.ratio*coef)),effectDuration:a.duration*rt.effectSeconds,support};
  };
 
 export function campaignBattle(ctx:RunContext,fx:EffectResolver):BattleState {
@@ -35,13 +36,30 @@ export function campaignBattle(ctx:RunContext,fx:EffectResolver):BattleState {
  });
  const waves=campaign.stageRows(ctx).map((_,i)=>campaign.nextStagePreview(ctx,i)!);
  commanders.push({id:'enemy',name:waves[0]?.boss?t(waves[0].boss.nameKey):'敵軍指揮官',side:'enemy',homeX:1470,x:1470,y:485,pose:'command',poseTime:0,flip:true});
- return createConfiguredBattle({troops:st.host.troops,supply:st.host.supply,supplyMax:st.host.supplyMax,regen:st.host.supplyMax*rt.supplyRegenRatio,duration:rt.duration,skills,commanders,waveTroops:waves.map(w=>w.enemyTroops),waveNames:waves.map(w=>w.boss?t(w.boss.nameKey):'敵軍指揮官'),allyAttack:fx.resolve(targetId('battle.damage.physical'),(attrs.war+attrs.lead)/2/rt.attackDivisor,ctx),enemyAttack:(rule.enemyDamageByChapter[ctx.state.progress.chapter-1]??rule.enemyDamageByChapter.at(-1)!)/rt.enemyAttackDivisor});
+ const battle=createConfiguredBattle({terrain:/chibi|jing|jiang|shiting/.test(String(ctx.state.progress.chapterId))?'water':/yiling|hunt|hanzhong/.test(String(ctx.state.progress.chapterId))?'mountain':'plain',infantryPercent:st.loadout.infantryPercent??60,rng:(Number(ctx.state.seed)+ctx.state.progress.chapter*997)>>>0,troops:st.host.troops,supply:st.host.supply,supplyMax:st.host.supplyMax,regen:st.host.supplyMax*rt.supplyRegenRatio,duration:rt.duration,skills,commanders,waveTroops:waves.map(w=>w.enemyTroops),waveNames:waves.map(w=>w.boss?t(w.boss.nameKey):'敵軍指揮官'),allyAttack:fx.resolve(targetId('battle.damage.physical'),(attrs.war+attrs.lead)/2/rt.attackDivisor,ctx),enemyAttack:(rule.enemyDamageByChapter[ctx.state.progress.chapter-1]??rule.enemyDamageByChapter.at(-1)!)/rt.enemyAttackDivisor});
+ const memberTraits=st.loadout.commanders.flatMap(slot=>{const n=ctx.defs.reader('notable').get(String(slot.notableId));return n.abilities.traits.map(id=>({id,owner:t(n.nameKey),level:ctx.defs.single('notableStar').commanderLevelByStar[notableCodex.starOf(slot.notableId,ctx.state.metaSnapshot)]}));});
+ battle.traits=[...ability.activeTraits(ctx).map(id=>({id,owner:'主角',level:ability.levelOf(id,ctx)})),...memberTraits].flatMap(row=>{const d=ability.traitDef(row.id,ctx);return d.battleTrigger?[{id:d.battleTrigger,owner:row.owner,level:row.level??1,name:t(d.nameKey)}]:[];});
+ return battle;
 }
 
 /** Rewards follow actual defeated soldiers. Deep unlocks require completing their wave. */
 export function realtimeRewards(ctx:RunContext):{rewards:readonly EventReward[];money:number;cleared:number;defeated:boolean} {
  const b=ctx.state.campaign?.realtime;if(!b)throw new Error('沒有即時戰役');
  const stages=campaign.currentCampaign(ctx).stages;
+ // Recruited enemies complete a wave but yield no kill salary. Each wave keeps its own ledger.
+ if((b.removed??0)>0){
+  let cleared=0;const rewards:EventReward[]=[];
+  for(let wave=1;wave<=b.wave;wave++){
+   const index=Math.min(wave-1,stages.length-1),troops=b.waveTroops[index]!;
+   const kills=b.waveKills?.[wave]??0,removed=b.waveRemoved?.[wave]??0,full=kills+removed>=troops;
+   if(full)cleared++;
+   for(const r of stages[index]!.rewards){if(r.kind==='money')rewards.push({...r,amount:Math.floor(r.amount*Math.min(1,kills/troops))});else if(full&&(wave<=stages.length||r.kind==='attr'))rewards.push(r);}
+  }
+  const defeated=armyCount(b,'ally')===0;
+  const adjusted=defeated?rewards.flatMap<EventReward>(r=>'amount' in r?[{...r,amount:r.kind==='attr'?Math.round(r.amount/2*100)/100:Math.floor(r.amount/2)}]:'chance' in r?[{...r,chance:r.chance/2}]:[r]):rewards;
+  return {rewards:adjusted,money:adjusted.reduce((n,r)=>n+(r.kind==='money'?r.amount:0),0),cleared,defeated};
+ }
+
  let remaining=b.kills,cleared=0;const rewards:EventReward[]=[];
  for(let i=0;remaining>0;i++){
   const index=Math.min(i,stages.length-1),troops=b.waveTroops[index]!;

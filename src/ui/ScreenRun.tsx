@@ -12,7 +12,6 @@ import {
 import { CareerHero, preloadCareerTheater } from './CareerTheater.js';
 import { Journal } from './Journal.js';
 import { Participants } from './Participants.js';
-import { CaocaoRig } from './CaocaoRig.js';
 import { CharacterArt } from './CharacterArt.js';
 import { useEffect, useRef, useState } from 'react';
 import { captureGrowth, type GrowthView } from './Hud.js';
@@ -38,6 +37,15 @@ interface Props {
   readonly onLearn: () => void;
   readonly onVault: () => void;
 }
+
+// Stable stage slots: the first two pairs open a shallow, wide V. Only seats
+// 6/7 return to the middle, smaller and behind both wings. Population changes
+// must not move or resize actors already occupying the front seats.
+const COMPANION_ROWS = [
+  { spread: 175, scale: .70, feet: 520 },
+  { spread: 285, scale: .53, feet: 460 },
+  { spread: 76, scale: .40, feet: 315 },
+] as const;
 
 const gains = (list: readonly AttributeGain[]): string =>
   list.length === 0
@@ -246,6 +254,11 @@ export function ScreenRun({
   };
   const dialogueOffer = receipt?.offer ?? pending;
   const storyChoice = !animating && !fixedReceipt && !dialogueOffer ? s.storyChoice : null;
+  // Hover/focus selects the action preview without committing the turn. Feed the
+  // same training forecast to the HUD; never overlay it on dialogue/results.
+  const trainingPreview = !concealed && !animating && !fixedReceipt && !dialogueOffer && !storyChoice && st.turn.selected === null && activeSlot
+    ? s.previewTraining(activeIndex)
+    : null;
   return (
     <div
       inert={concealed}
@@ -255,6 +268,7 @@ export function ScreenRun({
       <Hud
         s={s}
         growth={growth}
+        preview={trainingPreview ? { [trainingPreview.attr]: trainingPreview.expectedGain } : undefined}
       />
       {performance && <TaskPerformance {...performance} />}
       <div className="training-stage" aria-label="行動人物預覽">
@@ -263,23 +277,20 @@ export function ScreenRun({
           <CareerHero profile={activeProfile} />
         </div>
         {companions.map((companion, i) => {
-          // Affinity order fills the V from front to back, alternating left and right.
           const row = Math.floor(i / 2);
-          const depth = row * 2 / Math.max(2, Math.ceil(companions.length / 2) - 1);
-          const side = i % 2 === 0 ? -1 : 1;
-          const spread = 145 + 65 * depth - 15 * depth * depth;
-          const scale = .78 - depth * .11;
+          const side = (i % 2 === 0 ? -1 : 1) * (row === 2 ? -1 : 1);
+          const { spread, scale, feet } = COMPANION_ROWS[Math.min(row, COMPANION_ROWS.length - 1)]!;
+          // The result scene has the full stage. Keep preview wings inside the
+          // side panels until those panels leave for the system dialogue.
+          const visibleSpread = spread * (fixedReceipt && !animating ? 1 : .65);
           const width = 330 * scale;
           const height = 475 * scale;
-          const feet = 500 - depth * 125;
           return <div className="training-partner" key={String(companion.id)}
             data-affinity={companion.affinity} data-depth={row + 1} data-position={i + 2}
-            aria-label={`${companion.name} · 好感 ${companion.affinity} · 站位 ${i + 2} · 後方第 ${row + 1} 排${side < 0 ? '左側' : '右側'}`}
-            style={{left:389 + side * spread - width / 2, top:feet - height,
+            aria-label={`${companion.name} · 好感 ${companion.affinity} · 站位 ${i + 2} · ${row >= 2 ? '中央後排' : '後方第 ' + (row + 1) + ' 排'}${side < 0 ? '左側' : '右側'}`}
+            style={{left:389 + side * visibleSpread - width / 2, top:feet - height,
               width, height, zIndex:20 - i}}>
-            {companion.name === '曹操'
-              ? <CaocaoRig motion={selected === 0 ? 'command' : 'idle'} />
-              : <CharacterArt name={companion.name} />}
+            <CharacterArt name={companion.name} />
           </div>;
         })}
       </div>

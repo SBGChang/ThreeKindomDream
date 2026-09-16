@@ -914,8 +914,10 @@ export function run(): void {
     });
 
     it('升星提高連動（好感已達門檻的前提下）', () => {
-      const s = newSession(4242);
-      const m = s.current.roster.members[0];
+      const initial = newSession(4242);
+      const teacher=defs.reader('notable').all().find(n=>n.unlocks.some(u=>u.funcType==='LinkBonus'&&u.star>0))!;
+      const m={notableId:teacher.notableId};
+      const s=Session.restore(wiring,{...initial.current,roster:{members:[{notableId:m.notableId,affinity:100,origin:'companion'}]}});
       if (m === undefined) throw new Error('陣容為空');
       const attr = baseOf(m.notableId, s.ctx).specialty;
       const maxStar = notableCodex.maxStar(defs);
@@ -1374,7 +1376,7 @@ export function run(): void {
         ok(taughtTraits.has(String(tr.traitId)), `特質 ${String(tr.traitId)} 沒有任何來源`);
       }
       for (const sk of defs.reader('skill').all()) {
-        ok(taughtSkills.has(String(sk.skillId)), `技能 ${String(sk.skillId)} 沒有任何來源`);
+        ok(sk.legacy || taughtSkills.has(String(sk.skillId)), `技能 ${String(sk.skillId)} 沒有任何來源`);
       }
     });
   });

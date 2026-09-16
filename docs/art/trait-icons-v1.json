@@ -1,0 +1,139 @@
+{
+  "tool": "built-in image_gen",
+  "version": 1,
+  "format": "RGBA PNG, original generated alpha preserved",
+  "assets": [
+    {
+      "id": "danshi",
+      "name": "膽識",
+      "prompt": "Use case: stylized-concept. Create ONE standalone simple trait icon for a cute Three Kingdoms chibi strategy RPG. Raster game asset, square canvas 1:1, genuinely transparent alpha background. Thick warm dark-brown outlines, rounded chunky silhouette, clean flat color areas, two-tone cel shading, hand-painted game art. Keep it much simpler than a skill illustration: only the specified one or two objects, no people, no scenery, no card frame, no badge border, no stars, no text, no letters, no numbers. Center complete object within the middle 78% of canvas, 11% transparent padding on all sides. Must be clearly readable at 100x100 pixels and attractive enlarged to 170x170. Not photorealistic, no glossy 3D, no particle effects, no tiny filigree. Subject: One chunky crimson leather gauntlet gripping a short upright silver sword with a modest bronze guard; courage and physical strength. The fist is the main shape, blade fully inside frame.",
+      "file": "public/art/ui/traits/danshi-v1.png"
+    },
+    {
+      "id": "chenyi",
+      "name": "沉毅",
+      "prompt": "Use case: stylized-concept. Create ONE standalone simple trait icon for a cute Three Kingdoms chibi strategy RPG. Raster game asset, square canvas 1:1, genuinely transparent alpha background. Thick warm dark-brown outlines, rounded chunky silhouette, clean flat color areas, two-tone cel shading, hand-painted game art. Keep it much simpler than a skill illustration: only the specified one or two objects, no people, no scenery, no card frame, no badge border, no stars, no text, no letters, no numbers. Center complete object within the middle 78% of canvas, 11% transparent padding on all sides. Must be clearly readable at 100x100 pixels and attractive enlarged to 170x170. Not photorealistic, no glossy 3D, no particle effects, no tiny filigree. Subject: One broad slate-blue sturdy shield with a single raised bronze central boss and a very small stone base; steadfast calm endurance. Compact bold silhouette, no heraldry.",
+      "file": "public/art/ui/traits/chenyi-v1.png"
+    },
+    {
+      "id": "liande",
+      "name": "練達",
+      "prompt": "Use case: stylized-concept. Create ONE standalone simple trait icon for a cute Three Kingdoms chibi strategy RPG. Raster game asset, square canvas 1:1, genuinely transparent alpha background. Thick warm dark-brown outlines, rounded chunky silhouette, clean flat color areas, two-tone cel shading, hand-painted game art. Keep it much simpler than a skill illustration: only the specified one or two objects, no people, no scenery, no card frame, no badge border, no stars, no text, no letters, no numbers. Center complete object within the middle 78% of canvas, 11% transparent padding on all sides. Must be clearly readable at 100x100 pixels and attractive enlarged to 170x170. Not photorealistic, no glossy 3D, no particle effects, no tiny filigree. Subject: One compact cream bamboo document roll tied with a jade-green cord, with one small square cinnabar seal beside its lower edge; experienced civil administration. No writing on either object.",
+      "file": "public/art/ui/traits/liande-v1.png"
+    },
+    {
+      "id": "jimin",
+      "name": "機敏",
+      "prompt": "Use case: stylized-concept. Create ONE standalone simple trait icon for a cute Three Kingdoms chibi strategy RPG. Raster game asset, square canvas 1:1, genuinely transparent alpha background. Thick warm dark-brown outlines, rounded chunky silhouette, clean flat color areas, two-tone cel shading, hand-painted game art. Keep it much simpler than a skill illustration: only the specified one or two objects, no people, no scenery, no card frame, no badge border, no stars, no text, no letters, no numbers. Center complete object within the middle 78% of canvas, 11% transparent padding on all sides. Must be clearly readable at 100x100 pixels and attractive enlarged to 170x170. Not photorealistic, no glossy 3D, no particle effects, no tiny filigree. Subject: One stylized large alert teal eye with a single angular amber lightning spark at its upper-right; quick perception and cleverness. Iconic eye shape, warm dark outline, no face or other anatomy.",
+      "file": "public/art/ui/traits/jimin-v1.png"
+    },
+    {
+      "id": "linzhen",
+      "name": "臨陣不亂",
+      "prompt": "Use case: stylized-concept. Create ONE standalone simple trait icon for a cute Three Kingdoms chibi strategy RPG. Raster game asset, square canvas 1:1, genuinely transparent alpha background. Thick warm dark-brown outlines, rounded chunky silhouette, clean flat color areas, two-tone cel shading, hand-painted game art. Keep it much simpler than a skill illustration: only the specified one or two objects, no people, no scenery, no card frame, no badge border, no stars, no text, no letters, no numbers. Center complete object within the middle 78% of canvas, 11% transparent padding on all sides. Must be clearly readable at 100x100 pixels and attractive enlarged to 170x170. Not photorealistic, no glossy 3D, no particle effects, no tiny filigree. Subject: One short upright jade-green triangular military command flag on a bronze pole with a broad sturdy base; calm command under pressure. One tiny silver spearhead caps the pole. No flag emblem or writing.",
+      "file": "public/art/ui/traits/linzhen-v1.png"
+    },
+    {
+      "id": "zhechong",
+      "name": "折衝樽俎",
+      "prompt": "Use case: stylized-concept. Create ONE standalone simple trait icon for a cute Three Kingdoms chibi strategy RPG. Raster game asset, square canvas 1:1, genuinely transparent alpha background. Thick warm dark-brown outlines, rounded chunky silhouette, clean flat color areas, two-tone cel shading, hand-painted game art. Keep it much simpler than a skill illustration: only the specified one or two objects, no people, no scenery, no card frame, no badge border, no stars, no text, no letters, no numbers. Center complete object within the middle 78% of canvas, 11% transparent padding on all sides. Must be clearly readable at 100x100 pixels and attractive enlarged to 170x170. Not photorealistic, no glossy 3D, no particle effects, no tiny filigree. Subject: One squat bronze ceremonial wine goblet with a single golden rice ear beside it; diplomacy and plentiful provisions. Simple recognizable goblet silhouette, minimal bronze details.",
+      "file": "public/art/ui/traits/zhechong-v1.png"
+    },
+    {
+      "id": "liaodi",
+      "name": "料敵",
+      "prompt": "Use case: stylized-concept. Create ONE standalone simple trait icon for a cute Three Kingdoms chibi strategy RPG. Raster game asset, square canvas 1:1, genuinely transparent alpha background. Thick warm dark-brown outlines, rounded chunky silhouette, clean flat color areas, two-tone cel shading, hand-painted game art. Keep it much simpler than a skill illustration: only the specified one or two objects, no people, no scenery, no card frame, no badge border, no stars, no text, no letters, no numbers. Center complete object within the middle 78% of canvas, 11% transparent padding on all sides. Must be clearly readable at 100x100 pixels and attractive enlarged to 170x170. Not photorealistic, no glossy 3D, no particle effects, no tiny filigree. Subject: One cream folded tactical map with three large dark route strokes and one large crimson game pawn standing on it; anticipating enemy movement. No text, no detailed terrain. Bold compact map and pawn composition.",
+      "file": "public/art/ui/traits/liaodi-v1.png"
+    },
+    {
+      "id": "wanrendi",
+      "name": "萬人之敵",
+      "prompt": "Use case: stylized-concept. Create ONE standalone simple trait icon for a cute Three Kingdoms chibi strategy RPG. Raster game asset, square canvas 1:1, genuinely transparent alpha background. Thick warm dark-brown outlines, rounded chunky silhouette, clean flat color areas, two-tone cel shading, hand-painted game art. Keep it much simpler than a skill illustration: only the specified one or two objects, no people, no scenery, no card frame, no badge border, no stars, no text, no letters, no numbers. Center complete object within the middle 78% of canvas, 11% transparent padding on all sides. Must be clearly readable at 100x100 pixels and attractive enlarged to 170x170. Not photorealistic, no glossy 3D, no particle effects, no tiny filigree. Subject: One powerful crimson-shafted silver halberd embedded in one cracked gray stone; overwhelming martial strength. Complete broad crescent blade inside frame; only a couple of bold cracks, no debris.",
+      "file": "public/art/ui/traits/wanrendi-v1.png"
+    },
+    {
+      "id": "jingwei",
+      "name": "經緯之才",
+      "prompt": "Use case: stylized-concept. Create ONE standalone simple trait icon for a cute Three Kingdoms chibi strategy RPG. Raster game asset, square canvas 1:1, genuinely transparent alpha background. Thick warm dark-brown outlines, rounded chunky silhouette, clean flat color areas, two-tone cel shading, hand-painted game art. Keep it much simpler than a skill illustration: only the specified one or two objects, no people, no scenery, no card frame, no badge border, no stars, no text, no letters, no numbers. Center complete object within the middle 78% of canvas, 11% transparent padding on all sides. Must be clearly readable at 100x100 pixels and attractive enlarged to 170x170. Not photorealistic, no glossy 3D, no particle effects, no tiny filigree. Subject: One open elegant ivory feather fan with a deep indigo handle and a single small jade knot; outstanding strategic and administrative talent. Only five broad feathers, one compact fan silhouette.",
+      "file": "public/art/ui/traits/jingwei-v1.png"
+    },
+    {
+      "id": "gangbi",
+      "name": "剛愎",
+      "prompt": "Use case: stylized-concept. Create ONE standalone simple trait icon for a cute Three Kingdoms chibi strategy RPG. Raster game asset, square canvas 1:1, genuinely transparent alpha background. Thick warm dark-brown outlines, rounded chunky silhouette, clean flat color areas, two-tone cel shading, hand-painted game art. Keep it much simpler than a skill illustration: only the specified one or two objects, no people, no scenery, no card frame, no badge border, no stars, no text, no letters, no numbers. Center complete object within the middle 78% of canvas, 11% transparent padding on all sides. Must be clearly readable at 100x100 pixels and attractive enlarged to 170x170. Not photorealistic, no glossy 3D, no particle effects, no tiny filigree. Subject: One stylized stubborn dark-red ram head emblem with curled bronze horns and narrowed eyes; unyielding obstinacy. Simple cute chibi emblem, head only, no body, no circular backing.",
+      "file": "public/art/ui/traits/gangbi-v1.png"
+    },
+    {
+      "id": "trigger-backwater",
+      "name": "背水",
+      "prompt": "Use case: stylized-concept. Create ONE standalone simple trait icon for a cute Three Kingdoms chibi strategy RPG. Raster game asset, square canvas 1:1, genuinely transparent alpha background. Thick warm dark-brown outlines, rounded chunky silhouette, clean flat color areas, two-tone cel shading, hand-painted game art. Keep it much simpler than a skill illustration: only the specified one or two objects, no people, no scenery, no card frame, no badge border, no stars, no text, no letters, no numbers. Center complete object within the middle 78% of canvas, 11% transparent padding on all sides. Must be clearly readable at 100x100 pixels and attractive enlarged to 170x170. Not photorealistic, no glossy 3D, no particle effects, no tiny filigree. Subject: One broad silver sword planted upright in one curling deep-blue wave; a last desperate stand with water behind. Two bold shapes only.",
+      "file": "public/art/ui/traits/trigger-backwater-v1.png"
+    },
+    {
+      "id": "trigger-breakline",
+      "name": "破陣",
+      "prompt": "Use case: stylized-concept. Create ONE standalone simple trait icon for a cute Three Kingdoms chibi strategy RPG. Raster game asset, square canvas 1:1, genuinely transparent alpha background. Thick warm dark-brown outlines, rounded chunky silhouette, clean flat color areas, two-tone cel shading, hand-painted game art. Keep it much simpler than a skill illustration: only the specified one or two objects, no people, no scenery, no card frame, no badge border, no stars, no text, no letters, no numbers. Center complete object within the middle 78% of canvas, 11% transparent padding on all sides. Must be clearly readable at 100x100 pixels and attractive enlarged to 170x170. Not photorealistic, no glossy 3D, no particle effects, no tiny filigree. Subject: One broken red wooden barricade split by a stout bronze spearhead; breaking the enemy line. Compact silhouette, just two broken boards.",
+      "file": "public/art/ui/traits/trigger-breakline-v1.png"
+    },
+    {
+      "id": "trigger-hunters",
+      "name": "獵弓",
+      "prompt": "Use case: stylized-concept. Create ONE standalone simple trait icon for a cute Three Kingdoms chibi strategy RPG. Raster game asset, square canvas 1:1, genuinely transparent alpha background. Thick warm dark-brown outlines, rounded chunky silhouette, clean flat color areas, two-tone cel shading, hand-painted game art. Keep it much simpler than a skill illustration: only the specified one or two objects, no people, no scenery, no card frame, no badge border, no stars, no text, no letters, no numbers. Center complete object within the middle 78% of canvas, 11% transparent padding on all sides. Must be clearly readable at 100x100 pixels and attractive enlarged to 170x170. Not photorealistic, no glossy 3D, no particle effects, no tiny filigree. Subject: One small brown hunting bow crossed by one ivory-fletched arrow, with a dark crimson feather tied to its grip. Bold open bow curve.",
+      "file": "public/art/ui/traits/trigger-hunters-v1.png"
+    },
+    {
+      "id": "trigger-fervor",
+      "name": "酣戰",
+      "prompt": "Use case: stylized-concept. Create ONE standalone simple trait icon for a cute Three Kingdoms chibi strategy RPG. Raster game asset, square canvas 1:1, genuinely transparent alpha background. Thick warm dark-brown outlines, rounded chunky silhouette, clean flat color areas, two-tone cel shading, hand-painted game art. Keep it much simpler than a skill illustration: only the specified one or two objects, no people, no scenery, no card frame, no badge border, no stars, no text, no letters, no numbers. Center complete object within the middle 78% of canvas, 11% transparent padding on all sides. Must be clearly readable at 100x100 pixels and attractive enlarged to 170x170. Not photorealistic, no glossy 3D, no particle effects, no tiny filigree. Subject: One clenched bronze gauntlet with one compact orange flame curling around the fist; fighting spirit growing hotter. No arm or body.",
+      "file": "public/art/ui/traits/trigger-fervor-v1.png"
+    },
+    {
+      "id": "trigger-frugal",
+      "name": "節糧",
+      "prompt": "Use case: stylized-concept. Create ONE standalone simple trait icon for a cute Three Kingdoms chibi strategy RPG. Raster game asset, square canvas 1:1, genuinely transparent alpha background. Thick warm dark-brown outlines, rounded chunky silhouette, clean flat color areas, two-tone cel shading, hand-painted game art. Keep it much simpler than a skill illustration: only the specified one or two objects, no people, no scenery, no card frame, no badge border, no stars, no text, no letters, no numbers. Center complete object within the middle 78% of canvas, 11% transparent padding on all sides. Must be clearly readable at 100x100 pixels and attractive enlarged to 170x170. Not photorealistic, no glossy 3D, no particle effects, no tiny filigree. Subject: One small jade-green tied grain pouch with three golden rice grains carefully collected beside it; saving provisions.",
+      "file": "public/art/ui/traits/trigger-frugal-v1.png"
+    },
+    {
+      "id": "trigger-aftershock",
+      "name": "餘威",
+      "prompt": "Use case: stylized-concept. Create ONE standalone simple trait icon for a cute Three Kingdoms chibi strategy RPG. Raster game asset, square canvas 1:1, genuinely transparent alpha background. Thick warm dark-brown outlines, rounded chunky silhouette, clean flat color areas, two-tone cel shading, hand-painted game art. Keep it much simpler than a skill illustration: only the specified one or two objects, no people, no scenery, no card frame, no badge border, no stars, no text, no letters, no numbers. Center complete object within the middle 78% of canvas, 11% transparent padding on all sides. Must be clearly readable at 100x100 pixels and attractive enlarged to 170x170. Not photorealistic, no glossy 3D, no particle effects, no tiny filigree. Subject: One bronze war hammer head with two broad crimson impact arcs behind it; lingering power of a strike. Short handle completely in frame.",
+      "file": "public/art/ui/traits/trigger-aftershock-v1.png"
+    },
+    {
+      "id": "trigger-relief",
+      "name": "疾援",
+      "prompt": "Use case: stylized-concept. Create ONE standalone simple trait icon for a cute Three Kingdoms chibi strategy RPG. Raster game asset, square canvas 1:1, genuinely transparent alpha background. Thick warm dark-brown outlines, rounded chunky silhouette, clean flat color areas, two-tone cel shading, hand-painted game art. Keep it much simpler than a skill illustration: only the specified one or two objects, no people, no scenery, no card frame, no badge border, no stars, no text, no letters, no numbers. Center complete object within the middle 78% of canvas, 11% transparent padding on all sides. Must be clearly readable at 100x100 pixels and attractive enlarged to 170x170. Not photorealistic, no glossy 3D, no particle effects, no tiny filigree. Subject: One small light tan winged leather boot, one ivory wing and two simple teal speed strokes; swift reinforcement. No leg.",
+      "file": "public/art/ui/traits/trigger-relief-v1.png"
+    },
+    {
+      "id": "trigger-laststand",
+      "name": "死守",
+      "prompt": "Use case: stylized-concept. Create ONE standalone simple trait icon for a cute Three Kingdoms chibi strategy RPG. Raster game asset, square canvas 1:1, genuinely transparent alpha background. Thick warm dark-brown outlines, rounded chunky silhouette, clean flat color areas, two-tone cel shading, hand-painted game art. Keep it much simpler than a skill illustration: only the specified one or two objects, no people, no scenery, no card frame, no badge border, no stars, no text, no letters, no numbers. Center complete object within the middle 78% of canvas, 11% transparent padding on all sides. Must be clearly readable at 100x100 pixels and attractive enlarged to 170x170. Not photorealistic, no glossy 3D, no particle effects, no tiny filigree. Subject: One squat gray stone gate with a thick closed red wooden door and one bronze crossbar; holding a fortified position. Simple single tower silhouette.",
+      "file": "public/art/ui/traits/trigger-laststand-v1.png"
+    },
+    {
+      "id": "trigger-sighting",
+      "name": "校射",
+      "prompt": "Use case: stylized-concept. Create ONE standalone simple trait icon for a cute Three Kingdoms chibi strategy RPG. Raster game asset, square canvas 1:1, genuinely transparent alpha background. Thick warm dark-brown outlines, rounded chunky silhouette, clean flat color areas, two-tone cel shading, hand-painted game art. Keep it much simpler than a skill illustration: only the specified one or two objects, no people, no scenery, no card frame, no badge border, no stars, no text, no letters, no numbers. Center complete object within the middle 78% of canvas, 11% transparent padding on all sides. Must be clearly readable at 100x100 pixels and attractive enlarged to 170x170. Not photorealistic, no glossy 3D, no particle effects, no tiny filigree. Subject: One single arrow hitting the exact center of a chunky ivory and crimson archery target; adjusted precision. No numbers or target stand.",
+      "file": "public/art/ui/traits/trigger-sighting-v1.png"
+    },
+    {
+      "id": "trigger-exploit",
+      "name": "追亂",
+      "prompt": "Use case: stylized-concept. Create ONE standalone simple trait icon for a cute Three Kingdoms chibi strategy RPG. Raster game asset, square canvas 1:1, genuinely transparent alpha background. Thick warm dark-brown outlines, rounded chunky silhouette, clean flat color areas, two-tone cel shading, hand-painted game art. Keep it much simpler than a skill illustration: only the specified one or two objects, no people, no scenery, no card frame, no badge border, no stars, no text, no letters, no numbers. Center complete object within the middle 78% of canvas, 11% transparent padding on all sides. Must be clearly readable at 100x100 pixels and attractive enlarged to 170x170. Not photorealistic, no glossy 3D, no particle effects, no tiny filigree. Subject: One crimson spearhead diving diagonally through a broken dark-blue rope loop; exploiting an enemy opening. Large clear simple shapes.",
+      "file": "public/art/ui/traits/trigger-exploit-v1.png"
+    },
+    {
+      "id": "trigger-drill",
+      "name": "練兵",
+      "prompt": "Use case: stylized-concept. Create ONE standalone simple trait icon for a cute Three Kingdoms chibi strategy RPG. Raster game asset, square canvas 1:1, genuinely transparent alpha background. Thick warm dark-brown outlines, rounded chunky silhouette, clean flat color areas, two-tone cel shading, hand-painted game art. Keep it much simpler than a skill illustration: only the specified one or two objects, no people, no scenery, no card frame, no badge border, no stars, no text, no letters, no numbers. Center complete object within the middle 78% of canvas, 11% transparent padding on all sides. Must be clearly readable at 100x100 pixels and attractive enlarged to 170x170. Not photorealistic, no glossy 3D, no particle effects, no tiny filigree. Subject: Two short crossed practice swords made of warm tan wood, tied at the crossing with one jade-green cord; troop training. No blade metal.",
+      "file": "public/art/ui/traits/trigger-drill-v1.png"
+    },
+    {
+      "id": "trigger-supply",
+      "name": "護糧",
+      "prompt": "Use case: stylized-concept. Create ONE standalone simple trait icon for a cute Three Kingdoms chibi strategy RPG. Raster game asset, square canvas 1:1, genuinely transparent alpha background. Thick warm dark-brown outlines, rounded chunky silhouette, clean flat color areas, two-tone cel shading, hand-painted game art. Keep it much simpler than a skill illustration: only the specified one or two objects, no people, no scenery, no card frame, no badge border, no stars, no text, no letters, no numbers. Center complete object within the middle 78% of canvas, 11% transparent padding on all sides. Must be clearly readable at 100x100 pixels and attractive enlarged to 170x170. Not photorealistic, no glossy 3D, no particle effects, no tiny filigree. Subject: One small golden grain sack protected behind a small jade-green shield; guarding supplies. Two simple chunky overlapping objects.",
+      "file": "public/art/ui/traits/trigger-supply-v1.png"
+    }
+  ]
+}

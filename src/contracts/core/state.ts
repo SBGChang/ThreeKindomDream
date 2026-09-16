@@ -307,6 +307,8 @@ export interface CommanderSlot {
   readonly skillId: SkillId;
 }
 export interface BattleLoadout {
+  /** Percentage of original soldiers assigned to infantry; legacy loadouts use 60. */
+  readonly infantryPercent?: number;
   readonly skills: readonly SkillId[];
   readonly commanders: readonly CommanderSlot[];
 }

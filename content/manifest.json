@@ -1,7 +1,7 @@
 {
   "packs": [
     {
-      "defCount": 186,
+      "defCount": 223,
       "dir": "core",
       "loadOrder": 0,
       "packId": "pack:core",
@@ -23,6 +23,16 @@
       "dir": "shu",
       "loadOrder": 20,
       "packId": "pack:shu",
+      "requiredPacks": [
+        "pack:core"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "defCount": 62,
+      "dir": "wu",
+      "loadOrder": 30,
+      "packId": "pack:wu",
       "requiredPacks": [
         "pack:core"
       ],

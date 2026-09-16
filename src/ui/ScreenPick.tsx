@@ -34,7 +34,7 @@ export function ScreenFaction({ s, bump }: Props): React.ReactElement {
         <button onClick={() => { s.noFactionAvailable(); bump(); }}>無處可去 → 在野</button>
       )}
       <p className="sub" style={{ marginTop: 16 }}>
-        魏國篇 · 從此踏上你的文武官途。
+        魏、蜀、吳 · 選擇你要同行的旗幟。
       </p>
     </>
   );

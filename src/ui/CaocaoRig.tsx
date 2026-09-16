@@ -1,3 +1,5 @@
+// Retired experiment (2026-09-16): the user abandoned the rig approach.
+// No game or preview route imports this file. Use CharacterArt for Cao Cao.
 import { useEffect, useRef, useState } from 'react';
 
 type Box = readonly [number, number, number, number];

@@ -1,3 +1,6 @@
+import { triggeredTexts } from './core/abilities/triggered.js';
+import { withTactics } from './tactic-teachers.js';
+import { tacticTexts } from './core/abilities/tactics.js';
 // Content Pack 宣告：有哪些 pack、版本、相依、載入順序，以及每個 pack 由哪些檔組成。
 //
 // 分包原則（ARCHITECTURE §2.12）：
@@ -45,14 +48,17 @@ import { variedCommissions,variedTexts } from './core/events/varied.js';
 import { earlyStories,earlyTexts } from './wei/early-stories.js';
 import { zhTW } from './l10n/index.js';
 import { withDialogue, dialogueTexts } from './dialogue.js';
+import { WU } from './wu/pack-id.js';
+import { wuDefs,wuTexts,wuNotables } from './wu/index.js';
 import { SHU } from './shu/pack-id.js';
 import { shuDefs, shuTexts, shuNotables } from './shu/index.js';
 import { withTeaching } from './teaching.js';
 import { commonStories, weiStories, mainStoryTexts } from './main-stories.js';
 
 const coreDialogueEvents = [...coreCommissions, ...variedCommissions].map(withDialogue);
-const weiDialogueEvents = [...weiCommissions, ...weiNotableCommissions, ...weiNotableEvents, ...earlyStories].map(d => withDialogue(withTeaching(d, weiNotables)));
-const shuDialogueDefs = shuDefs.map(d => d.kind === 'event' ? withDialogue(withTeaching(d, shuNotables)) : d);
+const weiDialogueEvents = [...weiCommissions, ...weiNotableCommissions, ...weiNotableEvents, ...earlyStories].map(d => withDialogue(withTeaching(d, weiNotables.map(withTactics))));
+const shuDialogueDefs = shuDefs.map(d => d.kind === 'event' ? withDialogue(withTeaching(d, shuNotables.map(withTactics))) : d.kind==='notable'?withTactics(d):d);
+const wuDialogueDefs=wuDefs.map(d=>d.kind==='event'?withDialogue(withTeaching(d,wuNotables.map(withTactics))):d.kind==='notable'?withTactics(d):d);
 const corePack: AuthoredPack = {
   packId: CORE,
   version: '0.1.0',
@@ -76,7 +82,7 @@ const corePack: AuthoredPack = {
   ],
   effects: coreEffects,
   // GREYBOX：文案暫時全部掛在 core。正式版應隨各 pack 拆分（06 §2.1）。
-  texts: {...zhTW,...earlyTexts,...variedTexts,...dialogueTexts,...mainStoryTexts},
+  texts: {...zhTW,...tacticTexts,...triggeredTexts,...earlyTexts,...variedTexts,...dialogueTexts,...mainStoryTexts},
 };
 
 const weiPack: AuthoredPack = {
@@ -85,7 +91,7 @@ const weiPack: AuthoredPack = {
   requiredPacks: [CORE],
   loadOrder: 10,
   defs: [
-    ...weiNotables, weiSuperiorPool,
+    ...weiNotables.map(withTactics), weiSuperiorPool,
     weiFaction,
     ...weiDialogueEvents,
     ...weiChapters, weiSequence,
@@ -101,5 +107,5 @@ export const AUTHORED_MANIFEST: AuthoredManifest = {
   packs: [corePack, weiPack, {
     packId: SHU, version: '0.1.0', requiredPacks: [CORE], loadOrder: 20,
     defs: shuDialogueDefs, effects: {}, texts: shuTexts,
-  }],
+  },{packId:WU,version:'0.1.0',requiredPacks:[CORE],loadOrder:30,defs:wuDialogueDefs,effects:{},texts:wuTexts}],
 };

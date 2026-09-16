@@ -3,7 +3,7 @@ import {drawEncounterDemo} from './confrontation-render.js';
 import {loadDuelImages} from './duel-art.js';
 import {DuelBattleOverlay} from './DuelBattleOverlay.js';
 import { useEffect, useRef, useState } from 'react';
-import { armyBarWidth, armyCount, castSkill, createBattle, startBattle, COMMAND_LEAD, skillBlock, tickBattle, type BattleState, type DemoSkill } from './realtime-battle-model.js';
+import { armyBarWidth, armyCount, castSkill, createBattle, startBattle, skillBlock, tickBattle, type BattleState, type DemoSkill } from './realtime-battle-model.js';
 import { BATTLE_ASSETS, drawBattle, loadBattleImages, type BattleImages } from './realtime-battle-render.js';
 import './realtime-battle-demo.css';
 
@@ -34,7 +34,7 @@ export function RealtimeBattle({campaign,bump,onDone}:{campaign?:Session;bump?:(
  const cast=(id:string)=>{if(campaign?campaign.castRealtimeSkill(id):castSkill(battle.current,id))sync();};
  const togglePause=()=>{const s=battle.current;if(s.status==='running')s.status='paused';else if(s.status==='paused')s.status='running';sync();};
  const start=()=>{if(!ready)return;const s=createBattle(troops);startBattle(s);battle.current=s;sync();};
- useEffect(()=>{let alive=true;const encounter=campaign?.realtimeConfrontation(),ids=encounter?[encounter.participants.ally.id,...encounter.waveOpponents.map(p=>p.id)]:[];void Promise.all([loadBattleImages(campaign?`./art/backgrounds/bg-battle-${Math.min(4,campaign.current.progress.chapter)}.png`:undefined,battle.current.commanders),loadDuelImages(ids)]).then(([v,d])=>{if(alive){images.current={...v,...d};setReady(true);}}).catch(e=>{if(alive)setError(String(e));});return()=>{alive=false;};},[]);
+ useEffect(()=>{let alive=true;const encounter=campaign?.realtimeConfrontation(),ids=encounter?[encounter.participants.ally.id,...encounter.waveOpponents.map(p=>p.id)]:[];void Promise.all([loadBattleImages(campaign?`./art/backgrounds/bg-battle-${Math.min(4,campaign.current.progress.chapter)}.png`:undefined,battle.current.commanders,battle.current.waveNames),loadDuelImages(ids)]).then(([v,d])=>{if(alive){images.current={...v,...d};setReady(true);}}).catch(e=>{if(alive)setError(String(e));});return()=>{alive=false;};},[]);
  useEffect(()=>{
   if(!ready)return;let raf=0,last=performance.now(),uiAt=0,saveAt=0,acc=0;
   const frame=(now:number)=>{
@@ -54,7 +54,7 @@ const skill=battle.current.skills.find(v=>v.key.toLowerCase()===e.key.toLowerCas
  },[ready]);
  const result=campaign&&state.status==='finished'?campaign.realtimeCampaignResult():null;
  const c=state.cinematic,ended=state.status==='finished',contest=campaign?.realtimeConfrontation()?.contest;
- const phase=c?(c.time<COMMAND_LEAD?'將令已下':c.time<COMMAND_LEAD+2.5?c.skill.kind==='inspire'?'擂鼓振軍威':'出陣！':c.time<COMMAND_LEAD+3.6?c.skill.kind==='inspire'?'全軍振奮':'敵陣潰散':'重返戰場'):'';
+ const phase=c?(c.time<.35?'諸將退避':c.time<.7?'主將就位':c.time<1.1?'戰兵入陣':c.time<1.5?'聽我號令':c.time<2.5?'戰法發動':c.time<3.1?'命中':c.time<3.7?'收兵歸隊':'諸將歸位'):'';
  return <main className={campaign?"rt-shell rt-campaign":"rt-shell"}><div className={`rt-battle ${contest?'ct-battle ct-duel':''}`} data-contest-phase={contest?.phase??'none'} data-status={state.status} data-wave-phase={state.phase} data-wave={state.wave} data-cinematic={c?.skill.kind??'none'}>
   <canvas ref={canvas} width={1600} height={900} aria-label={`即時戰場：我軍 ${armyCount(state,'ally')} 人、敵軍 ${armyCount(state,'enemy')} 人`}/>
   {contest?<DuelBattleOverlay contest={contest} paused={state.status!=='running'} onAnswer={choice=>{campaign?.answerRealtimeDuel(choice);sync();}} onHelpChange={helpChange}/>:<><div className="rt-top-left"><span>{campaign?'整軍出陣 · 章末戰役':'大檢定・演武試作'}</span>{!campaign&&<><a href="?art=unit-sequence">返回動作預覽</a><a href="?art=confrontation-demo">試玩單挑・舌戰 →</a></>}</div>

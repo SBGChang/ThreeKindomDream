@@ -9,21 +9,22 @@
       },
       "skills": [
         {
-          "skillId": "skill:guwu",
+          "skillId": "skill:tactic-pincer",
           "star": 0
         },
         {
-          "skillId": "skill:haoling",
+          "skillId": "skill:tactic-inspire",
           "star": 2
         },
         {
-          "skillId": "skill:jiezhi",
+          "skillId": "skill:tactic-reinforce",
           "star": 4
         }
       ],
       "traits": [
         "trait:chenyi",
-        "trait:liande"
+        "trait:liande",
+        "trait:trigger-backwater"
       ]
     },
     "base": {
@@ -81,21 +82,22 @@
       },
       "skills": [
         {
-          "skillId": "skill:tuzhen",
+          "skillId": "skill:tactic-cavalry",
           "star": 0
         },
         {
-          "skillId": "skill:xianzhen",
+          "skillId": "skill:tactic-pursue",
           "star": 2
         },
         {
-          "skillId": "skill:wanrenzhi",
+          "skillId": "skill:tactic-sweep",
           "star": 4
         }
       ],
       "traits": [
         "trait:danshi",
-        "trait:linzhen"
+        "trait:linzhen",
+        "trait:trigger-breakline"
       ]
     },
     "base": {
@@ -153,21 +155,22 @@
       },
       "skills": [
         {
-          "skillId": "skill:guwu",
+          "skillId": "skill:tactic-pincer",
           "star": 0
         },
         {
-          "skillId": "skill:haoling",
+          "skillId": "skill:tactic-taunt",
           "star": 2
         },
         {
-          "skillId": "skill:xianzhen",
+          "skillId": "skill:tactic-sweep",
           "star": 4
         }
       ],
       "traits": [
         "trait:danshi",
-        "trait:linzhen"
+        "trait:linzhen",
+        "trait:trigger-hunters"
       ]
     },
     "base": {
@@ -225,21 +228,22 @@
       },
       "skills": [
         {
-          "skillId": "skill:tuzhen",
+          "skillId": "skill:tactic-cavalry",
           "star": 0
         },
         {
-          "skillId": "skill:xianzhen",
+          "skillId": "skill:tactic-mounted",
           "star": 2
         },
         {
-          "skillId": "skill:jiezhi",
+          "skillId": "skill:tactic-crossbow",
           "star": 4
         }
       ],
       "traits": [
         "trait:chenyi",
-        "trait:danshi"
+        "trait:danshi",
+        "trait:trigger-fervor"
       ]
     },
     "base": {
@@ -297,21 +301,22 @@
       },
       "skills": [
         {
-          "skillId": "skill:huoji",
+          "skillId": "skill:tactic-fire",
           "star": 0
         },
         {
-          "skillId": "skill:shuiyan",
+          "skillId": "skill:tactic-water",
           "star": 2
         },
         {
-          "skillId": "skill:lianhuan",
+          "skillId": "skill:tactic-thunder",
           "star": 4
         }
       ],
       "traits": [
         "trait:jimin",
-        "trait:liaodi"
+        "trait:liaodi",
+        "trait:trigger-frugal"
       ]
     },
     "base": {
@@ -369,21 +374,22 @@
       },
       "skills": [
         {
-          "skillId": "skill:fumin",
+          "skillId": "skill:tactic-misreport",
           "star": 0
         },
         {
-          "skillId": "skill:luanci",
+          "skillId": "skill:tactic-reform",
           "star": 2
         },
         {
-          "skillId": "skill:tuntian",
+          "skillId": "skill:tactic-reinforce",
           "star": 4
         }
       ],
       "traits": [
         "trait:liande",
-        "trait:zhechong"
+        "trait:zhechong",
+        "trait:trigger-aftershock"
       ]
     },
     "base": {
@@ -2790,7 +2796,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:haoling",
+            "skill": "skill:tactic-pincer",
             "trait": null
           }
         ],
@@ -2819,7 +2825,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:haoling",
+            "skill": "skill:tactic-pincer",
             "trait": null
           }
         ],
@@ -2896,7 +2902,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:tuzhen",
+            "skill": "skill:tactic-cavalry",
             "trait": null
           }
         ],
@@ -2925,7 +2931,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:tuzhen",
+            "skill": "skill:tactic-cavalry",
             "trait": null
           }
         ],
@@ -3002,7 +3008,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:haoling",
+            "skill": "skill:tactic-pincer",
             "trait": null
           }
         ],
@@ -3031,7 +3037,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:haoling",
+            "skill": "skill:tactic-pincer",
             "trait": null
           }
         ],
@@ -3108,7 +3114,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:tuzhen",
+            "skill": "skill:tactic-cavalry",
             "trait": null
           }
         ],
@@ -3137,7 +3143,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:tuzhen",
+            "skill": "skill:tactic-cavalry",
             "trait": null
           }
         ],
@@ -3214,7 +3220,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:huoji",
+            "skill": "skill:tactic-fire",
             "trait": null
           }
         ],
@@ -3243,7 +3249,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:huoji",
+            "skill": "skill:tactic-fire",
             "trait": null
           }
         ],
@@ -3320,7 +3326,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:fumin",
+            "skill": "skill:tactic-misreport",
             "trait": null
           }
         ],
@@ -3349,7 +3355,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:fumin",
+            "skill": "skill:tactic-misreport",
             "trait": null
           }
         ],
@@ -3427,7 +3433,7 @@
           {
             "kind": "unlock",
             "skill": null,
-            "trait": "trait:chenyi"
+            "trait": "trait:trigger-backwater"
           }
         ],
         "tier": "story"
@@ -3456,7 +3462,7 @@
           {
             "kind": "unlock",
             "skill": null,
-            "trait": "trait:chenyi"
+            "trait": "trait:trigger-backwater"
           }
         ],
         "tier": "story"
@@ -3534,7 +3540,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:jiezhi",
+            "skill": "skill:tactic-inspire",
             "trait": null
           }
         ],
@@ -3563,7 +3569,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:jiezhi",
+            "skill": "skill:tactic-inspire",
             "trait": null
           }
         ],
@@ -3643,7 +3649,7 @@
           {
             "kind": "unlock",
             "skill": null,
-            "trait": "trait:chenyi"
+            "trait": "trait:trigger-backwater"
           }
         ],
         "tier": "story"
@@ -3672,7 +3678,7 @@
           {
             "kind": "unlock",
             "skill": null,
-            "trait": "trait:chenyi"
+            "trait": "trait:trigger-backwater"
           }
         ],
         "tier": "story"
@@ -3750,7 +3756,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:jiezhi",
+            "skill": "skill:tactic-reinforce",
             "trait": null
           }
         ],
@@ -3779,7 +3785,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:jiezhi",
+            "skill": "skill:tactic-reinforce",
             "trait": null
           }
         ],
@@ -3859,7 +3865,7 @@
           {
             "kind": "unlock",
             "skill": null,
-            "trait": "trait:danshi"
+            "trait": "trait:trigger-breakline"
           }
         ],
         "tier": "story"
@@ -3888,7 +3894,7 @@
           {
             "kind": "unlock",
             "skill": null,
-            "trait": "trait:danshi"
+            "trait": "trait:trigger-breakline"
           }
         ],
         "tier": "story"
@@ -3966,7 +3972,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:xianzhen",
+            "skill": "skill:tactic-pursue",
             "trait": null
           }
         ],
@@ -3995,7 +4001,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:xianzhen",
+            "skill": "skill:tactic-pursue",
             "trait": null
           }
         ],
@@ -4182,7 +4188,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:wanrenzhi",
+            "skill": "skill:tactic-sweep",
             "trait": null
           }
         ],
@@ -4211,7 +4217,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:wanrenzhi",
+            "skill": "skill:tactic-sweep",
             "trait": null
           }
         ],
@@ -4291,7 +4297,7 @@
           {
             "kind": "unlock",
             "skill": null,
-            "trait": "trait:danshi"
+            "trait": "trait:trigger-hunters"
           }
         ],
         "tier": "story"
@@ -4320,7 +4326,7 @@
           {
             "kind": "unlock",
             "skill": null,
-            "trait": "trait:danshi"
+            "trait": "trait:trigger-hunters"
           }
         ],
         "tier": "story"
@@ -4398,7 +4404,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:xianzhen",
+            "skill": "skill:tactic-taunt",
             "trait": null
           }
         ],
@@ -4427,7 +4433,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:xianzhen",
+            "skill": "skill:tactic-taunt",
             "trait": null
           }
         ],
@@ -4614,7 +4620,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:xianzhen",
+            "skill": "skill:tactic-sweep",
             "trait": null
           }
         ],
@@ -4643,7 +4649,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:xianzhen",
+            "skill": "skill:tactic-sweep",
             "trait": null
           }
         ],
@@ -4723,7 +4729,7 @@
           {
             "kind": "unlock",
             "skill": null,
-            "trait": "trait:danshi"
+            "trait": "trait:trigger-fervor"
           }
         ],
         "tier": "story"
@@ -4752,7 +4758,7 @@
           {
             "kind": "unlock",
             "skill": null,
-            "trait": "trait:danshi"
+            "trait": "trait:trigger-fervor"
           }
         ],
         "tier": "story"
@@ -4830,7 +4836,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:xianzhen",
+            "skill": "skill:tactic-mounted",
             "trait": null
           }
         ],
@@ -4859,7 +4865,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:xianzhen",
+            "skill": "skill:tactic-mounted",
             "trait": null
           }
         ],
@@ -4939,7 +4945,7 @@
           {
             "kind": "unlock",
             "skill": null,
-            "trait": "trait:danshi"
+            "trait": "trait:trigger-fervor"
           }
         ],
         "tier": "story"
@@ -4968,7 +4974,7 @@
           {
             "kind": "unlock",
             "skill": null,
-            "trait": "trait:danshi"
+            "trait": "trait:trigger-fervor"
           }
         ],
         "tier": "story"
@@ -5046,7 +5052,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:xianzhen",
+            "skill": "skill:tactic-crossbow",
             "trait": null
           }
         ],
@@ -5075,7 +5081,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:xianzhen",
+            "skill": "skill:tactic-crossbow",
             "trait": null
           }
         ],
@@ -5262,7 +5268,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:shuiyan",
+            "skill": "skill:tactic-water",
             "trait": null
           }
         ],
@@ -5291,7 +5297,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:shuiyan",
+            "skill": "skill:tactic-water",
             "trait": null
           }
         ],
@@ -5371,7 +5377,7 @@
           {
             "kind": "unlock",
             "skill": null,
-            "trait": "trait:liaodi"
+            "trait": "trait:trigger-frugal"
           }
         ],
         "tier": "story"
@@ -5400,7 +5406,7 @@
           {
             "kind": "unlock",
             "skill": null,
-            "trait": "trait:liaodi"
+            "trait": "trait:trigger-frugal"
           }
         ],
         "tier": "story"
@@ -5478,7 +5484,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:lianhuan",
+            "skill": "skill:tactic-thunder",
             "trait": null
           }
         ],
@@ -5507,7 +5513,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:lianhuan",
+            "skill": "skill:tactic-thunder",
             "trait": null
           }
         ],
@@ -5694,7 +5700,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:tuntian",
+            "skill": "skill:tactic-reform",
             "trait": null
           }
         ],
@@ -5723,7 +5729,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:tuntian",
+            "skill": "skill:tactic-reform",
             "trait": null
           }
         ],
@@ -5803,7 +5809,7 @@
           {
             "kind": "unlock",
             "skill": null,
-            "trait": "trait:zhechong"
+            "trait": "trait:trigger-aftershock"
           }
         ],
         "tier": "story"
@@ -5832,7 +5838,7 @@
           {
             "kind": "unlock",
             "skill": null,
-            "trait": "trait:zhechong"
+            "trait": "trait:trigger-aftershock"
           }
         ],
         "tier": "story"
@@ -5910,7 +5916,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:tuntian",
+            "skill": "skill:tactic-reinforce",
             "trait": null
           }
         ],
@@ -5939,7 +5945,7 @@
           },
           {
             "kind": "unlock",
-            "skill": "skill:tuntian",
+            "skill": "skill:tactic-reinforce",
             "trait": null
           }
         ],

@@ -55,7 +55,8 @@ export function economyReview(): Session {
 }
 
 /** Stable layout examples: two people, signals alone, six people, and empty. */
-export function runLayoutReview(): Session {
+export function runLayoutReview(companionCount?: number): Session {
+  const count = companionCount === undefined ? undefined : Math.max(0, Math.min(6, Math.floor(companionCount) || 0));
   const meta = emptyMeta(),
     s = Session.start(wiring, meta, emptyDraft(meta, defs), seed(77)),
     state = s.current;
@@ -79,9 +80,9 @@ export function runLayoutReview(): Session {
       ...state.turn,
       slots: state.turn.slots.map((slot, i) => ({
         ...slot,
-        notables: i === 0 ? ids.slice(0, 2) : i === 2 ? ids : [],
-        hasEncounter: i === 0,
-        hasCommission: i === 0 || i === 1,
+        notables: count === undefined ? (i === 0 ? ids.slice(0, 2) : i === 2 ? ids : []) : ids.slice(0, count),
+        hasEncounter: count === undefined && i === 0,
+        hasCommission: count === undefined && (i === 0 || i === 1),
       })),
     },
   });

@@ -311,6 +311,17 @@ export class Session {
     const attrs=nd?.abilities.attrs??{lead:statQuery.attr('lead',this.ctx),war:statQuery.attr('war',this.ctx),int:statQuery.attr('int',this.ctx),pol:statQuery.attr('pol',this.ctx)};
     return realtimeSkill(this.ctx,this.w.fx,id,nd?this.w.defs.text(String(nd.nameKey)):'主角',0,!!nd,attrs,notable?this.w.defs.single('notableStar').commanderLevelByStar[this.state.metaSnapshot.notableCodex[String(notable)]?.star??0]:1);
   }
+  /** Calculate a lesson's result with the combat resolver, without buying or mutating a save. */
+  previewSkillLevel(id:SkillId,level:number):ReturnType<typeof realtimeSkill> {
+    const max=this.w.defs.single('growthRule').learning.power.length;
+    const previewLevel=Math.max(1,Math.min(max,Math.floor(level)||1));
+    const ctx={...this.ctx,state:{...this.state,abilities:{...this.state.abilities,
+      skills:ability.hasSkill(id,this.ctx)?this.state.abilities.skills:[...this.state.abilities.skills,id],
+      levels:{...this.state.abilities.levels,[String(id)]:previewLevel},
+    }}};
+    const attrs={lead:statQuery.attr('lead',ctx),war:statQuery.attr('war',ctx),int:statQuery.attr('int',ctx),pol:statQuery.attr('pol',ctx)};
+    return realtimeSkill(ctx,this.w.fx,id,'主角',0,false,attrs);
+  }
   campaignWaveTroops(index:number):number { return campaign.nextStagePreview(this.ctx,index)?.enemyTroops??0; }
   /** Live battle is part of the save. Re-entering never rerolls or replenishes it. */
   startRealtimeCampaign(): BattleState {

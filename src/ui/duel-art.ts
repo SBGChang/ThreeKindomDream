@@ -1,3 +1,4 @@
+import {UNIFIED_OFFICERS} from '../contracts/core/officer-motion.js';
 import {DUEL_ACTORS} from '../contracts/core/duel-art.js';
 export {DUEL_ACTORS} from '../contracts/core/duel-art.js';
 const cache=new Map<string,Promise<HTMLCanvasElement>>();
@@ -10,7 +11,7 @@ export function loadDuelArt(file:string):Promise<HTMLCanvasElement>{
 }
 export async function loadDuelImages(ids:readonly string[]):Promise<Record<string,HTMLCanvasElement>>{
  if(ids.length)await Promise.all([loadDuelArt('action-kit-v1'),loadDuelArt('status-scroll-v1'),loadDuelArt('status-icons-v1'),loadDuelArt('wheel-platter-v1'),loadDuelArt('wheel-counter-arrow-v1'),loadDuelArt('wheel-confirm-button-v1'),loadDuelArt('matchup-icons-v1')]);
- const entries=await Promise.all([...new Set(ids)].map(async id=>{if(!DUEL_ACTORS[id])throw Error(`缺少武將動作登錄：${id}`);const raw=await loadDuelArt(id+'-v'+(DUEL_ART_VERSIONS[id]??1));return ['duel-'+id,normalizeDuelAtlas(raw,DUEL_SOURCE_COLUMNS[id]??4)] as const;}));return Object.fromEntries(entries);
+ const entries=await Promise.all([...new Set(ids)].map(async id=>{if(!DUEL_ACTORS[id])throw Error(`缺少武將動作登錄：${id}`);const raw=await loadDuelArt(id+'-v'+(DUEL_ART_VERSIONS[id]??1));return ['duel-'+id,(UNIFIED_OFFICERS as readonly string[]).includes(id)?(await import('./officer-motion.js')).repackOfficer(raw,8,6,Array.from({length:32},(_,i)=>i)):normalizeDuelAtlas(raw,DUEL_SOURCE_COLUMNS[id]??4)] as const;}));return Object.fromEntries(entries);
 }
 /** Repack full cells with an invariant scale and baseline; never stretch portrait cells. */
 function normalizeDuelAtlas(raw:HTMLCanvasElement,columns:number):HTMLCanvasElement {

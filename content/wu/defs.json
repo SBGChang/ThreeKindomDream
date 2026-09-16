@@ -1,0 +1,5594 @@
+[
+  {
+    "abilities": {
+      "attrs": {
+        "int": 72,
+        "lead": 94,
+        "pol": 70,
+        "war": 90
+      },
+      "skills": [
+        {
+          "skillId": "skill:tactic-pincer",
+          "star": 0
+        },
+        {
+          "skillId": "skill:tactic-shield",
+          "star": 2
+        },
+        {
+          "skillId": "skill:tactic-sweep",
+          "star": 4
+        }
+      ],
+      "traits": [
+        "trait:chenyi",
+        "trait:liande",
+        "trait:trigger-relief"
+      ]
+    },
+    "base": {
+      "specialty": "lead",
+      "specialtyWeight": 1
+    },
+    "duelArtId": "sunjian",
+    "factionId": "faction:wu",
+    "id": "notable:sunjian",
+    "kind": "notable",
+    "nameKey": "notable.sunjian.name",
+    "notableId": "notable:sunjian",
+    "packId": "pack:wu",
+    "rarity": 5,
+    "schemaVersion": 1,
+    "unlocks": [
+      {
+        "descKey": "notable.sunjian.link",
+        "funcType": "LinkBonus",
+        "referId": 4101,
+        "star": 0
+      },
+      {
+        "descKey": "notable.sunjian.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4111,
+        "star": 1
+      },
+      {
+        "descKey": "notable.sunjian.bias",
+        "funcType": "SlotBias",
+        "referId": 4001,
+        "star": 2
+      },
+      {
+        "descKey": "notable.sunjian.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4111,
+        "star": 3
+      },
+      {
+        "descKey": "notable.sunjian.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4111,
+        "star": 5
+      }
+    ]
+  },
+  {
+    "abilities": {
+      "attrs": {
+        "int": 74,
+        "lead": 94,
+        "pol": 68,
+        "war": 96
+      },
+      "skills": [
+        {
+          "skillId": "skill:tactic-cavalry",
+          "star": 0
+        },
+        {
+          "skillId": "skill:tactic-pursue",
+          "star": 2
+        },
+        {
+          "skillId": "skill:tactic-ambush",
+          "star": 4
+        }
+      ],
+      "traits": [
+        "trait:danshi",
+        "trait:jimin",
+        "trait:trigger-laststand"
+      ]
+    },
+    "base": {
+      "specialty": "war",
+      "specialtyWeight": 1
+    },
+    "duelArtId": "sunce",
+    "factionId": "faction:wu",
+    "id": "notable:sunce",
+    "kind": "notable",
+    "nameKey": "notable.sunce.name",
+    "notableId": "notable:sunce",
+    "packId": "pack:wu",
+    "rarity": 5,
+    "schemaVersion": 1,
+    "unlocks": [
+      {
+        "descKey": "notable.sunce.link",
+        "funcType": "LinkBonus",
+        "referId": 4101,
+        "star": 0
+      },
+      {
+        "descKey": "notable.sunce.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4113,
+        "star": 1
+      },
+      {
+        "descKey": "notable.sunce.bias",
+        "funcType": "SlotBias",
+        "referId": 4002,
+        "star": 2
+      },
+      {
+        "descKey": "notable.sunce.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4113,
+        "star": 3
+      },
+      {
+        "descKey": "notable.sunce.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4113,
+        "star": 5
+      }
+    ]
+  },
+  {
+    "abilities": {
+      "attrs": {
+        "int": 84,
+        "lead": 90,
+        "pol": 93,
+        "war": 68
+      },
+      "skills": [
+        {
+          "skillId": "skill:tactic-longshot",
+          "star": 0
+        },
+        {
+          "skillId": "skill:tactic-inspire",
+          "star": 2
+        },
+        {
+          "skillId": "skill:tactic-reinforce",
+          "star": 4
+        }
+      ],
+      "traits": [
+        "trait:chenyi",
+        "trait:liande",
+        "trait:trigger-sighting"
+      ]
+    },
+    "base": {
+      "specialty": "lead",
+      "specialtyWeight": 1
+    },
+    "duelArtId": "sunquan",
+    "factionId": "faction:wu",
+    "id": "notable:sunquan",
+    "kind": "notable",
+    "nameKey": "notable.sunquan.name",
+    "notableId": "notable:sunquan",
+    "packId": "pack:wu",
+    "rarity": 5,
+    "schemaVersion": 1,
+    "unlocks": [
+      {
+        "descKey": "notable.sunquan.link",
+        "funcType": "LinkBonus",
+        "referId": 4101,
+        "star": 0
+      },
+      {
+        "descKey": "notable.sunquan.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4111,
+        "star": 1
+      },
+      {
+        "descKey": "notable.sunquan.bias",
+        "funcType": "SlotBias",
+        "referId": 4001,
+        "star": 2
+      },
+      {
+        "descKey": "notable.sunquan.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4111,
+        "star": 3
+      },
+      {
+        "descKey": "notable.sunquan.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4111,
+        "star": 5
+      }
+    ]
+  },
+  {
+    "abilities": {
+      "attrs": {
+        "int": 98,
+        "lead": 96,
+        "pol": 87,
+        "war": 72
+      },
+      "skills": [
+        {
+          "skillId": "skill:tactic-fire",
+          "star": 0
+        },
+        {
+          "skillId": "skill:tactic-water",
+          "star": 2
+        },
+        {
+          "skillId": "skill:tactic-thunder",
+          "star": 4
+        }
+      ],
+      "traits": [
+        "trait:danshi",
+        "trait:jimin",
+        "trait:trigger-exploit"
+      ]
+    },
+    "base": {
+      "specialty": "int",
+      "specialtyWeight": 1
+    },
+    "duelArtId": "zhouyu",
+    "factionId": "faction:wu",
+    "id": "notable:zhouyu",
+    "kind": "notable",
+    "nameKey": "notable.zhouyu.name",
+    "notableId": "notable:zhouyu",
+    "packId": "pack:wu",
+    "rarity": 5,
+    "schemaVersion": 1,
+    "unlocks": [
+      {
+        "descKey": "notable.zhouyu.link",
+        "funcType": "LinkBonus",
+        "referId": 4101,
+        "star": 0
+      },
+      {
+        "descKey": "notable.zhouyu.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4116,
+        "star": 1
+      },
+      {
+        "descKey": "notable.zhouyu.bias",
+        "funcType": "SlotBias",
+        "referId": 4003,
+        "star": 2
+      },
+      {
+        "descKey": "notable.zhouyu.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4116,
+        "star": 3
+      },
+      {
+        "descKey": "notable.zhouyu.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4116,
+        "star": 5
+      }
+    ]
+  },
+  {
+    "abilities": {
+      "attrs": {
+        "int": 93,
+        "lead": 83,
+        "pol": 95,
+        "war": 56
+      },
+      "skills": [
+        {
+          "skillId": "skill:tactic-misreport",
+          "star": 0
+        },
+        {
+          "skillId": "skill:tactic-reform",
+          "star": 2
+        },
+        {
+          "skillId": "skill:tactic-divide",
+          "star": 4
+        }
+      ],
+      "traits": [
+        "trait:chenyi",
+        "trait:liande",
+        "trait:trigger-drill"
+      ]
+    },
+    "base": {
+      "specialty": "pol",
+      "specialtyWeight": 1
+    },
+    "duelArtId": "lusu",
+    "factionId": "faction:wu",
+    "id": "notable:lusu",
+    "kind": "notable",
+    "nameKey": "notable.lusu.name",
+    "notableId": "notable:lusu",
+    "packId": "pack:wu",
+    "rarity": 4,
+    "schemaVersion": 1,
+    "unlocks": [
+      {
+        "descKey": "notable.lusu.link",
+        "funcType": "LinkBonus",
+        "referId": 4101,
+        "star": 0
+      },
+      {
+        "descKey": "notable.lusu.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4117,
+        "star": 1
+      },
+      {
+        "descKey": "notable.lusu.bias",
+        "funcType": "SlotBias",
+        "referId": 4004,
+        "star": 2
+      },
+      {
+        "descKey": "notable.lusu.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4117,
+        "star": 3
+      },
+      {
+        "descKey": "notable.lusu.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4117,
+        "star": 5
+      }
+    ]
+  },
+  {
+    "abilities": {
+      "attrs": {
+        "int": 89,
+        "lead": 93,
+        "pol": 75,
+        "war": 86
+      },
+      "skills": [
+        {
+          "skillId": "skill:tactic-infighting",
+          "star": 0
+        },
+        {
+          "skillId": "skill:tactic-toarcher",
+          "star": 2
+        },
+        {
+          "skillId": "skill:tactic-turncoat",
+          "star": 4
+        }
+      ],
+      "traits": [
+        "trait:chenyi",
+        "trait:liande",
+        "trait:trigger-supply"
+      ]
+    },
+    "base": {
+      "specialty": "lead",
+      "specialtyWeight": 1
+    },
+    "duelArtId": "lumeng",
+    "factionId": "faction:wu",
+    "id": "notable:lumeng",
+    "kind": "notable",
+    "nameKey": "notable.lumeng.name",
+    "notableId": "notable:lumeng",
+    "packId": "pack:wu",
+    "rarity": 4,
+    "schemaVersion": 1,
+    "unlocks": [
+      {
+        "descKey": "notable.lumeng.link",
+        "funcType": "LinkBonus",
+        "referId": 4101,
+        "star": 0
+      },
+      {
+        "descKey": "notable.lumeng.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4111,
+        "star": 1
+      },
+      {
+        "descKey": "notable.lumeng.bias",
+        "funcType": "SlotBias",
+        "referId": 4001,
+        "star": 2
+      },
+      {
+        "descKey": "notable.lumeng.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4111,
+        "star": 3
+      },
+      {
+        "descKey": "notable.lumeng.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4111,
+        "star": 5
+      }
+    ]
+  },
+  {
+    "abilities": {
+      "attrs": {
+        "int": 97,
+        "lead": 96,
+        "pol": 91,
+        "war": 63
+      },
+      "skills": [
+        {
+          "skillId": "skill:tactic-fire",
+          "star": 0
+        },
+        {
+          "skillId": "skill:tactic-rocks",
+          "star": 2
+        },
+        {
+          "skillId": "skill:tactic-lure",
+          "star": 4
+        }
+      ],
+      "traits": [
+        "trait:danshi",
+        "trait:jimin",
+        "trait:trigger-backwater"
+      ]
+    },
+    "base": {
+      "specialty": "int",
+      "specialtyWeight": 1
+    },
+    "duelArtId": "luxun",
+    "factionId": "faction:wu",
+    "id": "notable:luxun",
+    "kind": "notable",
+    "nameKey": "notable.luxun.name",
+    "notableId": "notable:luxun",
+    "packId": "pack:wu",
+    "rarity": 5,
+    "schemaVersion": 1,
+    "unlocks": [
+      {
+        "descKey": "notable.luxun.link",
+        "funcType": "LinkBonus",
+        "referId": 4101,
+        "star": 0
+      },
+      {
+        "descKey": "notable.luxun.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4116,
+        "star": 1
+      },
+      {
+        "descKey": "notable.luxun.bias",
+        "funcType": "SlotBias",
+        "referId": 4003,
+        "star": 2
+      },
+      {
+        "descKey": "notable.luxun.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4116,
+        "star": 3
+      },
+      {
+        "descKey": "notable.luxun.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4116,
+        "star": 5
+      }
+    ]
+  },
+  {
+    "abilities": {
+      "attrs": {
+        "int": 68,
+        "lead": 85,
+        "pol": 59,
+        "war": 95
+      },
+      "skills": [
+        {
+          "skillId": "skill:tactic-cavalry",
+          "star": 0
+        },
+        {
+          "skillId": "skill:tactic-mounted",
+          "star": 2
+        },
+        {
+          "skillId": "skill:tactic-crossbow",
+          "star": 4
+        }
+      ],
+      "traits": [
+        "trait:danshi",
+        "trait:jimin",
+        "trait:trigger-breakline"
+      ]
+    },
+    "base": {
+      "specialty": "war",
+      "specialtyWeight": 1
+    },
+    "duelArtId": "taishici",
+    "factionId": "faction:wu",
+    "id": "notable:taishici",
+    "kind": "notable",
+    "nameKey": "notable.taishici.name",
+    "notableId": "notable:taishici",
+    "packId": "pack:wu",
+    "rarity": 4,
+    "schemaVersion": 1,
+    "unlocks": [
+      {
+        "descKey": "notable.taishici.link",
+        "funcType": "LinkBonus",
+        "referId": 4101,
+        "star": 0
+      },
+      {
+        "descKey": "notable.taishici.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4113,
+        "star": 1
+      },
+      {
+        "descKey": "notable.taishici.bias",
+        "funcType": "SlotBias",
+        "referId": 4002,
+        "star": 2
+      },
+      {
+        "descKey": "notable.taishici.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4113,
+        "star": 3
+      },
+      {
+        "descKey": "notable.taishici.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4113,
+        "star": 5
+      }
+    ]
+  },
+  {
+    "abilities": {
+      "attrs": {
+        "int": 74,
+        "lead": 89,
+        "pol": 54,
+        "war": 94
+      },
+      "skills": [
+        {
+          "skillId": "skill:tactic-cavalry",
+          "star": 0
+        },
+        {
+          "skillId": "skill:tactic-volley",
+          "star": 2
+        },
+        {
+          "skillId": "skill:tactic-ambush",
+          "star": 4
+        }
+      ],
+      "traits": [
+        "trait:danshi",
+        "trait:jimin",
+        "trait:trigger-hunters"
+      ]
+    },
+    "base": {
+      "specialty": "war",
+      "specialtyWeight": 1
+    },
+    "duelArtId": "ganning",
+    "factionId": "faction:wu",
+    "id": "notable:ganning",
+    "kind": "notable",
+    "nameKey": "notable.ganning.name",
+    "notableId": "notable:ganning",
+    "packId": "pack:wu",
+    "rarity": 4,
+    "schemaVersion": 1,
+    "unlocks": [
+      {
+        "descKey": "notable.ganning.link",
+        "funcType": "LinkBonus",
+        "referId": 4101,
+        "star": 0
+      },
+      {
+        "descKey": "notable.ganning.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4113,
+        "star": 1
+      },
+      {
+        "descKey": "notable.ganning.bias",
+        "funcType": "SlotBias",
+        "referId": 4002,
+        "star": 2
+      },
+      {
+        "descKey": "notable.ganning.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4113,
+        "star": 3
+      },
+      {
+        "descKey": "notable.ganning.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4113,
+        "star": 5
+      }
+    ]
+  },
+  {
+    "abilities": {
+      "attrs": {
+        "int": 73,
+        "lead": 88,
+        "pol": 66,
+        "war": 86
+      },
+      "skills": [
+        {
+          "skillId": "skill:tactic-pincer",
+          "star": 0
+        },
+        {
+          "skillId": "skill:tactic-shield",
+          "star": 2
+        },
+        {
+          "skillId": "skill:tactic-reinforce",
+          "star": 4
+        }
+      ],
+      "traits": [
+        "trait:chenyi",
+        "trait:liande",
+        "trait:trigger-fervor"
+      ]
+    },
+    "base": {
+      "specialty": "lead",
+      "specialtyWeight": 1
+    },
+    "duelArtId": "huanggai",
+    "factionId": "faction:wu",
+    "id": "notable:huanggai",
+    "kind": "notable",
+    "nameKey": "notable.huanggai.name",
+    "notableId": "notable:huanggai",
+    "packId": "pack:wu",
+    "rarity": 4,
+    "schemaVersion": 1,
+    "unlocks": [
+      {
+        "descKey": "notable.huanggai.link",
+        "funcType": "LinkBonus",
+        "referId": 4101,
+        "star": 0
+      },
+      {
+        "descKey": "notable.huanggai.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4111,
+        "star": 1
+      },
+      {
+        "descKey": "notable.huanggai.bias",
+        "funcType": "SlotBias",
+        "referId": 4001,
+        "star": 2
+      },
+      {
+        "descKey": "notable.huanggai.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4111,
+        "star": 3
+      },
+      {
+        "descKey": "notable.huanggai.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4111,
+        "star": 5
+      }
+    ]
+  },
+  {
+    "abilities": {
+      "attrs": {
+        "int": 90,
+        "lead": 66,
+        "pol": 98,
+        "war": 33
+      },
+      "skills": [
+        {
+          "skillId": "skill:tactic-misreport",
+          "star": 0
+        },
+        {
+          "skillId": "skill:tactic-taunt",
+          "star": 2
+        },
+        {
+          "skillId": "skill:tactic-divide",
+          "star": 4
+        }
+      ],
+      "traits": [
+        "trait:chenyi",
+        "trait:liande",
+        "trait:trigger-frugal"
+      ]
+    },
+    "base": {
+      "specialty": "pol",
+      "specialtyWeight": 1
+    },
+    "duelArtId": "zhangzhao",
+    "factionId": "faction:wu",
+    "id": "notable:zhangzhao",
+    "kind": "notable",
+    "nameKey": "notable.zhangzhao.name",
+    "notableId": "notable:zhangzhao",
+    "packId": "pack:wu",
+    "rarity": 4,
+    "schemaVersion": 1,
+    "unlocks": [
+      {
+        "descKey": "notable.zhangzhao.link",
+        "funcType": "LinkBonus",
+        "referId": 4101,
+        "star": 0
+      },
+      {
+        "descKey": "notable.zhangzhao.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4117,
+        "star": 1
+      },
+      {
+        "descKey": "notable.zhangzhao.bias",
+        "funcType": "SlotBias",
+        "referId": 4004,
+        "star": 2
+      },
+      {
+        "descKey": "notable.zhangzhao.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4117,
+        "star": 3
+      },
+      {
+        "descKey": "notable.zhangzhao.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4117,
+        "star": 5
+      }
+    ]
+  },
+  {
+    "abilities": {
+      "attrs": {
+        "int": 82,
+        "lead": 72,
+        "pol": 92,
+        "war": 47
+      },
+      "skills": [
+        {
+          "skillId": "skill:tactic-longshot",
+          "star": 0
+        },
+        {
+          "skillId": "skill:tactic-toinfantry",
+          "star": 2
+        },
+        {
+          "skillId": "skill:tactic-reinforce",
+          "star": 4
+        }
+      ],
+      "traits": [
+        "trait:chenyi",
+        "trait:liande",
+        "trait:trigger-aftershock"
+      ]
+    },
+    "base": {
+      "specialty": "pol",
+      "specialtyWeight": 1
+    },
+    "duelArtId": "buzhi",
+    "factionId": "faction:wu",
+    "id": "notable:buzhi",
+    "kind": "notable",
+    "nameKey": "notable.buzhi.name",
+    "notableId": "notable:buzhi",
+    "packId": "pack:wu",
+    "rarity": 3,
+    "schemaVersion": 1,
+    "unlocks": [
+      {
+        "descKey": "notable.buzhi.link",
+        "funcType": "LinkBonus",
+        "referId": 4101,
+        "star": 0
+      },
+      {
+        "descKey": "notable.buzhi.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4117,
+        "star": 1
+      },
+      {
+        "descKey": "notable.buzhi.bias",
+        "funcType": "SlotBias",
+        "referId": 4004,
+        "star": 2
+      },
+      {
+        "descKey": "notable.buzhi.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4117,
+        "star": 3
+      },
+      {
+        "descKey": "notable.buzhi.specialty",
+        "funcType": "LinkBonus",
+        "referId": 4117,
+        "star": 5
+      }
+    ]
+  },
+  {
+    "entries": [
+      {
+        "notableId": "notable:sunjian",
+        "requirements": [],
+        "weight": 10
+      },
+      {
+        "notableId": "notable:sunce",
+        "requirements": [],
+        "weight": 10
+      },
+      {
+        "notableId": "notable:sunquan",
+        "requirements": [],
+        "weight": 10
+      },
+      {
+        "notableId": "notable:zhouyu",
+        "requirements": [],
+        "weight": 10
+      },
+      {
+        "notableId": "notable:lusu",
+        "requirements": [],
+        "weight": 10
+      },
+      {
+        "notableId": "notable:lumeng",
+        "requirements": [],
+        "weight": 10
+      },
+      {
+        "notableId": "notable:luxun",
+        "requirements": [],
+        "weight": 10
+      },
+      {
+        "notableId": "notable:taishici",
+        "requirements": [],
+        "weight": 10
+      },
+      {
+        "notableId": "notable:ganning",
+        "requirements": [],
+        "weight": 10
+      },
+      {
+        "notableId": "notable:huanggai",
+        "requirements": [],
+        "weight": 10
+      },
+      {
+        "notableId": "notable:zhangzhao",
+        "requirements": [],
+        "weight": 10
+      },
+      {
+        "notableId": "notable:buzhi",
+        "requirements": [],
+        "weight": 10
+      }
+    ],
+    "factionId": "faction:wu",
+    "id": "pool:wu.superiors",
+    "kind": "notablePool",
+    "packId": "pack:wu",
+    "poolId": "pool:wu.superiors",
+    "schemaVersion": 1
+  },
+  {
+    "bondSpeechKeys": [
+      "lord.wu.bond.0",
+      "lord.wu.bond.1",
+      "lord.wu.bond.2",
+      "lord.wu.bond.3"
+    ],
+    "faction": "faction:wu",
+    "id": "faction:wu",
+    "kind": "faction",
+    "lordId": "notable:sunquan",
+    "nameKey": "faction.wu.name",
+    "packId": "pack:wu",
+    "rejectReasonKey": "faction.wu.reject",
+    "requirements": [],
+    "schemaVersion": 1,
+    "superiorPoolId": "pool:wu.superiors"
+  },
+  {
+    "category": "bond",
+    "descKey": "shop.bond.wu.desc",
+    "id": "shop:bond.wu",
+    "item": "shop:bond.wu",
+    "kind": "shopItem",
+    "levels": [
+      {
+        "cost": 600,
+        "grant": {
+          "faction": "faction:wu",
+          "kind": "factionBond",
+          "toLevel": 1
+        },
+        "level": 1
+      },
+      {
+        "cost": 1500,
+        "grant": {
+          "faction": "faction:wu",
+          "kind": "factionBond",
+          "toLevel": 2
+        },
+        "level": 2
+      },
+      {
+        "cost": 3200,
+        "grant": {
+          "faction": "faction:wu",
+          "kind": "factionBond",
+          "toLevel": 3
+        },
+        "level": 3
+      }
+    ],
+    "nameKey": "shop.bond.wu.name",
+    "packId": "pack:wu",
+    "requiresItems": [],
+    "requiresPack": "pack:wu",
+    "schemaVersion": 1
+  },
+  {
+    "chapterId": "ch:wu.hulao",
+    "factionId": "faction:wu",
+    "id": "ch:wu.hulao",
+    "kind": "chapter",
+    "length": 8,
+    "onPass": null,
+    "order": 1,
+    "packId": "pack:wu",
+    "schemaVersion": 1,
+    "titleKey": "chapter.wu.hulao.title"
+  },
+  {
+    "chapterId": "ch:wu.jiangdong",
+    "factionId": "faction:wu",
+    "id": "ch:wu.jiangdong",
+    "kind": "chapter",
+    "length": 8,
+    "onPass": null,
+    "order": 2,
+    "packId": "pack:wu",
+    "schemaVersion": 1,
+    "titleKey": "chapter.wu.jiangdong.title"
+  },
+  {
+    "chapterId": "ch:wu.hunt",
+    "factionId": "faction:wu",
+    "id": "ch:wu.hunt",
+    "kind": "chapter",
+    "length": 8,
+    "onPass": null,
+    "order": 3,
+    "packId": "pack:wu",
+    "schemaVersion": 1,
+    "titleKey": "chapter.wu.hunt.title"
+  },
+  {
+    "chapterId": "ch:wu.chibi",
+    "factionId": "faction:wu",
+    "id": "ch:wu.chibi",
+    "kind": "chapter",
+    "length": 8,
+    "onPass": null,
+    "order": 4,
+    "packId": "pack:wu",
+    "schemaVersion": 1,
+    "titleKey": "chapter.wu.chibi.title"
+  },
+  {
+    "chapterId": "ch:wu.jinghuai",
+    "factionId": "faction:wu",
+    "id": "ch:wu.jinghuai",
+    "kind": "chapter",
+    "length": 8,
+    "onPass": null,
+    "order": 5,
+    "packId": "pack:wu",
+    "schemaVersion": 1,
+    "titleKey": "chapter.wu.jinghuai.title"
+  },
+  {
+    "chapterId": "ch:wu.yiling",
+    "factionId": "faction:wu",
+    "id": "ch:wu.yiling",
+    "kind": "chapter",
+    "length": 8,
+    "onPass": null,
+    "order": 6,
+    "packId": "pack:wu",
+    "schemaVersion": 1,
+    "titleKey": "chapter.wu.yiling.title"
+  },
+  {
+    "chapterId": "ch:wu.shiting",
+    "factionId": "faction:wu",
+    "id": "ch:wu.shiting",
+    "kind": "chapter",
+    "length": 8,
+    "onPass": null,
+    "order": 7,
+    "packId": "pack:wu",
+    "schemaVersion": 1,
+    "titleKey": "chapter.wu.shiting.title"
+  },
+  {
+    "chapterId": "ch:wu.succession",
+    "factionId": "faction:wu",
+    "id": "ch:wu.succession",
+    "kind": "chapter",
+    "length": 8,
+    "onPass": null,
+    "order": 8,
+    "packId": "pack:wu",
+    "schemaVersion": 1,
+    "titleKey": "chapter.wu.succession.title"
+  },
+  {
+    "chapters": [
+      "ch:wu.hulao",
+      "ch:wu.jiangdong",
+      "ch:wu.hunt",
+      "ch:wu.chibi",
+      "ch:wu.jinghuai",
+      "ch:wu.yiling",
+      "ch:wu.shiting",
+      "ch:wu.succession"
+    ],
+    "factionId": "faction:wu",
+    "id": "seq:wu",
+    "kind": "chapterSequence",
+    "packId": "pack:wu",
+    "schemaVersion": 1
+  },
+  {
+    "attrs": {
+      "int": 48,
+      "lead": 80,
+      "pol": 36,
+      "war": 91
+    },
+    "duelArtId": "huaxiong",
+    "enemyId": "enemy:wu.huaxiong",
+    "id": "enemy:wu.huaxiong",
+    "kind": "enemy",
+    "nameKey": "enemy.wu.huaxiong.name",
+    "packId": "pack:wu",
+    "schemaVersion": 1,
+    "skillId": "skill:xianzhen"
+  },
+  {
+    "attrs": {
+      "int": 68,
+      "lead": 85,
+      "pol": 59,
+      "war": 95
+    },
+    "duelArtId": "taishici",
+    "enemyId": "enemy:wu.taishici",
+    "id": "enemy:wu.taishici",
+    "kind": "enemy",
+    "nameKey": "enemy.wu.taishici.name",
+    "packId": "pack:wu",
+    "schemaVersion": 1,
+    "skillId": "skill:tuzhen"
+  },
+  {
+    "attrs": {
+      "int": 78,
+      "lead": 80,
+      "pol": 45,
+      "war": 86
+    },
+    "duelArtId": "npc_soldier",
+    "enemyId": "enemy:wu.assassin",
+    "id": "enemy:wu.assassin",
+    "kind": "enemy",
+    "nameKey": "enemy.wu.assassin.name",
+    "packId": "pack:wu",
+    "schemaVersion": 1,
+    "skillId": "skill:jiezhi"
+  },
+  {
+    "attrs": {
+      "int": 83,
+      "lead": 90,
+      "pol": 75,
+      "war": 82
+    },
+    "duelArtId": "npc_soldier",
+    "enemyId": "enemy:wu.cao",
+    "id": "enemy:wu.cao",
+    "kind": "enemy",
+    "nameKey": "enemy.wu.cao.name",
+    "packId": "pack:wu",
+    "schemaVersion": 1,
+    "skillId": "skill:huoji"
+  },
+  {
+    "attrs": {
+      "int": 80,
+      "lead": 87,
+      "pol": 65,
+      "war": 88
+    },
+    "duelArtId": "npc_soldier",
+    "enemyId": "enemy:wu.jingzhou",
+    "id": "enemy:wu.jingzhou",
+    "kind": "enemy",
+    "nameKey": "enemy.wu.jingzhou.name",
+    "packId": "pack:wu",
+    "schemaVersion": 1,
+    "skillId": "skill:shuiyan"
+  },
+  {
+    "attrs": {
+      "int": 76,
+      "lead": 89,
+      "pol": 70,
+      "war": 90
+    },
+    "duelArtId": "npc_soldier",
+    "enemyId": "enemy:wu.shu",
+    "id": "enemy:wu.shu",
+    "kind": "enemy",
+    "nameKey": "enemy.wu.shu.name",
+    "packId": "pack:wu",
+    "schemaVersion": 1,
+    "skillId": "skill:xianzhen"
+  },
+  {
+    "attrs": {
+      "int": 74,
+      "lead": 88,
+      "pol": 69,
+      "war": 86
+    },
+    "duelArtId": "caoxiu",
+    "enemyId": "enemy:wu.caoxiu",
+    "id": "enemy:wu.caoxiu",
+    "kind": "enemy",
+    "nameKey": "enemy.wu.caoxiu.name",
+    "packId": "pack:wu",
+    "schemaVersion": 1,
+    "skillId": "skill:tuzhen"
+  },
+  {
+    "attrs": {
+      "int": 85,
+      "lead": 90,
+      "pol": 60,
+      "war": 82
+    },
+    "duelArtId": "npc_soldier",
+    "enemyId": "enemy:wu.private",
+    "id": "enemy:wu.private",
+    "kind": "enemy",
+    "nameKey": "enemy.wu.private.name",
+    "packId": "pack:wu",
+    "schemaVersion": 1,
+    "skillId": "skill:jiezhi"
+  },
+  {
+    "campaignId": "campaign:wu.hulao",
+    "chapterId": "ch:wu.hulao",
+    "enemyNotables": [],
+    "id": "campaign:wu.hulao",
+    "kind": "campaign",
+    "packId": "pack:wu",
+    "schemaVersion": 1,
+    "stages": [
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.hulao.stage.0",
+        "damageMul": 0.45,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 15,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 1
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.hulao.stage.1",
+        "damageMul": 0.51,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 20,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 1.18
+      },
+      {
+        "boss": "enemy:wu.huaxiong",
+        "briefKey": "campaign.wu.hulao.stage.2",
+        "damageMul": 0.58,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 25,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 1.4
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.hulao.stage.3",
+        "damageMul": 0.66,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 35,
+            "kind": "money"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:chenyi"
+          }
+        ],
+        "troopsMul": 2.4
+      },
+      {
+        "boss": "enemy:wu.huaxiong",
+        "briefKey": "campaign.wu.hulao.stage.4",
+        "damageMul": 0.74,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 45,
+            "kind": "money"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:jiezhi",
+            "trait": null
+          }
+        ],
+        "troopsMul": 3
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.hulao.stage.5",
+        "damageMul": 0.84,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 60,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 3.7
+      },
+      {
+        "boss": "enemy:wu.huaxiong",
+        "briefKey": "campaign.wu.hulao.stage.6",
+        "damageMul": 0.95,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 80,
+            "kind": "money"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:xianzhen",
+            "trait": null
+          }
+        ],
+        "troopsMul": 4.6
+      }
+    ]
+  },
+  {
+    "campaignId": "campaign:wu.jiangdong",
+    "chapterId": "ch:wu.jiangdong",
+    "enemyNotables": [],
+    "id": "campaign:wu.jiangdong",
+    "kind": "campaign",
+    "packId": "pack:wu",
+    "schemaVersion": 1,
+    "stages": [
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.jiangdong.stage.0",
+        "damageMul": 0.45,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 15,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 1
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.jiangdong.stage.1",
+        "damageMul": 0.51,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 20,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 1.18
+      },
+      {
+        "boss": "enemy:wu.taishici",
+        "briefKey": "campaign.wu.jiangdong.stage.2",
+        "damageMul": 0.58,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 25,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 1.4
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.jiangdong.stage.3",
+        "damageMul": 0.66,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 35,
+            "kind": "money"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:chenyi"
+          }
+        ],
+        "troopsMul": 2.4
+      },
+      {
+        "boss": "enemy:wu.taishici",
+        "briefKey": "campaign.wu.jiangdong.stage.4",
+        "damageMul": 0.74,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 45,
+            "kind": "money"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:jiezhi",
+            "trait": null
+          }
+        ],
+        "troopsMul": 3
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.jiangdong.stage.5",
+        "damageMul": 0.84,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 60,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 3.7
+      },
+      {
+        "boss": "enemy:wu.taishici",
+        "briefKey": "campaign.wu.jiangdong.stage.6",
+        "damageMul": 0.95,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 80,
+            "kind": "money"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:xianzhen",
+            "trait": null
+          }
+        ],
+        "troopsMul": 4.6
+      }
+    ]
+  },
+  {
+    "campaignId": "campaign:wu.hunt",
+    "chapterId": "ch:wu.hunt",
+    "enemyNotables": [],
+    "id": "campaign:wu.hunt",
+    "kind": "campaign",
+    "packId": "pack:wu",
+    "schemaVersion": 1,
+    "stages": [
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.hunt.stage.0",
+        "damageMul": 0.45,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 15,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 1
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.hunt.stage.1",
+        "damageMul": 0.51,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 20,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 1.18
+      },
+      {
+        "boss": "enemy:wu.assassin",
+        "briefKey": "campaign.wu.hunt.stage.2",
+        "damageMul": 0.58,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 25,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 1.4
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.hunt.stage.3",
+        "damageMul": 0.66,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 35,
+            "kind": "money"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:chenyi"
+          }
+        ],
+        "troopsMul": 2.4
+      },
+      {
+        "boss": "enemy:wu.assassin",
+        "briefKey": "campaign.wu.hunt.stage.4",
+        "damageMul": 0.74,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 45,
+            "kind": "money"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:jiezhi",
+            "trait": null
+          }
+        ],
+        "troopsMul": 3
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.hunt.stage.5",
+        "damageMul": 0.84,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 60,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 3.7
+      },
+      {
+        "boss": "enemy:wu.assassin",
+        "briefKey": "campaign.wu.hunt.stage.6",
+        "damageMul": 0.95,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 80,
+            "kind": "money"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:xianzhen",
+            "trait": null
+          }
+        ],
+        "troopsMul": 4.6
+      }
+    ]
+  },
+  {
+    "campaignId": "campaign:wu.chibi",
+    "chapterId": "ch:wu.chibi",
+    "enemyNotables": [],
+    "id": "campaign:wu.chibi",
+    "kind": "campaign",
+    "packId": "pack:wu",
+    "schemaVersion": 1,
+    "stages": [
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.chibi.stage.0",
+        "damageMul": 0.45,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 15,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 1
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.chibi.stage.1",
+        "damageMul": 0.51,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 20,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 1.18
+      },
+      {
+        "boss": "enemy:wu.cao",
+        "briefKey": "campaign.wu.chibi.stage.2",
+        "damageMul": 0.58,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 25,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 1.4
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.chibi.stage.3",
+        "damageMul": 0.66,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 35,
+            "kind": "money"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:chenyi"
+          }
+        ],
+        "troopsMul": 2.4
+      },
+      {
+        "boss": "enemy:wu.cao",
+        "briefKey": "campaign.wu.chibi.stage.4",
+        "damageMul": 0.74,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 45,
+            "kind": "money"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:jiezhi",
+            "trait": null
+          }
+        ],
+        "troopsMul": 3
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.chibi.stage.5",
+        "damageMul": 0.84,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 60,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 3.7
+      },
+      {
+        "boss": "enemy:wu.cao",
+        "briefKey": "campaign.wu.chibi.stage.6",
+        "damageMul": 0.95,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 80,
+            "kind": "money"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:xianzhen",
+            "trait": null
+          }
+        ],
+        "troopsMul": 4.6
+      }
+    ]
+  },
+  {
+    "campaignId": "campaign:wu.jinghuai",
+    "chapterId": "ch:wu.jinghuai",
+    "enemyNotables": [],
+    "id": "campaign:wu.jinghuai",
+    "kind": "campaign",
+    "packId": "pack:wu",
+    "schemaVersion": 1,
+    "stages": [
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.jinghuai.stage.0",
+        "damageMul": 0.45,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 15,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 1
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.jinghuai.stage.1",
+        "damageMul": 0.51,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 20,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 1.18
+      },
+      {
+        "boss": "enemy:wu.jingzhou",
+        "briefKey": "campaign.wu.jinghuai.stage.2",
+        "damageMul": 0.58,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 25,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 1.4
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.jinghuai.stage.3",
+        "damageMul": 0.66,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 35,
+            "kind": "money"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:chenyi"
+          }
+        ],
+        "troopsMul": 2.4
+      },
+      {
+        "boss": "enemy:wu.jingzhou",
+        "briefKey": "campaign.wu.jinghuai.stage.4",
+        "damageMul": 0.74,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 45,
+            "kind": "money"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:jiezhi",
+            "trait": null
+          }
+        ],
+        "troopsMul": 3
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.jinghuai.stage.5",
+        "damageMul": 0.84,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 60,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 3.7
+      },
+      {
+        "boss": "enemy:wu.jingzhou",
+        "briefKey": "campaign.wu.jinghuai.stage.6",
+        "damageMul": 0.95,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 80,
+            "kind": "money"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:xianzhen",
+            "trait": null
+          }
+        ],
+        "troopsMul": 4.6
+      }
+    ]
+  },
+  {
+    "campaignId": "campaign:wu.yiling",
+    "chapterId": "ch:wu.yiling",
+    "enemyNotables": [],
+    "id": "campaign:wu.yiling",
+    "kind": "campaign",
+    "packId": "pack:wu",
+    "schemaVersion": 1,
+    "stages": [
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.yiling.stage.0",
+        "damageMul": 0.45,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 15,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 1
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.yiling.stage.1",
+        "damageMul": 0.51,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 20,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 1.18
+      },
+      {
+        "boss": "enemy:wu.shu",
+        "briefKey": "campaign.wu.yiling.stage.2",
+        "damageMul": 0.58,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 25,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 1.4
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.yiling.stage.3",
+        "damageMul": 0.66,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 35,
+            "kind": "money"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:chenyi"
+          }
+        ],
+        "troopsMul": 2.4
+      },
+      {
+        "boss": "enemy:wu.shu",
+        "briefKey": "campaign.wu.yiling.stage.4",
+        "damageMul": 0.74,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 45,
+            "kind": "money"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:jiezhi",
+            "trait": null
+          }
+        ],
+        "troopsMul": 3
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.yiling.stage.5",
+        "damageMul": 0.84,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 60,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 3.7
+      },
+      {
+        "boss": "enemy:wu.shu",
+        "briefKey": "campaign.wu.yiling.stage.6",
+        "damageMul": 0.95,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 80,
+            "kind": "money"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:xianzhen",
+            "trait": null
+          }
+        ],
+        "troopsMul": 4.6
+      }
+    ]
+  },
+  {
+    "campaignId": "campaign:wu.shiting",
+    "chapterId": "ch:wu.shiting",
+    "enemyNotables": [],
+    "id": "campaign:wu.shiting",
+    "kind": "campaign",
+    "packId": "pack:wu",
+    "schemaVersion": 1,
+    "stages": [
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.shiting.stage.0",
+        "damageMul": 0.45,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 15,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 1
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.shiting.stage.1",
+        "damageMul": 0.51,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 20,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 1.18
+      },
+      {
+        "boss": "enemy:wu.caoxiu",
+        "briefKey": "campaign.wu.shiting.stage.2",
+        "damageMul": 0.58,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 25,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 1.4
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.shiting.stage.3",
+        "damageMul": 0.66,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 35,
+            "kind": "money"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:chenyi"
+          }
+        ],
+        "troopsMul": 2.4
+      },
+      {
+        "boss": "enemy:wu.caoxiu",
+        "briefKey": "campaign.wu.shiting.stage.4",
+        "damageMul": 0.74,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 45,
+            "kind": "money"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:jiezhi",
+            "trait": null
+          }
+        ],
+        "troopsMul": 3
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.shiting.stage.5",
+        "damageMul": 0.84,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 60,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 3.7
+      },
+      {
+        "boss": "enemy:wu.caoxiu",
+        "briefKey": "campaign.wu.shiting.stage.6",
+        "damageMul": 0.95,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 80,
+            "kind": "money"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:lianhuan",
+            "trait": null
+          }
+        ],
+        "troopsMul": 4.6
+      }
+    ]
+  },
+  {
+    "campaignId": "campaign:wu.succession",
+    "chapterId": "ch:wu.succession",
+    "enemyNotables": [],
+    "id": "campaign:wu.succession",
+    "kind": "campaign",
+    "packId": "pack:wu",
+    "schemaVersion": 1,
+    "stages": [
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.succession.stage.0",
+        "damageMul": 0.45,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 15,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 1
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.succession.stage.1",
+        "damageMul": 0.51,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 20,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 1.18
+      },
+      {
+        "boss": "enemy:wu.private",
+        "briefKey": "campaign.wu.succession.stage.2",
+        "damageMul": 0.58,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 25,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 1.4
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.succession.stage.3",
+        "damageMul": 0.66,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 35,
+            "kind": "money"
+          },
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:chenyi"
+          }
+        ],
+        "troopsMul": 2.4
+      },
+      {
+        "boss": "enemy:wu.private",
+        "briefKey": "campaign.wu.succession.stage.4",
+        "damageMul": 0.74,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 45,
+            "kind": "money"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:jiezhi",
+            "trait": null
+          }
+        ],
+        "troopsMul": 3
+      },
+      {
+        "boss": null,
+        "briefKey": "campaign.wu.succession.stage.5",
+        "damageMul": 0.84,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 60,
+            "kind": "money"
+          }
+        ],
+        "troopsMul": 3.7
+      },
+      {
+        "boss": "enemy:wu.private",
+        "briefKey": "campaign.wu.succession.stage.6",
+        "damageMul": 0.95,
+        "rewards": [
+          {
+            "amount": 0.15,
+            "attr": "lead",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "war",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "int",
+            "kind": "attr"
+          },
+          {
+            "amount": 0.15,
+            "attr": "pol",
+            "kind": "attr"
+          },
+          {
+            "amount": 80,
+            "kind": "money"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:lianhuan",
+            "trait": null
+          }
+        ],
+        "troopsMul": 4.6
+      }
+    ]
+  },
+  {
+    "bodyKey": "event.wu.sunjian.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wu.sunjian.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:wu.sunjian.companionship",
+    "id": "event:wu.sunjian.companionship",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wu.sunjian.0",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:sunjian"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tactic-pincer",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wu.sunjian.1",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:sunjian"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tactic-pincer",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [],
+      "rarity": 1
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wu.sunjian.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:sunjian"
+        }
+      ],
+      "chainId": "chain:wu.sunjian",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wu.sunce.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wu.sunce.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:wu.sunce.companionship",
+    "id": "event:wu.sunce.companionship",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wu.sunce.0",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:sunce"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tactic-cavalry",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wu.sunce.1",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:sunce"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tactic-cavalry",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [],
+      "rarity": 1
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wu.sunce.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:sunce"
+        }
+      ],
+      "chainId": "chain:wu.sunce",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wu.sunquan.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wu.sunquan.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:wu.sunquan.companionship",
+    "id": "event:wu.sunquan.companionship",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wu.sunquan.0",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:sunquan"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tactic-longshot",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wu.sunquan.1",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:sunquan"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tactic-longshot",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [],
+      "rarity": 1
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wu.sunquan.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:sunquan"
+        }
+      ],
+      "chainId": "chain:wu.sunquan",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wu.zhouyu.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wu.zhouyu.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:wu.zhouyu.companionship",
+    "id": "event:wu.zhouyu.companionship",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wu.zhouyu.0",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:zhouyu"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tactic-fire",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wu.zhouyu.1",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:zhouyu"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tactic-fire",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [],
+      "rarity": 1
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wu.zhouyu.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:zhouyu"
+        }
+      ],
+      "chainId": "chain:wu.zhouyu",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wu.lusu.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wu.lusu.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:wu.lusu.companionship",
+    "id": "event:wu.lusu.companionship",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wu.lusu.0",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:lusu"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tactic-misreport",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wu.lusu.1",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:lusu"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tactic-misreport",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [],
+      "rarity": 1
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wu.lusu.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:lusu"
+        }
+      ],
+      "chainId": "chain:wu.lusu",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wu.lumeng.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wu.lumeng.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:wu.lumeng.companionship",
+    "id": "event:wu.lumeng.companionship",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wu.lumeng.0",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:lumeng"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tactic-infighting",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wu.lumeng.1",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:lumeng"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tactic-infighting",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [],
+      "rarity": 1
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wu.lumeng.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:lumeng"
+        }
+      ],
+      "chainId": "chain:wu.lumeng",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wu.luxun.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wu.luxun.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:wu.luxun.companionship",
+    "id": "event:wu.luxun.companionship",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wu.luxun.0",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:luxun"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tactic-fire",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wu.luxun.1",
+        "practice": [
+          {
+            "attr": "int",
+            "weight": 1.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:luxun"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tactic-fire",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [],
+      "rarity": 1
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wu.luxun.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:luxun"
+        }
+      ],
+      "chainId": "chain:wu.luxun",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wu.taishici.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wu.taishici.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:wu.taishici.companionship",
+    "id": "event:wu.taishici.companionship",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wu.taishici.0",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:taishici"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tactic-cavalry",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wu.taishici.1",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:taishici"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tactic-cavalry",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [],
+      "rarity": 1
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wu.taishici.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:taishici"
+        }
+      ],
+      "chainId": "chain:wu.taishici",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wu.ganning.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wu.ganning.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:wu.ganning.companionship",
+    "id": "event:wu.ganning.companionship",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wu.ganning.0",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:ganning"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tactic-cavalry",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wu.ganning.1",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:ganning"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tactic-cavalry",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [],
+      "rarity": 1
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wu.ganning.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:ganning"
+        }
+      ],
+      "chainId": "chain:wu.ganning",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wu.huanggai.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wu.huanggai.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:wu.huanggai.companionship",
+    "id": "event:wu.huanggai.companionship",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wu.huanggai.0",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:huanggai"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tactic-pincer",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wu.huanggai.1",
+        "practice": [
+          {
+            "attr": "lead",
+            "weight": 1.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "martial"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:huanggai"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tactic-pincer",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [],
+      "rarity": 1
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wu.huanggai.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:huanggai"
+        }
+      ],
+      "chainId": "chain:wu.huanggai",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wu.zhangzhao.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wu.zhangzhao.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:wu.zhangzhao.companionship",
+    "id": "event:wu.zhangzhao.companionship",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wu.zhangzhao.0",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:zhangzhao"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tactic-misreport",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wu.zhangzhao.1",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:zhangzhao"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tactic-misreport",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [],
+      "rarity": 1
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wu.zhangzhao.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:zhangzhao"
+        }
+      ],
+      "chainId": "chain:wu.zhangzhao",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "bodyKey": "event.wu.buzhi.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.wu.buzhi.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:wu.buzhi.companionship",
+    "id": "event:wu.buzhi.companionship",
+    "kind": "event",
+    "options": [
+      {
+        "check": null,
+        "labelKey": "event.wu.buzhi.0",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:buzhi"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tactic-longshot",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.wu.buzhi.1",
+        "practice": [
+          {
+            "attr": "pol",
+            "weight": 1.5
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "amount": 8,
+            "kind": "merit",
+            "merit": "civil"
+          },
+          {
+            "amount": 5,
+            "kind": "affinity",
+            "notableId": "notable:buzhi"
+          },
+          {
+            "kind": "unlock",
+            "skill": "skill:tactic-longshot",
+            "trait": null
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wu",
+    "paramSlots": [],
+    "progression": {
+      "previous": [],
+      "rarity": 1
+    },
+    "requirements": [
+      {
+        "type": "faction",
+        "value": "faction:wu"
+      }
+    ],
+    "schemaVersion": 1,
+    "titleKey": "event.wu.buzhi.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "acquainted",
+          "notableId": "notable:buzhi"
+        }
+      ],
+      "chainId": "chain:wu.buzhi",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
+    "aftermaths": [
+      {
+        "requirements": [],
+        "scene": {
+          "beats": [
+            {
+              "speaker": null,
+              "textKey": "story.wu.hulao.after.line.0"
+            }
+          ],
+          "bodyKey": "story.wu.hulao.after.body",
+          "id": "story.wu.hulao.after",
+          "teachings": [
+            {
+              "skill": "skill:tuzhen",
+              "trait": null
+            }
+          ],
+          "titleKey": "story.wu.hulao.after.title"
+        }
+      }
+    ],
+    "battleVariants": [
+      {
+        "briefKeys": [
+          "story.wu.hulao.stage.0",
+          "story.wu.hulao.stage.1",
+          "story.wu.hulao.stage.2",
+          "story.wu.hulao.stage.3",
+          "story.wu.hulao.stage.4",
+          "story.wu.hulao.stage.5",
+          "story.wu.hulao.stage.6"
+        ],
+        "requirements": []
+      }
+    ],
+    "chapterId": "ch:wu.hulao",
+    "id": "story:wu.hulao",
+    "kind": "storyChapter",
+    "milestones": [],
+    "nodes": [
+      {
+        "beats": [
+          {
+            "speaker": null,
+            "textKey": "U1.A.line.0"
+          }
+        ],
+        "bodyKey": "U1.A.body",
+        "id": "U1.A",
+        "options": [
+          {
+            "consequenceKey": "U1.A.supply.hint",
+            "id": "supply",
+            "labelKey": "U1.A.supply.label"
+          },
+          {
+            "consequenceKey": "U1.A.charge.hint",
+            "id": "charge",
+            "labelKey": "U1.A.charge.label"
+          }
+        ],
+        "responseTiming": "immediate",
+        "titleKey": "U1.A.title",
+        "turn": 2
+      },
+      {
+        "beats": [
+          {
+            "speaker": null,
+            "textKey": "U1.B.line.0"
+          }
+        ],
+        "bodyKey": "U1.B.body",
+        "id": "U1.B",
+        "options": [
+          {
+            "consequenceKey": "U1.B.shelter.hint",
+            "id": "shelter",
+            "labelKey": "U1.B.shelter.label"
+          },
+          {
+            "consequenceKey": "U1.B.handover.hint",
+            "id": "handover",
+            "labelKey": "U1.B.handover.label"
+          }
+        ],
+        "responseTiming": "chapterEnd",
+        "titleKey": "U1.B.title",
+        "turn": 6
+      }
+    ],
+    "opening": {
+      "beats": [
+        {
+          "speaker": null,
+          "textKey": "story.wu.hulao.opening.line.0"
+        }
+      ],
+      "bodyKey": "story.wu.hulao.opening.body",
+      "id": "story.wu.hulao.opening",
+      "titleKey": "story.wu.hulao.opening.title"
+    },
+    "packId": "pack:wu",
+    "schemaVersion": 1
+  },
+  {
+    "aftermaths": [
+      {
+        "requirements": [],
+        "scene": {
+          "beats": [
+            {
+              "speaker": null,
+              "textKey": "story.wu.jiangdong.after.line.0"
+            }
+          ],
+          "bodyKey": "story.wu.jiangdong.after.body",
+          "id": "story.wu.jiangdong.after",
+          "teachings": [
+            {
+              "skill": "skill:guwu",
+              "trait": null
+            }
+          ],
+          "titleKey": "story.wu.jiangdong.after.title"
+        }
+      }
+    ],
+    "battleVariants": [
+      {
+        "briefKeys": [
+          "story.wu.jiangdong.stage.0",
+          "story.wu.jiangdong.stage.1",
+          "story.wu.jiangdong.stage.2",
+          "story.wu.jiangdong.stage.3",
+          "story.wu.jiangdong.stage.4",
+          "story.wu.jiangdong.stage.5",
+          "story.wu.jiangdong.stage.6"
+        ],
+        "requirements": []
+      }
+    ],
+    "chapterId": "ch:wu.jiangdong",
+    "id": "story:wu.jiangdong",
+    "kind": "storyChapter",
+    "milestones": [],
+    "nodes": [
+      {
+        "beats": [
+          {
+            "speaker": null,
+            "textKey": "U2.A.line.0"
+          }
+        ],
+        "bodyKey": "U2.A.body",
+        "id": "U2.A",
+        "options": [
+          {
+            "consequenceKey": "U2.A.scouts.hint",
+            "id": "scouts",
+            "labelKey": "U2.A.scouts.label"
+          },
+          {
+            "consequenceKey": "U2.A.assault.hint",
+            "id": "assault",
+            "labelKey": "U2.A.assault.label"
+          }
+        ],
+        "responseTiming": "immediate",
+        "titleKey": "U2.A.title",
+        "turn": 2
+      },
+      {
+        "beats": [
+          {
+            "speaker": null,
+            "textKey": "U2.B.line.0"
+          }
+        ],
+        "bodyKey": "U2.B.body",
+        "id": "U2.B",
+        "options": [
+          {
+            "consequenceKey": "U2.B.harbor.hint",
+            "id": "harbor",
+            "labelKey": "U2.B.harbor.label"
+          },
+          {
+            "consequenceKey": "U2.B.handover.hint",
+            "id": "handover",
+            "labelKey": "U2.B.handover.label"
+          }
+        ],
+        "responseTiming": "chapterEnd",
+        "titleKey": "U2.B.title",
+        "turn": 6
+      }
+    ],
+    "opening": {
+      "beats": [
+        {
+          "speaker": null,
+          "textKey": "story.wu.jiangdong.opening.line.0"
+        }
+      ],
+      "bodyKey": "story.wu.jiangdong.opening.body",
+      "id": "story.wu.jiangdong.opening",
+      "titleKey": "story.wu.jiangdong.opening.title"
+    },
+    "packId": "pack:wu",
+    "schemaVersion": 1
+  },
+  {
+    "aftermaths": [
+      {
+        "requirements": [
+          {
+            "id": "wu.sunce-rescued",
+            "kind": "milestone"
+          }
+        ],
+        "scene": {
+          "beats": [
+            {
+              "speaker": null,
+              "textKey": "story.wu.hunt.alive.line.0"
+            }
+          ],
+          "bodyKey": "story.wu.hunt.alive.body",
+          "id": "story.wu.hunt.alive",
+          "titleKey": "story.wu.hunt.alive.title"
+        }
+      },
+      {
+        "requirements": [],
+        "scene": {
+          "beats": [
+            {
+              "speaker": null,
+              "textKey": "story.wu.hunt.after.line.0"
+            }
+          ],
+          "bodyKey": "story.wu.hunt.after.body",
+          "id": "story.wu.hunt.after",
+          "teachings": [
+            {
+              "skill": "skill:jiezhi",
+              "trait": null
+            }
+          ],
+          "titleKey": "story.wu.hunt.after.title"
+        }
+      }
+    ],
+    "battleVariants": [
+      {
+        "briefKeys": [
+          "story.wu.hunt.rescue.stage.0",
+          "story.wu.hunt.rescue.stage.1",
+          "story.wu.hunt.rescue.stage.2",
+          "story.wu.hunt.rescue.stage.3",
+          "story.wu.hunt.rescue.stage.4",
+          "story.wu.hunt.rescue.stage.5",
+          "story.wu.hunt.rescue.stage.6"
+        ],
+        "requirements": [
+          {
+            "kind": "choice",
+            "node": "U2.A",
+            "option": "scouts"
+          },
+          {
+            "kind": "choice",
+            "node": "U3.A",
+            "option": "escort"
+          }
+        ]
+      },
+      {
+        "briefKeys": [
+          "story.wu.hunt.stage.0",
+          "story.wu.hunt.stage.1",
+          "story.wu.hunt.stage.2",
+          "story.wu.hunt.stage.3",
+          "story.wu.hunt.stage.4",
+          "story.wu.hunt.stage.5",
+          "story.wu.hunt.stage.6"
+        ],
+        "requirements": []
+      }
+    ],
+    "chapterId": "ch:wu.hunt",
+    "id": "story:wu.hunt",
+    "kind": "storyChapter",
+    "milestones": [
+      {
+        "hintKey": "story.wu.hunt.rescue.hint",
+        "id": "wu.sunce-rescued",
+        "minCleared": 5,
+        "requirements": [
+          {
+            "kind": "choice",
+            "node": "U2.A",
+            "option": "scouts"
+          },
+          {
+            "kind": "choice",
+            "node": "U3.A",
+            "option": "escort"
+          }
+        ],
+        "scene": {
+          "beats": [
+            {
+              "speaker": null,
+              "textKey": "story.wu.hunt.rescue.line.0"
+            }
+          ],
+          "bodyKey": "story.wu.hunt.rescue.body",
+          "id": "story.wu.hunt.rescue",
+          "titleKey": "story.wu.hunt.rescue.title"
+        }
+      }
+    ],
+    "nodes": [
+      {
+        "beats": [
+          {
+            "speaker": null,
+            "textKey": "U3.A.line.0"
+          }
+        ],
+        "bodyKey": "U3.A.body",
+        "id": "U3.A",
+        "options": [
+          {
+            "consequenceKey": "U3.A.escort.hint",
+            "id": "escort",
+            "labelKey": "U3.A.escort.label"
+          },
+          {
+            "consequenceKey": "U3.A.city.hint",
+            "id": "city",
+            "labelKey": "U3.A.city.label"
+          }
+        ],
+        "responseTiming": "immediate",
+        "titleKey": "U3.A.title",
+        "turn": 2
+      },
+      {
+        "beats": [
+          {
+            "speaker": null,
+            "textKey": "U3.B.line.0"
+          }
+        ],
+        "bodyKey": "U3.B.body",
+        "id": "U3.B",
+        "options": [
+          {
+            "consequenceKey": "U3.B.handover.hint",
+            "id": "handover",
+            "labelKey": "U3.B.handover.label"
+          },
+          {
+            "consequenceKey": "U3.B.personal.hint",
+            "id": "personal",
+            "labelKey": "U3.B.personal.label"
+          }
+        ],
+        "responseTiming": "chapterEnd",
+        "titleKey": "U3.B.title",
+        "turn": 6
+      }
+    ],
+    "opening": {
+      "beats": [
+        {
+          "speaker": null,
+          "textKey": "story.wu.hunt.opening.line.0"
+        }
+      ],
+      "bodyKey": "story.wu.hunt.opening.body",
+      "id": "story.wu.hunt.opening",
+      "titleKey": "story.wu.hunt.opening.title"
+    },
+    "packId": "pack:wu",
+    "schemaVersion": 1
+  },
+  {
+    "aftermaths": [
+      {
+        "requirements": [],
+        "scene": {
+          "beats": [
+            {
+              "speaker": null,
+              "textKey": "story.wu.chibi.after.line.0"
+            }
+          ],
+          "bodyKey": "story.wu.chibi.after.body",
+          "id": "story.wu.chibi.after",
+          "teachings": [
+            {
+              "skill": "skill:huoji",
+              "trait": null
+            }
+          ],
+          "titleKey": "story.wu.chibi.after.title"
+        }
+      }
+    ],
+    "battleVariants": [
+      {
+        "briefKeys": [
+          "story.wu.chibi.stage.0",
+          "story.wu.chibi.stage.1",
+          "story.wu.chibi.stage.2",
+          "story.wu.chibi.stage.3",
+          "story.wu.chibi.stage.4",
+          "story.wu.chibi.stage.5",
+          "story.wu.chibi.stage.6"
+        ],
+        "requirements": []
+      }
+    ],
+    "chapterId": "ch:wu.chibi",
+    "id": "story:wu.chibi",
+    "kind": "storyChapter",
+    "milestones": [],
+    "nodes": [
+      {
+        "beats": [
+          {
+            "speaker": null,
+            "textKey": "U4.A.line.0"
+          }
+        ],
+        "bodyKey": "U4.A.body",
+        "id": "U4.A",
+        "options": [
+          {
+            "consequenceKey": "U4.A.pact.hint",
+            "id": "pact",
+            "labelKey": "U4.A.pact.label"
+          },
+          {
+            "consequenceKey": "U4.A.fireships.hint",
+            "id": "fireships",
+            "labelKey": "U4.A.fireships.label"
+          }
+        ],
+        "responseTiming": "immediate",
+        "titleKey": "U4.A.title",
+        "turn": 2
+      },
+      {
+        "beats": [
+          {
+            "speaker": null,
+            "textKey": "U4.B.line.0"
+          }
+        ],
+        "bodyKey": "U4.B.body",
+        "id": "U4.B",
+        "options": [
+          {
+            "consequenceKey": "U4.B.shelter.hint",
+            "id": "shelter",
+            "labelKey": "U4.B.shelter.label"
+          },
+          {
+            "consequenceKey": "U4.B.handover.hint",
+            "id": "handover",
+            "labelKey": "U4.B.handover.label"
+          }
+        ],
+        "responseTiming": "chapterEnd",
+        "titleKey": "U4.B.title",
+        "turn": 6
+      }
+    ],
+    "opening": {
+      "beats": [
+        {
+          "speaker": null,
+          "textKey": "story.wu.chibi.opening.line.0"
+        }
+      ],
+      "bodyKey": "story.wu.chibi.opening.body",
+      "id": "story.wu.chibi.opening",
+      "titleKey": "story.wu.chibi.opening.title"
+    },
+    "packId": "pack:wu",
+    "schemaVersion": 1
+  },
+  {
+    "aftermaths": [
+      {
+        "requirements": [],
+        "scene": {
+          "beats": [
+            {
+              "speaker": null,
+              "textKey": "story.wu.jinghuai.after.line.0"
+            }
+          ],
+          "bodyKey": "story.wu.jinghuai.after.body",
+          "id": "story.wu.jinghuai.after",
+          "teachings": [
+            {
+              "skill": "skill:shuiyan",
+              "trait": null
+            }
+          ],
+          "titleKey": "story.wu.jinghuai.after.title"
+        }
+      }
+    ],
+    "battleVariants": [
+      {
+        "briefKeys": [
+          "story.wu.jinghuai.stage.0",
+          "story.wu.jinghuai.stage.1",
+          "story.wu.jinghuai.stage.2",
+          "story.wu.jinghuai.stage.3",
+          "story.wu.jinghuai.stage.4",
+          "story.wu.jinghuai.stage.5",
+          "story.wu.jinghuai.stage.6"
+        ],
+        "requirements": []
+      }
+    ],
+    "chapterId": "ch:wu.jinghuai",
+    "id": "story:wu.jinghuai",
+    "kind": "storyChapter",
+    "milestones": [],
+    "nodes": [
+      {
+        "beats": [
+          {
+            "speaker": null,
+            "textKey": "U5.A.line.0"
+          }
+        ],
+        "bodyKey": "U5.A.body",
+        "id": "U5.A",
+        "options": [
+          {
+            "consequenceKey": "U5.A.pact.hint",
+            "id": "pact",
+            "labelKey": "U5.A.pact.label"
+          },
+          {
+            "consequenceKey": "U5.A.strike.hint",
+            "id": "strike",
+            "labelKey": "U5.A.strike.label"
+          }
+        ],
+        "responseTiming": "immediate",
+        "titleKey": "U5.A.title",
+        "turn": 2
+      },
+      {
+        "beats": [
+          {
+            "speaker": null,
+            "textKey": "U5.B.line.0"
+          }
+        ],
+        "bodyKey": "U5.B.body",
+        "id": "U5.B",
+        "options": [
+          {
+            "consequenceKey": "U5.B.shelter.hint",
+            "id": "shelter",
+            "labelKey": "U5.B.shelter.label"
+          },
+          {
+            "consequenceKey": "U5.B.handover.hint",
+            "id": "handover",
+            "labelKey": "U5.B.handover.label"
+          }
+        ],
+        "responseTiming": "chapterEnd",
+        "titleKey": "U5.B.title",
+        "turn": 6
+      }
+    ],
+    "opening": {
+      "beats": [
+        {
+          "speaker": null,
+          "textKey": "story.wu.jinghuai.opening.line.0"
+        }
+      ],
+      "bodyKey": "story.wu.jinghuai.opening.body",
+      "id": "story.wu.jinghuai.opening",
+      "titleKey": "story.wu.jinghuai.opening.title"
+    },
+    "packId": "pack:wu",
+    "schemaVersion": 1
+  },
+  {
+    "aftermaths": [
+      {
+        "requirements": [],
+        "scene": {
+          "beats": [
+            {
+              "speaker": null,
+              "textKey": "story.wu.yiling.after.line.0"
+            }
+          ],
+          "bodyKey": "story.wu.yiling.after.body",
+          "id": "story.wu.yiling.after",
+          "teachings": [
+            {
+              "skill": "skill:xianzhen",
+              "trait": null
+            }
+          ],
+          "titleKey": "story.wu.yiling.after.title"
+        }
+      }
+    ],
+    "battleVariants": [
+      {
+        "briefKeys": [
+          "story.wu.yiling.stage.0",
+          "story.wu.yiling.stage.1",
+          "story.wu.yiling.stage.2",
+          "story.wu.yiling.stage.3",
+          "story.wu.yiling.stage.4",
+          "story.wu.yiling.stage.5",
+          "story.wu.yiling.stage.6"
+        ],
+        "requirements": []
+      }
+    ],
+    "chapterId": "ch:wu.yiling",
+    "id": "story:wu.yiling",
+    "kind": "storyChapter",
+    "milestones": [],
+    "nodes": [
+      {
+        "beats": [
+          {
+            "speaker": null,
+            "textKey": "U6.A.line.0"
+          }
+        ],
+        "bodyKey": "U6.A.body",
+        "id": "U6.A",
+        "options": [
+          {
+            "consequenceKey": "U6.A.trust.hint",
+            "id": "trust",
+            "labelKey": "U6.A.trust.label"
+          },
+          {
+            "consequenceKey": "U6.A.shelter.hint",
+            "id": "shelter",
+            "labelKey": "U6.A.shelter.label"
+          }
+        ],
+        "responseTiming": "immediate",
+        "titleKey": "U6.A.title",
+        "turn": 2
+      },
+      {
+        "beats": [
+          {
+            "speaker": null,
+            "textKey": "U6.B.line.0"
+          }
+        ],
+        "bodyKey": "U6.B.body",
+        "id": "U6.B",
+        "options": [
+          {
+            "consequenceKey": "U6.B.handover.hint",
+            "id": "handover",
+            "labelKey": "U6.B.handover.label"
+          },
+          {
+            "consequenceKey": "U6.B.assault.hint",
+            "id": "assault",
+            "labelKey": "U6.B.assault.label"
+          }
+        ],
+        "responseTiming": "chapterEnd",
+        "titleKey": "U6.B.title",
+        "turn": 6
+      }
+    ],
+    "opening": {
+      "beats": [
+        {
+          "speaker": null,
+          "textKey": "story.wu.yiling.opening.line.0"
+        }
+      ],
+      "bodyKey": "story.wu.yiling.opening.body",
+      "id": "story.wu.yiling.opening",
+      "titleKey": "story.wu.yiling.opening.title"
+    },
+    "packId": "pack:wu",
+    "schemaVersion": 1
+  },
+  {
+    "aftermaths": [
+      {
+        "requirements": [],
+        "scene": {
+          "beats": [
+            {
+              "speaker": null,
+              "textKey": "story.wu.shiting.after.line.0"
+            }
+          ],
+          "bodyKey": "story.wu.shiting.after.body",
+          "id": "story.wu.shiting.after",
+          "teachings": [
+            {
+              "skill": "skill:zhirong",
+              "trait": null
+            }
+          ],
+          "titleKey": "story.wu.shiting.after.title"
+        }
+      }
+    ],
+    "battleVariants": [
+      {
+        "briefKeys": [
+          "story.wu.shiting.stage.0",
+          "story.wu.shiting.stage.1",
+          "story.wu.shiting.stage.2",
+          "story.wu.shiting.stage.3",
+          "story.wu.shiting.stage.4",
+          "story.wu.shiting.stage.5",
+          "story.wu.shiting.stage.6"
+        ],
+        "requirements": []
+      }
+    ],
+    "chapterId": "ch:wu.shiting",
+    "id": "story:wu.shiting",
+    "kind": "storyChapter",
+    "milestones": [],
+    "nodes": [
+      {
+        "beats": [
+          {
+            "speaker": null,
+            "textKey": "U7.A.line.0"
+          }
+        ],
+        "bodyKey": "U7.A.body",
+        "id": "U7.A",
+        "options": [
+          {
+            "consequenceKey": "U7.A.charter.hint",
+            "id": "charter",
+            "labelKey": "U7.A.charter.label"
+          },
+          {
+            "consequenceKey": "U7.A.harbor.hint",
+            "id": "harbor",
+            "labelKey": "U7.A.harbor.label"
+          }
+        ],
+        "responseTiming": "immediate",
+        "titleKey": "U7.A.title",
+        "turn": 2
+      },
+      {
+        "beats": [
+          {
+            "speaker": null,
+            "textKey": "U7.B.line.0"
+          }
+        ],
+        "bodyKey": "U7.B.body",
+        "id": "U7.B",
+        "options": [
+          {
+            "consequenceKey": "U7.B.handover.hint",
+            "id": "handover",
+            "labelKey": "U7.B.handover.label"
+          },
+          {
+            "consequenceKey": "U7.B.honor.hint",
+            "id": "honor",
+            "labelKey": "U7.B.honor.label"
+          }
+        ],
+        "responseTiming": "chapterEnd",
+        "titleKey": "U7.B.title",
+        "turn": 6
+      }
+    ],
+    "opening": {
+      "beats": [
+        {
+          "speaker": null,
+          "textKey": "story.wu.shiting.opening.line.0"
+        }
+      ],
+      "bodyKey": "story.wu.shiting.opening.body",
+      "id": "story.wu.shiting.opening",
+      "titleKey": "story.wu.shiting.opening.title"
+    },
+    "packId": "pack:wu",
+    "schemaVersion": 1
+  },
+  {
+    "aftermaths": [
+      {
+        "requirements": [
+          {
+            "id": "wu.hearing-restored",
+            "kind": "milestone"
+          },
+          {
+            "kind": "choice",
+            "node": "U8.B",
+            "option": "handover"
+          }
+        ],
+        "scene": {
+          "beats": [
+            {
+              "speaker": null,
+              "textKey": "story.wu.succession.dawn.line.0"
+            }
+          ],
+          "bodyKey": "story.wu.succession.dawn.body",
+          "id": "story.wu.succession.dawn",
+          "titleKey": "story.wu.succession.dawn.title"
+        }
+      },
+      {
+        "requirements": [
+          {
+            "id": "wu.hearing-restored",
+            "kind": "milestone"
+          }
+        ],
+        "scene": {
+          "beats": [
+            {
+              "speaker": null,
+              "textKey": "story.wu.succession.partial.line.0"
+            }
+          ],
+          "bodyKey": "story.wu.succession.partial.body",
+          "id": "story.wu.succession.partial",
+          "titleKey": "story.wu.succession.partial.title"
+        }
+      },
+      {
+        "requirements": [],
+        "scene": {
+          "beats": [
+            {
+              "speaker": null,
+              "textKey": "story.wu.succession.after.line.0"
+            }
+          ],
+          "bodyKey": "story.wu.succession.after.body",
+          "id": "story.wu.succession.after",
+          "teachings": [
+            {
+              "skill": "skill:lianhuan",
+              "trait": null
+            }
+          ],
+          "titleKey": "story.wu.succession.after.title"
+        }
+      }
+    ],
+    "battleVariants": [
+      {
+        "briefKeys": [
+          "story.wu.succession.stage.0",
+          "story.wu.succession.stage.1",
+          "story.wu.succession.stage.2",
+          "story.wu.succession.stage.3",
+          "story.wu.succession.stage.4",
+          "story.wu.succession.stage.5",
+          "story.wu.succession.stage.6"
+        ],
+        "requirements": []
+      }
+    ],
+    "chapterId": "ch:wu.succession",
+    "id": "story:wu.succession",
+    "kind": "storyChapter",
+    "milestones": [
+      {
+        "hintKey": "story.wu.succession.hearing.hint",
+        "id": "wu.hearing-restored",
+        "minCleared": 5,
+        "requirements": [
+          {
+            "kind": "choice",
+            "node": "U7.A",
+            "option": "charter"
+          },
+          {
+            "kind": "choice",
+            "node": "U7.B",
+            "option": "handover"
+          },
+          {
+            "kind": "choice",
+            "node": "U8.A",
+            "option": "hearing"
+          }
+        ],
+        "scene": {
+          "beats": [
+            {
+              "speaker": null,
+              "textKey": "story.wu.succession.hearing.line.0"
+            }
+          ],
+          "bodyKey": "story.wu.succession.hearing.body",
+          "id": "story.wu.succession.hearing",
+          "titleKey": "story.wu.succession.hearing.title"
+        }
+      }
+    ],
+    "nodes": [
+      {
+        "beats": [
+          {
+            "speaker": null,
+            "textKey": "U8.A.line.0"
+          }
+        ],
+        "bodyKey": "U8.A.body",
+        "id": "U8.A",
+        "options": [
+          {
+            "consequenceKey": "U8.A.hearing.hint",
+            "id": "hearing",
+            "labelKey": "U8.A.hearing.label"
+          },
+          {
+            "consequenceKey": "U8.A.shelter.hint",
+            "id": "shelter",
+            "labelKey": "U8.A.shelter.label"
+          }
+        ],
+        "responseTiming": "immediate",
+        "titleKey": "U8.A.title",
+        "turn": 2
+      },
+      {
+        "beats": [
+          {
+            "speaker": null,
+            "textKey": "U8.B.line.0"
+          }
+        ],
+        "bodyKey": "U8.B.body",
+        "id": "U8.B",
+        "options": [
+          {
+            "consequenceKey": "U8.B.handover.hint",
+            "id": "handover",
+            "labelKey": "U8.B.handover.label"
+          },
+          {
+            "consequenceKey": "U8.B.guard.hint",
+            "id": "guard",
+            "labelKey": "U8.B.guard.label"
+          }
+        ],
+        "responseTiming": "chapterEnd",
+        "titleKey": "U8.B.title",
+        "turn": 6
+      }
+    ],
+    "opening": {
+      "beats": [
+        {
+          "speaker": null,
+          "textKey": "story.wu.succession.opening.line.0"
+        }
+      ],
+      "bodyKey": "story.wu.succession.opening.body",
+      "id": "story.wu.succession.opening",
+      "titleKey": "story.wu.succession.opening.title"
+    },
+    "packId": "pack:wu",
+    "schemaVersion": 1
+  },
+  {
+    "bodyKey": "ending.wu.brothers.body",
+    "collectible": true,
+    "ending": "ending:wu.brothers",
+    "endingKind": "fullDream",
+    "factionId": "faction:wu",
+    "id": "ending:wu.brothers",
+    "kind": "ending",
+    "packId": "pack:wu",
+    "pointsMultiplier": 1.8,
+    "priority": 605,
+    "requirements": [],
+    "schemaVersion": 1,
+    "storyRequirements": [
+      {
+        "id": "wu.sunce-rescued",
+        "kind": "milestone"
+      },
+      {
+        "kind": "choice",
+        "node": "U3.B",
+        "option": "handover"
+      }
+    ],
+    "titleKey": "ending.wu.brothers.title",
+    "trigger": {
+      "kind": "sequenceCompleted"
+    }
+  },
+  {
+    "bodyKey": "ending.wu.tomorrow.body",
+    "collectible": true,
+    "ending": "ending:wu.tomorrow",
+    "endingKind": "fullDream",
+    "factionId": "faction:wu",
+    "id": "ending:wu.tomorrow",
+    "kind": "ending",
+    "packId": "pack:wu",
+    "pointsMultiplier": 1.8,
+    "priority": 606,
+    "requirements": [],
+    "schemaVersion": 1,
+    "storyRequirements": [
+      {
+        "id": "wu.hearing-restored",
+        "kind": "milestone"
+      },
+      {
+        "kind": "choice",
+        "node": "U8.B",
+        "option": "handover"
+      }
+    ],
+    "titleKey": "ending.wu.tomorrow.title",
+    "trigger": {
+      "kind": "sequenceCompleted"
+    }
+  }
+]

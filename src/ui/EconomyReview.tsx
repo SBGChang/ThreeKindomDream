@@ -16,7 +16,7 @@ export function EconomyReview(): React.ReactElement {
         : new URLSearchParams(location.search).get('art') === 'layout'
           ? ['bad','normal','success'].includes(new URLSearchParams(location.search).get('fixed') ?? '')
             ? () => fixedActionReview(new URLSearchParams(location.search).get('fixed')!, new URLSearchParams(location.search).has('event'))
-            : runLayoutReview
+            : () => runLayoutReview(new URLSearchParams(location.search).has('companions') ? Number(new URLSearchParams(location.search).get('companions')) : undefined)
         : ['full', 'empty'].includes(new URLSearchParams(location.search).get('lessons') ?? '')
           ? () => trainingArtReview(new URLSearchParams(location.search).get('lessons') === 'empty')
           : new URLSearchParams(location.search).get('stock') === 'full' ? fullEconomyReview : new URLSearchParams(location.search).get('stock') === 'limited' ? limitedEconomyReview : economyReview,

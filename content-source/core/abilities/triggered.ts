@@ -1,0 +1,7 @@
+import type { TraitDef } from '../../../src/contracts/core/definitions.js';
+import { traitId } from '../../../src/contracts/core/ids.js';
+import { asKey } from '../../authoring.js';
+import { coreDef } from '../pack-id.js';
+export const triggeredTexts:Record<string,string>={};
+const rows=[["backwater", "背水", "本軍低於三成時，攻擊與防禦提升 6 秒；每戰一次。"], ["breakline", "破陣", "擊破步兵單位後，我方步兵攻擊提升 8%，持續 5 秒，最多三層。"], ["hunters", "獵弓", "擊破弓兵單位後，反弓招式冷卻縮短 1 秒；間隔 3 秒。"], ["fervor", "酣戰", "每交戰 8 秒，攻擊提升 4%，最多五層；換關重置。"], ["frugal", "節糧", "施放自己的招式時，25% 機率返還 30% 軍糧。"], ["aftershock", "餘威", "自己的招式擊破單位後，全軍攻擊提升 15%，持續 4 秒。"], ["relief", "疾援", "本軍步兵低於出征總兵力兩成時，弓兵撤離速度提升 35%，持續 2 秒；每關一次。"], ["laststand", "死守", "每隊步兵兵力低於四分之一時，減傷 25%，持續 3 秒；每關一次。"], ["sighting", "校射", "弓兵連續兩次落空後，命中提升 15 個百分點，持續 4 秒。"], ["exploit", "追亂", "自己的控制招式生效時，目標受到傷害提升 10%，持續 3 秒。"], ["drill", "練兵", "改編整備完成後，部隊攻擊提升 15%，持續 4 秒。"], ["supply", "護糧", "我方箭矢命中時，5% 機率補充 2 軍糧；全軍間隔 2 秒。"]] as const;
+export const triggeredTraits:readonly TraitDef[]=rows.map(([id,name,desc],i)=>{const prefix='trait.trigger-'+id;triggeredTexts[prefix+'.name']=name;triggeredTexts[prefix+'.desc']=desc;return coreDef('trait','trait:trigger-'+id,{traitId:traitId('trait:trigger-'+id),tier:i<4?'common':i<9?'fine':'peerless',nameKey:asKey(prefix+'.name'),descKey:asKey(prefix+'.desc'),cost:Object.fromEntries((i%2?['lead','war','int']:['war','lead','pol']).slice(0,i<4?1:i<9?2:3).map((a,j)=>[a,[300,220,150][j]!])),polarity:'positive',effects:[],battleTrigger:id});});

@@ -21,7 +21,7 @@ const depths = [0, 0, 0, 0];
 const before = performance.now();
 for (let i = 0; i < runs; i++) {
   const s = Session.start(w, meta, emptyDraft(meta, w.defs), seed(1000 + i));
-  const result = driveRun(s, policy);
+  const result = driveRun(s, policy, {battle:'realtime'});
   actionCount += result.actions;
   result.depths.forEach((n, ch) => { depths[ch] = (depths[ch] ?? 0) + n; });
   const id = String(s.current.ending?.endingId);

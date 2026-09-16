@@ -44,16 +44,17 @@ export function ScreenCampaign({ s, bump, onDepart, onLearn }: Props): React.Rea
   const st = s.current.campaign, learned = s.current.abilities.skills;
   const eligible = st ? s.eligibleCommanders() : [];
   const [picked, setPicked] = useState<readonly SkillId[]>(() => st?.loadout?.skills ?? learned.slice(0, 3));
-  const [cmd, setCmd] = useState<readonly CommanderSlot[]>(() => st?.loadout?.commanders ?? eligible.slice(0, 3).flatMap(id => {
+  const [cmd, setCmd] = useState<readonly CommanderSlot[]>(() => st?.loadout?.commanders.map(slot=>({...slot,skillId:s.commanderSkills(slot.notableId).includes(slot.skillId)?slot.skillId:s.commanderSkills(slot.notableId)[0]!})).filter(slot=>!!slot.skillId) ?? eligible.slice(0, 3).flatMap(id => {
     const skillId = s.commanderSkills(id).at(-1);
     return skillId === undefined ? [] : [{ notableId: id, skillId }];
   }));
+  const [infantryPercent,setInfantryPercent] = useState(st?.loadout?.infantryPercent ?? 60);
   const [tab, setTab] = useState<PrepTab>('skills');
   const opener = useRef<HTMLElement | null>(null);
   const [picker, setPicker] = useState<Picker | null>(null);
   useEffect(() => {
-    if (s.campaignState()?.phase === 'configuring') { s.rememberCampaign({ skills: picked, commanders: cmd }); bump(); }
-  }, [s, picked, cmd, bump]);
+    if (s.campaignState()?.phase === 'configuring') { s.rememberCampaign({ skills: picked, commanders: cmd, infantryPercent }); bump(); }
+  }, [s, picked, cmd, infantryPercent, bump]);
   useEffect(() => { if (s.campaignState()?.phase !== 'configuring' && s.campaignState() !== null) onDepart(); }, [s, onDepart]);
   if (!st) return <p>沒有進行中的戰役。</p>;
   if (st.phase !== 'configuring') return <p>全軍出陣……</p>;
@@ -91,7 +92,12 @@ export function ScreenCampaign({ s, bump, onDepart, onLearn }: Props): React.Rea
     <aside className="prep-route" aria-label="關卡軍情"><ol>{rows.map(row => <li key={row.index}><button className="prep-wave" onClick={() => open({ kind: 'wave', index: row.index })} aria-label={'查看第 ' + (row.index + 1) + ' 關軍情，' + (row.boss ? t(row.boss.nameKey) : '敵軍') + '，兵力 ' + number(s.campaignWaveTroops(row.index))}>
       <span className="prep-route-no" aria-hidden="true"><b>{row.index + 1}</b></span><span className="prep-enemy-art" aria-hidden="true">{enemyArt(row.boss ? t(row.boss.nameKey) : undefined)}</span><strong className="prep-wave-strength">{number(s.campaignWaveTroops(row.index))}</strong>
     </button></li>)}</ol></aside>
-    <footer className="prep-footer">{picked.length === 0 && <span className="prep-warning" role="status">未攜帶主將招式</span>}<button className="prep-depart" onClick={() => { s.configureCampaign({ skills: picked, commanders: cmd }); onDepart(); bump(); }}><img src="./art/ui/campaign/depart-v1.png" alt="" /><span>全軍出陣</span></button></footer>
+    <div className="prep-formation" role="group" aria-label="步兵弓兵編成">
+      <div><b><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 3L12 1 21 3V13L12 23 3 13Z" fill="#64c5d9" stroke="#241d17" strokeWidth="2"/><path d="M12 4V19M6 7H18" stroke="#fff0bd" strokeWidth="2"/></svg>步兵 <strong>{infantryPercent}%</strong><small>{number(Math.round(limits.troopsMax*infantryPercent/100))} 人</small></b><b><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 2Q24 12 6 22L11 12Z" fill="none" stroke="#ffd07d" strokeWidth="2"/><path d="M2 12H22L18 8M22 12L18 16" fill="none" stroke="#fff1c3" strokeWidth="2"/></svg>弓兵 <strong>{100-infantryPercent}%</strong><small>{number(limits.troopsMax-Math.round(limits.troopsMax*infantryPercent/100))} 人</small></b></div>
+      <input type="range" min="0" max="100" step="5" value={infantryPercent} aria-label="步兵比例" aria-valuetext={`步兵 ${infantryPercent}%，弓兵 ${100-infantryPercent}%`} onChange={e=>setInfantryPercent(Number(e.target.value))} style={{background:`linear-gradient(to right,#53bacc ${infantryPercent}%,#eebd55 ${infantryPercent}%)`}}/>
+      <span>步兵守前陣 · 弓兵後排射擊</span>
+    </div>
+    <footer className="prep-footer">{picked.length === 0 && <span className="prep-warning" role="status">未攜帶主將招式</span>}<button className="prep-depart" onClick={() => { s.configureCampaign({ skills: picked, commanders: cmd, infantryPercent }); onDepart(); bump(); }}><img src="./art/ui/campaign/depart-v1.png" alt="" /><span>全軍出陣</span></button></footer>
     </div>{picker && <PreparationDialog title={picker.kind === 'skills' ? '主將招式' : picker.kind === 'commanders' ? '同行指揮' : picker.kind === 'support' ? notableName(picker.id) + ' · 支援招式' : '第 ' + (picker.index + 1) + ' 關 · 軍情'} onClose={close} tactics={picker.kind === 'skills' || picker.kind === 'support'} commanders={picker.kind === 'commanders'} briefing={picker.kind === 'wave'}>
       {picker.kind === 'skills' && <TacticPicker s={s} choices={learned} picked={picked} initialId={picker.id} limit={3} onChange={setPicked} onClose={close} onLearn={onLearn} />}
 

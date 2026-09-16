@@ -55,3 +55,10 @@
 .campaign-save-notice{display:none}.game-stage:has(.campaign-prep)>.campaign-save-notice{display:block;position:absolute;left:30px;top:29px;max-width:290px;padding:5px 12px;background:#24372ce8;border:1px solid #c5a06466;border-radius:5px;color:#ffe7b5;font-size:13px;z-index:6}
 
 .game-stage .campaign-prep .prep-close,.game-stage .campaign-prep .prep-close:hover:not(:disabled){width:44px;height:44px;padding:0;border:0;border-radius:0;background:url('/art/ui/campaign/command-controls-v6.png') 100% 0/300% 100% no-repeat}
+
+.prep-formation{position:absolute;left:400px;top:665px;width:385px;padding:10px 20px;background:linear-gradient(#664321,#332719);border:3px solid #3b291b;border-radius:18px;box-shadow:inset 0 0 0 2px #c79851,0 4px #261b15;color:#fff1c7;text-shadow:0 2px #26190f}
+.prep-formation>div{display:flex;justify-content:space-between;font-size:18px}.prep-formation b:last-child{text-align:right;color:#ffe09a}.prep-formation b:first-child{color:#bdefff}.prep-formation small{display:block;font-size:13px;color:#fff2d1}.prep-formation input{appearance:none;display:block;width:100%;height:18px;margin:9px 0;border:3px solid #241c16;border-radius:12px;box-shadow:inset 0 2px 2px #ffffff70;cursor:ew-resize}.prep-formation input::-webkit-slider-thumb{appearance:none;width:26px;height:30px;border:3px solid #523719;border-radius:9px;background:linear-gradient(#fff4ca,#d59940);box-shadow:0 2px 2px #0008}.prep-formation input:focus-visible{outline:3px solid #fff2bd;outline-offset:4px}.prep-formation>span{display:block;font-size:12px;text-align:center;color:#e4cda4}
+
+.prep-formation{top:708px;left:389px;width:435px;padding:6px 16px}.prep-formation>div{font-size:16px;line-height:22px}.prep-formation small{display:inline;margin-left:8px;font-size:12px}.prep-formation input{margin:7px 0}.prep-formation>span{line-height:15px}.prep-footer{pointer-events:none}.prep-footer button,.prep-footer .prep-warning{pointer-events:auto}
+
+.prep-formation svg{width:20px;height:20px;vertical-align:middle;margin-right:5px;filter:drop-shadow(0 1px #21180e)}

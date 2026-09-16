@@ -1070,6 +1070,209 @@
     "troopsBase": 120
   },
   {
+    "battleTrigger": "backwater",
+    "cost": {
+      "war": 300
+    },
+    "descKey": "trait.trigger-backwater.desc",
+    "effects": [],
+    "id": "trait:trigger-backwater",
+    "kind": "trait",
+    "nameKey": "trait.trigger-backwater.name",
+    "packId": "pack:core",
+    "polarity": "positive",
+    "schemaVersion": 1,
+    "tier": "common",
+    "traitId": "trait:trigger-backwater"
+  },
+  {
+    "battleTrigger": "breakline",
+    "cost": {
+      "lead": 300
+    },
+    "descKey": "trait.trigger-breakline.desc",
+    "effects": [],
+    "id": "trait:trigger-breakline",
+    "kind": "trait",
+    "nameKey": "trait.trigger-breakline.name",
+    "packId": "pack:core",
+    "polarity": "positive",
+    "schemaVersion": 1,
+    "tier": "common",
+    "traitId": "trait:trigger-breakline"
+  },
+  {
+    "battleTrigger": "hunters",
+    "cost": {
+      "war": 300
+    },
+    "descKey": "trait.trigger-hunters.desc",
+    "effects": [],
+    "id": "trait:trigger-hunters",
+    "kind": "trait",
+    "nameKey": "trait.trigger-hunters.name",
+    "packId": "pack:core",
+    "polarity": "positive",
+    "schemaVersion": 1,
+    "tier": "common",
+    "traitId": "trait:trigger-hunters"
+  },
+  {
+    "battleTrigger": "fervor",
+    "cost": {
+      "lead": 300
+    },
+    "descKey": "trait.trigger-fervor.desc",
+    "effects": [],
+    "id": "trait:trigger-fervor",
+    "kind": "trait",
+    "nameKey": "trait.trigger-fervor.name",
+    "packId": "pack:core",
+    "polarity": "positive",
+    "schemaVersion": 1,
+    "tier": "common",
+    "traitId": "trait:trigger-fervor"
+  },
+  {
+    "battleTrigger": "frugal",
+    "cost": {
+      "lead": 220,
+      "war": 300
+    },
+    "descKey": "trait.trigger-frugal.desc",
+    "effects": [],
+    "id": "trait:trigger-frugal",
+    "kind": "trait",
+    "nameKey": "trait.trigger-frugal.name",
+    "packId": "pack:core",
+    "polarity": "positive",
+    "schemaVersion": 1,
+    "tier": "fine",
+    "traitId": "trait:trigger-frugal"
+  },
+  {
+    "battleTrigger": "aftershock",
+    "cost": {
+      "lead": 300,
+      "war": 220
+    },
+    "descKey": "trait.trigger-aftershock.desc",
+    "effects": [],
+    "id": "trait:trigger-aftershock",
+    "kind": "trait",
+    "nameKey": "trait.trigger-aftershock.name",
+    "packId": "pack:core",
+    "polarity": "positive",
+    "schemaVersion": 1,
+    "tier": "fine",
+    "traitId": "trait:trigger-aftershock"
+  },
+  {
+    "battleTrigger": "relief",
+    "cost": {
+      "lead": 220,
+      "war": 300
+    },
+    "descKey": "trait.trigger-relief.desc",
+    "effects": [],
+    "id": "trait:trigger-relief",
+    "kind": "trait",
+    "nameKey": "trait.trigger-relief.name",
+    "packId": "pack:core",
+    "polarity": "positive",
+    "schemaVersion": 1,
+    "tier": "fine",
+    "traitId": "trait:trigger-relief"
+  },
+  {
+    "battleTrigger": "laststand",
+    "cost": {
+      "lead": 300,
+      "war": 220
+    },
+    "descKey": "trait.trigger-laststand.desc",
+    "effects": [],
+    "id": "trait:trigger-laststand",
+    "kind": "trait",
+    "nameKey": "trait.trigger-laststand.name",
+    "packId": "pack:core",
+    "polarity": "positive",
+    "schemaVersion": 1,
+    "tier": "fine",
+    "traitId": "trait:trigger-laststand"
+  },
+  {
+    "battleTrigger": "sighting",
+    "cost": {
+      "lead": 220,
+      "war": 300
+    },
+    "descKey": "trait.trigger-sighting.desc",
+    "effects": [],
+    "id": "trait:trigger-sighting",
+    "kind": "trait",
+    "nameKey": "trait.trigger-sighting.name",
+    "packId": "pack:core",
+    "polarity": "positive",
+    "schemaVersion": 1,
+    "tier": "fine",
+    "traitId": "trait:trigger-sighting"
+  },
+  {
+    "battleTrigger": "exploit",
+    "cost": {
+      "int": 150,
+      "lead": 300,
+      "war": 220
+    },
+    "descKey": "trait.trigger-exploit.desc",
+    "effects": [],
+    "id": "trait:trigger-exploit",
+    "kind": "trait",
+    "nameKey": "trait.trigger-exploit.name",
+    "packId": "pack:core",
+    "polarity": "positive",
+    "schemaVersion": 1,
+    "tier": "peerless",
+    "traitId": "trait:trigger-exploit"
+  },
+  {
+    "battleTrigger": "drill",
+    "cost": {
+      "lead": 220,
+      "pol": 150,
+      "war": 300
+    },
+    "descKey": "trait.trigger-drill.desc",
+    "effects": [],
+    "id": "trait:trigger-drill",
+    "kind": "trait",
+    "nameKey": "trait.trigger-drill.name",
+    "packId": "pack:core",
+    "polarity": "positive",
+    "schemaVersion": 1,
+    "tier": "peerless",
+    "traitId": "trait:trigger-drill"
+  },
+  {
+    "battleTrigger": "supply",
+    "cost": {
+      "int": 150,
+      "lead": 300,
+      "war": 220
+    },
+    "descKey": "trait.trigger-supply.desc",
+    "effects": [],
+    "id": "trait:trigger-supply",
+    "kind": "trait",
+    "nameKey": "trait.trigger-supply.name",
+    "packId": "pack:core",
+    "polarity": "positive",
+    "schemaVersion": 1,
+    "tier": "peerless",
+    "traitId": "trait:trigger-supply"
+  },
+  {
     "cost": {
       "war": 150
     },
@@ -1310,6 +1513,7 @@
     "descKey": "skill.tuzhen.desc",
     "id": "skill:tuzhen",
     "kind": "skill",
+    "legacy": true,
     "nameKey": "skill.tuzhen.name",
     "packId": "pack:core",
     "schemaVersion": 1,
@@ -1330,6 +1534,7 @@
     "descKey": "skill.xianzhen.desc",
     "id": "skill:xianzhen",
     "kind": "skill",
+    "legacy": true,
     "nameKey": "skill.xianzhen.name",
     "packId": "pack:core",
     "schemaVersion": 1,
@@ -1351,6 +1556,7 @@
     "descKey": "skill.wanrenzhi.desc",
     "id": "skill:wanrenzhi",
     "kind": "skill",
+    "legacy": true,
     "nameKey": "skill.wanrenzhi.name",
     "packId": "pack:core",
     "schemaVersion": 1,
@@ -1370,6 +1576,7 @@
     "descKey": "skill.huoji.desc",
     "id": "skill:huoji",
     "kind": "skill",
+    "legacy": true,
     "nameKey": "skill.huoji.name",
     "packId": "pack:core",
     "schemaVersion": 1,
@@ -1390,6 +1597,7 @@
     "descKey": "skill.shuiyan.desc",
     "id": "skill:shuiyan",
     "kind": "skill",
+    "legacy": true,
     "nameKey": "skill.shuiyan.name",
     "packId": "pack:core",
     "schemaVersion": 1,
@@ -1411,6 +1619,7 @@
     "descKey": "skill.lianhuan.desc",
     "id": "skill:lianhuan",
     "kind": "skill",
+    "legacy": true,
     "nameKey": "skill.lianhuan.name",
     "packId": "pack:core",
     "schemaVersion": 1,
@@ -1430,6 +1639,7 @@
     "descKey": "skill.fumin.desc",
     "id": "skill:fumin",
     "kind": "skill",
+    "legacy": true,
     "nameKey": "skill.fumin.name",
     "packId": "pack:core",
     "schemaVersion": 1,
@@ -1450,6 +1660,7 @@
     "descKey": "skill.tuntian.desc",
     "id": "skill:tuntian",
     "kind": "skill",
+    "legacy": true,
     "nameKey": "skill.tuntian.name",
     "packId": "pack:core",
     "schemaVersion": 1,
@@ -1471,6 +1682,7 @@
     "descKey": "skill.wangzuo.desc",
     "id": "skill:wangzuo",
     "kind": "skill",
+    "legacy": true,
     "nameKey": "skill.wangzuo.name",
     "packId": "pack:core",
     "schemaVersion": 1,
@@ -1490,6 +1702,7 @@
     "descKey": "skill.haoling.desc",
     "id": "skill:haoling",
     "kind": "skill",
+    "legacy": true,
     "nameKey": "skill.haoling.name",
     "packId": "pack:core",
     "schemaVersion": 1,
@@ -1509,6 +1722,7 @@
     "descKey": "skill.luanci.desc",
     "id": "skill:luanci",
     "kind": "skill",
+    "legacy": true,
     "nameKey": "skill.luanci.name",
     "packId": "pack:core",
     "schemaVersion": 1,
@@ -1528,6 +1742,7 @@
     "descKey": "skill.guwu.desc",
     "id": "skill:guwu",
     "kind": "skill",
+    "legacy": true,
     "nameKey": "skill.guwu.name",
     "packId": "pack:core",
     "schemaVersion": 1,
@@ -1548,11 +1763,589 @@
     "descKey": "skill.jiezhi.desc",
     "id": "skill:jiezhi",
     "kind": "skill",
+    "legacy": true,
     "nameKey": "skill.jiezhi.name",
     "packId": "pack:core",
     "schemaVersion": 1,
     "skillId": "skill:jiezhi",
     "tier": "fine"
+  },
+  {
+    "action": {
+      "actorAttr": "lead",
+      "duration": 2,
+      "kind": "physical",
+      "ratio": 0.22
+    },
+    "battleMechanic": "pincer",
+    "cooldownSeconds": 16,
+    "cost": {
+      "lead": 380
+    },
+    "descKey": "skill.tactic-pincer.desc",
+    "id": "skill:tactic-pincer",
+    "kind": "skill",
+    "nameKey": "skill.tactic-pincer.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tactic-pincer",
+    "supplyCost": 40,
+    "tier": "common"
+  },
+  {
+    "action": {
+      "actorAttr": "war",
+      "duration": 2,
+      "kind": "physical",
+      "ratio": 0.22
+    },
+    "battleMechanic": "cavalry",
+    "cooldownSeconds": 15,
+    "cost": {
+      "war": 380
+    },
+    "descKey": "skill.tactic-cavalry.desc",
+    "id": "skill:tactic-cavalry",
+    "kind": "skill",
+    "nameKey": "skill.tactic-cavalry.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tactic-cavalry",
+    "supplyCost": 35,
+    "tier": "common"
+  },
+  {
+    "action": {
+      "actorAttr": "lead",
+      "duration": 2,
+      "kind": "buff",
+      "ratio": 0.25
+    },
+    "battleMechanic": "longshot",
+    "cooldownSeconds": 13,
+    "cost": {
+      "lead": 380
+    },
+    "descKey": "skill.tactic-longshot.desc",
+    "id": "skill:tactic-longshot",
+    "kind": "skill",
+    "nameKey": "skill.tactic-longshot.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tactic-longshot",
+    "supplyCost": 28,
+    "tier": "common"
+  },
+  {
+    "action": {
+      "actorAttr": "int",
+      "duration": 2,
+      "kind": "debuff",
+      "ratio": 0.25
+    },
+    "battleMechanic": "infighting",
+    "cooldownSeconds": 17,
+    "cost": {
+      "int": 380
+    },
+    "descKey": "skill.tactic-infighting.desc",
+    "id": "skill:tactic-infighting",
+    "kind": "skill",
+    "nameKey": "skill.tactic-infighting.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tactic-infighting",
+    "supplyCost": 34,
+    "tier": "common"
+  },
+  {
+    "action": {
+      "actorAttr": "pol",
+      "duration": 2,
+      "kind": "debuff",
+      "ratio": 0.25
+    },
+    "battleMechanic": "misreport",
+    "cooldownSeconds": 17,
+    "cost": {
+      "pol": 380
+    },
+    "descKey": "skill.tactic-misreport.desc",
+    "id": "skill:tactic-misreport",
+    "kind": "skill",
+    "nameKey": "skill.tactic-misreport.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tactic-misreport",
+    "supplyCost": 32,
+    "tier": "common"
+  },
+  {
+    "action": {
+      "actorAttr": "int",
+      "duration": 2,
+      "kind": "magic",
+      "ratio": 0.22
+    },
+    "battleMechanic": "fire",
+    "cooldownSeconds": 14,
+    "cost": {
+      "int": 380
+    },
+    "descKey": "skill.tactic-fire.desc",
+    "id": "skill:tactic-fire",
+    "kind": "skill",
+    "nameKey": "skill.tactic-fire.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tactic-fire",
+    "supplyCost": 35,
+    "tier": "common"
+  },
+  {
+    "action": {
+      "actorAttr": "lead",
+      "duration": 2,
+      "kind": "buff",
+      "ratio": 0.25
+    },
+    "battleMechanic": "inspire",
+    "cooldownSeconds": 16,
+    "cost": {
+      "lead": 380,
+      "war": 280
+    },
+    "descKey": "skill.tactic-inspire.desc",
+    "id": "skill:tactic-inspire",
+    "kind": "skill",
+    "nameKey": "skill.tactic-inspire.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tactic-inspire",
+    "supplyCost": 25,
+    "tier": "fine"
+  },
+  {
+    "action": {
+      "actorAttr": "lead",
+      "duration": 2,
+      "kind": "buff",
+      "ratio": 0.25
+    },
+    "battleMechanic": "shield",
+    "cooldownSeconds": 13,
+    "cost": {
+      "lead": 380,
+      "war": 280
+    },
+    "descKey": "skill.tactic-shield.desc",
+    "id": "skill:tactic-shield",
+    "kind": "skill",
+    "nameKey": "skill.tactic-shield.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tactic-shield",
+    "supplyCost": 24,
+    "tier": "fine"
+  },
+  {
+    "action": {
+      "actorAttr": "pol",
+      "duration": 2,
+      "kind": "buff",
+      "ratio": 0.25
+    },
+    "battleMechanic": "reform",
+    "cooldownSeconds": 15,
+    "cost": {
+      "lead": 280,
+      "pol": 380
+    },
+    "descKey": "skill.tactic-reform.desc",
+    "id": "skill:tactic-reform",
+    "kind": "skill",
+    "nameKey": "skill.tactic-reform.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tactic-reform",
+    "supplyCost": 24,
+    "tier": "fine"
+  },
+  {
+    "action": {
+      "actorAttr": "lead",
+      "duration": 2,
+      "kind": "buff",
+      "ratio": 0.25
+    },
+    "battleMechanic": "toarcher",
+    "cooldownSeconds": 18,
+    "cost": {
+      "lead": 380,
+      "war": 280
+    },
+    "descKey": "skill.tactic-toarcher.desc",
+    "id": "skill:tactic-toarcher",
+    "kind": "skill",
+    "nameKey": "skill.tactic-toarcher.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tactic-toarcher",
+    "supplyCost": 26,
+    "tier": "fine"
+  },
+  {
+    "action": {
+      "actorAttr": "lead",
+      "duration": 2,
+      "kind": "buff",
+      "ratio": 0.25
+    },
+    "battleMechanic": "toinfantry",
+    "cooldownSeconds": 15,
+    "cost": {
+      "lead": 380,
+      "war": 280
+    },
+    "descKey": "skill.tactic-toinfantry.desc",
+    "id": "skill:tactic-toinfantry",
+    "kind": "skill",
+    "nameKey": "skill.tactic-toinfantry.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tactic-toinfantry",
+    "supplyCost": 22,
+    "tier": "fine"
+  },
+  {
+    "action": {
+      "actorAttr": "war",
+      "duration": 2,
+      "kind": "physical",
+      "ratio": 0.22
+    },
+    "battleMechanic": "pursue",
+    "cooldownSeconds": 14,
+    "cost": {
+      "lead": 280,
+      "war": 380
+    },
+    "descKey": "skill.tactic-pursue.desc",
+    "id": "skill:tactic-pursue",
+    "kind": "skill",
+    "nameKey": "skill.tactic-pursue.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tactic-pursue",
+    "supplyCost": 30,
+    "tier": "fine"
+  },
+  {
+    "action": {
+      "actorAttr": "war",
+      "duration": 2,
+      "kind": "physical",
+      "ratio": 0.22
+    },
+    "battleMechanic": "mounted",
+    "cooldownSeconds": 14,
+    "cost": {
+      "lead": 280,
+      "war": 380
+    },
+    "descKey": "skill.tactic-mounted.desc",
+    "id": "skill:tactic-mounted",
+    "kind": "skill",
+    "nameKey": "skill.tactic-mounted.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tactic-mounted",
+    "supplyCost": 32,
+    "tier": "fine"
+  },
+  {
+    "action": {
+      "actorAttr": "war",
+      "duration": 2,
+      "kind": "physical",
+      "ratio": 0.22
+    },
+    "battleMechanic": "volley",
+    "cooldownSeconds": 16,
+    "cost": {
+      "lead": 280,
+      "war": 380
+    },
+    "descKey": "skill.tactic-volley.desc",
+    "id": "skill:tactic-volley",
+    "kind": "skill",
+    "nameKey": "skill.tactic-volley.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tactic-volley",
+    "supplyCost": 36,
+    "tier": "fine"
+  },
+  {
+    "action": {
+      "actorAttr": "int",
+      "duration": 2,
+      "kind": "magic",
+      "ratio": 0.22
+    },
+    "battleMechanic": "water",
+    "cooldownSeconds": 18,
+    "cost": {
+      "int": 380,
+      "lead": 280
+    },
+    "descKey": "skill.tactic-water.desc",
+    "id": "skill:tactic-water",
+    "kind": "skill",
+    "nameKey": "skill.tactic-water.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tactic-water",
+    "supplyCost": 40,
+    "tier": "fine"
+  },
+  {
+    "action": {
+      "actorAttr": "int",
+      "duration": 2,
+      "kind": "magic",
+      "ratio": 0.22
+    },
+    "battleMechanic": "rocks",
+    "cooldownSeconds": 17,
+    "cost": {
+      "int": 380,
+      "lead": 280
+    },
+    "descKey": "skill.tactic-rocks.desc",
+    "id": "skill:tactic-rocks",
+    "kind": "skill",
+    "nameKey": "skill.tactic-rocks.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tactic-rocks",
+    "supplyCost": 38,
+    "tier": "fine"
+  },
+  {
+    "action": {
+      "actorAttr": "pol",
+      "duration": 2,
+      "kind": "debuff",
+      "ratio": 0.25
+    },
+    "battleMechanic": "taunt",
+    "cooldownSeconds": 18,
+    "cost": {
+      "lead": 280,
+      "pol": 380
+    },
+    "descKey": "skill.tactic-taunt.desc",
+    "id": "skill:tactic-taunt",
+    "kind": "skill",
+    "nameKey": "skill.tactic-taunt.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tactic-taunt",
+    "supplyCost": 24,
+    "tier": "fine"
+  },
+  {
+    "action": {
+      "actorAttr": "int",
+      "duration": 2,
+      "kind": "buff",
+      "ratio": 0.25
+    },
+    "battleMechanic": "ambush",
+    "cooldownSeconds": 24,
+    "cost": {
+      "int": 380,
+      "lead": 280,
+      "war": 210
+    },
+    "descKey": "skill.tactic-ambush.desc",
+    "id": "skill:tactic-ambush",
+    "kind": "skill",
+    "nameKey": "skill.tactic-ambush.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tactic-ambush",
+    "supplyCost": 42,
+    "tier": "peerless"
+  },
+  {
+    "action": {
+      "actorAttr": "pol",
+      "duration": 2,
+      "kind": "buff",
+      "ratio": 0.25
+    },
+    "battleMechanic": "reinforce",
+    "cooldownSeconds": 24,
+    "cost": {
+      "lead": 280,
+      "pol": 380,
+      "war": 210
+    },
+    "descKey": "skill.tactic-reinforce.desc",
+    "id": "skill:tactic-reinforce",
+    "kind": "skill",
+    "nameKey": "skill.tactic-reinforce.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tactic-reinforce",
+    "supplyCost": 40,
+    "tier": "peerless"
+  },
+  {
+    "action": {
+      "actorAttr": "pol",
+      "duration": 2,
+      "kind": "debuff",
+      "ratio": 0.25
+    },
+    "battleMechanic": "divide",
+    "cooldownSeconds": 22,
+    "cost": {
+      "lead": 280,
+      "pol": 380,
+      "war": 210
+    },
+    "descKey": "skill.tactic-divide.desc",
+    "id": "skill:tactic-divide",
+    "kind": "skill",
+    "nameKey": "skill.tactic-divide.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tactic-divide",
+    "supplyCost": 45,
+    "tier": "peerless"
+  },
+  {
+    "action": {
+      "actorAttr": "int",
+      "duration": 2,
+      "kind": "debuff",
+      "ratio": 0.25
+    },
+    "battleMechanic": "turncoat",
+    "cooldownSeconds": 22,
+    "cost": {
+      "int": 380,
+      "lead": 280,
+      "war": 210
+    },
+    "descKey": "skill.tactic-turncoat.desc",
+    "id": "skill:tactic-turncoat",
+    "kind": "skill",
+    "nameKey": "skill.tactic-turncoat.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tactic-turncoat",
+    "supplyCost": 45,
+    "tier": "peerless"
+  },
+  {
+    "action": {
+      "actorAttr": "int",
+      "duration": 2,
+      "kind": "debuff",
+      "ratio": 0.25
+    },
+    "battleMechanic": "lure",
+    "cooldownSeconds": 26,
+    "cost": {
+      "int": 380,
+      "lead": 280,
+      "war": 210
+    },
+    "descKey": "skill.tactic-lure.desc",
+    "id": "skill:tactic-lure",
+    "kind": "skill",
+    "nameKey": "skill.tactic-lure.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tactic-lure",
+    "supplyCost": 46,
+    "tier": "peerless"
+  },
+  {
+    "action": {
+      "actorAttr": "war",
+      "duration": 2,
+      "kind": "physical",
+      "ratio": 0.22
+    },
+    "battleMechanic": "sweep",
+    "cooldownSeconds": 13,
+    "cost": {
+      "int": 210,
+      "lead": 280,
+      "war": 380
+    },
+    "descKey": "skill.tactic-sweep.desc",
+    "id": "skill:tactic-sweep",
+    "kind": "skill",
+    "nameKey": "skill.tactic-sweep.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tactic-sweep",
+    "supplyCost": 30,
+    "tier": "peerless"
+  },
+  {
+    "action": {
+      "actorAttr": "war",
+      "duration": 2,
+      "kind": "physical",
+      "ratio": 0.22
+    },
+    "battleMechanic": "crossbow",
+    "cooldownSeconds": 12,
+    "cost": {
+      "int": 210,
+      "lead": 280,
+      "war": 380
+    },
+    "descKey": "skill.tactic-crossbow.desc",
+    "id": "skill:tactic-crossbow",
+    "kind": "skill",
+    "nameKey": "skill.tactic-crossbow.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tactic-crossbow",
+    "supplyCost": 28,
+    "tier": "peerless"
+  },
+  {
+    "action": {
+      "actorAttr": "int",
+      "duration": 2,
+      "kind": "magic",
+      "ratio": 0.22
+    },
+    "battleMechanic": "thunder",
+    "cooldownSeconds": 20,
+    "cost": {
+      "int": 380,
+      "lead": 280,
+      "war": 210
+    },
+    "descKey": "skill.tactic-thunder.desc",
+    "id": "skill:tactic-thunder",
+    "kind": "skill",
+    "nameKey": "skill.tactic-thunder.name",
+    "packId": "pack:core",
+    "schemaVersion": 1,
+    "skillId": "skill:tactic-thunder",
+    "supplyCost": 44,
+    "tier": "peerless"
   },
   {
     "action": {
@@ -1569,6 +2362,7 @@
     "descKey": "skill.zhirong.desc",
     "id": "skill:zhirong",
     "kind": "skill",
+    "legacy": true,
     "nameKey": "skill.zhirong.name",
     "packId": "pack:core",
     "schemaVersion": 1,

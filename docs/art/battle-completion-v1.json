@@ -1,0 +1,164 @@
+{
+  "date": "2026-09-16",
+  "tool": "image_gen.imagegen",
+  "style": "Q版熱血三國，existing Cao Cao duel atlas style, cel-painted sprites, PNG sequences, magenta chromakey or native alpha",
+  "heroes": [
+    {
+      "id": "sunjian",
+      "name": "孫堅",
+      "hint": "Generated images are saved to C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21 as C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-e539755b-f86e-4018-a8c8-8a481844b698.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "id": "sunce",
+      "name": "孫策",
+      "hint": "Generated images are saved to C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21 as C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-bf1e37d6-6229-46b0-894a-d6f74391bf2f.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "id": "sunquan",
+      "name": "孫權",
+      "hint": "Generated images are saved to C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21 as C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-2c121d43-db4b-4f85-8313-02e8785a7f76.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "id": "zhouyu",
+      "name": "周瑜",
+      "hint": "Generated images are saved to C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21 as C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-ebf6bf7c-54b4-4280-b88b-9585b2d3ba19.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "id": "lumeng",
+      "name": "呂蒙",
+      "hint": "Generated images are saved to C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21 as C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-e9ee25d0-ff35-4a06-b57c-3eaf8afa1ed5.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "id": "luxun",
+      "name": "陸遜",
+      "hint": "Generated images are saved to C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21 as C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-25ed45a7-55cb-4d13-beaa-f7f64a08d731.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "id": "taishici",
+      "name": "太史慈",
+      "hint": "Generated images are saved to C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21 as C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-7053f3d6-8798-4f64-96ce-806753baf08d.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "id": "ganning",
+      "name": "甘寧",
+      "hint": "Generated images are saved to C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21 as C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-831c138e-df43-4a90-b9fa-3fc7f3b157e4.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "id": "huanggai",
+      "name": "黃蓋",
+      "hint": "Generated images are saved to C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21 as C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-8735f861-977a-46ea-a8f4-c84e09742408.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "id": "zhangzhao",
+      "name": "張昭",
+      "hint": "Generated images are saved to C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21 as C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-30f5f4a8-9e88-4983-af71-51109043a561.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "id": "buzhi",
+      "name": "步騭",
+      "hint": "Generated images are saved to C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21 as C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-46749fda-bc28-4d95-b1de-2cd1278f4544.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "id": "caoxiu",
+      "name": "曹休",
+      "hint": "Generated images are saved to C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21 as C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-0b61e29e-5c2d-4d06-bc48-bf0dd988a8ba.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    }
+  ],
+  "commands": [
+    {
+      "index": 0,
+      "ids": [
+        "xiahouyuan",
+        "caocao",
+        "zhangliao",
+        "dianwei"
+      ],
+      "hint": "Generated images are saved to C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21 as C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-8ee396f0-c545-4499-a1e3-2846ae2ba0b2.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "index": 1,
+      "ids": [
+        "lejin",
+        "jiaxu",
+        "chengyu",
+        "xunyu"
+      ],
+      "hint": "Generated images are saved to C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21 as C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-6cc04033-8764-46ab-adec-c38873beaeae.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "index": 2,
+      "ids": [
+        "chenqun",
+        "maojie",
+        "huangfusong",
+        "simayi"
+      ],
+      "hint": "Generated images are saved to C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21 as C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-31908270-fbeb-47a4-a0b5-ea9341f1cb03.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "index": 3,
+      "ids": [
+        "bocai",
+        "zhangliang",
+        "zhangjiao",
+        "huaxiong"
+      ],
+      "hint": "Generated images are saved to C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21 as C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-2920d6ba-9506-4734-83ca-78d6212d6c11.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "index": 4,
+      "ids": [
+        "lijue",
+        "lvbu",
+        "yanliang",
+        "guotu"
+      ],
+      "hint": "Generated images are saved to C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21 as C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-aa992452-cc99-49f7-a955-672bec6e427d.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "index": 5,
+      "ids": [
+        "yuanshao",
+        "yuantan",
+        "shenpei",
+        "tadun"
+      ],
+      "hint": "Generated images are saved to C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21 as C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-0906cb0a-f653-4712-87d1-99fc1f2c0c72.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "index": 6,
+      "ids": [
+        "liubei",
+        "guanyu",
+        "zhangfei",
+        "zhaoyun"
+      ],
+      "hint": "Generated images are saved to C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21 as C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-ab969803-fd7a-4e55-96cf-856f15e56979.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "index": 7,
+      "ids": [
+        "zhugeliang",
+        "jiangwan",
+        "pangtong",
+        "huangzhong"
+      ],
+      "hint": "Generated images are saved to C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21 as C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-e3219a54-10bb-44f8-aa25-886fbedb0ee7.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "index": 8,
+      "ids": [
+        "lusu"
+      ],
+      "hint": "Generated images are saved to C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21 as C:\\Users\\DerekHChang\\.codex\\generated_images\\01a08936-3c12-70e0-9913-1e2809b95d21\\exec-284e8cc9-698e-44a0-affc-77050952de4c.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    }
+  ],
+  "layouts": {
+    "heroes": "8 columns x 6 rows: attack, defend, rest, hurt, command, mounted run; 8 frames/action",
+    "commands": "4 columns x (2 x members) rows: command 4, run 4 per member; order in ids",
+    "tactics": "4x4: water,wave splash,rock,rock burst,thunder,electric burst,shield,shield break,heal spiral,heal light,confusion,rout,target,order,conversion,supply",
+    "evolution": "4x4: gold gathering4, gold burst4, red attack4, jade protect/recovery4"
+  },
+  "generationInstructions": "Exact equal cells, isolated full mounted characters facing right, consistent costume/horse identity from references, thick outlines, cel shading, magenta #FF00FF, no labels or grid. Command: rest, raise hand/weapon, point and shout, lower. Run: four-phase horse gait. Unified sheets: 8 distinct frames per row for attack, defend, rest, hurt, command, run. Effects isolated painted particles on transparent background, no characters/text.",
+  "runtime": "loadDuelArt chromakey and repackOfficer fixed baseline. Existing older duel atlases preserved. VFX deterministic canvas sprite composition; battle rules and headless strategy remain shared."
+}

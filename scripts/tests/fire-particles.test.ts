@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {drawFireParticles} from '../../src/ui/fire-particles.js';
-import {drawBattle,stageSkillCommander} from '../../src/ui/realtime-battle-render.js';
+import {drawBattle,stageSkillCommander,skillStageAnchor,stageSkillTroops} from '../../src/ui/realtime-battle-render.js';
 import {createBattle,castSkill,DEMO_SKILLS} from '../../src/ui/realtime-battle-model.js';
 
 function recorder(){
@@ -44,17 +44,24 @@ console.log('Textured fire passed: atlas bounds, lifetime, alpha, deterministic 
 
 for(const skill of DEMO_SKILLS){
  const s=createBattle();s.status='running';s.phase='combat';castSkill(s,skill.id);
- const owner=s.commanders.find(g=>g.name===skill.owner)!,cam={x:920,y:460,zoom:1.3};
- for(const t of [0,.2,.5,1,2.5,3.6,4.2]){
-  s.cinematic!.time=t;const before=JSON.stringify(s),view=stageSkillCommander(owner,s,cam);
-  assert.equal(view.opacity,1,'owner never fades');assert.equal(JSON.stringify(s),before,'staging never overwrites real commander positions');
-  if(t>=.5&&t<=3.6){assert.equal(view.unit.x,cam.x);assert.equal(view.unit.y,cam.y-110/cam.zoom);assert(Math.abs(view.size*cam.zoom-185)<1e-8,'rear unit stays at original screen size');
-   for(const g of s.commanders.filter(g=>g!==owner))assert.equal(stageSkillCommander(g,s,cam).opacity,0,'all other generals fully fade out');
+ const owner=s.commanders.find(g=>g.name===skill.owner)!,anchor=skillStageAnchor(s);
+ for(const t of [0,.2,.35,.7,1.1,1.5,2.5,3.1,3.7,4.2]){
+  s.cinematic!.time=t;const before=JSON.stringify(s),view=stageSkillCommander(owner,s,{x:920,y:460,zoom:1.3}),actors=stageSkillTroops(s);
+  assert.equal(view.opacity,1);assert.equal(view.size,185);
+  assert.equal(JSON.stringify(s),before,'presentation never moves real units or changes battle state');
+  if(t>=.7&&t<=3.7){assert.equal(view.unit.x,anchor.x);assert.equal(view.unit.y,anchor.y);}
+  if(t>=.35&&t<3.7)for(const g of s.commanders.filter(g=>g!==owner)){
+   const other=stageSkillCommander(g,s);assert.equal(other.opacity,0);assert(other.unit.x<0||other.unit.x>1600,'other commanders leave the screen');
   }
   if(t===0||t===4.2){assert.equal(view.unit.x,owner.x);assert.equal(view.unit.y,owner.y);}
+  if(t<.7||t>=3.7)assert.equal(actors.length,0);
+  if(t===.7)assert(actors.every(a=>a.phase==='enter'&&a.x<0&&a.name===(skill.kind==='charge'?'charge':skill.kind==='mounted'?'mounted':'run')));
+  if(t===1.1)assert(actors.every(a=>a.phase==='wait'&&a.x>anchor.x&&a.frame===0));
+  if(t===1.5)assert(actors.every(a=>a.phase==='act'));
+  if(t===3.1)assert(actors.every(a=>a.phase==='return'&&a.flip&&a.name===(skill.kind==='charge'?'charge':skill.kind==='mounted'?'mounted':'run')));
  }
 }
-console.log('Commander staging passed: normal size, opaque owner, rear center, all others hidden and return to original position.');
+console.log('Formation staging passed: six skill owners, fixed formation center, sequential entry/order/action/return, and unchanged simulation.');
 
 const early=sample(1.43).filter(c=>c[0]==='drawImage'),late=sample(2.1).filter(c=>c[0]==='drawImage');
 assert(late.length>early.length*2,'the ember front grows denser before ignition');

@@ -1,3 +1,4 @@
+import {drawEvolutionParticles,effectStamp} from './tactical-particles.js';
 import {duelPresentation,DUEL_EVOLUTION_SECONDS} from '../app/duel-presentation.js';
 import type { EncounterDemo } from '../app/confrontation-demo.js';
 import { drawBattle, type BattleImages } from './realtime-battle-render.js';
@@ -83,14 +84,13 @@ export function drawEncounterDemo(ctx:CanvasRenderingContext2D,images:BattleImag
     ctx.save();ctx.fillStyle=`rgba(3,9,18,${.78*focus})`;ctx.fillRect(0,0,1600,900);ctx.restore();
     duelist(ctx,images,c.enemyId,right,feet,'idle',0,true,alpha*(1-.85*focus));
     ctx.save();
-    const glow=ctx.createRadialGradient(left,feet-127.5,15,left,feet-127.5,187.5);
-    glow.addColorStop(0,`rgba(255,246,172,${.8*focus})`);glow.addColorStop(.55,`rgba(255,195,56,${.5*focus})`);glow.addColorStop(1,'rgba(255,170,30,0)');
-    ctx.fillStyle=glow;ctx.beginPath();ctx.arc(left,feet-127.5,187.5,0,Math.PI*2);ctx.fill();
+    const evo=images['evolution-particles'];if(evo)drawEvolutionParticles(ctx,evo,et,left,feet,turn?.allyEvolution??'',false);
     const cheer=images['commander-'+(c.allyId==='npc_soldier'?'enemy':c.allyId)];
     if(cheer){
      const cell=cheer.width/4,frame=et<1.7?8+Math.min(2,Math.floor(et/.18)):11+Math.min(4,Math.floor((et-1.7)/.2)),size=277.5;
      ctx.drawImage(cheer,(frame%4)*cell,Math.floor(frame/4)*cell,cell,cell,left-size/2,feet-size*.88,size,size);
     }else duelist(ctx,images,c.allyId,left,feet,'rest',clamp(et/.8),false,alpha);
+    if(evo)drawEvolutionParticles(ctx,evo,et,left,feet,turn?.allyEvolution??'',true);
     ctx.restore();
    }else{
     const hitBeat=acting&&c.phase==='clash'&&t>=.75&&t<.82;
@@ -99,6 +99,7 @@ export function drawEncounterDemo(ctx:CanvasRenderingContext2D,images:BattleImag
     // The attacking weapon must remain visible across the defender's silhouette.
     if(acting&&c.phase==='clash'&&turn?.ally==='attack'&&turn.enemy!=='attack'){drawEnemy();drawAlly();}
     else{drawAlly();drawEnemy();}
+    if(acting&&(turn?.ally==='attack'||turn?.enemy==='attack')&&c.phase==='clash'&&t>=.72&&t<1.15&&images['skill-particles']){const q=(t-.72)/.43;effectStamp(ctx,images['skill-particles'],guardA||guardB?10:6,(left+right)/2,feet-110,90+q*140,90+q*140,1-q);}
    }
   }else{
    general(ctx,images,c.allyId,left,feet,frame,false,alpha,impact&&hurtA);
