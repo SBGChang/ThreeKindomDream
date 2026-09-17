@@ -1,0 +1,21 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><title>步兵動作比例檢查</title>
+<style>body{margin:24px;background:#24252b;color:#fff1cd;font:16px system-ui}h1{font-size:24px}section{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}figure{margin:0;background:#34363c;padding:8px}canvas{display:block;width:100%}figcaption{text-align:center}button{padding:8px 20px;margin-bottom:12px}p{color:#c9c6ba}</style>
+<h1>步兵動作比例與銜接</h1><p>同一位置、相同鏡頭與繪製尺寸，使用正式戰場共用的比例校正。最後一欄循環切換待機 → 跑步 → 揮刀 → 受擊。</p><button id="pause">暫停動畫</button><main></main>
+<script type="module">
+import {battleSpriteRect} from '/src/ui/battle-sprite-framing.ts';
+const images={};
+await Promise.all(['run','slash','hurt','enemy-run','enemy-slash','enemy-hurt'].map(name=>new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>{images[name]=img;resolve()};img.onerror=reject;img.src=`/art/units/battle-demo/${name}-atlas.png`;})));
+const views=[];
+for(const side of ['ally','enemy']){
+ const h=document.createElement('h2');h.textContent=side==='ally'?'我軍':'敵軍';document.querySelector('main').append(h);
+ const section=document.createElement('section');document.querySelector('main').append(section);
+ for(const pose of ['guard','run','slash','hurt','sequence']){const figure=document.createElement('figure'),canvas=document.createElement('canvas'),caption=document.createElement('figcaption');canvas.width=256;canvas.height=256;caption.textContent=pose;figure.append(canvas,caption);section.append(figure);views.push({side,pose,canvas,caption});}
+}
+let paused=false,time=0,last=performance.now();document.querySelector('#pause').onclick=e=>{paused=!paused;e.target.textContent=paused?'繼續動畫':'暫停動畫'};
+function draw(now){if(!paused)time+=Math.min(.1,(now-last)/1000);last=now;
+ for(const v of views){const pose=v.pose==='sequence'?['guard','run','slash','hurt'][Math.floor(time/1.6)%4]:v.pose;
+ const clip=pose==='run'?'run':pose==='hurt'?'hurt':'slash',frame=pose==='guard'?0:pose==='run'?Math.floor(time*14)%16:pose==='hurt'?Math.floor(time*10)%4:Math.floor(time*10)%8,name=(v.side==='enemy'?'enemy-':'')+clip;
+ const ctx=v.canvas.getContext('2d'),r=battleSpriteRect(name,frame,256);ctx.clearRect(0,0,256,256);ctx.strokeStyle='#9e927177';ctx.beginPath();ctx.moveTo(0,226+214-256*.89);ctx.lineTo(256,226+214-256*.89);ctx.stroke();ctx.drawImage(images[name],frame%4*256,Math.floor(frame/4)*256,256,256,128+r.x,226+r.y,r.width,r.height);v.caption.textContent=`${v.pose==='sequence'?'連續：':''}${pose} · ${frame+1}`;}
+ requestAnimationFrame(draw);
+}requestAnimationFrame(draw);
+</script></html>

@@ -1,3 +1,4 @@
+import {battleSpriteRect} from './battle-sprite-framing.js';
 import {loadOfficerCommands,duelActorForName} from './officer-motion.js';
 import {drawTacticalParticles,drawStatusParticles} from './tactical-particles.js';
 import {loadArcherMotion,archerFrame} from './archer-sprites.js';
@@ -18,7 +19,8 @@ function sprite(ctx:CanvasRenderingContext2D,images:BattleImages,name:string,fra
  const img=images[name];if(!img)return;
  const cell=img.width/4,rows=Math.round(img.height/cell),f=Math.min(rows*4-1,Math.max(0,Math.floor(frame)));
  ctx.save();ctx.globalAlpha=clamp(alpha);ctx.translate(x,y);if(flip)ctx.scale(-1,1);ctx.filter=filter;
- ctx.drawImage(img,(f%4)*cell,Math.floor(f/4)*cell,cell,cell,-size/2,-size*.89,size,size);ctx.restore();
+ const rect=battleSpriteRect(name,f,size);
+ ctx.drawImage(img,(f%4)*cell,Math.floor(f/4)*cell,cell,cell,rect.x,rect.y,rect.width,rect.height);ctx.restore();
 }
 function shadow(ctx:CanvasRenderingContext2D,x:number,y:number,size:number,alpha:number){ctx.save();ctx.globalAlpha=alpha;ctx.fillStyle='#35231850';ctx.beginPath();ctx.ellipse(x,y,size*.22,size*.042,0,0,Math.PI*2);ctx.fill();ctx.restore();}
 function troop(ctx:CanvasRenderingContext2D,images:BattleImages,u:Troop,s:BattleState,opacity:number,retreat=false){
