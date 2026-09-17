@@ -61,7 +61,7 @@ export function ScreenCampaign({ s, bump, onDepart, onLearn }: Props): React.Rea
   const chapter = defs.reader('chapter').get(String(s.current.progress.chapterId));
   const limits = s.hostLimits(), rows = s.stageRows();
   const wave = picker?.kind === 'wave' ? rows.find(row => row.index === picker.index) : undefined;
-  const enemyArt = (bossName?: string): React.ReactElement => bossName ? <CharacterArt name={bossName} portrait /> : <CharacterArt name="敵軍" portrait />;
+  const enemyArt = (bossName?: string): React.ReactElement => bossName ? <CharacterArt name={bossName} portrait context="campaign" /> : <CharacterArt name="敵軍" portrait context="campaign" />;
   const open = (next: Picker): void => { opener.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; setPicker(next); };
   const close = (): void => { setPicker(null); requestAnimationFrame(() => opener.current?.focus()); };
   const relationship = (id: NotableId): React.ReactElement => {

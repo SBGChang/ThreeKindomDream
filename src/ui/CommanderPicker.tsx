@@ -47,7 +47,7 @@ export function CommanderPicker({ s, choices, picked, initialId, onChange, onClo
         const skillId = options.at(-1);
         if (replacing && active && skillId) change(picked.map((old, index) => index === i ? { notableId: active, skillId } : old), '已編入 ' + name(active));
         else if (member) preview(member.notableId);
-      }}>{member ? <><CharacterArt name={name(member.notableId)} portrait /><b>{name(member.notableId)}</b></> : <b className="commander-vacant">空位</b>}</button>; })}</div>
+      }}>{member ? <><CharacterArt name={name(member.notableId)} portrait context="commander" /><b>{name(member.notableId)}</b></> : <b className="commander-vacant">空位</b>}</button>; })}</div>
       <p className="commander-notice" role="status" aria-live="polite">{notice}</p>
     </footer>
     <button className="commander-finish" onClick={onClose}>整備完成</button>

@@ -63,7 +63,7 @@ export function Participants({
                     onClick={() => onInspect(String(id))}
                     aria-label={name + ' · ' + t('stage.' + stage)}
                   >
-                    <CharacterArt name={name} portrait />
+                    <CharacterArt name={name} portrait context="participants" />
                     <b>{name}</b>
                     <span
                       className={'relationship-icon stage-' + stage}

@@ -1,3 +1,4 @@
+import type { PortraitContext } from './portrait-layouts.js';
 import { RunFooter } from './RunFooter.js';
 import { useDragScroll } from './useDragScroll.js';
 import { SystemMenu } from './SystemMenu.js';
@@ -13,8 +14,8 @@ import { defs, t } from '../app/bootstrap.js';
 export const GameSettingsContext = createContext<() => void>(() => {});
 export const art = (name: string): string => `./art/${name}.png`;
 export function Landscape(): React.ReactElement { return <img className="landscape" src={art('backgrounds/bg-destiny')} alt="" />; }
-export function OfficerPortrait({ name }: { name: string }): React.ReactElement {
-  return <span className="officer-portrait"><CharacterArt name={name} portrait /></span>;
+export function OfficerPortrait({ name, context = 'default' }: { name: string; context?: PortraitContext }): React.ReactElement {
+  return <span className="officer-portrait"><CharacterArt name={name} portrait context={context} /></span>;
 }
 export function GameFrame({ meta, session, active, onGo, saveNotice, children, onReturnHome, beforeExit }: {
   readonly meta: MetaState; readonly session: Session | null; readonly active: string;

@@ -1,0 +1,418 @@
+{
+  "sunquan": {
+    "source": "art/characters-v3/sunquan.png",
+    "generation": "v3-redraw",
+    "face": {
+      "x": 0.39453125,
+      "y": 0.203125,
+      "width": 0.2734375,
+      "height": 0.1640625
+    }
+  },
+  "zhouyu": {
+    "source": "art/characters-v3/zhouyu.png",
+    "generation": "v3-redraw",
+    "face": {
+      "x": 0.3671875,
+      "y": 0.23697917,
+      "width": 0.2890625,
+      "height": 0.1796875
+    }
+  },
+  "ganning": {
+    "source": "art/characters-v3/ganning.png",
+    "generation": "v3-redraw",
+    "face": {
+      "x": 0.44921875,
+      "y": 0.2265625,
+      "width": 0.28125,
+      "height": 0.18229167
+    }
+  },
+  "liubei": {
+    "source": "art/characters-story/liubei.png",
+    "generation": "story-redraw",
+    "face": {
+      "x": 0.390625,
+      "y": 0.20572917,
+      "width": 0.28125,
+      "height": 0.1875
+    }
+  },
+  "guanyu": {
+    "source": "art/characters-story/guanyu.png",
+    "generation": "story-redraw",
+    "face": {
+      "x": 0.44140625,
+      "y": 0.2265625,
+      "width": 0.265625,
+      "height": 0.15885417
+    }
+  },
+  "zhangfei": {
+    "source": "art/characters-story/zhangfei.png",
+    "generation": "story-redraw",
+    "face": {
+      "x": 0.4453125,
+      "y": 0.27083333,
+      "width": 0.25,
+      "height": 0.1640625
+    }
+  },
+  "zhaoyun": {
+    "source": "art/characters-story/zhaoyun.png",
+    "generation": "story-redraw",
+    "face": {
+      "x": 0.44921875,
+      "y": 0.32291667,
+      "width": 0.25390625,
+      "height": 0.13802083
+    }
+  },
+  "zhugeliang": {
+    "source": "art/characters-story/zhugeliang.png",
+    "generation": "story-redraw",
+    "face": {
+      "x": 0.3828125,
+      "y": 0.24479167,
+      "width": 0.3125,
+      "height": 0.1875
+    }
+  },
+  "jiangwan": {
+    "source": "art/characters-story/jiangwan.png",
+    "generation": "story-redraw",
+    "face": {
+      "x": 0.390625,
+      "y": 0.20833333,
+      "width": 0.30859375,
+      "height": 0.18489583
+    }
+  },
+  "pangtong": {
+    "source": "art/characters-story/pangtong.png",
+    "generation": "story-redraw",
+    "face": {
+      "x": 0.4140625,
+      "y": 0.22395833,
+      "width": 0.28125,
+      "height": 0.17447917
+    }
+  },
+  "huangzhong": {
+    "source": "art/characters-story/huangzhong.png",
+    "generation": "story-redraw",
+    "face": {
+      "x": 0.421875,
+      "y": 0.22395833,
+      "width": 0.29296875,
+      "height": 0.171875
+    }
+  },
+  "lusu": {
+    "source": "art/characters-story/lusu.png",
+    "generation": "story-redraw",
+    "face": {
+      "x": 0.38671875,
+      "y": 0.20833333,
+      "width": 0.28515625,
+      "height": 0.18229167
+    }
+  },
+  "bocai": {
+    "source": "art/characters-v2/bocai.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.30859375,
+      "y": 0.265625,
+      "width": 0.3046875,
+      "height": 0.15625
+    }
+  },
+  "caocao": {
+    "source": "art/characters-v2/caocao.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.359375,
+      "y": 0.25520833,
+      "width": 0.328125,
+      "height": 0.16927083
+    }
+  },
+  "chengyu": {
+    "source": "art/characters-v2/chengyu.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.3828125,
+      "y": 0.20833333,
+      "width": 0.3046875,
+      "height": 0.1796875
+    }
+  },
+  "chenqun": {
+    "source": "art/characters-v2/chenqun.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.37890625,
+      "y": 0.2265625,
+      "width": 0.3359375,
+      "height": 0.20052083
+    }
+  },
+  "dianwei": {
+    "source": "art/characters-v2/dianwei.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.40625,
+      "y": 0.203125,
+      "width": 0.31640625,
+      "height": 0.20833333
+    }
+  },
+  "guojia": {
+    "source": "art/characters-v2/guojia.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.421875,
+      "y": 0.265625,
+      "width": 0.27734375,
+      "height": 0.17708333
+    }
+  },
+  "guotu": {
+    "source": "art/characters-v2/guotu.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.390625,
+      "y": 0.25,
+      "width": 0.3203125,
+      "height": 0.1796875
+    }
+  },
+  "huangfusong": {
+    "source": "art/characters-v2/huangfusong.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.265625,
+      "y": 0.26822917,
+      "width": 0.30078125,
+      "height": 0.15625
+    }
+  },
+  "huaxiong": {
+    "source": "art/characters-v2/huaxiong.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.3515625,
+      "y": 0.31510417,
+      "width": 0.328125,
+      "height": 0.15625
+    }
+  },
+  "jiaxu": {
+    "source": "art/characters-v2/jiaxu.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.39453125,
+      "y": 0.234375,
+      "width": 0.29296875,
+      "height": 0.1796875
+    }
+  },
+  "lejin": {
+    "source": "art/characters-v2/lejin.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.3828125,
+      "y": 0.31770833,
+      "width": 0.30859375,
+      "height": 0.14583333
+    }
+  },
+  "lijue": {
+    "source": "art/characters-v2/lijue.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.3125,
+      "y": 0.33854167,
+      "width": 0.32421875,
+      "height": 0.16666667
+    }
+  },
+  "lord": {
+    "source": "art/characters-v2/lord.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.46484375,
+      "y": 0.24479167,
+      "width": 0.2890625,
+      "height": 0.19010417
+    }
+  },
+  "lvbu": {
+    "source": "art/characters-v2/lvbu.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.453125,
+      "y": 0.3125,
+      "width": 0.234375,
+      "height": 0.14583333
+    }
+  },
+  "maojie": {
+    "source": "art/characters-v2/maojie.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.28515625,
+      "y": 0.21875,
+      "width": 0.34765625,
+      "height": 0.1875
+    }
+  },
+  "npc_soldier": {
+    "source": "art/characters-v2/npc_soldier.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.38671875,
+      "y": 0.26302083,
+      "width": 0.33203125,
+      "height": 0.17447917
+    }
+  },
+  "shenpei": {
+    "source": "art/characters-v2/shenpei.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.3515625,
+      "y": 0.21875,
+      "width": 0.33984375,
+      "height": 0.1953125
+    }
+  },
+  "simayi": {
+    "source": "art/characters-v2/simayi.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.3828125,
+      "y": 0.265625,
+      "width": 0.3046875,
+      "height": 0.16927083
+    }
+  },
+  "tadun": {
+    "source": "art/characters-v2/tadun.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.3125,
+      "y": 0.265625,
+      "width": 0.33984375,
+      "height": 0.17447917
+    }
+  },
+  "xiahoudun": {
+    "source": "art/characters-v2/xiahoudun.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.21875,
+      "y": 0.23697917,
+      "width": 0.32421875,
+      "height": 0.19791667
+    }
+  },
+  "xunyu": {
+    "source": "art/characters-v2/xunyu.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.3671875,
+      "y": 0.265625,
+      "width": 0.35546875,
+      "height": 0.19791667
+    }
+  },
+  "yanliang": {
+    "source": "art/characters-v2/yanliang.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.34375,
+      "y": 0.30208333,
+      "width": 0.31640625,
+      "height": 0.16145833
+    }
+  },
+  "yuanshao": {
+    "source": "art/characters-v2/yuanshao.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.4375,
+      "y": 0.22916667,
+      "width": 0.2890625,
+      "height": 0.17708333
+    }
+  },
+  "yuantan": {
+    "source": "art/characters-v2/yuantan.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.39453125,
+      "y": 0.2734375,
+      "width": 0.3203125,
+      "height": 0.1640625
+    }
+  },
+  "yujin": {
+    "source": "art/characters-v2/yujin.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.40234375,
+      "y": 0.24479167,
+      "width": 0.33203125,
+      "height": 0.1875
+    }
+  },
+  "zhangjiao": {
+    "source": "art/characters-v2/zhangjiao.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.390625,
+      "y": 0.26822917,
+      "width": 0.26171875,
+      "height": 0.15364583
+    }
+  },
+  "zhangliang": {
+    "source": "art/characters-v2/zhangliang.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.2890625,
+      "y": 0.25260417,
+      "width": 0.296875,
+      "height": 0.1640625
+    }
+  },
+  "zhangliao": {
+    "source": "art/characters-v2/zhangliao.png",
+    "generation": "v2-redraw",
+    "face": {
+      "x": 0.30078125,
+      "y": 0.34375,
+      "width": 0.328125,
+      "height": 0.171875
+    }
+  },
+  "xiahouyuan": {
+    "source": "art/duel/xiahouyuan-v1.png",
+    "generation": "duel-atlas",
+    "sourceRegion": {
+      "x": 0,
+      "y": 0,
+      "width": 0.25,
+      "height": 0.125
+    },
+    "face": {
+      "x": 0.10644531,
+      "y": 0.03841146,
+      "width": 0.03320312,
+      "height": 0.02278646
+    }
+  }
+}

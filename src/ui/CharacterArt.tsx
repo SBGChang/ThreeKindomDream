@@ -1,5 +1,6 @@
+import type { PortraitContext } from './portrait-layouts.js';
 import { useEffect, useRef } from 'react';
-import { drawPortrait } from './portrait-framing.js';
+import { characterFraming, drawPortrait } from './portrait-framing.js';
 
 export const CHARACTERS: Readonly<Record<string,string>> = {
   '孫權':'sunquan','周瑜':'zhouyu','甘寧':'ganning',
@@ -12,7 +13,6 @@ export const CHARACTERS: Readonly<Record<string,string>> = {
   '主將':'lord','軍吏':'npc_soldier','敵軍':'npc_soldier',
 };
 const images=new Map<string,Promise<HTMLCanvasElement>>();
-const storyIds = new Set(['liubei','guanyu','zhangfei','zhaoyun','zhugeliang','jiangwan','pangtong','huangzhong','lusu']);
 /** Match the source game's chroma-key convention without modifying original artwork. */
 export function loadCharacterSprite(src:string):Promise<HTMLCanvasElement>{
   const cached=images.get(src);if(cached)return cached;
@@ -26,13 +26,13 @@ export function loadCharacterSprite(src:string):Promise<HTMLCanvasElement>{
     };im.onerror=()=>{images.delete(src);reject(new Error(`無法載入素材 ${src}`));};im.src=src;
   });images.set(src,promise);return promise;
 }
-export function CharacterArt({name,portrait=false}:{name:string;portrait?:boolean}):React.ReactElement{
+export function CharacterArt({name,portrait=false,context='default'}:{name:string;portrait?:boolean;context?:PortraitContext}):React.ReactElement{
   const ref=useRef<HTMLCanvasElement>(null),id=CHARACTERS[name]??'npc_soldier';
-  const src=`./art/${storyIds.has(id)?'characters-story':'characters-v2'}/${id}.png`;
+  const src=`./${characterFraming(id).source}`;
   useEffect(()=>{let active=true;void loadCharacterSprite(src).then(im=>{
     if(!active||!ref.current)return;const c=ref.current,ctx=c.getContext('2d')!;
-    if(portrait){drawPortrait(ctx,im,id);}
+    if(portrait){drawPortrait(ctx,im,id,context);}
     else {c.width=im.width;c.height=im.height;ctx.drawImage(im,0,0);}
-  }).catch(()=>{if(active&&ref.current){const c=ref.current;const ctx=c.getContext('2d')!;ctx.clearRect(0,0,c.width,c.height);ctx.fillStyle='#ffe2aa';ctx.font='36px serif';ctx.fillText(name,10,50);}});return()=>{active=false;};},[src,portrait,id,name]);
+  }).catch(()=>{if(active&&ref.current){const c=ref.current;const ctx=c.getContext('2d')!;ctx.clearRect(0,0,c.width,c.height);ctx.fillStyle='#ffe2aa';ctx.font='36px serif';ctx.fillText(name,10,50);}});return()=>{active=false;};},[src,portrait,id,name,context]);
   return <canvas ref={ref} className={portrait?'character-face':'character-halfbody'} role="img" aria-label={name}/>;
 }

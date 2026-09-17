@@ -1,3 +1,4 @@
+import { characterFraming } from './portrait-framing.js';
 import {battleSpriteRect} from './battle-sprite-framing.js';
 import {loadOfficerCommands,duelActorForName} from './officer-motion.js';
 import {drawTacticalParticles,drawStatusParticles} from './tactical-particles.js';
@@ -14,7 +15,7 @@ const clamp=(v:number)=>Math.max(0,Math.min(1,v));
 for(const commander of COMMANDERS)BATTLE_ASSETS['commander-'+commander.id]=root+'commanders/'+commander.id+'-atlas.png';
 const ease=(v:number)=>{const t=clamp(v);return t*t*(3-2*t);};
 const mix=(a:number,b:number,t:number)=>a+(b-a)*t;
-export async function loadBattleImages(background?:string,commanders:readonly Commander[]=[],waveNames:readonly string[]=[]):Promise<BattleImages>{const images:BattleImages=await Promise.all(Object.entries({...BATTLE_ASSETS,...(background?{background}:{})}).map(([key,src])=>new Promise<[string,HTMLImageElement]>((resolve,reject)=>{const img=new Image();img.onload=()=>resolve([key,img]);img.onerror=()=>reject(new Error(`素材載入失敗：${key}`));img.src=src;}))).then(Object.fromEntries);images['archer-motion']=await loadArcherMotion();Object.assign(images,await loadOfficerCommands([...commanders.map(c=>duelActorForName(c.name)),...waveNames.map(duelActorForName)]));await Promise.all(commanders.filter(c=>c.portrait&&!images['commander-'+c.id]).map(async c=>{try{images['portrait-'+c.id]=await loadCharacterSprite(`./art/characters-v2/${c.portrait}.png`);}catch{images['commander-'+c.id]=images['commander-lord']!;}}));return images;}
+export async function loadBattleImages(background?:string,commanders:readonly Commander[]=[],waveNames:readonly string[]=[]):Promise<BattleImages>{const images:BattleImages=await Promise.all(Object.entries({...BATTLE_ASSETS,...(background?{background}:{})}).map(([key,src])=>new Promise<[string,HTMLImageElement]>((resolve,reject)=>{const img=new Image();img.onload=()=>resolve([key,img]);img.onerror=()=>reject(new Error(`素材載入失敗：${key}`));img.src=src;}))).then(Object.fromEntries);images['archer-motion']=await loadArcherMotion();Object.assign(images,await loadOfficerCommands([...commanders.map(c=>duelActorForName(c.name)),...waveNames.map(duelActorForName)]));await Promise.all(commanders.filter(c=>c.portrait&&!images['commander-'+c.id]).map(async c=>{try{images['portrait-'+c.id]=await loadCharacterSprite(`./${characterFraming(c.portrait!).source}`);}catch{images['commander-'+c.id]=images['commander-lord']!;}}));return images;}
 function sprite(ctx:CanvasRenderingContext2D,images:BattleImages,name:string,frame:number,x:number,y:number,size=150,flip=false,alpha=1,filter='none') {
  const img=images[name];if(!img)return;
  const cell=img.width/4,rows=Math.round(img.height/cell),f=Math.min(rows*4-1,Math.max(0,Math.floor(frame)));

@@ -80,7 +80,7 @@ export function DialogueFace({
       {actor.hero ? (
         <CareerHero profile={profile} />
       ) : (
-        <CharacterArt name={actor.name} portrait />
+        <CharacterArt name={actor.name} portrait context="dialogue" />
       )}
     </div>
   );

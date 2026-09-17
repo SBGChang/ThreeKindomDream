@@ -1,0 +1,35 @@
+{
+  "date": "2026-09-17",
+  "tool": "built-in image_gen",
+  "approvedStyle": "曹操／典韋：粗描邊、大頭、短身、全身立繪",
+  "reference": "public/art/characters-v2/caocao.png",
+  "reason": "Replace GreetingsMyLord half-body assets; preserve legacy files.",
+  "characters": [
+    {
+      "id": "sunquan",
+      "source": "C:/Users/2773/.codex/generated_images/01a0adaa-12fa-71e1-aab2-f887f183939a/exec-9a2719dd-2a0f-4963-97ee-8e7af2b6878e.png",
+      "target": "public/art/characters-v3/sunquan.png",
+      "sha256": "dcc2e58bd557463b69205789a08cb598b1c3bf7dd5a9ee4094e87f14ba7e6269",
+      "background": "native alpha"
+    },
+    {
+      "id": "zhouyu",
+      "source": "C:/Users/2773/.codex/generated_images/01a0adaa-12fa-71e1-aab2-f887f183939a/exec-2441d6f5-d30d-4275-8abe-9441f82da50d.png",
+      "target": "public/art/characters-v3/zhouyu.png",
+      "sha256": "afd1979dfdec9a70ca2e903065efbfe38d0731de803e2085051e6155ce8ab3f0",
+      "background": "magenta chroma key"
+    },
+    {
+      "id": "ganning",
+      "source": "C:/Users/2773/.codex/generated_images/01a0adaa-12fa-71e1-aab2-f887f183939a/exec-e8d2a5f2-b471-40b2-9ea1-6f2c7393b593.png",
+      "target": "public/art/characters-v3/ganning.png",
+      "sha256": "9eccc42d927d517909b570cb498bd95c70f7909ce1b7c77fc95cb91539012d79",
+      "background": "magenta chroma key"
+    }
+  ],
+  "notes": [
+    "Sun Quan hidden RGB is dark but outside silhouette has alpha=0; verified in game renderer.",
+    "Head crops are bound to selected source paths in src/ui/character-framing.json.",
+    "Unused generation variants remain in the generation directory."
+  ]
+}
