@@ -1,0 +1,28 @@
+/* Painted on the same 1280 × 800 coordinate plane as GameFrame. */
+.stage-content.view-destiny{inset:0}
+.dream-menu{position:absolute;inset:0;background:url('../../public/art/ui/main-menu/dream-gate-v1.png') center/100% 100% no-repeat;color:#fff0c7}
+.dream-menu-accessible{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip-path:inset(50%)}
+.game-stage .dream-menu-hit{position:absolute;left:var(--x);top:var(--y);width:var(--w);height:var(--h);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:0 18px 0 112px;border:0;border-radius:24px;background:transparent;box-shadow:none;color:#fff0c7;font-family:'DFKai-SB','KaiTi','Microsoft JhengHei',serif;text-shadow:0 2px 2px #291309,1px 0 #432411,-1px 0 #432411;transition:filter .18s,box-shadow .18s}
+.dream-menu-hit strong{font-size:34px;line-height:1.12;letter-spacing:5px;font-weight:900}
+.dream-menu-enter{--x:760px;--y:150px;--w:420px;--h:94px}
+.dream-menu-heroes{--x:760px;--y:273px;--w:420px;--h:91px}
+.dream-menu-fate{--x:760px;--y:394px;--w:420px;--h:92px}
+.dream-menu-treasury{--x:760px;--y:516px;--w:420px;--h:91px}
+.game-stage .dream-menu-enter strong{font-size:40px}
+.game-stage .dream-menu-save,.game-stage .dream-menu-settings{--y:685px;--w:208px;--h:63px;padding:0 12px 0 65px;font-size:21px;font-weight:900;letter-spacing:1px;border-radius:14px}
+.dream-menu-save{--x:747px}.dream-menu-settings{--x:983px}
+.game-stage .dream-menu-hit:hover:not(:disabled),.game-stage .dream-menu-hit:focus-visible{background-image:url('../../public/art/ui/main-menu/dream-gate-v1.png');background-size:1280px 800px;background-position:calc(-1 * var(--x)) calc(-1 * var(--y));background-repeat:no-repeat;transform:none;filter:brightness(1.17);box-shadow:0 0 16px #ffdd7a80}
+.game-stage .dream-menu-hit:focus-visible{outline:3px solid #fff2a6;outline-offset:4px}
+.game-stage .dream-menu-hit:active:not(:disabled){transform:none;filter:brightness(.95)}
+.dream-menu-progress{position:absolute;left:233px;top:694px;width:379px;height:53px;display:grid;grid-template-columns:35px 1fr 1fr;align-items:center;gap:14px;color:#54321e;font-family:'DFKai-SB','KaiTi','PMingLiU',serif;text-shadow:0 1px 0 #fff0ce}
+.dream-record-title{writing-mode:vertical-rl;justify-self:center;font-size:20px;font-weight:900;letter-spacing:4px;color:#963d29;transform:rotate(-5deg)}
+.dream-record{display:flex;align-items:center;justify-content:center;gap:12px;min-width:0}
+.dream-record>span{width:42px;font-size:20px;font-weight:900;line-height:1.1;letter-spacing:1px}
+.dream-record strong{display:flex;align-items:baseline;gap:5px;color:#8f3424;font-size:36px;font-weight:900;line-height:1;font-variant-numeric:tabular-nums;text-shadow:0 1px 0 #ffe8b3,1px 1px 0 #6f2a171f}
+.dream-record strong small{color:#67462a;font-size:17px;font-weight:400}
+.dream-menu-paper{width:550px;padding:40px 28px;text-align:center;color:#4d2c18;border:28px solid transparent;border-image:var(--paper-art) 150 fill / 28px;filter:drop-shadow(0 14px 20px #160c0990)}
+.dream-menu-paper h2{margin:8px 0 22px;font:900 32px 'DFKai-SB',serif;letter-spacing:3px}.dream-menu-paper p{font-size:17px;line-height:1.8;margin-bottom:26px}
+.game-stage .dream-menu-paper button{margin:0 8px;padding:8px 16px;border:14px solid transparent;border-image:var(--paper-art) 150 fill / 14px;border-radius:0;background:none;box-shadow:none;color:#513219;font-size:20px;font-weight:900}
+.game-stage .dream-menu-paper .dream-menu-danger{color:#a13224}
+.game-stage .dream-menu-paper button:hover{background:none;filter:brightness(1.12)}
+@media(prefers-reduced-motion:reduce){.game-stage .dream-menu-hit{transition:none}}

@@ -5,11 +5,12 @@ import { applySystemPreferences, readSystemPreferences } from './system-preferen
 import { observeDisplayLanguage } from './display-language.js';
 import { DialogueHeaderContext, type DialogueHeader } from './dialogue-header.js';
 import { CharacterArt } from './CharacterArt.js';
-import { useEffect, useState, type ReactNode } from 'react';
+import { createContext, useEffect, useState, type ReactNode } from 'react';
 import type { Session } from '../app/session.js';
 import type { MetaState } from '../contracts/core/state.js';
 import { defs, t } from '../app/bootstrap.js';
 
+export const GameSettingsContext = createContext<() => void>(() => {});
 export const art = (name: string): string => `./art/${name}.png`;
 export function Landscape(): React.ReactElement { return <img className="landscape" src={art('backgrounds/bg-destiny')} alt="" />; }
 export function OfficerPortrait({ name }: { name: string }): React.ReactElement {
@@ -64,10 +65,10 @@ export function GameFrame({ meta, session, active, onGo, saveNotice, children, o
   const nav = session ? [['run','行旅'], ['learn','訓練'], ['market','商店'], ['vault','器物']] : [['destiny','天命'], ['notables','風雲錄'], ['shop','天命閣'], ['items','天工閣']];
   const scene = session?.needsCampaign || active === 'battle' ? `backgrounds/bg-battle-${Math.max(1,Math.min(4,session?.current.progress.chapter??1))}` : session ? (session.current.progress.phase === 'camp' ? 'backgrounds/bg-drill' : 'backgrounds/bg-hall') : 'backgrounds/bg-destiny';
   return <DialogueHeaderContext.Provider value={setDialogueHeader}><div className="game-viewport"><div className={`game-stage ${session ? 'in-dream' : 'out-dream'} ${dialogueHeader ? 'has-dialogue' : ''}`} style={{ transform: `scale(${scale})`, ...(dialogueHeader ? { top: (800 * scale - viewportHeight) / 2 } : {}), backgroundImage: `url('${art(scene)}')` }}>
-    {!runChrome && !['entry','notables','shop','items'].includes(active) && <header className="game-top"><div className="chapter-plaque">{chapter}{session && <small>{session.current.progress.turnInChapter}/8</small>}</div><button onClick={() => setSettings(true)} aria-label="遊戲設定">☰</button></header>}
-    <main className={`stage-content view-${active} ${session?.needsCampaign ? 'campaign-view' : ''}`} id="main-content">{children}</main>
+    {!runChrome && !['destiny','entry','notables','shop','items'].includes(active) && <header className="game-top"><div className="chapter-plaque">{chapter}{session && <small>{session.current.progress.turnInChapter}/8</small>}</div><button onClick={() => setSettings(true)} aria-label="遊戲設定">☰</button></header>}
+    <main className={`stage-content view-${active} ${session?.needsCampaign ? 'campaign-view' : ''}`} id="main-content"><GameSettingsContext.Provider value={() => setSettings(true)}>{children}</GameSettingsContext.Provider></main>
     {saveNotice && <span className="campaign-save-notice" role="status">{saveNotice}</span>}
-    {!['entry','notables','shop','items'].includes(active) && (runChrome && session ? <RunFooter active={active} s={session} chapter={chapter} onGo={onGo} onSettings={()=>setSettings(true)} notice={saveNotice} dialogue={dialogueHeader}/> : <footer className="game-bottom"><span className={saveNotice ? 'warn' : ''} role="status">{saveNotice || '◆ 進度已自動保存'}</span><nav aria-label="遊戲功能">{nav.map(([key,label]) => <button key={key} aria-pressed={active === key} disabled={locked} onClick={() => onGo(key!)}>{label}</button>)}</nav>{active==='run'&&<button className="bottom-settings" aria-label="遊戲設定" onClick={()=>setSettings(true)}>選單</button>}<span>Esc 選單</span></footer>)}
+    {!['destiny','entry','notables','shop','items'].includes(active) && (runChrome && session ? <RunFooter active={active} s={session} chapter={chapter} onGo={onGo} onSettings={()=>setSettings(true)} notice={saveNotice} dialogue={dialogueHeader}/> : <footer className="game-bottom"><span className={saveNotice ? 'warn' : ''} role="status">{saveNotice || '◆ 進度已自動保存'}</span><nav aria-label="遊戲功能">{nav.map(([key,label]) => <button key={key} aria-pressed={active === key} disabled={locked} onClick={() => onGo(key!)}>{label}</button>)}</nav>{active==='run'&&<button className="bottom-settings" aria-label="遊戲設定" onClick={()=>setSettings(true)}>選單</button>}<span>Esc 選單</span></footer>)}
     {settings && <SystemMenu onClose={() => setSettings(false)} onHome={onReturnHome ?? (() => onGo('destiny'))} {...(beforeExit ? { beforeExit } : {})}/>}
   </div></div></DialogueHeaderContext.Provider>;
 }
