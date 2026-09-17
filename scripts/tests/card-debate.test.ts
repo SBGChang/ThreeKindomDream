@@ -41,6 +41,13 @@ for(const victory of [true,false]){
 }
 const paused=createEncounterDemo('cards');beginEncounterDemo(paused);for(let i=0;i<1000&&!paused.contest;i++)tickEncounterDemo(paused,1/60);paused.battle.status='paused';const snap=JSON.stringify(paused);tickEncounterDemo(paused,10);assert.equal(answerContest(paused,DEBATE_RECOVER),false);assert.equal(JSON.stringify(paused),snap);
 const draw=pair('focus','focus');draw.round=20;resolveCardDebate(draw,0);assert.equal(draw.result,'draw');
-const timed=createEncounterDemo('cards');beginEncounterDemo(timed);for(let i=0;i<2500&&!timed.contest?.cards?.last;i++)tickEncounterDemo(timed,1/60);assert.equal(timed.contest!.cards!.last!.allyFallback,true,'timeout uses the free recovery action');
+const waiting=createEncounterDemo('cards');beginEncounterDemo(waiting);
+for(let i=0;i<2500&&waiting.contest?.phase!=='read';i++)tickEncounterDemo(waiting,1/60);
+assert.equal(waiting.contest?.phase,'read');const waitingSnapshot=JSON.stringify(waiting);
+for(let i=0;i<60*180;i++)tickEncounterDemo(waiting,1/60);
+assert.equal(JSON.stringify(waiting),waitingSnapshot,'three minutes of thinking never advances clocks, enemy choice, cards or resources');
+const resumed=JSON.parse(JSON.stringify(waiting));tickEncounterDemo(resumed,1/60);assert.equal(JSON.stringify(resumed),waitingSnapshot,'resumed decisions remain untimed');
+assert(answerContest(waiting,DEBATE_RECOVER),'manual recovery still works after waiting');
+assert.equal(waiting.contest!.cards!.last!.allyFallback,true);
 const sixScene=createEncounterDemo('cards',53);sixScene.debateBuilds={ally:{...DEFAULT_DEBATE_BUILD,int:90},enemy:{...DEFAULT_DEBATE_BUILD}};beginEncounterDemo(sixScene);for(let i=0;i<2000&&sixScene.contest?.phase!=='read';i++)tickEncounterDemo(sixScene,1/60);assert.equal(sixScene.contest?.phase,'read');sixScene.contest!.cards!.ally.momentum=3;assert(answerContest(sixScene,5));assert.equal(sixScene.contest!.cards!.last!.ally,'pressure','the sixth slot survives encounter input validation');assert.equal(sixScene.contest!.cards!.last!.allyFallback,false);assert.equal(answerContest(sixScene,5),false,'reveal blocks double input');
 console.log({simulations:800,wins,losses,draws,averageRounds:rounds/800});console.log('Card debate passed: combos, interruption, reflection, stats, locked AI, dead-hand recovery, deck conservation, limits, frozen battle and both retreat outcomes.');

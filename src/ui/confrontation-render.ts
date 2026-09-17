@@ -1,3 +1,5 @@
+import {debateFrame} from './debate-art.js';
+import {drawDebateParticles} from './debate-particles.js';
 import {drawEvolutionParticles,effectStamp} from './tactical-particles.js';
 import {duelPresentation,DUEL_EVOLUTION_SECONDS} from '../app/duel-presentation.js';
 import type { EncounterDemo } from '../app/confrontation-demo.js';
@@ -21,7 +23,7 @@ function duelist(ctx:CanvasRenderingContext2D,images:BattleImages,id:string,x:nu
  ctx.save();ctx.globalAlpha=alpha;ctx.fillStyle='#21170f55';ctx.beginPath();ctx.ellipse(x,y,67.5,13.5,0,0,Math.PI*2);ctx.fill();ctx.translate(x,y);if(flip)ctx.scale(-1,1);if(hit)ctx.filter='brightness(1.65)';ctx.drawImage(im,(frame%4)*w,Math.floor(frame/4)*h,w,h,-size/2,-size*252/320,size,size);ctx.restore();
 }
 
-/** Choreography uses existing Q-style mounted general sheets; no paper-doll joints. */
+/** Duel and card debate use their dedicated character action sheets. */
 export function drawEncounterDemo(ctx:CanvasRenderingContext2D,images:BattleImages,s:EncounterDemo):void {
   const c=s.contest;
   if(!c){drawBattle(ctx,images,s.battle);return;}
@@ -59,7 +61,7 @@ export function drawEncounterDemo(ctx:CanvasRenderingContext2D,images:BattleImag
    const recoil=24*ease((t-.79)/.12)*(1-ease((t-1.05)/.55));
    if(reactA)left-=recoil*(repelledA?2:1);
    if(reactB)right+=recoil*(repelledB?2:1);
-  }else if(!duel&&c.phase==='clash'){
+  }else if(!duel&&!c.cards&&c.phase==='clash'){
    if(hurtA)left-=strike*35;
    if(hurtB)right+=strike*35;
   }
@@ -101,6 +103,16 @@ export function drawEncounterDemo(ctx:CanvasRenderingContext2D,images:BattleImag
     else{drawAlly();drawEnemy();}
     if(acting&&(turn?.ally==='attack'||turn?.enemy==='attack')&&c.phase==='clash'&&t>=.72&&t<1.15&&images['skill-particles']){const q=(t-.72)/.43;effectStamp(ctx,images['skill-particles'],guardA||guardB?10:6,(left+right)/2,feet-110,90+q*140,90+q*140,1-q);}
    }
+  }else if(c.cards){
+   for(const side of ['ally','enemy'] as const){
+    const im=images['debate-'+(side==='ally'?'guojia':'enemy')];if(!im)continue;
+    const f=debateFrame(c.phase==='clash'&&c.cards.last?c.cards.last[side]:null,t),size=360;
+    ctx.save();ctx.globalAlpha=alpha;ctx.translate(side==='ally'?left:right,feet);
+    ctx.fillStyle='#21170f55';ctx.beginPath();ctx.ellipse(0,0,65,12,0,0,Math.PI*2);ctx.fill();
+    if(side==='enemy')ctx.scale(-1,1);
+    if(c.phase==='clash'&&t>=.65&&t<.76&&(side==='ally'?hurtA:hurtB))ctx.filter='brightness(1.35)';
+    ctx.drawImage(im,(f%4)*320,Math.floor(f/4)*320,320,320,-size/2,-size*284/320,size,size);ctx.restore();
+   }
   }else{
    general(ctx,images,c.allyId,left,feet,frame,false,alpha,impact&&hurtA);
    general(ctx,images,'enemy',right,feet,c.phase==='verdict'&&c.winner==='enemy'?8+Math.min(7,Math.floor(t/1.8*8)):frame,true,alpha,impact&&hurtB);
@@ -110,11 +122,11 @@ export function drawEncounterDemo(ctx:CanvasRenderingContext2D,images:BattleImag
     const center=c.success?right-55:left+55;
     ctx.strokeStyle=c.success?'#ffdd85':'#ff8170';ctx.lineWidth=7;ctx.shadowColor=ctx.strokeStyle;ctx.shadowBlur=20;
     if(c.cards?.last){
-      const p=ease(t/1.25);
-      for(const [card,from,to] of [[c.cards.last.ally,left,right],[c.cards.last.enemy,right,left]] as const){
-        ctx.strokeStyle=card==='focus'?'#a7e2ca':card==='rebut'?'#b0dbf3':card==='question'?'#d6aff0':'#ffe19e';ctx.shadowColor=ctx.strokeStyle;ctx.lineWidth=4;
-        if(card==='focus'||card==='rebut'){ctx.beginPath();ctx.ellipse(from,470,card==='focus'?60+p*25:65,card==='focus'?20:100,0,0,Math.PI*2);ctx.stroke();}
-        else{const x=card==='borrow'?to+(from-to)*p:from+(to-from)*p;for(let i=0;i<3;i++){ctx.beginPath();ctx.ellipse(x,405+i*16,16+i*8,38+i*5,0,-1.2,1.2);ctx.stroke();}}
+      const atlas=images['skill-particles'];
+      if(atlas){
+       const reduced=typeof window!=='undefined'&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+       drawDebateParticles(ctx,atlas,c.cards.last.ally,t,left,right,c.round*137,reduced);
+       drawDebateParticles(ctx,atlas,c.cards.last.enemy,t,right,left,c.round*137+71,reduced);
       }
     }else if(!duel){
       const p=ease(t/.65),from=c.success?left:right,to=c.success?right:left;

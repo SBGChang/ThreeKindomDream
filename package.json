@@ -18,7 +18,7 @@
     "build": "npm run content:build && tsc --noEmit -p tsconfig.json && vite build",
     "game": "npm run build && electron .",
     "game:launch": "electron .",
-    "verify:confrontation": "tsx scripts/tests/duel-model.test.ts && tsx scripts/tests/confrontation-demo.test.ts && tsx scripts/tests/duel-art.test.ts && tsx scripts/tests/card-debate.test.ts && tsx scripts/tests/debate-strategies.test.ts",
+    "verify:confrontation": "tsx scripts/tests/duel-model.test.ts && tsx scripts/tests/confrontation-demo.test.ts && tsx scripts/tests/duel-art.test.ts && tsx scripts/tests/card-debate.test.ts && tsx scripts/tests/debate-strategies.test.ts && tsx scripts/tests/debate-particles.test.ts && tsx scripts/tests/card-debate-forecast.test.ts && tsx scripts/tests/debate-art.test.ts && tsx scripts/tests/debate-rally.test.ts",
     "verify:portraits": "tsx scripts/tests/portrait-framing.test.ts"
   },
   "devDependencies": {

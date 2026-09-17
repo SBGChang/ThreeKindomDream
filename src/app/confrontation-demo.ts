@@ -14,7 +14,7 @@ const DEBATE: readonly Challenge[] = [
   {cue:'你們接連受挫，還有誰願意跟著你？',hint:'對方正在動搖軍心；回應共同守護的目標。',choices:['身後是同袍與家園，我們知道為誰而戰。','只要我的官位還在，何必管別人？','過去的傷亡，全是士卒自己的錯。'],correct:0,answer:'穩住軍心，讓將士重新站在一起。'},
   {cue:'我既說不傷百姓，徵走他們所有糧食又有何妨？',hint:'前後兩句是否能同時成立？',choices:['你的軍糧比百姓的生計重要。','取盡口糧仍稱不傷民，你要如何自圓其說？','糧袋的顏色倒是十分整齊。'],correct:1,answer:'指出前後矛盾，令敵將無言以對。'},
 ];
-export const replyWindow = (c: Contest): number => c.duel || c.kind === 'duel' ? Infinity : c.cards ? 25 : 14;
+export const replyWindow = (c: Contest): number => c.duel || c.kind === 'duel' || c.cards ? Infinity : 14;
 const random = (s: EncounterDemo): number => {
   s.rng = (Math.imul(s.rng, 1664525) + 1013904223) >>> 0;
   return s.rng / 0x100000000;
@@ -106,9 +106,8 @@ export function tickEncounterDemo(s: EncounterDemo, delta: number): void {
   const dt=Math.max(0,Math.min(.05,delta));if(!dt)return;
   const c=s.contest;
   if(c){
-    // A duel decision is an input gate, not a timed phase. Do not advance any
-    // clocks or enter the debate timeout path, including after save/resume.
-    if(c.phase==='read'&&(c.duel||c.kind==='duel')){
+    // Duel and card debate decisions wait for input, including after save/resume.
+    if(c.phase==='read'&&(c.duel||c.kind==='duel'||c.cards)){
       if(c.duel?.ally.fainted){
         c.phaseTime+=dt;
         if(c.phaseTime>=.8)answerDuel(s,null);
