@@ -336,7 +336,8 @@ export function nextStagePreview(ctx: RunContext, index = ctx.state.campaign?.cl
   const r = rule(ctx);
   const troops = Math.round(enemyBase(ctx) * stage.troopsMul);
   const dmgBase = enemyDamageBase(ctx);
-  const boss = stage.boss === null ? null : ctx.defs.reader('enemy').get(String(stage.boss));
+  const originalBoss = stage.boss === null ? null : ctx.defs.reader('enemy').get(String(stage.boss));
+  const boss=originalBoss&&rosterIds(ctx).some(id=>ctx.defs.text(String(ctx.defs.reader('notable').get(String(id)).nameKey))===ctx.defs.text(String(originalBoss.nameKey)))?{...originalBoss,nameKey:'battle.enemy.replacement' as L10nKey,duelArtId:'npc_soldier'}:originalBoss;
   // 情報要【含關底敵將那一下】—— 少算它，玩家與模擬器都會低估這一關。
   const extra = boss === null ? 0 : (() => {
     const a = ability.skillDef(boss.skillId, ctx).action;
@@ -700,7 +701,7 @@ export function stageRows(ctx: RunContext): readonly StageRow[] {
     return {
       index: i,
       brief: stage.briefKey,
-      boss: stage.boss === null ? null : ctx.defs.reader('enemy').get(String(stage.boss)),
+      boss: nextStagePreview(ctx,i)?.boss??null,
       salary,
       cumulative: acc,
       unique: stage.rewards.some((r) => r.kind === 'unlock' || r.kind === 'item'),

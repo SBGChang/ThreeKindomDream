@@ -1,7 +1,7 @@
 {
   "packs": [
     {
-      "defCount": 223,
+      "defCount": 230,
       "dir": "core",
       "loadOrder": 0,
       "packId": "pack:core",
@@ -9,7 +9,7 @@
       "version": "0.1.0"
     },
     {
-      "defCount": 104,
+      "defCount": 122,
       "dir": "wei",
       "loadOrder": 10,
       "packId": "pack:wei",
@@ -19,7 +19,7 @@
       "version": "0.1.0"
     },
     {
-      "defCount": 73,
+      "defCount": 86,
       "dir": "shu",
       "loadOrder": 20,
       "packId": "pack:shu",
@@ -29,7 +29,7 @@
       "version": "0.1.0"
     },
     {
-      "defCount": 62,
+      "defCount": 63,
       "dir": "wu",
       "loadOrder": 30,
       "packId": "pack:wu",

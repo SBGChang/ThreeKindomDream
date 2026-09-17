@@ -2,6 +2,9 @@ export type DuelAction='attack'|'defend'|'rest';
 export type DuelTrait='none'|'momentum'|'steady'|'breathing'|'reversal';
 export interface DuelBuild {war:number;lead:number;trait:DuelTrait}
 export interface DuelFighter {
+ retreatSpeed?:number;
+ equipmentDamage?:number;
+ emergencyHeal?:{threshold:number;ratio:number;used:boolean};
  /** Opponents do not earn Combo or action points. Omitted in older saves. */
  progression?:boolean;
  build:DuelBuild;attack:number;defense:number;maxStamina:number;stamina:number;injury:number;injuryLimit:number;recovery:number;combo:number;

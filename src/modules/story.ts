@@ -1,3 +1,4 @@
+import {rosterIds} from './roster-query.js';
 // Narrative owns choices, irreversible rescues and chapter presentation checkpoints.
 import type { RunContext } from '../contracts/core/context.js';
 import type { RunState } from '../contracts/core/state.js';
@@ -9,13 +10,14 @@ export const emptyStory = (enabled = true): StoryState => ({
   enabled, choices: {}, milestones: [], depths: {}, scenes: [], seenScenes: [], awaitingChapterClose: false, awaitingEndingChoice: false,
 });
 
-export const chapterStory = (ctx: RunContext): StoryChapterDef | null => ctx.state.story.enabled
-  ? ctx.defs.reader('storyChapter').all().find(d => d.chapterId === ctx.state.progress.chapterId) ?? null : null;
-
-export const meetsStory = (requirements: readonly StoryRequirement[], ctx: RunContext): boolean =>
-  requirements.length === 0 || (ctx.state.story.enabled && requirements.every(r => r.kind === 'choice'
-    ? ctx.state.story.choices[r.node] === r.option : ctx.state.story.milestones.includes(r.id)));
-
+export const meetsStory = (requirements: readonly StoryRequirement[], ctx: RunContext): boolean => requirements.every(r=>r.kind==='any'?r.requirements.some(group=>meetsStory(group,ctx)):r.kind==='choice'?ctx.state.story.choices[r.node]===r.option:r.kind==='roster'?rosterIds(ctx).some(id=>String(id)===r.id)===r.present:r.kind==='depth'?(ctx.state.story.depths[r.chapter]??0)>=r.min:ctx.state.story.milestones.includes(r.id));
+export const chapterStory=(ctx:RunContext):StoryChapterDef|null=>{
+ if(!ctx.state.story.enabled)return null;
+ const d=ctx.defs.reader('storyChapter').all().find(d=>d.chapterId===ctx.state.progress.chapterId);
+ const selected=d?.variants?.find(v=>meetsStory(v.requirements,ctx))?.chapter??d;
+ if(!selected)return null;const companion=selected.companions?.find(v=>rosterIds(ctx).some(id=>id===v.notableId));
+ return companion?{...selected,opening:companion.opening,nodes:companion.nodes??selected.nodes,...(companion.fieldStories?{fieldStories:companion.fieldStories}:{}),milestones:[],aftermaths:[{requirements:[],scene:companion.aftermath}]}:selected;
+};
 export const scheduledStory = (ctx: RunContext): StoryNode | null => chapterStory(ctx)?.nodes
   .find(n => n.turn === ctx.state.progress.turnInChapter) ?? null;
 
@@ -44,7 +46,7 @@ export const enterStory = (ctx: RunContext): RunState => {
 export function commitStory(nodeId: string, optionId: string, ctx: RunContext): RunState {
   const node = unchosenStory(ctx);
   if (pendingScene(ctx) || !node || node.id !== nodeId || !node.options.some(o => o.id === optionId)) {
-    throw new Error('主線選擇無效或已經完成');
+    throw new Error('主線選擇無效或已經完成：'+nodeId+'/'+optionId+'，目前可選 '+node?.options.map(o=>o.id).join('/'));
   }
   const state = { ...ctx.state, story: { ...ctx.state.story, choices: { ...ctx.state.story.choices, [node.id]: optionId } } };
   const response = node.options.find(o => o.id === optionId)?.response;

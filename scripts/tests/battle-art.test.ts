@@ -10,7 +10,11 @@ assert.equal(new Set([...legacy,...COMMAND_GROUPS.flat(),...UNIFIED_OFFICERS]).s
 for(const id of Object.keys(DUEL_ACTORS))assert([...legacy,...COMMAND_GROUPS.flat(),...UNIFIED_OFFICERS].includes(id));
 for(let i=0;i<COMMAND_GROUPS.length;i++){const png=readFileSync('public/art/duel/commands-group-'+i+'-v1.png');assert(png.readUInt32BE(16)>700);assert(png.readUInt32BE(20)>700);}
 assert.equal(duelActorForName('太史慈・交鋒'),'taishici');
-for(const n of defs.reader('notable').all())assert.notEqual(n.duelArtId,'npc_soldier');
+const pendingPortraits=new Set(['notable:machao','notable:weiyan','notable:fazheng','notable:jiangwei']);
+for(const n of defs.reader('notable').all()){
+ if(pendingPortraits.has(String(n.notableId)))assert.equal(n.duelArtId,'npc_soldier','new officers must declare their temporary shared atlas');
+ else assert.notEqual(n.duelArtId,'npc_soldier');
+}
 let calls:number[][]=[];
 const ctx={save(){},restore(){},translate(...args:number[]){assert(args.every(Number.isFinite));},rotate(n:number){assert(Number.isFinite(n));},set globalAlpha(n:number){assert(n>=0&&n<=1);},drawImage(_im:unknown,...args:number[]){assert(args.every(Number.isFinite));assert(args[0]!>=0&&args[0]!<400);assert(args[1]!>=0&&args[1]!<400);calls.push(args);}} as unknown as CanvasRenderingContext2D;
 const atlas={width:400,height:400} as HTMLCanvasElement;

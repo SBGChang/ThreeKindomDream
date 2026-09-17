@@ -1,0 +1,1556 @@
+<!doctype html>
+<html lang="en" data-visualize-standalone>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>三國夢｜固定八章 IF 分支圖</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe sandbox="allow-scripts" referrerpolicy="no-referrer" title="三國夢｜固定八章 IF 分支圖" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot; data-visualize-standalone&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;三國夢｜固定八章 IF 分支圖&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(
+    --background,
+    var(--color-background-primary, light-dark(rgb(255 255 255), rgb(24 24 24)))
+  ) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --color-background-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --card: color-mix(in oklab, var(--foreground) 5%, var(--background));
+  --card-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --popover: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255), rgb(45 45 45))
+  );
+  --popover-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --primary: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --primary-foreground: var(
+    --color-text-inverse,
+    light-dark(rgb(255 255 255), rgb(13 13 13))
+  );
+  --secondary: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%))
+  );
+  --secondary-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: var(
+    --color-text-secondary,
+    light-dark(rgb(26 28 31 / 49.4%), rgb(255 255 255 / 49.8%))
+  );
+  --accent: var(
+    --color-background-info,
+    light-dark(rgb(229 242 255), rgb(13 39 63))
+  );
+  --accent-foreground: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --destructive: var(
+    --color-text-warning,
+    light-dark(rgb(226 85 7), rgb(255 133 73))
+  );
+  --border: var(
+    --color-border-secondary,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+  --input: var(
+    --color-border-primary,
+    light-dark(
+      rgb(26 28 31 / 11.8%),
+      color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+    )
+  );
+  --ring: var(
+    --color-ring-primary,
+    light-dark(rgb(51 156 255), rgb(131 195 255 / 76%))
+  );
+  --font-size-base: var(--font-text-md-size, 14px);
+  --blue: light-dark(rgb(51 156 255), rgb(51 156 255));
+  --orange: light-dark(rgb(226 85 7), rgb(251 106 34));
+  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
+  --red: light-dark(rgb(224 46 42), rgb(255 103 100));
+  --purple: light-dark(rgb(146 79 247), rgb(173 123 249));
+  --yellow: light-dark(rgb(255 195 0), rgb(255 210 64));
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --icon-size: 16px;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --corner-shape: round;
+  --radius: var(--border-radius-lg, 10px);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  /* Preserve MCP aliases for older inline renderers without creating :root cycles. */
+  --color-background-primary: var(
+    --background,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --color-text-primary: var(
+    --foreground,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --color-border-secondary: var(
+    --border,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+
+  margin: 0;
+  padding: var(--visualize-paint-gutter, 0px);
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans) !important;
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--font-weight-medium, 500);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive &gt; .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align=&quot;right&quot;]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align=&quot;center&quot;]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: var(--corner-shape);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card, .progress) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+hr {
+  width: 100%;
+  height: 1px;
+  margin-block: 6px;
+  border: 0;
+  background: var(--border);
+}
+
+.nav {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 4px;
+}
+
+.progress {
+  display: flex;
+  height: 8px;
+  margin-block: calc((var(--line-height-normal, 1.5em) - 8px) / 2);
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+}
+
+.progress-bar:only-child {
+  border-radius: var(--radius-full);
+}
+
+.progress-bar {
+  height: 100%;
+  flex-shrink: 0;
+  border: 0;
+  background: var(--viz-series-1);
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.nav-link,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn,
+.nav-link {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover,
+.nav-link:not(:disabled):not([aria-disabled=&quot;true&quot;]):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.nav-pills .nav-link {
+  min-width: 0;
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.nav-justified .nav-link {
+  flex: 1 1 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.nav-pills .nav-link.active {
+  color: var(--foreground);
+  background: var(--muted);
+}
+
+.btn:disabled,
+.nav-link:disabled,
+.nav-link[aria-disabled=&quot;true&quot;] {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: var(--corner-shape);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+  [aria-pressed=&quot;true&quot;],
+  [aria-selected=&quot;true&quot;],
+  .is-selected
+) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible,
+.nav-link:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+@media (pointer: coarse) {
+  .btn,
+  .nav-link,
+  .form-control,
+  .form-select {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Keep small-screen WebKit from zooming when a text field receives focus. */
+  .form-control,
+  .form-select {
+    font-size: max(16px, var(--font-size-normal));
+  }
+
+  .form-control[type=&quot;file&quot;]::file-selector-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .form-control-color[type=&quot;color&quot;] {
+    width: 44px;
+    height: 44px;
+  }
+
+  .form-control:is(
+    [type=&quot;date&quot;],
+    [type=&quot;datetime-local&quot;],
+    [type=&quot;month&quot;],
+    [type=&quot;time&quot;],
+    [type=&quot;week&quot;]
+  ) {
+    min-width: 0;
+    max-width: 100%;
+    padding-block: 8px;
+  }
+
+  .form-check {
+    min-height: 44px;
+    padding-inline: 15px;
+  }
+
+  .form-check-input {
+    position: relative;
+  }
+
+  .form-check-input::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    content: &quot;&quot;;
+    transform: translate(-50%, -50%);
+  }
+
+  .form-check-label {
+    display: inline-flex;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .form-range {
+    height: 44px;
+    touch-action: pan-y;
+  }
+
+  .form-range::-webkit-slider-runnable-track {
+    height: 44px;
+  }
+
+  .form-range::-moz-range-track {
+    height: 44px;
+  }
+
+  .form-range::-webkit-slider-thumb {
+    margin-top: 12px;
+  }
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+/* Model-authored chart rules can otherwise stretch icons after these styles load. */
+svg.lucide {
+  display: block;
+  width: var(--icon-size) !important;
+  height: var(--icon-size) !important;
+  flex: none;
+  margin: 0 !important;
+  stroke-width: 1.6;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;tk-if-eight-v4&quot;&gt;
+  &lt;h2&gt;三國 IF · 同樣八章，不同歷史&lt;/h2&gt;
+  &lt;div class=&quot;text-small&quot;&gt;v4 企畫｜共同序章＋國線八章｜72 回合・9 場戰役・最多 63 關&lt;/div&gt;
+  &lt;div class=&quot;nav nav-pills&quot; role=&quot;tablist&quot; aria-label=&quot;陣營&quot;&gt;
+    &lt;button type=&quot;button&quot; class=&quot;nav-link active&quot; role=&quot;tab&quot; id=&quot;if-tab-wei&quot; aria-controls=&quot;if-panel-wei&quot; aria-selected=&quot;true&quot;&gt;魏國&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;nav-link&quot; role=&quot;tab&quot; id=&quot;if-tab-shu&quot; aria-controls=&quot;if-panel-shu&quot; aria-selected=&quot;false&quot;&gt;蜀國&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;nav-link&quot; role=&quot;tab&quot; id=&quot;if-tab-wu&quot; aria-controls=&quot;if-panel-wu&quot; aria-selected=&quot;false&quot;&gt;吳國&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;section id=&quot;if-panel-wei&quot; role=&quot;tabpanel&quot; aria-labelledby=&quot;if-tab-wei&quot;&gt;&lt;/section&gt;
+  &lt;section id=&quot;if-panel-shu&quot; role=&quot;tabpanel&quot; aria-labelledby=&quot;if-tab-shu&quot; hidden&gt;&lt;/section&gt;
+  &lt;section id=&quot;if-panel-wu&quot; role=&quot;tabpanel&quot; aria-labelledby=&quot;if-tab-wu&quot; hidden&gt;&lt;/section&gt;
+&lt;/div&gt;
+&lt;style&gt;
+#tk-if-eight-v4 { color:var(--foreground); }
+#tk-if-eight-v4 .nav { margin:16px 0; }
+#tk-if-eight-v4 .route-map { position:relative; margin:18px 0; }
+#tk-if-eight-v4 .route-arrows { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+#tk-if-eight-v4 .chapter-row { position:relative; padding:0 0 38px 0; }
+#tk-if-eight-v4 .chapter-caption { margin:0 0 6px; width:fit-content; position:relative; z-index:1; padding-right:6px; background:var(--background); }
+#tk-if-eight-v4 .chapter-nodes { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; align-items:stretch; }
+#tk-if-eight-v4 .node-wrap { position:relative; min-width:0; display:flex; }
+#tk-if-eight-v4 .node-button { appearance:none; width:100%; padding:10px 6px; border:1px solid var(--border); border-radius:6px; background:var(--background); color:var(--foreground); font:inherit; text-align:center; cursor:pointer; overflow-wrap:anywhere; }
+#tk-if-eight-v4 .node-button[data-on=&quot;true&quot;] { border-color:var(--primary); background:var(--accent); color:var(--accent-foreground); }
+#tk-if-eight-v4 .node-button[aria-pressed=&quot;true&quot;] { outline:2px solid var(--primary); outline-offset:2px; }
+#tk-if-eight-v4 .node-code { display:block; }
+#tk-if-eight-v4 .route-legend { display:flex; gap:14px; flex-wrap:wrap; margin-top:10px; }
+#tk-if-eight-v4 .route-key { display:inline-block; width:20px; border-top:2px solid var(--primary); vertical-align:middle; margin-right:4px; }
+#tk-if-eight-v4 .route-key-other { border-color:var(--muted-foreground); border-top-style:dashed; }
+#tk-if-eight-v4 .chapter-detail { border-top:1px solid var(--border); padding-top:16px; }
+#tk-if-eight-v4 .detail-line { margin:10px 0; overflow-wrap:anywhere; }
+#tk-if-eight-v4 .outcome { margin:8px 0; padding-left:12px; border-left:2px solid var(--primary); }
+#tk-if-eight-v4 details { margin-top:20px; }
+#tk-if-eight-v4 summary { cursor:pointer; padding:8px 0; }
+#tk-if-eight-v4 .unlock-item { padding:10px 0; border-bottom:1px solid var(--border); }
+#tk-if-eight-v4 .form-label { display:block; }
+#tk-if-eight-v4 select { max-width:100%; }
+&lt;/style&gt;
+&lt;script&gt;
+(() =&gt; {
+  const root = document.getElementById(&#x27;tk-if-eight-v4&#x27;);
+  const plan = {
+    wei:{label:&#x27;魏國&#x27;, focus:&#x27;赤壁真勝 → 成都 → 北拒匈奴 → 治世之能臣&#x27;, selected:&#x27;W4&#x27;,
+      nodes:[
+        [&#x27;W1&#x27;,1,2,&#x27;虎牢&#x27;,&#x27;呂布未入隊：決戰認可；在隊：董卓改由關防軍守關，呂布與聯軍破關。&#x27;,&#x27;沿基礎 A／B；呂布資格只看第七關正式決戰。&#x27;,null,[[&#x27;W2&#x27;,&#x27;所有結果&#x27;]]],
+        [&#x27;W2&#x27;,2,2,&#x27;宛城至官渡&#x27;,&#x27;典韋救援占前三關，官渡占後四關；跨年字幕不刷新兵力或補給。&#x27;,&#x27;A：備械偵門／集中糧運；B：側門接援／主力突圍。&#x27;,&#x27;宛城夜警|奪回兵械|側門接應|官渡前哨|糧道牽制|烏巢突破|官渡決勝&#x27;,[[&#x27;W3&#x27;,&#x27;所有結果&#x27;]]],
+        [&#x27;W3&#x27;,3,2,&#x27;河北&#x27;,&#x27;醫隊第四關接回郭嘉；同行則共同分工，後段敗北不撤銷救援。&#x27;,&#x27;A：驛站醫隊／加速追擊；B：後方統籌／前軍深入。&#x27;,null,[[&#x27;W4&#x27;,&#x27;所有結果&#x27;]]],
+        [&#x27;W4&#x27;,4,2,&#x27;赤壁&#x27;,&#x27;撤離七關全過不等於南征勝利。分舟＋反攻＋第七關勝利，才改變後續國勢。&#x27;,&#x27;A：分舟防火／集中強攻；B：反制反攻／全軍撤離。&#x27;,&#x27;病營安置|分舟警戒|火船截斷|江面反攻|烏林奪岸|聯軍退路|江防接管&#x27;,[[&#x27;W5&#x27;,&#x27;所有結果；保存赤壁戰略勝利與否&#x27;]]],
+        [&#x27;W5&#x27;,5,2,&#x27;潼關&#x27;,&#x27;赤壁勝利後，潼關成為進成都前的關中與補給整備；仍占第五章。&#x27;,&#x27;沿基礎 A／B；本章結果不取代赤壁國勢判定。&#x27;,null,[[&#x27;W6a&#x27;,&#x27;赤壁未取得戰略勝利&#x27;],[&#x27;W6b&#x27;,&#x27;赤壁分舟＋反攻＋全勝&#x27;]]],
+        [&#x27;W6a&#x27;,6,1,&#x27;漢中&#x27;,&#x27;沿基礎漢中劇本，準備、撤路與戰果維持原章位。&#x27;,&#x27;沿基礎 A／B。&#x27;,null,[[&#x27;W7a&#x27;,&#x27;所有結果&#x27;]]],
+        [&#x27;W6b&#x27;,6,3,&#x27;成都&#x27;,&#x27;劉璋仍掌成都，劉備投靠並率客軍協防。全勝完成接管；失敗保留赤壁戰果，停止西征。&#x27;,&#x27;A：安民登錄／封鎖要道；B：分別議降／合軍攻城。&#x27;,&#x27;劍門前哨|糧道護送|涪城外圍|客軍防線|成都北門|城內止亂|劉璋議降&#x27;,[[&#x27;W7b&#x27;,&#x27;第七關勝利&#x27;],[&#x27;W7a&#x27;,&#x27;未全勝／撤退&#x27;]]],
+        [&#x27;W7a&#x27;,7,1,&#x27;新朝&#x27;,&#x27;把承諾寫成誰都能看的字。成都失敗入口要保留南征戰果；曹操在隊時改為主動交政。&#x27;,&#x27;A：公開章程／軍令優先；B：制度交接／個人收權。&#x27;,null,[[&#x27;W8a&#x27;,&#x27;所有結果&#x27;]]],
+        [&#x27;W7b&#x27;,7,3,&#x27;北拒匈奴&#x27;,&#x27;成都已定，轉為邊疆防務與互市。未全勝以年代過場交代軍權集中，接新國勢的高平陵。&#x27;,&#x27;A：邊防公簿／機動出擊；B：分區交權／中軍收權。&#x27;,&#x27;雁門警報|村鎮撤護|糧道守備|邊騎迂迴|敵軍主營|邊塞復防|互市通道保全&#x27;,[[&#x27;W8b&#x27;,&#x27;第七關勝利&#x27;],[&#x27;W8a&#x27;,&#x27;未全勝／撤退&#x27;]]],
+        [&#x27;W8a&#x27;,8,1,&#x27;高平陵&#x27;,&#x27;新朝與北疆失利都可到此，但國土與人物狀態不同。前章制度準備＋本章公示與第五關可保朝議；全勝交接成魏闕長明。&#x27;,&#x27;A：公示名冊／秘密控道；B：依法交接／集中權力。&#x27;,null,[]],
+        [&#x27;W8b&#x27;,8,3,&#x27;治世之能臣&#x27;,&#x27;曹操仍是漢相。國內治理與西域開拓同屬本章；全勝且公開章程、落實交接才成完整治世結局。&#x27;,&#x27;A：公開賦役／集中開拓；B：地方分工／丞相統攬。&#x27;,&#x27;糧道護運|屯田安置|地方止亂|議政護送|邊軍交接|河西通道|西域開拓&#x27;,[]]
+      ],
+      samples:[[&#x27;新歷史：成都、北疆皆勝&#x27;,&#x27;W1 W2 W3 W4 W5 W6b W7b W8b&#x27;],[&#x27;成都失敗：接新朝&#x27;,&#x27;W1 W2 W3 W4 W5 W6b W7a W8a&#x27;],[&#x27;北拒失敗：接高平陵&#x27;,&#x27;W1 W2 W3 W4 W5 W6b W7b W8a&#x27;],[&#x27;基礎線：赤壁未成戰略勝利&#x27;,&#x27;W1 W2 W3 W4 W5 W6a W7a W8a&#x27;]],
+      unlocks:[[&#x27;呂布&#x27;,&#x27;W1 第七關擊敗本人；若已在隊，改聯軍同行，不出現敵方呂布。&#x27;],[&#x27;典韋&#x27;,&#x27;W2 備械＋側門接援＋第三關成功。&#x27;],[&#x27;郭嘉&#x27;,&#x27;W3 驛站醫隊＋後方統籌＋第四關成功。&#x27;],[&#x27;一般解鎖&#x27;,&#x27;曹操：首次完整魏線；張遼：統御80；賈詡：曾取得竹簡與印綬；荀彧：文官六階。&#x27;],[&#x27;初始六人&#x27;,&#x27;于禁、夏侯惇、樂進、程昱、陳群、毛玠。&#x27;]]
+    },
+    shu:{label:&#x27;蜀國&#x27;,focus:&#x27;漢中全勝、留接援 → 荊襄會盟 → 保住荊州 → 兩路北伐&#x27;,selected:&#x27;S7b&#x27;,
+      nodes:[
+        [&#x27;S1&#x27;,1,2,&#x27;虎牢&#x27;,&#x27;未帶呂布可決戰解鎖；已帶呂布改聯軍破關。&#x27;,&#x27;沿基礎 A／B。&#x27;,null,[[&#x27;S2&#x27;,&#x27;所有結果&#x27;]]],
+        [&#x27;S2&#x27;,2,2,&#x27;徐州&#x27;,&#x27;建立蜀線同伴關係，同行人物不再同場以敵方出現。&#x27;,&#x27;沿基礎 A／B。&#x27;,null,[[&#x27;S3&#x27;,&#x27;所有結果&#x27;]]],
+        [&#x27;S3&#x27;,3,2,&#x27;長坂&#x27;,&#x27;趙雲在隊時改共同接應，不另生第二個趙雲。&#x27;,&#x27;沿基礎 A／B。&#x27;,null,[[&#x27;S4&#x27;,&#x27;所有結果&#x27;]]],
+        [&#x27;S4&#x27;,4,2,&#x27;赤壁&#x27;,&#x27;同盟準備影響後來救關羽與荊襄會盟；不因本章人物抽取改掉條件。&#x27;,&#x27;A：盟約 pact／優先本軍戰果；B 沿基礎決策。&#x27;,null,[[&#x27;S5&#x27;,&#x27;所有結果；保存盟約準備&#x27;]]],
+        [&#x27;S5&#x27;,5,2,&#x27;入蜀&#x27;,&#x27;勘路＋交接＋第五關救龐統；交接同時為諸葛亮後續伏筆，沒有新增 P1／P2。&#x27;,&#x27;A：勘路回報／接管軍械；B：前軍接應與官署交接／主帥親掌。&#x27;,&#x27;入境接糧|山道斥候|前軍分隊|伏兵警訊|落鳳接應|雒城外圍|成都交接&#x27;,[[&#x27;S6b&#x27;,&#x27;龐統本夢獲救或已在隊&#x27;],[&#x27;S6a&#x27;,&#x27;龐統未獲救且不在隊&#x27;]]],
+        [&#x27;S6a&#x27;,6,1,&#x27;漢中&#x27;,&#x27;沒有龐統也能準備保住荊州；國勢分支不要求擁有特定人物。&#x27;,&#x27;A：荊州接援走廊／集中漢中；B：分層交令／主帥總攬。&#x27;,null,[[&#x27;S7b&#x27;,&#x27;S4盟約＋本章走廊＋全勝&#x27;],[&#x27;S7a&#x27;,&#x27;任一條件未成立&#x27;]]],
+        [&#x27;S6b&#x27;,6,3,&#x27;雙謀漢中&#x27;,&#x27;龐統拆解敵方布防，諸葛亮安排糧運與接力；法正核實情報。活下來的人真正改變後續軍議。&#x27;,&#x27;A：荊州接援走廊／集中漢中；B：分層交令／主帥總攬。&#x27;,&#x27;山口偵察|糧道接力|雙軍誘敵|定軍山外圍|山地合擊|援軍截斷|漢中接管&#x27;,[[&#x27;S7b&#x27;,&#x27;S4盟約＋本章走廊＋全勝&#x27;],[&#x27;S7a&#x27;,&#x27;任一條件未成立&#x27;]]],
+        [&#x27;S7a&#x27;,7,1,&#x27;荊州危局&#x27;,&#x27;有盟約、走廊與本章接援，第五關能救關羽，但不等於保住荊州。即使七關全勝仍是撤援成果。&#x27;,&#x27;A：接回關羽與守軍／守後方；B：延續盟約／復仇動員。&#x27;,&#x27;江岸預警|守軍集結|撤路奪回|追兵攔截|麥城接應|百姓渡江|殿後歸營&#x27;,[[&#x27;S8a&#x27;,&#x27;所有結果；保留關羽存活成果&#x27;]]],
+        [&#x27;S7b&#x27;,7,3,&#x27;荊襄會盟&#x27;,&#x27;不再重演麥城敗局。第五關接援可解鎖關羽；續盟並全勝才保住荊州，維持兩路出兵的基礎。&#x27;,&#x27;A：前線接援／守後方；B：延續盟約／復仇動員。&#x27;,&#x27;邊界止衝|信使護送|樊城牽制|江岸防突|荊州接援|盟軍解圍|荊襄守約&#x27;,[[&#x27;S8b&#x27;,&#x27;本章接援＋續盟＋第七關勝利&#x27;],[&#x27;S8a&#x27;,&#x27;任一條件未成立&#x27;]]],
+        [&#x27;S8a&#x27;,8,1,&#x27;北伐&#x27;,&#x27;五丈原救援需 S5、S6 交接及本章分工，第五關達標保人。荊州失利後關羽若存活，不能再播放祭奠。&#x27;,&#x27;A：分工休養／主帥承擔；B：新軍交令／主帥留權。&#x27;,&#x27;祁山前哨|糧道輪替|山路守援|指揮接替|五丈原續燈|前軍回接|祁山突破&#x27;,[]],
+        [&#x27;S8b&#x27;,8,3,&#x27;兩路北伐&#x27;,&#x27;蜀道與荊襄共同進軍。第五關指揮接力可等價解鎖諸葛亮，沒有硬塞病危；全勝交接收束漢室再曉。&#x27;,&#x27;A：分工休養／主帥承擔；B：新軍交令／主帥留權。&#x27;,&#x27;蜀道出師|荊襄策應|糧運會合|兩軍分掌|軍師輪休|宛洛決戰|中原安定&#x27;,[]]
+      ],
+      samples:[[&#x27;新歷史：雙謀、會盟、兩路北伐&#x27;,&#x27;S1 S2 S3 S4 S5 S6b S7b S8b&#x27;],[&#x27;不需龐統：同樣能保住荊州&#x27;,&#x27;S1 S2 S3 S4 S5 S6a S7b S8b&#x27;],[&#x27;會盟未成：帶著存活成果北伐&#x27;,&#x27;S1 S2 S3 S4 S5 S6b S7b S8a&#x27;],[&#x27;救人但失荊州：危局接北伐&#x27;,&#x27;S1 S2 S3 S4 S5 S6a S7a S8a&#x27;]],
+      unlocks:[[&#x27;龐統&#x27;,&#x27;S5 勘路＋交接＋第五關成功。&#x27;],[&#x27;關羽&#x27;,&#x27;S4盟約＋S6走廊＋S7接援＋第五關成功；麥城救援／荊襄接援皆可。&#x27;],[&#x27;諸葛亮&#x27;,&#x27;S5交接＋S6交接＋S8分工＋第五關成功；北伐／兩路版皆可。&#x27;],[&#x27;呂布&#x27;,&#x27;S1 第七關正式擊敗本人。&#x27;],[&#x27;一般解鎖&#x27;,&#x27;劉備：首次完整蜀線；馬超：武官六階；姜維：任一 S8 第七關勝利。&#x27;],[&#x27;初始六人&#x27;,&#x27;張飛、趙雲、蔣琬、黃忠、魏延、法正。&#x27;]]
+    },
+    wu:{label:&#x27;吳國&#x27;,focus:&#x27;孫策存活、兄弟分政 → 合肥 → 淮泗 → 兩岸立政 → 建業共治&#x27;,selected:&#x27;U4&#x27;,
+      nodes:[
+        [&#x27;U1&#x27;,1,2,&#x27;虎牢&#x27;,&#x27;孫堅前鋒與華雄戰場；帶呂布可有聯軍同行，不能在此解鎖呂布。&#x27;,&#x27;沿基礎 A／B。&#x27;,null,[[&#x27;U2&#x27;,&#x27;所有結果&#x27;]]],
+        [&#x27;U2&#x27;,2,2,&#x27;峴山至江東&#x27;,&#x27;前兩關救孫堅，後五關江東立足。時間字幕不刷新戰役消耗；孫堅生還不消除孫策政治危機。&#x27;,&#x27;A：查追兵與沿岸情報／追擊；B：接應與渡江分工／集中指揮。&#x27;,&#x27;峴山追兵|回旗接應|渡口立足|沿岸糧道|江東據點|城外整軍|太史慈對陣&#x27;,[[&#x27;U3&#x27;,&#x27;所有結果&#x27;]]],
+        [&#x27;U3&#x27;,3,2,&#x27;獵場&#x27;,&#x27;U2情報＋本章護衛＋第五關救孫策；本人在隊改共同破伏。存活／在隊再加交政，才成立兄弟分政。&#x27;,&#x27;A：分路護衛／輕騎出獵；B：兄弟分任內外／軍政一身承擔。&#x27;,null,[[&#x27;U4&#x27;,&#x27;所有結果；保存兄弟分政與否&#x27;]]],
+        [&#x27;U4&#x27;,4,2,&#x27;赤壁&#x27;,&#x27;兄弟分政讓孫策主外、孫權主內。配合盟約、分令與全勝，才有條件乘勝北進；否則維持荊淮路線。&#x27;,&#x27;A：互援盟約／優先戰果；B：水陸分令／主帥親掌。&#x27;,null,[[&#x27;U5b&#x27;,&#x27;兄弟分政＋盟約＋分令＋全勝&#x27;],[&#x27;U5a&#x27;,&#x27;任一條件未成立&#x27;]]],
+        [&#x27;U5a&#x27;,5,1,&#x27;荊淮&#x27;,&#x27;周瑜醫舟與交接占前兩關，之後回到荊淮局勢；無額外護送戰役。&#x27;,&#x27;A：醫舟輪值／優先推進；B：交出部分指揮／主帥統攬。&#x27;,&#x27;醫舟護運|水軍交接|荊州使節|江岸對峙|淮口守備|糧運保全|江防換守&#x27;,[[&#x27;U6a&#x27;,&#x27;所有結果；關羽在隊改止兵版&#x27;]]],
+        [&#x27;U5b&#x27;,5,3,&#x27;合肥&#x27;,&#x27;赤壁之後攻合肥，沒有先搶荊州再加一章北伐。周瑜接力仍占同一場前兩關；張遼在隊時替換敵將。&#x27;,&#x27;A：醫舟輪值／優先推進；B：交出部分指揮／主帥統攬。&#x27;,&#x27;醫舟護運|水軍交接|濡須渡口|江北補給|合肥外圍|城門合擊|淮南立足&#x27;,[[&#x27;U6c&#x27;,&#x27;第七關勝利&#x27;],[&#x27;U6b&#x27;,&#x27;未全勝／撤退&#x27;]]],
+        [&#x27;U6a&#x27;,6,1,&#x27;夷陵／止兵&#x27;,&#x27;基礎夷陵；若關羽在隊或戰因被同行改寫，換成江岸止兵。同一章、同七關，無死亡隊友。&#x27;,&#x27;沿基礎兩個決策；止兵版以止衝與接防改寫。&#x27;,null,[[&#x27;U7a&#x27;,&#x27;所有結果&#x27;]]],
+        [&#x27;U6b&#x27;,6,2,&#x27;江防重整&#x27;,&#x27;合肥未取，先接回退軍與百姓，再恢復江防。成功也不憑空補回淮泗拓土。&#x27;,&#x27;A：先護民／先護械；B：分段接防／中軍掌令。&#x27;,&#x27;退軍接應|軍民渡江|殿後護舟|濡須復防|糧倉保全|水寨換守|江面解圍&#x27;,[[&#x27;U7b&#x27;,&#x27;所有結果&#x27;]]],
+        [&#x27;U6c&#x27;,6,3,&#x27;淮泗&#x27;,&#x27;守住江北新據點，從進攻走向軍民安置；失利保留合肥成果，停止擴張。&#x27;,&#x27;A：軍民安置／追擊擴張；B：地方分任／中軍統管。&#x27;,&#x27;淮南守備|流民接護|舟車糧運|魏軍反攻|淮泗渡口|兩岸聯防|新郡安定&#x27;,[[&#x27;U7c&#x27;,&#x27;第七關勝利&#x27;],[&#x27;U7b&#x27;,&#x27;未全勝／撤退&#x27;]]],
+        [&#x27;U7a&#x27;,7,1,&#x27;石亭&#x27;,&#x27;既有戰役也留下章程與交接準備；孫策存活會改變終章的政治因果。&#x27;,&#x27;A：公開章程／軍令優先；B：交接軍權／元老留權。&#x27;,null,[[&#x27;U8b&#x27;,&#x27;孫策在隊或本夢獲救&#x27;],[&#x27;U8a&#x27;,&#x27;孫策未獲救且不在隊&#x27;]]],
+        [&#x27;U7b&#x27;,7,2,&#x27;江防整軍&#x27;,&#x27;依先前戰果保留淮南或江岸據點，不重置成歷史夷陵；同樣可準備保全陸遜。&#x27;,&#x27;A：公開章程／軍令優先；B：交接軍權／元老留權。&#x27;,&#x27;散軍歸建|糧道清理|江口拒敵|舊部整合|水陸換防|軍令護送|濡須穩守&#x27;,[[&#x27;U8b&#x27;,&#x27;所有結果&#x27;]]],
+        [&#x27;U7c&#x27;,7,3,&#x27;兩岸立政&#x27;,&#x27;新郡徵糧、舊部軍權與兩岸換防。軍事七關保全制度執行，議政用原有對話，不加一場辯論。&#x27;,&#x27;A：公開章程／軍令優先；B：交接軍權／元老留權。&#x27;,&#x27;新郡護運|徵糧糾紛|軍民分防|舊部抗令|邊軍輪替|章程護送|兩岸交防&#x27;,[[&#x27;U8c&#x27;,&#x27;公開章程＋交接＋全勝&#x27;],[&#x27;U8b&#x27;,&#x27;任一條件未成立&#x27;]]],
+        [&#x27;U8a&#x27;,8,1,&#x27;二宮&#x27;,&#x27;立嗣衝突下保全陸遜。U7章程＋交接、本章公開聽諫＋第五關解鎖；全勝落實交接成江月長明。&#x27;,&#x27;A：公開聽諫／密議處置；B：落實交接／保留終決。&#x27;,&#x27;呈議護送|宮門對峙|諫臣家眷|江岸接援|陸遜出局|禁軍交令|宮城止兵&#x27;,[]],
+        [&#x27;U8b&#x27;,8,2,&#x27;江東議局&#x27;,&#x27;孫氏舊部、拓土派與士族爭軍政權；孫策與北進留下的歷史影響仍在，不強套原二宮。&#x27;,&#x27;A：公開聽諫／密議處置；B：落實交接／保留終決。&#x27;,&#x27;議政護送|軍令分歧|江北糧道|諫臣保全|陸遜呈議|水陸交令|建業止爭&#x27;,[]],
+        [&#x27;U8c&#x27;,8,3,&#x27;建業共治&#x27;,&#x27;陸遜正式主議是第五關等價解鎖成果；第七關海陸通商收束江海長明，不延長一章。&#x27;,&#x27;A：公開聽諫／密議處置；B：落實交接／保留終決。&#x27;,&#x27;商路護運|港口整備|海陸糧運|元老議政|陸遜主議|軍民交防|海陸通商&#x27;,[]]
+      ],
+      samples:[[&#x27;新歷史：北進、立政皆成&#x27;,&#x27;U1 U2 U3 U4 U5b U6c U7c U8c&#x27;],[&#x27;合肥失敗：重整江防&#x27;,&#x27;U1 U2 U3 U4 U5b U6b U7b U8b&#x27;],[&#x27;淮泗失敗：保留合肥成果&#x27;,&#x27;U1 U2 U3 U4 U5b U6c U7b U8b&#x27;],[&#x27;制度未成：兩岸轉江東議局&#x27;,&#x27;U1 U2 U3 U4 U5b U6c U7c U8b&#x27;],[&#x27;未北進、孫策存活：議局&#x27;,&#x27;U1 U2 U3 U4 U5a U6a U7a U8b&#x27;],[&#x27;基礎線：石亭、二宮&#x27;,&#x27;U1 U2 U3 U4 U5a U6a U7a U8a&#x27;]],
+      unlocks:[[&#x27;孫堅&#x27;,&#x27;U2 查追兵＋接應分工＋第二關成功。&#x27;],[&#x27;孫策&#x27;,&#x27;U2情報＋U3護衛＋第五關成功；兄弟分政還需 U3 交政。&#x27;],[&#x27;周瑜&#x27;,&#x27;U5醫舟＋指揮交接＋第二關成功；荊淮、合肥皆可。&#x27;],[&#x27;陸遜&#x27;,&#x27;U7章程＋交接、U8公開聽諫＋第五關成功；三種終章皆可。&#x27;],[&#x27;一般解鎖&#x27;,&#x27;孫權：首次完整吳線；甘寧：武力85。&#x27;],[&#x27;初始六人&#x27;,&#x27;魯肅、呂蒙、太史慈、黃蓋、張昭、步騭。&#x27;]]
+    }
+  };
+  // The manifest is planning data only, exposed for artifact verification.
+  window.ifPlanV4 = plan;
+  const ns=&#x27;http://www.w3.org/2000/svg&#x27;;
+  const make=(tag,cls,text)=&gt;{const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;};
+  const svgEl=(tag,attrs)=&gt;{const e=document.createElementNS(ns,tag);Object.entries(attrs).forEach(([k,v])=&gt;e.setAttribute(k,v));return e;};
+  Object.entries(plan).forEach(([key,f])=&gt;{
+    const panel=root.querySelector(&#x27;#if-panel-&#x27;+key);
+    const heading=make(&#x27;h3&#x27;,&#x27;&#x27;,f.focus);panel.append(heading);
+    const label=make(&#x27;label&#x27;,&#x27;form-label&#x27;,&#x27;示範路徑（圖中實線）&#x27;);label.htmlFor=&#x27;if-route-&#x27;+key;
+    const route=make(&#x27;select&#x27;,&#x27;form-select&#x27;);route.id=label.htmlFor;
+    f.samples.forEach(([name],i)=&gt;{const o=make(&#x27;option&#x27;,&#x27;&#x27;,name);o.value=i;route.append(o);});panel.append(label,route);
+    const legend=make(&#x27;div&#x27;,&#x27;route-legend text-small&#x27;);
+    [[&#x27;route-key&#x27;,&#x27;本次示範&#x27;],[&#x27;route-key route-key-other&#x27;,&#x27;其他可接分支&#x27;]].forEach(([cls,t])=&gt;{const s=make(&#x27;span&#x27;);s.append(make(&#x27;span&#x27;,cls),document.createTextNode(t));legend.append(s);});panel.append(legend);
+    const map=make(&#x27;div&#x27;,&#x27;route-map&#x27;);map.setAttribute(&#x27;aria-label&#x27;,f.label+&#x27;八個固定章位&#x27;);
+    const svg=svgEl(&#x27;svg&#x27;,{class:&#x27;route-arrows&#x27;,&#x27;aria-hidden&#x27;:&#x27;true&#x27;});map.append(svg);
+    const buttons=new Map();
+    for(let slot=1;slot&lt;=8;slot++){
+      const row=make(&#x27;div&#x27;,&#x27;chapter-row&#x27;);row.dataset.slot=slot;
+      row.append(make(&#x27;div&#x27;,&#x27;chapter-caption text-small&#x27;,`第 ${slot} 章 · 本列擇一 · 8 回合／7 關`));
+      const grid=make(&#x27;div&#x27;,&#x27;chapter-nodes&#x27;);
+      f.nodes.filter(n=&gt;n[1]===slot).forEach(n=&gt;{
+        const wrap=make(&#x27;div&#x27;,&#x27;node-wrap&#x27;);wrap.style.gridColumn=n[2];
+        const b=make(&#x27;button&#x27;,&#x27;node-button&#x27;);b.type=&#x27;button&#x27;;b.dataset.node=n[0];b.setAttribute(&#x27;aria-pressed&#x27;,&#x27;false&#x27;);
+        b.append(make(&#x27;span&#x27;,&#x27;node-code text-small&#x27;,n[0]),document.createTextNode(n[3]));
+        b.addEventListener(&#x27;click&#x27;,()=&gt;{select.value=n[0];updateDetail();});buttons.set(n[0],b);wrap.append(b);grid.append(wrap);
+      });row.append(grid);map.append(row);
+    }panel.append(map);
+    const detail=make(&#x27;div&#x27;,&#x27;chapter-detail&#x27;);
+    const sl=make(&#x27;label&#x27;,&#x27;form-label&#x27;,&#x27;章節與成功／失敗出口&#x27;);sl.htmlFor=&#x27;if-select-&#x27;+key;
+    const select=make(&#x27;select&#x27;,&#x27;form-select&#x27;);select.id=sl.htmlFor;
+    f.nodes.forEach(n=&gt;{const o=make(&#x27;option&#x27;,&#x27;&#x27;,`${n[0]}　${n[3]}`);o.value=n[0];select.append(o);});select.value=f.selected;
+    const body=make(&#x27;div&#x27;);body.setAttribute(&#x27;aria-live&#x27;,&#x27;polite&#x27;);detail.append(sl,select,body);panel.append(detail);
+    const disclosure=make(&#x27;details&#x27;);disclosure.append(make(&#x27;summary&#x27;,&#x27;&#x27;,f.label+&#x27;角色解鎖與初始名單&#x27;));
+    f.unlocks.forEach(([name,rule])=&gt;{const item=make(&#x27;div&#x27;,&#x27;unlock-item&#x27;);item.append(make(&#x27;div&#x27;,&#x27;&#x27;,name),make(&#x27;div&#x27;,&#x27;text-small&#x27;,rule));disclosure.append(item);});panel.append(disclosure);
+    const invariant=make(&#x27;div&#x27;,&#x27;detail-line text-small&#x27;,&#x27;解鎖≠當夢入隊；未帶本人仍重做檢定。救援達標後不因後續敗北撤銷。同行改寫人物，國勢成功仍須達標。&#x27;);disclosure.append(invariant);
+    function updateDetail(){
+      const n=f.nodes.find(n=&gt;n[0]===select.value);body.replaceChildren();
+      buttons.forEach((b,id)=&gt;b.setAttribute(&#x27;aria-pressed&#x27;,String(id===n[0])));
+      body.append(make(&#x27;div&#x27;,&#x27;detail-line&#x27;,n[4]),make(&#x27;div&#x27;,&#x27;detail-line&#x27;,n[5]));
+      if(n[6])body.append(make(&#x27;div&#x27;,&#x27;detail-line text-small&#x27;,&#x27;七關：&#x27;+n[6].split(&#x27;|&#x27;).map((s,i)=&gt;(i+1)+&#x27;. &#x27;+s).join(&#x27; → &#x27;)));
+      else body.append(make(&#x27;div&#x27;,&#x27;detail-line text-small&#x27;,&#x27;七關沿基礎章節配置；本稿只替換人物、目標與前後因果。&#x27;));
+      if(n[7].length)n[7].forEach(([to,when])=&gt;{const target=f.nodes.find(x=&gt;x[0]===to);body.append(make(&#x27;div&#x27;,&#x27;outcome&#x27;,`${when} → ${to} ${target[3]}`));});
+      else body.append(make(&#x27;div&#x27;,&#x27;outcome&#x27;,&#x27;所有結果 → 本夢終幕；依七關成果與交接條件區分結局，沒有第九章。&#x27;));
+    }
+    function draw(){
+      if(panel.hidden)return;
+      const box=map.getBoundingClientRect();if(box.width===0)return;
+      svg.setAttribute(&#x27;viewBox&#x27;,`0 0 ${box.width} ${box.height}`);svg.replaceChildren();
+      const defs=svgEl(&#x27;defs&#x27;,{});[&#x27;selected&#x27;,&#x27;other&#x27;].forEach(kind=&gt;{const marker=svgEl(&#x27;marker&#x27;,{id:`if-arrow-${key}-${kind}`,viewBox:&#x27;0 0 8 8&#x27;,refX:7,refY:4,markerWidth:6,markerHeight:6,orient:&#x27;auto&#x27;});marker.append(svgEl(&#x27;path&#x27;,{d:&#x27;M0,0 L8,4 L0,8 Z&#x27;,fill:kind===&#x27;selected&#x27;?&#x27;var(--primary)&#x27;:&#x27;var(--muted-foreground)&#x27;}));defs.append(marker);});svg.append(defs);
+      const chosen=f.samples[Number(route.value)][1].split(&#x27; &#x27;);buttons.forEach((b,id)=&gt;b.dataset.on=String(chosen.includes(id)));
+      const edges=[];f.nodes.forEach(n=&gt;n[7].forEach(([to])=&gt;edges.push([n[0],to])));
+      edges.sort((a,b)=&gt;Number(chosen.includes(a[0])&amp;&amp;chosen.includes(a[1]))-Number(chosen.includes(b[0])&amp;&amp;chosen.includes(b[1])));
+      edges.forEach(([from,to])=&gt;{
+        const a=buttons.get(from).getBoundingClientRect(),b=buttons.get(to).getBoundingClientRect();
+        const x1=a.left+a.width/2-box.left,y1=a.bottom-box.top+2,x2=b.left+b.width/2-box.left,y2=b.top-box.top-3;
+        const on=chosen.includes(from)&amp;&amp;chosen.includes(to);const mid=(y1+y2)/2;
+        svg.append(svgEl(&#x27;path&#x27;,{d:`M${x1},${y1} C${x1},${mid} ${x2},${mid} ${x2},${y2}`,fill:&#x27;none&#x27;,stroke:on?&#x27;var(--primary)&#x27;:&#x27;var(--muted-foreground)&#x27;,&#x27;stroke-width&#x27;:on?2:1.3,&#x27;stroke-dasharray&#x27;:on?&#x27;none&#x27;:&#x27;4 4&#x27;,&#x27;marker-end&#x27;:`url(#if-arrow-${key}-${on?&#x27;selected&#x27;:&#x27;other&#x27;})`}));
+      });
+    }
+    select.addEventListener(&#x27;change&#x27;,updateDetail);route.addEventListener(&#x27;change&#x27;,draw);
+    new ResizeObserver(draw).observe(map);
+    new MutationObserver(()=&gt;{if(!panel.hidden)requestAnimationFrame(draw);}).observe(panel,{attributes:true,attributeFilter:[&#x27;hidden&#x27;]});
+    updateDetail();requestAnimationFrame(draw);
+  });
+})();
+&lt;/script&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+  let lastPointerWasTouch = false;
+  let pinnedByTouch = false;
+
+  const getTrigger = (target) =&gt;
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest(&quot;[data-tooltip]&quot;)
+      : null;
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    pinnedByTouch = false;
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handlePointer = (event) =&gt; {
+    lastPointerWasTouch =
+      event.type === &quot;pointerdown&quot; &amp;&amp; event.pointerType === &quot;touch&quot;;
+  };
+  const handleTouchClick = (event) =&gt; {
+    const isTouch = event.pointerType === &quot;touch&quot; || lastPointerWasTouch;
+    lastPointerWasTouch = false;
+    if (!isTouch || event.detail === 0) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (
+      trigger == null ||
+      !trigger.isConnected ||
+      getContent(trigger).length === 0 ||
+      (pinnedByTouch &amp;&amp; activeTrigger === trigger)
+    ) {
+      if (pinnedByTouch) {
+        closeTooltip();
+      }
+      return;
+    }
+    openTooltip(trigger);
+    pinnedByTouch = activeTrigger === trigger;
+    window.setTimeout(() =&gt; {
+      if (activeTrigger === trigger &amp;&amp; !trigger.isConnected) {
+        closeTooltip(false);
+      }
+    }, 0);
+  };
+  const handleLeave = (event) =&gt; {
+    if (pinnedByTouch) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    lastPointerWasTouch = false;
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    lastPointerWasTouch = false;
+    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
+    document.removeEventListener(&quot;pointerdown&quot;, handlePointer);
+    document.removeEventListener(&quot;pointercancel&quot;, handlePointer);
+    document.removeEventListener(&quot;click&quot;, handleTouchClick);
+    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
+    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
+    document.removeEventListener(&quot;focusout&quot;, handleLeave);
+    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
+  document.addEventListener(&quot;pointerdown&quot;, handlePointer);
+  document.addEventListener(&quot;pointercancel&quot;, handlePointer);
+  document.addEventListener(&quot;click&quot;, handleTouchClick);
+  document.addEventListener(&quot;pointerout&quot;, handleLeave);
+  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
+  document.addEventListener(&quot;focusout&quot;, handleLeave);
+  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
+  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-tabs&quot;&gt;
+(() =&gt; {
+  const selector = &#x27;.nav[role=&quot;tablist&quot;] [role=&quot;tab&quot;]&#x27;;
+  const disabled = &#x27;:disabled,[aria-disabled=&quot;true&quot;]&#x27;;
+  const selectTab = (selected) =&gt; {
+    const panelId = selected.getAttribute(&quot;aria-controls&quot;);
+    for (const tab of selected.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;)) {
+      const active = tab === selected;
+      tab.classList.toggle(&quot;active&quot;, active);
+      tab.setAttribute(&quot;aria-selected&quot;, String(active));
+      const id = tab.getAttribute(&quot;aria-controls&quot;);
+      const panel = id &amp;&amp; document.getElementById(id);
+      if (panel != null) {
+        panel.hidden = id !== panelId;
+        if (!panel.hidden &amp;&amp; selected.id) {
+          panel.setAttribute(&quot;aria-labelledby&quot;, selected.id);
+        }
+      }
+    }
+  };
+  const interact = (event) =&gt; {
+    const tab = event.target?.closest?.(selector);
+    if (event.defaultPrevented || tab == null || tab.matches(disabled)) {
+      return;
+    }
+    if (event.type === &quot;click&quot;) {
+      selectTab(tab);
+      return;
+    }
+    const tabs = Array.from(
+      tab.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;),
+    ).filter((candidate) =&gt; !candidate.matches(disabled));
+    const current = tabs.indexOf(tab);
+    let next;
+    if (event.key === &quot;ArrowRight&quot; || event.key === &quot;ArrowDown&quot;) {
+      next = (current + 1) % tabs.length;
+    } else if (event.key === &quot;ArrowLeft&quot; || event.key === &quot;ArrowUp&quot;) {
+      next = (current + tabs.length - 1) % tabs.length;
+    } else if (event.key === &quot;Home&quot;) {
+      next = 0;
+    } else if (event.key === &quot;End&quot;) {
+      next = tabs.length - 1;
+    } else {
+      return;
+    }
+    event.preventDefault();
+    tabs[next].focus();
+    selectTab(tabs[next]);
+  };
+
+  for (const list of document.querySelectorAll(&#x27;.nav[role=&quot;tablist&quot;]&#x27;)) {
+    const selected =
+      list.querySelector(&#x27;[role=&quot;tab&quot;][aria-selected=&quot;true&quot;]&#x27;) ??
+      list.querySelector(&#x27;[role=&quot;tab&quot;].active&#x27;) ??
+      list.querySelector(&#x27;[role=&quot;tab&quot;]&#x27;);
+    if (selected != null) {
+      selectTab(selected);
+    }
+  }
+  document.addEventListener(&quot;click&quot;, interact);
+  document.addEventListener(&quot;keydown&quot;, interact);
+  window.addEventListener(&quot;pagehide&quot;, () =&gt; {
+    document.removeEventListener(&quot;click&quot;, interact);
+    document.removeEventListener(&quot;keydown&quot;, interact);
+  }, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</body>
+</html>

@@ -84,3 +84,5 @@ export { baseOf, notableSlotBonus, stageOf } from '../modules/roster-query.js';
 // ⑩ 只轉出唯讀查詢。`awardNotableFragments` 是寫入函式，只有 ㉖ 可呼叫，
 // 因此不從這裡出去 —— UI 拿不到它才是這道轉出的意義。
 export { notableCodex } from '../modules/notable-codex.js';
+
+export {recruited} from '../modules/recruitment.js';

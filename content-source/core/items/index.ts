@@ -30,6 +30,21 @@ import { FX } from '../effects/ids.js';
 import { coreDef } from '../pack-id.js';
 
 const k = asKey;
+const sourceHints:Record<string,string>={
+ "bamboo": "低階獎勵池；程昱、毛玠知交事件；官渡情報查證；夢中商店。",
+ "spear": "低階獎勵池；夏侯惇知交事件；汜水關接戰；夢中商店。",
+ "bow": "低階獎勵池；張遼、樂進知交事件；荊淮擊退追兵；夢中商店。",
+ "seal": "低階獎勵池；于禁、陳群知交事件；夢中商店。",
+ "ledger": "低階獎勵池；夢中商店。",
+ "rations": "低階獎勵池；夢中商店。",
+ "qinggang": "夏侯惇莫逆鏈與人物委託；虎牢關第一次邀戰擊敗全盛呂布；首次取得後商店。",
+ "mengde": "曹操莫逆链與人物委託；官渡情報查證；首次取得後商店。",
+ "halberd": "曹操與典韋雙人鏈、典韋人物委託；宛城斷後挑戰；首次取得後商店。",
+ "fengxiao": "郭嘉莫逆鏈與人物委託；首次取得後商店。",
+ "wangzuo": "荀彧莫逆鏈與人物委託；首次取得後商店。",
+ "xiaoyaojin": "張遼莫逆鏈〈合肥〉與人物委託；首次取得後商店。",
+ "wuzi": "張遼、于禁、樂進皆達莫逆並完成前置的〈五子良將〉事件；首次取得後珍品商店。"
+};
 
 /** 低階道具的每輪上限。「無上限」在資料上是一個大到碰不到的數。 */
 const UNLIMITED = 99;
@@ -60,6 +75,7 @@ const item = (
   itemId: itemId(`item:${name}`),
   rarity,
   perRunCap,
+  sourceHint:sourceHints[name]!,
   nameKey: k(`item.${name}.name`),
   descKey: k(`item.${name}.desc`),
   tiers: ladder(name, rows).map((row,i)=>({...row,fragmentCost:([0,...(rarity<=2?[3,5,8,12,18]:rarity===3?[3,4,6,9,12]:rarity===4?[2,4,6,8,12]:[2,3,4,6,9])][i]??0)})),
@@ -198,12 +214,12 @@ const named: readonly ItemDef[] = [
    * 兩件湊在一起會互相抵銷，那是真的取捨。
    */
   item('xiaoyaojin', 4, 1, [
-    [ref('SlotBias', FX.biasZhangliaoLead18)],
-    [ref('AffinityGrowth', FX.growZhangliao80)],
-    [ref('SlotSizeBonus', FX.soloBonus20)],
-    [ref('LinkAmplify', FX.amplifyZhangliao25)],
-    [ref('GainMultiplier', FX.gainLead20)],
-    [ref('SlotSizeBonus', FX.soloBonus40)],
+    [ref('SlotBias', FX.xiaoBias)],
+    [ref('AffinityGrowth', FX.xiaoAffinity)],
+    [ref('SlotSizeBonus', FX.xiaoSolo)],
+    [ref('LinkAmplify', FX.xiaoLink)],
+    [ref('GainMultiplier', FX.xiaoGain)],
+    [ref('SlotSizeBonus', FX.xiaoSolo)],
   ]),
 
   /**

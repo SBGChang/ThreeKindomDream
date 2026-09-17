@@ -1,3 +1,5 @@
+import {fieldDialogueVisible} from './battle-story-field.js';
+import {chooseRallyAction} from './debate-rally-model.js';
 import { actionBlock } from './duel-model.js';
 import type { Session } from './session.js';
 import type { SlotIndex } from '../contracts/core/primitives.js';
@@ -46,6 +48,8 @@ export function driveRun(s: Session, policy: RunPolicy, options:{battle?:'legacy
       if(options.battle==='realtime'){
         const battle=s.startRealtimeCampaign();
         for(let frame=0;frame<120000&&battle.status!=='finished';frame++){
+          const story=s.battlefieldStory;
+          if(story&&story.field.mode==='story'){const node=story.data.nodes[story.field.story.node]!;if(node.kind==='debate'){const rally=story.field.story.rally!;if(rally.winner)s.finishBattleDebate();else s.answerBattleDebate(rally.turn,chooseRallyAction(rally));}else if(fieldDialogueVisible(story.data,story.field)){s.advanceBattleStory(story.field.story.revision,node.kind==='choice'?node.options[0]!.id:undefined);}}
           const encounter=s.realtimeConfrontation();
           if(encounter?.contest?.phase==='read')s.answerRealtimeDuel(policy.chooseDuel?.(s)??(encounter.contest.duel&&actionBlock(encounter.contest.duel.ally,'attack')?2:0));
           if(frame%15===0){

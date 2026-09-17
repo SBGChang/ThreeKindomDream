@@ -1,3 +1,9 @@
+import {BattleStoryDialogue} from './BattleStoryDialogue.js';
+import {fieldDialogueVisible} from '../app/battle-story-field.js';
+import {RallyDebateDemo} from './RallyDebateDemo.js';
+import {DuelVitals} from './DuelHud.js';
+import {t,defs} from '../app/bootstrap.js';
+import './battle-story-field.css';
 import type { Session } from '../app/session.js';
 import {drawEncounterDemo} from './confrontation-render.js';
 import {loadDuelImages} from './duel-art.js';
@@ -10,6 +16,7 @@ import './battle-hud.css';
 
 export function RealtimeBattle({campaign,bump,onDone}:{campaign?:Session;bump?:()=>void;onDone?:()=>void}={}):React.ReactElement {
  const [initial]=useState(()=>campaign?campaign.startRealtimeCampaign():createBattle());
+ const stage=useRef<HTMLDivElement>(null),[storyScale,setStoryScale]=useState(1);
  const canvas=useRef<HTMLCanvasElement>(null),battle=useRef<BattleState>(initial),images=useRef<BattleImages|null>(null);
  const [state,setState]=useState<BattleState>(battle.current),[ready,setReady]=useState(false),[error,setError]=useState(''),[troops,setTroops]=useState(400);
  const [duelHelp,setDuelHelp]=useState(false),helpResume=useRef(false);
@@ -18,7 +25,7 @@ export function RealtimeBattle({campaign,bump,onDone}:{campaign?:Session;bump?:(
  const cast=(id:string)=>{if(campaign?campaign.castRealtimeSkill(id):castSkill(battle.current,id))sync();};
  const togglePause=()=>{const s=battle.current;if(s.status==='running')s.status='paused';else if(s.status==='paused')s.status='running';sync();};
  const start=()=>{if(!ready)return;const s=createBattle(troops);startBattle(s);battle.current=s;sync();};
- useEffect(()=>{let alive=true;const encounter=campaign?.realtimeConfrontation(),ids=encounter?[encounter.participants.ally.id,...encounter.waveOpponents.map(p=>p.id)]:[];void Promise.all([loadBattleImages(campaign?`./art/backgrounds/bg-battle-${Math.min(4,campaign.current.progress.chapter)}.png`:undefined,battle.current.commanders,battle.current.waveNames),loadDuelImages(ids)]).then(([v,d])=>{if(alive){images.current={...v,...d};setReady(true);}}).catch(e=>{if(alive)setError(String(e));});return()=>{alive=false;};},[]);
+ useEffect(()=>{let alive=true;const encounter=campaign?.realtimeConfrontation(),ids=encounter?[encounter.participants.ally.id,...encounter.waveOpponents.map(p=>p.id)]:[];void Promise.all([loadBattleImages(campaign?`./art/backgrounds/bg-battle-${Math.min(4,campaign.current.progress.chapter)}.png`:undefined,battle.current.commanders,battle.current.waveNames),loadDuelImages([...ids,'lvbu','zhangfei','guanyu','liubei','lord'])]).then(([v,d])=>{if(alive){images.current={...v,...d};setReady(true);}}).catch(e=>{if(alive)setError(String(e));});return()=>{alive=false;};},[]);
  useEffect(()=>{
   if(!ready)return;let raf=0,last=performance.now(),uiAt=0,saveAt=0,acc=0;
   const frame=(now:number)=>{
@@ -31,17 +38,21 @@ export function RealtimeBattle({campaign,bump,onDone}:{campaign?:Session;bump?:(
   raf=requestAnimationFrame(frame);return()=>cancelAnimationFrame(raf);
  },[ready]);
  useEffect(()=>{
-  const key=(e:KeyboardEvent)=>{if(e.repeat||e.altKey||e.ctrlKey||e.metaKey||e.target instanceof HTMLSelectElement||e.target instanceof HTMLInputElement)return;const s=battle.current;if(e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();if(s.status==='running')togglePause();return;}if(e.code==='Space'&&(s.status==='running'||s.status==='paused')){e.preventDefault();togglePause();return;}if(campaign?.realtimeConfrontation()?.contest)return; // DuelInterface owns staged selection and confirmation.
+  const key=(e:KeyboardEvent)=>{const field=campaign?.battlefieldStory;if(e.defaultPrevented||field&&field.data.nodes[field.field.story.node]?.kind==='debate')return;if(e.repeat||e.altKey||e.ctrlKey||e.metaKey||e.target instanceof HTMLSelectElement||e.target instanceof HTMLInputElement)return;const s=battle.current;if(e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();if(s.status==='running')togglePause();return;}if(e.code==='Space'&&(s.status==='running'||s.status==='paused')){e.preventDefault();togglePause();return;}if(campaign?.battlefieldStory?.field.mode==='story'||campaign?.realtimeConfrontation()?.contest)return; // DuelInterface owns staged selection and confirmation.
 const skill=battle.current.skills.find(v=>v.key.toLowerCase()===e.key.toLowerCase());if(skill&&ready){e.preventDefault();cast(skill.id);}};
-  const hide=()=>{if(document.hidden&&battle.current.status==='running'){battle.current.status='paused';sync();}};
+  const hide=()=>{const field=campaign?.battlefieldStory;if(field&&field.data.nodes[field.field.story.node]?.kind==='debate')return;if(document.hidden&&battle.current.status==='running'){battle.current.status='paused';sync();}};
   window.addEventListener('keydown',key);document.addEventListener('visibilitychange',hide);return()=>{window.removeEventListener('keydown',key);document.removeEventListener('visibilitychange',hide);};
  },[ready]);
+ useEffect(()=>{const el=stage.current;if(!el)return;const resize=()=>setStoryScale(el.clientWidth/1280);resize();const o=new ResizeObserver(resize);o.observe(el);return()=>o.disconnect();},[campaign?.battlefieldStory?.field.story.node]);
+ const p=campaign?.battlefieldStory,talk=p&&fieldDialogueVisible(p.data,p.field),node=p?.data.nodes[p.field.story.node];
+ const displayData=p?{...p.data,nodes:Object.fromEntries(Object.entries(p.data.nodes).map(([id,n])=>[id,n.kind==='reward'?{...n,reward:{...n.reward,items:n.reward.items.map(id=>t(defs.reader('item').get(id).nameKey)),unlocks:n.reward.unlocks.map(id=>t(defs.reader('notable').get(id).nameKey))}}:n]))}:null;
+ if(p&&node?.kind==='debate'&&p.field.story.rally)return <RallyDebateDemo key={p.data.id+'/'+p.field.story.node} campaign={{state:p.field.story.rally,onPause:paused=>{campaign!.pauseRealtimeCampaign(paused);sync();},enemyName:node.enemyName,onAction:(side,a)=>{const ok=campaign!.answerBattleDebate(side,a);bump?.();return ok;},onDone:()=>{campaign!.finishBattleDebate();sync();}}}/>;
  const result=campaign&&state.status==='finished'?campaign.realtimeCampaignResult():null;
  const c=state.cinematic,ended=state.status==='finished',contest=campaign?.realtimeConfrontation()?.contest;
  const art='./art/ui/campaign/';
- return <main className={campaign?"rt-shell rt-campaign":"rt-shell"}><div className={`rt-battle ${contest?'ct-battle ct-duel':''}`} data-contest-phase={contest?.phase??'none'} data-status={state.status} data-wave-phase={state.phase} data-wave={state.wave} data-cinematic={c?.skill.kind??'none'}>
+ return <main className={campaign?"rt-shell rt-campaign":"rt-shell"}><div ref={stage} className={`rt-battle bsf-field ${contest?'ct-battle ct-duel':''}`} data-contest-phase={contest?.phase??'none'} data-status={state.status} data-wave-phase={state.phase} data-wave={state.wave} data-cinematic={c?.skill.kind??'none'}>
   <canvas ref={canvas} width={1600} height={900} aria-label={`即時戰場：我軍 ${armyCount(state,'ally')} 人、敵軍 ${armyCount(state,'enemy')} 人`}/>
-  {contest?<DuelBattleOverlay contest={contest} paused={state.status!=='running'} onAnswer={choice=>{campaign?.answerRealtimeDuel(choice);sync();}} onHelpChange={helpChange}/>:<><ArmyHud state={state}/>
+  {talk?null:contest&&node?.kind==='combat'&&node.mode==='auto'?<><DuelVitals fighter={contest.duel!.ally} name={contest.allyName} actorId={contest.allyId}/><DuelVitals fighter={contest.duel!.enemy} name={contest.enemyName} actorId={contest.enemyId} enemy/><div className="bsf-auto">{node.title} · 自動交鋒</div></>:contest?<DuelBattleOverlay contest={contest} paused={state.status!=='running'} onAnswer={choice=>{campaign?.answerRealtimeDuel(choice);sync();}} onHelpChange={helpChange}/>:<><ArmyHud state={state}/>
   <BattleHint className={`rt-timer ${state.status==='running'&&state.phase==='combat'&&!c&&state.duration-state.time<=10?'rt-urgent':''}`} below title="鳴金倒數" detail="交戰時倒數；戰法演出與換波期間暫停計時。">{id=><button type="button" aria-describedby={id} aria-label={`剩餘 ${Math.ceil(state.duration-state.time)} 秒`}><strong>{Math.ceil(state.duration-state.time).toString().padStart(2,'0')}</strong><small>{ended?'收兵':state.status==='paused'?'暫停':c||state.phase!=='combat'?'待陣':'倒數'}</small></button>}</BattleHint>
   <ArmyHud state={state} enemy/>
   {state.status!=='ready'&&state.status!=='finished'&&state.phase==='start'&&<div className="rt-wave-start" key={state.wave} style={{opacity:Math.min(1,state.phaseTime/.15,Math.max(0,(1.45-state.phaseTime)/.3))}}><div className="rt-start-lettering"><small>第 {state.wave} 陣</small><img src={art+'battle-start-v1.png'} alt="開戰"/></div></div>}
@@ -51,6 +62,7 @@ const skill=battle.current.skills.find(v=>v.key.toLowerCase()===e.key.toLowerCas
   <SupplyBags state={state}/><div className="rt-lower-info"><BattleBuffs state={state}/></div>
   <BattleHint className="rt-battle-record" end title="戰況" detail={state.log.length?state.log.map((line,i)=><span key={i}>{line}</span>):'交鋒在即。'}>{id=><button type="button" aria-describedby={id} aria-label={`擊退 ${state.kills} 人，查看戰況`}><img src={art+'enemy-squad-v1.png'} alt=""/><strong>{state.kills}</strong></button>}</BattleHint>
   <nav className="rt-command" aria-label="戰法操作區"><section className="rt-skill-group"><h2>戰法</h2><div>{state.skills.filter(skill=>!skill.support && (!campaign?['1','2','3'].includes(skill.key):true)).map(skill=><SkillButton key={skill.id} skill={skill} state={state} onCast={cast}/>)}</div></section><section className="rt-skill-group rt-companions"><h2>援護</h2><div>{state.skills.filter(skill=>campaign?skill.support:['Q','W','E'].includes(skill.key)).map(skill=><SkillButton key={skill.id} skill={skill} state={state} onCast={cast}/>)}</div></section><button type="button" className="rt-pause" aria-label={state.status==='paused'?'繼續戰鬥':'暫停戰鬥'} disabled={state.status==='ready'||ended} onClick={togglePause}><span aria-hidden="true">{state.status==='paused'?'▶':'Ⅱ'}</span><small>SPACE</small></button></nav></>}
+  {talk&&p&&displayData&&<div className="game-stage bsf-dialogue-stage" style={{transform:`scale(${storyScale})`}}><BattleStoryDialogue data={displayData} run={p.field.story} onNext={choice=>{campaign!.advanceBattleStory(p.field.story.revision,choice);sync();}}/></div>}
   {(state.status==='ready'||ended)&&<div className="rt-overlay"><section className="rt-scroll" role="dialog" aria-modal="true" aria-label={ended?'戰役結算':'演武準備'}>
    <small>三國夢 · 演武</small><h1>{ended?'鳴金收兵':'沙場演武'}</h1>
    {ended?<><p>{state.reason}</p><div className="rt-result"><span><img src={art+'enemy-squad-v1.png'} alt=""/>擊退<strong>{state.kills}</strong></span><span><img src={art+'troops-icon-v1.png'} alt=""/>存留<strong>{armyCount(state,'ally')}</strong></span><span><img src={art+'tactic-book-v5.png'} alt=""/>戰法<strong>{state.castCount}</strong></span></div>{result&&<p className="rt-earned"><strong>{result.money}</strong> 錢 · 破 {result.cleared} 陣{result.defeated?' · 戰敗折半':''}</p>}</>:<><p className="rt-motto">六十息，破千軍</p><div className="rt-troop-options" role="group" aria-label="出陣兵力">{[200,400,600].map(n=><button type="button" key={n} aria-pressed={troops===n} onClick={()=>{setTroops(n);battle.current=createBattle(n);sync();}}><img src={art+'troops-icon-v1.png'} alt=""/><strong>{n}</strong></button>)}</div><BattleHint className="rt-rules-help" title="演武軍令" detail="60 秒內擊退更多敵軍。每隊最多 50 人；兵力歸零才倒地。戰法消耗軍糧，演出與換波期間暫停計時。">{id=><button type="button" aria-describedby={id}><img src={art+'tactic-book-v5.png'} alt=""/>軍令</button>}</BattleHint></>}

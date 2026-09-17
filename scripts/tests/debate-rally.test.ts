@@ -1,14 +1,41 @@
 import assert from 'node:assert/strict';
-import {actRally,chooseRallyAction,createRally,drawRallyCard,forecastRally,rallyHandSize,rallyOpponentHand,rallyPlayable,rallySpecialPlayable} from '../../src/app/debate-rally-model.js';
+import {actRally,chooseRallyAction,createRally,drawRallyCard,forecastRally,rallyHandSize,rallyMustPass,rallyOpponentHand,rallyPlayable,rallySpecialPlayable} from '../../src/app/debate-rally-model.js';
 import type {RallyBuild,RallyCard,RallyColor,RallySpecial} from '../../src/contracts/core/debate-rally.js';
 import {RALLY_PROFILES,RALLY_SPECIALS,RALLY_PASSIVES,rallyProfile} from '../../src/app/debate-traits.js';
 import {DUEL_ACTORS} from '../../src/contracts/core/duel-art.js';
 import {DEBATE_OFFICER_STATS} from '../../src/app/debate-roster.js';
+import {sortedRallyHand,rallyFanSlot} from '../../src/ui/rally-hand-layout.js';
 const plain:RallyBuild={int:70,pol:65,special:null,passives:[]};
 let id=10000;
 const normal=(color:RallyColor,value:number):RallyCard=>({id:id++,kind:'normal',color,value});
 const special=(special:RallySpecial):RallyCard=>({id:id++,kind:'special',special});
+{
+ const blueLow=normal('reason',2),blueHigh=normal('reason',9),green=normal('evidence',1),red=normal('presence',3),sp=special('wild');
+ const hand=[sp,red,blueHigh,green,blueLow],original=[...hand];
+ assert.deepEqual(sortedRallyHand(hand),[blueLow,blueHigh,green,red,sp],'group colors, ascending ranks, then special cards');
+ assert.deepEqual(hand,original,'display sorting must not change gameplay draw order');
+ for(const count of [1,8,20]){
+  const first=rallyFanSlot(0,count),last=rallyFanSlot(count-1,count);
+  assert.equal(first.x+last.x,0);assert.equal(first.angle+last.angle,0);assert.equal(first.y,last.y);
+  assert(Math.abs(first.x)<=33&&Math.abs(first.angle)<=11,'large hands stay within the fan');
+ }
+}
 const setup=()=>{const s=createRally(plain,plain);s.table={id:9999,kind:'normal',color:'reason',value:5};return s;};
+{
+ const s=setup();s.ally.hand=[normal('evidence',1)];
+ assert(rallyMustPass(s));
+ const before=s.ally.hand.length;assert(actRally(s,'ally',{kind:'pass'}));
+ assert.equal(s.ally.hand.length,before+1);assert.equal(s.turn,'enemy');
+ assert(!rallyMustPass(s,'ally'),'inactive player cannot auto-pass');
+}
+for(const kind of Object.keys(RALLY_SPECIALS) as RallySpecial[]){
+ const s=setup();s.ally.hand=[normal('evidence',1),normal('presence',2),special(kind)];
+ assert(!rallyMustPass(s),'usable specials prevent automatic passing');
+ assert(!actRally(s,'ally',{kind:'pass'}),'cannot retain a usable special by passing');
+ const action=chooseRallyAction(s);assert.equal(action.kind,'special');assert(actRally(s,'ally',action));
+ assert.equal(rallyMustPass(s),!s.ally.hand.some(c=>rallyPlayable(s,'ally',c)),'after the special, check normal cards again');
+ s.ally.skip=true;assert(rallyMustPass(s),'shout forces a pass even with cards');
+}
 for(const color of ['reason','evidence','presence'] as const)for(let value=1;value<=9;value++){
  const s=setup(),card=normal(color,value);assert.equal(rallyPlayable(s,'ally',card),color==='reason'?value>5:value===5);
  s.table=null;assert(rallyPlayable(s,'ally',card));
@@ -20,9 +47,9 @@ for(const color of ['reason','evidence','presence'] as const)for(let value=1;val
 }
 for(const kind of Object.keys(RALLY_SPECIALS) as RallySpecial[]){
  const s=setup(),sp=special(kind),a=normal('reason',7),b=normal('evidence',5);s.ally.hand=[sp,a,b,special('reflect')];
- const count=s.ally.hand.length;assert(actRally(s,'ally',{kind:'special',id:sp.id,...(kind==='induct'?{targets:[a.id,b.id]}:{})}));assert.equal(s.turn,'ally');assert(s.specialUsed);assert.equal(s.ally.hand.length,count-1+(kind==='concentrate'?3:0));
+ const count=s.ally.hand.length;assert(actRally(s,'ally',{kind:'special',id:sp.id,...(kind==='induct'?{targets:[a.id,b.id]}:{})}));assert.equal(s.turn,'ally');assert(s.specialUsed);assert.equal(s.ally.hand.at(-1)?.kind,'normal','special always replaces itself with a normal card');assert.equal(s.ally.hand.length,count+(kind==='concentrate'?3:0));
  assert(!rallySpecialPlayable(s,'ally',s.ally.hand.find(c=>c.kind==='special')!),'second special forbidden');
- if(kind==='induct')assert(s.ally.hand.filter(c=>c.kind==='normal').every(c=>c.value===9));
+ if(kind==='induct')assert([a,b].every(c=>c.kind==='normal'&&c.value===9));
  if(kind==='shout'){assert(s.ally.double);assert(s.enemy.skip);assert(actRally(s,'ally',{kind:'normal',id:a.id}));assert(actRally(s,'enemy',{kind:'pass'}));assert(!s.enemy.skip);assert.equal(s.lastPass,'enemy');}
  if(kind==='wild'){assert(rallyPlayable(s,'ally',normal('presence',1)));}
  if(kind==='reflect')assert(s.ally.reflect);
@@ -30,7 +57,7 @@ for(const kind of Object.keys(RALLY_SPECIALS) as RallySpecial[]){
 {
  const s=setup(),sp=special('induct'),a=normal('reason',2);s.ally.hand=[sp,a,normal('presence',3)];const before=structuredClone(s);
  for(const targets of [[],[a.id,a.id],[a.id,999],[a.id]]){assert(!actRally(s,'ally',{kind:'special',id:sp.id,targets}));assert.deepEqual(s,before);}
- assert(actRally(s,'ally',{kind:'special',id:sp.id,targets:[a.id,s.ally.hand[2]!.id]}));assert(s.ally.hand.every(c=>c.kind==='normal'&&c.value===5));
+ assert(actRally(s,'ally',{kind:'special',id:sp.id,targets:[a.id,s.ally.hand[2]!.id]}));assert(s.ally.hand.slice(0,2).every(c=>c.kind==='normal'&&c.value===5));
 }
 {
  const s=setup();s.ally.hand=[normal('reason',6)];s.enemy.hand=[normal('evidence',1)];assert(!actRally(s,'ally',{kind:'pass'}));
@@ -85,3 +112,13 @@ for(let seed=1;seed<=500;seed++){
  assert(s.winner,`simulation ${seed} must terminate`);outcomes[s.winner]++;completed++;maxActions=Math.max(maxActions,n);
 }
 console.log('Rally debate passed: 27 follow rules, five specials, caps, reflection, combo, redraw, secrecy, eight passives, roster stats, intelligence distribution.',{completed,maxActions,outcomes});
+
+{
+ const all=Object.keys(RALLY_SPECIALS) as RallySpecial[],s=createRally({...plain,specials:all});
+ const found=new Set<RallySpecial>();
+ for(let i=0;i<5000;i++){const c=drawRallyCard(s,'ally');if(c.kind==='special')found.add(c.special);}
+ assert.deepEqual([...found].sort(),[...all].sort(),'all owned special traits enter the draw pool');
+ const restored=JSON.parse(JSON.stringify(s));assert.deepEqual(drawRallyCard(s,'ally'),drawRallyCard(restored,'ally'),'multiple sources survive save/load');
+ const limited=createRally({...plain,specials:['induct','reflect']});
+ for(let i=0;i<500;i++){const c=drawRallyCard(limited,'ally');assert(c.kind==='normal'||['induct','reflect'].includes(c.special));assert.equal(drawRallyCard(limited,'ally',true).kind,'normal');}
+}

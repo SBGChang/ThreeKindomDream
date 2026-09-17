@@ -6,7 +6,7 @@ const finite=(n:unknown)=>typeof n==='number'&&Number.isFinite(n)&&n>=0;
 const action=(a:unknown)=>a===null||DUEL_ACTIONS.includes(a as never);
 const build=(b:DuelBuild)=>b&&finite(b.war)&&finite(b.lead)&&Object.hasOwn(DUEL_TRAITS,b.trait);
 const fighter=(f:DuelFighter)=>f&&[f.stamina,f.maxStamina,f.injury,f.injuryLimit,f.attack,f.defense,f.recovery,f.combo,f.streak].every(finite)&&f.maxStamina>0&&f.injuryLimit>0&&f.stamina<=f.maxStamina&&f.injury<=f.injuryLimit&&f.combo<=DUEL_RULES.comboCap&&f.streak<=DUEL_RULES.streakCap&&f.build&&f.build.war>=1&&f.build.war<=100&&f.build.lead>=1&&f.build.lead<=100&&Object.hasOwn(DUEL_TRAITS,f.build.trait)&&typeof f.taunted==='boolean'&&typeof f.fainted==='boolean'&&action(f.previous)&&DUEL_ACTIONS.every(a=>finite(f.points[a])&&f.points[a]<=DUEL_RULES.pointsCap);
-const turn=(t:DuelTurn)=>t&&action(t.ally)&&action(t.enemy)&&[t.damageToAlly,t.damageToEnemy,t.allyCost,t.enemyCost,t.allyRecovery,t.enemyRecovery].every(finite)&&Array.isArray(t.notes)&&t.notes.every(n=>typeof n==='string')&&(t.changes===undefined||(['ally','enemy'] as const).every(side=>Number.isFinite(t.changes?.[side].stamina)&&finite(t.changes?.[side].injury)));
+const turn=(t:DuelTurn)=>t&&action(t.ally)&&action(t.enemy)&&[t.damageToAlly,t.damageToEnemy,t.allyCost,t.enemyCost,t.allyRecovery,t.enemyRecovery].every(finite)&&Array.isArray(t.notes)&&t.notes.every(n=>typeof n==='string')&&(t.changes===undefined||(['ally','enemy'] as const).every(side=>Number.isFinite(t.changes?.[side].stamina)&&Number.isFinite(t.changes?.[side].injury)));
 /** Reject malformed persisted duel state without re-rolling or repairing player choices. */
 export function validEncounterProgress(value:unknown):value is EncounterProgress {
  try{

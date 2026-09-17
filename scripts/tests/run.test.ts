@@ -117,7 +117,7 @@ export function run(): void {
       chooseOption: (_s, offer) => offer.optionStates.findIndex(o => o.enabled),
       spend: () => {}, chooseLoadout: loadoutFor, chooseEngage: () => false,
     };
-    it('每章八次行動，四章共三十二次，沒有重複進入章末', () => {
+    it('每章八次行動，序章加八章共七十二次，沒有重複進入章末', () => {
       const s = newSession(4242);
       const chapters: Record<number, number> = {};
       const result = driveRun(s, { ...policy, chooseSlot: s2 => {
@@ -125,9 +125,9 @@ export function run(): void {
         chapters[ch] = (chapters[ch] ?? 0) + 1;
         return policy.chooseSlot(s2);
       } });
-      eq(result.actions, 32);
-      eq(Object.values(chapters), [8, 8, 8, 8]);
-      eq(s.current.progress.turn, 32);
+      eq(result.actions, 72);
+      eq(Object.values(chapters), Array(9).fill(8));
+      eq(s.current.progress.turn, 72);
       ok(!s.canAdvance(), '結局後不可繼續推進');
     });
     it('存檔在待處理事件中恢复後，策略與逐步操作得到相同結果', () => {

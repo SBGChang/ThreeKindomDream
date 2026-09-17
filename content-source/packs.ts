@@ -55,10 +55,17 @@ import { shuDefs, shuTexts, shuNotables } from './shu/index.js';
 import { withTeaching } from './teaching.js';
 import { commonStories, weiStories, mainStoryTexts } from './main-stories.js';
 
+import {withRecruitment} from './recruitment.js';
+import {expandStory,extraWeiChapters,extraWeiCampaigns,extraWeiStories,expansionTexts,expansionEndings} from './narrative-expansion.js';
+import {lvbu,lvbuTexts} from './lvbu.js';
+import {equipmentItems,equipmentTexts} from './core/items/equipment.js';
 const coreDialogueEvents = [...coreCommissions, ...variedCommissions].map(withDialogue);
 const weiDialogueEvents = [...weiCommissions, ...weiNotableCommissions, ...weiNotableEvents, ...earlyStories].map(d => withDialogue(withTeaching(d, weiNotables.map(withTactics))));
 const shuDialogueDefs = shuDefs.map(d => d.kind === 'event' ? withDialogue(withTeaching(d, shuNotables.map(withTactics))) : d.kind==='notable'?withTactics(d):d);
 const wuDialogueDefs=wuDefs.map(d=>d.kind==='event'?withDialogue(withTeaching(d,wuNotables.map(withTactics))):d.kind==='notable'?withTactics(d):d);
+const expandedWei=[...weiStories,...extraWeiStories].map(expandStory);
+const expandedShu=shuDialogueDefs.map(d=>d.kind==='storyChapter'?expandStory(d):d.kind==='notable'?withRecruitment(d):d);
+const expandedWu=wuDialogueDefs.map(d=>d.kind==='storyChapter'?expandStory(d):d.kind==='notable'?withRecruitment(d):d);
 const corePack: AuthoredPack = {
   packId: CORE,
   version: '0.1.0',
@@ -73,7 +80,7 @@ const corePack: AuthoredPack = {
     ...campEnemies, ...campCampaigns,
     ...talents, ...shopItems, settlementFormula,
     ...paramPools, ...dcCurves,
-    ...coreItems, ...coreItemPools,
+    ...coreItems, ...equipmentItems, ...coreItemPools,
     ...coreDialogueEvents,
     ...campChapters, campSequence,
     ...commonStories,
@@ -82,7 +89,7 @@ const corePack: AuthoredPack = {
   ],
   effects: coreEffects,
   // GREYBOX：文案暫時全部掛在 core。正式版應隨各 pack 拆分（06 §2.1）。
-  texts: {...zhTW,...tacticTexts,...triggeredTexts,...earlyTexts,...variedTexts,...dialogueTexts,...mainStoryTexts},
+  texts: {...zhTW,...equipmentTexts,...lvbuTexts,...expansionTexts,...tacticTexts,...triggeredTexts,...earlyTexts,...variedTexts,...dialogueTexts,...mainStoryTexts},
 };
 
 const weiPack: AuthoredPack = {
@@ -91,12 +98,12 @@ const weiPack: AuthoredPack = {
   requiredPacks: [CORE],
   loadOrder: 10,
   defs: [
-    ...weiNotables.map(withTactics), weiSuperiorPool,
+    ...weiNotables.map(withTactics).map(withRecruitment),withRecruitment(lvbu), weiSuperiorPool,
     weiFaction,
     ...weiDialogueEvents,
-    ...weiChapters, weiSequence,
-    ...weiStories,
-    ...weiEnemies, ...weiCampaigns,
+    ...weiChapters,...extraWeiChapters, {...weiSequence,chapters:[...weiSequence.chapters,...extraWeiChapters.map(c=>c.chapterId)]},
+    ...expandedWei,...expansionEndings.filter(e=>e.factionId==='faction:wei'),
+    ...weiEnemies, ...weiCampaigns,...extraWeiCampaigns,
   ],
   effects: {},
   texts: {},
@@ -106,6 +113,6 @@ export const AUTHORED_MANIFEST: AuthoredManifest = {
   runtimeVersion: '0.1.0',
   packs: [corePack, weiPack, {
     packId: SHU, version: '0.1.0', requiredPacks: [CORE], loadOrder: 20,
-    defs: shuDialogueDefs, effects: {}, texts: shuTexts,
-  },{packId:WU,version:'0.1.0',requiredPacks:[CORE],loadOrder:30,defs:wuDialogueDefs,effects:{},texts:wuTexts}],
+    defs: [...expandedShu,...expansionEndings.filter(e=>e.factionId==='faction:shu')], effects: {}, texts: shuTexts,
+  },{packId:WU,version:'0.1.0',requiredPacks:[CORE],loadOrder:30,defs:[...expandedWu,...expansionEndings.filter(e=>e.factionId==='faction:wu')],effects:{},texts:wuTexts}],
 };

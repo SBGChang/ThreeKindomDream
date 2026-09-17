@@ -112,6 +112,7 @@ export const effects: EffectTableInput = {
 
   // ── 站位分配。【不吃好感門檻】—— 好感正是靠同格養出來的（死結）。
   SlotBias: {
+    [FX.xiaoBias]: { target: named('notable:zhangliao'), attrWeights: {lead:4}, condition:null },
     [FX.biasSelfLead15]: { target: SELF, attrWeights: { lead: 1.5 }, condition: null },
     [FX.biasSelfWar15]: { target: SELF, attrWeights: { war: 1.5 }, condition: null },
     [FX.biasSelfInt18]: { target: SELF, attrWeights: { int: 1.8 }, condition: null },
@@ -157,6 +158,7 @@ export const effects: EffectTableInput = {
 
   // ── 放大同格【其他】人。陳群的九品官人法，唯一直接獎勵多人同格的效果。
   LinkAmplify: {
+    [FX.xiaoLink]: {target:named('notable:zhangliao'),standing:STAND_NONE,mulPct:1,condition:null},
     [FX.amplifyAll15]: { target: ALL, standing: STAND_SELF, mulPct: 0.15, condition: null },
     [FX.amplifyAll20]: { target: ALL, standing: STAND_SELF, mulPct: 0.20, condition: null },
     // 道具版：來源不是名士，所以不要求誰站著（陳群本人不必在場）。
@@ -205,6 +207,7 @@ export const effects: EffectTableInput = {
    * 因此玩家有兩種互斥的站位流派可以選。
    */
   SlotSizeBonus: {
+    [FX.xiaoSolo]: {minNotables:1,maxNotables:1,standing:STAND_NONE,mulPct:1,condition:null},
     [FX.soloBonus20]: {
       minNotables: 1, maxNotables: 1, standing: STAND_NONE, mulPct: 0.20, condition: null,
     },
@@ -264,6 +267,7 @@ export const effects: EffectTableInput = {
   },
 
   GainMultiplier: {
+    [FX.xiaoGain]: {scope:'lead',mulPct:.4,condition:null},
     [FX.gainInt8]: { scope: 'int', mulPct: 0.08, condition: null },
     [FX.gainInt15]: { scope: 'int', mulPct: 0.15, condition: null },
     [FX.gainWar8]: { scope: 'war', mulPct: 0.08, condition: null },
@@ -304,6 +308,7 @@ export const effects: EffectTableInput = {
    * 它與「起始好感」是同一件事的兩種買法：一次性跳過 vs 持續加速。
    */
   AffinityGrowth: {
+    [FX.xiaoAffinity]: { target: named('notable:zhangliao'), mulPct:1.5, condition:null },
     [FX.growAll15]: { target: ALL, mulPct: 0.15, condition: null },
     [FX.growSelf50]: { target: SELF, mulPct: 0.50, condition: null },
     [FX.growAll20]: { target: ALL, mulPct: 0.20, condition: null },

@@ -3640,6 +3640,7 @@
     "perRunCap": 99,
     "rarity": 1,
     "schemaVersion": 1,
+    "sourceHint": "低階獎勵池；程昱、毛玠知交事件；官渡情報查證；夢中商店。",
     "tiers": [
       {
         "descKey": "item.bamboo.tier.0",
@@ -3719,6 +3720,7 @@
     "perRunCap": 99,
     "rarity": 1,
     "schemaVersion": 1,
+    "sourceHint": "低階獎勵池；夏侯惇知交事件；汜水關接戰；夢中商店。",
     "tiers": [
       {
         "descKey": "item.spear.tier.0",
@@ -3798,6 +3800,7 @@
     "perRunCap": 99,
     "rarity": 2,
     "schemaVersion": 1,
+    "sourceHint": "低階獎勵池；張遼、樂進知交事件；荊淮擊退追兵；夢中商店。",
     "tiers": [
       {
         "descKey": "item.bow.tier.0",
@@ -3877,6 +3880,7 @@
     "perRunCap": 99,
     "rarity": 2,
     "schemaVersion": 1,
+    "sourceHint": "低階獎勵池；于禁、陳群知交事件；夢中商店。",
     "tiers": [
       {
         "descKey": "item.seal.tier.0",
@@ -3956,6 +3960,7 @@
     "perRunCap": 1,
     "rarity": 4,
     "schemaVersion": 1,
+    "sourceHint": "夏侯惇莫逆鏈與人物委託；虎牢關第一次邀戰擊敗全盛呂布；首次取得後商店。",
     "tiers": [
       {
         "descKey": "item.qinggang.tier.0",
@@ -4035,6 +4040,7 @@
     "perRunCap": 1,
     "rarity": 3,
     "schemaVersion": 1,
+    "sourceHint": "曹操莫逆链與人物委託；官渡情報查證；首次取得後商店。",
     "tiers": [
       {
         "descKey": "item.mengde.tier.0",
@@ -4114,6 +4120,7 @@
     "perRunCap": 1,
     "rarity": 3,
     "schemaVersion": 1,
+    "sourceHint": "曹操與典韋雙人鏈、典韋人物委託；宛城斷後挑戰；首次取得後商店。",
     "tiers": [
       {
         "descKey": "item.halberd.tier.0",
@@ -4193,6 +4200,7 @@
     "perRunCap": 1,
     "rarity": 4,
     "schemaVersion": 1,
+    "sourceHint": "郭嘉莫逆鏈與人物委託；首次取得後商店。",
     "tiers": [
       {
         "descKey": "item.fengxiao.tier.0",
@@ -4272,6 +4280,7 @@
     "perRunCap": 1,
     "rarity": 4,
     "schemaVersion": 1,
+    "sourceHint": "荀彧莫逆鏈與人物委託；首次取得後商店。",
     "tiers": [
       {
         "descKey": "item.wangzuo.tier.0",
@@ -4351,13 +4360,14 @@
     "perRunCap": 1,
     "rarity": 4,
     "schemaVersion": 1,
+    "sourceHint": "張遼莫逆鏈〈合肥〉與人物委託；首次取得後商店。",
     "tiers": [
       {
         "descKey": "item.xiaoyaojin.tier.0",
         "effects": [
           {
             "funcType": "SlotBias",
-            "referId": 4025
+            "referId": 9901
           }
         ],
         "fragmentCost": 0,
@@ -4368,7 +4378,7 @@
         "effects": [
           {
             "funcType": "AffinityGrowth",
-            "referId": 5115
+            "referId": 9902
           }
         ],
         "fragmentCost": 2,
@@ -4379,7 +4389,7 @@
         "effects": [
           {
             "funcType": "SlotSizeBonus",
-            "referId": 4401
+            "referId": 9903
           }
         ],
         "fragmentCost": 4,
@@ -4390,7 +4400,7 @@
         "effects": [
           {
             "funcType": "LinkAmplify",
-            "referId": 4214
+            "referId": 9904
           }
         ],
         "fragmentCost": 6,
@@ -4401,7 +4411,7 @@
         "effects": [
           {
             "funcType": "GainMultiplier",
-            "referId": 4908
+            "referId": 9905
           }
         ],
         "fragmentCost": 8,
@@ -4412,7 +4422,7 @@
         "effects": [
           {
             "funcType": "SlotSizeBonus",
-            "referId": 4402
+            "referId": 9903
           }
         ],
         "fragmentCost": 12,
@@ -4430,6 +4440,7 @@
     "perRunCap": 1,
     "rarity": 5,
     "schemaVersion": 1,
+    "sourceHint": "張遼、于禁、樂進皆達莫逆並完成前置的〈五子良將〉事件；首次取得後珍品商店。",
     "tiers": [
       {
         "descKey": "item.wuzi.tier.0",
@@ -4549,6 +4560,7 @@
     "perRunCap": 99,
     "rarity": 1,
     "schemaVersion": 1,
+    "sourceHint": "低階獎勵池；夢中商店。",
     "tiers": [
       {
         "descKey": "item.ledger.tier.0",
@@ -4628,6 +4640,7 @@
     "perRunCap": 99,
     "rarity": 2,
     "schemaVersion": 1,
+    "sourceHint": "低階獎勵池；夢中商店。",
     "tiers": [
       {
         "descKey": "item.rations.tier.0",
@@ -4694,6 +4707,184 @@
         ],
         "fragmentCost": 18,
         "tier": 5
+      }
+    ]
+  },
+  {
+    "descKey": "item.fangtian.desc",
+    "equipment": {
+      "duelDamage": 0.1,
+      "slot": "weapon"
+    },
+    "id": "item:fangtian",
+    "itemId": "item:fangtian",
+    "kind": "item",
+    "nameKey": "item.fangtian.name",
+    "packId": "pack:core",
+    "perRunCap": 1,
+    "rarity": 5,
+    "schemaVersion": 1,
+    "sourceHint": "虎牢關單挑擊敗呂布；首次取得後可於珍品商店購買。",
+    "tiers": [
+      {
+        "descKey": "item.fangtian.tier.0",
+        "effects": [],
+        "fragmentCost": 0,
+        "tier": 0
+      }
+    ]
+  },
+  {
+    "descKey": "item.chitu.desc",
+    "equipment": {
+      "checkBonus": 5,
+      "checkTags": [
+        "pursuit",
+        "escape"
+      ],
+      "retreatSpeed": 0.15,
+      "slot": "mount"
+    },
+    "id": "item:chitu",
+    "itemId": "item:chitu",
+    "kind": "item",
+    "nameKey": "item.chitu.name",
+    "packId": "pack:core",
+    "perRunCap": 1,
+    "rarity": 5,
+    "schemaVersion": 1,
+    "sourceHint": "虎牢關單挑擊敗呂布；首次取得後可於珍品商店購買。",
+    "tiers": [
+      {
+        "descKey": "item.chitu.tier.0",
+        "effects": [],
+        "fragmentCost": 0,
+        "tier": 0
+      }
+    ]
+  },
+  {
+    "descKey": "item.yitian.desc",
+    "equipment": {
+      "armyDamage": 0.05,
+      "slot": "weapon"
+    },
+    "id": "item:yitian",
+    "itemId": "item:yitian",
+    "kind": "item",
+    "nameKey": "item.yitian.name",
+    "packId": "pack:core",
+    "perRunCap": 1,
+    "rarity": 5,
+    "schemaVersion": 1,
+    "sourceHint": "虎牢关首次邀戰擊敗全盛呂布，曹操贈送；之後珍品商店。",
+    "tiers": [
+      {
+        "descKey": "item.yitian.tier.0",
+        "effects": [],
+        "fragmentCost": 0,
+        "tier": 0
+      }
+    ]
+  },
+  {
+    "descKey": "item.white-horse.desc",
+    "equipment": {
+      "healRatio": 0.1,
+      "healThreshold": 0.3,
+      "slot": "treasure"
+    },
+    "id": "item:white-horse",
+    "itemId": "item:white-horse",
+    "kind": "item",
+    "nameKey": "item.white-horse.name",
+    "packId": "pack:core",
+    "perRunCap": 1,
+    "rarity": 3,
+    "schemaVersion": 1,
+    "sourceHint": "長坂完成救援與百姓撤離；首次取得後商店。",
+    "tiers": [
+      {
+        "descKey": "item.white-horse.tier.0",
+        "effects": [],
+        "fragmentCost": 0,
+        "tier": 0
+      }
+    ]
+  },
+  {
+    "descKey": "item.alliance.desc",
+    "equipment": {
+      "checkBonus": 5,
+      "checkTags": [
+        "alliance",
+        "surrender"
+      ],
+      "slot": "treasure"
+    },
+    "id": "item:alliance",
+    "itemId": "item:alliance",
+    "kind": "item",
+    "nameKey": "item.alliance.name",
+    "packId": "pack:core",
+    "perRunCap": 1,
+    "rarity": 4,
+    "schemaVersion": 1,
+    "sourceHint": "荊襄會盟履約與議約成功；首次取得後商店。",
+    "tiers": [
+      {
+        "descKey": "item.alliance.tier.0",
+        "effects": [],
+        "fragmentCost": 0,
+        "tier": 0
+      }
+    ]
+  },
+  {
+    "descKey": "item.sea-chart.desc",
+    "equipment": {
+      "seaIntel": true,
+      "slot": "treasure"
+    },
+    "id": "item:sea-chart",
+    "itemId": "item:sea-chart",
+    "kind": "item",
+    "nameKey": "item.sea-chart.name",
+    "packId": "pack:core",
+    "perRunCap": 1,
+    "rarity": 4,
+    "schemaVersion": 1,
+    "sourceHint": "江東航路勘察成功，遠航之前取得；首次取得後商店。",
+    "tiers": [
+      {
+        "descKey": "item.sea-chart.tier.0",
+        "effects": [],
+        "fragmentCost": 0,
+        "tier": 0
+      }
+    ]
+  },
+  {
+    "descKey": "item.trade-pass.desc",
+    "equipment": {
+      "discount": 0.1,
+      "slot": "treasure"
+    },
+    "id": "item:trade-pass",
+    "itemId": "item:trade-pass",
+    "kind": "item",
+    "nameKey": "item.trade-pass.name",
+    "packId": "pack:core",
+    "perRunCap": 1,
+    "rarity": 4,
+    "schemaVersion": 1,
+    "sourceHint": "大航海或西域開拓完成和平通商；首次取得後商店。",
+    "tiers": [
+      {
+        "descKey": "item.trade-pass.tier.0",
+        "effects": [],
+        "fragmentCost": 0,
+        "tier": 0
       }
     ]
   },

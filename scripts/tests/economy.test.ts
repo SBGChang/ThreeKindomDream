@@ -563,7 +563,7 @@ export function run() {
           );
         s.advance();
       }
-      eq(camps, 4);
+      eq(camps, 9);
       ok(s.isOver, '第四次離營後結算');
     });
     it('新存檔保留錢、貨架與關注；舊局保留備份但要求重新入夢', () => {

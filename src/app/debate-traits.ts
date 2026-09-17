@@ -19,6 +19,7 @@ export const RALLY_PASSIVES:Record<RallyPassive,{name:string;description:string}
  renewal:{name:'重整旗鼓',description:'每次另起恢復 8 點心防。'},
  scholar:{name:'博聞',description:'初始及另起多抽一張普通牌。'},
 };
+export function rallySpecialSources(build:RallyBuild):RallySpecial[]{return [...new Set(build.specials??(build.special?[build.special]:[]))].filter(k=>Object.hasOwn(RALLY_SPECIALS,k));}
 export interface RallyProfile {id:string;name:string;build:RallyBuild;reason:string}
 // Gameplay assignments, not claims about historical personalities. Unlisted officers get ordinary cards.
 const groups:Record<RallySpecial,string[]>={
@@ -39,8 +40,8 @@ const passiveGroups:Record<RallyPassive,string[]>={
  scholar:['zhugeliang','xunyu','zhouyu','luxun','jiangwan','chenqun','zhangzhao','lusu'],
 };
 export const RALLY_PROFILES:RallyProfile[]=Object.entries(DUEL_ACTORS).map(([id,name])=>{
- const special=(Object.keys(groups) as RallySpecial[]).find(k=>groups[k].includes(id))??null;
+ const specials=(Object.keys(groups) as RallySpecial[]).filter(k=>groups[k].includes(id));
  const passives=(Object.keys(passiveGroups) as RallyPassive[]).filter(k=>passiveGroups[k].includes(id)).slice(0,2);
- return {id,name,build:{int:DEBATE_OFFICER_STATS[id]?.int??65,pol:DEBATE_OFFICER_STATS[id]?.pol??65,special,passives},reason:special?RALLY_SPECIALS[special].trait+'：'+passives.map(p=>RALLY_PASSIVES[p].name).join('、'):'普通牌路線'+(passives.length?'：'+passives.map(p=>RALLY_PASSIVES[p].name).join('、'):'，無特殊牌來源')};
+ return {id,name,build:{int:DEBATE_OFFICER_STATS[id]?.int??65,pol:DEBATE_OFFICER_STATS[id]?.pol??65,specials,passives},reason:specials.length?specials.map(k=>RALLY_SPECIALS[k].trait).join('、')+'：'+passives.map(p=>RALLY_PASSIVES[p].name).join('、'):'普通牌路線'+(passives.length?'：'+passives.map(p=>RALLY_PASSIVES[p].name).join('、'):'，無特殊牌來源')};
 });
 export const rallyProfile=(id:string)=>RALLY_PROFILES.find(p=>p.id===id)??RALLY_PROFILES.find(p=>p.id==='npc_soldier')!;

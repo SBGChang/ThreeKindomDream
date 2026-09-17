@@ -89,12 +89,13 @@ export function acquire(
 ): { readonly state: RunState; readonly gain: ItemGain | null } {
   if (source === 'natural' && !canAcquire(id, ctx)) return { state: ctx.state, gain: null };
   const before = heldCount(id, ctx);
+  const hasTiers=ctx.defs.reader('item').get(String(id)).tiers.length>1;
   return {
     state: {
       ...ctx.state,
       items: { ...ctx.state.items, count: { ...ctx.state.items.count, [String(id)]: before + 1 },
           naturalCounts:{...ctx.state.items.naturalCounts,[String(id)]:(ctx.state.items.naturalCounts?.[String(id)]??0)+(source==='natural'?1:0)},
-          fragments:{...ctx.state.items.fragments,[String(id)]:(ctx.state.items.fragments?.[String(id)]??0)+(before>0?1:0)} },
+          fragments:{...ctx.state.items.fragments,[String(id)]:(ctx.state.items.fragments?.[String(id)]??0)+(before>0&&hasTiers?1:0)} },
     },
     gain: { itemId: id, duplicate: before > 0 },
   };

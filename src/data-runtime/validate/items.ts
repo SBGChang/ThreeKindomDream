@@ -48,7 +48,7 @@ function validateOneItem(c: Ctx, d: Rec, id: string, maxTier: number): void {
     c.text(t['descKey'], 'items', `tiers[${i}].descKey`, id);
 
     const effects = c.arr(t['effects']);
-    if (effects.length === 0) {
+    if (effects.length === 0 && !d['equipment']) {
       c.push('rule', 'items', `tiers[${i}].effects`, id, `階 ${tier} 沒有任何效果`,
         '空的一階等於花碎片買了一場空');
     }
@@ -147,6 +147,7 @@ export function validateItems(c: Ctx): void {
     const id = c.s(d['id']);
     if (c.n(d['perRunCap']) !== 1) continue;
     if (guaranteed.has(id)) continue;
+    if(c.rows('storyChapter').flatMap(ch=>[ch,...c.arr(ch['variants']).map(v=>v['chapter'] as Rec)]).some(ch=>c.arr(ch['fieldStories']).some(st=>Object.values((st['nodes']??{}) as Record<string,Rec>).some(n=>n['kind']==='reward'&&Array.isArray((n['reward'] as Rec)?.['items'])&&((n['reward'] as Rec)['items'] as unknown[]).includes(id)))))continue;
     c.push('rule', 'items', 'perRunCap', id,
       '一輪一次的道具沒有任何保證掉落的來源',
       '它不帶進場就永遠 0 碎片 —— 至少要有一條 chance: 1 的鏈末掉落');

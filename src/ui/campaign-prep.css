@@ -62,3 +62,9 @@
 .prep-formation{top:708px;left:389px;width:435px;padding:6px 16px}.prep-formation>div{font-size:16px;line-height:22px}.prep-formation small{display:inline;margin-left:8px;font-size:12px}.prep-formation input{margin:7px 0}.prep-formation>span{line-height:15px}.prep-footer{pointer-events:none}.prep-footer button,.prep-footer .prep-warning{pointer-events:auto}
 
 .prep-formation svg{width:20px;height:20px;vertical-align:middle;margin-right:5px;filter:drop-shadow(0 1px #21180e)}
+
+.prep-equipment{position:absolute;left:52px;top:650px;width:305px;display:grid;gap:6px;padding:10px;background:#f4dfb8;border:2px solid #96704a;border-radius:8px;z-index:2}.prep-equipment label{display:grid;grid-template-columns:45px 1fr;align-items:center;font-size:14px}.prep-equipment select{min-width:0;max-width:100%;font-size:13px;padding:5px;color:#332315;background:#fff4d9}
+
+.prep-equipment{left:38px;top:145px;width:470px;padding:24px;gap:32px}.prep-equipment[hidden]{display:none}.prep-equipment label{grid-template-columns:70px 1fr;font-size:22px}.prep-equipment select{font-size:17px;padding:12px}.prep-tabs button{min-width:0;flex:1;font-size:20px}.prep-tabs .prep-tab-icon{width:24px;margin-right:4px}
+
+.game-stage .prep-tabs>button{width:auto;min-width:0;flex:1;padding:6px;font-size:20px;gap:4px}

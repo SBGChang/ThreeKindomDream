@@ -1,3 +1,4 @@
+import {recruited} from './recruitment.js';
 // ⑩ 名士圖鑑。記憶碎片 → 星階突破 → 逐人手寫的解鎖條（10 §1）。
 //
 // 星是【突破】不是稀有度。各稀有度共用十二輪碎片階梯，
@@ -64,7 +65,7 @@ export const notableCodex: NotableCodexQuery = {
   designatable(meta, defs) {
     const curve = defs.single('affinityCurve');
     return defs.reader('notable').all()
-      .filter((n) => this.entry(n.notableId, meta).completedWith || this.starOf(n.notableId, meta) >= curve.designateStar)
+      .filter((n) => recruited(String(n.notableId),meta,defs)&&(this.entry(n.notableId, meta).completedWith || this.starOf(n.notableId, meta) >= curve.designateStar))
       .map((n) => n.notableId);
   },
 

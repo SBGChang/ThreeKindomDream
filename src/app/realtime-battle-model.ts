@@ -160,6 +160,7 @@ function tickTransition(s:BattleState,dt:number):void {
   case 'fade-out':
    if(s.phaseTime>=.65){
     if(s.defeated==='ally'){finish(s,s.waveTroops.length?'我軍力竭 · 敗軍收整':'我軍力竭 · 演武結束');return;}
+    if(s.maxWaves&&s.wave>=s.maxWaves){finish(s,'七陣皆破 · 鳴金收兵');return;}
     s.units=s.units.filter(u=>u.side==='ally'&&u.hp>0&&!u.temporary);
     if(armyCount(s,'ally')===0){finish(s,'援軍離場 · 本軍力竭');return;}
     s.wave++;

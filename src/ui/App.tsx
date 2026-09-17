@@ -37,7 +37,7 @@ export function App({ preview = false }: { preview?: boolean }): React.ReactElem
     if (preview) return;
     // Keep unreadable snapshots intact until the player explicitly starts another run.
     if (restored.notice && session === null && revision === 0) return;
-    try { saveRun(session, log); setSaveNotice(''); }
+    try { if(session){const next=session.preserveUnlocks(loadMeta());saveMeta(next);setMeta(next);} saveRun(session, log); setSaveNotice(''); }
     catch { setSaveNotice('儲存失敗，請保留此頁'); }
   }, [session, revision, log, restored.notice]);
   const commitMeta = (m: MetaState): void => {
@@ -51,7 +51,7 @@ export function App({ preview = false }: { preview?: boolean }): React.ReactElem
   const preserveProgress = (): void => {
     if (preview) return;
     // An unreadable save is kept intact until a new run is explicitly started.
-    if (session !== null) saveRun(session, log);
+    if (session !== null) {saveMeta(session.preserveUnlocks(loadMeta()));saveRun(session, log);}
   };
   const screen = (): React.ReactElement => {
     if (session === null || atMainMenu) {

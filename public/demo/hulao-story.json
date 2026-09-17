@@ -1,0 +1,38 @@
+{
+ "version":1,"id":"hulao-first-encounter","title":"第一關 · 虎牢揚名","subtitle":"關前一戟，問天下誰敢應戰。","entry":"arrival",
+ "field":{"troops":600,"enemy":"lvbu","wave":1},
+ "playerStats":{"lead":55,"war":60,"int":45,"pol":40},"statCap":100,
+ "actors":{
+  "player":{"name":"你","art":"lord","build":{"war":60,"lead":55,"trait":"none"}},
+  "lvbu":{"name":"呂布","art":"lvbu","build":{"war":100,"lead":90,"trait":"none"}},
+  "zhangfei":{"name":"張飛","art":"zhangfei","build":{"war":98,"lead":82,"trait":"none"}},
+  "guanyu":{"name":"關羽","art":"guanyu","build":{"war":97,"lead":90,"trait":"none"}},
+  "liubei":{"name":"劉備","art":"liubei","build":{"war":78,"lead":85,"trait":"none"}},
+  "caocao":{"name":"曹操","art":"caocao","build":{"war":72,"lead":95,"trait":"none"}}
+ },
+ "nodes":{
+  "arrival":{"kind":"dialogue","lines":[{"speaker":"戰場","text":"虎牢關前，聯軍止步。赤兔踏過陣前，方天畫戟映著寒光。"},{"speaker":"呂布","text":"關東諸侯，便只敢躲在旗後？誰敢上前，與我一戰！"}],"next":"first-challenge"},
+  "first-challenge":{"kind":"choice","prompt":"呂布尚未交戰。你要現在出陣嗎？","options":[{"id":"accept","label":"我來！現在挑戰呂布","detail":"滿血、完整能力；沒有疲勞削弱。勝利：四維各＋10、方天化戟、赤兔馬，另有曹操賞賜。","next":"full-duel"},{"id":"watch","label":"先觀其勢，留在陣中","detail":"觀看張飛、關羽、劉備依序出戰；之後還有一次挑戰機會。","next":"zhang-intro"}]},
+  "full-duel":{"kind":"combat","title":"初鋒 · 挑戰全盛呂布","mode":"player","ally":{"actor":"player","health":1,"modifiers":[]},"enemy":{"actor":"lvbu","health":1,"modifiers":[]},"seed":31,"aiSeed":1,"aiWeights":{"attack":1,"defend":1,"rest":1},"opening":[{"speaker":"呂布","text":"無名之輩，也敢第一個出陣？報上名來！"},{"speaker":"你","thought":true,"text":"他還未耗去半分氣力。這一戰很險……但若能勝他，天下便會記得我。"}],"cues":[{"id":"first-respect","round":3,"lines":[{"speaker":"呂布","text":"竟還接得住！好，這幾招，我記住了！"}]}],"next":{"win":"full-recognition","lose":"defeat","draw":"draw"}},
+  "full-recognition":{"kind":"reward","reward":{"id":"first-blood-prize","title":"正面擊敗全盛呂布","allStats":10,"gold":0,"items":["方天化戟","赤兔馬"],"unlocks":["呂布"]},"next":"cao-praise"},
+  "cao-praise":{"kind":"dialogue","lines":[{"speaker":"呂布","text":"今日是我輸了。戟與馬，歸你。真希望來日，能與你站在同一面旗下。"},{"speaker":"曹操","text":"尚未有三將耗其鋒芒，你竟能獨力勝他！如此武藝，豈可埋沒於行伍。"},{"speaker":"曹操","text":"我有青虹、倚天二劍，今日一併贈你，再賜黃金五百。願你此後，為天下立功！"}],"next":"cao-gift"},
+  "cao-gift":{"kind":"reward","reward":{"id":"cao-special-gift","title":"曹操賞識 · 雙劍與黃金","allStats":0,"gold":500,"items":["青虹劍","倚天劍"],"unlocks":[]},"next":"full-end"},
+  "full-end":{"kind":"end","title":"一戰驚天下","text":"未借三英之力，你在虎牢關前擊敗全盛呂布。聯軍重新擂鼓，你的名字隨軍旗傳遍陣中。"},
+  "zhang-intro":{"kind":"dialogue","lines":[{"speaker":"張飛","text":"三姓家奴休走！燕人張翼德在此！"},{"speaker":"呂布","text":"來得好！便拿你試一試，這天下第一的分量！"}],"next":"zhang-duel"},
+  "zhang-duel":{"kind":"combat","title":"三英戰呂布 · 張飛出陣","mode":"auto","ally":{"actor":"zhangfei","health":1,"modifiers":[]},"enemy":{"actor":"lvbu","health":1,"modifiers":[{"label":"無雙鋒芒 · 戰鬥力 ×2","power":2}]},"seed":13,"aiSeed":7,"aiWeights":{"attack":5,"defend":1,"rest":2},"opening":[],"cues":[],"next":{"win":"npc-surprise","lose":"zhang-after","draw":"npc-surprise"}},
+  "zhang-after":{"kind":"dialogue","lines":[{"speaker":"張飛","text":"好重的戟！俺的手臂……二哥，小心他！"},{"speaker":"呂布","thought":true,"text":"這莽漢倒有幾分力氣。方才用力太猛，氣息已不似起手時順了。"},{"speaker":"關羽","text":"三弟且退。關雲長，來領教你的高招。"}],"next":"guan-duel"},
+  "guan-duel":{"kind":"combat","title":"三英戰呂布 · 關羽接戰","mode":"auto","ally":{"actor":"guanyu","health":1,"modifiers":[]},"enemy":{"actor":"lvbu","health":1,"modifiers":[{"label":"強提鋒芒 · 攻擊力 ×1.5","attack":1.5}]},"seed":17,"aiSeed":9,"aiWeights":{"attack":5,"defend":1,"rest":2},"opening":[],"cues":[],"next":{"win":"npc-surprise","lose":"guan-after","draw":"npc-surprise"}},
+  "guan-after":{"kind":"dialogue","lines":[{"speaker":"關羽","text":"這一戟，關某記下了。大哥，莫與他硬碰。"},{"speaker":"呂布","thought":true,"text":"刀勢如此沉穩……連戰兩人，雙臂竟已有些發顫。不能讓他們看出來。"},{"speaker":"劉備","text":"二弟三弟且回，我來接應。呂奉先，看劍！"}],"next":"liu-duel"},
+  "liu-duel":{"kind":"combat","title":"三英戰呂布 · 劉備接應","mode":"auto","ally":{"actor":"liubei","health":1,"modifiers":[]},"enemy":{"actor":"lvbu","health":1,"modifiers":[]},"seed":19,"aiSeed":11,"aiWeights":{"attack":5,"defend":1,"rest":2},"opening":[],"cues":[],"next":{"win":"npc-surprise","lose":"liu-after","draw":"npc-surprise"}},
+  "liu-after":{"kind":"dialogue","lines":[{"speaker":"劉備","text":"不可再纏戰！二弟、三弟，隨我退回本陣！"},{"speaker":"呂布","thought":true,"text":"總算退了……胸中如火，連握戟也要多費一分力。可陣前，不能低頭。"},{"speaker":"呂布","text":"還有誰！你——方才在陣中看了許久，可敢上前與我一戰？"}],"next":"second-challenge"},
+  "second-challenge":{"kind":"choice","prompt":"三英已退，呂布氣息漸亂。你要接戰嗎？","options":[{"id":"accept","label":"有何不敢！出陣單挑","detail":"呂布起始生命50%、戰鬥力−20%；你戰鬥力＋20%。勝利獲方天化戟、赤兔馬。","next":"tired-duel"},{"id":"decline","label":"留在本陣，不冒此險","detail":"本段結束，不獲單挑寶物；不憑空判定你戰敗。","next":"decline-end"}]},
+  "tired-duel":{"kind":"combat","title":"陣前揚名 · 迎戰疲憊呂布","mode":"player","ally":{"actor":"player","health":1,"modifiers":[{"label":"揚名之志 · 戰鬥力 ＋20%","power":1.2}]},"enemy":{"actor":"lvbu","health":0.5,"modifiers":[{"label":"連戰疲憊 · 戰鬥力 −20%","power":0.8}]},"seed":23,"aiSeed":1,"aiWeights":{"attack":1,"defend":1,"rest":1},"opening":[{"speaker":"呂布","thought":true,"text":"已經疲憊至此……但對付這種小雜魚，應該還綽綽有餘。"},{"speaker":"你","thought":true,"text":"居然能與呂布單挑！他的戟已不似方才凌厲——這正是揚名立萬的好機會！"}],"cues":[{"id":"fatigue-shown","round":3,"lines":[{"speaker":"呂布","thought":true,"text":"怎麼回事……手臂比方才更沉。這小子竟還能步步緊逼！"}]}],"next":{"win":"tired-prize","lose":"defeat","draw":"draw"}},
+  "tired-prize":{"kind":"reward","reward":{"id":"tired-victory-prize","title":"虎牢揚名 · 單挑得勝","allStats":0,"gold":0,"items":["方天化戟","赤兔馬"],"unlocks":["呂布"]},"next":"tired-recognition"},
+  "tired-recognition":{"kind":"dialogue","lines":[{"speaker":"呂布","text":"我雖連戰，你也確有膽色。勝便是勝，戟與馬，歸你。"},{"speaker":"呂布","text":"真希望來日，能與你站在同一面旗下。"},{"speaker":"你","thought":true,"text":"今日借三英之勢，才有此勝。總有一天，我要堂堂正正勝過全盛的他。"}],"next":"tired-end"},
+  "tired-end":{"kind":"end","title":"虎牢初揚名","text":"你抓住了三英留下的機會。呂布記住了你的名字，聯軍也多了一位敢於出陣的人。"},
+  "decline-end":{"kind":"end","title":"留待來日","text":"你沒有接受單挑，隨聯軍穩住陣腳。本次示範在此結束；正式接線時回到本關戰場，不增加關卡。"},
+  "defeat":{"kind":"end","title":"敗退歸陣","text":"你被接回本陣，這一戰沒有獲得寶物或能力獎勵。正式版依本關敗退規則處理，不接著再領一次疲勞挑戰。"},
+  "draw":{"kind":"end","title":"鳴金收兵","text":"二十四合未分高下，各自歸陣。平手不視為擊敗呂布，也不發放勝利獎勵。"},
+  "npc-surprise":{"kind":"end","title":"演出結果改變","text":"自動對戰未得到預定的三英敗退結果，因此停止後續邀戰，避免播放與戰果矛盾的台詞。此出口供調整假資料時檢查。"}
+ }
+}

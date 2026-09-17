@@ -56,7 +56,7 @@ export function drawEncounterDemo(ctx:CanvasRenderingContext2D,images:BattleImag
    const target=turn?.ally==='attack'?turn.enemy:turn?.ally;
    const contactGap=(attackers===2?156:target==='defend'?116:82)*1.5;
    const advance=(345-contactGap)/Math.max(1,attackers)*rush*rush*returning;
-   if(turn?.ally==='attack')left+=advance;
+   if(turn?.ally==='attack')left+=advance*(returning>0?(1-ease((t-1.02)*(1+(c.duel?.ally.retreatSpeed??0))/.65))/returning:0);
    if(turn?.enemy==='attack')right-=advance;
    const recoil=24*ease((t-.79)/.12)*(1-ease((t-1.05)/.55));
    if(reactA)left-=recoil*(repelledA?2:1);

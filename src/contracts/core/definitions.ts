@@ -330,12 +330,14 @@ export interface NotableSkillRow {
 }
 
 export interface NotableDef extends DefHeader {
+  readonly recruitment?: {readonly initial?:boolean;readonly hint:string;readonly attr?:{readonly name:Attr;readonly min:number};readonly career?:{readonly line:'civil'|'martial';readonly min:number};readonly items?:readonly string[];readonly fullDream?:string;readonly story?:readonly import('./story.js').StoryRequirement[]};
+  readonly affiliation?:string;
   /** Explicit shared atlas until this character receives a dedicated duel sequence. */
   readonly duelArtId?:string;
   readonly kind: 'notable';
   readonly notableId: NotableId;
   readonly rarity: Rarity;
-  readonly factionId: FactionId;
+  readonly factionId: FactionId | null;
   readonly nameKey: L10nKey;
   /** 基底。取代了原本的 `role` —— 那個欄位沒有任何程式讀它，是假裝成資料的註解。 */
   readonly base: NotableBaseDef;
@@ -743,6 +745,8 @@ export interface ItemTierDef {
  * 廣域件每條都比同階的點名件弱，那是規則不是例外。
  */
 export interface ItemDef extends DefHeader {
+  readonly equipment?: { readonly slot: 'weapon' | 'mount' | 'treasure'; readonly duelDamage?: number; readonly retreatSpeed?: number; readonly armyDamage?: number; readonly healThreshold?: number; readonly healRatio?: number; readonly checkTags?: readonly string[]; readonly checkBonus?: number; readonly seaIntel?: boolean; readonly discount?: number };
+  readonly sourceHint?: string;
   readonly kind: 'item';
   readonly itemId: ItemId;
   readonly rarity: Rarity;

@@ -1,5 +1,5 @@
 import type {RallyAction,RallyBuild,RallyCard,RallyColor,RallyEvent,RallyFighter,RallySide,RallyState} from '../contracts/core/debate-rally.js';
-import {RALLY_SPECIALS,RALLY_PASSIVES,rallyProfile} from './debate-traits.js';
+import {RALLY_SPECIALS,RALLY_PASSIVES,rallyProfile,rallySpecialSources} from './debate-traits.js';
 export type * from '../contracts/core/debate-rally.js';
 const other=(side:RallySide):RallySide=>side==='ally'?'enemy':'ally';
 const clamp=(n:number,a:number,b:number)=>Math.min(b,Math.max(a,n));
@@ -7,13 +7,14 @@ const random=(s:RallyState)=>{s.rng=(Math.imul(s.rng,1664525)+1013904223)>>>0;re
 export const rallyHandSize=(int:number)=>4+Math.floor((clamp(Number.isFinite(int)?int:50,1,100)-1)/20);
 const has=(f:RallyFighter,p:keyof typeof RALLY_PASSIVES)=>f.build.passives.includes(p);
 function fighter(input:RallyBuild):RallyFighter {
- const build:RallyBuild={int:clamp(Math.round(Number.isFinite(input.int)?input.int:50),1,100),pol:clamp(Math.round(Number.isFinite(input.pol)?input.pol:50),1,100),special:input.special&&Object.hasOwn(RALLY_SPECIALS,input.special)?input.special:null,passives:[...new Set(input.passives)].filter(p=>Object.hasOwn(RALLY_PASSIVES,p)).slice(0,2)};
+ const build:RallyBuild={int:clamp(Math.round(Number.isFinite(input.int)?input.int:50),1,100),pol:clamp(Math.round(Number.isFinite(input.pol)?input.pol:50),1,100),specials:rallySpecialSources(input),passives:[...new Set(input.passives)].filter(p=>Object.hasOwn(RALLY_PASSIVES,p)).slice(0,2)};
  const maxHeart=160+Math.round(build.pol*.6);
  return {build,heart:maxHeart,maxHeart,hand:[],combo:0,double:false,reflect:false,wild:false,skip:false};
 }
 export function drawRallyCard(s:RallyState,side:RallySide,normalOnly=false):RallyCard {
  const f=s[side],id=s.nextId++;
- if(!normalOnly&&f.build.special&&random(s)<.16)return {id,kind:'special',special:f.build.special};
+ const sources=rallySpecialSources(f.build);
+ if(!normalOnly&&sources.length&&random(s)<.16)return {id,kind:'special',special:sources.length===1?sources[0]!:sources[Math.floor(random(s)*sources.length)]!};
  const color=(['reason','evidence','presence'] as RallyColor[])[Math.floor(random(s)*3)]!;
  // Identical random quantiles increase monotonically with intellect.
  const value=Math.min(9,1+Math.floor(9*Math.pow(random(s),1.65-f.build.int*.011)));
@@ -36,6 +37,10 @@ export const rallyNormals=(s:RallyState,side=s.turn)=>s[side].hand.filter(c=>ral
 export function rallySpecialPlayable(s:RallyState,side:RallySide,card:RallyCard):boolean {
  return !s.winner&&s.turn===side&&!s[side].skip&&!s.specialUsed&&card.kind==='special'&&(card.special!=='induct'||s[side].hand.filter(c=>c.kind==='normal').length>=2);
 }
+/** A forced pass is available only when neither a normal nor a special can be played. */
+export function rallyMustPass(s:RallyState,side=s.turn):boolean {
+ return !s.winner&&s.turn===side&&!s[side].hand.some(c=>rallyPlayable(s,side,c)||rallySpecialPlayable(s,side,c));
+}
 export function rallyDamage(s:RallyState,side:RallySide,card:Extract<RallyCard,{kind:'normal'}>):number {
  const f=s[side],target=s[other(side)],combo=s.lastPass===other(side)?f.combo+1:0;
  const switching=s.table&&s.table.color!==card.color&&s.table.value===card.value;
@@ -51,7 +56,7 @@ export function actRally(s:RallyState,side:RallySide,action:RallyAction):boolean
  const f=s[side],target=s[other(side)],card=action.kind==='pass'?null:f.hand.find(c=>c.id===action.id);
  if(action.kind==='normal'&&(!card||!rallyPlayable(s,side,card)))return false;
  if(action.kind==='special'&&(!card||!rallySpecialPlayable(s,side,card)))return false;
- if(action.kind==='pass'&&rallyNormals(s,side).length)return false;
+ if(action.kind==='pass'&&!rallyMustPass(s,side))return false;
  let selected:RallyCard[]=[];
  if(action.kind==='special'&&card?.kind==='special'&&card.special==='induct'){
   const ids=action.targets??[];if(ids.length!==2||ids[0]===ids[1])return false;
@@ -67,6 +72,7 @@ export function actRally(s:RallyState,side:RallySide,action:RallyAction):boolean
   else if(card.special==='shout'){f.double=true;target.skip=true;}
   else if(card.special==='reflect')f.reflect=true;
   else f.wild=true;
+  f.hand.push(drawRallyCard(s,side,true));
  }else if(action.kind==='normal'&&card?.kind==='normal'){
   const damage=rallyDamage(s,side,card);f.combo=s.lastPass===other(side)?f.combo+1:0;target.combo=0;event.combo=f.combo;
   const receiver=target.reflect?f:target;event.reflected=target.reflect;if(target.reflect)target.reflect=false;
@@ -106,5 +112,8 @@ export function chooseRallyAction(s:RallyState,side=s.turn):RallyAction {
   }else if(c.special==='wild'&&!normals.length&&f.hand.some(v=>v.kind==='normal')&&!f.wild||c.special==='shout'&&normals.length&&!f.double||c.special==='reflect'&&!f.reflect||c.special==='concentrate'&&(!normals.length||f.hand.length<7))return {kind:'special',id:c.id};
  }
  const best=normals.filter((c):c is Extract<RallyCard,{kind:'normal'}>=>c.kind==='normal').sort((a,b)=>a.value-b.value)[0];
- return best?{kind:'normal',id:best.id}:{kind:'pass'};
+ if(best)return {kind:'normal',id:best.id};
+ const required=specials[0];
+ if(required?.kind==='special')return {kind:'special',id:required.id,...(required.special==='induct'?{targets:f.hand.filter(c=>c.kind==='normal').slice(0,2).map(c=>c.id)}:{})};
+ return {kind:'pass'};
 }

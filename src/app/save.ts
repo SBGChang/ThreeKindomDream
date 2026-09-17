@@ -1,3 +1,5 @@
+import {validateBattleStory} from './battle-story.js';
+import {validRallySnapshot} from './rally-validation.js';
 import { validBattleSnapshot } from './realtime-battle-model.js';
 import {validEncounterProgress} from './confrontation-validation.js';
 import type { RunState } from '../contracts/core/state.js';
@@ -77,6 +79,7 @@ export function restoreRun(w: Wiring): {
       throw new Error('存檔格式不符');
     if(s.campaign?.realtime&&!validBattleSnapshot(s.campaign.realtime))throw new Error('即時戰役存檔格式不符');
     if(s.campaign?.confrontation&&(!s.campaign.realtime||!validEncounterProgress(s.campaign.confrontation)))throw new Error('單挑存檔格式不符');
+    if(s.campaign?.fieldStory){const p=s.campaign.fieldStory;validateBattleStory(p.data);if(!p.data.nodes[p.field.story.node]||!Array.isArray(p.field.story.granted)||!Array.isArray(p.field.story.visited)||!Number.isSafeInteger(p.field.story.revision)||!['field','story','finished'].includes(p.field.mode))throw Error('戰場故事存檔格式不符');if(p.field.story.rally&&!validRallySnapshot(p.field.story.rally))throw Error('戰場舌戰快照不符');if(p.field.encounter.contest&&!validEncounterProgress(p.field.encounter))throw Error('戰場單挑快照不符');}
     w.defs.reader('chapter').get(String(s.progress.chapterId));
     for (const id of s.abilities.skills) w.defs.reader('skill').get(String(id));
     for (const id of s.abilities.traits) w.defs.reader('trait').get(String(id));

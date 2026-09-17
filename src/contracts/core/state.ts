@@ -58,6 +58,8 @@ export interface CollectionState {
 }
 
 export interface MetaState {
+  readonly unlockedNotables?:readonly string[];
+  readonly discoveredItems?:readonly string[];
   readonly schemaVersion: number;
   readonly points: number;
   readonly notableCodex: Readonly<Record<string, NotableCodexEntry>>;
@@ -357,6 +359,9 @@ export interface BattleLogEntry {
 }
 
 export interface CampaignState {
+  readonly fieldStory?: {data:import('./battle-story.js').BattleStory;field:import('./battle-story.js').StoryField};
+  readonly seenFieldStories?:readonly string[];
+  readonly fieldRewards?:readonly string[];
   readonly confrontation?: EncounterProgress;
   /** Persist the live battle, including paused cinematics and completed results. */
   readonly realtime?: BattleState;
@@ -393,6 +398,8 @@ export interface StoryState {
   readonly tracked:NotableId|null; readonly waitingSince:number|null;
 }
 export interface RunState {
+  readonly earnedUnlocks?:readonly string[];
+  readonly equipment?: Readonly<Partial<Record<'weapon'|'mount'|'treasure', ItemId>>>;
   readonly runId?: string;
   readonly economy: EconomyState;
   readonly stories: StoryState;

@@ -25,6 +25,7 @@
 //   8xxx  DesignateSlots        指名額度
 
 export const FX = {
+  xiaoBias: 9901, xiaoAffinity: 9902, xiaoSolo: 9903, xiaoLink: 9904, xiaoGain: 9905,
   // ── StatModifier（天賦與商店沿用）─────────────────
   expIntUp: 1101,
   expAllUp: 1102,

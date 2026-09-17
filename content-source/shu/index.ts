@@ -19,11 +19,18 @@ const roster: readonly { slug: string; name: string; attr: Attr; rarity: Rarity;
   { slug: 'zhaoyun', name: '趙雲', attr: 'war', rarity: 4, stats: [89, 94, 76, 69], skills: ['tuzhen', 'xianzhen', 'jiezhi'], traits: ['chenyi', 'danshi'], story: '趙雲牽著走失的小馬回營，主人卻以為牠早已丟了。他朝你笑：「多回頭找一次，也許就在下一個轉彎。」你接過韁繩，把這句話記住。' },
   { slug: 'zhugeliang', name: '諸葛亮', attr: 'int', rarity: 5, stats: [91, 40, 99, 96], skills: ['huoji', 'shuiyan', 'lianhuan'], traits: ['jimin', 'liaodi'], story: '風箏第三次落到樹上，孔明盯著它難得語塞。你去搬梯，他還在比劃竹骨的重量。等風箏終於飛起來，你們一起笑得像從未帶過兵的孩子。' },
   { slug: 'jiangwan', name: '蔣琬', attr: 'pol', rarity: 3, stats: [68, 42, 83, 93], skills: ['fumin', 'luanci', 'tuntian'], traits: ['liande', 'zhechong'], story: '最不起眼的案上，堆著明天每一隊兵需要的糧單。蔣琬將它們分給幾名年輕書吏，自己只留一份。他問你：「若我有一天不在，這裡也該照常運轉，對吧？」' },
+  {"slug":"huangzhong","name":"黃忠","attr":"war","rarity":4,"stats":[87,95,66,58],"skills":["tuzhen","xianzhen","wanrenzhi"],"traits":["chenyi","liande"],"story":"弓弦未老，先看箭落之處，再問我的年歲。"},
+  {"slug":"machao","name":"馬超","attr":"war","rarity":5,"stats":[91,97,52,42],"skills":["tuzhen","xianzhen","wanrenzhi"],"traits":["chenyi","liande"],"story":"衝得進去，也要帶弟兄回來。"},
+  {"slug":"weiyan","name":"魏延","attr":"lead","rarity":4,"stats":[92,89,73,55],"skills":["haoling","jiezhi","xianzhen"],"traits":["chenyi","liande"],"story":"險路我敢走，撤路也會說清楚。"},
+  {"slug":"pangtong","name":"龐統","attr":"int","rarity":5,"stats":[87,36,98,86],"skills":["huoji","shuiyan","lianhuan"],"traits":["chenyi","liande"],"story":"這張圖，還欠一條讓百姓回家的路。"},
+  {"slug":"fazheng","name":"法正","attr":"int","rarity":4,"stats":[82,45,95,84],"skills":["huoji","lianhuan","shuiyan"],"traits":["chenyi","liande"],"story":"捷報先放下，先告訴我消息從哪裡來。"},
+  {"slug":"jiangwei","name":"姜維","attr":"lead","rarity":5,"stats":[93,90,91,70],"skills":["haoling","xianzhen","jiezhi"],"traits":["chenyi","liande"],"story":"接旗的人，也要學會把旗交出去。"},
 ];
 const boosts = { lead: FX.linkLead15, war: FX.linkWar15, int: FX.linkInt15, pol: FX.linkPol15 };
 const biases = { lead: FX.biasSelfLead15, war: FX.biasSelfWar15, int: FX.biasSelfInt18, pol: FX.biasSelfPol16 };
 export const shuNotables: readonly NotableDef[] = roster.map(r => shuDef('notable', `notable:${r.slug}`, {
   notableId: notableId(`notable:${r.slug}`), factionId: SHU_F, rarity: r.rarity,
+  ...(['machao','weiyan','fazheng','jiangwei'].includes(r.slug)?{duelArtId:'npc_soldier'}:{}),
   nameKey: k(`notable.${r.slug}.name`, r.name), base: notableBase(r.rarity, r.attr),
   abilities: { attrs: { lead: r.stats[0], war: r.stats[1], int: r.stats[2], pol: r.stats[3] },
     traits: r.traits.map(x => traitId(`trait:${x}`)),

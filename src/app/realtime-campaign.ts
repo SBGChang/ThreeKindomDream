@@ -1,3 +1,4 @@
+import {equipmentEffects} from '../modules/equipment.js';
 import type { RunContext } from '../contracts/core/context.js';
 import type { EventReward } from '../contracts/core/definitions.js';
 import type { SkillId } from '../contracts/core/ids.js';
@@ -36,10 +37,10 @@ export function campaignBattle(ctx:RunContext,fx:EffectResolver):BattleState {
  });
  const waves=campaign.stageRows(ctx).map((_,i)=>campaign.nextStagePreview(ctx,i)!);
  commanders.push({id:'enemy',name:waves[0]?.boss?t(waves[0].boss.nameKey):'敵軍指揮官',side:'enemy',homeX:1470,x:1470,y:485,pose:'command',poseTime:0,flip:true});
- const battle=createConfiguredBattle({terrain:/chibi|jing|jiang|shiting/.test(String(ctx.state.progress.chapterId))?'water':/yiling|hunt|hanzhong/.test(String(ctx.state.progress.chapterId))?'mountain':'plain',infantryPercent:st.loadout.infantryPercent??60,rng:(Number(ctx.state.seed)+ctx.state.progress.chapter*997)>>>0,troops:st.host.troops,supply:st.host.supply,supplyMax:st.host.supplyMax,regen:st.host.supplyMax*rt.supplyRegenRatio,duration:rt.duration,skills,commanders,waveTroops:waves.map(w=>w.enemyTroops),waveNames:waves.map(w=>w.boss?t(w.boss.nameKey):'敵軍指揮官'),allyAttack:fx.resolve(targetId('battle.damage.physical'),(attrs.war+attrs.lead)/2/rt.attackDivisor,ctx),enemyAttack:(rule.enemyDamageByChapter[ctx.state.progress.chapter-1]??rule.enemyDamageByChapter.at(-1)!)/rt.enemyAttackDivisor});
+ const battle=createConfiguredBattle({terrain:/chibi|jing|jiang|shiting/.test(String(ctx.state.progress.chapterId))?'water':/yiling|hunt|hanzhong/.test(String(ctx.state.progress.chapterId))?'mountain':'plain',infantryPercent:st.loadout.infantryPercent??60,rng:(Number(ctx.state.seed)+ctx.state.progress.chapter*997)>>>0,troops:st.host.troops,supply:st.host.supply,supplyMax:st.host.supplyMax,regen:st.host.supplyMax*rt.supplyRegenRatio,duration:rt.duration,skills,commanders,waveTroops:waves.map(w=>w.enemyTroops),waveNames:waves.map(w=>w.boss?t(w.boss.nameKey):'敵軍指揮官'),allyAttack:fx.resolve(targetId('battle.damage.physical'),(attrs.war+attrs.lead)/2/rt.attackDivisor,ctx)*(1+equipmentEffects(ctx).reduce((v,e)=>v+(e.armyDamage??0),0)),enemyAttack:(rule.enemyDamageByChapter[ctx.state.progress.chapter-1]??rule.enemyDamageByChapter.at(-1)!)/rt.enemyAttackDivisor});
  const memberTraits=st.loadout.commanders.flatMap(slot=>{const n=ctx.defs.reader('notable').get(String(slot.notableId));return n.abilities.traits.map(id=>({id,owner:t(n.nameKey),level:ctx.defs.single('notableStar').commanderLevelByStar[notableCodex.starOf(slot.notableId,ctx.state.metaSnapshot)]}));});
  battle.traits=[...ability.activeTraits(ctx).map(id=>({id,owner:'主角',level:ability.levelOf(id,ctx)})),...memberTraits].flatMap(row=>{const d=ability.traitDef(row.id,ctx);return d.battleTrigger?[{id:d.battleTrigger,owner:row.owner,level:row.level??1,name:t(d.nameKey)}]:[];});
- return battle;
+ battle.maxWaves=waves.length;return battle;
 }
 
 /** Rewards follow actual defeated soldiers. Deep unlocks require completing their wave. */

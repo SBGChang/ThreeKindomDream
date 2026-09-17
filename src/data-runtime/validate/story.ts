@@ -68,6 +68,7 @@ export function validateStory(c: Ctx): void {
         }
       }
     }
+    for(const chapterData of [d,...c.arr(d['variants']).map(v=>v['chapter'] as Rec)])for(const event of c.arr(chapterData['fieldStories']))milestones.add('field:'+c.s(event['id']));
     const variants = c.arr(d['battleVariants']);
     if (variants.length && c.list(variants.at(-1)?.['requirements']).length !== 0)
       c.push('rule', 'story', 'battleVariants', id, '戰役情境最後一筆必須無條件');
@@ -80,13 +81,14 @@ export function validateStory(c: Ctx): void {
   const check = (reqs: unknown, id: string): void => {
     if (!Array.isArray(reqs)) { c.push('schema', 'story', 'requirements', id, '主線條件須為陣列'); return; }
     for (const r of c.arr(reqs)) {
-      if (r['kind'] === 'choice') {
+      if(r['kind']==='any'){if(!Array.isArray(r['requirements'])||!r['requirements'].length)c.push('schema','story','any',id,'擇一條件不可為空');for(const group of c.list(r['requirements']))check(group,id);}
+      else if (r['kind'] === 'choice') {
         const node = nodes.get(c.s(r['node']));
-        if (!node || !c.arr(node.row['options']).some(o => o['id'] === r['option']))
+        if ((!node || !c.arr(node.row['options']).some(o => o['id'] === r['option']))&&!c.rows('storyChapter').some(d=>c.arr(d['variants']).some(v=>c.arr((v['chapter'] as Rec)?.['nodes']).some(n=>n['id']===r['node']&&c.arr(n['options']).some(o=>o['id']===r['option'])))))
           c.push('reference', 'story', 'requirements', id, `主線選項不存在: ${c.s(r['node'])}/${c.s(r['option'])}`);
       } else if (r['kind'] === 'milestone') {
         if (!milestones.has(c.s(r['id']))) c.push('reference', 'story', 'requirements', id, '里程碑不存在');
-      } else c.push('schema', 'story', 'requirements.kind', id, '未知主線條件');
+      } else if(r['kind']==='roster'){if(!c.rows('notable').some(n=>n['notableId']===r['id']))c.push('reference','story','roster',id,'同行角色不存在');} else if(r['kind']==='depth'){if(!chapters.has(c.s(r['chapter']))||!Number.isInteger(r['min'])||c.n(r['min'])<1||c.n(r['min'])>7)c.push('reference','story','depth',id,'章節關序不合法');} else c.push('schema', 'story', 'requirements.kind', id, '未知主線條件');
     }
   };
   for (const d of c.rows('storyChapter')) {

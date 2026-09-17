@@ -8,7 +8,7 @@ import type { ActionTally, RunState, TurnProgress } from '../contracts/core/stat
 import { hasSelected } from './training.js';
 import { isClear } from './commission.js';
 import { hasEnded } from './ending.js';
-import { pendingScene, unchosenStory, awaitingChapterClose, awaitingEndingChoice } from './story.js';
+import { chapterStory, pendingScene, unchosenStory, awaitingChapterClose, awaitingEndingChoice } from './story.js';
 
 export const sequenceOf = (
   faction: FactionId | null, ctx: RunContext,
@@ -129,8 +129,7 @@ export const canAdvance = (ctx: RunContext): boolean => !hasEnded(ctx)
   && !ctx.state.progress.pendingCampaign && !ctx.state.progress.pendingFactionChoice
   && !ctx.state.progress.pendingSuperiorAssign && hasSelected(ctx) && isClear(ctx);
 
-export const currentChapter = (ctx: RunContext): ChapterDef =>
-  chapterAt(ctx.state.progress.chapterId, ctx);
+export const currentChapter = (ctx: RunContext): ChapterDef => {const d=chapterAt(ctx.state.progress.chapterId,ctx),n=chapterStory(ctx);return n?{...d,titleKey:n.opening.titleKey}:d;};
 
 export const isSequenceComplete = (ctx: RunContext): boolean => {
   const seq = sequenceOf(ctx.state.faction, ctx);

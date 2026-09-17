@@ -107,12 +107,15 @@ function resolveRound(s:DuelState,action:DuelAction|null,forceEvolution?:boolean
       }else turn.damageToAlly=hitB;
     }
   }
+  turn.damageToEnemy=Math.round(turn.damageToEnemy*(1+(a.equipmentDamage??0)));
   const recover=(f:DuelFighter,act:DuelAction|null,opponent:DuelAction|null,evolved:boolean,wasFainted:boolean)=>wasFainted?DUEL_RULES.attackCost:act==='rest'?Math.round(restAmount(f)*(opponent==='attack'?.5:evolved?1.5:1)):0;
   const recoveryA=recover(a,x,y,evoA,allyFainted),recoveryB=recover(b,y,x,false,enemyFainted);
   a.stamina=Math.max(0,a.stamina-turn.allyCost);b.stamina=Math.max(0,b.stamina-turn.enemyCost);
   turn.allyRecovery=Math.min(a.maxStamina-a.stamina,recoveryA);turn.enemyRecovery=Math.min(b.maxStamina-b.stamina,recoveryB);
   a.stamina+=turn.allyRecovery;b.stamina+=turn.enemyRecovery;
   a.injury=Math.min(a.injuryLimit,a.injury+turn.damageToAlly);b.injury=Math.min(b.injuryLimit,b.injury+turn.damageToEnemy);
+  const heal=a.emergencyHeal;
+  if(heal&&!heal.used&&a.injury<a.injuryLimit&&duelHealth(a)/a.injuryLimit<=heal.threshold){a.injury=Math.max(0,a.injury-Math.round(a.injuryLimit*heal.ratio));heal.used=true;turn.notes.push('白馬護符發動，恢復最大生命的 10%。');}
   if(x==='rest'&&y==='defend'){b.taunted=true;turn.notes.push('敵方受嘲諷，下回合禁防。');}
   if(y==='rest'&&x==='defend'){a.taunted=true;turn.notes.push('我方受嘲諷，下回合禁防。');}
   if(x==='defend'&&y==='defend'){a.taunted=true;b.taunted=true;turn.notes.push('雙方對峙，下回合均禁止防守。');}

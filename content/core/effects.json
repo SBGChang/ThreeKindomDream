@@ -180,6 +180,14 @@
         "kind": "named",
         "notableId": "notable:lejin"
       }
+    },
+    "9902": {
+      "condition": null,
+      "mulPct": 1.5,
+      "target": {
+        "kind": "named",
+        "notableId": "notable:zhangliao"
+      }
     }
   },
   "CheckRetry": {
@@ -481,6 +489,11 @@
       "condition": null,
       "mulPct": 0.1,
       "scope": "all"
+    },
+    "9905": {
+      "condition": null,
+      "mulPct": 0.4,
+      "scope": "lead"
     }
   },
   "GlowBaseWeight": {
@@ -674,6 +687,17 @@
       "target": {
         "attr": "war",
         "kind": "specialty"
+      }
+    },
+    "9904": {
+      "condition": null,
+      "mulPct": 1,
+      "standing": {
+        "kind": "none"
+      },
+      "target": {
+        "kind": "named",
+        "notableId": "notable:zhangliao"
       }
     }
   },
@@ -1130,6 +1154,16 @@
         "kind": "named",
         "notableId": "notable:lejin"
       }
+    },
+    "9901": {
+      "attrWeights": {
+        "lead": 4
+      },
+      "condition": null,
+      "target": {
+        "kind": "named",
+        "notableId": "notable:zhangliao"
+      }
     }
   },
   "SlotSizeBonus": {
@@ -1147,6 +1181,15 @@
       "maxNotables": 1,
       "minNotables": 1,
       "mulPct": 0.4,
+      "standing": {
+        "kind": "none"
+      }
+    },
+    "9903": {
+      "condition": null,
+      "maxNotables": 1,
+      "minNotables": 1,
+      "mulPct": 1,
       "standing": {
         "kind": "none"
       }

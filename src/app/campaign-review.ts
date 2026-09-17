@@ -1,6 +1,6 @@
 import { Session } from './session.js';
 import { defs, emptyDraft, emptyMeta, wiring } from './bootstrap.js';
-import { chapterIndex, seed } from '../contracts/core/ids.js';
+import { chapterId,chapterIndex, seed } from '../contracts/core/ids.js';
 import { begin } from '../modules/campaign.js';
 /** Synthetic, isolated art fixtures. Never read or write a player's repository. */
 export function campaignReviewSession(sample: string): Session {
@@ -19,7 +19,7 @@ export function campaignReviewSession(sample: string): Session {
     career: veteran ? { civil: highestRank, martial: highestRank } : initial.career,
     currencies: veteran ? { merit: { civil: highestMerit, martial: highestMerit } } : initial.currencies,
     attributes: { values: veteran ? { lead: 100, war: 100, int: 100, pol: 100 } : sample === 'full' ? { lead: 58, war: 72, int: 43, pol: 39 } : initial.attributes.values },
-    progress: { ...initial.progress, pendingCampaign: true, turnInChapter: 8, ...(veteran ? { chapter: chapterIndex(4), chapterId: lastCampaign.chapterId } : {}) },
+    progress: { ...initial.progress, pendingCampaign: true, turnInChapter: 8, ...(['story','debate'].includes(sample)?{chapter:chapterIndex(2),chapterId:chapterId(sample==='debate'?'ch:wei.chibi':'ch:wei.hulao')}:{}), ...(veteran ? { chapter: chapterIndex(4), chapterId: lastCampaign.chapterId } : {}) },
     abilities: { ...initial.abilities, skills },
     roster: { members: people.map((x, i) => ({ notableId: x.notableId, affinity: 30 + i * 10, origin: 'companion' as const })) },
     metaSnapshot: { ...initial.metaSnapshot, notableCodex: Object.fromEntries(people.map(x => [String(x.notableId), { star: 3, fragments: 0 }])) },

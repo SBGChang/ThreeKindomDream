@@ -2,7 +2,7 @@ export type RallySide='ally'|'enemy';
 export type RallyColor='reason'|'evidence'|'presence';
 export type RallySpecial='induct'|'shout'|'concentrate'|'reflect'|'wild';
 export type RallyPassive='composure'|'eloquence'|'precision'|'adaptable'|'momentum'|'resourceful'|'renewal'|'scholar';
-export interface RallyBuild {int:number;pol:number;special:RallySpecial|null;passives:RallyPassive[]}
+export interface RallyBuild {int:number;pol:number;special?:RallySpecial|null;specials?:RallySpecial[];passives:RallyPassive[]}
 export type RallyCard={id:number;kind:'normal';color:RallyColor;value:number}|{id:number;kind:'special';special:RallySpecial};
 export interface RallyFighter {build:RallyBuild;heart:number;maxHeart:number;hand:RallyCard[];combo:number;double:boolean;reflect:boolean;wild:boolean;skip:boolean}
 export interface RallyEvent {side:RallySide;kind:'normal'|'special'|'pass'|'restart';card:RallyCard|null;damage:number;reflected:boolean;before:Record<RallySide,number>;after:Record<RallySide,number>;combo:number}

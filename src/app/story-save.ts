@@ -15,13 +15,15 @@ export function migrateStoryRun(state: RunState, version: number, defs: Definiti
     || !Array.isArray(story.milestones) || !Array.isArray(story.scenes) || !Array.isArray(story.seenScenes)) {
     throw new Error('主線存檔格式不符');
   }
-  const chapters = defs.reader('storyChapter').all();
-  const nodes = new Map(chapters.flatMap(c => c.nodes).map(n => [n.id, n]));
+  const roots = defs.reader('storyChapter').all();
+  const chapters = roots.flatMap(c=>[c,...(c.variants??[]).map(v=>v.chapter)]);
+  const nodes = chapters.flatMap(c=>[...c.nodes,...(c.legacy?.nodes??[]),...(c.companions??[]).flatMap(p=>p.nodes??[])]);
   const milestoneIds = new Set(chapters.flatMap(c => c.milestones.map(m => m.id)));
-  const scenes = new Map(chapters.flatMap(c => [c.opening, ...c.aftermaths.map(a => a.scene), ...c.milestones.map(m => m.scene), ...c.nodes.flatMap(n => n.options.flatMap(o => o.response ? [o.response] : []))])
+  for(const c of chapters)for(const event of [...(c.fieldStories??[]),...(c.companions??[]).flatMap(p=>p.fieldStories??[])])milestoneIds.add('field:'+event.id);
+  const scenes = new Map(chapters.flatMap(c => [...(c.legacy?.scenes??[]),c.opening, ...c.aftermaths.map(a => a.scene), ...c.milestones.map(m => m.scene), ...c.nodes.flatMap(n => n.options.flatMap(o => o.response ? [o.response] : [])),...(c.companions??[]).flatMap(p=>[p.opening,p.aftermath,...(p.nodes??[]).flatMap(n=>n.options.flatMap(o=>o.response?[o.response]:[]))])])
     .map(s => [s.id, s]));
   for (const [node, option] of Object.entries(story.choices)) {
-    if (!nodes.get(node)?.options.some(o => o.id === option)) throw new Error('主線選擇不屬於目前內容');
+    if (!nodes.some(n=>n.id===node&&n.options.some(o => o.id === option))) throw new Error('主線選擇不屬於目前內容');
   }
   for (const id of story.milestones) if (!milestoneIds.has(id)) throw new Error('救援紀錄不存在');
   for (const id of story.seenScenes) if (!scenes.has(id)) throw new Error('劇情紀錄不存在');

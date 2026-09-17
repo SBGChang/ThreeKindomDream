@@ -52,7 +52,7 @@ function applyGrants(
 
 export function assembleCompanions(ctx: TurnContext, fx: EffectResolver): RunState {
   const rules = ctx.defs.single('gameRules');
-  const picked: NotableId[] = [...ctx.state.config.designatedCompanions];
+  const picked: NotableId[] = [...ctx.state.config.designatedCompanions].filter(id=>companionCandidates(ctx).includes(id));
   let remaining = companionCandidates(ctx).filter((id) => !picked.includes(id));
   while (picked.length < rules.companionCount && remaining.length > 0) {
     const chosen = ctx.rng.pick('notable.roster', remaining);
@@ -90,7 +90,7 @@ export function assignSuperiors(
   const taken = new Set([...rosterIds(ctx).map(String), ...chosen.map(String)]);
 
   const picked: NotableId[] = [...chosen];
-  let remaining = pool.entries.filter((e) => !taken.has(String(e.notableId)));
+  let remaining = pool.entries.filter((e) => !taken.has(String(e.notableId))&&candidates.includes(e.notableId));
   while (picked.length < rules.superiorCount && remaining.length > 0) {
     const e = ctx.rng.weighted('notable.roster',
       remaining.map((x) => ({ item: x, weight: x.weight })));

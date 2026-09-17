@@ -1,3 +1,4 @@
+import {recruited} from './recruitment.js';
 // ⑲ 名士局內狀態 · 唯讀查詢（無 RNG）。
 import type { RunContext } from '../contracts/core/context.js';
 import type { LinkBonusDef, NotableBaseDef } from '../contracts/core/definitions.js';
@@ -65,14 +66,14 @@ export const countAtStage = (stage: AffinityStage, ctx: RunContext): number =>
 
 /** 候選池 ＝ 所有已載入 pack 的名士聯集，不是一張資料表（19 §2.1）。 */
 export const companionCandidates = (ctx: RunContext): readonly NotableId[] =>
-  ctx.defs.reader('notable').all().map((n) => n.notableId);
+  ctx.defs.reader('notable').all().filter(n=>recruited(String(n.notableId),ctx.state.metaSnapshot,ctx.defs)).map((n) => n.notableId);
 
 export function superiorCandidates(ctx: RunContext): readonly NotableId[] {
   if (ctx.state.faction === null) return [];
   const faction = ctx.defs.reader('faction').get(String(ctx.state.faction));
   const pool = ctx.defs.reader('notablePool').get(String(faction.superiorPoolId));
   const taken = new Set(rosterIds(ctx).map(String));
-  return pool.entries.filter((e) => !taken.has(String(e.notableId))).map((e) => e.notableId);
+  return pool.entries.filter((e) => !taken.has(String(e.notableId))&&recruited(String(e.notableId),ctx.state.metaSnapshot,ctx.defs)).map((e) => e.notableId);
 }
 
 export const baseOf = (id: NotableId, ctx: RunContext): NotableBaseDef =>

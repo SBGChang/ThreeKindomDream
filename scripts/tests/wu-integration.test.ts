@@ -31,7 +31,7 @@ assert.equal(defs.reader('chapter').all().filter(c=>c.factionId===wu).length,8);
 assert.equal(defs.reader('notable').all().filter(n=>n.factionId===wu).length,12);
 const success=storyFixture(5);assert(success.current.story.milestones.includes('wu.sunce-rescued'));assert(success.current.story.milestones.includes('wu.hearing-restored'));assert.equal(String(success.current.ending!.endingId),'ending:wu.tomorrow');
 const short=storyFixture(4);assert(!short.current.story.milestones.includes('wu.sunce-rescued'));assert(!short.current.story.milestones.includes('wu.hearing-restored'));
-const unprepared=storyFixture(7,{'U2.A':'assault','U7.A':'harbor'});assert(!unprepared.current.story.milestones.includes('wu.sunce-rescued'));assert(!unprepared.current.story.milestones.includes('wu.hearing-restored'));
+const unprepared=storyFixture(7,{'U2.A':'rush','U7.A':'harbor'});assert(!unprepared.current.story.milestones.includes('wu.sunce-rescued'));assert(!unprepared.current.story.milestones.includes('wu.hearing-restored'));
 const partial=storyFixture(5,{'U3.B':'personal','U8.B':'guard'});assert(partial.current.story.milestones.includes('wu.sunce-rescued'));assert(partial.current.story.milestones.includes('wu.hearing-restored'));assert(!['ending:wu.tomorrow','ending:wu.brothers'].includes(String(partial.current.ending!.endingId)));
 const resumed=Session.restore(wiring,JSON.parse(JSON.stringify(success.current)));assert.deepEqual(resumed.current.story,success.current.story);
 const live=newStorySession(515);const result=driveRun(live,{...POLICIES[0]!,chooseFaction:()=>wu},{battle:'realtime'});assert(live.isOver);assert.equal(result.actions,72);assert.equal(result.depths.length,9);

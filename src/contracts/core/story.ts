@@ -4,6 +4,9 @@ import type { ChapterId, L10nKey, SkillId, TraitId } from './ids.js';
 export interface StoryTeaching { readonly skill: SkillId | null; readonly trait: TraitId | null }
 
 export type StoryRequirement =
+  | {readonly kind:'any';readonly requirements:readonly StoryRequirement[][]}
+  | { readonly kind:'roster';readonly id:string;readonly present:boolean }
+  | { readonly kind:'depth';readonly chapter:string;readonly min:number }
   | { readonly kind: 'choice'; readonly node: string; readonly option: string }
   | { readonly kind: 'milestone'; readonly id: string };
 
@@ -48,6 +51,11 @@ export interface StoryMilestone {
 }
 
 export interface StoryChapterDef extends DefHeader {
+  readonly legacy?:{readonly nodes:readonly StoryNode[];readonly scenes:readonly StoryScene[]};
+  readonly enemyNameKey?:L10nKey;
+  readonly companions?:readonly {readonly notableId:string;readonly opening:StoryScene;readonly aftermath:StoryScene;readonly nodes?:readonly StoryNode[];readonly fieldStories?:readonly import('./battle-story.js').BattleStory[]}[];
+  readonly variants?: readonly {readonly requirements:readonly StoryRequirement[];readonly chapter:Omit<StoryChapterDef,'variants'>}[];
+  readonly fieldStories?: readonly import('./battle-story.js').BattleStory[];
   readonly kind: 'storyChapter';
   readonly chapterId: ChapterId;
   readonly opening: StoryScene;

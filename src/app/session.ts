@@ -1,3 +1,10 @@
+import {preserveRecruitment,earnedRecruits} from '../modules/recruitment.js';
+import {prepareFieldStory,bankFieldRewards} from './campaign-field-story.js';
+import {tickStoryField,advanceFieldStory,answerFieldDuel} from './battle-story-field.js';
+import {advanceStory,answerStoryDebate} from './battle-story.js';
+import type {RallyAction,RallySide} from '../contracts/core/debate-rally.js';
+import {DUEL_ACTIONS} from './duel-model.js';
+import * as equipment from '../modules/equipment.js';
 import { CHARGES } from '../contracts/core/effects.js';
 import {campaignConfrontation} from './campaign-confrontation.js';
 import {answerContest,tickEncounterDemo,type EncounterDemo} from './confrontation-demo.js';
@@ -61,15 +68,18 @@ export class Session {
       return id === null ? tc.state : ability.addSkill(id, tc);
     });
     s.mutate((tc) => item.seedCarried(tc));
+    s.mutate(tc=>equipment.autoEquip(tc));
     s.mutate((tc) => roster.assembleCompanions(tc, w.fx));
     s.mutate(tc => economy.transact('entry', economy.economyRule(tc).startingMoney, '啟程盤纏', tc));
     s.refreshSlots();
     return s;
   }
 
-  get current(): RunState { return this.state; }
+  get current(): RunState {const earned=earnedRecruits(this.ctx);if(earned.some(id=>!this.state.earnedUnlocks?.includes(id)))this.state={...this.state,earnedUnlocks:earned};return this.state;}
+  preserveUnlocks(meta:MetaState):MetaState{return preserveRecruitment(meta,this.ctx);}
   static restore(w: Wiring, state: RunState): Session {
     if(state.campaign?.realtime?.status==='running')state={...state,campaign:{...state.campaign,realtime:{...state.campaign.realtime,status:'paused'}}};
+    if(state.campaign?.fieldStory&&state.campaign.realtime){const f=state.campaign.fieldStory.field;f.encounter.battle=state.campaign.realtime;if(f.encounter.contest&&f.story.duel)f.encounter.contest.duel=f.story.duel;}
     const s = new Session(w, state);
     // Earlier saves recorded teaching as a locked Lv0 course; preserve it as a learned Lv1.
     for (const id of state.growth.unlockedSkills) if (!ability.hasSkill(id, s.ctx))
@@ -88,7 +98,9 @@ export class Session {
   learningOffers(): readonly learning.LearningOffer[] { return learning.offers(this.ctx, this.w.fx); }
   get money(): number { return economy.balance(this.ctx); }
   get needsChapterCamp(): boolean { return economy.inCamp(this.ctx); }
-  marketShelf() { return market.shelf(this.ctx); }
+  marketShelf() {const sh=market.shelf(this.ctx);return {...sh,offers:sh.offers.map(o=>({...o,price:equipment.itemPrice(o.price,this.ctx)}))};}
+  equipmentOptions(){return item.heldItems(this.ctx).map(id=>this.w.defs.reader('item').get(String(id))).filter(d=>d.equipment);}
+  equipItem(id:ItemIdT|null,slot:equipment.EquipmentSlot){this.state=equipment.equip(id,slot,this.ctx);}
   fragmentTargets() { return market.fragmentTargets(this.ctx); }
   fragmentPrice(id: ItemIdT): number { return economy.economyRule(this.ctx).fragmentPrices[this.w.defs.reader('item').get(String(id)).rarity-1]!; }
   selectFragment(id: ItemIdT): void { this.state=market.selectTarget(id,this.ctx); }
@@ -330,22 +342,29 @@ export class Session {
     if(st.realtime)return st.realtime;
     if(st.log.length)throw new Error('舊版戰役須先完成原有走留決策');
     const realtime=campaignBattle(this.ctx,this.w.fx);startBattle(realtime);
-    this.state={...this.state,campaign:{...st,realtime,confrontation:campaignConfrontation(this.ctx,realtime)}};return realtime;
+    this.state={...this.state,campaign:{...st,realtime,confrontation:campaignConfrontation(this.ctx,realtime)}};this.state=prepareFieldStory(this.ctx);return realtime;
   }
   advanceRealtimeCampaign(delta:number):void {
+    this.state=prepareFieldStory(this.ctx);
     const st=this.state.campaign,b=st?.realtime;
     if(!st||!b)return;
+    if(st.fieldStory){const p=st.fieldStory;p.field.encounter.battle=b;tickStoryField(p.data,p.field,delta);this.state=bankFieldRewards(this.ctx);this.state=story.recordStoryDepth(this.state.progress.chapterId,Math.min(7,realtimeRewards(this.ctx).cleared),this.ctx);if(p.field.triggered&&p.field.mode==='field'){const {fieldStory:discard,...rest}=this.state.campaign!;void discard;this.state={...this.state,campaign:{...rest,...(rest.confrontation?{confrontation:{...rest.confrontation,attempted:true,waveSeen:b.wave}}:{}),seenFieldStories:[...(rest.seenFieldStories??[]),p.data.id]}};}return;}
     if(st.confrontation){const encounter={...st.confrontation,battle:b};tickEncounterDemo(encounter,delta);const {battle:unused,...confrontation}=encounter;void unused;this.state={...this.state,campaign:{...st,confrontation}};}else tickBattle(b,delta);
+    this.state=story.recordStoryDepth(this.state.progress.chapterId,Math.min(7,realtimeRewards(this.ctx).cleared),this.ctx);
     if(b.status==='running'&&b.phase==='fallen'&&b.defeated==='ally'&&!st.rallied&&this.w.fx.chargesOf(CHARGES.majorRetry,this.ctx)>0){
       rallyArmy(b,this.w.defs.single('battleRule').rallyRatio);
       this.state={...consumeCharge(CHARGES.majorRetry,this.ctx),campaign:{...this.state.campaign!,rallied:true,realtime:b}};
     }
   }
   castRealtimeSkill(id:string):boolean {
-    const b=this.state.campaign?.realtime;return b&&!this.state.campaign?.confrontation?.contest?castSkill(b,id):false;
+    const b=this.state.campaign?.realtime;return b&&this.state.campaign?.fieldStory?.field.mode!=='story'&&!this.state.campaign?.confrontation?.contest?castSkill(b,id):false;
   }
-  realtimeConfrontation():EncounterDemo|null {const c=this.state.campaign;return c?.realtime&&c.confrontation?{...c.confrontation,battle:c.realtime}:null;}
-  answerRealtimeDuel(choice:number):boolean {const e=this.realtimeConfrontation();if(!e||!answerContest(e,choice))return false;const {battle:unused,...confrontation}=e;void unused;this.state={...this.state,campaign:{...this.state.campaign!,confrontation}};return true;}
+  realtimeConfrontation():EncounterDemo|null {const c=this.state.campaign;if(c?.fieldStory)return c.fieldStory.field.encounter;const e=c?.realtime&&c.confrontation?{...c.confrontation,battle:c.realtime}:null;if(e?.contest?.duel&&e.contest.allyId==='lord')equipment.equipDuel(e.contest.duel.ally,this.ctx);return e;}
+  answerRealtimeDuel(choice:number):boolean {if(this.state.campaign?.realtime?.status!=='running')return false;const p=this.state.campaign?.fieldStory;if(p){const action=DUEL_ACTIONS[choice];return !!action&&answerFieldDuel(p.data,p.field,action);}const e=this.realtimeConfrontation();if(!e||!answerContest(e,choice))return false;const {battle:unused,...confrontation}=e;void unused;this.state={...this.state,campaign:{...this.state.campaign!,confrontation}};return true;}
+  get battlefieldStory(){return this.state.campaign?.fieldStory;}
+  advanceBattleStory(revision:number,choice?:string){const p=this.battlefieldStory;if(!p||p.field.encounter.battle.status!=='running')return false;const ok=advanceFieldStory(p.data,p.field,revision,choice);this.state=bankFieldRewards(this.ctx);return ok;}
+  answerBattleDebate(side:RallySide,action:RallyAction){const p=this.battlefieldStory;return !!p&&p.field.encounter.battle.status==='running'&&answerStoryDebate(p.data,p.field.story,side,action);}
+  finishBattleDebate(){const p=this.battlefieldStory;if(p?.field.story.rally?.winner){advanceStory(p.data,p.field.story,p.field.story.revision);this.state=bankFieldRewards(this.ctx);}}
   pauseRealtimeCampaign(paused:boolean):void {
     const b=this.state.campaign?.realtime;
     if(b&&(b.status==='running'||b.status==='paused'))b.status=paused?'paused':'running';
@@ -580,7 +599,7 @@ export class Session {
   summary(): RunSummary { return summarize(this.state, this.w.defs); }
 
   settle(meta: MetaState): SettlementResult {
-    return settle(this.summary(), meta, this.w.defs);
+    return settle(this.summary(), this.preserveUnlocks(meta), this.w.defs);
   }
 }
 

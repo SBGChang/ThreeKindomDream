@@ -1,3 +1,4 @@
+import {itemPrice} from './equipment.js';
 import type { RunContext, TurnContext } from '../contracts/core/context.js';
 import type { ItemId } from '../contracts/core/ids.js';
 import type { MarketOffer, RunState } from '../contracts/core/state.js';
@@ -132,9 +133,9 @@ export function buy(
   ctx: RunContext,
 ): { state: RunState; ok: boolean } {
   const row = shelf(ctx).offers.find((x) => x.id === id);
-  if (!canManage(ctx) || !row || row.bought || balance(ctx) < row.price)
+  if (!canManage(ctx) || !row || row.bought || balance(ctx) < itemPrice(row.price,ctx))
     return { state: ctx.state, ok: false };
-  const paid = transact('market/' + id, -row.price, '購買道具', ctx);
+  const paid = transact('market/' + id, -itemPrice(row.price,ctx), '購買道具', ctx);
   if (paid === ctx.state) return { state: ctx.state, ok: false };
   const received = acquire(row.itemId, { ...ctx, state: paid }, 'market').state;
   return {
