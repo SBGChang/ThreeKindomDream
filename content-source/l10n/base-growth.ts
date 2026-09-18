@@ -8,5 +8,5 @@ export function baseGrowthText(prefix: string, referId: number): string {
   if (!effect) throw new Error(`Missing SlotBaseAdd for growth text: ${referId}`);
   const growth = Number((effect.add * economy.legacyBaseRatio).toFixed(6));
   const experience = Number((growth * 100).toFixed(4));
-  return `${prefix} +${growth}（${experience} 基礎經驗）`;
+  return `${prefix} +${experience}（成長 +${growth}）`;
 }

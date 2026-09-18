@@ -31,12 +31,14 @@ const checkBaseText=(descKey:string,effects:readonly {funcType:string;referId:nu
   const effect=defs.effect('SlotBaseAdd',ref.referId) as {add:number};
   const growth=Number((effect.add*growthRatio).toFixed(6));
   const text=defs.text(descKey);
-  assert(text.includes('+'+growth+'（'),text);
-  assert(text.includes(Number((growth*100).toFixed(4))+' 基礎經驗'),text);
+  assert(text.includes('成長 +'+growth+'）'),text);
+  assert(text.includes('基礎經驗 +'+Number((growth*100).toFixed(4))+'（'),text);
  }
 };
 for(const item of defs.reader('item').all())for(const tier of item.tiers)checkBaseText(String(tier.descKey),tier.effects);
 for(const notable of defs.reader('notable').all())for(const row of notable.unlocks)checkBaseText(String(row.descKey),[row]);
+for(const notable of defs.reader('notable').all())for(const row of notable.unlocks)assert.doesNotMatch(defs.text(String(row.descKey)),/同框|同格共事|[武智政]格/);
+for(const item of defs.reader('item').all())for(const tier of item.tiers)assert.doesNotMatch(defs.text(String(tier.descKey)),/同框|[武智政]格/);
 const stories=defs.reader('storyChapter').all().flatMap(s=>[s,...(s.variants??[]).map(v=>v.chapter)]);
 for(const chapter of stories){assert.equal(chapter.nodes.length,2);for(const d of chapter.fieldStories??[])validateBattleStory(d);}
 const ctx=(state:RunState)=>({state,defs});

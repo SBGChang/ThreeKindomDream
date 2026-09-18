@@ -24,9 +24,9 @@ export const wuNotables: readonly NotableDef[] = roster.map(r => wuDef('notable'
     skills: r.skills.map((x, i) => ({ star: [0, 2, 4][i]!, skillId: skillId(`skill:${x}`) })),
   },
   unlocks: [
-    { star: 0, funcType: 'LinkBonus', referId: effectId(FX.linkAll10), descKey: k(`notable.${r.slug}.link`, '同格共事加成 +10%（好感達知交後生效）') },
-    { star: 1, funcType: 'LinkBonus', referId: effectId(boosts[r.attr]), descKey: k(`notable.${r.slug}.specialty`, '專長格同框加成 +15%') },
-    { star: 2, funcType: 'SlotBias', referId: effectId(biases[r.attr]), descKey: k(`notable.${r.slug}.bias`, '更常出現在自己的專長格') },
+    { star: 0, funcType: 'LinkBonus', referId: effectId(FX.linkAll10), descKey: k(`notable.${r.slug}.link`, '一同修練時，指導加成 +10%') },
+    { star: 1, funcType: 'LinkBonus', referId: effectId(boosts[r.attr]), descKey: k(`notable.${r.slug}.specialty`, '一同進行其專長修練時，指導加成 +15%') },
+    { star: 2, funcType: 'SlotBias', referId: effectId(biases[r.attr]), descKey: k(`notable.${r.slug}.bias`, '更容易參與其專長修練') },
     { star: 3, funcType: 'LinkBonus', referId: effectId(boosts[r.attr]), descKey: asKey(`notable.${r.slug}.specialty`) },
     { star: 5, funcType: 'LinkBonus', referId: effectId(boosts[r.attr]), descKey: asKey(`notable.${r.slug}.specialty`) },
   ],
