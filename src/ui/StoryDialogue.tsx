@@ -65,7 +65,6 @@ export function StoryDialogue({ s, source, onDone }: { s: Session; source: Story
       <div className="decision-heading"><span aria-hidden="true">◆</span>選擇回應<span aria-hidden="true">◆</span></div>
       <div className="dialogue-options">{options.map((o,i) => <button className="dialogue-choice" key={o.id} onClick={() => { setAnswer(o.id); setChoosing(false); }}>
         <span className="dialogue-choice-label"><span className="dialogue-choice-number">{i+1}</span><DialogueText text={t(o.labelKey)} keywords={words}/></span>
-        <span className="dialogue-choice-reward"><DialogueText text={t(o.consequenceKey)} keywords={words}/></span>
       </button>)}</div>
     </section>}
     <section className="conversation-box" aria-label="對話框">

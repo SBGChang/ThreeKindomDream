@@ -283,63 +283,9 @@ export function EventDialogue({
               >
                 <span className="dialogue-choice-label">
                   <span className="dialogue-choice-number">{i + 1}</span>
-                  <DialogueText text={t(opt.labelKey)} keywords={words} />{opt.challenge&&<small> · {{duel:"單挑",debate:"舌戰",battle:"戰場"}[opt.challenge.mode]}</small>}
+                  <DialogueText text={t(opt.labelKey)} keywords={words} />
                 </span>
-                <span className="dialogue-choice-reward">
-                  {state.enabled ? (
-                    <>
-                      {state.successRate !== null && (
-                        <span>
-                          成功率 {Math.round(state.successRate * 100)}%　
-                        </span>
-                      )}
-                      {state.practicePreview.map((g, j) => (
-                        <span key={j}>
-                          {t('attr.' + g.attr + '.short')}經驗{' '}
-                          <b
-                            className={
-                              g.amount < 0
-                                ? 'dialogue-loss'
-                                : 'dialogue-gain'
-                            }
-                          >
-                            {g.amount > 0 ? '+' : ''}
-                            {Math.round(g.amount * 100)}
-                          </b>
-                          　
-                        </span>
-                      ))}
-                      {state.meritPreview.map((g, j) => (
-                        <span key={j}>
-                          {t('merit.' + g.line)}{' '}
-                          <b className="dialogue-gain">+{g.amount}</b>　
-                        </span>
-                      ))}
-                      薪水 <b className="dialogue-gain">+{state.salary}</b>
-                      {(state.successRate !== null || !!opt.challenge) && (
-                        <span>
-                          （未成{' '}
-                          <b className="dialogue-gain">
-                            +{state.failureSalary}
-                          </b>
-                          ）
-                        </span>
-                      )}
-                      {!!state.moneyCost && (
-                        <span>
-                          　投入{' '}
-                          <b className="dialogue-loss">
-                            −{state.moneyCost}
-                          </b>
-                        </span>
-                      )}
-                    </>
-                  ) : state.moneyCost && s.money < state.moneyCost ? (
-                    '金錢不足 · 需要 ' + state.moneyCost
-                  ) : (
-                    '官階或條件不足'
-                  )}
-                </span>
+
               </button>
             );
           })}

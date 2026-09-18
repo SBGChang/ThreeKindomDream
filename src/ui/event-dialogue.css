@@ -188,99 +188,104 @@
   color: #ff7979;
 }
 .dialogue-reward-page { position: absolute; right: 24px; bottom: 12px; font-size: 12px; color: #e5dcc9; }
+/* Floating painted response plaques keep attention on the player's words. */
 .dialogue-decision {
   position: absolute;
-  left: 350px;
-  top: 190px;
-  width: 580px;
-  padding: 16px 18px 20px;
+  left: 320px;
+  top: 184px;
+  width: 640px;
+  padding: 0 12px 16px;
   z-index: 6;
-  border: 3px solid #c29b58;
-  border-radius: 12px 4px;
-  background: linear-gradient(125deg,#47382b,#241c19 75%);
-  box-shadow: 0 0 0 3px #281a13, inset 0 0 0 2px #7e634044, 0 12px 26px #09060499;
   cursor: default;
   animation: decision-arrive .2s ease-out both;
 }
-.dialogue-decision::before,.dialogue-decision::after {
-  content: '';
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border: 2px solid #e2bf77;
-  pointer-events: none;
+.decision-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 240px;
+  height: 48px;
+  margin: 0 auto 8px;
+  color: #fff2c8;
+  font: bold 24px 'DFKai-SB', serif;
+  letter-spacing: 4px;
+  background: url('/art/ui/ui-button.png') center / 100% 100% no-repeat;
+  filter: drop-shadow(0 3px 3px #27170b88);
 }
-.dialogue-decision::before { left: 5px; top: 5px; border-right: 0; border-bottom: 0; border-radius: 5px 0 0; }
-.dialogue-decision::after { right: 5px; bottom: 5px; border-left: 0; border-top: 0; }
-.decision-heading { display:flex; align-items:center; justify-content:center; gap:18px; color:#f4d594; font:bold 23px 'DFKai-SB',serif; letter-spacing:4px; margin:2px 0 16px; }
-.decision-heading > span { color:#b39055; font-size:10px; }
-.dialogue-options { display:flex; flex-direction:column; gap:12px; }
+.decision-heading > span { color: #eccb80; font-size: 9px; }
+.dialogue-options { display: flex; flex-direction: column; gap: 4px; }
 .dialogue-actor { transition: translate .2s ease; }
 .decision-open .dialogue-cast:has(> .dialogue-actor:last-child[data-actor="1"]) > .dialogue-actor[data-actor="0"] { translate:-70px 0; }
 .decision-open .dialogue-cast:has(> .dialogue-actor:last-child[data-actor="1"]) > .dialogue-actor[data-actor="1"] { translate:70px 0; }
 @keyframes decision-arrive { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
-.game-stage .event-dialogue .dialogue-choice {
+.game-stage .event-dialogue .dialogue-choice,
+.game-stage .event-dialogue .dialogue-choice:is(:hover,:focus-visible,:active,:disabled) {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  text-align: left;
   width: 100%;
   position: relative;
-  min-height: 82px;
-  padding: 11px 14px 11px 54px;
-  gap: 7px;
-  border: 2px solid #9b8056;
+  isolation: isolate;
+  min-height: 90px;
+  padding: 24px 64px;
+  border: 0;
   border-image: none;
-  border-radius: 4px;
-  background: linear-gradient(100deg, #68503a, #3d3026);
-  color: #fff8ec;
-  box-shadow: inset 0 1px 0 #f6d29b22, 0 3px 0 #160e0a;
+  border-radius: 0;
+  background: none;
+  color: #51311c;
+  box-shadow: none;
+  text-align: center;
+  text-shadow: 0 1px #fff7db;
+  -webkit-text-stroke: 0;
+  transform: none;
+  filter: none;
+  transition: translate .15s ease;
+}
+.dialogue-choice::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: url('/art/ui/training/paper-control-v1.png') center / 100% 140% no-repeat;
+  filter: drop-shadow(0 5px 3px #28160780);
+  transition: filter .15s ease;
 }
 .dialogue-choice-label {
-  font-size: 20px;
-  line-height: 1.35;
+  font: bold 22px/1.5 'Microsoft JhengHei', sans-serif;
+  overflow-wrap: anywhere;
 }
+.dialogue-choice-label .dialogue-keyword { color: inherit; }
 .dialogue-choice-number {
   position: absolute;
-  left: 13px;
-  top: 14px;
-  display: grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  border: 1px solid #d2b370;
-  border-radius: 4px;
-  background: #241b14;
-  color: #ffdb80;
-  font:
-    bold 18px Georgia,
-    serif;
-}
-.dialogue-choice-reward {
-  font-size: 13px;
-  line-height: 1.5;
-  color: #f3ecde;
-  padding-left: 0;
-}
-.dialogue-choice-reward > span { margin-right: 10px; }
-.dialogue-choice-reward b { margin-left: 3px; }
-.dialogue-choice-reward > b + span { margin-left: 10px; }
-.game-stage .event-dialogue button:hover:not(:disabled) {
-  filter: brightness(1.2);
-  transform: none;
-  background: #345361;
-  border-color: #d6b770;
+  left: 17px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  line-height: 32px;
+  color: #fff0b9;
+  text-shadow: 0 2px 2px #37200b;
+  font: bold 22px/32px Georgia, serif;
 }
 .game-stage .event-dialogue .dialogue-choice:is(:hover,:focus-visible):not(:disabled) {
-  filter: none;
-  transform: none;
-  background: linear-gradient(100deg, #68503a, #3d3026);
-  border-color: #ffe39a;
-  box-shadow: 0 0 0 2px #c5a35755, 0 0 16px #f7c96533, inset 0 1px 0 #f6d29b22;
+  translate: 0 -2px;
+  color: #7a3017;
   outline: none;
 }
-.game-stage .event-dialogue .dialogue-choice:disabled { opacity:1; color:#b2a48c; border-color:#75644c; background:#302820; box-shadow:inset 0 1px 0 #ffffff0a; }
-.dialogue-choice:disabled .dialogue-choice-reward { color:#baaa93; }
+.dialogue-choice:is(:hover,:focus-visible):not(:disabled)::before {
+  filter: brightness(1.1) drop-shadow(0 0 4px #ffe298) drop-shadow(0 5px 3px #28160780);
+}
+.game-stage .event-dialogue .dialogue-choice:focus-visible {
+  outline: 2px solid #fff0af;
+  outline-offset: 0;
+  border-radius: 18px;
+}
+.game-stage .event-dialogue .dialogue-choice:active:not(:disabled) { translate: 0 1px; }
+.game-stage .event-dialogue .dialogue-choice:disabled { color: #756957; opacity: .6; }
+.dialogue-choice:disabled::before { filter: saturate(.25); }
+.event-dialogue.is-reduced .dialogue-choice,
+.event-dialogue.is-reduced .dialogue-choice::before { transition: none; }
 .event-dialogue.is-reduced .dialogue-reward-lines p,
 .event-dialogue.is-reduced .dialogue-decision {
   animation: none;
@@ -324,6 +329,7 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .dialogue-decision { animation:none; }
+  .game-stage .event-dialogue .dialogue-choice, .dialogue-choice::before { transition:none; }
   .dialogue-actor { transition:none; }
   .game-stage > .game-bottom.run-footer {
     transition: none !important;
