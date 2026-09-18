@@ -1,4 +1,5 @@
 import {ItemArt} from './ItemArt.js';
+import './entry-controls.css';
 import { EntryTalentIcon } from './EntryTalentIcon.js';
 import { RealmIcon } from './RealmArt.js';
 import { CharacterArt } from './CharacterArt.js';

@@ -1,3 +1,6 @@
+import { baseGrowthText } from './base-growth.js';
+import { FX } from '../core/effects/ids.js';
+
 // 魏的十二人。名字與逐條解鎖能力的敘述。
 //
 // 【文案照著資料寫，不照著設計稿寫】—— 這裡的每一行都對應
@@ -8,7 +11,7 @@ export const notableTexts: Record<string, string> = {
   'notable.caocao.name': '曹操',
   'notable.caocao.kit.0': '同框時，該格加成 +10%',
   'notable.caocao.kit.1': '事件的武功結算 +10%',
-  'notable.caocao.kit.2': '同框統御格時，統御基礎成長 +0.5',
+  'notable.caocao.kit.2': baseGrowthText('同框統御格時，統御基礎成長', FX.baseLead5),
   'notable.caocao.kit.3': '統御格的同框加成再 +15%',
   'notable.caocao.kit.4': '起始好感 +20',
   'notable.caocao.kit.5': '統御格的同框加成再 +15%',
@@ -29,18 +32,18 @@ export const notableTexts: Record<string, string> = {
   'notable.yujin.name': '于禁',
   'notable.yujin.kit.0': '同框時，該格加成 +10%',
   'notable.yujin.kit.1': '事件的武功結算 +10%',
-  'notable.yujin.kit.2': '同框統御格時，統御基礎成長 +0.3',
-  'notable.yujin.kit.3': '同框統御格時，統御基礎成長再 +0.3',
+  'notable.yujin.kit.2': baseGrowthText('同框統御格時，統御基礎成長', FX.baseLead3),
+  'notable.yujin.kit.3': baseGrowthText('同框統御格時，統御基礎成長再', FX.baseLead3),
   'notable.yujin.kit.4': '起始好感 +20',
   'notable.yujin.kit.5': '統御格的保底光階提高一檔',
-  'notable.yujin.kit.6': '同框統御格時，統御基礎值再 +4',
+  'notable.yujin.kit.6': baseGrowthText('同框統御格時，統御基礎成長再', FX.baseLead4),
   'notable.yujin.kit.7': '統御格的同框加成再 +15%',
 
   // ══ 武 ══════════════════════════════════════════
   'notable.xiahoudun.name': '夏侯惇',
   'notable.xiahoudun.kit.0': '同框時，該格加成 +10%',
   'notable.xiahoudun.kit.1': '事件的武功結算 +10%',
-  'notable.xiahoudun.kit.2': '同框武格時，武基礎成長 +0.4',
+  'notable.xiahoudun.kit.2': baseGrowthText('同框武格時，武基礎成長', FX.baseWar4),
   'notable.xiahoudun.kit.3': '武格的同框加成再 +15%',
   'notable.xiahoudun.kit.4': '他出現在武格的權重 10 → 15',
   'notable.xiahoudun.kit.5': '武格的同框加成再 +15%',
@@ -56,16 +59,16 @@ export const notableTexts: Record<string, string> = {
   'notable.dianwei.kit.5': '起始好感再 +20 —— 入夢即開連動',
   'notable.dianwei.kit.6': '物理傷害再 +10%',
   'notable.dianwei.kit.7': '武格的同框加成再 +15%',
-  'notable.dianwei.kit.8': '同框時，該維基礎成長 +0.5',
+  'notable.dianwei.kit.8': baseGrowthText('同框時，該維基礎成長', FX.baseAll5),
 
   'notable.lejin.name': '樂進',
   'notable.lejin.kit.0': '同框時，該格加成 +12%',
   'notable.lejin.kit.1': '事件的武功結算 +10%',
-  'notable.lejin.kit.2': '同框時，該維基礎成長 +0.2',
+  'notable.lejin.kit.2': baseGrowthText('同框時，該維基礎成長', FX.baseAll2),
   'notable.lejin.kit.3': '同框時，該格加成再 +8%',
   'notable.lejin.kit.4': '起始好感 +20',
   'notable.lejin.kit.5': '同框時，該格加成再 +8%',
-  'notable.lejin.kit.6': '同框時，該維基礎成長再 +0.3',
+  'notable.lejin.kit.6': baseGrowthText('同框時，該維基礎成長再', FX.baseAll3),
   'notable.lejin.kit.7': '同框時，該格加成再 +10%',
 
   // ══ 智 ══════════════════════════════════════════
@@ -92,9 +95,9 @@ export const notableTexts: Record<string, string> = {
   'notable.chengyu.name': '程昱',
   'notable.chengyu.kit.0': '同框時，該格加成 +10%',
   'notable.chengyu.kit.1': '事件的文功結算 +15%',
-  'notable.chengyu.kit.2': '同框智格時，智基礎成長 +0.3',
+  'notable.chengyu.kit.2': baseGrowthText('同框智格時，智基礎成長', FX.baseInt3),
   'notable.chengyu.kit.3': '事件的文功結算再 +10%',
-  'notable.chengyu.kit.4': '同框智格時，智基礎成長再 +0.3',
+  'notable.chengyu.kit.4': baseGrowthText('同框智格時，智基礎成長再', FX.baseInt3),
   'notable.chengyu.kit.5': '起始好感 +20',
   'notable.chengyu.kit.6': '全行動的升階機率 +8%',
   'notable.chengyu.kit.7': '智格的同框加成再 +15%',
@@ -117,16 +120,16 @@ export const notableTexts: Record<string, string> = {
   'notable.chenqun.kit.3': '他所站的格，委託機率 +15%',
   'notable.chenqun.kit.4': '起始好感 +20',
   'notable.chenqun.kit.5': '同框的其他名士，加成再 +15%',
-  'notable.chenqun.kit.6': '同框政格時，政基礎成長 +0.5',
+  'notable.chenqun.kit.6': baseGrowthText('同框政格時，政基礎成長', FX.basePol5),
   'notable.chenqun.kit.7': '同框的其他名士，加成再 +20%',
 
   'notable.maojie.name': '毛玠',
   'notable.maojie.kit.0': '同框時，該格加成 +10%',
   'notable.maojie.kit.1': '事件的文功結算 +10%',
   'notable.maojie.kit.2': '他所站的格，人物事件機率 +15%',
-  'notable.maojie.kit.3': '同框政格時，政基礎成長 +0.3',
+  'notable.maojie.kit.3': baseGrowthText('同框政格時，政基礎成長', FX.basePol3),
   'notable.maojie.kit.4': '起始好感 +20',
   'notable.maojie.kit.5': '他所站的格，人物事件機率再 +15%',
-  'notable.maojie.kit.6': '同框政格時，政基礎值再 +4',
+  'notable.maojie.kit.6': baseGrowthText('同框政格時，政基礎成長再', FX.basePol4),
   'notable.maojie.kit.7': '政格的同框加成再 +15%',
 };

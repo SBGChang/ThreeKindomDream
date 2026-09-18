@@ -400,19 +400,153 @@
     }
   },
   "xiahouyuan": {
-    "source": "art/duel/xiahouyuan-v1.png",
-    "generation": "duel-atlas",
-    "sourceRegion": {
-      "x": 0,
-      "y": 0,
-      "width": 0.25,
-      "height": 0.125
-    },
+    "source": "art/characters-v3/xiahouyuan.png",
+    "generation": "v3-redraw",
     "face": {
-      "x": 0.10644531,
-      "y": 0.03841146,
-      "width": 0.03320312,
-      "height": 0.02278646
+      "x": 0.365,
+      "y": 0.28,
+      "width": 0.33,
+      "height": 0.17
+    }
+  },
+  "sunjian": {
+    "source": "art/characters-v3/sunjian.png",
+    "generation": "v3-redraw",
+    "face": {
+      "x": 0.36,
+      "y": 0.269,
+      "width": 0.32,
+      "height": 0.16
+    }
+  },
+  "sunce": {
+    "source": "art/characters-v3/sunce.png",
+    "generation": "v3-redraw",
+    "face": {
+      "x": 0.37,
+      "y": 0.249,
+      "width": 0.3,
+      "height": 0.175
+    }
+  },
+  "lumeng": {
+    "source": "art/characters-v3/lumeng.png",
+    "generation": "v3-redraw",
+    "face": {
+      "x": 0.37,
+      "y": 0.3,
+      "width": 0.32,
+      "height": 0.16
+    }
+  },
+  "luxun": {
+    "source": "art/characters-v3/luxun.png",
+    "generation": "v3-redraw",
+    "face": {
+      "x": 0.365,
+      "y": 0.267,
+      "width": 0.33,
+      "height": 0.168
+    }
+  },
+  "taishici": {
+    "source": "art/characters-v3/taishici.png",
+    "generation": "v3-redraw",
+    "face": {
+      "x": 0.36,
+      "y": 0.267,
+      "width": 0.328,
+      "height": 0.158
+    }
+  },
+  "huanggai": {
+    "source": "art/characters-v3/huanggai.png",
+    "generation": "v3-redraw",
+    "face": {
+      "x": 0.37,
+      "y": 0.23,
+      "width": 0.31,
+      "height": 0.194
+    }
+  },
+  "zhangzhao": {
+    "source": "art/characters-v3/zhangzhao.png",
+    "generation": "v3-redraw",
+    "face": {
+      "x": 0.38,
+      "y": 0.26,
+      "width": 0.3,
+      "height": 0.17
+    }
+  },
+  "buzhi": {
+    "source": "art/characters-v3/buzhi.png",
+    "generation": "v3-redraw",
+    "face": {
+      "x": 0.37,
+      "y": 0.255,
+      "width": 0.32,
+      "height": 0.176
+    }
+  },
+  "caoxiu": {
+    "source": "art/characters-v3/caoxiu.png",
+    "generation": "v3-redraw",
+    "face": {
+      "x": 0.37,
+      "y": 0.26,
+      "width": 0.32,
+      "height": 0.176
+    }
+  },
+  "machao": {
+    "source": "art/characters-v3/machao.png",
+    "generation": "v3-redraw",
+    "face": {
+      "x": 0.365,
+      "y": 0.26,
+      "width": 0.32,
+      "height": 0.16
+    }
+  },
+  "weiyan": {
+    "source": "art/characters-v3/weiyan.png",
+    "generation": "v3-redraw",
+    "face": {
+      "x": 0.37,
+      "y": 0.275,
+      "width": 0.32,
+      "height": 0.155
+    }
+  },
+  "fazheng": {
+    "source": "art/characters-v3/fazheng.png",
+    "generation": "v3-redraw",
+    "face": {
+      "x": 0.37,
+      "y": 0.245,
+      "width": 0.32,
+      "height": 0.18
+    }
+  },
+  "jiangwei": {
+    "source": "art/characters-v3/jiangwei.png",
+    "generation": "v3-redraw",
+    "face": {
+      "x": 0.37,
+      "y": 0.26,
+      "width": 0.32,
+      "height": 0.17
+    }
+  },
+  "xuyou": {
+    "source": "art/characters-v3/xuyou.png",
+    "generation": "v3-redraw",
+    "face": {
+      "x": 0.365,
+      "y": 0.25,
+      "width": 0.33,
+      "height": 0.19
     }
   }
 }

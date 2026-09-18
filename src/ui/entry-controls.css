@@ -1,0 +1,17 @@
+.game-stage .dream-entry.entry-tabbed .entry-tabs{height:62px;align-items:center;gap:8px}
+.game-stage .dream-entry.entry-tabbed .entry-tabs>button{height:62px;width:173px;min-width:0;padding:8px 22px;gap:8px;border:0!important;border-radius:0;background:url('/art/ui/training/paper-control-v1.png') center / 100% 100% no-repeat!important;color:#5a381e;box-shadow:none!important;text-shadow:none}
+.game-stage .dream-entry.entry-tabbed .entry-tabs>button[aria-selected=true]{background-image:url('/art/ui/training/jade-control-v1.png')!important;color:#fff0c2;text-shadow:0 2px 2px #24552c;filter:drop-shadow(0 2px 3px #edc56a55)}
+.game-stage .dream-entry.entry-tabbed .entry-tabs>button:hover{filter:brightness(1.12)}
+.game-stage .dream-entry.entry-tabbed .entry-tabs .realm-icon{min-width:0;width:36px;height:36px}
+.game-stage .dream-entry.entry-tabbed .entry-stat-icon{width:48px;height:52px}
+.game-stage .dream-entry.entry-tabbed .entry-grades{gap:1px}
+.game-stage .dream-entry.entry-tabbed .entry-grades button{position:relative;isolation:isolate;width:35px;min-width:35px;height:51px;padding:8px 0 0!important;border:0!important;border-radius:0;background:none!important;box-shadow:none!important;color:#694825;font:900 18px Georgia,serif;margin:0;opacity:1;transition:transform .12s,filter .12s}
+.game-stage .dream-entry.entry-tabbed .entry-grades button::before{content:'';position:absolute;inset:0;z-index:-1;background:url('/art/ui/attributes/grade-v1.png') center / 100% 100% no-repeat;pointer-events:none}
+.game-stage .dream-entry.entry-tabbed .entry-grades button[aria-pressed=true]{color:#fff5c5;text-shadow:0 1px 2px #57200a;transform:translateY(-3px);filter:drop-shadow(0 2px 2px #9a581c)}
+.game-stage .dream-entry.entry-tabbed .entry-grades button[aria-pressed=true]::before{filter:sepia(1) saturate(4) brightness(.65)}
+.game-stage .dream-entry.entry-tabbed .entry-grades button:disabled{color:#887860;opacity:.42;filter:grayscale(.65);cursor:not-allowed}
+.game-stage .dream-entry.entry-tabbed .entry-grades button:not(:disabled):hover{transform:translateY(-3px);filter:drop-shadow(0 0 3px #c48630)}
+.game-stage .dream-entry.entry-tabbed .entry-grades button:focus-visible{outline:2px solid #aa6d24;outline-offset:2px}
+.game-stage .dream-entry.entry-tabbed .entry-grades button{height:56px}
+.game-stage .dream-entry.entry-tabbed .entry-grades button::before{background-size:145% 100%}
+.game-stage .dream-entry.entry-tabbed .entry-grades button[aria-pressed=true]::before{filter:sepia(1) saturate(2.5) hue-rotate(65deg) brightness(.66)}

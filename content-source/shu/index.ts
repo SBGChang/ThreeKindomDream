@@ -30,7 +30,7 @@ const boosts = { lead: FX.linkLead15, war: FX.linkWar15, int: FX.linkInt15, pol:
 const biases = { lead: FX.biasSelfLead15, war: FX.biasSelfWar15, int: FX.biasSelfInt18, pol: FX.biasSelfPol16 };
 export const shuNotables: readonly NotableDef[] = roster.map(r => shuDef('notable', `notable:${r.slug}`, {
   notableId: notableId(`notable:${r.slug}`), factionId: SHU_F, rarity: r.rarity,
-  ...(['machao','weiyan','fazheng','jiangwei'].includes(r.slug)?{duelArtId:'npc_soldier'}:{}),
+  duelArtId: r.slug,
   nameKey: k(`notable.${r.slug}.name`, r.name), base: notableBase(r.rarity, r.attr),
   abilities: { attrs: { lead: r.stats[0], war: r.stats[1], int: r.stats[2], pol: r.stats[3] },
     traits: r.traits.map(x => traitId(`trait:${x}`)),

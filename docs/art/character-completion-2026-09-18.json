@@ -1,0 +1,591 @@
+{
+  "date": "2026-09-18",
+  "tool": "built-in image_gen",
+  "styleReference": "public/art/characters-v2/caocao.png",
+  "jobs": [
+    {
+      "id": "machao",
+      "kind": "portrait",
+      "prompt": "Edit the reference game sprite into MA CHAO 馬超. This is a SAME GAME character variant: preserve EXACTLY the reference's extremely short squat CHIBI body, huge head (head 45 percent of body height), thick black outlines, simple large flat cel-shaded shapes, round large eyes, tiny short legs and oversized boots. NO realistic metal texture, NO engraving, NO intricate decoration, NO adult proportions, NO painterly detail. Change identity completely: youthful CLEAN SHAVEN face (remove ALL beard and moustache), SILVER WHITE helmet with white plume, SILVER WHITE simplified armor with a few gold trim shapes, white cape, holding an upright simple silver spear with blue tassel. Confident friendly neutral expression. Full body single figure standing, 1024x1536 portrait, entire weapon and feet inside 10% margins. Mandatory background FLAT SOLID #FF00FF magenta, no gradient, no shadow, no glow, no text. Match the attached Cao Cao drawing's visual simplicity and body proportions exactly; this is Ma Chao, not Cao Cao.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-4395976e-f19a-4d4c-a034-b9ba66afaf95.png",
+      "target": "public/art/characters-v3/machao.png",
+      "sha256": "87fda20b016709cb29a4a0df2e8b2a15010d7497afca96d2a44c71c77fd2e904"
+    },
+    {
+      "id": "weiyan",
+      "kind": "portrait",
+      "prompt": "Edit the reference game sprite into a DIFFERENT character: Wei Yan 魏延: russet complexion, fierce brows short black beard, dark GREEN bronze armor and helmet, crimson scarf cape, heavy curved dao. SAME GAME art variant: preserve EXACTLY reference's short squat CHIBI body, huge head (45 percent body height), THICK BLACK outlines, SIMPLE large flat cel-shaded shapes, round expressive eyes, tiny short legs, oversized boots. NO realistic metal texture, NO engraving, NO intricate decoration, NO adult proportions or painterly detail. Change the identity and costume completely according to description above. Full body, single figure standing, portrait 1024x1536, whole weapon and feet in frame with margins, no horse. BACKGROUND MUST BE FLAT SOLID #FF00FF magenta, no gradient/glow/shadow/text. Keep reference's visual simplicity and very short body proportions, but draw Wei Yan 魏延: russet complexion, fierce brows short black beard, dark GREEN bronze armor and helmet, crimson scarf cape, heavy curved dao.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-1802726f-8948-4fdc-ae45-321b4242d119.png",
+      "target": "public/art/characters-v3/weiyan.png",
+      "sha256": "d2f8fd807c2a788fa3bd09acd6afbd1d6ff1636eef0c6a9ca5757a4ed0ed2aa3"
+    },
+    {
+      "id": "fazheng",
+      "kind": "portrait",
+      "prompt": "Edit the reference game sprite into a DIFFERENT character: Fa Zheng 法正: clever middle-aged scholar, narrow eyes thin moustache small goatee, REMOVE helmet and armor, tall black scholar hat, olive GREEN robe ivory inner layer, bamboo scroll. SAME GAME art variant: preserve EXACTLY reference's short squat CHIBI body, huge head (45 percent body height), THICK BLACK outlines, SIMPLE large flat cel-shaded shapes, round expressive eyes, tiny short legs, oversized boots. NO realistic metal texture, NO engraving, NO intricate decoration, NO adult proportions or painterly detail. Change the identity and costume completely according to description above. Full body, single figure standing, portrait 1024x1536, whole weapon and feet in frame with margins, no horse. BACKGROUND MUST BE FLAT SOLID #FF00FF magenta, no gradient/glow/shadow/text. Keep reference's visual simplicity and very short body proportions, but draw Fa Zheng 法正: clever middle-aged scholar, narrow eyes thin moustache small goatee, REMOVE helmet and armor, tall black scholar hat, olive GREEN robe ivory inner layer, bamboo scroll.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-f79aebac-77d7-4b7c-927d-6f0dca4b0ee2.png",
+      "target": "public/art/characters-v3/fazheng.png",
+      "sha256": "43192953f3495a8491db24a754027f5d06e41633c9e802ec4339ceb303319bb9"
+    },
+    {
+      "id": "jiangwei",
+      "kind": "portrait",
+      "prompt": "Edit the reference game sprite into a DIFFERENT character: Jiang Wei 姜維: young CLEAN SHAVEN thoughtful face, REMOVE helmet, dark hair tied up in small jade crown, TEAL green silver light armor and ivory cape, spear. SAME GAME art variant: preserve EXACTLY reference's short squat CHIBI body, huge head (45 percent body height), THICK BLACK outlines, SIMPLE large flat cel-shaded shapes, round expressive eyes, tiny short legs, oversized boots. NO realistic metal texture, NO engraving, NO intricate decoration, NO adult proportions or painterly detail. Change the identity and costume completely according to description above. Full body, single figure standing, portrait 1024x1536, whole weapon and feet in frame with margins, no horse. BACKGROUND MUST BE FLAT SOLID #FF00FF magenta, no gradient/glow/shadow/text. Keep reference's visual simplicity and very short body proportions, but draw Jiang Wei 姜維: young CLEAN SHAVEN thoughtful face, REMOVE helmet, dark hair tied up in small jade crown, TEAL green silver light armor and ivory cape, spear.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-363133a6-8c9c-44e2-a5cb-47868abfbc45.png",
+      "target": "public/art/characters-v3/jiangwei.png",
+      "sha256": "7c6621c6810aa541892833472dee8c178fa4866d98b16619f74a23b5e5baf6c4"
+    },
+    {
+      "id": "xuyou",
+      "kind": "portrait",
+      "prompt": "Edit the reference game sprite into a DIFFERENT character: Xu You 許攸: shrewd scholar arched brows thin moustache narrow long goatee, REMOVE helmet and armor, dark BROWN tall scholar cap, OCHRE gold robe dark brown trim, rolled map. SAME GAME art variant: preserve EXACTLY reference's short squat CHIBI body, huge head (45 percent body height), THICK BLACK outlines, SIMPLE large flat cel-shaded shapes, round expressive eyes, tiny short legs, oversized boots. NO realistic metal texture, NO engraving, NO intricate decoration, NO adult proportions or painterly detail. Change the identity and costume completely according to description above. Full body, single figure standing, portrait 1024x1536, whole weapon and feet in frame with margins, no horse. BACKGROUND MUST BE FLAT SOLID #FF00FF magenta, no gradient/glow/shadow/text. Keep reference's visual simplicity and very short body proportions, but draw Xu You 許攸: shrewd scholar arched brows thin moustache narrow long goatee, REMOVE helmet and armor, dark BROWN tall scholar cap, OCHRE gold robe dark brown trim, rolled map.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-f725f3dd-da9f-4b2e-add0-f94fa20b205e.png",
+      "target": "public/art/characters-v3/xuyou.png",
+      "sha256": "42c3ef0f57854bb2b0915705d0620e4fa1bcd2162e85bb0dbab3ceb26a16baad"
+    },
+    {
+      "id": "sunjian",
+      "kind": "portrait",
+      "prompt": "Edit the reference game sprite into a DIFFERENT character: Sun Jian 孫堅: REMOVE metal helmet entirely, dark hair tied with red CLOTH HEADBAND and high ponytail, short black beard, gold TIGER shoulder armor, brown red armor, red cape, curved dao sword. SAME GAME art variant: preserve EXACTLY reference's short squat CHIBI body, huge head (45 percent body height), THICK BLACK outlines, SIMPLE large flat cel-shaded shapes, round expressive eyes, tiny short legs, oversized boots. NO realistic metal texture, NO engraving, NO intricate decoration, NO adult proportions or painterly detail. Change the identity and costume completely according to description above. Full body, single figure standing, portrait 1024x1536, whole weapon and feet in frame with margins, no horse. BACKGROUND MUST BE FLAT SOLID #FF00FF magenta, no gradient/glow/shadow/text. Keep reference's visual simplicity and very short body proportions, but draw Sun Jian 孫堅: REMOVE metal helmet entirely, dark hair tied with red CLOTH HEADBAND and high ponytail, short black beard, gold TIGER shoulder armor, brown red armor, red cape, curved dao sword.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-5308f70f-0628-4b4e-b46f-b88afb2c6134.png",
+      "target": "public/art/characters-v3/sunjian.png",
+      "sha256": "ec8c28a6a6ad9bea562306e1f6c3a3d9acfacc6ca03bf117789e150223464e38"
+    },
+    {
+      "id": "sunce",
+      "kind": "portrait",
+      "prompt": "Edit the reference game sprite into a DIFFERENT character: Sun Ce 孫策: youthful CLEAN SHAVEN face, REMOVE helmet, brown long high ponytail and small golden hair clasp, WHITE cape, red gold armor, spear. SAME GAME art variant: preserve EXACTLY reference's short squat CHIBI body, huge head (45 percent body height), THICK BLACK outlines, SIMPLE large flat cel-shaded shapes, round expressive eyes, tiny short legs, oversized boots. NO realistic metal texture, NO engraving, NO intricate decoration, NO adult proportions or painterly detail. Change the identity and costume completely according to description above. Full body, single figure standing, portrait 1024x1536, whole weapon and feet in frame with margins, no horse. BACKGROUND MUST BE FLAT SOLID #FF00FF magenta, no gradient/glow/shadow/text. Keep reference's visual simplicity and very short body proportions, but draw Sun Ce 孫策: youthful CLEAN SHAVEN face, REMOVE helmet, brown long high ponytail and small golden hair clasp, WHITE cape, red gold armor, spear.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-eed3beee-aa5a-4a15-9e29-c758bbb8ea4d.png",
+      "target": "public/art/characters-v3/sunce.png",
+      "sha256": "b9e1892abf4786a2de930163eaef1d6e2e8727a5799e62fb477be5616ccd1b0e"
+    },
+    {
+      "id": "lumeng",
+      "kind": "portrait",
+      "prompt": "Edit the reference game sprite into a DIFFERENT character: Lu Meng 呂蒙: dark GREEN gold helmet and armor, GREEN cape, brown plume, short black beard, guandao. SAME GAME art variant: preserve EXACTLY reference's short squat CHIBI body, huge head (45 percent body height), THICK BLACK outlines, SIMPLE large flat cel-shaded shapes, round expressive eyes, tiny short legs, oversized boots. NO realistic metal texture, NO engraving, NO intricate decoration, NO adult proportions or painterly detail. Change the identity and costume completely according to description above. Full body, single figure standing, portrait 1024x1536, whole weapon and feet in frame with margins, no horse. BACKGROUND MUST BE FLAT SOLID #FF00FF magenta, no gradient/glow/shadow/text. Keep reference's visual simplicity and very short body proportions, but draw Lu Meng 呂蒙: dark GREEN gold helmet and armor, GREEN cape, brown plume, short black beard, guandao.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-85d101a7-a7b8-4ff1-b888-50cd88548be4.png",
+      "target": "public/art/characters-v3/lumeng.png",
+      "sha256": "3bfdf2932cd7140bb8253706cb0af9032e9baa0cd84cd7af62628bd74ccfff4a"
+    },
+    {
+      "id": "luxun",
+      "kind": "portrait",
+      "prompt": "Edit the reference game sprite into a DIFFERENT character: Lu Xun 陸遜: young CLEAN SHAVEN face, REMOVE helmet replace with BLUE scholar hat gold trim and white trailing ribbons, BLUE WHITE robes and light armor, straight sword. SAME GAME art variant: preserve EXACTLY reference's short squat CHIBI body, huge head (45 percent body height), THICK BLACK outlines, SIMPLE large flat cel-shaded shapes, round expressive eyes, tiny short legs, oversized boots. NO realistic metal texture, NO engraving, NO intricate decoration, NO adult proportions or painterly detail. Change the identity and costume completely according to description above. Full body, single figure standing, portrait 1024x1536, whole weapon and feet in frame with margins, no horse. BACKGROUND MUST BE FLAT SOLID #FF00FF magenta, no gradient/glow/shadow/text. Keep reference's visual simplicity and very short body proportions, but draw Lu Xun 陸遜: young CLEAN SHAVEN face, REMOVE helmet replace with BLUE scholar hat gold trim and white trailing ribbons, BLUE WHITE robes and light armor, straight sword.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-f6432f31-67d2-4f55-8ebb-47e676c2140e.png",
+      "target": "public/art/characters-v3/luxun.png",
+      "sha256": "d1e5f320ea50a7c1226b71773a81f2f53de0f1e38d714bf8f7cc8b04f01e0c9b"
+    },
+    {
+      "id": "taishici",
+      "kind": "portrait",
+      "prompt": "Edit the reference game sprite into a DIFFERENT character: Taishi Ci 太史慈: SILVER BLUE helmet and armor, BLUE plume and cape, short black beard, spear. SAME GAME art variant: preserve EXACTLY reference's short squat CHIBI body, huge head (45 percent body height), THICK BLACK outlines, SIMPLE large flat cel-shaded shapes, round expressive eyes, tiny short legs, oversized boots. NO realistic metal texture, NO engraving, NO intricate decoration, NO adult proportions or painterly detail. Change the identity and costume completely according to description above. Full body, single figure standing, portrait 1024x1536, whole weapon and feet in frame with margins, no horse. BACKGROUND MUST BE FLAT SOLID #FF00FF magenta, no gradient/glow/shadow/text. Keep reference's visual simplicity and very short body proportions, but draw Taishi Ci 太史慈: SILVER BLUE helmet and armor, BLUE plume and cape, short black beard, spear.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-c375a1bf-4eb1-4825-a742-e47078e510f9.png",
+      "target": "public/art/characters-v3/taishici.png",
+      "sha256": "3ba842a70932020ecb54036fb07ddf7b6c98717e574338cdcf4d7101f76bf45c"
+    },
+    {
+      "id": "huanggai",
+      "kind": "portrait",
+      "prompt": "Edit the reference game sprite into a DIFFERENT character: Huang Gai 黃蓋: elderly face, REMOVE helmet, white hair ponytail with RED CLOTH band, WHITE beard eyebrows, brown red armor and red cape, chain whip. SAME GAME art variant: preserve EXACTLY reference's short squat CHIBI body, huge head (45 percent body height), THICK BLACK outlines, SIMPLE large flat cel-shaded shapes, round expressive eyes, tiny short legs, oversized boots. NO realistic metal texture, NO engraving, NO intricate decoration, NO adult proportions or painterly detail. Change the identity and costume completely according to description above. Full body, single figure standing, portrait 1024x1536, whole weapon and feet in frame with margins, no horse. BACKGROUND MUST BE FLAT SOLID #FF00FF magenta, no gradient/glow/shadow/text. Keep reference's visual simplicity and very short body proportions, but draw Huang Gai 黃蓋: elderly face, REMOVE helmet, white hair ponytail with RED CLOTH band, WHITE beard eyebrows, brown red armor and red cape, chain whip.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-8c240564-d230-4cf0-b9aa-173291337cf0.png",
+      "target": "public/art/characters-v3/huanggai.png",
+      "sha256": "1b1914b2d083e454dae70d4442a6c011cecfe20925475bd1398acb8dfc76e3d9"
+    },
+    {
+      "id": "zhangzhao",
+      "kind": "portrait",
+      "prompt": "Edit the reference game sprite into a DIFFERENT character: Zhang Zhao 張昭: elderly scholar long WHITE beard, REMOVE all armor and helmet, tall burgundy scholar hat, burgundy robes gold trim, bamboo tablet. SAME GAME art variant: preserve EXACTLY reference's short squat CHIBI body, huge head (45 percent body height), THICK BLACK outlines, SIMPLE large flat cel-shaded shapes, round expressive eyes, tiny short legs, oversized boots. NO realistic metal texture, NO engraving, NO intricate decoration, NO adult proportions or painterly detail. Change the identity and costume completely according to description above. Full body, single figure standing, portrait 1024x1536, whole weapon and feet in frame with margins, no horse. BACKGROUND MUST BE FLAT SOLID #FF00FF magenta, no gradient/glow/shadow/text. Keep reference's visual simplicity and very short body proportions, but draw Zhang Zhao 張昭: elderly scholar long WHITE beard, REMOVE all armor and helmet, tall burgundy scholar hat, burgundy robes gold trim, bamboo tablet.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-07b27917-bd48-4f8d-8456-386247e52eaa.png",
+      "target": "public/art/characters-v3/zhangzhao.png",
+      "sha256": "65ce0851f402e6b61518cc932777d27c8a438004526cc81edc91e8f8fee97ee2"
+    },
+    {
+      "id": "buzhi",
+      "kind": "portrait",
+      "prompt": "Edit the reference game sprite into a DIFFERENT character: Bu Zhi 步騭: scholar short black moustache and goatee, REMOVE all armor and helmet, tall BLACK scholar hat green jewel, GREEN robes white cuffs, bamboo scroll. SAME GAME art variant: preserve EXACTLY reference's short squat CHIBI body, huge head (45 percent body height), THICK BLACK outlines, SIMPLE large flat cel-shaded shapes, round expressive eyes, tiny short legs, oversized boots. NO realistic metal texture, NO engraving, NO intricate decoration, NO adult proportions or painterly detail. Change the identity and costume completely according to description above. Full body, single figure standing, portrait 1024x1536, whole weapon and feet in frame with margins, no horse. BACKGROUND MUST BE FLAT SOLID #FF00FF magenta, no gradient/glow/shadow/text. Keep reference's visual simplicity and very short body proportions, but draw Bu Zhi 步騭: scholar short black moustache and goatee, REMOVE all armor and helmet, tall BLACK scholar hat green jewel, GREEN robes white cuffs, bamboo scroll.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-11a8b372-be84-4678-b824-ffb743d2bca9.png",
+      "target": "public/art/characters-v3/buzhi.png",
+      "sha256": "b70efd9eb8b5f0c274ea7b2aae59e8d10fc81f63c4b148a0c58edac7edb97206"
+    },
+    {
+      "id": "caoxiu",
+      "kind": "portrait",
+      "prompt": "Edit the reference game sprite into a DIFFERENT character: Cao Xiu 曹休: dark BLUE gold armor helmet, RED plume RED cape, short black beard, spear. SAME GAME art variant: preserve EXACTLY reference's short squat CHIBI body, huge head (45 percent body height), THICK BLACK outlines, SIMPLE large flat cel-shaded shapes, round expressive eyes, tiny short legs, oversized boots. NO realistic metal texture, NO engraving, NO intricate decoration, NO adult proportions or painterly detail. Change the identity and costume completely according to description above. Full body, single figure standing, portrait 1024x1536, whole weapon and feet in frame with margins, no horse. BACKGROUND MUST BE FLAT SOLID #FF00FF magenta, no gradient/glow/shadow/text. Keep reference's visual simplicity and very short body proportions, but draw Cao Xiu 曹休: dark BLUE gold armor helmet, RED plume RED cape, short black beard, spear.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-360c5ca8-dcac-4a53-a57b-6ac544024d1b.png",
+      "target": "public/art/characters-v3/caoxiu.png",
+      "sha256": "826d516100ae91fb67503de202f730d840274da9d7d5f4999cd4b5745fa836fc"
+    },
+    {
+      "id": "xiahouyuan",
+      "kind": "portrait",
+      "prompt": "Edit the reference game sprite into a DIFFERENT character: Xiahou Yuan 夏侯淵: dark navy gold helmet and armor, BLUE plume BLUE cape, black short beard, spear. SAME GAME art variant: preserve EXACTLY reference's short squat CHIBI body, huge head (45 percent body height), THICK BLACK outlines, SIMPLE large flat cel-shaded shapes, round expressive eyes, tiny short legs, oversized boots. NO realistic metal texture, NO engraving, NO intricate decoration, NO adult proportions or painterly detail. Change the identity and costume completely according to description above. Full body, single figure standing, portrait 1024x1536, whole weapon and feet in frame with margins, no horse. BACKGROUND MUST BE FLAT SOLID #FF00FF magenta, no gradient/glow/shadow/text. Keep reference's visual simplicity and very short body proportions, but draw Xiahou Yuan 夏侯淵: dark navy gold helmet and armor, BLUE plume BLUE cape, black short beard, spear.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-6dfe61cc-27c3-43ec-a52e-0db3af5e8ab0.png",
+      "target": "public/art/characters-v3/xiahouyuan.png",
+      "sha256": "c3bb90d498ce17c44b1322a88fc3d60b7e8c90328676eb9a023224d0053da2b6"
+    },
+    {
+      "id": "machao",
+      "kind": "mounted-six-actions",
+      "prompt": "Create a production sprite sheet of the attached MA CHAO character riding a small white horse. Preserve exact simplified chibi style, huge head short body, silver white armor, white plume, clean-shaven face, blue-tassel spear. EXACTLY EIGHT COLUMNS and SIX ROWS, 48 separate complete rider+horse sprites. Landscape 2048x1536. All face right. Each square cell has 16% empty magenta margins, identical size and hooves baseline. Row 1: 8 sequential frames of spear attack, windup thrust recover. Row 2: 8 frames defensive brace and recover. Row 3: 8 frames resting breathing. Row 4: 8 frames recoil hurt and recover. Row 5: 8 frames issuing spoken commands, hand raises, points, open palm, lowers, returns neutral, weapon resting. Row 6: 8 frames galloping loop. Flat solid #FF00FF background EVERYWHERE between sprites. NO text, no grids, no shadows, no gradients, no glow, no particles. Thick black outlines and simple cel shading EXACTLY like reference, not detailed realism. Full weapons contained in each cell.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-3f20cf43-c7d7-4089-a9de-c8353d3a9871.png",
+      "target": "public/art/duel/machao-v1.png",
+      "sha256": "5111dcc11d16246e1fc57012c69492ecfb48877875368a09bd9a85b56c21c5d2"
+    },
+    {
+      "id": "weiyan",
+      "kind": "mounted-six-actions",
+      "prompt": "Create a production sprite sheet of the attached weiyan character riding a small brown horse. Preserve EXACT identity, costume colors, face and SIMPLE chibi style: huge head short body thick black outline flat cel shading. EXACTLY 8 COLUMNS x 6 ROWS = 48 complete rider+horse sprites, landscape 2048x1536. All face RIGHT. Each square cell has 16% empty magenta safety margins, same size and hooves baseline. Row1: 8 frames attack once with own weapon (scholars use scroll), windup strike recover. Row2: 8 frames defensive brace recover. Row3: 8 frames resting breathing. Row4: 8 frames recoil hurt recover. Row5: 8 frames issuing spoken commands, hand raises points open palm lowers returns neutral, weapon resting. Row6: 8 frames galloping loop. Full weapons contained in cells. Flat solid #FF00FF background, no grid, text, shadows, gradients, glow or particles. NO realistic detail, exactly reference style.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-b1ddedcd-2830-4a6d-ac65-78f29bceee40.png",
+      "target": "public/art/duel/weiyan-v1.png",
+      "sha256": "7cc8e167d20f43a224305da9366750676126744bc3ffb83b76264b86c6e205f6"
+    },
+    {
+      "id": "fazheng",
+      "kind": "mounted-six-actions",
+      "prompt": "Create a production sprite sheet of the attached fazheng character riding a small brown horse. Preserve EXACT identity, costume colors, face and SIMPLE chibi style: huge head short body thick black outline flat cel shading. EXACTLY 8 COLUMNS x 6 ROWS = 48 complete rider+horse sprites, landscape 2048x1536. All face RIGHT. Each square cell has 16% empty magenta safety margins, same size and hooves baseline. Row1: 8 frames attack once with own weapon (scholars use scroll), windup strike recover. Row2: 8 frames defensive brace recover. Row3: 8 frames resting breathing. Row4: 8 frames recoil hurt recover. Row5: 8 frames issuing spoken commands, hand raises points open palm lowers returns neutral, weapon resting. Row6: 8 frames galloping loop. Full weapons contained in cells. Flat solid #FF00FF background, no grid, text, shadows, gradients, glow or particles. NO realistic detail, exactly reference style.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-33ec4ac4-5a0e-4828-9c51-ada5786e8354.png",
+      "target": "public/art/duel/fazheng-v1.png",
+      "sha256": "be135df0389812251d55ac84c95133958ac8060e5f87697f43db3ae9ab21878a"
+    },
+    {
+      "id": "jiangwei",
+      "kind": "mounted-six-actions",
+      "prompt": "Create a production sprite sheet of the attached jiangwei character riding a small brown horse. Preserve EXACT identity, costume colors, face and SIMPLE chibi style: huge head short body thick black outline flat cel shading. EXACTLY 8 COLUMNS x 6 ROWS = 48 complete rider+horse sprites, landscape 2048x1536. All face RIGHT. Each square cell has 16% empty magenta safety margins, same size and hooves baseline. Row1: 8 frames attack once with own weapon (scholars use scroll), windup strike recover. Row2: 8 frames defensive brace recover. Row3: 8 frames resting breathing. Row4: 8 frames recoil hurt recover. Row5: 8 frames issuing spoken commands, hand raises points open palm lowers returns neutral, weapon resting. Row6: 8 frames galloping loop. Full weapons contained in cells. Flat solid #FF00FF background, no grid, text, shadows, gradients, glow or particles. NO realistic detail, exactly reference style.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-3aaa265c-687d-4246-afd7-e30886914450.png",
+      "target": "public/art/duel/jiangwei-v1.png",
+      "sha256": "82172bc219c895944926f44a12f68005f43e1e58dbcd0bcb8b1fb49bd3781c43"
+    },
+    {
+      "id": "xuyou",
+      "kind": "mounted-six-actions",
+      "prompt": "Create a production sprite sheet of the attached xuyou character riding a small brown horse. Preserve EXACT identity, costume colors, face and SIMPLE chibi style: huge head short body thick black outline flat cel shading. EXACTLY 8 COLUMNS x 6 ROWS = 48 complete rider+horse sprites, landscape 2048x1536. All face RIGHT. Each square cell has 16% empty magenta safety margins, same size and hooves baseline. Row1: 8 frames attack once with own weapon (scholars use scroll), windup strike recover. Row2: 8 frames defensive brace recover. Row3: 8 frames resting breathing. Row4: 8 frames recoil hurt recover. Row5: 8 frames issuing spoken commands, hand raises points open palm lowers returns neutral, weapon resting. Row6: 8 frames galloping loop. Full weapons contained in cells. Flat solid #FF00FF background, no grid, text, shadows, gradients, glow or particles. NO realistic detail, exactly reference style.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-07af17f0-982e-4f9d-9f84-2983ef01128b.png",
+      "target": "public/art/duel/xuyou-v1.png",
+      "sha256": "bc59b6460ab568efc3a6440b5bb848306ec3dc4488cad4a6c26c417da2843c1d"
+    },
+    {
+      "id": "machao",
+      "kind": "standing-debate",
+      "prompt": "Create ONE production STANDING DEBATE animation sprite atlas for the attached character machao. Preserve exact identity, hair, hat, beard, costume colors and very SIMPLE CHIBI style. Thick dark outline, flat clean cel shading, giant head, tiny squat body. NO horse, NO weapon attacking, stow weapons, hands free for debate. EXACTLY 4 COLUMNS x 8 ROWS, 32 sprites in square cells, portrait 1024x2048. Same character in ALL cells, standing facing slightly RIGHT, same size and foot baseline. 15% empty safety margin each cell, whole head feet hands inside. Each row has FOUR SEQUENTIAL POSES: prepare, gesture, emphatic gesture, recover. Row1 argument: hand on chest, lift open palm, speak open palm, return. Row2 evidence: lift a scroll, open scroll, point at it, lower. Row3 question: thoughtful chin, lift finger, point forward, lower. Row4 rebuttal: brace, raise palm, firm stop palm, lower. Row5 persuasion: open arms, offer palm, knowing gesture, recover. Row6 focus: hands together, close eyes inhale, exhale, reopen eyes. Row7 shout: fist near waist, raise fist, shout leaning forward, settle. Row8 idle: relaxed neutral, blink, breathe, neutral. Simple bold game cartoon matching reference exactly, no realistic detail. Flat solid bright MAGENTA #FF00FF background throughout all empty space, no text labels grid particles shadows glow.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-5ac6149f-73d9-4460-a635-e5fa9f9a97db.png",
+      "target": "public/art/debate/machao-commands-v2.png",
+      "sha256": "df1c57945a8af6b4b65329a41aa278b6bee5677366937639608f58cbc147c2c5"
+    },
+    {
+      "id": "weiyan",
+      "kind": "standing-debate",
+      "prompt": "Create ONE production STANDING DEBATE animation sprite atlas for the attached character weiyan. Preserve exact identity, hair, hat, beard, costume colors and very SIMPLE CHIBI style. Thick dark outline, flat clean cel shading, giant head, tiny squat body. NO horse, NO weapon attacking, stow weapons, hands free for debate. EXACTLY 4 COLUMNS x 8 ROWS, 32 sprites in square cells, portrait 1024x2048. Same character in ALL cells, standing facing slightly RIGHT, same size and foot baseline. 15% empty safety margin each cell, whole head feet hands inside. Each row has FOUR SEQUENTIAL POSES: prepare, gesture, emphatic gesture, recover. Row1 argument: hand on chest, lift open palm, speak open palm, return. Row2 evidence: lift a scroll, open scroll, point at it, lower. Row3 question: thoughtful chin, lift finger, point forward, lower. Row4 rebuttal: brace, raise palm, firm stop palm, lower. Row5 persuasion: open arms, offer palm, knowing gesture, recover. Row6 focus: hands together, close eyes inhale, exhale, reopen eyes. Row7 shout: fist near waist, raise fist, shout leaning forward, settle. Row8 idle: relaxed neutral, blink, breathe, neutral. Simple bold game cartoon matching reference exactly, no realistic detail. Flat solid bright MAGENTA #FF00FF background throughout all empty space, no text labels grid particles shadows glow.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-1e215afa-8957-4a8b-988a-75b495c93eca.png",
+      "target": "public/art/debate/weiyan-commands-v2.png",
+      "sha256": "3084f521fd3fad96652e679b3633a096072585bbe754d2020554c2eec0f2d5d0"
+    },
+    {
+      "id": "fazheng",
+      "kind": "standing-debate",
+      "prompt": "Create ONE production STANDING DEBATE animation sprite atlas for the attached character fazheng. Preserve exact identity, hair, hat, beard, costume colors and very SIMPLE CHIBI style. Thick dark outline, flat clean cel shading, giant head, tiny squat body. NO horse, NO weapon attacking, stow weapons, hands free for debate. EXACTLY 4 COLUMNS x 8 ROWS, 32 sprites in square cells, portrait 1024x2048. Same character in ALL cells, standing facing slightly RIGHT, same size and foot baseline. 15% empty safety margin each cell, whole head feet hands inside. Each row has FOUR SEQUENTIAL POSES: prepare, gesture, emphatic gesture, recover. Row1 argument: hand on chest, lift open palm, speak open palm, return. Row2 evidence: lift a scroll, open scroll, point at it, lower. Row3 question: thoughtful chin, lift finger, point forward, lower. Row4 rebuttal: brace, raise palm, firm stop palm, lower. Row5 persuasion: open arms, offer palm, knowing gesture, recover. Row6 focus: hands together, close eyes inhale, exhale, reopen eyes. Row7 shout: fist near waist, raise fist, shout leaning forward, settle. Row8 idle: relaxed neutral, blink, breathe, neutral. Simple bold game cartoon matching reference exactly, no realistic detail. Flat solid bright MAGENTA #FF00FF background throughout all empty space, no text labels grid particles shadows glow.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-a210cf06-f0fd-45c1-bf46-ea08b322fdce.png",
+      "target": "public/art/debate/fazheng-commands-v2.png",
+      "sha256": "7adb03ff352e5b50fd94750b6a0e699c7499124305263a3ad016250ebaee1c59"
+    },
+    {
+      "id": "jiangwei",
+      "kind": "standing-debate",
+      "prompt": "Create ONE production STANDING DEBATE animation sprite atlas for the attached character jiangwei. Preserve exact identity, hair, hat, beard, costume colors and very SIMPLE CHIBI style. Thick dark outline, flat clean cel shading, giant head, tiny squat body. NO horse, NO weapon attacking, stow weapons, hands free for debate. EXACTLY 4 COLUMNS x 8 ROWS, 32 sprites in square cells, portrait 1024x2048. Same character in ALL cells, standing facing slightly RIGHT, same size and foot baseline. 15% empty safety margin each cell, whole head feet hands inside. Each row has FOUR SEQUENTIAL POSES: prepare, gesture, emphatic gesture, recover. Row1 argument: hand on chest, lift open palm, speak open palm, return. Row2 evidence: lift a scroll, open scroll, point at it, lower. Row3 question: thoughtful chin, lift finger, point forward, lower. Row4 rebuttal: brace, raise palm, firm stop palm, lower. Row5 persuasion: open arms, offer palm, knowing gesture, recover. Row6 focus: hands together, close eyes inhale, exhale, reopen eyes. Row7 shout: fist near waist, raise fist, shout leaning forward, settle. Row8 idle: relaxed neutral, blink, breathe, neutral. Simple bold game cartoon matching reference exactly, no realistic detail. Flat solid bright MAGENTA #FF00FF background throughout all empty space, no text labels grid particles shadows glow.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-4fc03410-dbc0-43ba-ab19-590a765563ff.png",
+      "target": "public/art/debate/jiangwei-commands-v2.png",
+      "sha256": "f356206b275ac41403caddd601a5343a4263463957910f127bb7ff568be969b1"
+    },
+    {
+      "id": "xuyou",
+      "kind": "standing-debate",
+      "prompt": "Create ONE production STANDING DEBATE animation sprite atlas for the attached character xuyou. Preserve exact identity, hair, hat, beard, costume colors and very SIMPLE CHIBI style. Thick dark outline, flat clean cel shading, giant head, tiny squat body. NO horse, NO weapon attacking, stow weapons, hands free for debate. EXACTLY 4 COLUMNS x 8 ROWS, 32 sprites in square cells, portrait 1024x2048. Same character in ALL cells, standing facing slightly RIGHT, same size and foot baseline. 15% empty safety margin each cell, whole head feet hands inside. Each row has FOUR SEQUENTIAL POSES: prepare, gesture, emphatic gesture, recover. Row1 argument: hand on chest, lift open palm, speak open palm, return. Row2 evidence: lift a scroll, open scroll, point at it, lower. Row3 question: thoughtful chin, lift finger, point forward, lower. Row4 rebuttal: brace, raise palm, firm stop palm, lower. Row5 persuasion: open arms, offer palm, knowing gesture, recover. Row6 focus: hands together, close eyes inhale, exhale, reopen eyes. Row7 shout: fist near waist, raise fist, shout leaning forward, settle. Row8 idle: relaxed neutral, blink, breathe, neutral. Simple bold game cartoon matching reference exactly, no realistic detail. Flat solid bright MAGENTA #FF00FF background throughout all empty space, no text labels grid particles shadows glow.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-7cab153f-3cf6-4d4a-aec5-1addf5d7d2c8.png",
+      "target": "public/art/debate/xuyou-commands-v2.png",
+      "sha256": "d2aead11d3096b80a9c8fea4919fa7113a8e3b763299883c0d81cedd10fb9058"
+    },
+    {
+      "id": "sunjian",
+      "kind": "standing-debate",
+      "prompt": "Create ONE production STANDING DEBATE animation sprite atlas for the attached character sunjian. Preserve exact identity, hair, hat, beard, costume colors and very SIMPLE CHIBI style. Thick dark outline, flat clean cel shading, giant head, tiny squat body. NO horse, NO weapon attacking, stow weapons, hands free for debate. EXACTLY 4 COLUMNS x 8 ROWS, 32 sprites in square cells, portrait 1024x2048. Same character in ALL cells, standing facing slightly RIGHT, same size and foot baseline. 15% empty safety margin each cell, whole head feet hands inside. Each row has FOUR SEQUENTIAL POSES: prepare, gesture, emphatic gesture, recover. Row1 argument: hand on chest, lift open palm, speak open palm, return. Row2 evidence: lift a scroll, open scroll, point at it, lower. Row3 question: thoughtful chin, lift finger, point forward, lower. Row4 rebuttal: brace, raise palm, firm stop palm, lower. Row5 persuasion: open arms, offer palm, knowing gesture, recover. Row6 focus: hands together, close eyes inhale, exhale, reopen eyes. Row7 shout: fist near waist, raise fist, shout leaning forward, settle. Row8 idle: relaxed neutral, blink, breathe, neutral. Simple bold game cartoon matching reference exactly, no realistic detail. Flat solid bright MAGENTA #FF00FF background throughout all empty space, no text labels grid particles shadows glow.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-6bf1df87-62a2-4da5-9989-d5dbd9a1fbdc.png",
+      "target": "public/art/debate/sunjian-commands-v2.png",
+      "sha256": "52f500f3c0aa1e03a05dc85724be5665ec0187e1142080401d613dcbb2e5acb9"
+    },
+    {
+      "id": "sunce",
+      "kind": "standing-debate",
+      "prompt": "Create ONE production STANDING DEBATE animation sprite atlas for the attached character sunce. Preserve exact identity, hair, hat, beard, costume colors and very SIMPLE CHIBI style. Thick dark outline, flat clean cel shading, giant head, tiny squat body. NO horse, NO weapon attacking, stow weapons, hands free for debate. EXACTLY 4 COLUMNS x 8 ROWS, 32 sprites in square cells, portrait 1024x2048. Same character in ALL cells, standing facing slightly RIGHT, same size and foot baseline. 15% empty safety margin each cell, whole head feet hands inside. Each row has FOUR SEQUENTIAL POSES: prepare, gesture, emphatic gesture, recover. Row1 argument: hand on chest, lift open palm, speak open palm, return. Row2 evidence: lift a scroll, open scroll, point at it, lower. Row3 question: thoughtful chin, lift finger, point forward, lower. Row4 rebuttal: brace, raise palm, firm stop palm, lower. Row5 persuasion: open arms, offer palm, knowing gesture, recover. Row6 focus: hands together, close eyes inhale, exhale, reopen eyes. Row7 shout: fist near waist, raise fist, shout leaning forward, settle. Row8 idle: relaxed neutral, blink, breathe, neutral. Simple bold game cartoon matching reference exactly, no realistic detail. Flat solid bright MAGENTA #FF00FF background throughout all empty space, no text labels grid particles shadows glow.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-0fef9b4f-d045-48ee-b449-e479e3bae845.png",
+      "target": "public/art/debate/sunce-commands-v2.png",
+      "sha256": "890a0356e76069480afbcd5971106dd98366acd8ac48f9ce5c903ac533e3d980"
+    },
+    {
+      "id": "lumeng",
+      "kind": "standing-debate",
+      "prompt": "Create ONE production STANDING DEBATE animation sprite atlas for the attached character lumeng. Preserve exact identity, hair, hat, beard, costume colors and very SIMPLE CHIBI style. Thick dark outline, flat clean cel shading, giant head, tiny squat body. NO horse, NO weapon attacking, stow weapons, hands free for debate. EXACTLY 4 COLUMNS x 8 ROWS, 32 sprites in square cells, portrait 1024x2048. Same character in ALL cells, standing facing slightly RIGHT, same size and foot baseline. 15% empty safety margin each cell, whole head feet hands inside. Each row has FOUR SEQUENTIAL POSES: prepare, gesture, emphatic gesture, recover. Row1 argument: hand on chest, lift open palm, speak open palm, return. Row2 evidence: lift a scroll, open scroll, point at it, lower. Row3 question: thoughtful chin, lift finger, point forward, lower. Row4 rebuttal: brace, raise palm, firm stop palm, lower. Row5 persuasion: open arms, offer palm, knowing gesture, recover. Row6 focus: hands together, close eyes inhale, exhale, reopen eyes. Row7 shout: fist near waist, raise fist, shout leaning forward, settle. Row8 idle: relaxed neutral, blink, breathe, neutral. Simple bold game cartoon matching reference exactly, no realistic detail. Flat solid bright MAGENTA #FF00FF background throughout all empty space, no text labels grid particles shadows glow.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-5b12cacc-d3d4-447c-ae15-ffcddec56ae3.png",
+      "target": "public/art/debate/lumeng-commands-v2.png",
+      "sha256": "5ac3d7a777262ab790df69865f9b03ba2196ff75f119a5d478ba8e4bcd4ce6a9"
+    },
+    {
+      "id": "luxun",
+      "kind": "standing-debate",
+      "prompt": "Create ONE production STANDING DEBATE animation sprite atlas for the attached character luxun. Preserve exact identity, hair, hat, beard, costume colors and very SIMPLE CHIBI style. Thick dark outline, flat clean cel shading, giant head, tiny squat body. NO horse, NO weapon attacking, stow weapons, hands free for debate. EXACTLY 4 COLUMNS x 8 ROWS, 32 sprites in square cells, portrait 1024x2048. Same character in ALL cells, standing facing slightly RIGHT, same size and foot baseline. 15% empty safety margin each cell, whole head feet hands inside. Each row has FOUR SEQUENTIAL POSES: prepare, gesture, emphatic gesture, recover. Row1 argument: hand on chest, lift open palm, speak open palm, return. Row2 evidence: lift a scroll, open scroll, point at it, lower. Row3 question: thoughtful chin, lift finger, point forward, lower. Row4 rebuttal: brace, raise palm, firm stop palm, lower. Row5 persuasion: open arms, offer palm, knowing gesture, recover. Row6 focus: hands together, close eyes inhale, exhale, reopen eyes. Row7 shout: fist near waist, raise fist, shout leaning forward, settle. Row8 idle: relaxed neutral, blink, breathe, neutral. Simple bold game cartoon matching reference exactly, no realistic detail. Flat solid bright MAGENTA #FF00FF background throughout all empty space, no text labels grid particles shadows glow.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-2e1bddcb-c1a6-48b4-9588-fafba8b8904c.png",
+      "target": "public/art/debate/luxun-commands-v2.png",
+      "sha256": "dd908c00cf7f70b47da3d705ce4f807ffa611d1e9c2d8d4aaf44780526a9a0e2"
+    },
+    {
+      "id": "taishici",
+      "kind": "standing-debate",
+      "prompt": "Create ONE production STANDING DEBATE animation sprite atlas for the attached character taishici. Preserve exact identity, hair, hat, beard, costume colors and very SIMPLE CHIBI style. Thick dark outline, flat clean cel shading, giant head, tiny squat body. NO horse, NO weapon attacking, stow weapons, hands free for debate. EXACTLY 4 COLUMNS x 8 ROWS, 32 sprites in square cells, portrait 1024x2048. Same character in ALL cells, standing facing slightly RIGHT, same size and foot baseline. 15% empty safety margin each cell, whole head feet hands inside. Each row has FOUR SEQUENTIAL POSES: prepare, gesture, emphatic gesture, recover. Row1 argument: hand on chest, lift open palm, speak open palm, return. Row2 evidence: lift a scroll, open scroll, point at it, lower. Row3 question: thoughtful chin, lift finger, point forward, lower. Row4 rebuttal: brace, raise palm, firm stop palm, lower. Row5 persuasion: open arms, offer palm, knowing gesture, recover. Row6 focus: hands together, close eyes inhale, exhale, reopen eyes. Row7 shout: fist near waist, raise fist, shout leaning forward, settle. Row8 idle: relaxed neutral, blink, breathe, neutral. Simple bold game cartoon matching reference exactly, no realistic detail. Flat solid bright MAGENTA #FF00FF background throughout all empty space, no text labels grid particles shadows glow.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-0de9acb1-af3c-4c98-ab1e-a16dc5d0e1a5.png",
+      "target": "public/art/debate/taishici-commands-v2.png",
+      "sha256": "9f6803dfcb262ff89ec8c4c11c0d304b1f5ca5754720f6b17dd2e3555eb241c8"
+    },
+    {
+      "id": "huanggai",
+      "kind": "standing-debate",
+      "prompt": "Create ONE production STANDING DEBATE animation sprite atlas for the attached character huanggai. Preserve exact identity, hair, hat, beard, costume colors and very SIMPLE CHIBI style. Thick dark outline, flat clean cel shading, giant head, tiny squat body. NO horse, NO weapon attacking, stow weapons, hands free for debate. EXACTLY 4 COLUMNS x 8 ROWS, 32 sprites in square cells, portrait 1024x2048. Same character in ALL cells, standing facing slightly RIGHT, same size and foot baseline. 15% empty safety margin each cell, whole head feet hands inside. Each row has FOUR SEQUENTIAL POSES: prepare, gesture, emphatic gesture, recover. Row1 argument: hand on chest, lift open palm, speak open palm, return. Row2 evidence: lift a scroll, open scroll, point at it, lower. Row3 question: thoughtful chin, lift finger, point forward, lower. Row4 rebuttal: brace, raise palm, firm stop palm, lower. Row5 persuasion: open arms, offer palm, knowing gesture, recover. Row6 focus: hands together, close eyes inhale, exhale, reopen eyes. Row7 shout: fist near waist, raise fist, shout leaning forward, settle. Row8 idle: relaxed neutral, blink, breathe, neutral. Simple bold game cartoon matching reference exactly, no realistic detail. Flat solid bright MAGENTA #FF00FF background throughout all empty space, no text labels grid particles shadows glow.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-4595984e-e617-491a-b120-bc776602be2a.png",
+      "target": "public/art/debate/huanggai-commands-v2.png",
+      "sha256": "d8b70021219d261e65dcffc1af06892a5030d54fbf31af6afbfa441d118be2ab"
+    },
+    {
+      "id": "zhangzhao",
+      "kind": "standing-debate",
+      "prompt": "Create ONE production STANDING DEBATE animation sprite atlas for the attached character zhangzhao. Preserve exact identity, hair, hat, beard, costume colors and very SIMPLE CHIBI style. Thick dark outline, flat clean cel shading, giant head, tiny squat body. NO horse, NO weapon attacking, stow weapons, hands free for debate. EXACTLY 4 COLUMNS x 8 ROWS, 32 sprites in square cells, portrait 1024x2048. Same character in ALL cells, standing facing slightly RIGHT, same size and foot baseline. 15% empty safety margin each cell, whole head feet hands inside. Each row has FOUR SEQUENTIAL POSES: prepare, gesture, emphatic gesture, recover. Row1 argument: hand on chest, lift open palm, speak open palm, return. Row2 evidence: lift a scroll, open scroll, point at it, lower. Row3 question: thoughtful chin, lift finger, point forward, lower. Row4 rebuttal: brace, raise palm, firm stop palm, lower. Row5 persuasion: open arms, offer palm, knowing gesture, recover. Row6 focus: hands together, close eyes inhale, exhale, reopen eyes. Row7 shout: fist near waist, raise fist, shout leaning forward, settle. Row8 idle: relaxed neutral, blink, breathe, neutral. Simple bold game cartoon matching reference exactly, no realistic detail. Flat solid bright MAGENTA #FF00FF background throughout all empty space, no text labels grid particles shadows glow.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-9d77dd1b-aba0-4d5a-a097-34fb798e908c.png",
+      "target": "public/art/debate/zhangzhao-commands-v2.png",
+      "sha256": "10a2d85383585584801497ac755ca6e63e9760a4e3f0b117cae17a77245bffb8"
+    },
+    {
+      "id": "buzhi",
+      "kind": "standing-debate",
+      "prompt": "Create ONE production STANDING DEBATE animation sprite atlas for the attached character buzhi. Preserve exact identity, hair, hat, beard, costume colors and very SIMPLE CHIBI style. Thick dark outline, flat clean cel shading, giant head, tiny squat body. NO horse, NO weapon attacking, stow weapons, hands free for debate. EXACTLY 4 COLUMNS x 8 ROWS, 32 sprites in square cells, portrait 1024x2048. Same character in ALL cells, standing facing slightly RIGHT, same size and foot baseline. 15% empty safety margin each cell, whole head feet hands inside. Each row has FOUR SEQUENTIAL POSES: prepare, gesture, emphatic gesture, recover. Row1 argument: hand on chest, lift open palm, speak open palm, return. Row2 evidence: lift a scroll, open scroll, point at it, lower. Row3 question: thoughtful chin, lift finger, point forward, lower. Row4 rebuttal: brace, raise palm, firm stop palm, lower. Row5 persuasion: open arms, offer palm, knowing gesture, recover. Row6 focus: hands together, close eyes inhale, exhale, reopen eyes. Row7 shout: fist near waist, raise fist, shout leaning forward, settle. Row8 idle: relaxed neutral, blink, breathe, neutral. Simple bold game cartoon matching reference exactly, no realistic detail. Flat solid bright MAGENTA #FF00FF background throughout all empty space, no text labels grid particles shadows glow.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-73f3ca74-d2e5-4796-915a-ea122cbdd03d.png",
+      "target": "public/art/debate/buzhi-commands-v2.png",
+      "sha256": "8fa4b3f11945e5091aee4d4c41770b1e1d9c1fe44a2e5fd0c50c48be12230698"
+    },
+    {
+      "id": "caoxiu",
+      "kind": "standing-debate",
+      "prompt": "Create ONE production STANDING DEBATE animation sprite atlas for the attached character caoxiu. Preserve exact identity, hair, hat, beard, costume colors and very SIMPLE CHIBI style. Thick dark outline, flat clean cel shading, giant head, tiny squat body. NO horse, NO weapon attacking, stow weapons, hands free for debate. EXACTLY 4 COLUMNS x 8 ROWS, 32 sprites in square cells, portrait 1024x2048. Same character in ALL cells, standing facing slightly RIGHT, same size and foot baseline. 15% empty safety margin each cell, whole head feet hands inside. Each row has FOUR SEQUENTIAL POSES: prepare, gesture, emphatic gesture, recover. Row1 argument: hand on chest, lift open palm, speak open palm, return. Row2 evidence: lift a scroll, open scroll, point at it, lower. Row3 question: thoughtful chin, lift finger, point forward, lower. Row4 rebuttal: brace, raise palm, firm stop palm, lower. Row5 persuasion: open arms, offer palm, knowing gesture, recover. Row6 focus: hands together, close eyes inhale, exhale, reopen eyes. Row7 shout: fist near waist, raise fist, shout leaning forward, settle. Row8 idle: relaxed neutral, blink, breathe, neutral. Simple bold game cartoon matching reference exactly, no realistic detail. Flat solid bright MAGENTA #FF00FF background throughout all empty space, no text labels grid particles shadows glow.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-a7bb158c-dad0-47f3-8565-637f6621cfe3.png",
+      "target": "public/art/debate/caoxiu-commands-v2.png",
+      "sha256": "66b13b40129693e3a804692febe2cc52de59469eabf4f029808d35e1e9384c8b"
+    },
+    {
+      "id": "xiahouyuan",
+      "kind": "standing-debate",
+      "prompt": "Create ONE production STANDING DEBATE animation sprite atlas for the attached character xiahouyuan. Preserve exact identity, hair, hat, beard, costume colors and very SIMPLE CHIBI style. Thick dark outline, flat clean cel shading, giant head, tiny squat body. NO horse, NO weapon attacking, stow weapons, hands free for debate. EXACTLY 4 COLUMNS x 8 ROWS, 32 sprites in square cells, portrait 1024x2048. Same character in ALL cells, standing facing slightly RIGHT, same size and foot baseline. 15% empty safety margin each cell, whole head feet hands inside. Each row has FOUR SEQUENTIAL POSES: prepare, gesture, emphatic gesture, recover. Row1 argument: hand on chest, lift open palm, speak open palm, return. Row2 evidence: lift a scroll, open scroll, point at it, lower. Row3 question: thoughtful chin, lift finger, point forward, lower. Row4 rebuttal: brace, raise palm, firm stop palm, lower. Row5 persuasion: open arms, offer palm, knowing gesture, recover. Row6 focus: hands together, close eyes inhale, exhale, reopen eyes. Row7 shout: fist near waist, raise fist, shout leaning forward, settle. Row8 idle: relaxed neutral, blink, breathe, neutral. Simple bold game cartoon matching reference exactly, no realistic detail. Flat solid bright MAGENTA #FF00FF background throughout all empty space, no text labels grid particles shadows glow.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-c7d01ce6-cac6-4a5c-b712-dec02cbd4e6a.png",
+      "target": "public/art/debate/xiahouyuan-commands-v2.png",
+      "sha256": "d98b62e5e0509c67cdd6e155f3887701be2f51b57b78d3cae50ad29f13deb70a"
+    },
+    {
+      "id": "lord",
+      "kind": "standing-debate",
+      "prompt": "Create ONE production STANDING DEBATE animation sprite atlas for the attached character lord. Preserve exact identity, hair, hat, beard, costume colors and very SIMPLE CHIBI style. Thick dark outline, flat clean cel shading, giant head, tiny squat body. NO horse, NO weapon attacking, stow weapons, hands free for debate. EXACTLY 4 COLUMNS x 8 ROWS, 32 sprites in square cells, portrait 1024x2048. Same character in ALL cells, standing facing slightly RIGHT, same size and foot baseline. 15% empty safety margin each cell, whole head feet hands inside. Each row has FOUR SEQUENTIAL POSES: prepare, gesture, emphatic gesture, recover. Row1 argument: hand on chest, lift open palm, speak open palm, return. Row2 evidence: lift a scroll, open scroll, point at it, lower. Row3 question: thoughtful chin, lift finger, point forward, lower. Row4 rebuttal: brace, raise palm, firm stop palm, lower. Row5 persuasion: open arms, offer palm, knowing gesture, recover. Row6 focus: hands together, close eyes inhale, exhale, reopen eyes. Row7 shout: fist near waist, raise fist, shout leaning forward, settle. Row8 idle: relaxed neutral, blink, breathe, neutral. Simple bold game cartoon matching reference exactly, no realistic detail. Flat solid bright MAGENTA #FF00FF background throughout all empty space, no text labels grid particles shadows glow.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-d073f99c-28fb-49fe-afd7-8881a48aa02b.png",
+      "target": "public/art/debate/lord-commands-v2.png",
+      "sha256": "3cc5bf17035e0930f9f18ee2c14ca9ff092beea235682f955f3bdc3997fc6321"
+    },
+    {
+      "id": "sunquan",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character sunquan shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-fe6ccc36-0c52-44db-b308-d3562252a81e.png",
+      "target": "public/art/debate/sunquan-commands-v2.png",
+      "sha256": "6815c37b241f917702dece3f128113cdb41db3a0be05557b9c153bc80f5c94f5"
+    },
+    {
+      "id": "zhouyu",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character zhouyu shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-e2a31b19-2da6-445f-8d06-6268eaced3ee.png",
+      "target": "public/art/debate/zhouyu-commands-v2.png",
+      "sha256": "365ba675d93c06cea2bc29a51b551f2250015f1e6ef6e11ef0bef9120a33b684"
+    },
+    {
+      "id": "ganning",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character ganning shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-f5ee0d1b-2266-487e-aeb4-131d7257b70e.png",
+      "target": "public/art/debate/ganning-commands-v2.png",
+      "sha256": "a56987af9feda9aa0cc2e8970b306efb48308d9e4ce3bbdd1c58d5da09d4f595"
+    },
+    {
+      "id": "liubei",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character liubei shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-ea7c6db5-abf4-4e0a-a01b-622fc6018297.png",
+      "target": "public/art/debate/liubei-commands-v2.png",
+      "sha256": "cdf73b1c4f7c1d1e2290f570f5bfa6453fcaf31a316668f25f29fdcc49f98b42"
+    },
+    {
+      "id": "guanyu",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character guanyu shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-dcc93be3-4fd0-44c0-9de2-fa43a7c5a6cc.png",
+      "target": "public/art/debate/guanyu-commands-v2.png",
+      "sha256": "f1e8b4714be601a6423904d65d1142d130b91f3a7fc6f19a376ef67f528c92fd"
+    },
+    {
+      "id": "zhangfei",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character zhangfei shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-b2e89db2-364c-41d9-b31f-0566d617eac2.png",
+      "target": "public/art/debate/zhangfei-commands-v2.png",
+      "sha256": "df5cb686bdc7360f602c0f60d362e91e3c935043d1cdcff9b25ebb5372e7b59c"
+    },
+    {
+      "id": "zhaoyun",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character zhaoyun shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-41b50b8b-8b82-4fc2-8dfc-9b584f9c8688.png",
+      "target": "public/art/debate/zhaoyun-commands-v2.png",
+      "sha256": "470afcd0012f2f4855b35467be9baece33101327dd941bf36aa9611b2d454290"
+    },
+    {
+      "id": "zhugeliang",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character zhugeliang shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-5a69eda2-3e4b-40b8-a4f3-2aaf72b36b21.png",
+      "target": "public/art/debate/zhugeliang-commands-v2.png",
+      "sha256": "c51951a38fd2c24e8ea82f0b622a20ca5e0733fe372863203fd1ac7a9cfdd468"
+    },
+    {
+      "id": "jiangwan",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character jiangwan shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-c000c7ba-c1dc-4b3c-9778-a5bb7e7bb0d9.png",
+      "target": "public/art/debate/jiangwan-commands-v2.png",
+      "sha256": "0a4db3308596d2bfbec9155fd3eeb7340631997ea9c69431bd578e0f357cc3f4"
+    },
+    {
+      "id": "pangtong",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character pangtong shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-18985746-1af5-4514-8916-c14cf7d0107a.png",
+      "target": "public/art/debate/pangtong-commands-v2.png",
+      "sha256": "aed63c25501bfc91bd222b381cfffad74062192eb920b4a754c04995d1a030eb"
+    },
+    {
+      "id": "huangzhong",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character huangzhong shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-708f1898-ede1-4f70-bd5f-16fa98041e1f.png",
+      "target": "public/art/debate/huangzhong-commands-v2.png",
+      "sha256": "62a2d03ad0de2889586eb3291d761d50b2f1666d89912cee8f8fbae6d74d4f0d"
+    },
+    {
+      "id": "lusu",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character lusu shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-db97be5b-3f30-46d2-a095-c484c31584a2.png",
+      "target": "public/art/debate/lusu-commands-v2.png",
+      "sha256": "f7884fe4d751fa11e93692b5fabc2fdabc98f6dbe9941612f0a798fe134f0325"
+    },
+    {
+      "id": "bocai",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character bocai shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-ea914efc-b97a-444f-9137-118dc19d6974.png",
+      "target": "public/art/debate/bocai-commands-v2.png",
+      "sha256": "3618c6a05730d34865271d682a2dba258eaaf13e7ef02621b9c30c3203c50845"
+    },
+    {
+      "id": "caocao",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character caocao shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-62997f25-7dba-4df8-a02b-ee9c4eb0ccc9.png",
+      "target": "public/art/debate/caocao-commands-v2.png",
+      "sha256": "a5106504728f2b72eba4d1d015e2e934b26f279cf5e08e885aa044a6e80933ad"
+    },
+    {
+      "id": "chengyu",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character chengyu shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-bbc55ee3-a0d4-4f1f-8ae2-971caf03bf70.png",
+      "target": "public/art/debate/chengyu-commands-v2.png",
+      "sha256": "e56eb38be654e096453456069e067566d7979b58fc9502f5af36f6c9b63999fd"
+    },
+    {
+      "id": "chenqun",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character chenqun shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-c6c1f62a-e004-4e9f-9353-aef4f49c84d3.png",
+      "target": "public/art/debate/chenqun-commands-v2.png",
+      "sha256": "07bb563673bfc8573d0b87995c9671728d28d1328279f58b06b1a6f870f65f3f"
+    },
+    {
+      "id": "dianwei",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character dianwei shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-c0ae2dd5-b437-41b5-bfcb-d3148b1c56f1.png",
+      "target": "public/art/debate/dianwei-commands-v2.png",
+      "sha256": "712e58780f5189a0e52005096eae70e7adee8a07e649623eb6500c3c5e74b957"
+    },
+    {
+      "id": "guotu",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character guotu shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-5fbca5a0-f784-4f02-b1d5-39c0fce8f859.png",
+      "target": "public/art/debate/guotu-commands-v2.png",
+      "sha256": "9b63dbb890198893c1dabf9ca2bdff2b57efd7e47ac7d5f56303b0ec3be4b719"
+    },
+    {
+      "id": "huangfusong",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character huangfusong shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-073bce40-226f-422b-b325-25374615d2c7.png",
+      "target": "public/art/debate/huangfusong-commands-v2.png",
+      "sha256": "e2add2a66bdd248304383bd6fa509d930472c95779affa9c490d89dfcfa291bf"
+    },
+    {
+      "id": "huaxiong",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character huaxiong shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-d788af08-c724-44a3-8c14-5e8a2fe1a325.png",
+      "target": "public/art/debate/huaxiong-commands-v2.png",
+      "sha256": "faa56623366ed446f88489d0e2efeb40bb9c7146dea3b57a4a409794f769833a"
+    },
+    {
+      "id": "jiaxu",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character jiaxu shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-3194b77d-f29e-41cf-92fe-fe3bf4ff27e4.png",
+      "target": "public/art/debate/jiaxu-commands-v2.png",
+      "sha256": "96b7f4eaac82e8a5320d5901758e94ffdb67f8bb729873065d4650345a458a80"
+    },
+    {
+      "id": "lejin",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character lejin shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-a22e4a95-c294-497f-af9a-f0e8a94ad454.png",
+      "target": "public/art/debate/lejin-commands-v2.png",
+      "sha256": "7bde0281855c9cd375095ed8b988bba65a745a5caa11711cdf288a3bbec7f883"
+    },
+    {
+      "id": "lijue",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character lijue shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-21700f63-9042-4a9f-93f4-583481d4f9f8.png",
+      "target": "public/art/debate/lijue-commands-v2.png",
+      "sha256": "067640c4e02cc013875f04c9b0943c09faf0ea466054e3861a803fae672c6fd3"
+    },
+    {
+      "id": "lvbu",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character lvbu shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-e442c844-beec-48a8-ae31-6a5721568a5d.png",
+      "target": "public/art/debate/lvbu-commands-v2.png",
+      "sha256": "f87610af10ff0e332223ab5201ed64696240f184c13be6be1fca887cd9c00af5"
+    },
+    {
+      "id": "maojie",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character maojie shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-0cce4570-7a2f-481e-9f8b-e9aea1ee324b.png",
+      "target": "public/art/debate/maojie-commands-v2.png",
+      "sha256": "204ff64fcbee4394740c64c95b2756d26f1c0c80330e1f40ffc01995ce831b7d"
+    },
+    {
+      "id": "shenpei",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character shenpei shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-3332e463-0c23-4f5c-8676-4b64f019344b.png",
+      "target": "public/art/debate/shenpei-commands-v2.png",
+      "sha256": "bc35cde2655a146472072b70e1d21e763b57345294a18c47b5de47e0b456b5cc"
+    },
+    {
+      "id": "simayi",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character simayi shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-5a339f6c-6d84-40e6-ae66-e40c2e381995.png",
+      "target": "public/art/debate/simayi-commands-v2.png",
+      "sha256": "c6a24d2c8781214d55047fa8ad79fc39f6496262db5bb84ad48d921f0f2564ad"
+    },
+    {
+      "id": "tadun",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character tadun shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-2d59dca1-5f65-4422-a9b2-229cd12b806f.png",
+      "target": "public/art/debate/tadun-commands-v2.png",
+      "sha256": "05a9cd5f44237eb415eafd5d51813140ece8f88afeb7976d9363aa33c8eefb99"
+    },
+    {
+      "id": "xiahoudun",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character xiahoudun shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-4bf08972-899c-4acb-b3a8-796eeccbd360.png",
+      "target": "public/art/debate/xiahoudun-commands-v2.png",
+      "sha256": "2b02e4cdfb17bb1162c28c071fc92a60153f2b077f7d0104a246aa06ff664a16"
+    },
+    {
+      "id": "xunyu",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character xunyu shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-bf5a544f-d99b-4fcd-b8c9-ddf2fbd7b645.png",
+      "target": "public/art/debate/xunyu-commands-v2.png",
+      "sha256": "68eae6dff5d036522db6be3cbf2d8fe2d6670fe28fffbf1a301badcb59fadb31"
+    },
+    {
+      "id": "yanliang",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character yanliang shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-6a05e953-7d19-454c-b862-11bfef239f6f.png",
+      "target": "public/art/debate/yanliang-commands-v2.png",
+      "sha256": "a967b3a2553a78bfb1acf0679a5a94f9c12d5d2c2b158452a9befeca4307fca3"
+    },
+    {
+      "id": "yuanshao",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character yuanshao shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-8e7e20f8-a10a-4418-8dcd-d8fd9b388f1f.png",
+      "target": "public/art/debate/yuanshao-commands-v2.png",
+      "sha256": "1a4670608c17aa30e43da72a042f2bddc310bda128265c010ab8a4c34516b78c"
+    },
+    {
+      "id": "yuantan",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character yuantan shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-3ceaef1c-d4bf-499a-b393-354f077f66a0.png",
+      "target": "public/art/debate/yuantan-commands-v2.png",
+      "sha256": "6b26afac12c25ca4147deb260991aec35997b4b4cf414c05741855ffebfc1d72"
+    },
+    {
+      "id": "yujin",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character yujin shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-e7420338-a84e-4b6e-aa6f-784f48de3172.png",
+      "target": "public/art/debate/yujin-commands-v2.png",
+      "sha256": "e0f18cee2e75fc24efeb9e6d5df392d4bb38d0bf80588cb0f81b2086577e2b5a"
+    },
+    {
+      "id": "zhangjiao",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character zhangjiao shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-82c2e8f2-5ce2-4d65-9468-c8f7b814afb3.png",
+      "target": "public/art/debate/zhangjiao-commands-v2.png",
+      "sha256": "f0acd5d03af39cb3bd38d06ab88ffcafe5d458d8dfdd04b480fdebe5df81c4ab"
+    },
+    {
+      "id": "zhangliang",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character zhangliang shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-06baaf49-0899-4eb9-8ac0-d3736fd29196.png",
+      "target": "public/art/debate/zhangliang-commands-v2.png",
+      "sha256": "4ef388398880d4bc665cfa5d820cf38fce645e48a42b528c2b59fbe53fea81c2"
+    },
+    {
+      "id": "zhangliao",
+      "kind": "standing-debate",
+      "prompt": "Use case stylized-concept. Generate ONE STANDING DEBATE sprite atlas for character zhangliao shown in the reference. Reference is IDENTITY and STYLE, preserve face hair beard headgear costume colors. Keep bold dark outlines, simple flat cel shading, very large head and squat tiny chibi body. All sprites are the SAME person standing on foot, face slightly RIGHT, no horse, weapons stowed. EXACTLY FOUR COLUMNS x EIGHT ROWS of equal square cells, 32 frames, portrait 1024x2048. All complete head feet hands inside cell, 15% empty margins, identical scale and foot baseline. Each row = FOUR animation phases prepare, gesture, emphasis, recover. Row1 argument: chest hand / lift open palm / speak with palm / return. Row2 evidence: lift scroll / open / point to it / lower. Row3 question: chin / raise finger / point forward / return. Row4 rebuttal: brace / raise hand / stop palm / return. Row5 persuasion: open arms / offering hand / knowing gesture / return. Row6 focus: hands together / inhale closed eyes / exhale / open eyes. Row7 shout: waist fist / raise fist / shout lean / settle. Row8 idle: neutral / blink / breathe / neutral. FLAT SOLID BRIGHT #FF00FF magenta in all empty background, no labels text grid glow shadows particles. NO intricate realism; SAME simple chibi game style as reference.",
+      "source": "C:\\Users\\2773\\.codex\\generated_images\\01a0b081-3525-7b83-b1f2-3acbbc9ce997\\exec-d48abdf4-6be5-4273-8270-b890544cdef8.png",
+      "target": "public/art/debate/zhangliao-commands-v2.png",
+      "sha256": "0f90bcd243e139af888b4ff17367c10f355a967e2bd15a2e23d4e3c31d900bca"
+    }
+  ]
+}

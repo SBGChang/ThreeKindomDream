@@ -1,2 +1,2 @@
-export const UNIFIED_OFFICERS=['sunjian','sunce','sunquan','zhouyu','lumeng','luxun','taishici','ganning','huanggai','zhangzhao','buzhi','caoxiu'] as const;
+export const UNIFIED_OFFICERS=['machao','weiyan','fazheng','jiangwei','xuyou','sunjian','sunce','sunquan','zhouyu','lumeng','luxun','taishici','ganning','huanggai','zhangzhao','buzhi','caoxiu'] as const;
 export const COMMAND_GROUPS=[['xiahouyuan','caocao','zhangliao','dianwei'],['lejin','jiaxu','chengyu','xunyu'],['chenqun','maojie','huangfusong','simayi'],['bocai','zhangliang','zhangjiao','huaxiong'],['lijue','lvbu','yanliang','guotu'],['yuanshao','yuantan','shenpei','tadun'],['liubei','guanyu','zhangfei','zhaoyun'],['zhugeliang','jiangwan','pangtong','huangzhong'],['lusu']] as const;

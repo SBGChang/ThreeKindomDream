@@ -161,10 +161,10 @@
 .realm .hero-biography h3{font-size:20px;margin:18px 0 8px}
 .realm .hero-biography li{font-size:16px;margin:8px 0;padding:10px;border-left:4px solid #ac513a;background:#bf7e3d19}
 .realm .hero-index{position:absolute;left:0;right:0;bottom:0;height:119px;display:flex;overflow:auto;gap:12px;padding:8px 5px;align-items:stretch}
-.game-stage .realm .hero-index button{flex:0 0 157px;display:flex;align-items:center;gap:5px;border:3px solid #583623;border-image:none;background:#f2d6a6;border-radius:12px 12px 6px 6px;padding:5px;box-shadow:0 4px #24180f;min-height:0;font-size:20px}
+.game-stage .realm .hero-index button{flex:0 0 172px;display:flex;align-items:center;gap:5px;border:14px solid transparent;border-image:url('/art/ui/notable/character-card-v1.png') 56 fill / 14px stretch;background:none;border-radius:0;padding:0 2px;box-shadow:none;min-height:0;font-size:20px}
 .realm .hero-index .officer-portrait{width:61px;height:68px;flex-shrink:0}
 .realm .hero-index .painted-stars .realm-icon{width:14px;height:16px}
-.game-stage .realm .hero-index button.selected{background:#ffe8b8;border-color:#c34c2f;box-shadow:0 4px #6b291d;filter:none}
+.game-stage .realm .hero-index button.selected{border-image-source:url('/art/ui/notable/character-card-selected-v1.png');background:none;box-shadow:none;filter:none}
 .realm .realm-progress{border:3px solid #67452b;border-radius:9px;height:29px;box-shadow:inset 0 3px #0007;background:#292b21}
 .realm .realm-progress i{background:#a4cd63;box-shadow:inset 0 3px #d8eb9c}
 .realm .realm-progress span{line-height:23px;font-size:13px}

@@ -1,0 +1,6 @@
+/* Standalone painted attributes: never sample a character-panel rectangle. */
+.game-stage :is(.entry-stat-icon,.painted-stat-icon){background-image:var(--attribute-icon)!important;background-size:contain!important;background-position:center!important;background-repeat:no-repeat!important;background-color:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+.game-stage :is(.entry-stat-lead,.painted-stat-lead){--attribute-icon:url('/art/ui/attributes/lead-v1.png')}
+.game-stage :is(.entry-stat-war,.painted-stat-war){--attribute-icon:url('/art/ui/attributes/war-v1.png')}
+.game-stage :is(.entry-stat-int,.painted-stat-int){--attribute-icon:url('/art/ui/attributes/int-v1.png')}
+.game-stage :is(.entry-stat-pol,.painted-stat-pol){--attribute-icon:url('/art/ui/attributes/pol-v1.png')}

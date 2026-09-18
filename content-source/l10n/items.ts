@@ -1,3 +1,6 @@
+import { baseGrowthText } from './base-growth.js';
+import { FX } from '../core/effects/ids.js';
+
 // 十一件道具。名字、一句話定位，以及逐階解放的敘述。
 //
 // 【敘述照著資料寫】—— 每一行對應 content-source/core/items/index.ts
@@ -10,19 +13,19 @@ export const itemTexts: Record<string, string> = {
   // ══ 廣域 · 不限對象 ══════════════════════════════
   'item.bamboo.name': '竹簡',
   'item.bamboo.desc': '抄了一半的舊書。看得懂的人不多，肯看的人更少。',
-  'item.bamboo.tier.0': '智的基礎成長 +2',
+  'item.bamboo.tier.0': baseGrowthText('智的基礎成長', FX.itemBaseInt2),
   'item.bamboo.tier.1': '智的成長量 +8%',
   'item.bamboo.tier.2': '文功結算 +5%',
-  'item.bamboo.tier.3': '智的基礎成長再 +3',
+  'item.bamboo.tier.3': baseGrowthText('智的基礎成長再', FX.itemBaseInt3),
   'item.bamboo.tier.4': '智格的保底光階提高一檔',
   'item.bamboo.tier.5': '智的成長量再 +15%',
 
   'item.spear.name': '鐵槍',
   'item.spear.desc': '軍中最常見的一桿。用久了，手自己記得它的重量。',
-  'item.spear.tier.0': '武的基礎成長 +2',
+  'item.spear.tier.0': baseGrowthText('武的基礎成長', FX.itemBaseWar2),
   'item.spear.tier.1': '武的成長量 +8%',
   'item.spear.tier.2': '武功結算 +5%',
-  'item.spear.tier.3': '武的基礎成長再 +3',
+  'item.spear.tier.3': baseGrowthText('武的基礎成長再', FX.itemBaseWar3),
   'item.spear.tier.4': '武格的保底光階提高一檔',
   'item.spear.tier.5': '武的成長量再 +15%',
 
@@ -32,14 +35,14 @@ export const itemTexts: Record<string, string> = {
   'item.bow.tier.0': '武系名士站武格的權重 10 → 13',
   'item.bow.tier.1': '武的成長量 +10%',
   'item.bow.tier.2': '武系名士的同框加成再 +10%',
-  'item.bow.tier.3': '武的基礎成長 +3',
+  'item.bow.tier.3': baseGrowthText('武的基礎成長', FX.itemBaseWar3),
   'item.bow.tier.4': '武格的升階機率 +10%',
   'item.bow.tier.5': '武系名士的好感成長 +25%',
 
   'item.seal.name': '印綬',
   'item.seal.desc': '一方銅印，一條絲帶。份量不在銅上。',
   'item.seal.tier.0': '文功獲取量 +8%',
-  'item.seal.tier.1': '政的基礎成長 +2',
+  'item.seal.tier.1': baseGrowthText('政的基礎成長', FX.itemBasePol2),
   'item.seal.tier.2': '委託機率 +8%',
   'item.seal.tier.3': '文功獲取量再 +10%',
   'item.seal.tier.4': '政系名士站政格的權重 10 → 13',
@@ -47,7 +50,7 @@ export const itemTexts: Record<string, string> = {
 
   'item.qinggang.name': '青釭劍',
   'item.qinggang.desc': '削鐵如泥。這種東西不會傳到你手上，除非有人在戰場上把它讓給你。',
-  'item.qinggang.tier.0': '武的基礎成長 +5',
+  'item.qinggang.tier.0': baseGrowthText('武的基礎成長', FX.itemBaseWar5),
   'item.qinggang.tier.1': '武系名士站武格的權重 10 → 16',
   'item.qinggang.tier.2': '武的成長量 +20%',
   'item.qinggang.tier.3': '武功獲取量 +15%',
@@ -60,14 +63,14 @@ export const itemTexts: Record<string, string> = {
   'item.mengde.tier.0': '曹操出現在統御格的權重 10 → 18',
   'item.mengde.tier.1': '統御的成長量 +15%',
   'item.mengde.tier.2': '曹操的同框加成再 +25%',
-  'item.mengde.tier.3': '統御的基礎成長 +4',
+  'item.mengde.tier.3': baseGrowthText('統御的基礎成長', FX.itemBaseLead4),
   'item.mengde.tier.4': '曹操的起始好感 +20',
   'item.mengde.tier.5': '統系已解鎖技能與特性的訓練費 −20%',
 
   'item.halberd.name': '短戟',
   'item.halberd.desc': '他慣用的那一對。「賊來十步，乃呼我。」',
   'item.halberd.tier.0': '典韋出現在任何格的權重 10 → 16',
-  'item.halberd.tier.1': '武的基礎成長 +4',
+  'item.halberd.tier.1': baseGrowthText('武的基礎成長', FX.itemBaseWar4),
   'item.halberd.tier.2': '典韋的同框加成再 +25%',
   'item.halberd.tier.3': '典韋的好感成長 +80%',
   'item.halberd.tier.4': '人物事件機率 +20%',

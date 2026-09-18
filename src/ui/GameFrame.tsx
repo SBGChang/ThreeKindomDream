@@ -1,4 +1,5 @@
 import type { PortraitContext } from './portrait-layouts.js';
+import './attribute-icons.css';
 import { RunFooter } from './RunFooter.js';
 import { useDragScroll } from './useDragScroll.js';
 import { SystemMenu } from './SystemMenu.js';

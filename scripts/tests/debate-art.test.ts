@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import {DEBATE_CARDS} from '../../src/app/card-debate-model.js';
 import {debateFrame,DEBATE_MOTION_ROWS} from '../../src/ui/debate-art.js';
 import type {DebateCard} from '../../src/contracts/core/card-debate.js';
+import {drawRally} from '../../src/ui/rally-render.js';
+import {createRally} from '../../src/app/debate-rally-model.js';
 assert.deepEqual(Object.keys(DEBATE_MOTION_ROWS).sort(),Object.keys(DEBATE_CARDS).sort());
 const frames=new Set<number>();
 for(const card of Object.keys(DEBATE_CARDS) as DebateCard[]){
@@ -14,4 +16,10 @@ for(const card of Object.keys(DEBATE_CARDS) as DebateCard[]){
  assert.equal(debateFrame(card,.65),debateFrame(card,.65),'paused playback is deterministic');
 }
 for(const t of [0,.6,1.2,1.8,2.4,100])assert(debateFrame(null,t)>=28&&debateFrame(null,t)<32);
+// Regression: selecting named people must change the rendered bodies, not just portraits.
+const used:unknown[]=[];
+const ctx=new Proxy({drawImage:(image:unknown)=>used.push(image)},{get:(target,key)=>Reflect.get(target,key)??(()=>{})}) as unknown as CanvasRenderingContext2D;
+const ally={width:1280} as HTMLCanvasElement,enemy={width:1280} as HTMLCanvasElement;
+drawRally(ctx,{'debate-machao':ally,'debate-fazheng':enemy,'debate-guojia':{width:1280} as HTMLCanvasElement},createRally(),0,false,false,{ally:'machao',enemy:'fazheng'});
+assert.deepEqual(used,[ally,enemy]);
 console.log('Debate motion: all seven commands have four exclusive poses, timed emphasis, held recovery and separate idle frames.');

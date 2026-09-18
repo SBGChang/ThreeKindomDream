@@ -31,6 +31,7 @@
       "specialty": "lead",
       "specialtyWeight": 1
     },
+    "duelArtId": "liubei",
     "factionId": "faction:shu",
     "id": "notable:liubei",
     "kind": "notable",
@@ -108,6 +109,7 @@
       "specialty": "war",
       "specialtyWeight": 1
     },
+    "duelArtId": "guanyu",
     "factionId": "faction:shu",
     "id": "notable:guanyu",
     "kind": "notable",
@@ -206,6 +208,7 @@
       "specialty": "lead",
       "specialtyWeight": 1
     },
+    "duelArtId": "zhangfei",
     "factionId": "faction:shu",
     "id": "notable:zhangfei",
     "kind": "notable",
@@ -283,6 +286,7 @@
       "specialty": "war",
       "specialtyWeight": 1
     },
+    "duelArtId": "zhaoyun",
     "factionId": "faction:shu",
     "id": "notable:zhaoyun",
     "kind": "notable",
@@ -360,6 +364,7 @@
       "specialty": "int",
       "specialtyWeight": 1
     },
+    "duelArtId": "zhugeliang",
     "factionId": "faction:shu",
     "id": "notable:zhugeliang",
     "kind": "notable",
@@ -458,6 +463,7 @@
       "specialty": "pol",
       "specialtyWeight": 1
     },
+    "duelArtId": "jiangwan",
     "factionId": "faction:shu",
     "id": "notable:jiangwan",
     "kind": "notable",
@@ -534,6 +540,7 @@
       "specialty": "war",
       "specialtyWeight": 1
     },
+    "duelArtId": "huangzhong",
     "factionId": "faction:shu",
     "id": "notable:huangzhong",
     "kind": "notable",
@@ -610,7 +617,7 @@
       "specialty": "war",
       "specialtyWeight": 1
     },
-    "duelArtId": "npc_soldier",
+    "duelArtId": "machao",
     "factionId": "faction:shu",
     "id": "notable:machao",
     "kind": "notable",
@@ -690,7 +697,7 @@
       "specialty": "lead",
       "specialtyWeight": 1
     },
-    "duelArtId": "npc_soldier",
+    "duelArtId": "weiyan",
     "factionId": "faction:shu",
     "id": "notable:weiyan",
     "kind": "notable",
@@ -767,6 +774,7 @@
       "specialty": "int",
       "specialtyWeight": 1
     },
+    "duelArtId": "pangtong",
     "factionId": "faction:shu",
     "id": "notable:pangtong",
     "kind": "notable",
@@ -859,7 +867,7 @@
       "specialty": "int",
       "specialtyWeight": 1
     },
-    "duelArtId": "npc_soldier",
+    "duelArtId": "fazheng",
     "factionId": "faction:shu",
     "id": "notable:fazheng",
     "kind": "notable",
@@ -936,7 +944,7 @@
       "specialty": "lead",
       "specialtyWeight": 1
     },
-    "duelArtId": "npc_soldier",
+    "duelArtId": "jiangwei",
     "factionId": "faction:shu",
     "id": "notable:jiangwei",
     "kind": "notable",

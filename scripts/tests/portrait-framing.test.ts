@@ -47,4 +47,4 @@ assert.deepEqual(portraitCrop(600,900,'unknown'),portraitCrop(600,900,'npc_soldi
 for(const id of ['guanyu','zhangfei']) {
   const g=portraitFaceGuide(1024,1536,id);close(Math.max(g.width,g.height),.5);
 }
-console.log('Portraits: 41 sources, face centered, pure face <=50% on both axes, uniform contexts, no distortion, atlas isolation passed.');
+console.log(`Portraits: ${Object.keys(CHARACTER_FRAMING).length} sources, face centered, pure face <=50% on both axes, uniform contexts, no distortion, atlas isolation passed.`);

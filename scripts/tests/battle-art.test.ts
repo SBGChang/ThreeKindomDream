@@ -10,10 +10,10 @@ assert.equal(new Set([...legacy,...COMMAND_GROUPS.flat(),...UNIFIED_OFFICERS]).s
 for(const id of Object.keys(DUEL_ACTORS))assert([...legacy,...COMMAND_GROUPS.flat(),...UNIFIED_OFFICERS].includes(id));
 for(let i=0;i<COMMAND_GROUPS.length;i++){const png=readFileSync('public/art/duel/commands-group-'+i+'-v1.png');assert(png.readUInt32BE(16)>700);assert(png.readUInt32BE(20)>700);}
 assert.equal(duelActorForName('太史慈・交鋒'),'taishici');
-const pendingPortraits=new Set(['notable:machao','notable:weiyan','notable:fazheng','notable:jiangwei']);
 for(const n of defs.reader('notable').all()){
- if(pendingPortraits.has(String(n.notableId)))assert.equal(n.duelArtId,'npc_soldier','new officers must declare their temporary shared atlas');
- else assert.notEqual(n.duelArtId,'npc_soldier');
+ assert.notEqual(n.duelArtId,'npc_soldier','named officers must use dedicated art');
+ const id=n.duelArtId??duelActorForName(defs.text(String(n.nameKey)));
+ assert.notEqual(id,'npc_soldier');assert(DUEL_ACTORS[id]);
 }
 let calls:number[][]=[];
 const ctx={save(){},restore(){},translate(...args:number[]){assert(args.every(Number.isFinite));},rotate(n:number){assert(Number.isFinite(n));},set globalAlpha(n:number){assert(n>=0&&n<=1);},drawImage(_im:unknown,...args:number[]){assert(args.every(Number.isFinite));assert(args[0]!>=0&&args[0]!<400);assert(args[1]!>=0&&args[1]!<400);calls.push(args);}} as unknown as CanvasRenderingContext2D;
@@ -28,4 +28,4 @@ for(const mechanic of Object.keys(TACTIC_VFX)){
 for(const kind of ['攻其不備','借力打力','蓄勢待發'])for(const t of [0,.5,1.3,1.8,2.79,2.8]){
  calls=[];drawEvolutionParticles(ctx,atlas,t,800,600,kind);drawEvolutionParticles(ctx,atlas,t,800,600,kind,true);if(t>=2.8)assert.equal(calls.length,0);else assert(calls.length>0);
 }
-console.log('Battle art passed: 50 command/march actors, 25 deterministic VFX, three evolution types, expiration, atlas bounds and model isolation.');
+console.log(`Battle art passed: ${Object.keys(DUEL_ACTORS).length} command/march actors, 25 deterministic VFX, three evolution types, expiration, atlas bounds and model isolation.`);

@@ -4,15 +4,15 @@ import {debateFrame} from './debate-art.js';
 import {drawDebateParticles} from './debate-particles.js';
 import {RALLY_COLORS,RALLY_SPECIALS} from '../app/debate-traits.js';
 export function rallyMotion(event:RallyEvent){return event.card?.kind==='normal'?RALLY_COLORS[event.card.color].motion:event.card?.kind==='special'?RALLY_SPECIALS[event.card.special].motion:'focus';}
-export function drawRally(ctx:CanvasRenderingContext2D,images:BattleImages,s:RallyState,t:number,animating:boolean,reduced=false,formal=false):void {
+export function drawRally(ctx:CanvasRenderingContext2D,images:BattleImages,s:RallyState,t:number,animating:boolean,reduced=false,actors:Readonly<{ally:string;enemy:string}>={ally:'guojia',enemy:'npc_soldier'}):void {
  ctx.clearRect(0,0,1600,900);const bg=images.background;if(bg)ctx.drawImage(bg,-250,-160,2100,1182);
  ctx.fillStyle='#07131b78';ctx.fillRect(0,0,1600,900);
  const event=s.last,active=animating&&event;
  for(const side of ['ally','enemy'] as const){
-  const im=images[formal&&side==='ally'?'commander-lord':'debate-'+(side==='ally'?'guojia':'enemy')];if(!im)continue;
+  const im=images['debate-'+actors[side]];if(!im)continue;
   const hurt=active&&event.after[side]<event.before[side]&&t>=.7&&t<1.4;
   const x=side==='ally'?465:1135,feet=568,size=345;
-  const cell=im.width/4;const f=formal&&side==='ally'?(active&&event.side===side?Math.min(7,Math.floor(t*5)):0):debateFrame(active&&event.side===side?rallyMotion(event):null,active?t:0);
+  const cell=im.width/4;const f=debateFrame(active&&event.side===side?rallyMotion(event):null,active?t:0);
   ctx.save();ctx.translate(x,feet);ctx.fillStyle='#16110c65';ctx.beginPath();ctx.ellipse(0,0,62,12,0,0,Math.PI*2);ctx.fill();
   if(side==='enemy')ctx.scale(-1,1);
   if(hurt&&!reduced){const p=Math.sin((t-.7)/.7*Math.PI);ctx.translate(-p*10,0);ctx.rotate(-p*.045);}

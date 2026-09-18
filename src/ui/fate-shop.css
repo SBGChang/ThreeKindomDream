@@ -1,0 +1,46 @@
+/* Painted controls share the game's wood, parchment and jade artwork. */
+.game-stage .realm.fate-painted .realm-icon{min-width:0;min-height:0;flex-shrink:0}
+.game-stage .realm.fate-painted .fate-balance{width:184px;height:68px;padding:9px 30px;gap:6px;border:0;border-radius:0;box-shadow:none;background: url('/art/ui/training/paper-control-v1.png') center / 100% 100% no-repeat;color:#54361f}
+.fate-painted .fate-balance>span{display:grid;line-height:1.1;text-align:center}
+.fate-painted .fate-balance small{font-size:12px;grid-column:auto}
+.fate-painted .fate-balance strong{font-size:25px}
+.game-stage .realm.fate-painted .fate-layout{inset:96px 108px 108px;grid-template-rows:78px minmax(0,1fr);gap:14px}
+.game-stage .realm.fate-painted .fate-paths{gap:10px;align-items:center}
+.game-stage .realm.fate-painted .fate-paths button{position:relative;display:flex;width:196px;height:78px;min-width:0;min-height:0;padding:12px 24px;margin:0;gap:8px;border:0;border-image:none;border-radius:0;box-shadow:none;background:url('/art/ui/training/paper-control-v1.png') center / 100% 100% no-repeat;color:#58351f;font-size:24px;transition:filter .15s,transform .15s}
+.game-stage .realm.fate-painted .fate-paths button.selected{background:url('/art/ui/training/jade-control-v1.png') center / 100% 100% no-repeat!important;color:#fff3c7;text-shadow:0 2px 2px #164b30;filter:drop-shadow(0 3px 5px #ffd97166)}
+.game-stage .realm.fate-painted .fate-paths button:hover{filter:brightness(1.12);transform:translateY(-2px)}
+.game-stage .realm.fate-painted button:focus-visible{outline:3px solid #ffe7a4;outline-offset:3px}
+.game-stage .realm.fate-painted .fate-offerings{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding:0;overflow:visible;align-content:start}
+.game-stage .realm.fate-painted .fate-offering{box-sizing:border-box;position:relative;display:flex;flex-direction:column;min-width:0;min-height:0;height:238px;padding:25px 27px 21px;border:0;border-image:none;border-radius:0;background:url('/art/ui/parchment-frame-v2.png') center / 100% 100% no-repeat;box-shadow:none;color:#573b27}
+.game-stage .realm.fate-painted .fate-node{position:absolute;top:24px;right:25px;margin:0;float:none}
+.game-stage .realm.fate-painted .fate-node .realm-icon{width:32px;height:32px}
+.game-stage .realm.fate-painted .fate-offering h2{margin:0 48px 9px 0;font-size:23px;color:#543218;line-height:1.3}
+.game-stage .realm.fate-painted .fate-offering p{margin:0;min-height:0;font-size:14px;line-height:1.55;color:#63472e;flex:1;padding-right:8px}
+.game-stage .realm.fate-painted .fate-progress{margin-top:9px}
+.game-stage .realm.fate-painted .fate-progress>span{font-size:12px;color:#705432}
+.game-stage .realm.fate-painted .fate-steps{display:flex;gap:2px;margin:3px 0 6px;flex-wrap:wrap}
+.game-stage .realm.fate-painted .fate-steps .realm-icon{width:22px;height:22px;background:none;border:0;box-shadow:none}
+.game-stage .realm.fate-painted .fate-steps .unlit{filter:grayscale(1) sepia(.6);opacity:.48}
+.game-stage .realm.fate-painted .fate-offering footer{display:flex;justify-content:space-between;align-items:center;border:0;padding:0;gap:4px;font-size:21px;color:#68431c}
+.game-stage .realm.fate-painted .realm-upgrade{position:relative;width:133px;height:48px;min-width:0;border:0!important;padding:0!important;filter:none;opacity:1;box-shadow:none!important;color:#fff3ce;line-height:1;font-size:16px}
+.game-stage .realm.fate-painted .realm-upgrade img{position:absolute;inset:0;object-fit:fill;width:100%;height:100%}
+.game-stage .realm.fate-painted .realm-upgrade span{position:relative;z-index:1;text-shadow:0 1px 2px #55200a}
+.game-stage .realm.fate-painted .realm-upgrade:disabled{filter:none;opacity:1;color:#f7ecd9;cursor:default}
+.game-stage .realm.fate-painted .realm-upgrade:disabled img{filter:grayscale(.9) brightness(.8)}
+.game-stage .realm.fate-painted .realm-upgrade:not(:disabled):hover{filter:brightness(1.12)}
+.game-stage .realm.fate-painted .fate-offering:only-child{grid-column:1/-1;width:760px;height:400px;justify-self:center;margin-top:12px;padding:44px 58px}
+.game-stage .realm.fate-painted .fate-offering:only-child h2{font-size:32px;margin-bottom:22px}
+.game-stage .realm.fate-painted .fate-offering:only-child p{font-size:17px;max-width:480px;min-height:0}
+.game-stage .realm.fate-painted .fate-offering:only-child .fate-node{top:48px;right:52px;margin:0}
+.game-stage .realm.fate-painted .fate-offering:only-child .fate-node .realm-icon{width:104px;height:104px}
+.game-stage .realm.fate-painted .fate-offering:only-child .fate-steps .realm-icon{width:34px;height:34px}
+.game-stage .realm.fate-painted .fate-offering:only-child .fate-progress>span{font-size:15px}
+.game-stage .realm.fate-painted .fate-offering:only-child .realm-upgrade{width:180px;height:62px;font-size:19px}
+.game-stage .realm.fate-painted .realm-footnote{bottom:29px;color:#ffe5a7;text-shadow:0 2px 3px #271607;font-size:18px}
+.game-stage .realm.fate-painted .fate-balance{display:flex;align-items:center}.game-stage .realm.fate-painted .fate-balance .realm-icon{grid-row:auto}.game-stage .realm.fate-painted .fate-balance small{font-size:11px;line-height:1.2}.game-stage .realm.fate-painted .fate-balance strong{font-size:23px;line-height:1.1}
+.game-stage .realm.fate-painted .fate-paths button.selected{box-shadow:none!important}
+.game-stage .realm.fate-painted .fate-balance{width:230px}
+.game-stage .realm.fate-painted .fate-balance>span{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.game-stage .realm.fate-painted .fate-balance small{font-size:13px}
+.game-stage .realm.fate-painted .fate-offering:not(:only-child) .fate-node{top:10px}
+.game-stage .realm.fate-painted .fate-offering:not(:only-child) p{padding-right:15px}

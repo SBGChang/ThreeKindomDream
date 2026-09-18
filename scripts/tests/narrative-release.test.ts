@@ -24,7 +24,19 @@ assert.equal(defs.reader('notable').all().length,37);
 assert.equal(defs.reader('notable').all().filter(n=>recruited(String(n.notableId),meta,defs)).length,18);
 assert.equal(defs.reader('item').all().length,20);
 for(const id of ['wei','shu','wu']){const seq=defs.reader('chapterSequence').all().find(s=>s.factionId==='faction:'+id)!;assert.equal(seq.chapters.length,8);assert(seq.chapters.every(id=>defs.reader('chapter').get(String(id)).length===8));}
-for(const item of defs.reader('item').all())for(const tier of item.tiers)for(const effect of tier.effects)if(effect.funcType==='SlotBaseAdd')assert(Number.isInteger((defs.effect(effect.funcType,effect.referId) as {add:number}).add));
+// Display values must track the converted training growth, not the legacy integer unit.
+const growthRatio=defs.single('growthRule').economy.legacyBaseRatio;
+const checkBaseText=(descKey:string,effects:readonly {funcType:string;referId:number}[])=>{
+ for(const ref of effects)if(ref.funcType==='SlotBaseAdd'){
+  const effect=defs.effect('SlotBaseAdd',ref.referId) as {add:number};
+  const growth=Number((effect.add*growthRatio).toFixed(6));
+  const text=defs.text(descKey);
+  assert(text.includes('+'+growth+'（'),text);
+  assert(text.includes(Number((growth*100).toFixed(4))+' 基礎經驗'),text);
+ }
+};
+for(const item of defs.reader('item').all())for(const tier of item.tiers)checkBaseText(String(tier.descKey),tier.effects);
+for(const notable of defs.reader('notable').all())for(const row of notable.unlocks)checkBaseText(String(row.descKey),[row]);
 const stories=defs.reader('storyChapter').all().flatMap(s=>[s,...(s.variants??[]).map(v=>v.chapter)]);
 for(const chapter of stories){assert.equal(chapter.nodes.length,2);for(const d of chapter.fieldStories??[])validateBattleStory(d);}
 const ctx=(state:RunState)=>({state,defs});

@@ -1,8 +1,11 @@
+import { DUEL_ACTORS } from '../contracts/core/duel-art.js';
 import type { PortraitContext } from './portrait-layouts.js';
 import { useEffect, useRef } from 'react';
 import { characterFraming, drawPortrait } from './portrait-framing.js';
 
 export const CHARACTERS: Readonly<Record<string,string>> = {
+  ...Object.fromEntries(Object.entries(DUEL_ACTORS).map(([id,name])=>[name,id])),
+  '你':'lord',
   '孫權':'sunquan','周瑜':'zhouyu','甘寧':'ganning',
   '劉備':'liubei','關羽':'guanyu','張飛':'zhangfei','趙雲':'zhaoyun','諸葛亮':'zhugeliang','孔明':'zhugeliang','蔣琬':'jiangwan','龐統':'pangtong','黃忠':'huangzhong','魯肅':'lusu',
   '阿禾':'npc_soldier','傷兵':'npc_soldier',
