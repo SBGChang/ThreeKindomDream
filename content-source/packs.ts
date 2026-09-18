@@ -1,3 +1,5 @@
+import {withEventChallenge,challengeTexts} from './event-challenges.js';
+import {lvbuTrial,lvbuTrialTexts} from './lvbu-trial.js';
 import { triggeredTexts } from './core/abilities/triggered.js';
 import { withTactics } from './tactic-teachers.js';
 import { tacticTexts } from './core/abilities/tactics.js';
@@ -59,10 +61,10 @@ import {withRecruitment} from './recruitment.js';
 import {expandStory,extraWeiChapters,extraWeiCampaigns,extraWeiStories,expansionTexts,expansionEndings} from './narrative-expansion.js';
 import {lvbu,lvbuTexts} from './lvbu.js';
 import {equipmentItems,equipmentTexts} from './core/items/equipment.js';
-const coreDialogueEvents = [...coreCommissions, ...variedCommissions].map(withDialogue);
-const weiDialogueEvents = [...weiCommissions, ...weiNotableCommissions, ...weiNotableEvents, ...earlyStories].map(d => withDialogue(withTeaching(d, weiNotables.map(withTactics))));
-const shuDialogueDefs = shuDefs.map(d => d.kind === 'event' ? withDialogue(withTeaching(d, shuNotables.map(withTactics))) : d.kind==='notable'?withTactics(d):d);
-const wuDialogueDefs=wuDefs.map(d=>d.kind==='event'?withDialogue(withTeaching(d,wuNotables.map(withTactics))):d.kind==='notable'?withTactics(d):d);
+const coreDialogueEvents = [...coreCommissions, ...variedCommissions].map(d=>withDialogue(withEventChallenge(d)));
+const weiDialogueEvents = [...weiCommissions, ...weiNotableCommissions, ...weiNotableEvents, ...earlyStories].map(d => withDialogue(withEventChallenge(withTeaching(d, weiNotables.map(withTactics)))));
+const shuDialogueDefs = shuDefs.map(d => d.kind === 'event' ? withDialogue(withEventChallenge(withTeaching(d, shuNotables.map(withTactics)))) : d.kind==='notable'?withTactics(d):d);
+const wuDialogueDefs=wuDefs.map(d=>d.kind==='event'?withDialogue(withEventChallenge(withTeaching(d,wuNotables.map(withTactics)))):d.kind==='notable'?withTactics(d):d);
 const expandedWei=[...weiStories,...extraWeiStories].map(expandStory);
 const expandedShu=shuDialogueDefs.map(d=>d.kind==='storyChapter'?expandStory(d):d.kind==='notable'?withRecruitment(d):d);
 const expandedWu=wuDialogueDefs.map(d=>d.kind==='storyChapter'?expandStory(d):d.kind==='notable'?withRecruitment(d):d);
@@ -89,7 +91,7 @@ const corePack: AuthoredPack = {
   ],
   effects: coreEffects,
   // GREYBOX：文案暫時全部掛在 core。正式版應隨各 pack 拆分（06 §2.1）。
-  texts: {...zhTW,...equipmentTexts,...lvbuTexts,...expansionTexts,...tacticTexts,...triggeredTexts,...earlyTexts,...variedTexts,...dialogueTexts,...mainStoryTexts},
+  texts: {...zhTW,...lvbuTrialTexts,...challengeTexts,...equipmentTexts,...lvbuTexts,...expansionTexts,...tacticTexts,...triggeredTexts,...earlyTexts,...variedTexts,...dialogueTexts,...mainStoryTexts},
 };
 
 const weiPack: AuthoredPack = {
@@ -101,6 +103,7 @@ const weiPack: AuthoredPack = {
     ...weiNotables.map(withTactics).map(withRecruitment),withRecruitment(lvbu), weiSuperiorPool,
     weiFaction,
     ...weiDialogueEvents,
+    withDialogue(lvbuTrial),
     ...weiChapters,...extraWeiChapters, {...weiSequence,chapters:[...weiSequence.chapters,...extraWeiChapters.map(c=>c.chapterId)]},
     ...expandedWei,...expansionEndings.filter(e=>e.factionId==='faction:wei'),
     ...weiEnemies, ...weiCampaigns,...extraWeiCampaigns,

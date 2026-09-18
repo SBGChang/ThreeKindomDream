@@ -3,7 +3,7 @@ export interface Arrow { id:number; side:Side; targetId:number; x:number;y:numbe
 export type Side = 'ally' | 'enemy';
 export type SkillKind = 'fire' | 'charge' | 'mounted' | 'pincer' | 'inspire';
 export interface DemoSkill { id:string; name:string; owner:string; key:string; kind:SkillKind; cost:number; cd:number; damage:number; description:string; effect?:'damage'|'heal'|'buff'|'debuff'; power?:number; effectDuration?:number; support?:boolean;mechanic?:string;level?:number }
-export interface Troop {facingLeft?:boolean;kind:UnitKind;temporary?:boolean;absent?:number;effects?:Record<string,number>;id:number;side:Side;hp:number;maxHp:number;x:number;y:number;homeX:number;lane:number;attack:number;targetId:number;struck:boolean;pose:'guard'|'run'|'slash'|'hit'|'dead';poseTime:number;deathTime:number;hitTime:number;seed:number}
+export interface Troop {armyId?:string;facingLeft?:boolean;kind:UnitKind;temporary?:boolean;absent?:number;effects?:Record<string,number>;id:number;side:Side;hp:number;maxHp:number;x:number;y:number;homeX:number;lane:number;attack:number;targetId:number;struck:boolean;pose:'guard'|'run'|'slash'|'hit'|'dead';poseTime:number;deathTime:number;hitTime:number;seed:number}
 export type WavePhase='entry'|'reveal'|'start'|'combat'|'fallen'|'flee'|'cheer'|'exit'|'fade-out'|'fade-in';
 export interface Commander {id:string;name:string;side:Side;x:number;y:number;homeX:number;pose:'command'|'cheer'|'move';poseTime:number;flip:boolean; portrait?:string}
 export interface Cinematic {hitIds?:number[];skill:DemoSkill;time:number;impacted:boolean;targetX:number;targetY:number;damage:number}

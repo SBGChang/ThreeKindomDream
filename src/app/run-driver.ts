@@ -1,3 +1,4 @@
+import {playEventChallenge} from './event-challenge-driver.js';
 import {fieldDialogueVisible} from './battle-story-field.js';
 import {chooseRallyAction} from './debate-rally-model.js';
 import { actionBlock } from './duel-model.js';
@@ -75,7 +76,7 @@ export function driveRun(s: Session, policy: RunPolicy, options:{battle?:'legacy
       let events = 0;
       while (s.pendingEvent !== null) {
         if (++events > 64) throw new Error('事件佇列未收斂');
-        s.resolveEvent(policy.chooseOption(s, s.pendingEvent));
+        playEventChallenge(s,policy.chooseOption(s, s.pendingEvent));
       }
       if (s.canAdvance()) s.advance();
     }

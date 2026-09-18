@@ -10,7 +10,7 @@
     "verify:content": "tsx scripts/verify-content.ts",
     "verify:discipline": "tsx scripts/verify-discipline.ts",
     "verify:modules": "tsx scripts/verify-modules.ts",
-    "verify": "npm run typecheck && npm run verify:discipline && npm run verify:content && npm run verify:modules && npm run verify:realtime && npm run verify:confrontation && npm run verify:portraits && npm run verify:narrative && npm run verify:character-art",
+    "verify": "npm run typecheck && npm run verify:discipline && npm run verify:content && npm run verify:modules && npm run verify:realtime && npm run verify:confrontation && npm run verify:portraits && npm run verify:narrative && npm run verify:character-art && npm run verify:event-challenge",
     "verify:realtime": "tsx scripts/tests/battlefield-layout.test.ts && tsx scripts/tests/battle-tactics.test.ts && tsx scripts/tests/wu-integration.test.ts && tsx scripts/tests/realtime-battle.test.ts && tsx scripts/tests/realtime-campaign.test.ts && tsx scripts/tests/fire-particles.test.ts && tsx scripts/tests/skill-particles.test.ts && tsx scripts/tests/battle-art.test.ts && tsx scripts/tests/battle-hud.test.tsx && tsx scripts/tests/battle-sprite-framing.test.ts",
     "sim": "tsx scripts/simulate.ts",
     "sim:fast": "tsx scripts/simulate-fast.ts",
@@ -21,6 +21,7 @@
     "verify:confrontation": "tsx scripts/tests/duel-model.test.ts && tsx scripts/tests/confrontation-demo.test.ts && tsx scripts/tests/duel-art.test.ts && tsx scripts/tests/card-debate.test.ts && tsx scripts/tests/debate-strategies.test.ts && tsx scripts/tests/debate-particles.test.ts && tsx scripts/tests/card-debate-forecast.test.ts && tsx scripts/tests/debate-art.test.ts && tsx scripts/tests/debate-rally.test.ts",
     "verify:portraits": "tsx scripts/tests/portrait-framing.test.ts",
     "verify:narrative": "tsx scripts/tests/battle-story.test.ts && tsx scripts/tests/battle-story-field.test.ts && tsx scripts/tests/narrative-release.test.ts",
+    "verify:event-challenge": "tsx scripts/tests/event-challenge.test.ts && tsx scripts/tests/event-challenge-builds.test.ts && tsx scripts/tests/lvbu-trial.test.ts",
     "verify:character-art": "tsx scripts/tests/character-art-coverage.test.ts"
   },
   "devDependencies": {

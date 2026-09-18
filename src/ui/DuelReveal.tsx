@@ -14,7 +14,7 @@ export function DuelReveal({contest:c}:{contest:Contest}):React.ReactElement|nul
  if(p.stage==='evolution'){
   const upgraded=p.time>=1.3,blink=p.time<.5?1:p.time<1.3?(Math.floor((p.time-.5)/.2)%2===0?.12:1):1;
   const fade=1-ease((p.time-2.5)/.3);
-  return <div className="du-evolution-reveal" aria-label="我方升變演出" style={{opacity:fade}}><div className="du-evolution-emblem" style={{opacity:upgraded?1:blink,transform:`scale(${upgraded?1+.15*(1-ease((p.time-1.3)/.3)):1})`}}><DuelArt file="matchup-icons-v1" cell={upgraded?3:cell}/></div>{upgraded&&<strong className="du-reveal-title du-title-gold">{last.allyEvolution}</strong>}</div>;
+  return <div className="du-evolution-reveal" aria-label={last.enemyEvolution?'敵方升變演出':'我方升變演出'} style={{opacity:fade}}><div className="du-evolution-emblem" style={{opacity:upgraded?1:blink,transform:`scale(${upgraded?1+.15*(1-ease((p.time-1.3)/.3)):1})`}}><DuelArt file="matchup-icons-v1" cell={upgraded?3:cell}/></div>{upgraded&&<strong className="du-reveal-title du-title-gold">{last.allyEvolution??last.enemyEvolution}</strong>}</div>;
  }
  const t=p.time,C=DUEL_COLLISION;
  // Accelerate through contact rather than easing to a stop; preserve the two-hit recoil cadence.

@@ -1,3 +1,4 @@
+import {createEventChallenge,enterEventChallenge,finishChallenge,answerEventDuel,answerEventDebate,tickEventChallenge,continueEventChallenge} from './event-challenge.js';
 import {preserveRecruitment,earnedRecruits} from '../modules/recruitment.js';
 import {prepareFieldStory,bankFieldRewards} from './campaign-field-story.js';
 import {tickStoryField,advanceFieldStory,answerFieldDuel} from './battle-story-field.js';
@@ -78,6 +79,7 @@ export class Session {
   get current(): RunState {const earned=earnedRecruits(this.ctx);if(earned.some(id=>!this.state.earnedUnlocks?.includes(id)))this.state={...this.state,earnedUnlocks:earned};return this.state;}
   preserveUnlocks(meta:MetaState):MetaState{return preserveRecruitment(meta,this.ctx);}
   static restore(w: Wiring, state: RunState): Session {
+    if(state.eventChallenge){state=structuredClone(state);state.eventChallenge!.paused=true;}
     if(state.campaign?.realtime?.status==='running')state={...state,campaign:{...state.campaign,realtime:{...state.campaign.realtime,status:'paused'}}};
     if(state.campaign?.fieldStory&&state.campaign.realtime){const f=state.campaign.fieldStory.field;f.encounter.battle=state.campaign.realtime;if(f.encounter.contest&&f.story.duel)f.encounter.contest.duel=f.story.duel;}
     const s = new Session(w, state);
@@ -255,10 +257,33 @@ export class Session {
     this.mutate((tc) => commission.openBeats(tc, this.w.fx));
   }
 
-  canAdvance(): boolean { return turn.canAdvance(this.ctx); }
+  beginEventChallenge(optionIndex:number):void {
+    if(this.state.eventChallenge)throw Error('事件挑戰尚未結束');
+    const offer=this.pendingEvent;
+    if(!offer||!offer.optionStates[optionIndex]?.enabled)throw Error('事件選項無法使用');
+    const option=this.w.defs.reader('event').get(String(offer.eventDefId)).options[optionIndex];
+    if(!option?.challenge||this.money<(option.moneyCost??0))throw Error('事件挑戰條件不足');
+    this.state={...this.state,eventChallenge:createEventChallenge(String(offer.eventDefId),optionIndex,option.challenge,this.ctx)};
+  }
+  enterEventChallenge():void {const s=this.state.eventChallenge;if(s)enterEventChallenge(s,this.ctx,this.w.fx);}
+  configureEventChallenge(skills:string[],infantryPercent:number):void {
+    const s=this.state.eventChallenge;if(!s||s.phase!=='prep')throw Error('尚未進入整備');
+    if(skills.length>3||new Set(skills).size!==skills.length||skills.some(id=>!this.state.abilities.skills.some(v=>String(v)===id))||!Number.isInteger(infantryPercent)||infantryPercent<0||infantryPercent>100)throw Error('整備配置無效');
+    s.skills=[...skills];s.infantryPercent=infantryPercent;
+  }
+  pauseEventChallenge(paused:boolean):void {const s=this.state.eventChallenge;if(s)s.paused=paused;}
+  retreatEventChallenge():void {const s=this.state.eventChallenge;if(s&&(s.phase==='playing'||s.definition.stages&&(s.phase==='opening'||s.phase==='intermission')))finishChallenge(s,'retreat');}
+  continueEventChallenge():void {const s=this.state.eventChallenge;if(s)continueEventChallenge(s);}
+  answerEventDuel(choice:number|null):boolean {const s=this.state.eventChallenge;return !!s&&answerEventDuel(s,choice);}
+  answerEventDebate(side:RallySide,action:RallyAction):boolean {const s=this.state.eventChallenge;return !!s&&answerEventDebate(s,side,action);}
+  finishEventDebate():void {const s=this.state.eventChallenge;if(s?.rally?.winner)finishChallenge(s,s.rally.winner==='ally'?'win':'lose');}
+  tickEventChallenge(dt:number):void {const s=this.state.eventChallenge;if(s)tickEventChallenge(s,dt);}
+  castEventSkill(id:string):boolean {const s=this.state.eventChallenge;return !!s&&s.phase==='playing'&&!s.paused&&!!s.battle&&castSkill(s.battle,id);}
+
+  canAdvance(): boolean { return !this.state.eventChallenge&&turn.canAdvance(this.ctx); }
 
   advance(): void {
-    if (!turn.canAdvance(this.ctx)) {
+    if (!this.canAdvance()) {
       throw new Error('本回合尚未完成（未投入固定事件，或還有待處理事件）');
     }
     if (this.state.progress.turnInChapter >= turn.currentChapter(this.ctx).length) {

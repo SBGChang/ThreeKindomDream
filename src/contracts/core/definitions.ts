@@ -418,6 +418,7 @@ export interface EventPractice {
 }
 
 export interface EventOptionDef {
+  readonly challenge?: import('./event-challenge.js').EventChallengeDef;
   readonly moneyCost?: number;
   readonly resultKey?: L10nKey;
   /** 三檔之一。同一則委託必須各有一個，由載入期驗證強制（17 §5）。 */
@@ -832,6 +833,8 @@ export interface GrowthRuleDef extends DefHeader {
 export type AbilityCost = Readonly<Partial<Record<Attr, number>>>;
 
 export interface TraitDef extends DefHeader {
+  readonly eventExclusive?: boolean;
+  readonly duelProcChance?: number;
   readonly battleTrigger?:string;
   readonly duelTrait?: import('./duel.js').DuelTrait;
   readonly kind: 'trait';

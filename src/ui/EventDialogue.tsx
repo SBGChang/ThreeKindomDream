@@ -1,3 +1,5 @@
+import {createPortal} from 'react-dom';
+import {EventChallengeView} from './EventChallengeView.js';
 import { useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { DialogueHeaderContext } from './dialogue-header.js';
 import type {
@@ -20,7 +22,7 @@ import type { EventReceipt } from './event-receipt.js';
 import './event-dialogue.css';
 
 type SceneBeat = Omit<DialogueBeat, 'textKey'> & { text: string };
-type Phase = 'intro' | 'choices' | 'response' | 'outro' | 'rewards';
+type Phase = 'challenge' | 'intro' | 'choices' | 'response' | 'outro' | 'rewards';
 const fill = (text: string, offer: EventOffer) =>
   text.replace(/\{(\w+)\}/g, (_, key: string) => t(offer.params[key]));
 /** Long authored narration is paged at punctuation, never hidden behind a scrollbar. */
@@ -47,14 +49,14 @@ export function EventDialogue({
   receipt,
   profile,
   onResolve,
-  onFinish,
+  onFinish, onProgress,
 }: {
   s: Session;
   offer: EventOffer;
   receipt: EventReceipt | null;
   profile: CareerPresentation;
-  onResolve: (option: number) => EventReceipt;
-  onFinish: () => void;
+  onResolve: (option: number) => EventReceipt | null;
+  onFinish: () => void; onProgress:()=>void;
 }): React.ReactElement {
   const def = defs.reader('event').get(String(offer.eventDefId)),
     title = t(def.titleKey);
@@ -65,9 +67,9 @@ export function EventDialogue({
   }, [setHeader, title, def.trigger.kind, offer.rarity]);
   const root = useRef<HTMLDivElement>(null),
     resolving = useRef(false),
-    [phase, setPhase] = useState<Phase>('intro'),
+    [phase, setPhase] = useState<Phase>(s.current.eventChallenge?'challenge':'intro'),
     [index, setIndex] = useState(0),
-    [chosen, setChosen] = useState(0),
+    [chosen, setChosen] = useState(s.current.eventChallenge?.option??0),
     [reduced, setReduced] = useState(
       () => matchMedia('(prefers-reduced-motion: reduce)').matches,
     ),
@@ -110,7 +112,7 @@ export function EventDialogue({
   };
   const outro = useMemo<SceneBeat[]>(() => {
     if (!receipt) return [];
-    const script = def.dialogue?.outcomes?.find(
+    const script = def.options[receipt.result.optionIndex]?.challenge?undefined:def.dialogue?.outcomes?.find(
       (o) =>
         o.option === receipt.result.optionIndex &&
         (o.passed === undefined || o.passed === receipt.result.passed),
@@ -188,9 +190,10 @@ export function EventDialogue({
       if (resolving.current) return;
       resolving.current = true;
       try {
-        onResolve(chosen);
+        const resolved=onResolve(chosen);
         setIndex(0);
-        setPhase('outro');
+        setPhase(resolved?'outro':'challenge');
+        resolving.current=false;
       } catch (error) {
         resolving.current = false;
         throw error;
@@ -222,6 +225,7 @@ export function EventDialogue({
     stage.addEventListener('click', advance);
     return () => stage.removeEventListener('click', advance);
   });
+  if(phase==='challenge')return createPortal(<EventChallengeView session={s} onChange={onProgress} onDone={()=>{onResolve(chosen);setIndex(0);setPhase('outro');}}/>,document.querySelector('.game-stage')!);
   return (
     <div
       ref={root}
@@ -279,7 +283,7 @@ export function EventDialogue({
               >
                 <span className="dialogue-choice-label">
                   <span className="dialogue-choice-number">{i + 1}</span>
-                  <DialogueText text={t(opt.labelKey)} keywords={words} />
+                  <DialogueText text={t(opt.labelKey)} keywords={words} />{opt.challenge&&<small> · {{duel:"單挑",debate:"舌戰",battle:"戰場"}[opt.challenge.mode]}</small>}
                 </span>
                 <span className="dialogue-choice-reward">
                   {state.enabled ? (
@@ -312,7 +316,7 @@ export function EventDialogue({
                         </span>
                       ))}
                       薪水 <b className="dialogue-gain">+{state.salary}</b>
-                      {state.successRate !== null && (
+                      {(state.successRate !== null || !!opt.challenge) && (
                         <span>
                           （未成{' '}
                           <b className="dialogue-gain">

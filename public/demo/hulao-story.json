@@ -3,12 +3,12 @@
  "field":{"troops":600,"enemy":"lvbu","wave":1},
  "playerStats":{"lead":55,"war":60,"int":45,"pol":40},"statCap":100,
  "actors":{
-  "player":{"name":"你","art":"lord","build":{"war":60,"lead":55,"trait":"none"}},
-  "lvbu":{"name":"呂布","art":"lvbu","build":{"war":100,"lead":90,"trait":"none"}},
-  "zhangfei":{"name":"張飛","art":"zhangfei","build":{"war":98,"lead":82,"trait":"none"}},
-  "guanyu":{"name":"關羽","art":"guanyu","build":{"war":97,"lead":90,"trait":"none"}},
-  "liubei":{"name":"劉備","art":"liubei","build":{"war":78,"lead":85,"trait":"none"}},
-  "caocao":{"name":"曹操","art":"caocao","build":{"war":72,"lead":95,"trait":"none"}}
+  "player":{"name":"你","art":"lord","build":{"war":60,"lead":55,"trait":"none","comboEnabled":true}},
+  "lvbu":{"name":"呂布","art":"lvbu","build":{"war":100,"lead":90,"trait":"peerless","traitChance":0.25,"comboEnabled":false}},
+  "zhangfei":{"name":"張飛","art":"zhangfei","build":{"war":98,"lead":82,"trait":"none","comboEnabled":false}},
+  "guanyu":{"name":"關羽","art":"guanyu","build":{"war":97,"lead":90,"trait":"none","comboEnabled":false}},
+  "liubei":{"name":"劉備","art":"liubei","build":{"war":78,"lead":85,"trait":"none","comboEnabled":false}},
+  "caocao":{"name":"曹操","art":"caocao","build":{"war":72,"lead":95,"trait":"none","comboEnabled":false}}
  },
  "nodes":{
   "arrival":{"kind":"dialogue","lines":[{"speaker":"戰場","text":"虎牢關前，聯軍止步。赤兔踏過陣前，方天畫戟映著寒光。"},{"speaker":"呂布","text":"關東諸侯，便只敢躲在旗後？誰敢上前，與我一戰！"}],"next":"first-challenge"},

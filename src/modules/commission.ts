@@ -345,7 +345,7 @@ export function optionStates(
       (c) => !evaluateCondition(c, ctx, readStat),
     );
     let rate: number | null = null;
-    if (o.check !== null) {
+    if (o.check !== null && !o.challenge) {
       rate = preview(
         specForMinor(
           o.check.attr,
@@ -467,7 +467,11 @@ export function resolveHead(
 
   const tier = stories.storyRarity(def);
   let passed = true;
-  if (option.check !== null) {
+  const challenge=ctx.state.eventChallenge;
+  if(challenge||option.challenge){
+    if(!option.challenge||!challenge||challenge.eventId!==String(def.eventDefId)||challenge.option!==optionIndex||challenge.turn!==ctx.state.progress.turn||challenge.phase!=='result'||!challenge.outcome)throw Error('請先完成此事件的挑戰');
+    passed=challenge.outcome==='win';
+  }else if (option.check !== null) {
     const dc = Math.round(
       economyRule(ctx).commissionAbility[tier - 1]! *
         economyRule(ctx).optionDc[option.tier],
@@ -486,7 +490,8 @@ export function resolveHead(
   const meritRaw = meritYield(option, ratio, offer.rarity, ctx, fx);
   const meritGained = meritShown(meritRaw, ctx, fx);
 
-  const salary = salaryFor(option, offer.rarity, passed, ctx);
+  const cashOut=challenge?.outcome==='retreat'?(challenge.definition.cashOutGold?.[challenge.completed??0]??0):0;
+  const salary = salaryFor(option, offer.rarity, passed, ctx)+cashOut;
   if (balance(ctx) < (option.moneyCost ?? 0)) throw new Error('金錢不足');
   let state = transact(
     'event-cost/' + ctx.state.progress.turn + '/' + def.eventDefId,
@@ -564,9 +569,10 @@ export function resolveHead(
     meritGained,
     itemsGained,
     salary,
-    ...(option.resultKey ? { resultKey: option.resultKey } : {}),
+    ...(!option.challenge&&option.resultKey ? { resultKey: option.resultKey } : {}),
   };
   state = stories.record(def, optionIndex, passed, at());
+  if(challenge)state={...state,eventChallenge:null};
   const seen: readonly EventDefId[] = def.unique
     ? [...state.turn.seenUniqueIds, def.eventDefId]
     : state.turn.seenUniqueIds;

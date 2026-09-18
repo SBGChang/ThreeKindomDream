@@ -1,3 +1,5 @@
+import {duelTraitBuild} from './duel-trait-build.js';
+import {activeTraits} from '../modules/ability.js';
 import type {RunContext} from '../contracts/core/context.js';
 import type {RunState} from '../contracts/core/state.js';
 import type {BattleStory} from '../contracts/core/battle-story.js';
@@ -15,7 +17,7 @@ export function prepareFieldStory(ctx:RunContext):RunState {
  const selected=chapterStory(ctx)?.fieldStories?.find(d=>d.field.wave===b.wave&&!(c.seenFieldStories??[]).includes(d.id)&&meetsStory(d.requirements??[],ctx));
  if(!selected)return ctx.state;
  const d:BattleStory=structuredClone(selected);d.playerStats={...ctx.state.attributes.values};d.statCap=ctx.defs.single('attributeCap').attrMax;
- const player=d.actors.player;if(player)player.build={...player.build,war:Math.max(1,d.playerStats.war),lead:Math.max(1,d.playerStats.lead)};
+ const player=d.actors.player;if(player)player.build={...player.build,...duelTraitBuild(activeTraits(ctx),ctx),war:Math.max(1,d.playerStats.war),lead:Math.max(1,d.playerStats.lead)};
  const eq=equipmentEffects(ctx);d.checkBonuses={};for(const e of eq)for(const tag of e.checkTags??[])d.checkBonuses[tag]=(d.checkBonuses[tag]??0)+(e.checkBonus??0);d.equipment={duelDamage:eq.reduce((v,e)=>v+(e.duelDamage??0),0),retreatSpeed:eq.reduce((v,e)=>v+(e.retreatSpeed??0),0),healThreshold:Math.max(0,...eq.map(e=>e.healThreshold??0)),healRatio:Math.max(0,...eq.map(e=>e.healRatio??0))};
  for(const n of Object.values(d.nodes))if(n.kind==='debate'){n.ally={...n.ally,int:Math.max(1,d.playerStats.int),pol:Math.max(1,d.playerStats.pol)};n.seed=(ctx.state.seed+b.wave*7919)>>>0;}
  if(d.intel&&eq.some(e=>e.seaIntel)){const first=d.nodes[d.entry];if(first?.kind==='dialogue')first.lines.unshift({speaker:'航海圖',text:d.intel});}

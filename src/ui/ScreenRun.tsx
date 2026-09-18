@@ -207,8 +207,9 @@ export function ScreenRun({
   };
 
   /** 拍二／拍三：選處理方式。佇列可能還有下一拍，所以推進要問 canAdvance。 */
-  const pickOption = (optionIndex: number): EventReceipt => {
+  const pickOption = (optionIndex: number): EventReceipt | null => {
     if (busy.current || !pending) throw new Error('事件正在處理中');
+    if(eventDef?.options[optionIndex]?.challenge&&!s.current.eventChallenge){s.beginEventChallenge(optionIndex);bump();return null;}
     busy.current = true;
     const before = s.current,
       offer = pending,
@@ -311,7 +312,7 @@ export function ScreenRun({
           offer={dialogueOffer}
           receipt={receipt}
           profile={activeProfile}
-          onResolve={pickOption}
+          onResolve={pickOption} onProgress={bump}
           onFinish={finishDialogue}
         />
       ) : pending === null && !receipt && !fixedReceipt ? (

@@ -4486,8 +4486,21 @@
         "tier": "story"
       },
       {
+        "challenge": {
+          "ability": 55,
+          "mode": "debate",
+          "opening": "張昭：辦法可以新，百姓卻禁不起反覆折騰。你如何保證可行？\n你：請先聽我把施行的次序說完。",
+          "opponent": "zhangzhao",
+          "opponentName": "張昭",
+          "outcomes": {
+            "draw": "雙方收手，這次未分高下。你記住交鋒中的破綻，回去再做準備。",
+            "lose": "張昭指出幾處疏漏，將文書推還給你：「先補齊，再來談。」",
+            "retreat": "你決定先退一步。這件事未能辦妥，仍可從經驗中學習。",
+            "win": "張昭將文書重新攤平：「你想過百姓如何承受。這份辦法，值得再議。」"
+          }
+        },
         "check": null,
-        "labelKey": "event.wu.zhangzhao.1",
+        "labelKey": "challenge.event:wu.zhangzhao.companionship.1.label",
         "practice": [
           {
             "attr": "pol",

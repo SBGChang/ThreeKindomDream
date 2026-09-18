@@ -36,14 +36,15 @@ function BuildEditor({side,build,profile,onChange}:{side:string;build:RallyBuild
   <p>{rallySpecialSources(build).length?'所選特技的特殊牌皆可抽到；使用後補一張普通牌。':'不會抽到特殊牌。'}</p><strong className="db-hand-count">起手 {rallyHandSize(build.int)+(build.passives.includes('scholar')?1:0)} 張</strong>
  </fieldset>;
 }
-export interface CampaignDebateBinding {onPause:(paused:boolean)=>void;state:import('../contracts/core/debate-rally.js').RallyState;enemyName:string;onAction:(side:RallySide,action:RallyAction)=>boolean;onDone:()=>void}
+export interface CampaignDebateBinding {returnLabel?:string;background?:string;onRetreat?:()=>void;initialPaused?:boolean;onPause:(paused:boolean)=>void;state:import('../contracts/core/debate-rally.js').RallyState;enemyName:string;onAction:(side:RallySide,action:RallyAction)=>boolean;onDone:()=>void}
 export function RallyDebateDemo({campaign}:{campaign?:CampaignDebateBinding}={}):React.ReactElement {
  const [builds,setBuilds]=useState({ally:structuredClone(rallyProfile('guojia').build),enemy:structuredClone(rallyProfile('npc_soldier').build)});
  const [profiles,setProfiles]=useState({ally:'guojia',enemy:'npc_soldier'});
  const actors={ally:campaign?'lord':profiles.ally||'guojia',enemy:campaign?duelActorForName(campaign.enemyName):profiles.enemy||'npc_soldier'};
  const model=useRef(campaign?.state??createRally()),images=useRef<BattleImages|null>(null),canvas=useRef<HTMLCanvasElement>(null);
- const [s,setS]=useState({...model.current}),[ready,setReady]=useState(false),[error,setError]=useState(''),[menu,setMenu]=useState(!campaign),[help,setHelp]=useState(false),[hover,setHover]=useState<number|null>(null),[induct,setInduct]=useState<number|null>(null),[targets,setTargets]=useState<number[]>([]),[time,setTime]=useState(0),[busy,setBusy]=useState(false);
- useEffect(()=>{campaign?.onPause(false);},[]);
+ const [s,setS]=useState({...model.current}),[ready,setReady]=useState(false),[error,setError]=useState(''),[menu,setMenu]=useState(campaign?.initialPaused??!campaign),[help,setHelp]=useState(false),[hover,setHover]=useState<number|null>(null),[induct,setInduct]=useState<number|null>(null),[targets,setTargets]=useState<number[]>([]),[time,setTime]=useState(0),[busy,setBusy]=useState(false);
+ useEffect(()=>{campaign?.onPause(menu||help);},[menu,help]);
+ useEffect(()=>{const hide=()=>{if(campaign&&document.hidden)setMenu(true);};document.addEventListener('visibilitychange',hide);return()=>document.removeEventListener('visibilitychange',hide);},[]);
  const controls=useRef({menu,help}),motion=useRef({active:false,time:0,think:0});controls.current={menu,help};
  const sync=()=>setS({...model.current});
  const run=(side:RallySide,action:RallyAction)=>{if(campaign?campaign.onAction(side,action):actRally(model.current,side,action)){motion.current={active:true,time:0,think:0};setBusy(true);setTime(0);setHover(null);setInduct(null);setTargets([]);sync();}};
@@ -55,7 +56,7 @@ export function RallyDebateDemo({campaign}:{campaign?:CampaignDebateBinding}={})
   run('ally',{kind:c.kind,id});
  };
  const start=()=>{model.current=createRally(builds.ally,builds.enemy,Date.now());motion.current={active:false,time:0,think:0};setBusy(false);setTime(0);setHover(null);setInduct(null);setTargets([]);setMenu(false);sync();};
- useEffect(()=>{let alive=true;setReady(false);setError('');void Promise.all([loadBattleImages(),loadDebateImages([actors.ally,actors.enemy]),preloadRallyCards()]).then(([im,art])=>{if(alive){images.current={...im,...art};setReady(true);}}).catch(e=>{if(alive)setError(String(e));});return()=>{alive=false;};},[actors.ally,actors.enemy]);
+ useEffect(()=>{let alive=true;setReady(false);setError('');void Promise.all([loadBattleImages(campaign?.background),loadDebateImages([actors.ally,actors.enemy]),preloadRallyCards()]).then(([im,art])=>{if(alive){images.current={...im,...art};setReady(true);}}).catch(e=>{if(alive)setError(String(e));});return()=>{alive=false;};},[actors.ally,actors.enemy]);
  useEffect(()=>{if(!ready)return;let raf=0,previous=performance.now(),ui=0;const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const frame=(now:number)=>{const dt=Math.min(.05,(now-previous)/1000);previous=now;const c=controls.current,m=motion.current,d=model.current;
    if(!c.menu&&!c.help){
@@ -93,9 +94,10 @@ export function RallyDebateDemo({campaign}:{campaign?:CampaignDebateBinding}={})
    </aside>}
    <div className="rally-action-rail">{induct!==null&&<button onClick={()=>{setInduct(null);setTargets([]);}}>取消歸納</button>}<small>{s.ally.hand.length} 張 · 特殊牌 {s.specialUsed?0:1}/1</small></div>
   </>}
-  <nav className="rally-toolbar">{!campaign&&<a href="?art=confrontation-demo">‹ 單挑</a>}<button type="button" className="rally-help-icon" aria-label="玩法與特性" onClick={()=>setHelp(true)}><DebateIcon card="proof"/></button></nav>
-  {menu&&<div className="ct-overlay"><section className="cb-setup rally-setup" role="dialog" aria-label="輪流接牌試配"><h1>你一句 · 我一句</h1><p>三色接牌 · 1–9 點 · 心防歸零即敗</p><div className="cb-builds">{(['ally','enemy'] as const).map(side=><BuildEditor key={side} side={side==='ally'?'我方':'敵方'} build={builds[side]} profile={profiles[side]} onChange={(v,profile)=>{setBuilds(b=>({...b,[side]:v}));setProfiles(p=>({...p,[side]:profile??''}));}}/>)}</div><footer><button onClick={()=>setHelp(true)}>玩法與特性</button><button disabled={!ready||!!error} onClick={start}>{ready?'開始辯論':'素材整備中…'}</button></footer>{error&&<p role="alert">{error}</p>}</section></div>}
-  {s.winner&&!busy&&!menu&&<div className="ct-overlay"><section className="ct-pause-menu" role="dialog" aria-label="舌戰結果"><h1>{s.winner==='ally'?'辯勝':'失辯'}</h1><p>{s.turnNumber-1} 手 · 另起 {s.restarts} 次</p>{campaign?<button onClick={campaign.onDone}>返回戰場</button>:<><button onClick={start}>再辯一場</button><button onClick={()=>setMenu(true)}>調整特性</button></>}</section></div>}
+  <nav className="rally-toolbar">{campaign&&<button onClick={()=>setMenu(true)}>暫停</button>}{!campaign&&<a href="?art=confrontation-demo">‹ 單挑</a>}<button type="button" className="rally-help-icon" aria-label="玩法與特性" onClick={()=>setHelp(true)}><DebateIcon card="proof"/></button></nav>
+  {menu&&!campaign&&<div className="ct-overlay"><section className="cb-setup rally-setup" role="dialog" aria-label="輪流接牌試配"><h1>你一句 · 我一句</h1><p>三色接牌 · 1–9 點 · 心防歸零即敗</p><div className="cb-builds">{(['ally','enemy'] as const).map(side=><BuildEditor key={side} side={side==='ally'?'我方':'敵方'} build={builds[side]} profile={profiles[side]} onChange={(v,profile)=>{setBuilds(b=>({...b,[side]:v}));setProfiles(p=>({...p,[side]:profile??''}));}}/>)}</div><footer><button onClick={()=>setHelp(true)}>玩法與特性</button><button disabled={!ready||!!error} onClick={start}>{ready?'開始辯論':'素材整備中…'}</button></footer>{error&&<p role="alert">{error}</p>}</section></div>}
+  {menu&&campaign&&<div className="ct-overlay"><section className="ct-pause-menu"><h1>暫歇片刻</h1><button onClick={()=>setMenu(false)}>繼續舌戰</button>{campaign.onRetreat&&<button onClick={campaign.onRetreat}>認退</button>}</section></div>}
+  {s.winner&&!busy&&!menu&&<div className="ct-overlay"><section className="ct-pause-menu" role="dialog" aria-label="舌戰結果"><h1>{s.winner==='ally'?'辯勝':'失辯'}</h1><p>{s.turnNumber-1} 手 · 另起 {s.restarts} 次</p>{campaign?<button onClick={campaign.onDone}>{campaign.returnLabel??"返回戰場"}</button>:<><button onClick={start}>再辯一場</button><button onClick={()=>setMenu(true)}>調整特性</button></>}</section></div>}
   {help&&<RallyGuide onClose={()=>setHelp(false)}/>}
  </div></main>;
 }

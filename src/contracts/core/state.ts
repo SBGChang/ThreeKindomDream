@@ -398,6 +398,7 @@ export interface StoryState {
   readonly tracked:NotableId|null; readonly waitingSince:number|null;
 }
 export interface RunState {
+  readonly eventChallenge?: import('./event-challenge.js').EventChallengeState | null;
   readonly earnedUnlocks?:readonly string[];
   readonly equipment?: Readonly<Partial<Record<'weapon'|'mount'|'treasure', ItemId>>>;
   readonly runId?: string;

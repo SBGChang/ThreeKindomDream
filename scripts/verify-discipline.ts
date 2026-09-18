@@ -90,7 +90,7 @@ const OWNS: Readonly<Record<string, readonly string[]>> = {
   // ⑯ 與 ⑰ 共同擁有 `turn`：一個回合就是「固定事件 ＋ 它引出的事件」，
   // 硬把它切成兩個 slice 會讓「本回合做了什麼」需要兩處對帳（15 §2）。
   'training.ts': ['turn'],
-  'commission.ts': ['turn'],
+  'commission.ts': ['turn','eventChallenge'], // 挑戰是待結算事件的延續；仍由委託統一發獎。
   'roster.ts': ['roster'],
   'roster-query.ts': ['roster'],
   'stats.ts': ['attributes', 'currencies', 'career'],

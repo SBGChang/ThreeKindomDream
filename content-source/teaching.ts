@@ -14,7 +14,7 @@ export function withTeaching(event: EventDef, teachers: readonly NotableDef[]): 
   const tiers = { common:0, fine:1, peerless:2 };
   const skill = coreSkills.filter(s => teacher.abilities.skills.some(t=>t.skillId===s.skillId) && tiers[s.tier]<=ceiling)
     .sort((a,b)=>tiers[b.tier]-tiers[a.tier])[0];
-  const trait = coreTraits.filter(t => teacher.abilities.traits.includes(t.traitId) && tiers[t.tier]<=ceiling)
+  const trait = coreTraits.filter(t => !t.eventExclusive && teacher.abilities.traits.includes(t.traitId) && tiers[t.tier]<=ceiling)
     .sort((a,b)=>tiers[b.tier]-tiers[a.tier])[0];
   const lesson: EventReward | null = rarity % 2 === 0 && trait
     ? {kind:'unlock',trait:trait.traitId,skill:null}

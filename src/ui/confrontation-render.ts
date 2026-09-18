@@ -24,17 +24,18 @@ function duelist(ctx:CanvasRenderingContext2D,images:BattleImages,id:string,x:nu
 }
 
 /** Duel and card debate use their dedicated character action sheets. */
-export function drawEncounterDemo(ctx:CanvasRenderingContext2D,images:BattleImages,s:EncounterDemo):void {
+export function drawEncounterDemo(ctx:CanvasRenderingContext2D,images:BattleImages,s:{contest:EncounterDemo["contest"];battle?:EncounterDemo["battle"]}):void {
   const c=s.contest;
-  if(!c){drawBattle(ctx,images,s.battle);return;}
+  if(!c){if(s.battle)drawBattle(ctx,images,s.battle);return;}
   const presentation=duelPresentation(c),duelAnimating=c.duel&&c.phase==='clash',acting=!duelAnimating||presentation.stage==='combat';
   const t=duelAnimating?(acting?presentation.time:0):c.phaseTime;
   const armyOpacity=c.phase==='clear'?1-ease(t/.9):c.phase==='restore'?ease(t/.8):c.phase==='retreat'?1:0;
   const retreatSide=c.winner==='ally'?'enemy' as const:'ally' as const;
-  const fleeing=s.battle.commanders.find(g=>g.side===retreatSide);
+  const fleeing=s.battle?.commanders.find(g=>g.side===retreatSide);
   const follow=ease(t/.8);
   const followCamera=fleeing?{x:800+(Math.max(-770,Math.min(2280,fleeing.x))-800)*follow,y:450+(fleeing.y-30-450)*follow,zoom:1+.6*follow}:undefined;
-  drawBattle(ctx,images,s.battle,{armyOpacity,...(c.phase==='retreat'?{retreatSide,...(followCamera?{camera:followCamera}:{})}:{})});
+  if(s.battle)drawBattle(ctx,images,s.battle,{armyOpacity,...(c.phase==='retreat'?{retreatSide,...(followCamera?{camera:followCamera}:{})}:{})});
+  else if(images.background)ctx.drawImage(images.background,0,0,1600,900);
   ctx.save();ctx.fillStyle=`rgba(8,15,23,${(1-armyOpacity)*.38})`;ctx.fillRect(0,0,1600,900);ctx.restore();
   if(c.phase==='clear'||c.phase==='retreat')return;
   const entry=c.phase==='approach'?ease(t/1.2):1;
@@ -84,6 +85,13 @@ export function drawEncounterDemo(ctx:CanvasRenderingContext2D,images:BattleImag
     const et=presentation.time,focus=ease(et/.25)*(1-ease((et-(DUEL_EVOLUTION_SECONDS-.3))/.3));
     // Darken the battlefield first, then paint the halo behind the lit ally.
     ctx.save();ctx.fillStyle=`rgba(3,9,18,${.78*focus})`;ctx.fillRect(0,0,1600,900);ctx.restore();
+    if(turn?.enemyEvolution){
+     duelist(ctx,images,c.allyId,left,feet,'idle',0,false,alpha*(1-.85*focus));
+     const evo=images['evolution-particles'];
+     if(evo)drawEvolutionParticles(ctx,evo,et,right,feet,turn.enemyEvolution,false);
+     duelist(ctx,images,c.enemyId,right,feet,'rest',clamp(et/.8),true,alpha);
+     if(evo)drawEvolutionParticles(ctx,evo,et,right,feet,turn.enemyEvolution,true);
+    }else{
     duelist(ctx,images,c.enemyId,right,feet,'idle',0,true,alpha*(1-.85*focus));
     ctx.save();
     const evo=images['evolution-particles'];if(evo)drawEvolutionParticles(ctx,evo,et,left,feet,turn?.allyEvolution??'',false);
@@ -94,6 +102,7 @@ export function drawEncounterDemo(ctx:CanvasRenderingContext2D,images:BattleImag
     }else duelist(ctx,images,c.allyId,left,feet,'rest',clamp(et/.8),false,alpha);
     if(evo)drawEvolutionParticles(ctx,evo,et,left,feet,turn?.allyEvolution??'',true);
     ctx.restore();
+    }
    }else{
     const hitBeat=acting&&c.phase==='clash'&&t>=.75&&t<.82;
     const drawAlly=()=>duelist(ctx,images,c.allyId,left,feet,a[0],a[1],false,alpha,hitBeat&&hurtA&&!guardA);

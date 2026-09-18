@@ -1,3 +1,4 @@
+import {validEventChallengeDef} from '../event-challenge-validation.js';
 import { ATTRS, OPTION_TIERS, RARITIES } from '../../contracts/core/primitives.js';
 import type { Ctx, Rec } from './types.js';
 import { validateDialogue } from './dialogue.js';
@@ -312,6 +313,7 @@ export function validateEvents(c: Ctx): void {
 
     opts.forEach((o, i) => {
       c.text(o['labelKey'], 'events', `options[${i}].labelKey`, id);
+      if(o['challenge']!==undefined&&!validEventChallengeDef(o['challenge']))c.push('rule','events',"options["+i+"].challenge",id,'挑戰模式、對手、難度、出口或兵力資料不符');
       const chk = o['check'];
       if (chk !== null && chk !== undefined && typeof chk === 'object') {
         const curveId = c.s((chk as Record<string, unknown>)['dcCurveId']);

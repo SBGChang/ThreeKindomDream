@@ -4134,8 +4134,21 @@
         "tier": "story"
       },
       {
+        "challenge": {
+          "ability": 55,
+          "mode": "duel",
+          "opening": "馬超：既要請教，就讓我看看你的槍。點到即止，不必逞強。\n你：請將軍指教！",
+          "opponent": "machao",
+          "opponentName": "馬超",
+          "outcomes": {
+            "draw": "雙方收手，這次未分高下。你記住交鋒中的破綻，回去再做準備。",
+            "lose": "馬超及時收住槍鋒：「步子別急，先站穩。我們下次再試。」",
+            "retreat": "你決定先退一步。這件事未能辦妥，仍可從經驗中學習。",
+            "win": "馬超收槍一笑：「這一招接得好。衝得進去，也要記得回來。」"
+          }
+        },
         "check": null,
-        "labelKey": "event.shu.machao.1",
+        "labelKey": "challenge.event:shu.machao.companionship.1.label",
         "practice": [
           {
             "attr": "war",
@@ -7382,6 +7395,7 @@
           "caocao": {
             "art": "caocao",
             "build": {
+              "comboEnabled": false,
               "lead": 95,
               "trait": "none",
               "war": 72
@@ -7391,6 +7405,7 @@
           "guanyu": {
             "art": "guanyu",
             "build": {
+              "comboEnabled": false,
               "lead": 90,
               "trait": "none",
               "war": 97
@@ -7400,6 +7415,7 @@
           "liubei": {
             "art": "liubei",
             "build": {
+              "comboEnabled": false,
               "lead": 85,
               "trait": "none",
               "war": 78
@@ -7409,8 +7425,10 @@
           "lvbu": {
             "art": "lvbu",
             "build": {
+              "comboEnabled": false,
               "lead": 90,
-              "trait": "none",
+              "trait": "peerless",
+              "traitChance": 0.25,
               "war": 100
             },
             "name": "呂布"
@@ -7418,6 +7436,7 @@
           "player": {
             "art": "lord",
             "build": {
+              "comboEnabled": true,
               "lead": 55,
               "trait": "none",
               "war": 60
@@ -7427,6 +7446,7 @@
           "zhangfei": {
             "art": "zhangfei",
             "build": {
+              "comboEnabled": false,
               "lead": 82,
               "trait": "none",
               "war": 98

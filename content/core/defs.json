@@ -1070,6 +1070,26 @@
     "troopsBase": 120
   },
   {
+    "cost": {
+      "int": 150,
+      "lead": 220,
+      "war": 300
+    },
+    "descKey": "trait.wushuangfeijiang.desc",
+    "duelProcChance": 0.25,
+    "duelTrait": "peerless",
+    "effects": [],
+    "eventExclusive": true,
+    "id": "trait:wushuangfeijiang",
+    "kind": "trait",
+    "nameKey": "trait.wushuangfeijiang.name",
+    "packId": "pack:core",
+    "polarity": "positive",
+    "schemaVersion": 1,
+    "tier": "peerless",
+    "traitId": "trait:wushuangfeijiang"
+  },
+  {
     "battleTrigger": "backwater",
     "cost": {
       "war": 300
@@ -5089,11 +5109,26 @@
         "tier": "low"
       },
       {
+        "challenge": {
+          "ability": 30,
+          "enemySquads": 3,
+          "enemyTroops": 180,
+          "mode": "battle",
+          "opening": "探子：前方幾股賊兵已經合圍！\n你：糧車不能困在這裡。留下車隊，我親自帶一隊人打通道路。號角響前，務必擊退全部賊兵！",
+          "opponent": "npc_soldier",
+          "opponentName": "攔路賊兵",
+          "outcomes": {
+            "draw": "雙方收手，這次未分高下。你記住交鋒中的破綻，回去再做準備。",
+            "lose": "賊兵逼住隘口，你只能退回車隊，另尋安全的道路。押運未能如期完成。",
+            "retreat": "你決定先退一步。這件事未能辦妥，仍可從經驗中學習。",
+            "win": "你率隊衝開包圍，護著糧車穿過隘口。押運的差事辦成了。"
+          }
+        },
         "check": {
           "attr": "lead",
           "dcCurveId": "dc:normal"
         },
-        "labelKey": "event.lead.2.escort.opt.fast",
+        "labelKey": "challenge.event:lead.2.escort.1.label",
         "practice": [
           {
             "attr": "lead",
@@ -5759,11 +5794,24 @@
         "tier": "low"
       },
       {
+        "challenge": {
+          "ability": 48,
+          "mode": "duel",
+          "opening": "敵將：可有人敢出陣與我一戰？\n你：只管放馬過來！",
+          "opponent": "npc_soldier",
+          "opponentName": "叫陣敵將",
+          "outcomes": {
+            "draw": "雙方收手，這次未分高下。你記住交鋒中的破綻，回去再做準備。",
+            "lose": "你招架不住，只得勒馬退回。敵將仍在陣前叫罵，這口氣只能暫且記下。",
+            "retreat": "你決定先退一步。這件事未能辦妥，仍可從經驗中學習。",
+            "win": "敵將敗退，你收槍回陣。軍中響起喝采，這場叫陣已被你壓下。"
+          }
+        },
         "check": {
           "attr": "war",
           "dcCurveId": "dc:normal"
         },
-        "labelKey": "event.war.3.duel.opt.answer",
+        "labelKey": "challenge.event:war.3.duel.1.label",
         "practice": [
           {
             "attr": "war",
@@ -5790,11 +5838,24 @@
         "tier": "mid"
       },
       {
+        "challenge": {
+          "ability": 62,
+          "mode": "duel",
+          "opening": "敵將：既要賭，就以三十里為約！\n你：兩軍作證。接招！",
+          "opponent": "npc_soldier",
+          "opponentName": "叫陣敵將",
+          "outcomes": {
+            "draw": "雙方收手，這次未分高下。你記住交鋒中的破綻，回去再做準備。",
+            "lose": "你敗下陣來，只得履約後撤。這次失利，也讓你看清逞強的代價。",
+            "retreat": "你決定先退一步。這件事未能辦妥，仍可從經驗中學習。",
+            "win": "敵將收起兵刃，依約退兵。你替同袍贏下了整備的時間。"
+          }
+        },
         "check": {
           "attr": "war",
           "dcCurveId": "dc:hard"
         },
-        "labelKey": "event.war.3.duel.opt.wager",
+        "labelKey": "challenge.event:war.3.duel.2.label",
         "practice": [
           {
             "attr": "war",
@@ -6312,11 +6373,24 @@
         "tier": "mid"
       },
       {
+        "challenge": {
+          "ability": 50,
+          "mode": "debate",
+          "opening": "議事官：你說此策不妥，可有確實的依據？\n你：請容我從糧道與敵情說起。",
+          "opponent": "npc_soldier",
+          "opponentName": "帳中議事官",
+          "outcomes": {
+            "draw": "雙方收手，這次未分高下。你記住交鋒中的破綻，回去再做準備。",
+            "lose": "你的論據未能服眾。議事官仍採原案，你把沒有答清的問題記下。",
+            "retreat": "你決定先退一步。這件事未能辦妥，仍可從經驗中學習。",
+            "win": "帳中的質疑漸息。議事官重新攤開地圖，請你將替代方案說完。"
+          }
+        },
         "check": {
           "attr": "int",
           "dcCurveId": "dc:hard"
         },
-        "labelKey": "event.int.3.counsel.opt.refute",
+        "labelKey": "challenge.event:int.3.counsel.2.label",
         "practice": [
           {
             "attr": "int",

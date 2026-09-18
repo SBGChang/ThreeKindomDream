@@ -21,6 +21,7 @@ while(tired.node!=='second-challenge'&&guard++<250){
  const n=d.nodes[tired.node]!;
  if(storySpeech(d,tired)){next(tired);continue;}
  if(n.kind==='combat'){
+  for(const f of [tired.duel!.ally,tired.duel!.enemy]){assert.equal(f.progression,false);assert.equal(f.combo,0);assert(Object.values(f.points).every(p=>p===0));}
   if(tired.duel!.result){npcResults.push([tired.node,tired.duel!.result]);assert.equal(tired.duel!.result,'enemy',tired.node+' must end in Lv Bu victory');next(tired);}
   else assert.equal(stepStoryCombat(d,tired,tired.revision),true);
  }else throw Error('unexpected '+tired.node);

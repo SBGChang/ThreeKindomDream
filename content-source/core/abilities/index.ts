@@ -1,4 +1,5 @@
 import { triggeredTraits } from './triggered.js';
+import {peerlessTrait} from '../../lvbu-trial.js';
 import { tacticalSkills } from './tactics.js';
 import type { AbilityCost, SkillDef, TraitDef } from '../../../src/contracts/core/definitions.js';
 import type { Attr, SkillKind } from '../../../src/contracts/core/primitives.js';
@@ -43,6 +44,7 @@ const skill = (
 
 // ── 特質 ──────────────────────────────────────────────
 export const coreTraits: readonly TraitDef[] = [
+  peerlessTrait,
   ...triggeredTraits,
   trait('danshi', 'common', cost(['war', 150]), 'positive', [FX.battlePhys08]),
   trait('chenyi', 'common', cost(['lead', 150]), 'positive', [FX.battleTroops08]),

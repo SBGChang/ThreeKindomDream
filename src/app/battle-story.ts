@@ -1,3 +1,4 @@
+import {validDuelBuild} from '../data-runtime/duel-build-validation.js';
 import {createRally,actRally} from './debate-rally-model.js';
 import {validRallyBuild} from './rally-validation.js';
 import type {RallyAction,RallySide} from '../contracts/core/debate-rally.js';
@@ -17,7 +18,7 @@ export function validateBattleStory(value:unknown):BattleStory {
  if(!d.nodes[d.entry])fail('入口不存在');
  if(!obj(d.field)||!num(d.field.troops)||d.field.troops<50||d.field.troops>600||!d.actors[d.field.enemy]||!Number.isInteger(d.field.wave)||d.field.wave<1)fail('戰場觸發配置');
  for(const k of ['lead','war','int','pol'] as const)if(!num(d.playerStats[k])||d.playerStats[k]<0||d.playerStats[k]>d.statCap)fail('主角能力越界');
- for(const [id,a] of Object.entries(d.actors))if(!obj(a)||!text(a.name)||!text(a.art)||!obj(a.build)||!num(a.build.war)||!num(a.build.lead)||a.build.war<1||a.build.war>100||a.build.lead<1||a.build.lead>100||!['none','momentum','steady','breathing','reversal'].includes(a.build.trait))fail('角色 '+id);
+ for(const [id,a] of Object.entries(d.actors))if(!obj(a)||!text(a.name)||!text(a.art)||!obj(a.build)||!num(a.build.war)||!num(a.build.lead)||a.build.war<1||a.build.war>100||a.build.lead<1||a.build.lead>100||!validDuelBuild(a.build))fail('角色 '+id);
  const refs:string[]=[];const rewardIds=new Set<string>();
  const strings=(x:unknown)=>Array.isArray(x)&&x.every(text);
  const combatant=(x:StoryCombatant)=>obj(x)&&!!d.actors[x.actor]&&num(x.health)&&x.health>0&&x.health<=1&&Array.isArray(x.modifiers)&&x.modifiers.every(m=>obj(m)&&text(m.label)&&(m.power===undefined||num(m.power)&&m.power>0)&&(m.attack===undefined||num(m.attack)&&m.attack>0));
@@ -48,8 +49,8 @@ function enter(d:BattleStory,s:StoryRun,id:string,hops=0):void {
  s.node=id;s.line=0;s.duel=null;s.rally=null;s.healed=false;s.speech=[];s.speechIndex=0;s.seenCues=[];s.visited.push(id);
  const n=d.nodes[id]!;
  if(n.kind==='combat'){
-  s.duel=createDuel(d.actors[n.ally.actor]!.build,d.actors[n.enemy.actor]!.build,n.seed);s.aiRng=n.aiSeed>>>0;
-  if(n.mode==='auto')s.duel.ally.progression=false;
+  const ally=d.actors[n.ally.actor]!.build;
+  s.duel=createDuel({...ally,comboEnabled:ally.comboEnabled??n.mode==='player'},d.actors[n.enemy.actor]!.build,n.seed);s.aiRng=n.aiSeed>>>0;
   for(const side of ['ally','enemy'] as const){const f=s.duel[side],spec=n[side];f.injury=f.injuryLimit*(1-spec.health);
    for(const m of spec.modifiers){f.attack*=m.power??1;f.defense*=m.power??1;f.attack*=m.attack??1;}
   }

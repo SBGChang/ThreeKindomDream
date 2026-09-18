@@ -1,0 +1,23 @@
+.event-challenge{position:absolute;inset:0;z-index:80;background:#302118 url('/art/ui/campaign/camp-v1.png') center/cover no-repeat;color:#543720;font-family:'DFKai-SB','KaiTi',serif}
+.event-challenge .ec-control,.event-challenge .ec-control:hover,.event-challenge .ec-control:active{border:0;border-radius:0;box-shadow:none;background:url('/art/ui/training/paper-control-v1.png') center/100% 100% no-repeat;color:#543720;font-family:inherit;font-size:22px;padding:12px 22px;min-height:54px;transition:filter .15s}
+.event-challenge .ec-control:hover{filter:brightness(1.08)}
+.event-challenge .ec-control:focus-visible{outline:3px solid #f4cd79;outline-offset:3px}
+.event-challenge .ec-control[aria-pressed=true],.event-challenge .ec-depart{background-image:url('/art/ui/training/jade-control-v1.png');color:#fff2c7}
+.event-challenge .ec-control:disabled{filter:grayscale(1);opacity:.45}
+.ec-prep header{margin:45px 60px;color:#ffedbf;text-shadow:0 2px 4px #25150e}.ec-prep h1{font-size:38px;margin:0 0 8px}.ec-prep header p{font-size:22px;margin:0}
+.ec-folio{position:absolute;inset:138px 64px 88px;background:url('/art/ui/training/folio-v1.png') center/100% 100% no-repeat;display:grid;grid-template-columns:1fr 1fr;gap:100px;padding:46px 85px 90px}.ec-folio section{min-width:0;text-align:center}.ec-folio h2{font-size:28px;margin:10px 0 25px}.ec-folio h2 small{font-size:20px;margin-left:20px}.ec-skills{display:grid;grid-template-columns:1fr 1fr;gap:8px}.ec-skills .ec-control{font-size:21px;padding:8px 14px;display:flex;align-items:center;justify-content:center;gap:7px;height:70px}.ec-skills img{width:35px;height:35px;object-fit:contain}.ec-soldiers{width:120px;height:125px;object-fit:contain}.ec-folio p{font-size:24px}.ec-folio .ec-note{font-size:19px;opacity:.8}.ec-ratio{display:flex;align-items:center;gap:7px}.ec-ratio input{width:180px;accent-color:#477646}.ec-ratio .ec-control{padding:8px 13px;min-width:50px}.ec-pager{display:flex;justify-content:center;margin-top:12px}.ec-depart{position:absolute;right:84px;bottom:30px;width:265px}.ec-conversation{background-image:url('/art/backgrounds/bg-battle-1.png')}.ec-next{position:absolute;right:30px;bottom:22px}.ec-conversation .conversation-content{padding-right:190px}.ec-playing{background:#131714;display:flex;align-items:center;justify-content:center}.ec-playing>.rt-shell{width:100%;padding:0;min-height:0}.ec-playing .rt-battle{width:100%;max-height:100%;aspect-ratio:16/9}.ec-tools{position:absolute;left:43%;top:2%;display:flex;gap:6px;z-index:25}.ec-tools .ec-control{font-size:18px;min-height:40px;padding:7px 20px}.ec-loading,.ec-paused{position:absolute;top:43%;left:35%;width:30%;padding:30px;background:url('/art/ui/training/paper-control-v1.png') center/100% 100% no-repeat;text-align:center;font-size:30px;pointer-events:none}.ec-loading{z-index:30}.ec-timer{margin-left:auto;color:#ffe8b9;font-size:26px;padding:20px}.ec-playing .rt-command{justify-content:center}
+.ec-conversation{color:#fff4d6}
+.ec-conversation .ec-cashout{position:absolute;right:210px;bottom:22px;font-size:18px}
+.ec-conversation:has(.ec-cashout) .conversation-content{padding-bottom:70px}
+.ec-tools strong{font-size:18px;color:#ffedbf;text-shadow:0 2px 4px #25150e;align-self:center}
+/* This scene fills the game stage instead of the shifted cultivation sidebar. */
+
+.game-stage:has(.event-challenge)>.game-top,.game-stage:has(.event-challenge)>.game-bottom{visibility:hidden;pointer-events:none}
+.game-stage .event-challenge .ec-control,.game-stage .event-challenge .ec-control:is(:hover,:focus-visible,:active,:disabled){border:0;border-image:none;border-radius:0;box-shadow:none;background:url('/art/ui/training/paper-control-v1.png') center/100% 100% no-repeat;color:#543720;font-family:'DFKai-SB','KaiTi',serif}
+.game-stage .event-challenge .ec-control[aria-pressed=true],.game-stage .event-challenge .ec-depart,.game-stage .event-challenge .ec-depart:hover{background-image:url('/art/ui/training/jade-control-v1.png');color:#fff2c7}
+.game-stage .ec-playing .rt-battle button{border:0;border-image:none;box-shadow:none;background:none}
+.game-stage .ec-playing .rt-battle .rt-skill-group{flex:0 1 500px}
+.game-stage .ec-playing .rt-battle .rt-skill-slot{flex:0 0 130px}
+.game-stage .ec-playing .rt-battle .rt-skill{height:145px}
+.game-stage .ec-playing .rt-battle .ec-control,.game-stage .ec-playing .ct-pause-menu button,.game-stage .ec-playing .rally-toolbar>button:not(.rally-help-icon){background:url('/art/ui/training/paper-control-v1.png') center/100% 100% no-repeat;color:#543720}
+

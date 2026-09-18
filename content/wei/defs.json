@@ -1211,6 +1211,7 @@
         }
       ],
       "traits": [
+        "trait:wushuangfeijiang",
         "trait:danshi",
         "trait:linzhen"
       ]
@@ -4180,8 +4181,21 @@
         "tier": "story"
       },
       {
+        "challenge": {
+          "ability": 58,
+          "mode": "debate",
+          "opening": "郭嘉：我押他三日內必走。你若不信，不妨說說你的推斷。\n你：那就從他軍中的糧草說起。",
+          "opponent": "guojia",
+          "opponentName": "郭嘉",
+          "outcomes": {
+            "draw": "雙方收手，這次未分高下。你記住交鋒中的破綻，回去再做準備。",
+            "lose": "郭嘉逐一拆開你的推斷：「只看營火可不夠。再想想，他最怕失去的是什麼？」",
+            "retreat": "你決定先退一步。這件事未能辦妥，仍可從經驗中學習。",
+            "win": "郭嘉放下酒盞，笑著點頭：「你抓到了我沒有細想的地方。這回算你有理。」"
+          }
+        },
         "check": null,
-        "labelKey": "event.wei.guojia-wager.opt.b",
+        "labelKey": "challenge.event:wei.guojia-wager.1.label",
         "practice": [
           {
             "attr": "int",
@@ -9303,6 +9317,134 @@
     "weight": 100
   },
   {
+    "bodyKey": "event.lvbu.trial.body",
+    "collectible": true,
+    "dialogue": {
+      "intro": [
+        {
+          "speaker": null,
+          "textKey": "event.lvbu.trial.body"
+        },
+        {
+          "speaker": 1,
+          "textKey": "dialogue.notable.ask"
+        }
+      ]
+    },
+    "eventDefId": "event:lvbu.trial",
+    "id": "event:lvbu.trial",
+    "kind": "event",
+    "options": [
+      {
+        "challenge": {
+          "ability": 100,
+          "cashOutGold": [
+            20,
+            60,
+            120
+          ],
+          "duel": {
+            "enemy": {
+              "comboEnabled": false,
+              "lead": 90,
+              "trait": "peerless",
+              "traitChance": 0.25,
+              "war": 100
+            }
+          },
+          "mode": "duel",
+          "opening": "呂布：敢來挑戰，便先讓我看看你的膽量！",
+          "opponent": "lvbu",
+          "opponentName": "呂布",
+          "outcomes": {
+            "draw": "鳴金聲響，勝負未分。呂布搖頭：「試煉須勝，平手不算。」本輪試煉結束。",
+            "lose": "呂布收戟止戰：「敗在何處，回去想清楚。」本輪試煉結束，未取得無雙飛將。",
+            "retreat": "呂布：今日便到這裡。收下獎勵，記住交手所得。\n本輪試煉結束，未取得無雙飛將。",
+            "win": "呂布：無雙不在一味逞勇，而在看穿對手守勢的一瞬。\n你領悟了特性「無雙飛將」！可前往特性配置啟用。"
+          },
+          "stages": [
+            {
+              "opening": "呂布：第一試，我只用五成功力。\n呂布：我的攻擊與防禦降至 50%，無雙飛將仍會發動。只守不攻，可接不住我的戟！",
+              "power": 0.5,
+              "title": "第一試・五成之力（50%）",
+              "victory": "呂布：這一關算你過了。\n呂布：接下來是全力。收下 60 金就此作罷，還是恢復氣力再戰？"
+            },
+            {
+              "opening": "呂布：第二試，攻擊與防禦恢復 100%。\n呂布：方才的留手到此為止。你可準備好了？",
+              "power": 1,
+              "title": "第二試・飛將本色（100%）",
+              "victory": "呂布：竟能接住我的全力，好！\n呂布：最後一試，我將激起飛將之勢。現在收手可領 120 金，繼續便要面對 150% 攻防。"
+            },
+            {
+              "opening": "呂布：第三試，飛將之勢！攻擊與防禦提升至 150%。\n呂布：勝過此時的我，無雙飛將便傳給你！",
+              "power": 1.5,
+              "title": "第三試・無雙之境（150%）",
+              "victory": "呂布：三關皆破。你配得上這一招。"
+            }
+          ]
+        },
+        "check": null,
+        "labelKey": "event.lvbu.trial.accept",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 1
+          }
+        ],
+        "requirements": [],
+        "rewards": [
+          {
+            "kind": "unlock",
+            "skill": null,
+            "trait": "trait:wushuangfeijiang"
+          }
+        ],
+        "tier": "story"
+      },
+      {
+        "check": null,
+        "labelKey": "event.lvbu.trial.leave",
+        "practice": [
+          {
+            "attr": "war",
+            "weight": 0.2
+          }
+        ],
+        "requirements": [],
+        "resultKey": "event.lvbu.trial.leave.result",
+        "rewards": [
+          {
+            "amount": 20,
+            "kind": "money"
+          }
+        ],
+        "tier": "story"
+      }
+    ],
+    "packId": "pack:wei",
+    "paramSlots": [],
+    "progression": {
+      "previous": [],
+      "rarity": 3
+    },
+    "requirements": [],
+    "schemaVersion": 1,
+    "titleKey": "event.lvbu.trial.title",
+    "trigger": {
+      "cast": [
+        {
+          "minStage": "close",
+          "notableId": "notable:lvbu"
+        }
+      ],
+      "chainId": "chain:lvbu.trial",
+      "kind": "notable",
+      "step": 0
+    },
+    "unique": true,
+    "weight": 100
+  },
+  {
     "chapterId": "ch:wei.hulao",
     "factionId": "faction:wei",
     "id": "ch:wei.hulao",
@@ -9571,6 +9713,7 @@
           "caocao": {
             "art": "caocao",
             "build": {
+              "comboEnabled": false,
               "lead": 95,
               "trait": "none",
               "war": 72
@@ -9580,6 +9723,7 @@
           "guanyu": {
             "art": "guanyu",
             "build": {
+              "comboEnabled": false,
               "lead": 90,
               "trait": "none",
               "war": 97
@@ -9589,6 +9733,7 @@
           "liubei": {
             "art": "liubei",
             "build": {
+              "comboEnabled": false,
               "lead": 85,
               "trait": "none",
               "war": 78
@@ -9598,8 +9743,10 @@
           "lvbu": {
             "art": "lvbu",
             "build": {
+              "comboEnabled": false,
               "lead": 90,
-              "trait": "none",
+              "trait": "peerless",
+              "traitChance": 0.25,
               "war": 100
             },
             "name": "呂布"
@@ -9607,6 +9754,7 @@
           "player": {
             "art": "lord",
             "build": {
+              "comboEnabled": true,
               "lead": 55,
               "trait": "none",
               "war": 60
@@ -9616,6 +9764,7 @@
           "zhangfei": {
             "art": "zhangfei",
             "build": {
+              "comboEnabled": false,
               "lead": 82,
               "trait": "none",
               "war": 98

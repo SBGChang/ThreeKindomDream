@@ -68,13 +68,14 @@ export function validateAbilities(c: Ctx): void {
   }
   for (const row of c.rows('trait')) {
     const id = c.s(row['id']);
-    if (row['duelTrait'] !== undefined && !['momentum', 'steady', 'breathing', 'reversal'].includes(c.s(row['duelTrait']))) {
+    if(row['duelTrait']==='peerless'&&!(typeof row['duelProcChance']==='number'&&Number.isFinite(row['duelProcChance'])&&row['duelProcChance']>=0&&row['duelProcChance']<=1))c.push('rule','trait','duelProcChance',id,'無雙飛將需要 0–1 的觸發機率');
+    if (row['duelTrait'] !== undefined && !['momentum', 'steady', 'breathing', 'reversal', 'peerless'].includes(c.s(row['duelTrait']))) {
       c.push('rule', 'trait', 'duelTrait', id, '未知的單挑特性');
     }
     c.text(row['nameKey'], 'trait', 'nameKey', id);
     c.text(row['descKey'], 'trait', 'descKey', id);
     checkCost(c, 'trait', row, id);
-    if (c.list(row['effects']).length === 0 && !row['battleTrigger']) {
+    if (c.list(row['effects']).length === 0 && !row['battleTrigger'] && !row['duelTrait']) {
       c.push('rule', 'trait', 'effects', id, '沒有效果的特質是死內容');
     }
   }
