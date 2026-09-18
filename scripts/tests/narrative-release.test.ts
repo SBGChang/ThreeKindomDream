@@ -20,9 +20,9 @@ import {createRng} from '../../src/kernel/rng.js';
 import type {RunState} from '../../src/contracts/core/state.js';
 
 const meta=emptyMeta(),initial=newStorySession(713).current;
-assert.equal(defs.reader('notable').all().length,37);
+assert.equal(defs.reader('notable').all().length,38);
 assert.equal(defs.reader('notable').all().filter(n=>recruited(String(n.notableId),meta,defs)).length,18);
-assert.equal(defs.reader('item').all().length,20);
+assert.equal(defs.reader('item').all().length,21);
 for(const id of ['wei','shu','wu']){const seq=defs.reader('chapterSequence').all().find(s=>s.factionId==='faction:'+id)!;assert.equal(seq.chapters.length,8);assert(seq.chapters.every(id=>defs.reader('chapter').get(String(id)).length===8));}
 // Display values must track the converted training growth, not the legacy integer unit.
 const growthRatio=defs.single('growthRule').economy.legacyBaseRatio;
@@ -62,18 +62,18 @@ assert.equal(s.battlefieldStory.field.mode,'story');const stopped=battle.time;
 for(let i=0;i<100;i++)s.advanceRealtimeCampaign(1/60);assert.equal(battle.time,stopped);
 const restored=Session.restore(wiring,JSON.parse(JSON.stringify(s.current)) as RunState);assert.equal(restored.battlefieldStory!.field.encounter.battle,restored.current.campaign!.realtime);
 restored.pauseRealtimeCampaign(false);s=restored;
-const p=s.battlefieldStory!,reward=Object.values(p.data.nodes).find(n=>n.kind==='reward'&&n.reward.allStats===10)!;assert(reward.kind==='reward');
+const p=s.battlefieldStory!,reward=Object.values(p.data.nodes).find(n=>n.kind==='reward'&&n.reward.allStats===5)!;assert(reward.kind==='reward');
 // Exercise the production reward transaction independently of duel balance.
 p.field.story.granted.push(reward.reward.id);let paid=bankFieldRewards(s.ctx),again=bankFieldRewards(ctx(paid));
 assert.equal(paid.items.count['item:fangtian'],1);assert.equal(again.items.count['item:fangtian'],1);assert(again.earnedUnlocks!.includes('notable:lvbu'));
-assert.equal(paid.attributes.values.war,Math.min(100,s.current.attributes.values.war+10));
+assert.equal(paid.attributes.values.war,Math.min(100,s.current.attributes.values.war+5));
 assert(!recruited('notable:lvbu',paid.metaSnapshot,defs));assert(recruited('notable:lvbu',preserveRecruitment(meta,ctx(paid)),defs));
 
 const trade=itemId('item:trade-pass');const merchant={...initial,campaign:null,items:{...initial.items,count:{[trade]:1}},equipment:{treasure:trade},economy:{...initial.economy,money:1000,chapterCamp:true,market:{chapter:initial.progress.chapter,offers:[{id:'test',itemId:itemId('item:bamboo'),price:120,bought:false}],target:null,fragmentBought:false}}};
 assert.equal(itemPrice(120,ctx(merchant)),108);const bought=buy('test',ctx(merchant));assert(bought.ok);assert.equal(bought.state.economy.money,892);assert.equal(buy('test',ctx(bought.state)).ok,false);
 assert.equal(equip(itemId('item:fangtian'),'weapon',ctx(merchant)),merchant);
 assert.equal(defs.reader('item').get(String(trade)).tiers.length,1);
-console.log('narrative release: 37 recruits / 20 items / fixed routes / actual contact / pause / resume / idempotent rewards / market passed');
+console.log('narrative release: 38 recruits / 21 items / fixed routes / actual contact / pause / resume / idempotent rewards / market passed');
 
 // Fixed chapter replacements and both endings' prerequisites.
 for(const id of ['wei','shu','wu'])assert.equal(defs.reader('notable').all().filter(n=>n.factionId==='faction:'+id).length,12);

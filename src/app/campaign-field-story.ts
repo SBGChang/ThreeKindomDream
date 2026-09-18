@@ -26,7 +26,10 @@ export function prepareFieldStory(ctx:RunContext):RunState {
 }
 export function bankFieldRewards(ctx:RunContext):RunState {
  const c=ctx.state.campaign,p=c?.fieldStory;if(!c||!p)return ctx.state;
- let state=ctx.state;const granted=[...(c.fieldRewards??[])];
+ let state=ctx.state;
+ const marks=p.data.progressMarks;const reached=[...Object.entries(marks?.visited??{}).filter(([id])=>p.field.story.visited.includes(id)),...Object.entries(marks?.rewards??{}).filter(([id])=>p.field.story.granted.includes(id))].map(([,mark])=>mark);
+ if(reached.length)state={...state,story:{...state.story,milestones:[...new Set([...state.story.milestones,...reached])]}};
+ const granted=[...(c.fieldRewards??[])];
  for(const n of Object.values(p.data.nodes)){
   if(n.kind!=='reward'||!p.field.story.granted.includes(n.reward.id)||granted.includes(n.reward.id))continue;
   const r=n.reward;granted.push(r.id);

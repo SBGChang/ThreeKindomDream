@@ -1359,6 +1359,7 @@ export function run(): void {
     it('每個特質與技能至少有一個解鎖來源 —— 否則玩家永遠學不到', () => {
       const taughtTraits = new Set<string>();
       const taughtSkills = new Set<string>();
+      for(const c of defs.reader('storyChapter').all())for(const r of c.afterChallenges??[])if(r.reward.trait)taughtTraits.add(String(r.reward.trait));
       for (const n of defs.reader('notable').all()) {
         for (const tid of n.abilities.traits) taughtTraits.add(String(tid));
         for (const row of n.abilities.skills) taughtSkills.add(String(row.skillId));

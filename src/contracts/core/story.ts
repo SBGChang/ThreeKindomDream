@@ -8,7 +8,15 @@ export type StoryRequirement =
   | { readonly kind:'roster';readonly id:string;readonly present:boolean }
   | { readonly kind:'depth';readonly chapter:string;readonly min:number }
   | { readonly kind: 'choice'; readonly node: string; readonly option: string }
-  | { readonly kind: 'milestone'; readonly id: string };
+  | { readonly kind: 'milestone'; readonly id: string; readonly present?:boolean };
+
+export interface ChapterChallenge {
+ readonly optionalWhen?:readonly StoryRequirement[];
+ readonly id:string;
+ readonly requirements:readonly StoryRequirement[];
+ readonly challenge:import('./event-challenge.js').EventChallengeDef;
+ readonly reward:{readonly allStats:number;readonly gold:number;readonly items:readonly string[];readonly unlocks:readonly string[];readonly trait?:TraitId};
+}
 
 export interface StoryScene {
   readonly id: string;
@@ -51,6 +59,7 @@ export interface StoryMilestone {
 }
 
 export interface StoryChapterDef extends DefHeader {
+  readonly afterChallenges?:readonly ChapterChallenge[];
   readonly legacy?:{readonly nodes:readonly StoryNode[];readonly scenes:readonly StoryScene[]};
   readonly enemyNameKey?:L10nKey;
   readonly companions?:readonly {readonly notableId:string;readonly opening:StoryScene;readonly aftermath:StoryScene;readonly nodes?:readonly StoryNode[];readonly fieldStories?:readonly import('./battle-story.js').BattleStory[]}[];

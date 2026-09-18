@@ -1,7 +1,7 @@
 {
   "packs": [
     {
-      "defCount": 231,
+      "defCount": 234,
       "dir": "core",
       "loadOrder": 0,
       "packId": "pack:core",
@@ -9,7 +9,7 @@
       "version": "0.1.0"
     },
     {
-      "defCount": 123,
+      "defCount": 125,
       "dir": "wei",
       "loadOrder": 10,
       "packId": "pack:wei",

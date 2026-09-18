@@ -2,7 +2,7 @@ import {COMMAND_GROUPS,UNIFIED_OFFICERS} from '../contracts/core/officer-motion.
 import {loadDuelArt,keepFrameInk} from './duel-art.js';
 import {duelActorForName} from '../contracts/core/duel-art.js';
 export {duelActorForName};
-export const LEGACY_COMMANDERS:Readonly<Record<string,string>>={lord:'lord',npc_soldier:'enemy',guojia:'guojia',yujin:'yujin',xiahoudun:'xiahoudun'};
+export const LEGACY_COMMANDERS:Readonly<Record<string,string>>={nanhua:'nanhua',lord:'lord',npc_soldier:'enemy',guojia:'guojia',yujin:'yujin',xiahoudun:'xiahoudun'};
 const commandCache=new Map<string,Promise<HTMLCanvasElement>>();
 /** Includes the five original command atlases so every named actor has gestures. */
 export async function loadOfficerCommand(id:string):Promise<HTMLCanvasElement>{

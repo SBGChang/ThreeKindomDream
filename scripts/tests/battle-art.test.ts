@@ -5,7 +5,7 @@ import {COMMAND_GROUPS,UNIFIED_OFFICERS} from '../../src/contracts/core/officer-
 import {TACTIC_VFX,drawTacticalParticles,drawEvolutionParticles} from '../../src/ui/tactical-particles.js';
 import {createBattle,castSkill,tickBattle,type DemoSkill} from '../../src/app/realtime-battle-model.js';
 import {defs} from './harness.js';
-const legacy=['lord','npc_soldier','guojia','yujin','xiahoudun'];
+const legacy=['lord','npc_soldier','guojia','yujin','xiahoudun','nanhua'];
 assert.equal(new Set([...legacy,...COMMAND_GROUPS.flat(),...UNIFIED_OFFICERS]).size,Object.keys(DUEL_ACTORS).length);
 for(const id of Object.keys(DUEL_ACTORS))assert([...legacy,...COMMAND_GROUPS.flat(),...UNIFIED_OFFICERS].includes(id));
 for(let i=0;i<COMMAND_GROUPS.length;i++){const png=readFileSync('public/art/duel/commands-group-'+i+'-v1.png');assert(png.readUInt32BE(16)>700);assert(png.readUInt32BE(20)>700);}

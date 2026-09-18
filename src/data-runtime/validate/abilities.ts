@@ -75,7 +75,7 @@ export function validateAbilities(c: Ctx): void {
     c.text(row['nameKey'], 'trait', 'nameKey', id);
     c.text(row['descKey'], 'trait', 'descKey', id);
     checkCost(c, 'trait', row, id);
-    if (c.list(row['effects']).length === 0 && !row['battleTrigger'] && !row['duelTrait']) {
+    if (c.list(row['effects']).length === 0 && !row['battleTrigger'] && !row['duelTrait'] && !['growthBonus','meritBonus','affinityBonus'].some(k=>typeof row[k]==='number'&&Number(row[k])>0)) {
       c.push('rule', 'trait', 'effects', id, '沒有效果的特質是死內容');
     }
   }

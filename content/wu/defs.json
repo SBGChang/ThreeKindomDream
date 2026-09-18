@@ -4663,6 +4663,197 @@
     "weight": 100
   },
   {
+    "afterChallenges": [
+      {
+        "challenge": {
+          "ability": 100,
+          "duel": {
+            "enemy": {
+              "comboEnabled": false,
+              "lead": 90,
+              "power": 1,
+              "trait": "peerless",
+              "traitChance": 0.25,
+              "war": 100
+            }
+          },
+          "mode": "duel",
+          "opening": "呂布：我曾夢見在虎牢關與你搏殺，竟敗在你的手下。\n呂布：讓我看看，你如今可有那樣的實力！這次不激起飛將之勢，接招！",
+          "opponent": "lvbu",
+          "opponentName": "呂布",
+          "outcomes": {
+            "draw": "呂布：勝負未分，還不是夢中那場痛快的一戰。",
+            "lose": "呂布：原來……只是一場夢嗎。",
+            "retreat": "呂布：原來……只是一場夢嗎。",
+            "win": "呂布：我開始期待，你真正能與我一戰的那一天了。莫讓這天下再無有趣的對手！\n你獲得四維各 +5、方天化戟與赤兔馬。\n曹操：方才見閣下武藝，將來必有一番作為！這青釭、倚天雙劍與五百金，便作相贈。"
+          }
+        },
+        "id": "chapter:hulao-lvbu",
+        "requirements": [
+          {
+            "id": "notable:lvbu",
+            "kind": "roster",
+            "present": true
+          }
+        ],
+        "reward": {
+          "allStats": 5,
+          "gold": 500,
+          "items": [
+            "item:fangtian",
+            "item:chitu",
+            "item:qinggang",
+            "item:yitian"
+          ],
+          "unlocks": [
+            "notable:lvbu"
+          ]
+        }
+      },
+      {
+        "challenge": {
+          "ability": 95,
+          "debate": {
+            "enemy": {
+              "int": 95,
+              "passives": [],
+              "pol": 95,
+              "special": null
+            }
+          },
+          "mode": "debate",
+          "opening": "南華老仙：徒兒，既已有冠絕天下的武藝，不知你能否成為智勇雙全的天下第一人？\n南華老仙：今日，便與為師論上一論。",
+          "opponent": "nanhua",
+          "opponentName": "南華老仙",
+          "outcomes": {
+            "draw": "南華老仙：未分高下，尚待磨練。",
+            "lose": "南華老仙：今日所見，留待來日細想。",
+            "retreat": "南華老仙：知進知退，亦是一得。",
+            "win": "南華老仙：看來你終於成長到為師期盼的樣子了。\n他輕拍你的肩。你感到心境與身軀一同產生變化。\n獲得四維各 +5、太平要書與特性「天命之人」。"
+          }
+        },
+        "id": "chapter:hulao-nanhua-wise",
+        "requirements": [
+          {
+            "id": "notable:nanhua",
+            "kind": "roster",
+            "present": true
+          },
+          {
+            "kind": "any",
+            "requirements": [
+              [
+                {
+                  "id": "hulao:won",
+                  "kind": "milestone",
+                  "present": true
+                }
+              ],
+              [
+                {
+                  "id": "won:chapter:hulao-lvbu",
+                  "kind": "milestone",
+                  "present": true
+                }
+              ]
+            ]
+          }
+        ],
+        "reward": {
+          "allStats": 5,
+          "gold": 0,
+          "items": [
+            "item:taiping"
+          ],
+          "trait": "trait:tianmingzhiren",
+          "unlocks": [
+            "notable:nanhua"
+          ]
+        }
+      },
+      {
+        "challenge": {
+          "ability": 85,
+          "debate": {
+            "enemy": {
+              "int": 85,
+              "passives": [],
+              "pol": 85,
+              "special": null
+            }
+          },
+          "mode": "debate",
+          "opening": "南華老仙：徒兒，可曾想過，若當初好好學武，今日便有機會扭轉戰局？\n南華老仙：莫困於一途。用頭腦，一樣可以爭天下。來，與為師探討一番。",
+          "opponent": "nanhua",
+          "opponentName": "南華老仙",
+          "outcomes": {
+            "draw": "南華老仙：未分高下，尚待磨練。",
+            "lose": "南華老仙：今日所見，留待來日細想。",
+            "retreat": "南華老仙：知進知退，亦是一得。",
+            "win": "南華老仙：天下何止一條道路。這部太平要書，便交予你了。\n獲得四維各 +5、太平要書，解鎖南華老仙。"
+          }
+        },
+        "id": "chapter:hulao-nanhua",
+        "optionalWhen": [
+          {
+            "id": "notable:nanhua",
+            "kind": "roster",
+            "present": false
+          }
+        ],
+        "requirements": [
+          {
+            "kind": "any",
+            "requirements": [
+              [
+                {
+                  "id": "notable:nanhua",
+                  "kind": "roster",
+                  "present": true
+                },
+                {
+                  "id": "hulao:won",
+                  "kind": "milestone",
+                  "present": false
+                },
+                {
+                  "id": "won:chapter:hulao-lvbu",
+                  "kind": "milestone",
+                  "present": false
+                }
+              ],
+              [
+                {
+                  "id": "notable:nanhua",
+                  "kind": "roster",
+                  "present": false
+                },
+                {
+                  "id": "notable:lvbu",
+                  "kind": "roster",
+                  "present": false
+                },
+                {
+                  "id": "hulao:challenged",
+                  "kind": "milestone",
+                  "present": false
+                }
+              ]
+            ]
+          }
+        ],
+        "reward": {
+          "allStats": 5,
+          "gold": 0,
+          "items": [
+            "item:taiping"
+          ],
+          "unlocks": [
+            "notable:nanhua"
+          ]
+        }
+      }
+    ],
     "aftermaths": [
       {
         "requirements": [],

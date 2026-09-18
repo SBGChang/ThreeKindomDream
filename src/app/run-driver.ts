@@ -25,6 +25,7 @@ export function driveRun(s: Session, policy: RunPolicy, options:{battle?:'legacy
   let actions = 0;
   const depths: number[] = [];
   for (let guard = 0; guard < 1000 && !s.isOver; guard++) {
+    if(s.current.eventChallenge?.source==='chapter'){playEventChallenge(s,0);continue;}
     if(s.needsChapterCamp){s.continueChapter();continue;}
     if (s.needsEndingChoice) {
       const ending = s.storyEndingOptions()[0];

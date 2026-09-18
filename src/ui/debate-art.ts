@@ -21,7 +21,7 @@ function loadDebateActor(id:string):Promise<HTMLCanvasElement>{
    const pixels=ctx.getImageData(0,0,im.width,im.height),d=pixels.data;
    for(let i=0;i<d.length;i+=4){const r=d[i]!,g=d[i+1]!,b=d[i+2]!;if(r>100&&b>100&&g<Math.min(r,b)*.65){const a=Math.max(0,Math.min(1,(g/Math.min(r,b)-.15)/.5));d[i+3]=Math.round(d[i+3]!*a);if(a>0){d[i]=Math.max(0,(r-255*(1-a))/a);d[i+1]=Math.min(255,g/a);d[i+2]=Math.max(0,(b-255*(1-a))/a);}}}
    ctx.putImageData(pixels,0,0);
-   resolve(repackOfficer(raw,4,8,Array.from({length:32},(_,i)=>i),284,260));
+   resolve(repackOfficer(raw,4,8,Array.from({length:32},(_,i)=>id==='nanhua'&&i>=28?0:i),284,260));
   }catch(error){reject(error);}};im.src='./'+source;
  });cache.set(id,promise);promise.catch(()=>cache.delete(id));return promise;
 }

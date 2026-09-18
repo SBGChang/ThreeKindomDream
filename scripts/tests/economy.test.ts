@@ -353,7 +353,7 @@ export function run() {
         d = defs
           .reader('item')
           .all()
-          .find((d) => d.perRunCap === 1)!;
+          .find((d) => d.perRunCap === 1 && d.tiers.length > 1)!;
       const first = item.acquire(d.itemId, s.ctx, 'market').state;
       ok(
         item.canAcquire(d.itemId, { ...s.ctx, state: first }),

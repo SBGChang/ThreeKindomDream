@@ -11,17 +11,17 @@ import { storyPages } from './story-presentation.js';
 import './event-dialogue.css';
 
 /** The story director only presents text; all durable choices remain Session commands. */
-export function StoryDialogue({ s, source, onDone }: { s: Session; source: StoryScene | StoryNode; onDone: (option?: string) => void }): React.ReactElement {
+export function StoryDialogue({ s, source, onDone }: { s?: Session; source: StoryScene | StoryNode; onDone: (option?: string) => void }): React.ReactElement {
   const setHeader = useContext(DialogueHeaderContext);
   const title = t(source.titleKey);
   useLayoutEffect(() => { setHeader({ title, kind: '主線劇情', rarity: 0 }); return () => setHeader(null); }, [setHeader, title]);
   const root = useRef<HTMLDivElement>(null), completed = useRef(false);
   const [index, setIndex] = useState(0), [choosing, setChoosing] = useState(false), [answer, setAnswer] = useState<string>();
   const [reduced, setReduced] = useState(() => matchMedia('(prefers-reduced-motion: reduce)').matches);
-  const [profile] = useState(() => careerPresentation('lead', s.current.career));
+  const [profile] = useState(() => careerPresentation('lead', s?.current.career ?? { civil: 1, martial: 1 }));
   const entries = useMemo(() => [0, 1].map(i => ({ actor:i, duration:650, path:[{x:i===0?-25:125},actorHome(i,2)] })), []);
-  const pages = useMemo(() => [...storyPages(source, t),
-    ...('teachings' in source ? teachingRewardLines(s.current, s.previewStoryTeachings(source), defs).map(row => ({
+  const pages = useMemo(() => [...storyPages(source, key => s ? s.storyText(key) : t(key)),
+    ...(s && 'teachings' in source ? teachingRewardLines(s.current, s.previewStoryTeachings(source), defs).map(row => ({
       speaker: null, text: `${row.label} +${row.amount ?? 0}　${row.note ?? ''}`,
     })) : []),
   ], [source, s]);

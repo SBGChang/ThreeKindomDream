@@ -10,7 +10,7 @@ export const emptyStory = (enabled = true): StoryState => ({
   enabled, choices: {}, milestones: [], depths: {}, scenes: [], seenScenes: [], awaitingChapterClose: false, awaitingEndingChoice: false,
 });
 
-export const meetsStory = (requirements: readonly StoryRequirement[], ctx: RunContext): boolean => requirements.every(r=>r.kind==='any'?r.requirements.some(group=>meetsStory(group,ctx)):r.kind==='choice'?ctx.state.story.choices[r.node]===r.option:r.kind==='roster'?rosterIds(ctx).some(id=>String(id)===r.id)===r.present:r.kind==='depth'?(ctx.state.story.depths[r.chapter]??0)>=r.min:ctx.state.story.milestones.includes(r.id));
+export const meetsStory = (requirements: readonly StoryRequirement[], ctx: RunContext): boolean => requirements.every(r=>r.kind==='any'?r.requirements.some(group=>meetsStory(group,ctx)):r.kind==='choice'?ctx.state.story.choices[r.node]===r.option:r.kind==='roster'?rosterIds(ctx).some(id=>String(id)===r.id)===r.present:r.kind==='depth'?(ctx.state.story.depths[r.chapter]??0)>=r.min:ctx.state.story.milestones.includes(r.id)===(r.present??true));
 export const chapterStory=(ctx:RunContext):StoryChapterDef|null=>{
  if(!ctx.state.story.enabled)return null;
  const d=ctx.defs.reader('storyChapter').all().find(d=>d.chapterId===ctx.state.progress.chapterId);

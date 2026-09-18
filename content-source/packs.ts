@@ -1,3 +1,4 @@
+import {nanhua,nanhuaTraits,nanhuaTexts,nanhuaTrial,taiping} from './nanhua.js';
 import {withEventChallenge,challengeTexts} from './event-challenges.js';
 import {lvbuTrial,lvbuTrialTexts} from './lvbu-trial.js';
 import { triggeredTexts } from './core/abilities/triggered.js';
@@ -78,7 +79,7 @@ const corePack: AuthoredPack = {
     ...trainingActions, trainingCurve, eventYieldCurve, attrLine,
     ...affinityStages, affinityCurve, linkBonus, notableStar,
     attributeCap, gameRules, checkRule, growthRule, battleRule,
-    ...coreTraits, ...coreSkills,
+    ...coreTraits, ...nanhuaTraits, taiping, ...coreSkills,
     ...campEnemies, ...campCampaigns,
     ...talents, ...shopItems, settlementFormula,
     ...paramPools, ...dcCurves,
@@ -91,7 +92,7 @@ const corePack: AuthoredPack = {
   ],
   effects: coreEffects,
   // GREYBOX：文案暫時全部掛在 core。正式版應隨各 pack 拆分（06 §2.1）。
-  texts: {...zhTW,...lvbuTrialTexts,...challengeTexts,...equipmentTexts,...lvbuTexts,...expansionTexts,...tacticTexts,...triggeredTexts,...earlyTexts,...variedTexts,...dialogueTexts,...mainStoryTexts},
+  texts: {...zhTW,...nanhuaTexts,...lvbuTrialTexts,...challengeTexts,...equipmentTexts,...lvbuTexts,...expansionTexts,...tacticTexts,...triggeredTexts,...earlyTexts,...variedTexts,...dialogueTexts,...mainStoryTexts},
 };
 
 const weiPack: AuthoredPack = {
@@ -100,10 +101,10 @@ const weiPack: AuthoredPack = {
   requiredPacks: [CORE],
   loadOrder: 10,
   defs: [
-    ...weiNotables.map(withTactics).map(withRecruitment),withRecruitment(lvbu), weiSuperiorPool,
+    ...weiNotables.map(withTactics).map(withRecruitment),withRecruitment(lvbu),nanhua, weiSuperiorPool,
     weiFaction,
     ...weiDialogueEvents,
-    withDialogue(lvbuTrial),
+    withDialogue(lvbuTrial),withDialogue(nanhuaTrial),
     ...weiChapters,...extraWeiChapters, {...weiSequence,chapters:[...weiSequence.chapters,...extraWeiChapters.map(c=>c.chapterId)]},
     ...expandedWei,...expansionEndings.filter(e=>e.factionId==='faction:wei'),
     ...weiEnemies, ...weiCampaigns,...extraWeiCampaigns,

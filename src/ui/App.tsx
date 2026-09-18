@@ -1,3 +1,4 @@
+import {EventChallengeView} from './EventChallengeView.js';
 import { useCallback, useEffect, useState } from 'react';
 import type { Session } from '../app/session.js';
 import type { MetaState } from '../contracts/core/state.js';
@@ -62,6 +63,7 @@ export function App({ preview = false }: { preview?: boolean }): React.ReactElem
       return <ScreenDestiny meta={meta} {...(session ? { onResume: () => setAtMainMenu(false) } : {})} onGo={setMetaView} onReset={() => { if(preview){setSession(null);setMeta(emptyMeta());return;} try { resetMeta(); saveRun(null, []); setMeta(loadMeta()); bump(); } catch { setSaveNotice('無法清除存檔'); } }} />;
     }
     if (replay) return <CampaignJourney s={session} bump={bump} onDone={() => { setReplay(false); bump(); }} />;
+    if(session.current.eventChallenge?.source==='chapter')return <EventChallengeView key={session.current.eventChallenge.eventId} session={session} onChange={bump} onDone={()=>{session.finishChapterChallenge();bump();}}/>;
     if (session.storyScene || session.needsEndingChoice) return <PendingStory s={session} bump={bump}/>;
     if (session.isOver) return <ScreenEnd s={session} meta={meta} onSettled={m => { commitMeta(m); setSession(null); home(); }} />;
     if (session.needsChapterCamp && runView==='run') return <ScreenCamp s={session} bump={bump} onLearn={learn} onMarket={()=>setRunView('market')}/>;

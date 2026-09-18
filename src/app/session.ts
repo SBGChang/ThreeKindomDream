@@ -1,3 +1,5 @@
+import {stageChallenge} from '../contracts/core/event-challenge.js';
+import {nextChapterChallenge,settleChapterChallenge} from './chapter-challenges.js';
 import {createEventChallenge,enterEventChallenge,finishChallenge,answerEventDuel,answerEventDebate,tickEventChallenge,continueEventChallenge} from './event-challenge.js';
 import {preserveRecruitment,earnedRecruits} from '../modules/recruitment.js';
 import {prepareFieldStory,bankFieldRewards} from './campaign-field-story.js';
@@ -135,6 +137,17 @@ export class Session {
    */
   get pendingEvent(): EventOffer | null { return commission.head(this.ctx); }
 
+  storyText(key: string): string {
+    const names = this.state.roster.members.filter(m => m.origin === 'companion')
+      .map(m => this.w.defs.text(String(this.w.defs.reader('notable').get(String(m.notableId)).nameKey)));
+    const invited = this.state.config.designatedCompanions.map(id =>
+      this.w.defs.text(String(this.w.defs.reader('notable').get(String(id)).nameKey)));
+    return this.w.defs.text(key).replaceAll('{companions}', names.join('、'))
+      .replaceAll('{invitation}', invited.length
+        ? `你親口邀來的${invited.join('、')}，已應了這一夢的約；相逢之後，可別辜負這份信任。`
+        : '這是今夜與你有緣之人。此刻或許陌生，往後卻可能生死相託。');
+  }
+
   get storyScene() { return story.pendingScene(this.ctx); }
   previewStoryTeachings(scene: import('../contracts/core/story.js').StoryScene): RunState {
     return story.grantStoryTeachings(scene, this.ctx);
@@ -163,8 +176,8 @@ export class Session {
   acknowledgeStory(sceneId: string): void {
     this.state = story.acknowledgeStory(sceneId, this.ctx);
     if (!this.storyScene && story.awaitingChapterClose(this.ctx)) {
-      this.state = story.finishStoryChapter(this.ctx);
-      this.state = economy.setCamp(true, this.ctx);
+      this.state = nextChapterChallenge(this.ctx);
+      if(!this.state.eventChallenge){this.state = story.finishStoryChapter(this.ctx);this.state = economy.setCamp(true, this.ctx);}
     }
   }
 
@@ -265,14 +278,15 @@ export class Session {
     if(!option?.challenge||this.money<(option.moneyCost??0))throw Error('事件挑戰條件不足');
     this.state={...this.state,eventChallenge:createEventChallenge(String(offer.eventDefId),optionIndex,option.challenge,this.ctx)};
   }
+  finishChapterChallenge():void {this.state=settleChapterChallenge(this.ctx);if(!this.state.eventChallenge){this.state=story.finishStoryChapter(this.ctx);this.state=economy.setCamp(true,this.ctx);}}
   enterEventChallenge():void {const s=this.state.eventChallenge;if(s)enterEventChallenge(s,this.ctx,this.w.fx);}
   configureEventChallenge(skills:string[],infantryPercent:number):void {
     const s=this.state.eventChallenge;if(!s||s.phase!=='prep')throw Error('尚未進入整備');
-    if(skills.length>3||new Set(skills).size!==skills.length||skills.some(id=>!this.state.abilities.skills.some(v=>String(v)===id))||!Number.isInteger(infantryPercent)||infantryPercent<0||infantryPercent>100)throw Error('整備配置無效');
+    if(skills.length>3||new Set(skills).size!==skills.length||skills.some(id=>![...this.state.abilities.skills,...(stageChallenge(s).loanSkills??[])].some(v=>String(v)===id)||stageChallenge(s).strategyOnly&&!['magic','debuff'].includes(this.w.defs.reader('skill').get(id).action.kind))||!Number.isInteger(infantryPercent)||infantryPercent<0||infantryPercent>100)throw Error('整備配置無效');
     s.skills=[...skills];s.infantryPercent=infantryPercent;
   }
   pauseEventChallenge(paused:boolean):void {const s=this.state.eventChallenge;if(s)s.paused=paused;}
-  retreatEventChallenge():void {const s=this.state.eventChallenge;if(s&&(s.phase==='playing'||s.definition.stages&&(s.phase==='opening'||s.phase==='intermission')))finishChallenge(s,'retreat');}
+  retreatEventChallenge():void {const s=this.state.eventChallenge;if(s&&(s.phase==='playing'||s.phase==='opening'&&s.canDecline||s.definition.stages&&(s.phase==='opening'||s.phase==='intermission')))finishChallenge(s,'retreat');}
   continueEventChallenge():void {const s=this.state.eventChallenge;if(s)continueEventChallenge(s);}
   answerEventDuel(choice:number|null):boolean {const s=this.state.eventChallenge;return !!s&&answerEventDuel(s,choice);}
   answerEventDebate(side:RallySide,action:RallyAction):boolean {const s=this.state.eventChallenge;return !!s&&answerEventDebate(s,side,action);}

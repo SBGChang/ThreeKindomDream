@@ -1,3 +1,4 @@
+import {playEventChallenge} from '../src/app/event-challenge-driver.js';
 /** Genuine in-memory journeys. No state injection, rerolls, UI storage or synthetic stars. */
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -117,7 +118,8 @@ function runLife(meta:MetaState, runSeed:number, mode:string, detailed:boolean) 
     if(candidates[0] && s.current.stories?.tracked!==candidates[0].notableId){s.trackStory(candidates[0].notableId);record('track',candidates[0].notableId);}
   };
   for(let guard=0;guard<3000&&!s.isOver;guard++){
-    if(s.storyScene){
+    if(s.current.eventChallenge?.source==='chapter'){playEventChallenge(s,0);continue;}
+  if(s.storyScene){
       const scene=s.storyScene, before=s.money, levels=s.current.abilities.levels;
       s.acknowledgeStory(scene.id);scenes++;if(s.money>before)storyPaid++;
       record('scene',{id:scene.id,beats:scene.beats?.length??1,teachings:scene.teachings,levelsBefore:levels,levelsAfter:s.current.abilities.levels,moneyDelta:s.money-before});continue;

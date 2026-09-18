@@ -15,3 +15,26 @@
 .game-stage .dream-entry.entry-tabbed .entry-grades button{height:56px}
 .game-stage .dream-entry.entry-tabbed .entry-grades button::before{background-size:145% 100%}
 .game-stage .dream-entry.entry-tabbed .entry-grades button[aria-pressed=true]::before{filter:sepia(1) saturate(2.5) hue-rotate(65deg) brightness(.66)}
+
+.entry-companions { margin: 12px 0; padding: 14px 20px; border: 1px solid #806644; background: #171510ee; color: #eee0c6; }
+.entry-companions-guide { display: flex; align-items: center; gap: 16px; }
+.entry-companions-guide > :first-child { width: 76px; height: 100px; flex: 0 0 76px; overflow: hidden; }
+.entry-companions h2 { margin: 0 0 6px; font-size: 18px; }
+.entry-companions p { margin: 0 0 8px; line-height: 1.7; }
+.entry-companion-options { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.entry-companion-options button { padding: 8px 16px; }
+.entry-companion-options button[aria-pressed=true] { outline: 2px solid #d9b565; background: #514126; }
+
+.companion-entry { display:flex; flex-direction:column; padding:32px; background:linear-gradient(135deg,#20271f,#171510); }
+.companion-entry .entry-companions { flex:1; min-height:0; overflow:auto; margin:0 0 16px; padding:28px; }
+.companion-entry .entry-companions-guide > :first-child { width:150px; height:220px; flex-basis:150px; object-fit:contain; }
+.companion-entry footer { display:flex; justify-content:space-between; gap:16px; }
+.companion-entry footer button { padding:12px 22px; }
+
+.game-stage .companion-entry .entry-companions { display:flex; flex-direction:column; justify-content:center; background:linear-gradient(135deg,#18251ff5,#171510f2); }
+.game-stage .companion-entry .entry-companions-guide { gap:28px; max-width:1000px; margin:0 auto; }
+.game-stage .companion-entry .entry-companions-guide > :first-child { width:220px; height:300px; flex-basis:220px; }
+.game-stage .companion-entry h2 { color:#efd49b; font-size:30px; margin-bottom:20px; }
+.game-stage .companion-entry p { color:#fff0d6; font-size:24px; line-height:1.8; }
+.game-stage .companion-entry small { color:#ccb995; font-size:16px; }
+.game-stage .companion-entry .entry-companion-options { justify-content:center; margin-top:24px; }

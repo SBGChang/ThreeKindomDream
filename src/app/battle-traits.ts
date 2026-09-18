@@ -7,6 +7,17 @@ function flash(s:BattleState,t:BattleTrait){(s.traitMarks??={})['vfx:'+t.id+':'+
 function gate(s:BattleState,key:string,seconds:number){const m=s.traitMarks??={};if((m[key]??-1)>s.time)return false;m[key]=s.time+seconds;return true;}
 const army=(s:BattleState)=>s.units.filter(u=>u.side==='ally'&&available(u));
 export function traitCast(s:BattleState,skill:DemoSkill):void {
+ if(['water','fire','rocks'].includes(skill.mechanic??''))for(const t of owners(s,'nature')){
+  const marks=s.traitMarks??={},key='nature:'+t.owner+':';
+  marks[key+skill.mechanic]=1;marks[key+'damage:'+skill.mechanic]=skill.damage;
+  if(['water','fire','rocks'].every(m=>marks[key+m]===1)){
+   const damage=['water','fire','rocks'].reduce((n,m)=>n+(marks[key+'damage:'+m]??0),0)/3;
+   s.followupSkill={...skill,id:'nature-lightning',owner:t.owner,name:'落雷',mechanic:'lightning',cost:0,cd:0,key:'',damage:Math.round(damage*1.5),description:'水火山石引動天雷，攻擊兵力最多的敵方部隊。'};
+   for(const m of ['water','fire','rocks'])delete marks[key+m];
+   flash(s,t);
+  }
+  break;
+ }
  for(const t of owners(s,'frugal',skill.owner))if(battleRoll(s)<.25*potency(t)){s.supply=Math.min(s.supplyMax,s.supply+skill.cost*.3);flash(s,t);break;}
 }
 export function traitKill(s:BattleState,u:Troop,owner?:string):void {

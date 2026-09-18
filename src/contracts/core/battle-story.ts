@@ -20,6 +20,7 @@ export type StoryNode =
  | {kind:'reward';reward:StoryReward;next:string}
  | {kind:'end';title:string;text:string};
 export interface BattleStory {
+ progressMarks?:{visited:Record<string,string>;rewards:Record<string,string>};
  checkBonuses?:Record<string,number>;
  requirements?: readonly import('./story.js').StoryRequirement[];
  returnToBattle?:boolean;

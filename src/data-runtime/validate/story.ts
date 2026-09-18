@@ -1,4 +1,5 @@
 import type { Ctx, Rec } from './types.js';
+import {validEventChallengeDef} from '../event-challenge-validation.js';
 
 export function validateStory(c: Ctx): void {
   const checkBeats = (source: Rec, id: string) => {
@@ -16,6 +17,15 @@ export function validateStory(c: Ctx): void {
   const storyOwners = new Set<string>();
   for (const d of c.rows('storyChapter')) {
     const id = c.s(d['id']), chapter = c.s(d['chapterId']);
+    const challengeIds=new Set<string>();
+    for(const row of c.arr(d['afterChallenges'])){
+      const rid=c.s(row['id']),reward=row['reward'] as Rec;
+      if(!rid||challengeIds.has(rid)||!validEventChallengeDef(row['challenge']))c.push('schema','story','afterChallenges',id,'章末挑戰 ID 或對決設定無效');
+      challengeIds.add(rid);milestones.add('resolved:'+rid);milestones.add('won:'+rid);
+      if(!reward||!Number.isFinite(reward['allStats'])||c.n(reward['allStats'])<0||!Number.isSafeInteger(reward['gold'])||c.n(reward['gold'])<0)c.push('schema','story','afterChallenges.reward',id,'章末獎勵數值無效');
+      for(const [field,kind,key] of [['items','item','itemId'],['unlocks','notable','notableId']] as const)for(const value of c.list(reward?.[field]))if(!c.rows(kind).some(r=>r[key]===value))c.push('reference','story','afterChallenges.reward',id,'章末獎勵來源不存在');
+      if(reward?.['trait']&&!c.rows('trait').some(t=>t['traitId']===reward['trait']))c.push('reference','story','afterChallenges.reward',id,'特性不存在');
+    }
     if (!chapters.has(chapter)) c.push('reference', 'story', 'chapterId', id, '主線章節不存在');
     if (storyOwners.has(chapter)) c.push('rule', 'story', 'chapterId', id, '每章只能一份主線');
     storyOwners.add(chapter);
@@ -78,6 +88,7 @@ export function validateStory(c: Ctx): void {
       for (const key of c.list(v['briefKeys'])) c.text(key, 'story', 'briefKeys', id);
     }
   }
+  for(const d of c.rows('storyChapter'))for(const ch of [d,...c.arr(d['variants']).map(v=>v['chapter'] as Rec)])for(const st of c.arr(ch['fieldStories'])){const marks=st['progressMarks'] as Rec;for(const kind of ['visited','rewards'])for(const id of Object.values((marks?.[kind]??{}) as Record<string,string>))milestones.add(id);}
   const check = (reqs: unknown, id: string): void => {
     if (!Array.isArray(reqs)) { c.push('schema', 'story', 'requirements', id, '主線條件須為陣列'); return; }
     for (const r of c.arr(reqs)) {
@@ -92,6 +103,7 @@ export function validateStory(c: Ctx): void {
     }
   };
   for (const d of c.rows('storyChapter')) {
+    for(const row of c.arr(d['afterChallenges'])){check(row['requirements'],c.s(d['id']));if(row['optionalWhen'])check(row['optionalWhen'],c.s(d['id']));}
     for (const row of [...c.arr(d['milestones']), ...c.arr(d['aftermaths']), ...c.arr(d['battleVariants'])])
       check(row['requirements'], c.s(d['id']));
   }

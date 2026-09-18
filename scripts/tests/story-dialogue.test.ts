@@ -1,5 +1,8 @@
+import { emptyDraft } from '../../src/modules/dream-entry.js';
+import { seed, factionId } from '../../src/contracts/core/ids.js';
+import { driveRun } from '../../src/app/run-driver.js';
 import { describe, eq, it, ok, throws } from '../lib/tinytest.js';
-import { defs, newStorySession, wiring } from './harness.js';
+import { defs, newStorySession, wiring, META } from './harness.js';
 import { Session } from '../../src/app/session.js';
 import { migrateStoryRun } from '../../src/app/story-save.js';
 import { storyPages } from '../../src/ui/story-presentation.js';
@@ -19,8 +22,36 @@ export function run(): void {
         }
       }
       const s = newStorySession(32), opening = s.storyScene!;
-      eq(storyPages(opening,key=>defs.text(key)).map(p=>p.speaker), [null,'阿禾',null,'皇甫嵩']);
+      eq(storyPages(opening,key=>defs.text(key)).filter(p=>p.speaker).map(p=>p.speaker), ['南華老仙','南華老仙','阿禾','皇甫嵩']);
       throws(()=>s.selectSlot(0),'開場不可被固定行動略過');
+    });
+    it('南華報出真實同行者；指定故人與讀檔不會另抽人選', () => {
+      const first = newStorySession(80);
+      const id = first.current.roster.members[0]!.notableId;
+      const meta = {...META, notableCodex: {[String(id)]: {star: 2, fragments: 0, completedWith: true}}};
+      const s = Session.start(wiring, meta, {...emptyDraft(meta, defs), designatedCompanions:[id]}, seed(81));
+      const rendered = storyPages(s.storyScene!, key=>s.storyText(key)).map(p=>p.text).join('');
+      eq(s.current.roster.members.length, 3);
+      for (const member of s.current.roster.members) ok(rendered.includes(defs.text(String(defs.reader('notable').get(String(member.notableId)).nameKey))), '報出每一位實際同行者');
+      ok(rendered.includes('你親口邀來的'), '指定人選有專屬回應');
+      ok(!rendered.includes('{'), '替換所有動態文案');
+      const restored = Session.restore(wiring, migrateStoryRun(structuredClone(s.current),4,defs));
+      eq(storyPages(restored.storyScene!, key=>restored.storyText(key)), storyPages(s.storyScene!, key=>s.storyText(key)));
+      restored.acknowledgeStory(restored.storyScene!.id);
+      eq(Session.restore(wiring,migrateStoryRun(restored.current,4,defs)).storyScene,null);
+    });
+    it('魏蜀吳每一章都會實際播放開場且只播放一次', () => {
+      for (const slug of ['wei','shu','wu']) {
+        const faction = factionId('faction:'+slug), s = newStorySession(83);
+        driveRun(s, {chooseFaction:()=>faction,chooseSlot:()=>0,chooseOption:()=>0,spend:()=>{},chooseLoadout:()=>({skills:[],commanders:[]}),chooseEngage:()=>false});
+        const sequences = defs.reader('chapterSequence').all().filter(c=>c.factionId===null||c.factionId===faction);
+        for (const id of sequences.flatMap(c=>c.chapters)) {
+          const root=defs.reader('storyChapter').all().find(c=>c.chapterId===id)!;
+          const variants=[root,...(root.variants??[]).map(v=>v.chapter)];
+          const openings=variants.flatMap(c=>[c.opening.id,...(c.companions??[]).map(p=>p.opening.id)]);
+          eq(s.current.story.seenScenes.filter(id=>openings.includes(id)).length,1,'章節 '+id);
+        }
+      }
     });
     it('主線佔人物事件位置，委託仍先結算，回答不另耗回合', () => {
       const s = newStorySession(77);

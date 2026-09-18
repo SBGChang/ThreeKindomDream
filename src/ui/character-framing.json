@@ -548,5 +548,15 @@
       "width": 0.33,
       "height": 0.19
     }
+  },
+  "nanhua": {
+    "source": "art/characters-v2/nanhua.png",
+    "generation": "nanhua-style-matched",
+    "face": {
+      "x": 0.405,
+      "y": 0.267,
+      "width": 0.235,
+      "height": 0.125
+    }
   }
 }

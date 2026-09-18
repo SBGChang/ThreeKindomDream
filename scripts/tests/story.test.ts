@@ -1,3 +1,4 @@
+import {playEventChallenge} from '../../src/app/event-challenge-driver.js';
 import { Session } from '../../src/app/session.js';
 import { driveRun } from '../../src/app/run-driver.js';
 import { migrateStoryRun } from '../../src/app/story-save.js';
@@ -16,6 +17,7 @@ function pickStory(s: Session, choices: Readonly<Record<string, string>>): void 
 }
 function acknowledge(s: Session): void {
   while (s.storyScene) s.acknowledgeStory(s.storyScene.id);
+  while(s.current.eventChallenge?.source==='chapter')playEventChallenge(s,0);
 }
 function march(s: Session, choices: Readonly<Record<string, string>>): void {
   if (s.storyScene) { acknowledge(s); return; }
@@ -68,7 +70,7 @@ export function run(): void {
       eq(Object.keys(s.current.story.choices).length, 18);
       eq(s.current.story.seenScenes.filter(id => id.endsWith('.opening')).length, 9);
       eq(new Set(s.current.story.seenScenes).size, s.current.story.seenScenes.length);
-      eq(s.current.story.milestones, []);
+      eq(s.current.story.milestones.filter(id=>!id.startsWith('resolved:')&&!id.startsWith('won:')), []);
       ok(s.isOver, '保底結局應可達');
       const result1 = s.settle(META), result2 = s.settle(result1.meta);
       eq(result2.pointsGained, 0); eq(result2.meta, result1.meta);
@@ -85,14 +87,14 @@ export function run(): void {
       ok(!s.canAdvance(), '主線尚未回答必須擋住回合');
       s.chooseStory('S7.B', 'pact');
       throws(() => s.chooseStory('S7.B', 'handover'), '不得重答');
-      eq(s.current.story.milestones, []);
+      eq(s.current.story.milestones.filter(id=>!id.startsWith('resolved:')&&!id.startsWith('won:')), []);
       ok(s.canAdvance(), '委託與主線清完才推進');
     });
     it('沒有前置，戰役情境不冒充救關羽，五關也不會誤授改命', () => {
       const s = fifthStage(atCampaign('jingzhou', { ...readyChoices, 'S4.A': 'position' }));
       ok(defs.text(String(s.campaignDef().stages[6]!.briefKey)).includes('退軍'), '準備不足應為守岸情境');
       ok(s.engage().cleared, 'fixture 第五關應取勝');
-      eq(s.current.story.milestones, []);
+      eq(s.current.story.milestones.filter(id=>!id.startsWith('resolved:')&&!id.startsWith('won:')), []);
     });
     it('第五關救出，讀檔後第六關敗退，關羽仍在而深度仍是五', () => {
       let s = fifthStage(atCampaign('jingzhou'));
@@ -139,7 +141,7 @@ export function run(): void {
       throws(() => s.chooseStoryEnding('ending:chancellor'), '不能越權指定結局');
       s.chooseStoryEnding('ending:shu.dawn');
       eq(String(s.current.ending?.endingId), 'ending:shu.dawn');
-      eq(s.current.story.milestones.length, 2);
+      eq(s.current.story.milestones.filter(id=>!id.startsWith('resolved:')&&!id.startsWith('won:')).length, 2);
       throws(() => s.chooseStoryEnding('ending:shu.reunion'), '不得二次結局');
     });
     it('v3 只補明示停用的敘事狀態；v4 的未知選項與異常深度拒載', () => {

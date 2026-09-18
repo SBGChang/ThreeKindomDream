@@ -1,4 +1,5 @@
 // ⑲ 名士局內狀態 · 變更操作（需要 RNG 者收 TurnContext）。
+import {progressionBonus} from './progression-bonus.js';
 import type { RunContext, TurnContext } from '../contracts/core/context.js';
 import type { NotableId } from '../contracts/core/ids.js';
 import type { NotableTarget } from '../contracts/core/effects.js';
@@ -157,7 +158,7 @@ export function addAffinity(id:NotableId,amount:number,ctx:RunContext,interactio
  return withRoster(ctx,ctx.state.roster.members.map(m=>{
   if(m.notableId!==id)return m;
   const prior=m.lastGainTurn===turn?(m.gainedThisTurn??0):0;
-  const gain=Math.max(0,Math.min(amount,economyRule(ctx).affinityTurnCap-prior));
+  const gain=Math.max(0,Math.min(amount > 0 ? amount + progressionBonus('affinityBonus',ctx) : amount,economyRule(ctx).affinityTurnCap-prior));
   return {...m,affinity:Math.min(maxAffinity(ctx),m.affinity+gain),lastGainTurn:turn,gainedThisTurn:prior+gain,
    interactionTurns:interaction?[...new Set([...(m.interactionTurns??[]),turn])]:(m.interactionTurns??[])};
  }));

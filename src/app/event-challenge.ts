@@ -1,3 +1,4 @@
+import {stageChallenge} from '../contracts/core/event-challenge.js';
 import type { RunContext } from '../contracts/core/context.js';
 import type { EventChallengeState,EventChallengeDef,ChallengeOutcome } from '../contracts/core/event-challenge.js';
 import type { EffectResolver } from '../modules/effect.js';
@@ -22,8 +23,8 @@ export function createEventChallenge(eventId:string,option:number,definition:Eve
 }
 export function enterEventChallenge(s:EventChallengeState,ctx:RunContext,fx:EffectResolver):void {
  if(s.phase!=='opening'&&s.phase!=='prep')return;
- const d=s.definition,attr=(a:'lead'|'war'|'int'|'pol')=>statQuery.attr(a,ctx);
- if(d.mode==='battle'&&s.phase==='opening'){s.phase='prep';return;}
+ const d=stageChallenge(s),attr=(a:'lead'|'war'|'int'|'pol')=>statQuery.attr(a,ctx);
+ if(d.mode==='battle'&&s.phase==='opening'){s.skills=(d.loanSkills??s.skills).filter(id=>!d.strategyOnly||['magic','debuff'].includes(ctx.defs.reader('skill').get(id).action.kind)).slice(0,3);s.phase='prep';return;}
  if(d.mode==='duel'){
   const enemy=d.duel?.enemy??{war:d.ability,lead:d.ability,trait:'none' as const};
   const stage=d.stages?.[s.stage??0];
@@ -33,7 +34,7 @@ export function enterEventChallenge(s:EventChallengeState,ctx:RunContext,fx:Effe
   const enemy=d.debate?.enemy??{...rallyProfile(d.opponent).build,int:d.ability,pol:d.ability};
   s.rally=createRally({...d.debate?.ally,int:attr('int'),pol:attr('pol'),passives:d.debate?.ally?.passives??[]},enemy,s.seed);
  }else{
-  if(s.skills.length>3||new Set(s.skills).size!==s.skills.length||s.skills.some(id=>!ctx.state.abilities.skills.some(v=>String(v)===id)))throw Error('技能配置無效');
+  if(s.skills.length>3||new Set(s.skills).size!==s.skills.length||s.skills.some(id=>![...ctx.state.abilities.skills,...(d.loanSkills??[])].some(v=>String(v)===id)||d.strategyOnly&&!['magic','debuff'].includes(ctx.defs.reader('skill').get(id).action.kind)))throw Error('技能配置無效');
   if(!Number.isInteger(s.infantryPercent)||s.infantryPercent<0||s.infantryPercent>100)throw Error('兵種配比無效');
   const limits=hostLimits(ctx,fx),rt=ctx.defs.single('battleRule').realtime;
   const commanders:import('../contracts/core/realtime-battle.js').Commander[]=[{id:'lord',name:'主角',side:'ally',homeX:125,x:125,y:470,pose:'command',poseTime:0,flip:false}];
@@ -64,7 +65,7 @@ export function finishChallenge(s:EventChallengeState,outcome:ChallengeOutcome):
 }
 export function continueEventChallenge(s:EventChallengeState):void {
  if(s.phase!=='intermission'||!s.definition.stages||s.completed!==(s.stage??0)+1)throw Error('尚未完成本階段');
- s.stage=s.completed;s.phase='opening';s.paused=false;s.contest=null;
+ s.stage=s.completed;s.phase='opening';s.paused=false;s.contest=null;s.rally=null;s.battle=null;s.skills=[];
 }
 export function answerEventDuel(s:EventChallengeState,choice:number|null):boolean {
  const c=s.contest;if(s.paused||s.phase!=='playing'||c?.phase!=='read'||!c.duel)return false;

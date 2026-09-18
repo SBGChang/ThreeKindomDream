@@ -1521,6 +1521,70 @@
     "traitId": "trait:gangbi"
   },
   {
+    "battleTrigger": "nature",
+    "cost": {
+      "int": 300,
+      "lead": 150,
+      "pol": 220
+    },
+    "descKey": "trait.daofaziran.desc",
+    "effects": [],
+    "eventExclusive": true,
+    "id": "trait:daofaziran",
+    "kind": "trait",
+    "nameKey": "trait.daofaziran.name",
+    "packId": "pack:core",
+    "polarity": "positive",
+    "schemaVersion": 1,
+    "tier": "peerless",
+    "traitId": "trait:daofaziran"
+  },
+  {
+    "affinityBonus": 3,
+    "cost": {
+      "int": 300,
+      "lead": 150,
+      "pol": 220
+    },
+    "descKey": "trait.tianmingzhiren.desc",
+    "effects": [],
+    "eventExclusive": true,
+    "growthBonus": 0.15,
+    "id": "trait:tianmingzhiren",
+    "kind": "trait",
+    "meritBonus": 0.15,
+    "nameKey": "trait.tianmingzhiren.name",
+    "packId": "pack:core",
+    "polarity": "positive",
+    "schemaVersion": 1,
+    "tier": "peerless",
+    "traitId": "trait:tianmingzhiren"
+  },
+  {
+    "descKey": "item.taiping.desc",
+    "equipment": {
+      "slot": "treasure",
+      "strategyDamage": 0.15
+    },
+    "id": "item:taiping",
+    "itemId": "item:taiping",
+    "kind": "item",
+    "nameKey": "item.taiping.name",
+    "packId": "pack:core",
+    "perRunCap": 1,
+    "rarity": 5,
+    "schemaVersion": 1,
+    "sourceHint": "虎牢結束後，通過南華老仙的舌戰。",
+    "tiers": [
+      {
+        "descKey": "item.taiping.tier",
+        "effects": [],
+        "fragmentCost": 0,
+        "tier": 0
+      }
+    ]
+  },
+  {
     "action": {
       "actorAttr": "war",
       "duration": 0,
@@ -9836,7 +9900,7 @@
           "textKey": "C0.opening.line.0"
         },
         {
-          "speaker": "阿禾",
+          "speaker": "南華老仙",
           "textKey": "C0.opening.line.1"
         },
         {
@@ -9844,8 +9908,24 @@
           "textKey": "C0.opening.line.2"
         },
         {
-          "speaker": "皇甫嵩",
+          "speaker": "南華老仙",
           "textKey": "C0.opening.line.3"
+        },
+        {
+          "speaker": null,
+          "textKey": "C0.opening.line.4"
+        },
+        {
+          "speaker": "阿禾",
+          "textKey": "C0.opening.line.5"
+        },
+        {
+          "speaker": null,
+          "textKey": "C0.opening.line.6"
+        },
+        {
+          "speaker": "皇甫嵩",
+          "textKey": "C0.opening.line.7"
         }
       ],
       "bodyKey": "C0.opening.body",

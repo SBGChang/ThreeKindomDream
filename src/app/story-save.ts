@@ -19,6 +19,8 @@ export function migrateStoryRun(state: RunState, version: number, defs: Definiti
   const chapters = roots.flatMap(c=>[c,...(c.variants??[]).map(v=>v.chapter)]);
   const nodes = chapters.flatMap(c=>[...c.nodes,...(c.legacy?.nodes??[]),...(c.companions??[]).flatMap(p=>p.nodes??[])]);
   const milestoneIds = new Set(chapters.flatMap(c => c.milestones.map(m => m.id)));
+  for(const c of chapters)for(const st of [...(c.fieldStories??[]),...(c.companions??[]).flatMap(p=>p.fieldStories??[])])for(const marks of [st.progressMarks?.visited,st.progressMarks?.rewards])for(const id of Object.values(marks??{}))milestoneIds.add(id);
+  for(const c of chapters)for(const row of c.afterChallenges??[]){milestoneIds.add('resolved:'+row.id);milestoneIds.add('won:'+row.id);}
   for(const c of chapters)for(const event of [...(c.fieldStories??[]),...(c.companions??[]).flatMap(p=>p.fieldStories??[])])milestoneIds.add('field:'+event.id);
   const scenes = new Map(chapters.flatMap(c => [...(c.legacy?.scenes??[]),c.opening, ...c.aftermaths.map(a => a.scene), ...c.milestones.map(m => m.scene), ...c.nodes.flatMap(n => n.options.flatMap(o => o.response ? [o.response] : [])),...(c.companions??[]).flatMap(p=>[p.opening,p.aftermath,...(p.nodes??[]).flatMap(n=>n.options.flatMap(o=>o.response?[o.response]:[]))])])
     .map(s => [s.id, s]));
@@ -42,7 +44,8 @@ export function migrateStoryRun(state: RunState, version: number, defs: Definiti
   if (!story.enabled && (story.awaitingChapterClose || story.awaitingEndingChoice || story.scenes.length)) {
     throw new Error('舊局不得等待新主線');
   }
-  if (story.awaitingChapterClose && (story.scenes.length === 0 || state.progress.pendingCampaign || state.ending)) {
+  if(state.eventChallenge?.source==='chapter'&&!chapters.some(c=>c.chapterId===state.progress.chapterId&&c.afterChallenges?.some(r=>r.id===state.eventChallenge!.eventId)))throw new Error('章末挑戰不存在');
+  if (story.awaitingChapterClose && (story.scenes.length === 0 && state.eventChallenge?.source!=='chapter' || state.progress.pendingCampaign || state.ending)) {
     throw new Error('章末演出狀態不一致');
   }
   if (story.awaitingEndingChoice) {

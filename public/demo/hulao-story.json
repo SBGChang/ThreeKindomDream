@@ -12,9 +12,9 @@
  },
  "nodes":{
   "arrival":{"kind":"dialogue","lines":[{"speaker":"戰場","text":"虎牢關前，聯軍止步。赤兔踏過陣前，方天畫戟映著寒光。"},{"speaker":"呂布","text":"關東諸侯，便只敢躲在旗後？誰敢上前，與我一戰！"}],"next":"first-challenge"},
-  "first-challenge":{"kind":"choice","prompt":"呂布尚未交戰。你要現在出陣嗎？","options":[{"id":"accept","label":"我來！現在挑戰呂布","detail":"滿血、完整能力；沒有疲勞削弱。勝利：四維各＋10、方天化戟、赤兔馬，另有曹操賞賜。","next":"full-duel"},{"id":"watch","label":"先觀其勢，留在陣中","detail":"觀看張飛、關羽、劉備依序出戰；之後還有一次挑戰機會。","next":"zhang-intro"}]},
+  "first-challenge":{"kind":"choice","prompt":"呂布尚未交戰。你要現在出陣嗎？","options":[{"id":"accept","label":"我來！現在挑戰呂布","detail":"滿血、完整能力；沒有疲勞削弱。勝利：四維各＋5、方天化戟、赤兔馬，另有曹操賞賜。","next":"full-duel"},{"id":"watch","label":"先觀其勢，留在陣中","detail":"觀看張飛、關羽、劉備依序出戰；之後還有一次挑戰機會。","next":"zhang-intro"}]},
   "full-duel":{"kind":"combat","title":"初鋒 · 挑戰全盛呂布","mode":"player","ally":{"actor":"player","health":1,"modifiers":[]},"enemy":{"actor":"lvbu","health":1,"modifiers":[]},"seed":31,"aiSeed":1,"aiWeights":{"attack":1,"defend":1,"rest":1},"opening":[{"speaker":"呂布","text":"無名之輩，也敢第一個出陣？報上名來！"},{"speaker":"你","thought":true,"text":"他還未耗去半分氣力。這一戰很險……但若能勝他，天下便會記得我。"}],"cues":[{"id":"first-respect","round":3,"lines":[{"speaker":"呂布","text":"竟還接得住！好，這幾招，我記住了！"}]}],"next":{"win":"full-recognition","lose":"defeat","draw":"draw"}},
-  "full-recognition":{"kind":"reward","reward":{"id":"first-blood-prize","title":"正面擊敗全盛呂布","allStats":10,"gold":0,"items":["方天化戟","赤兔馬"],"unlocks":["呂布"]},"next":"cao-praise"},
+  "full-recognition":{"kind":"reward","reward":{"id":"first-blood-prize","title":"正面擊敗全盛呂布","allStats":5,"gold":0,"items":["方天化戟","赤兔馬"],"unlocks":["呂布"]},"next":"cao-praise"},
   "cao-praise":{"kind":"dialogue","lines":[{"speaker":"呂布","text":"今日是我輸了。戟與馬，歸你。真希望來日，能與你站在同一面旗下。"},{"speaker":"曹操","text":"尚未有三將耗其鋒芒，你竟能獨力勝他！如此武藝，豈可埋沒於行伍。"},{"speaker":"曹操","text":"我有青虹、倚天二劍，今日一併贈你，再賜黃金五百。願你此後，為天下立功！"}],"next":"cao-gift"},
   "cao-gift":{"kind":"reward","reward":{"id":"cao-special-gift","title":"曹操賞識 · 雙劍與黃金","allStats":0,"gold":500,"items":["青虹劍","倚天劍"],"unlocks":[]},"next":"full-end"},
   "full-end":{"kind":"end","title":"一戰驚天下","text":"未借三英之力，你在虎牢關前擊敗全盛呂布。聯軍重新擂鼓，你的名字隨軍旗傳遍陣中。"},

@@ -1,4 +1,5 @@
 // Per-attribute experience and course discovery. Training purchases belong to learning.ts.
+import {progressionBonus} from './progression-bonus.js';
 import type { RunContext } from '../contracts/core/context.js';
 import type {
   AttrGradeBand,
@@ -49,7 +50,7 @@ export function previewGrowth(
   const start = attributeBalance(attr, ctx),
     cap = capOf(attr, ctx);
   let value = start,
-    left = raw;
+    left = raw * (1 + progressionBonus('growthBonus', ctx));
   for (const band of rule(ctx).economy.growthBands) {
     const end = Math.min(cap, band.max);
     if (value >= end) continue;

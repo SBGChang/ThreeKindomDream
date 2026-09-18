@@ -182,7 +182,7 @@ export function tickBattle(s:BattleState,delta:number):void {
   const commander=s.commanders.find(g=>g.name===c.skill.owner);if(commander)commander.poseTime+=dt;
   if(!c.impacted&&c.time>=2.5+COMMAND_LEAD)impact(s,c);
   if(c.impacted)arrows(s,dt,true);
-  if(c.time>=CINEMATIC_LENGTH){s.cinematic=null;detectRout(s);}
+  if(c.time>=CINEMATIC_LENGTH){s.cinematic=null;if(!detectRout(s)&&s.followupSkill){const skill=s.followupSkill;s.followupSkill=null;const targets=s.units.filter(u=>u.side==='enemy'&&u.hp>0);s.cinematic={skill,time:0,impacted:false,targetX:targets[0]?.x??1050,targetY:485,damage:0};}else s.followupSkill=null;}
   return;
  }
  // Check before advancing the clock: a rout never spends extra battle time.
@@ -257,6 +257,7 @@ export function createConfiguredBattle(options: {terrain?:'plain'|'water'|'mount
 export function validBattleSnapshot(value:unknown):value is BattleState {
  if(!value||typeof value!=='object')return false;
  const b=value as BattleState;
+ const lightning=(k:DemoSkill|undefined|null)=>!!k&&k.id==='nature-lightning'&&k.mechanic==='lightning'&&k.cost===0&&k.cd===0&&Number.isFinite(k.damage)&&k.damage>=0&&!!b.traits?.some(t=>t.id==='nature'&&t.owner===k.owner);
  const finite=(n:unknown)=>typeof n==='number'&&Number.isFinite(n)&&n>=0;
  return ['ready','running','paused','finished'].includes(b.status)
   && ['entry','reveal','start','combat','fallen','flee','cheer','exit','fade-out','fade-in'].includes(b.phase)
@@ -268,7 +269,8 @@ export function validBattleSnapshot(value:unknown):value is BattleState {
   && Array.isArray(b.commanders)&&b.commanders.length>=2&&b.commanders.some(c=>c.side==='enemy')&&b.commanders.every(c=>typeof c.name==='string'&&Number.isFinite(c.x)&&Number.isFinite(c.y))
   && Array.isArray(b.skills)&&b.skills.length<=6&&b.skills.every(k=>typeof k.id==='string'&&typeof k.name==='string'&&typeof k.owner==='string'&&finite(k.cost)&&finite(k.cd)&&k.cd>0&&finite(k.damage))
   && !!b.cooldowns&&Object.values(b.cooldowns).every(finite)&&Array.isArray(b.log)
-  && (!b.cinematic||(finite(b.cinematic.time)&&b.skills.some(k=>k.id===b.cinematic!.skill?.id)))
+  && (!b.cinematic||(finite(b.cinematic.time)&&(b.skills.some(k=>k.id===b.cinematic!.skill?.id)||lightning(b.cinematic.skill))))
+  && (!b.followupSkill||lightning(b.followupSkill))
   && (b.infantryPercent===undefined||(finite(b.infantryPercent)&&b.infantryPercent<=100&&Number.isInteger(b.infantryPercent)))
   && (b.enemyInfantryPercent===undefined||(Number.isInteger(b.enemyInfantryPercent)&&b.enemyInfantryPercent>=0&&b.enemyInfantryPercent<=100))
   && (b.rng===undefined||(Number.isInteger(b.rng)&&b.rng>=0&&b.rng<=4294967295))

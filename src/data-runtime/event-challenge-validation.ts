@@ -6,6 +6,8 @@ import {validDuelBuild} from './duel-build-validation.js';
 export function validEventChallengeDef(value:unknown):value is EventChallengeDef {
  if(!value||typeof value!=='object')return false;
  const d=value as EventChallengeDef;
+ if(d.strategyOnly!==undefined&&typeof d.strategyOnly!=='boolean')return false;
+ if(d.loanSkills!==undefined&&(!Array.isArray(d.loanSkills)||d.loanSkills.length>3||d.loanSkills.some(id=>typeof id!=='string'||!id)))return false;
  if(d.duel!==undefined){
   const b=d.duel?.enemy;
   if(b?.comboEnabled!==undefined&&typeof b.comboEnabled!=='boolean')return false;
@@ -18,7 +20,7 @@ export function validEventChallengeDef(value:unknown):value is EventChallengeDef
   if(b.ally!==undefined&&(!b.ally||!validRallyBuild({...b.ally,int:50,pol:50})))return false;
  }
  if(d.stages!==undefined){
-  if(d.mode!=='duel'||!d.duel||!Array.isArray(d.stages)||d.stages.length<2||d.stages.length>5||d.stages.some(s=>!s||!Number.isFinite(s.power)||s.power<=0||s.power>3||![s.title,s.opening,s.victory].every(v=>typeof v==='string'&&v.length>0)))return false;
+  if(!Array.isArray(d.stages)||d.stages.length<2||d.stages.length>5||d.stages.some(s=>!s||s.encounter&&(!validEventChallengeDef(s.encounter)||s.encounter.stages!==undefined)||!Number.isFinite(s.power)||s.power<=0||s.power>3||![s.title,s.opening,s.victory].every(v=>typeof v==='string'&&v.length>0)))return false;
   if(!Array.isArray(d.cashOutGold)||d.cashOutGold.length!==d.stages.length||!d.cashOutGold.every(n=>Number.isSafeInteger(n)&&n>=0))return false;
  }else if(d.cashOutGold!==undefined)return false;
  return ['duel','debate','battle'].includes(d.mode)&&Object.hasOwn(DUEL_ACTORS,d.opponent)&&typeof d.opponentName==='string'&&d.opponentName.length>0&&Number.isInteger(d.ability)&&d.ability>=1&&d.ability<=100&&typeof d.opening==='string'&&d.opening.length>0&&!!d.outcomes&&(['win','lose','draw','retreat'] as const).every(k=>typeof d.outcomes[k]==='string'&&d.outcomes[k].length>0)&&(d.mode!=='battle'||Number.isInteger(d.enemySquads)&&d.enemySquads!>=2&&d.enemySquads!<=4&&Number.isInteger(d.enemyTroops)&&d.enemyTroops!>=d.enemySquads!&&d.enemyTroops!<=2000);

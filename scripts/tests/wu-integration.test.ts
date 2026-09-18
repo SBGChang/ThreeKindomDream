@@ -1,3 +1,4 @@
+import {playEventChallenge} from '../../src/app/event-challenge-driver.js';
 import assert from 'node:assert/strict';
 import { defs,newStorySession,wiring } from './harness.js';
 import { Session } from '../../src/app/session.js';
@@ -9,6 +10,7 @@ const choices:Record<string,string>={'U2.A':'scouts','U3.A':'escort','U3.B':'han
 function storyFixture(depth:number,overrides:Record<string,string>={}){
  const s=newStorySession(912),picked={...choices,...overrides};let actions=0;
  for(let i=0;i<1000&&!s.isOver;i++){
+  if(s.current.eventChallenge?.source==='chapter'){playEventChallenge(s,0);continue;}
   if(s.storyScene){s.acknowledgeStory(s.storyScene.id);continue;}
   if(s.needsEndingChoice){s.chooseStoryEnding(String(s.storyEndingOptions()[0]!.ending));continue;}
   if(s.storyChoice){s.chooseStory(s.storyChoice.id,picked[s.storyChoice.id]??s.storyChoice.options[0]!.id);continue;}

@@ -746,7 +746,7 @@ export interface ItemTierDef {
  * 廣域件每條都比同階的點名件弱，那是規則不是例外。
  */
 export interface ItemDef extends DefHeader {
-  readonly equipment?: { readonly slot: 'weapon' | 'mount' | 'treasure'; readonly duelDamage?: number; readonly retreatSpeed?: number; readonly armyDamage?: number; readonly healThreshold?: number; readonly healRatio?: number; readonly checkTags?: readonly string[]; readonly checkBonus?: number; readonly seaIntel?: boolean; readonly discount?: number };
+  readonly equipment?: { readonly slot: 'weapon' | 'mount' | 'treasure'; readonly duelDamage?: number; readonly retreatSpeed?: number; readonly armyDamage?: number; readonly strategyDamage?: number; readonly healThreshold?: number; readonly healRatio?: number; readonly checkTags?: readonly string[]; readonly checkBonus?: number; readonly seaIntel?: boolean; readonly discount?: number };
   readonly sourceHint?: string;
   readonly kind: 'item';
   readonly itemId: ItemId;
@@ -833,6 +833,9 @@ export interface GrowthRuleDef extends DefHeader {
 export type AbilityCost = Readonly<Partial<Record<Attr, number>>>;
 
 export interface TraitDef extends DefHeader {
+  readonly growthBonus?: number;
+  readonly meritBonus?: number;
+  readonly affinityBonus?: number;
   readonly eventExclusive?: boolean;
   readonly duelProcChance?: number;
   readonly battleTrigger?:string;

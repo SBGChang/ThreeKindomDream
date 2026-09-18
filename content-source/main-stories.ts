@@ -6,6 +6,11 @@ import { storyWriter } from './story-authoring.js';
 
 export const mainStoryTexts: Record<string, string> = {};
 const w = storyWriter(mainStoryTexts);
+w.text('dream.prologue.title', '南華引夢');
+w.text('dream.prologue.mist', '四野無聲，腳下卻浮起一條星河。你循著一盞燈走去，白髮道人已在霧中等候。');
+w.text('dream.prologue.voice', '徒兒，你來了。世人只道三國興亡早有定數，卻不知史書一頁，便是多少人未能走完的一生。');
+w.text('dream.prologue.promise', '我是南華。今夜，我送你入夢，從黃巾烽火中走一遭。你會怕，會敗，也會遇見願意把後背交給你的人。能帶回多少人，且看你如何選擇。');
+w.text('dream.prologue.prepare', '先定下此身的資質，帶好天賦與器物。若與故人的緣分已深，也可喚他再來。餘下的相逢，便交給這一夢。');
 w.text('story.ending.title', '這一夢，留下什麼');
 w.text('story.ending.body', '有些人終於等到重逢，有些人看見了新的黎明。你完成的救援都會留下；此刻，選一段最想銘記的故事，為這一夢落款。');
 w.text('story.ending.hint', '紀念這段已完成的改命；其他救援成果仍會保留。');
@@ -38,7 +43,7 @@ const rescue = [choice('W3.A', 'relay'), choice('W3.B', 'rest')];
 
 export const commonStories: readonly StoryChapterDef[] = [coreDef('storyChapter', 'story:camp.yellowturban', {
   chapterId: chapterId('ch:camp.yellowturban'),
-  opening: w.scene('C0.opening', '第一個要帶回來的人', '鼓聲裡，你發現自己的手正在發抖。旁邊的新兵阿禾把槍往你掌心一塞：「握住。等會兒誰先跑，誰請吃飯。」皇甫嵩巡營走過，停了一步：「怕很正常。別把身旁的人忘了。」', ['阿禾', '皇甫嵩']),
+  opening: w.scene('C0.opening', '黃巾初夢・與君同行', '南華拂袖，霧中浮出三道身影。「這次陪你走這一程的，是{companions}。{invitation}」你想記住他們的模樣，遠方卻先響起了戰鼓。南華的聲音追著你落入人間：「此去是黃巾之亂。你如今只是皇甫嵩帳下的新兵，先學會活下來，再學會讓身邊的人也活下來。」中平元年，黃巾蜂起，村道上盡是逃難的人。你在漢軍營中睜眼，掌心多了一層握槍的薄繭。鼓聲裡，你發現自己的手正在發抖。旁邊的新兵阿禾把槍往你掌心一塞：「握住。等會兒誰先跑，誰請吃飯。」皇甫嵩巡營走過，停了一步：「怕很正常。別把身旁的人忘了。」', ['南華老仙', '南華老仙', '阿禾', '皇甫嵩']),
   nodes: [
     node('C0.A', 2, '倉門裡的人', '潰兵藏入糧倉，裡面還有避難百姓。車架堵住側門，外寨的追兵仍在靠近。阿禾握住槍，看向你：「先救人，還是先把外面的路拿下來？」', ['阿禾'], [
       ['shelter', '開側門接人', '拆開車架，阿禾守住出口；優先護送百姓。'],

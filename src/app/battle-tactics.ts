@@ -22,6 +22,11 @@ export function tacticalImpact(s:BattleState,c:Cinematic):boolean {
   const target=targets[i%targets.length]!;s.arrows.push({id:s.nextId++,side:'ally',targetId:target.id,x:340,y:320,fromX:340,fromY:320,toX:target.x,toY:target.y-55,elapsed:-i*.07,duration:.6,damage:Math.max(1,Math.round(c.skill.damage/count)),hit:battleRoll(s)<accuracy,friendly:false,owner:c.skill.owner,retarget:['mounted','crossbow','thunder'].includes(m)});
  }};
  switch(m){
+  case 'lightning':{
+   const totals=new Map<string,number>();for(const u of foes){const id=u.armyId??'enemy';totals.set(id,(totals.get(id)??0)+u.hp);}
+   const id=[...totals].sort((a,b)=>b[1]-a[1])[0]?.[0];
+   const targets=foes.filter(u=>(u.armyId??'enemy')===id).sort((a,b)=>b.hp-a.hp||a.id-b.id);c.hitIds=targets.map(u=>u.id);targetDamage(targets,c.skill.damage);break;
+  }
   case 'pincer':targetDamage(infantry,c.skill.damage);mark(infantry,'confuse',2*scale);break;
   case 'cavalry':targetDamage(archers,c.skill.damage);mark(archers,'rout',2.5*scale);break;
   case 'longshot':mark(allies.filter(u=>u.kind==='archer'),'longshot',6*scale);break;

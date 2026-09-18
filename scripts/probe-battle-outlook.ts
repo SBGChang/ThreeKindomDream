@@ -1,3 +1,4 @@
+import {playEventChallenge} from '../src/app/event-challenge-driver.js';
 /** Reach first campaign legally, then compare a single equipped skill's forecast with real casts. */
 import { writeFileSync } from 'node:fs';
 import { Session } from '../src/app/session.js';
@@ -8,6 +9,7 @@ import { POLICIES } from './lib/policies.js';
 const meta=emptyMeta(),s=Session.start(wiring,meta,emptyDraft(meta,defs),seed(9000));
 const p=POLICIES.find(p=>p.name==='greedy-gain')!;
 for(let guard=0;guard<100&&!s.needsCampaign;guard++){
+  if(s.current.eventChallenge?.source==='chapter'){playEventChallenge(s,0);continue;}
   if(s.storyScene){s.acknowledgeStory(s.storyScene.id);continue;}
   if(s.storyChoice){s.chooseStory(s.storyChoice.id,s.storyChoice.options[0]!.id);continue;}
   if(!s.hasActed)s.selectSlot(p.chooseSlot(s));

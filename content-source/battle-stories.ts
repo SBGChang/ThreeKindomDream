@@ -1,3 +1,4 @@
+import {hulaoAfterChallenges} from './nanhua.js';
 import hulao from '../public/demo/hulao-story.json';
 import type {BattleStory,StoryNode} from '../src/contracts/core/battle-story.js';
 import type {StoryChapterDef} from '../src/contracts/core/story.js';
@@ -6,6 +7,7 @@ const itemNames:Record<string,string>={'方天化戟':'item:fangtian','赤兔馬
 function tiger():BattleStory {
  const d=structuredClone(hulao) as BattleStory;d.id='battle:hulao';d.returnToBattle=true;
  d.requirements=[{kind:'roster',id:'notable:lvbu',present:false}];
+ d.progressMarks={visited:{'full-duel':'hulao:challenged','tired-duel':'hulao:challenged'},rewards:{'first-blood-prize':'hulao:won','tired-victory-prize':'hulao:won'}};
  for(const n of Object.values(d.nodes))if(n.kind==='reward'){n.reward.items=n.reward.items.map(i=>itemNames[i]??i);n.reward.unlocks=n.reward.unlocks.map(()=> 'notable:lvbu');}
  return d;
 }
@@ -41,7 +43,7 @@ export function withBattleStories(d:StoryChapterDef):StoryChapterDef {
  else if(chapter==='ch:wu.succession')events.push(encounter('battle:hearing',5,'朝議護送','陸遜','不必替我爭一時意氣。請將完整奏疏送入朝堂，讓眾人有申辯的地方。','debate',[],'奏疏已當眾宣讀，朝臣不能再以一句傳言定罪。'));
  else if(specific[chapter]){const [title,speaker,line,win]=specific[chapter]!;events.push(encounter('battle:'+chapter,4,title,speaker,line,'debate',[],win));}
  else events.push(encounter('battle:'+chapter,4,'陣前相議','前軍使者','兩军相接，傷兵與糧隊仍在後面。這一刻，你打算如何回應？','debate',[],'我們先把撤路講清楚，再議誰先出陣。'));
- return {...d,fieldStories:events};
+ return {...d,fieldStories:events,...(chapter.endsWith('.hulao')?{afterChallenges:hulaoAfterChallenges}:{})};
 }
 
 /** Chapter-specific exchanges stay inside the existing seven battle waves. */

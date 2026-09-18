@@ -40,7 +40,7 @@ for(const [entry,kind] of [['full-duel','full'],['tired-duel','tired']] as const
   for(let i=0;d.nodes[s.node]!.kind!=='end'&&i<30;i++)next(s);
   if(outcome!=='ally'){assert.equal(s.items.length,0);assert.equal(s.gold,0);assert.deepEqual(s.stats,d.playerStats);continue;}
   assert.equal(s.items.length,kind==='full'?4:2);assert.equal(s.gold,kind==='full'?500:0);
-  for(const k of ['lead','war','int','pol'] as const)assert.equal(s.stats[k],d.playerStats[k]+(kind==='full'?10:0));
+  for(const k of ['lead','war','int','pol'] as const)assert.equal(s.stats[k],d.playerStats[k]+(kind==='full'?5:0));
   assert.deepEqual(s.unlocks,['呂布']);
   assert.equal(advanceStory(d,s,s.revision),false);
  }

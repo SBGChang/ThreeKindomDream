@@ -1,3 +1,5 @@
+import { StoryDialogue } from './StoryDialogue.js';
+import type { StoryScene } from '../contracts/core/story.js';
 import {ItemArt} from './ItemArt.js';
 import './entry-controls.css';
 import { EntryTalentIcon } from './EntryTalentIcon.js';
@@ -9,7 +11,7 @@ import type { AptitudeGrade, Attr } from '../contracts/core/primitives.js';
 import { APTITUDE_GRADES, ATTRS } from '../contracts/core/primitives.js';
 import type { ItemId, TalentId } from '../contracts/core/ids.js';
 import {
-  defs, draftCost, draftLimits, emptyDraft, t, validateDraft,
+  defs, designateQuota, draftCost, draftLimits, emptyDraft, t, validateDraft,
 } from '../app/bootstrap.js';
 
 interface Props {
@@ -27,11 +29,18 @@ const toggle = <T,>(xs: readonly T[], x: T, cap: number): readonly T[] => {
   return xs.length >= cap ? xs : [...xs, x];
 };
 
-/** 入夢只設定資質、天賦與器物；同行安排於遊戲中進行。草稿超支時保留選擇並停用入夢。 */
+const prologue: StoryScene = {
+  id: 'dream.prologue', titleKey: 'dream.prologue.title' as StoryScene['titleKey'], bodyKey: 'dream.prologue.mist' as StoryScene['bodyKey'],
+  beats: ['mist', 'voice', 'promise', 'prepare'].map((part, i) => ({ speaker: i ? '南華老仙' : null, textKey: ('dream.prologue.' + part) as StoryScene['bodyKey'] })),
+};
+/** 南華引夢後準備此身；指定的故人在開局抽選前寫入草稿。 */
 export function ScreenEntry({ meta, onEnter, onBack }: Props): React.ReactElement {
+  const [choosingCompanions, setChoosingCompanions] = useState(false);
+  const [introduced, setIntroduced] = useState(false);
   const [draft, setDraft] = useState<DreamEntryConfig>(() => emptyDraft(meta, defs));
   const [tab, setTab] = useState<EntryTab>('aptitude');
   const lim = draftLimits(meta, defs);
+  const quota = designateQuota(draft, defs);
   const c = draftCost(draft, meta, defs);
   const errors = validateDraft(draft, meta, defs);
   const aptCost = defs.single('aptitudeCost');
@@ -45,6 +54,18 @@ export function ScreenEntry({ meta, onEnter, onBack }: Props): React.ReactElemen
 
 
 
+  if (!introduced) return <StoryDialogue source={prologue} onDone={() => setIntroduced(true)}/>;
+
+  if (choosingCompanions) return <section className="dream-entry companion-entry">
+    <section className="entry-companions" aria-label="南華問緣">
+      <div className="entry-companions-guide"><CharacterArt name="南華老仙"/><div><h2>南華問緣</h2><p>{lim.designatable.length && quota > 0
+        ? `「你與故人的緣分已能穿過夢境。這一回，可有想邀來作伴的人？至多喚來 ${quota} 位，其餘由我替你牽緣。」`
+        : '「今夜先由我替你牽起三段緣。待你與故人羈絆漸深，便能親口邀他再赴此夢。」'}</p><small>同行共 {lim.companionSlots} 人・已邀請 {draft.designatedCompanions.length} 人；空位會自動補齊。</small></div></div>
+      <div className="entry-companion-options">{lim.designatable.map(id => { const on = has(draft.designatedCompanions,id); return <button type="button" key={String(id)} aria-pressed={on} disabled={!on && draft.designatedCompanions.length >= quota} onClick={() => setDraft(d => ({...d, designatedCompanions:toggle(d.designatedCompanions,id,quota)}))}>{t(defs.reader('notable').get(String(id)).nameKey)}{on ? '・已邀請' : ''}</button>; })}</div>
+    </section>
+    <footer><button type="button" onClick={() => setChoosingCompanions(false)}>返回入夢準備</button><button type="button" disabled={errors.length > 0} onClick={() => onEnter(draft)}>{draft.designatedCompanions.length ? '就邀這幾位，請先生引路' : '但憑先生牽緣，入夢吧'}</button></footer>
+  </section>;
+
   return <section className={"dream-entry entry-tabbed theme-"+tab}>
     <header className="entry-heading"><div><RealmIcon name="glow"/><h1>入夢</h1></div><button type="button" data-game-back className="entry-art-back" aria-label="返回天命" title="返回天命" onClick={onBack}><img src="./art/ui/entry/button-back-v2.png" alt="" draggable={false}/></button></header>
     <nav className="entry-tabs" role="tablist" aria-label="入夢準備">{ENTRY_TABS.map((it,i)=><button key={it.id} id={'entry-tab-'+it.id} role="tab" aria-selected={tab===it.id} aria-controls={'entry-panel-'+it.id} tabIndex={tab===it.id?0:-1} onClick={()=>setTab(it.id)} onKeyDown={e=>{const direction=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(direction||e.key==='Home'||e.key==='End'){e.preventDefault();const next=ENTRY_TABS[e.key==='Home'?0:e.key==='End'?ENTRY_TABS.length-1:(i+direction+ENTRY_TABS.length)%ENTRY_TABS.length]!;setTab(next.id);document.getElementById('entry-tab-'+next.id)?.focus();}}}><RealmIcon name={it.icon}/><span>{it.name}</span></button>)}</nav>
@@ -57,6 +78,6 @@ export function ScreenEntry({ meta, onEnter, onBack }: Props): React.ReactElemen
       <section hidden={tab!=='talent'} role="tabpanel" id="entry-panel-talent" aria-labelledby="entry-tab-talent" className="entry-card entry-talent"><header><RealmIcon name="talent"/><h2>天賦</h2><b className={c.talentPointsUsed>lim.talentPoints?'over-budget':''}>{c.talentPointsUsed} / {lim.talentPoints}</b></header><div className="entry-card-body entry-talents" tabIndex={0} aria-label="可選天賦">{lim.unlockedTalents.length?lim.unlockedTalents.map((id:TalentId)=>{const d=defs.reader('talent').get(String(id)),on=has(draft.talents,id);return <button key={String(id)} aria-pressed={on} onClick={()=>setDraft(x=>({...x,talents:on?x.talents.filter(y=>String(y)!==String(id)):[...x.talents,id]}))}><EntryTalentIcon id={String(id)}/><span><b>{t(d.nameKey)}</b><small>{t(d.descKey)}</small></span><strong>{d.cost}</strong></button>;}):<div className="entry-empty"><RealmIcon name="talent" className="unlit"/><span>尚未解放天賦</span></div>}</div></section>
       <section hidden={tab!=='items'} role="tabpanel" id="entry-panel-items" aria-labelledby="entry-tab-items" className="entry-card entry-items"><header><RealmIcon name="chest"/><h2>隨身器物</h2><b>{draft.carriedItems.length} / {lim.carrySlots}</b></header><div className="entry-card-body entry-choices" tabIndex={0} aria-label="可攜帶器物">{lim.carriableItems.length?lim.carriableItems.map((id:ItemId)=>{const d=defs.reader('item').get(String(id)),on=has(draft.carriedItems,id);return <button key={String(id)} aria-pressed={on} title={t(d.descKey)} onClick={()=>setDraft(x=>({...x,carriedItems:toggle(x.carriedItems,id,lim.carrySlots)}))}><ItemArt name={t(d.nameKey)}/><span>{t(d.nameKey)}</span></button>;}):<div className="entry-empty"><RealmIcon name="chest" className="unlit"/><span>尚無可攜帶器物</span></div>}</div></section>
     </div></div>
-    <footer className="entry-footer"><div role="status" className="entry-validation">{errors.map(e=><span key={e}>{e}</span>)}</div><button type="button" className="entry-confirm entry-art-enter" aria-label="入夢" disabled={errors.length>0} onClick={()=>onEnter(draft)}><img src="./art/ui/entry/button-enter-v2.png" alt="" draggable={false}/></button></footer>
+    <footer className="entry-footer"><div role="status" className="entry-validation">{errors.map(e=><span key={e}>{e}</span>)}</div><button type="button" className="entry-confirm entry-art-enter" aria-label="入夢" disabled={errors.length>0} onClick={()=>setChoosingCompanions(true)}><img src="./art/ui/entry/button-enter-v2.png" alt="" draggable={false}/></button></footer>
   </section>;
 }
