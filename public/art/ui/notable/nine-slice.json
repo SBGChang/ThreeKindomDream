@@ -1,0 +1,63 @@
+{
+  "source": "controls-sheet-v1.png",
+  "generator": "Built-in image_gen",
+  "assets": [
+    {
+      "file": "progress-track-v1.png",
+      "crop": [
+        100,
+        86,
+        1338,
+        124
+      ],
+      "slice": 48,
+      "renderBorder": 10
+    },
+    {
+      "file": "progress-fill-v1.png",
+      "crop": [
+        104,
+        261,
+        1328,
+        99
+      ],
+      "slice": 12,
+      "renderBorder": 4
+    },
+    {
+      "file": "inheritance-paper-v1.png",
+      "crop": [
+        104,
+        408,
+        1329,
+        156
+      ],
+      "slice": 22,
+      "renderBorder": 6
+    },
+    {
+      "file": "character-card-v1.png",
+      "crop": [
+        98,
+        601,
+        1340,
+        171
+      ],
+      "slice": 56,
+      "renderBorder": 14
+    },
+    {
+      "file": "character-card-selected-v1.png",
+      "crop": [
+        98,
+        799,
+        1340,
+        172
+      ],
+      "slice": 56,
+      "renderBorder": 14
+    }
+  ],
+  "repeat": "stretch",
+  "center": "fill"
+}

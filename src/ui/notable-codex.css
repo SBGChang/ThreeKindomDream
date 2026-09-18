@@ -1,0 +1,23 @@
+/* Bespoke notable art. Source-pixel slices keep corners fixed; only edges and centers stretch. */
+.game-stage .realm.realm-heroes .hero-biography{font-family:'DFKai-SB','KaiTi',serif}
+.game-stage .realm.realm-heroes .hero-biography h2{margin-bottom:2px}
+.game-stage .realm.realm-heroes .hero-biography .realm-progress{height:32px;margin:10px 0;border:10px solid transparent;border-image:url('/art/ui/notable/progress-track-v1.png') 48 fill / 10px stretch;border-radius:0;box-shadow:none;overflow:visible;background:none}
+.game-stage .realm.realm-heroes .realm-progress i{position:absolute;inset:-2px 0;width:100%!important;height:auto;border:4px solid transparent;border-image:url('/art/ui/notable/progress-fill-v1.png') 12 fill / 4px stretch;box-shadow:none;background:none;clip-path:inset(0 var(--fragment-remaining,100%) 0 0)}
+.game-stage .realm.realm-heroes .realm-progress span{display:flex;align-items:center;justify-content:center;font:700 16px 'DFKai-SB','KaiTi',serif;color:#fff4d7;text-shadow:0 1px 2px #232b1e}
+.game-stage .realm.realm-heroes .hero-encounter{display:flex;align-items:center;gap:8px;margin:8px 0;color:#69462d;font:16px/1.5 'DFKai-SB','KaiTi',serif}
+.game-stage .realm.realm-heroes .hero-encounter .realm-icon{width:38px;height:38px;flex:none}
+.game-stage .realm.realm-heroes .hero-biography h3{display:flex;align-items:center;gap:7px;width:190px;min-height:40px;margin:12px 0 7px;padding:0 5px;border:7px solid transparent;border-image:url('/art/ui/notable/inheritance-paper-v1.png') 22 fill / 7px stretch;background:none;font:700 20px 'DFKai-SB','KaiTi',serif}
+.game-stage .realm.realm-heroes .hero-biography h3 .realm-icon{width:32px;height:32px;flex:none}
+.game-stage .realm.realm-heroes .hero-inheritances{list-style:none;margin:0;padding:0}
+.game-stage .realm.realm-heroes .hero-inheritances li{display:flex;align-items:center;gap:9px;min-height:43px;margin:6px 0;padding:3px 9px;border:6px solid transparent;border-image:url('/art/ui/notable/inheritance-paper-v1.png') 22 fill / 6px stretch;box-shadow:none;background:none;font:16px/1.5 'DFKai-SB','KaiTi',serif;color:#553820}
+.game-stage .realm.realm-heroes .hero-inheritances li .realm-icon{width:27px;height:29px;flex:none}
+.game-stage .realm.realm-heroes .hero-empty{display:flex;align-items:center;gap:8px;font:16px/1.5 'DFKai-SB','KaiTi',serif}
+.game-stage .realm.realm-heroes .hero-empty .realm-icon{width:32px;height:32px;filter:grayscale(1)}
+.game-stage .realm.realm-heroes .hero-index button{flex-basis:172px;border:14px solid transparent;border-image:url('/art/ui/notable/character-card-v1.png') 56 fill / 14px stretch;border-radius:0;box-shadow:none;padding:0 2px;background:none;color:#553820;font-family:'DFKai-SB','KaiTi',serif}
+.game-stage .realm.realm-heroes .hero-index button.selected{border:14px solid transparent;border-image:url('/art/ui/notable/character-card-selected-v1.png') 56 fill / 14px stretch;box-shadow:none;background:none;color:#892f21;text-shadow:none}
+.game-stage .realm.realm-heroes .hero-index button:hover:not(:disabled){filter:brightness(1.08)}
+.game-stage .realm.realm-heroes .hero-index button:focus-visible{outline:2px solid #fff2bf;outline-offset:-5px}
+.game-stage .realm.realm-heroes .hero-index .officer-portrait{border:0;border-radius:0;box-shadow:none;background:none}
+.game-stage .realm.realm-heroes .hero-index button>span{min-width:0;white-space:nowrap}
+.game-stage .realm.realm-heroes .hero-index button.codex-locked{border-image:none;background:none;box-shadow:none;opacity:1;cursor:default;filter:none;transform:none}
+.game-stage .realm.realm-heroes .hero-index .codex-locked .codex-portrait{filter:brightness(0);pointer-events:none}

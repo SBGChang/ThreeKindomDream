@@ -1,0 +1,84 @@
+/* Fixed shelf slots match the three painted wooden boards; only the contents turn. */
+.game-stage .realm.treasury-paged .relic-detail .relic-description{font:18px/1.7 'DFKai-SB','KaiTi',serif;letter-spacing:.6px;color:#67482a;margin:8px 0 12px}
+.game-stage .realm.treasury-paged .relic-tabs{border:0;gap:5px;margin:0 0 8px}
+.game-stage .realm.treasury-paged .relic-tabs button{height:49px;min-width:0;padding:5px 13px;border:0;border-radius:0;box-shadow:none;font:700 18px 'DFKai-SB','KaiTi',serif;background:url('/art/ui/training/paper-control-v1.png') center / 100% 140% no-repeat!important;color:#654020!important}
+.game-stage .realm.treasury-paged .relic-tabs button[aria-selected=true],.game-stage .realm.treasury-paged .relic-tabs button[aria-selected=true]:hover{background:url('/art/ui/training/jade-control-v1.png') center / 100% 140% no-repeat!important;color:#fff0c5!important;text-shadow:0 1px 2px #21492c}
+.game-stage .realm.treasury-paged .relic-tabs button[aria-selected=false]:hover{background:url('/art/ui/training/paper-control-v1.png') center / 100% 140% no-repeat!important;filter:brightness(1.08)}
+.game-stage .realm.treasury-paged .relic-detail .relic-effects{gap:1px}
+.game-stage .realm.treasury-paged .relic-detail .relic-effects li{grid-template-columns:32px 1fr;align-items:center;padding:5px 0;gap:9px;background:none;border:0;font:17px/1.45 'DFKai-SB','KaiTi',serif;letter-spacing:.2px;min-height:44px}
+.game-stage .realm.treasury-paged .relic-detail .relic-effects .tier-past{color:#27231d}
+.game-stage .realm.treasury-paged .relic-detail .relic-effects .tier-current{color:#287342;font-weight:700}
+.game-stage .realm.treasury-paged .relic-detail .relic-effects .tier-future{color:#999184}
+.relic-tier-icon{position:relative;display:flex;align-items:center;justify-content:center;width:32px;height:42px;padding-top:5px;flex:none}
+.relic-tier-icon img{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;pointer-events:none}
+.relic-tier-icon b{position:relative;font:700 16px 'DFKai-SB','KaiTi',serif}
+.tier-past .relic-tier-icon img{filter:grayscale(1) brightness(.6)}
+.tier-past .relic-tier-icon b{color:#1c1b18}
+.tier-current .relic-tier-icon img{filter:sepia(1) saturate(2) hue-rotate(65deg) brightness(.75)}
+.tier-current .relic-tier-icon b{color:#eaffce;text-shadow:0 1px #24582e}
+.tier-future .relic-tier-icon{filter:grayscale(1);opacity:.45}
+.game-stage .realm.treasury-paged .relic-source p{font:18px/1.7 'DFKai-SB','KaiTi',serif}
+.game-stage .realm.treasury-paged .treasury-shelves button{overflow:visible}
+.game-stage .realm.treasury-paged .treasury-shelves button.selected{background:none!important;box-shadow:none!important}
+.game-stage .realm.treasury-paged .treasury-shelves .shelf-object{position:absolute;bottom:29px;left:50%;transform:translateX(-50%);width:116px;height:116px;display:flex;align-items:flex-end;justify-content:center}
+.game-stage .realm.treasury-paged .shelf-object::before{content:'';position:absolute;bottom:-2px;left:15%;width:70%;height:10px;background:radial-gradient(ellipse,#160b06a6,transparent 70%);pointer-events:none}
+.game-stage .realm.treasury-paged .treasury-shelves .shelf-object .relic-art{position:relative;width:110px;height:110px;min-width:0;min-height:0;object-fit:contain;object-position:center bottom;filter:drop-shadow(1px 3px 1px #1c0b0980)}
+.game-stage .realm.treasury-paged .treasury-shelves .shelf-nameplate{position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);width:137px;height:39px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;background:url('/art/ui/training/paper-control-v1.png') center / 100% 145% no-repeat;filter:drop-shadow(0 2px 1px #21100799);z-index:1}
+.game-stage .realm.treasury-paged .treasury-shelves .shelf-nameplate b{color:#56321b;font-size:17px;line-height:20px;text-shadow:none}
+.game-stage .realm.treasury-paged .treasury-shelves .shelf-nameplate .painted-stars{height:12px;margin:0;gap:1px}
+.game-stage .realm.treasury-paged .treasury-shelves .shelf-nameplate .painted-stars .realm-icon{width:12px;height:12px;min-width:0;min-height:0;filter:drop-shadow(0 1px 0 #704316)}
+.game-stage .realm.treasury-paged .treasury-shelves button.selected .shelf-nameplate{background-image:url('/art/ui/training/jade-control-v1.png');filter:drop-shadow(0 0 3px #edc466)}
+.game-stage .realm.treasury-paged .treasury-shelves button.selected .shelf-nameplate b{color:#fff1c4;text-shadow:0 1px 1px #204224}
+.game-stage .realm.treasury-paged .treasury-layout{inset:140px 67px 104px 105px;grid-template-columns:minmax(0,1fr) 335px;gap:79px;min-height:0}
+.treasury-cabinet{position:relative;min-width:0;min-height:0}
+.game-stage .treasury-paged .treasury-shelves{height:516px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(3,160px);grid-auto-rows:unset;gap:18px 10px;padding:0;overflow:visible;animation:shelf-arrive .18s ease-out}
+.game-stage .treasury-paged .treasury-shelves button{position:relative;height:160px;min-height:0;padding:0 5px 5px;gap:0;justify-content:flex-end;border:2px solid transparent;border-radius:8px;background:none;color:#ffe6b4;box-shadow:none;transition:background .15s}
+.game-stage .treasury-paged .treasury-shelves button.selected{border-color:transparent;background:radial-gradient(ellipse at 50% 78%,#ffd47f35,transparent 72%);box-shadow:inset 0 -3px #efbf66}
+.game-stage .treasury-paged .treasury-shelves button:hover:not(:disabled){background-color:#edbf5520;transform:none}
+.game-stage .realm.treasury-paged .treasury-shelves button.codex-locked{opacity:1;cursor:default;filter:none;background:none;box-shadow:none;transform:none}
+.game-stage .realm.treasury-paged .treasury-shelves .codex-locked .shelf-object{filter:brightness(0);pointer-events:none}
+.game-stage .treasury-paged .treasury-shelves button:focus-visible{outline:2px solid #ffe2a1;outline-offset:-2px}
+.game-stage .treasury-paged .treasury-shelves .relic-art{width:110px;height:110px;object-fit:contain;filter:drop-shadow(0 5px 3px #14080288);margin:0}
+.game-stage .treasury-paged .treasury-shelves b{font-size:20px;line-height:25px;white-space:nowrap;text-shadow:0 2px #361a0e}
+.game-stage .treasury-paged .treasury-shelves .painted-stars{height:17px;margin:2px 0 0;gap:1px}.game-stage .treasury-paged .treasury-shelves .painted-stars .realm-icon{width:14px;height:14px}
+.shelf-collected{position:absolute;right:5px;top:15px;font:16px 'DFKai-SB',serif;color:#eebd81;border:1px solid #b78150;padding:2px;border-radius:3px}
+.game-stage .shelf-pagination{position:absolute;top:552px;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:28px;color:#ffe9bc;text-shadow:0 2px #30180d}
+.game-stage .shelf-pagination button{width:50px;height:43px;padding:0;border:2px solid #bc8c4e;background:linear-gradient(#704729,#402819);box-shadow:0 3px #28170c,inset 0 0 0 2px #302017;border-radius:9px;font:36px/34px serif;color:#ffe5aa}
+.game-stage .shelf-pagination button:disabled{opacity:.35;cursor:default;filter:none}
+.game-stage .realm.treasury-paged .shelf-pagination button:is(:hover,:focus-visible,:active):not(:disabled){background:linear-gradient(#704729,#402819);color:#ffe5aa;border-color:#efc980;filter:none;transform:none;box-shadow:0 3px #28170c,inset 0 0 0 2px #302017,0 0 5px #e9b95e55}
+.game-stage .realm.treasury-paged .shelf-pagination button:focus-visible{outline:2px solid #ffe0a0;outline-offset:3px}
+.game-stage .realm.treasury-paged .relic-detail{display:flex;flex-direction:column;min-height:0;overflow:hidden;padding:15px 5px 9px;border:0;background:none;box-shadow:none;color:#49331f}
+.relic-heading{display:flex;align-items:center;gap:10px;flex:none;text-align:left;min-height:82px}
+.game-stage .realm.treasury-paged .relic-detail .relic-art.large{width:82px;height:82px;flex:0 0 82px;margin:0;object-fit:contain}
+.game-stage .treasury-paged .relic-detail h2{font-size:27px;line-height:1.15;margin:5px 0}.relic-ownership{font-size:12px;color:#775c3b}
+.game-stage .treasury-paged .relic-heading .painted-stars{justify-content:flex-start;gap:1px;margin:4px 0 0}.game-stage .treasury-paged .relic-heading .painted-stars .realm-icon{width:19px;height:19px}
+.game-stage .treasury-paged .relic-description{flex:none;font-size:14px;line-height:1.6;text-align:left;margin:11px 0;min-height:45px}
+.relic-tabs{display:flex;flex:none;border-bottom:2px solid #9d7949;margin:0 0 9px;gap:7px}
+.game-stage .relic-tabs button{flex:1;font-size:16px;font-weight:700;padding:7px 3px;border:0;border-radius:6px 6px 0 0;background:#9b704a22;color:#785932;box-shadow:none}
+.game-stage .relic-tabs button[aria-selected=true]{background:#665034;color:#fff2cb}.game-stage .relic-tabs button:focus-visible{outline:2px solid #b17a32;outline-offset:2px}
+.relic-content{flex:1;min-height:0;overflow:auto;text-align:left;padding:0 3px 5px;scrollbar-width:thin;scrollbar-color:#9d7949 #bd945322;overscroll-behavior:contain}
+.relic-growth-label{display:flex;justify-content:space-between;align-items:center;font-size:13px}.relic-growth-label small{font-size:11px;color:#785e40}
+.game-stage .treasury-paged .relic-detail .realm-progress{height:22px;margin:6px 0 10px;border-radius:5px;background:#665338}.game-stage .treasury-paged .relic-detail .realm-progress span{line-height:18px;font-size:12px}
+.game-stage .treasury-paged .relic-detail .relic-effects{list-style:none;padding:0;margin:0;display:grid;gap:5px}
+.game-stage .treasury-paged .relic-detail .relic-effects li{display:grid;grid-template-columns:35px 1fr;align-items:start;gap:7px;margin:0;padding:7px 5px;background:#a7804420;border:0;border-bottom:1px solid #956b3e25;font-size:14px;line-height:1.45;color:#49331f}
+.relic-tier{border:1px solid #9e835d;border-radius:4px;padding:1px 0;font-size:11px;text-align:center;color:#735b3d;white-space:nowrap}.is-unlocked .relic-tier{background:#637057;color:#fff6dc;border-color:#637057}
+.game-stage .relic-detail .relic-equipment-note{font-size:13px;color:#57624b;margin:3px 0 12px}.relic-source h3{font:700 20px 'DFKai-SB',serif;margin:8px 0 15px}.game-stage .relic-detail .relic-source p{font-size:16px;line-height:1.9;margin:0 0 18px}.game-stage .relic-detail .relic-source .relic-source-note{font-size:13px;color:#7c6346;border-top:1px solid #ac885844;padding-top:15px}
+@keyframes shelf-arrive{from{opacity:.5;transform:translateX(8px)}to{opacity:1;transform:none}}@media(prefers-reduced-motion:reduce){.game-stage .treasury-paged .treasury-shelves{animation:none}}
+
+.game-stage .realm.treasury-paged .relic-heading>.relic-art.large{min-width:0!important;max-width:82px!important;width:82px!important;min-height:0;max-height:82px}.relic-heading>div{min-width:0;flex:1}.game-stage .realm.treasury-paged .relic-heading h2{white-space:nowrap}.game-stage .realm.treasury-paged .treasury-shelves button.selected{border-color:transparent!important;box-shadow:inset 0 -3px #efbf66!important}
+
+
+.game-stage .treasury-paged .relic-detail .relic-effects li{padding-top:6px;padding-bottom:6px}
+
+
+.game-stage .realm.treasury-paged .treasury-layout{right:90px;grid-template-columns:minmax(0,1fr) 325px}.game-stage .realm.treasury-paged .relic-detail{padding-top:5px}.game-stage .treasury-paged .relic-description{margin:8px 0}.game-stage .realm.treasury-paged .treasury-shelves button.selected{outline:none!important}
+
+
+.game-stage .realm.treasury-paged .relic-tabs button[aria-selected=true],.game-stage .realm.treasury-paged .relic-tabs button[aria-selected=true]:hover{background:#665034!important;color:#fff2cb!important;filter:none}.game-stage .realm.treasury-paged .relic-tabs button[aria-selected=false]:hover{background:#b5905b55!important;color:#563d25!important}
+
+
+.game-stage .realm.treasury-paged .treasury-shelves .shelf-nameplate .painted-stars{min-height:12px;max-height:12px;flex:0 0 12px}.game-stage .realm.treasury-paged .treasury-shelves .shelf-nameplate b{flex:0 0 20px}
+.game-stage .realm.treasury-paged .relic-tabs button[aria-selected=true],.game-stage .realm.treasury-paged .relic-tabs button[aria-selected=true]:hover{background:url('/art/ui/training/jade-control-v1.png') center / 100% 140% no-repeat!important;color:#fff0c5!important;text-shadow:0 1px 2px #21492c}
+.game-stage .realm.treasury-paged .relic-detail .relic-effects li{min-height:36px;padding:3px 0;font-size:16px;line-height:1.4}
+.game-stage .realm.treasury-paged .relic-tier-icon{height:34px;width:30px}
+.game-stage .realm.treasury-paged .relic-detail .relic-description{font-size:17px;line-height:1.5}
