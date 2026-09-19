@@ -65,7 +65,7 @@ export function App({ preview = false }: { preview?: boolean }): React.ReactElem
     if (replay) return <CampaignJourney s={session} bump={bump} onDone={() => { setReplay(false); bump(); }} />;
     if(session.current.eventChallenge?.source==='chapter')return <EventChallengeView key={session.current.eventChallenge.eventId} session={session} onChange={bump} onDone={()=>{session.finishChapterChallenge();bump();}}/>;
     if (session.storyScene || session.needsEndingChoice) return <PendingStory s={session} bump={bump}/>;
-    if (session.isOver) return <ScreenEnd s={session} meta={meta} onSettled={m => { commitMeta(m); setSession(null); home(); }} />;
+    if (session.isOver) return <ScreenEnd s={session} meta={meta} onProgress={commitMeta} onSettled={m => { commitMeta(m); setSession(null); home(); }} />;
     if (session.needsChapterCamp && runView==='run') return <ScreenCamp s={session} bump={bump} onLearn={learn} onMarket={()=>setRunView('market')}/>;
     if (session.needsFactionChoice && !session.needsChapterCamp) return <ScreenFaction s={session} bump={bump} />;
     if (session.needsSuperiors) return <ScreenSuperiors s={session} bump={bump} />;

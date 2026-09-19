@@ -39,6 +39,31 @@
     "notableId": "notable:liubei",
     "packId": "pack:shu",
     "rarity": 5,
+    "recruitFarewell": {
+      "lines": [
+        {
+          "speaker": null,
+          "text": "一世行路將盡。劉備坐在夢中的路旁，替身邊留了一個位置。"
+        },
+        {
+          "speaker": "劉備",
+          "text": "這一路，有人同行，也有人走散。難得你一直陪我走到了這裡。"
+        },
+        {
+          "speaker": "你",
+          "text": "走過的地方太多，現在想起來，倒像只過了一晚。"
+        },
+        {
+          "speaker": "劉備",
+          "text": "可你做過的事，我都還記得。那些難處，你也陪我一一走過了。"
+        },
+        {
+          "speaker": "劉備",
+          "text": "若還有機會，我想早些遇見你。那時不急著談天下，先坐下來，好好吃一頓飯。"
+        }
+      ],
+      "title": "下次早些相逢"
+    },
     "recruitment": {
       "fullDream": "faction:shu",
       "hint": "首次完成蜀國圓夢結算"
@@ -117,6 +142,82 @@
     "notableId": "notable:guanyu",
     "packId": "pack:shu",
     "rarity": 5,
+    "recruitFarewell": {
+      "lines": [
+        {
+          "speaker": null,
+          "text": "夢境漸淡，關羽仍立在歸路盡頭，像是在等你。"
+        },
+        {
+          "speaker": "關羽",
+          "text": "這一生，關某經過不少風浪。到頭來，記得最清楚的，卻是麥城外那一路接應的火光。"
+        },
+        {
+          "speaker": "關羽",
+          "text": "立盟、留路，直到最後接援……你答應的事，一件也未曾忘。"
+        },
+        {
+          "speaker": "你",
+          "text": "既然說過會接你回來，就不能失約。"
+        },
+        {
+          "speaker": "關羽",
+          "text": "這份情義，關某銘記。"
+        },
+        {
+          "speaker": "關羽",
+          "text": "若還有相逢之日，願能早些與你相識。你我並肩，再走一程。"
+        }
+      ],
+      "title": "記得那條歸路",
+      "variants": [
+        {
+          "lines": [
+            {
+              "speaker": null,
+              "text": "夢境漸淡，關羽仍立在歸路盡頭，像是在等你。"
+            },
+            {
+              "speaker": "關羽",
+              "text": "這一生，關某經過不少風浪。到頭來，記得最清楚的，卻是荊襄接援時，那一路如約而至的旗幟。"
+            },
+            {
+              "speaker": "關羽",
+              "text": "立盟、留路，直到最後接援……你答應的事，一件也未曾忘。"
+            },
+            {
+              "speaker": "你",
+              "text": "既然立過盟、許過諾，就不能讓等著接應的人失望。"
+            },
+            {
+              "speaker": "關羽",
+              "text": "這份情義，關某銘記。"
+            },
+            {
+              "speaker": "關羽",
+              "text": "若還有相逢之日，願能早些與你相識。你我並肩，再走一程。"
+            }
+          ],
+          "requirements": [
+            {
+              "kind": "choice",
+              "node": "S4.A",
+              "option": "pact"
+            },
+            {
+              "kind": "choice",
+              "node": "S6.A",
+              "option": "corridor"
+            },
+            {
+              "chapter": "ch:shu.hanzhong",
+              "kind": "depth",
+              "min": 7
+            }
+          ]
+        }
+      ]
+    },
     "recruitment": {
       "hint": "赤壁立盟、漢中留援路，麥城接援通過第 5 關",
       "story": [
@@ -372,6 +473,35 @@
     "notableId": "notable:zhugeliang",
     "packId": "pack:shu",
     "rarity": 5,
+    "recruitFarewell": {
+      "lines": [
+        {
+          "speaker": null,
+          "text": "案上的燈火漸漸融入夢色。諸葛亮合起最後一卷軍書，把羽扇輕放在一旁。"
+        },
+        {
+          "speaker": "諸葛亮",
+          "text": "回想這一生，入蜀、漢中，直到北伐……你一次次安排交接，終於讓軍務不必都繫於一人。"
+        },
+        {
+          "speaker": "諸葛亮",
+          "text": "當初看來瑣碎的分工，到後來，竟能接住整支軍隊。這是你讓亮最難忘的事。"
+        },
+        {
+          "speaker": "你",
+          "text": "總不能每一封軍報，都等先生親自拆。"
+        },
+        {
+          "speaker": "諸葛亮",
+          "text": "是啊。如今再聽，仍覺寬慰。"
+        },
+        {
+          "speaker": "諸葛亮",
+          "text": "若能再共事，願與你從最初便分掌軍務。也好留一個晚上，只談你我想做的事。"
+        }
+      ],
+      "title": "可以放下的羽扇"
+    },
     "recruitment": {
       "hint": "入蜀與漢中交接，北伐分權並通過第 5 關",
       "story": [
@@ -625,6 +755,31 @@
     "notableId": "notable:machao",
     "packId": "pack:shu",
     "rarity": 5,
+    "recruitFarewell": {
+      "lines": [
+        {
+          "speaker": null,
+          "text": "鐵騎踏過的塵土已散。馬超牽馬停在夢中，望了望你曾受命掌領的軍旗。"
+        },
+        {
+          "speaker": "馬超",
+          "text": "這一生，你從軍中一路走上來，終於做到了能獨當一面的武職。這份本事，我認。"
+        },
+        {
+          "speaker": "你",
+          "text": "位置越高，越得記得跟在旗後的人。"
+        },
+        {
+          "speaker": "馬超",
+          "text": "嗯。只顧自己衝得痛快，算不上能領一軍。"
+        },
+        {
+          "speaker": "馬超",
+          "text": "可惜此行已到盡頭。若有機會重逢，你定進退，我來破陣，一起帶一次騎兵吧！"
+        }
+      ],
+      "title": "配得上這面旗"
+    },
     "recruitment": {
       "career": {
         "line": "martial",
@@ -782,6 +937,35 @@
     "notableId": "notable:pangtong",
     "packId": "pack:shu",
     "rarity": 5,
+    "recruitFarewell": {
+      "lines": [
+        {
+          "speaker": null,
+          "text": "山川城郭淡成紙上的墨跡。龐統攤開那張入蜀舊圖，指給你看其中一筆。"
+        },
+        {
+          "speaker": "龐統",
+          "text": "這一生畫過那麼多圖，我偏偏最記得這一條。落鳳坡前，是你先勘清了路，又安排好接應。"
+        },
+        {
+          "speaker": "龐統",
+          "text": "我光想著怎樣進去，你卻連出了事，該怎樣把人接回來，都想到了。"
+        },
+        {
+          "speaker": "你",
+          "text": "軍師畫的圖，總不能少了軍師回來的路。"
+        },
+        {
+          "speaker": "龐統",
+          "text": "哈！這一筆，到最後還是你勝過我。"
+        },
+        {
+          "speaker": "龐統",
+          "text": "若能再相逢，咱們從第一張圖便一起畫。也許能少走些險路，多做幾件痛快的事。"
+        }
+      ],
+      "title": "圖外的那條路"
+    },
     "recruitment": {
       "hint": "入蜀勘路與交接，通過落鳳坡第 5 關",
       "story": [
@@ -952,6 +1136,31 @@
     "notableId": "notable:jiangwei",
     "packId": "pack:shu",
     "rarity": 5,
+    "recruitFarewell": {
+      "lines": [
+        {
+          "speaker": null,
+          "text": "北伐的軍旗已遠，姜維仍望著夢中那張未曾收起的地圖。"
+        },
+        {
+          "speaker": "姜維",
+          "text": "北伐最後一道關口，你終究親自走過去了。想到那一刻，維至今仍覺振奮。"
+        },
+        {
+          "speaker": "姜維",
+          "text": "這一路有多難，走過的人才知道。能與你見到最後的戰果，是此生難忘之事。"
+        },
+        {
+          "speaker": "你",
+          "text": "如今再看這張圖，倒還有許多想去的地方。"
+        },
+        {
+          "speaker": "姜維",
+          "text": "維也是。若還有同行的機會，願與你各領一軍，彼此策應。前面的路，一起看。"
+        }
+      ],
+      "title": "最後一關以後"
+    },
     "recruitment": {
       "hint": "蜀國北伐通過第 7 關",
       "story": [
@@ -7348,7 +7557,7 @@
             "draw": "南華老仙：未分高下，尚待磨練。",
             "lose": "南華老仙：今日所見，留待來日細想。",
             "retreat": "南華老仙：知進知退，亦是一得。",
-            "win": "南華老仙：天下何止一條道路。這部太平要書，便交予你了。\n獲得四維各 +5、太平要書，解鎖南華老仙。"
+            "win": "南華老仙：天下何止一條道路。這部太平要書，便交予你了。\n獲得四維各 +5、太平要書。"
           }
         },
         "id": "chapter:hulao-nanhua",

@@ -2,19 +2,33 @@ import type { Session } from '../app/session.js';
 import type { MetaState } from '../contracts/core/state.js';
 import { defs, t } from '../app/bootstrap.js';
 import { Hud } from './Hud.js';
+import { lifeSettled, nextRecruitFarewell, advanceRecruitFarewell } from '../app/recruit-farewell.js';
+import { RecruitFarewell } from './RecruitFarewell.js';
+import { useState } from 'react';
 
 interface Props {
   readonly s: Session;
   readonly meta: MetaState;
   readonly onSettled: (meta: MetaState) => void;
+  readonly onProgress: (meta: MetaState) => void;
 }
 
-export function ScreenEnd({ s, meta, onSettled }: Props): React.ReactElement {
+export function ScreenEnd({ s, meta, onSettled, onProgress }: Props): React.ReactElement {
+  const [error,setError]=useState('');
   const st = s.current;
   const ending = st.ending;
   if (ending === null) throw new Error('尚未達成結局');
   const result = s.settle(meta);
   const frags = Object.entries(result.notableFragments);
+  const farewell=nextRecruitFarewell(st,meta,defs);
+  if(farewell)return <RecruitFarewell scene={farewell} onNext={()=>{
+    const next=advanceRecruitFarewell(st,meta,defs,farewell.notableId,farewell.page);
+    if(nextRecruitFarewell(st,next,defs))onProgress(next);else onSettled(next);
+  }}/>;
+  const confirm=()=>{try{
+    if(nextRecruitFarewell(st,result.meta,defs))onProgress(result.meta);
+    else onSettled(result.meta);
+  }catch{setError('結算未能保存，請保留此頁並再試一次。');}};
 
   return (
     <>
@@ -63,8 +77,9 @@ export function ScreenEnd({ s, meta, onSettled }: Props): React.ReactElement {
       )}
 
       <div className="row" style={{ marginTop: 22 }}>
-        <button className="primary" onClick={() => { onSettled(result.meta); }}>
-          夢醒 → 回到天命
+        {error&&<p role="alert">{error}</p>}
+        <button className="primary" onClick={confirm}>
+          {!lifeSettled(st,meta)&&nextRecruitFarewell(st,result.meta,defs)?'確認結算 → 夢醒之際':'夢醒 → 回到天命'}
         </button>
       </div>
     </>

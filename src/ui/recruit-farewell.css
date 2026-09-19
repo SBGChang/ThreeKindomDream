@@ -1,0 +1,25 @@
+.game-stage > .stage-content:has(.recruit-farewell){inset:0;overflow:hidden}
+.game-stage.in-dream:has(.recruit-farewell)>.game-top,.game-stage.in-dream:has(.recruit-farewell)>.game-bottom{display:none}
+.game-stage .game-sheet:has(.recruit-farewell){position:static;background:none;border:0;padding:0;box-shadow:none}
+.recruit-farewell{position:absolute;inset:0;z-index:25;overflow:hidden;color:#fff4d8;background:#182c35;font-family:serif}
+.farewell-sky{position:absolute;inset:0;background:linear-gradient(90deg,#102b3af0,#19384766 50%,#102b3add),linear-gradient(0deg,#10222f 3%,transparent 65%),url('/art/backgrounds/bg-destiny.png') center/cover;opacity:.9}
+.farewell-sky:after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 68% 35%,#f0dba244,transparent 47%)}
+.farewell-heading{position:absolute;left:100px;top:115px;width:520px}
+.farewell-settings{position:absolute;right:35px;top:28px;font-size:23px;z-index:1}
+.farewell-heading>span{font-size:18px;letter-spacing:5px;color:#dbcba9}
+.game-stage .farewell-heading h1{font-size:42px;margin:18px 0;color:#fff1c7;text-shadow:0 3px 2px #101d26}
+.farewell-portrait{position:absolute;right:85px;bottom:120px;width:500px;height:530px;display:flex;align-items:flex-end;justify-content:center;animation:farewell-arrive .65s ease-out both;filter:drop-shadow(0 12px 20px #07192499)}
+.farewell-portrait .character-halfbody{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+.farewell-conversation{position:absolute;left:90px;right:90px;bottom:97px;min-height:148px;padding:24px 34px 26px;border-top:2px solid #cdb880;background:linear-gradient(100deg,#132732fa,#1d3542f0);border-radius:5px;box-shadow:0 10px 26px #09182288}
+.farewell-speaker{font-size:23px;font-weight:bold;color:#f3d58e}
+.game-stage .farewell-conversation p{font-size:25px;line-height:1.65;margin:12px 0 0;color:#fff4df;max-width:100%;text-wrap:pretty}
+.farewell-controls{position:absolute;bottom:27px;left:90px;right:90px;display:flex;justify-content:flex-end;align-items:center;gap:24px}
+.farewell-controls button{min-width:164px;font-size:21px;padding:12px 25px}
+.farewell-controls [role=alert]{color:#ffceb0}
+.farewell-unlock{position:absolute;left:85px;top:325px;width:550px;text-align:center;animation:farewell-arrive .55s ease-out both}
+.farewell-unlock>span{font-size:21px;color:#e9c775;letter-spacing:9px}
+.game-stage .farewell-unlock h2{font-size:43px;color:#ffe5a4;margin:22px 0;text-shadow:0 3px 4px #081722;border:0}
+.game-stage .farewell-unlock p{font-size:22px;color:#f2e4c7}
+.recruit-farewell.is-unlocked .farewell-portrait{bottom:80px;height:550px}
+@keyframes farewell-arrive{from{opacity:0;translate:0 15px}to{opacity:1;translate:0 0}}
+@media(prefers-reduced-motion:reduce){.farewell-portrait,.farewell-unlock{animation:none}}

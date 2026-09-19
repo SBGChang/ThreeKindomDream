@@ -58,6 +58,7 @@ export interface CollectionState {
 }
 
 export interface MetaState {
+  readonly recruitFarewells?: import('./recruit-farewell.js').RecruitFarewellProgress;
   readonly unlockedNotables?:readonly string[];
   readonly discoveredItems?:readonly string[];
   readonly schemaVersion: number;

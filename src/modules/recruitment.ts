@@ -16,5 +16,11 @@ export function earnedRecruits(ctx:RunContext):string[]{
  }).map(d=>String(d.notableId))])];
 }
 export function preserveRecruitment(meta:MetaState,ctx:RunContext):MetaState{
- return {...meta,unlockedNotables:[...new Set([...(meta.unlockedNotables??[]),...earnedRecruits(ctx)])],discoveredItems:[...new Set([...(meta.discoveredItems??[]),...Object.keys(ctx.state.items.count).filter(id=>(ctx.state.items.count[id]??0)>0)])]};
+ const earned=earnedRecruits(ctx);
+ const previous=meta.recruitFarewells??{pending:[],completed:[]};
+ // Existing codex/unlock records are grandfathered; never backfill every old hero.
+ const fresh=earned.filter(id=>!recruited(id,meta,ctx.defs)&&!!ctx.defs.reader('notable').get(id).recruitFarewell);
+ return {...meta,
+  recruitFarewells:{...previous,pending:[...new Set([...previous.pending,...fresh])].filter(id=>!previous.completed.includes(id))},
+  unlockedNotables:[...new Set([...(meta.unlockedNotables??[]),...earned])],discoveredItems:[...new Set([...(meta.discoveredItems??[]),...Object.keys(ctx.state.items.count).filter(id=>(ctx.state.items.count[id]??0)>0)])]};
 }

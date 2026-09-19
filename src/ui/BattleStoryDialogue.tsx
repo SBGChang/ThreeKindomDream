@@ -13,7 +13,7 @@ export function BattleStoryDialogue({data,run,onNext}:{data:BattleStory;run:Stor
  const realSpeaker=line&&Object.values(data.actors).some(a=>a.name===line.speaker);
  if(realSpeaker&&line.speaker!=='你')lastNpc.current=line.speaker;
  const speaker=line?.speaker??(n.kind==='choice'?lastNpc.current??'軍中':n.kind==='reward'?'戰功':'軍中');
- const text=line?.text??(n.kind==='choice'?n.prompt:n.kind==='reward'?[n.reward.title,n.reward.allStats?`全屬性各＋${n.reward.allStats}`:'',...n.reward.items,...n.reward.unlocks.map(name=>'開放相逢：'+name),n.reward.gold?`黃金${n.reward.gold}`:''].filter(Boolean).join('　'):n.kind==='end'?n.text:'');
+ const text=line?.text??(n.kind==='choice'?n.prompt:n.kind==='reward'?[n.reward.title,n.reward.allStats?`全屬性各＋${n.reward.allStats}`:'',...n.reward.items,n.reward.gold?`黃金${n.reward.gold}`:''].filter(Boolean).join('　'):n.kind==='end'?n.text:'');
  const npc=lastNpc.current,actors=[{name:'你',hero:true},...(npc?[{name:npc}]:[])];
  const words=Object.values(data.actors).map(a=>a.name);
  useEffect(()=>{root.current?.focus({preventScroll:true});},[run.revision]);

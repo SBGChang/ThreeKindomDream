@@ -1,4 +1,5 @@
 import type {NotableDef} from '../src/contracts/core/definitions.js';
+import {recruitFarewells,guanyuFarewell} from './recruit-farewells.js';
 import type {StoryRequirement} from '../src/contracts/core/story.js';
 type R=NonNullable<NotableDef['recruitment']>;
 const c=(node:string,option:string):StoryRequirement=>({kind:'choice',node,option});
@@ -23,5 +24,5 @@ const rules:Record<string,R>={
 };
 export function withRecruitment(d:NotableDef):NotableDef{
  const slug=String(d.notableId).split(':')[1]!;const recruitment=initial.has(slug)?{initial:true,hint:'初始相逢資格'}:rules[slug];
- if(!recruitment)throw Error('角色缺少解鎖條件：'+slug);return {...d,recruitment};
+ if(!recruitment)throw Error('角色缺少解鎖條件：'+slug);return {...d,recruitment,...(!recruitment.initial?{recruitFarewell:slug==='guanyu'?guanyuFarewell:recruitFarewells[slug]}:{})};
 }

@@ -330,6 +330,7 @@ export interface NotableSkillRow {
 }
 
 export interface NotableDef extends DefHeader {
+  readonly recruitFarewell?: import('./recruit-farewell.js').RecruitFarewellScript;
   readonly recruitment?: {readonly initial?:boolean;readonly hint:string;readonly attr?:{readonly name:Attr;readonly min:number};readonly career?:{readonly line:'civil'|'martial';readonly min:number};readonly items?:readonly string[];readonly fullDream?:string;readonly story?:readonly import('./story.js').StoryRequirement[]};
   readonly affiliation?:string;
   /** Explicit shared atlas until this character receives a dedicated duel sequence. */
