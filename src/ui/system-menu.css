@@ -26,5 +26,30 @@
 .system-select{position:relative}.system-select:after{content:'⌄';position:absolute;right:18px;top:5px;font-size:27px;color:#dfc68e;pointer-events:none}.system-panel select{appearance:none;width:100%;height:48px;border:2px solid #7f806b;border-radius:4px;padding:0 44px 0 18px;background:#152029;color:#f4e3be;font:19px 'Microsoft JhengHei',sans-serif;cursor:pointer}.system-panel select option{background:#202d36;color:#f4e3be}
 .system-settings-footer{display:flex;align-items:center;justify-content:space-between;margin-top:24px;color:#aebbb7;font-size:13px}.system-panel .system-button{--tone:#aab7b5;--tone-dark:#26373d;--tone-light:#374a50;display:inline-flex;align-items:center;justify-content:center;gap:12px;min-width:160px;min-height:52px;padding:10px 20px;border:2px solid var(--tone);border-radius:5px;background:linear-gradient(110deg,var(--tone-light),var(--tone-dark));box-shadow:0 4px 0 #10181d;color:#fff1d5;font-size:19px;font-weight:700}.system-button>svg{width:22px;height:22px}
 .system-panel .system-button.tone-red{--tone:#da7869;--tone-dark:#642c30;--tone-light:#813e40}.system-panel .system-button.tone-gold{--tone:#c6a35c;--tone-dark:#4d3d24;--tone-light:#645036}.system-panel .system-button.tone-green{--tone:#91bf80;--tone-dark:#2e513f;--tone-light:#446a4b}
-.system-home,.system-quit,.system-exited{width:600px}.system-confirm-copy{display:flex;align-items:center;gap:24px;margin:32px 0 38px}.system-confirm-seal{display:flex;align-items:center;justify-content:center;width:76px;height:76px;flex:none;border:2px solid var(--tone);border-radius:16px;background:var(--tone-dark);color:var(--tone);box-shadow:inset 0 0 0 5px #0003;transform:rotate(-5deg)}.system-confirm-seal>svg{width:39px;height:39px;transform:rotate(5deg)}.system-confirm-copy p{font-size:20px;line-height:1.7;margin:0}.system-confirm-copy small{display:block;font-size:14px;line-height:1.7;margin-top:10px;color:#b8c1b9}.system-confirm-actions{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding-top:22px;border-top:1px solid #b6996355}.system-message{margin:18px 0 0;color:#ffc498;font-size:14px;line-height:1.6}.system-exited-copy{margin:30px 0;color:#d9dfd2;font-size:20px}
+.system-exited{width:600px}.system-message{margin:18px 0 0;color:#ffc498;font-size:14px;line-height:1.6}.system-exited-copy{margin:30px 0;color:#d9dfd2;font-size:20px}
+/* Dedicated painted parchment: fixed corners, stretching edges and paper center. */
+.system-panel.system-art-confirm{
+  width:660px;padding:22px 22px 18px;border:38px solid transparent;
+  border-image:url('../../public/art/ui/system/confirm-frame-v1.png') 156 fill / 38px / 0 stretch;
+  background:none;box-shadow:none;color:#57371f;
+}
+.system-confirm-content{display:grid;grid-template-columns:196px minmax(0,1fr);align-items:center;gap:24px;min-height:224px}
+.system-confirm-art{display:block;width:196px;height:210px;object-fit:contain}
+.system-confirm-letter h1{margin:0 0 18px;font:900 31px/1.3 'DFKai-SB','KaiTi','PMingLiU',serif;letter-spacing:2px;color:#58351e;text-shadow:0 1px #fff5da}
+.system-confirm-copy{margin:0;font-size:19px;line-height:1.7;color:#63472d}
+.system-confirm-copy small{display:block;margin-top:12px;font-size:16px;line-height:1.8;color:#786043}
+.system-confirm-actions{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:12px}
+.game-stage .system-art-confirm .system-painted-button{
+  position:relative;isolation:isolate;display:grid;place-items:center;min-width:0;height:86px;
+  margin:0;padding:0 24px;border:0;border-radius:0;background:none;box-shadow:none;
+  color:#fff1cb;font:900 24px/1.3 'DFKai-SB','KaiTi','PMingLiU',serif;
+  text-shadow:0 2px 0 #422716,1px 0 #422716,-1px 0 #422716;letter-spacing:2px;
+}
+.system-button-art{position:absolute;z-index:-1;inset:0;pointer-events:none;background:url('../../public/art/ui/system/confirm-buttons-v1.png') center 15.3% / 108% 464.44% no-repeat}
+.tone-gold>.system-button-art{background-position:center 50.5%}.tone-red>.system-button-art{background-position:center 85.9%}
+.game-stage .system-art-confirm .system-painted-button:is(:hover,:focus-visible,:active){background:none;border:0;box-shadow:none;transform:none;filter:none}
+.system-painted-button:is(:hover,:focus-visible):not(:disabled)>.system-button-art{filter:brightness(1.12) drop-shadow(0 0 3px #cf933b)}
+.game-stage .system-art-confirm .system-painted-button:focus-visible{outline:2px solid #916129;outline-offset:1px}
+.system-painted-button:active:not(:disabled)>.system-button-art{filter:brightness(.93)}
+.system-art-confirm .system-message{margin:12px 10px 0;color:#982f22;font-weight:700}
 @media(prefers-reduced-motion:reduce){.system-panel button{transition:none}}

@@ -4,10 +4,18 @@
 
 - 選單：500×562.606px，四個約 406×98px 長條按鈕，依序為系統設定、返回主選單、離開遊戲、繼續遊戲；分別使用藍、赭金、紅、綠色。每片都有獨立彩色令牌、立體器物圖示、銅金包角與雕雲外框。點擊區對齊圖片內各片令牌，Hover/focus 只描亮外緣。
 - 系統設定：780px 寬，音效、音樂、螢幕、文字四列。滑桿 0–100，提供鍵盤操作；文字為介面語言，提供繁體中文與簡體中文。
-- 確認框：600px 寬，警示標題與門／電源印記，取消及確認並列。預設聚焦取消，Esc 返回選單；Tab 留在目前視窗。
+- 確認框：660px 寬，專用紙面木框 9-slice、左側城門行囊插圖，右側楷書標題與保存說明。底部並列手繪青綠取消、赭金返回／朱紅離開令牌；預設聚焦取消，Esc 返回選單，Tab 留在目前視窗。
 - Hover/focus 僅描亮邊線，不更換底圖或縮放按鈕。所有頁面以 1280×800 舞台驗收，不需要捲動。
 
-新美術：`public/art/ui/system/menu-plaques-v1.png`，1182×1330 RGBA，四角 alpha 0，保留原始透明邊界；設定與確認框取相同素材的外框切片，內容區另以深色底承載。透過內建 imagegen 生成，完整提示詞見 [system-menu-art-prompt.md](system-menu-art-prompt.md)。
+選單美術：`public/art/ui/system/menu-plaques-v1.png`，1182×1330 RGBA，四角 alpha 0，保留原始透明邊界；設定頁仍取此素材外框，內容區以深色底承載。透過內建 imagegen 生成，完整提示詞見 [system-menu-art-prompt.md](system-menu-art-prompt.md)。
+
+確認框新增三張 1254×1254 美術，透過內建 imagegen 生成，完整提示詞與路徑見 [system-confirm-prompts-v1.json](system-confirm-prompts-v1.json)：
+
+- `public/art/ui/system/confirm-frame-v1.png`：不透明紙面木框，來源四邊各切 156px，顯示邊寬 38px，`border-image` 的 `fill` 保留美術紙面；四角固定、四邊與中央伸展。
+- `public/art/ui/system/return-gate-v1.png`：透明城門、行囊與卷軸，顯示範圍 196×210px，保持比例。
+- `public/art/ui/system/confirm-buttons-v1.png`：青綠、赭金、朱紅三列透明令牌圖集。CSS 專用子元素定位原圖，Hover／focus／active 僅改亮度或焦點，不改圖集位置。文字保持 DOM 語意與語言切換能力。
+
+驗收圖與腳本放在 `artifacts/system-confirm/`；確認實際 alpha 為 0–255、三種視窗尺寸（960×640、1280×800、1600×1000）、取消、Esc、Tab 焦點循環、返回主選單及 Hover 圖集不跳位。
 
 設定以 `sgd.system.v1` 保存，不影響遊戲數值或隨機流。音效提供獨立 Web Audio 按鈕回饋與滑桿試聽。HTML 音樂預設讀取 music 音量；音效媒體使用 `data-audio-channel="sfx"`。動態載入及播放媒體時會重新套用音量。目前專案未附背景音樂，這次不新增曲目。
 

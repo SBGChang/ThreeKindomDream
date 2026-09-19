@@ -87,6 +87,7 @@ export function SystemMenu({ onClose, onHome, beforeExit }: {
     finally { setBusy(false); }
   };
   const title = page === 'settings' ? '系統設定' : page === 'home' ? '返回主選單？' : page === 'quit' ? '離開遊戲？' : page === 'exited' ? '已離開遊戲' : '遊戲選單';
+  const isConfirm = page === 'home' || page === 'quit';
   return <div className="game-modal system-overlay" onClickCapture={event => {
     if ((event.target as HTMLElement).closest('button')) playMenuSound(prefs.sfx);
   }} onKeyDown={event => {
@@ -98,8 +99,8 @@ export function SystemMenu({ onClose, onHome, beforeExit }: {
       else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
     }
   }}>
-    <div ref={panel} className={`system-panel system-${page}`} role={page === 'home' || page === 'quit' ? 'alertdialog' : 'dialog'} aria-modal="true" aria-labelledby="system-title" aria-describedby={page === 'home' || page === 'quit' ? 'system-confirm-copy' : undefined}>
-      {page === 'menu' ? <h1 id="system-title" className="system-accessible-title">{title}</h1> : <header className="system-heading"><SystemIcon kind={page === 'settings' ? 'settings' : page === 'exited' ? 'quit' : 'alert'}/><h1 id="system-title">{title}</h1></header>}
+    <div ref={panel} className={`system-panel system-${page}${isConfirm ? ' system-art-confirm' : ''}`} role={isConfirm ? 'alertdialog' : 'dialog'} aria-modal="true" aria-labelledby="system-title" aria-describedby={isConfirm ? 'system-confirm-copy' : undefined} aria-busy={busy}>
+      {page === 'menu' ? <h1 id="system-title" className="system-accessible-title">{title}</h1> : !isConfirm && <header className="system-heading"><SystemIcon kind={page === 'settings' ? 'settings' : 'quit'}/><h1 id="system-title">{title}</h1></header>}
       {page === 'menu' && <>
         <div className="system-menu-list">
           <button className="system-row tone-blue" data-initial-focus onClick={() => go('settings')}><span>系統設定</span></button>
@@ -119,9 +120,18 @@ export function SystemMenu({ onClose, onHome, beforeExit }: {
         </div>
         <footer className="system-settings-footer"><span>調整即套用・自動記住設定</span><button className="system-button" onClick={() => go('menu')}><SystemIcon kind="back"/>返回選單</button></footer>
       </>}
-      {(page === 'home' || page === 'quit') && <>
-        <div className="system-confirm-copy" id="system-confirm-copy"><span className={`system-confirm-seal ${page === 'quit' ? 'tone-red' : 'tone-gold'}`}><SystemIcon kind={page === 'quit' ? 'quit' : 'home'}/></span><p>{page === 'quit' ? '是否結束本次遊戲？' : '是否離開目前畫面，返回主選單？'}<small>目前進度會保留，下次可繼續此生行旅。</small></p></div>
-        <div className="system-confirm-actions"><button className="system-button" disabled={busy} data-initial-focus onClick={() => go('menu')}>取消</button><button className={`system-button ${page === 'quit' ? 'tone-red' : 'tone-gold'}`} disabled={busy} onClick={() => void leave()}>{busy ? '儲存中…' : page === 'quit' ? '確認離開' : '返回主選單'}</button></div>
+      {isConfirm && <>
+        <div className="system-confirm-content">
+          <img className="system-confirm-art" src="./art/ui/system/return-gate-v1.png" alt="" aria-hidden="true"/>
+          <div className="system-confirm-letter">
+            <h1 id="system-title">{title}</h1>
+            <p id="system-confirm-copy" className="system-confirm-copy">{page === 'quit' ? '是否結束本次遊戲？' : '是否離開目前畫面？'}<small>目前進度會保留，<br/>下次可繼續此生行旅。</small></p>
+          </div>
+        </div>
+        <div className="system-confirm-actions">
+          <button className="system-painted-button" disabled={busy} data-initial-focus onClick={() => go('menu')}><span className="system-button-art" aria-hidden="true"/><span>取消</span></button>
+          <button className={`system-painted-button ${page === 'quit' ? 'tone-red' : 'tone-gold'}`} disabled={busy} onClick={() => void leave()}><span className="system-button-art" aria-hidden="true"/><span>{busy ? '儲存中…' : page === 'quit' ? '確認離開' : '返回主選單'}</span></button>
+        </div>
       </>}
       {page === 'exited' && <><p className="system-exited-copy">進度已保留，可以關閉此分頁。</p><button className="system-button tone-green" data-initial-focus onClick={onClose}>繼續遊戲</button></>}
       {message && <p className="system-message" role="alert">{message}</p>}
