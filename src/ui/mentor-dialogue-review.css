@@ -1,0 +1,7 @@
+.mentor-review{position:absolute;inset:0;outline:none}
+.mentor-review-nav{position:fixed;z-index:200;top:12px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;padding:10px 16px;background:#29251ded;color:#fff0c9;border:1px solid #bba374;border-radius:8px;white-space:nowrap;font-size:16px}
+.mentor-review-nav select,.mentor-review-nav button{font:inherit;background:#f5e7cb;color:#453321;padding:7px;border:1px solid #bba374;border-radius:4px;cursor:pointer}
+.mentor-review-nav small{color:#c7bea9}
+.mentor-review .mentor-prev{position:absolute;bottom:22px;right:165px}
+.mentor-review .mentor-count{position:absolute;bottom:38px;left:50%;color:#f4dfb1;font-size:18px}
+@media(max-width:850px){.mentor-review-nav{gap:5px;padding:7px;font-size:12px}.mentor-review-nav small,.mentor-review-nav strong{display:none}}
