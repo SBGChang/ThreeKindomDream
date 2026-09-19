@@ -20,11 +20,11 @@ const charge=setup('rest','defend',true);assert.equal(charge.t.allyEvolution,'�
 const reverse=setup('defend','attack',true);assert.equal(reverse.t.allyEvolution,'借力打力');assert.equal(reverse.t.allyCost,0);assert.equal(reverse.t.damageToAlly,0);assert.equal(reverse.t.damageToEnemy,reverse.db);assert.equal(reverse.t.enemyCost,48);
 for(const [mine,theirs] of [['attack','defend'],['defend','rest'],['rest','attack']] as const){
  const {s,t,da,db}=setup(mine,theirs,true);
- assert.equal(t.enemyEvolution,theirs==='attack'?'攻其不備':theirs==='defend'?'借力打力':'蓄勢待發');
- assert.equal(t.damageToAlly,theirs==='attack'?Math.round(db*1.2):theirs==='defend'?da:0);
- assert.equal(t.damageToEnemy,0);
- assert.equal(t.enemyCost,theirs==='defend'?0:actionCost(s.enemy,theirs));
- assert.equal(t.enemyRecovery,theirs==='rest'?Math.min(72,s.enemy.maxStamina-60):0);
+ assert.equal(t.enemyEvolution,null,'only the player can evolve, even with a favorable RNG roll');
+ assert.equal(t.damageToAlly,theirs==='attack'?db:0);
+ assert.equal(t.damageToEnemy,mine==='attack'?Math.round(da*.2):0);
+ assert.equal(t.enemyCost,actionCost(s.enemy,theirs));
+ assert.equal(t.enemyRecovery,theirs==='rest'?Math.min(48,s.enemy.maxStamina-60):0);
 }
 const enemyTrait=createDuel(DEFAULT_DUEL_BUILD,{...DEFAULT_DUEL_BUILD,trait:'reversal'});
 for(const enabled of [false,true]){
@@ -39,7 +39,7 @@ assert.equal(npc.last!.allyEvolution,'借力打力');assert.equal(npc.ally.combo
 assert.equal(actionCost(createDuel(DEFAULT_DUEL_BUILD,{...DEFAULT_DUEL_BUILD,trait:'steady'}).enemy,'defend'),9);
 assert.equal(restAmount(createDuel(DEFAULT_DUEL_BUILD,{...DEFAULT_DUEL_BUILD,trait:'breathing'}).enemy),54);
 enemyTrait.enemy.points.defend=12;enemyTrait.enemy.combo=6;
-assert.equal(evolutionChance(enemyTrait.enemy,'defend'),.16,'enemy trait bonus works without Combo or stale action points');
+assert.equal(evolutionChance(enemyTrait.enemy,'defend'),0,'enemy traits cannot enable evolution');
 
 const progress=createDuel();progress.ally.combo=3;progress.ally.previous='rest';progress.ally.streak=1;progress.ally.stamina=10;progress.enemyAction='defend';progress.rng=evoSeed(false);resolveDuel(progress,'rest');assert.equal(progress.ally.combo,5);assert.equal(progress.enemy.combo,0);assert.equal(progress.ally.points.rest,4);
 progress.ally.stamina=10;progress.enemyAction='attack';resolveDuel(progress,'rest');assert.equal(progress.ally.combo,0);assert.equal(progress.ally.points.rest,4,'countered action retains earned points but earns none');
@@ -48,8 +48,8 @@ assert.equal(repeated.enemy.combo,0);
 assert.deepEqual(repeated.enemy.points,{attack:0,defend:0,rest:0});
 assert.equal(attackPower(repeated.enemy),repeated.enemy.attack);
 assert.equal(defensePower(repeated.enemy),repeated.enemy.defense);
-assert.equal(evolutionChance(repeated.enemy,'rest'),.08);
-const oldOpponent=createDuel();delete oldOpponent.enemy.progression;
+assert.equal(evolutionChance(repeated.enemy,'rest'),0);
+const oldOpponent=createDuel();delete oldOpponent.enemy.progression;delete oldOpponent.enemy.canEvolve;
 oldOpponent.enemy.combo=6;oldOpponent.enemy.points.defend=12;oldOpponent.enemy.streak=5;
 oldOpponent.enemyAction='defend';oldOpponent.rng=evoSeed(false);
 const cleanOpponent=createDuel();cleanOpponent.enemyAction='defend';cleanOpponent.rng=oldOpponent.rng;
@@ -60,8 +60,8 @@ assert.deepEqual(oldOpponent.enemy.points,{attack:0,defend:0,rest:0});
 const titles=new Set<string>();
 for(const a of DUEL_ACTIONS)for(const b of DUEL_ACTIONS){
  const copy=duelMatchup(a,b);titles.add(copy.result.title);
- assert.equal(copy.evolution!==null,counters(a,b)||counters(b,a),'either side can evolve when countering');
- assert.equal(copy.evolutionSide,copy.relation==='win'?'ally':copy.relation==='lose'?'enemy':null);
+ assert.equal(copy.evolution!==null,counters(a,b),'only a player counter can evolve');
+ assert.equal(copy.evolutionSide,copy.relation==='win'?'ally':null);
 }
 assert.equal(titles.size,9,'every matchup has its own result title');
 for(const a of DUEL_ACTIONS)assert.equal(duelMatchup(a,null).evolution,null);
@@ -104,7 +104,7 @@ function simulate(policy:Policy,war:number,trait:DuelTrait,seed:number):DuelStat
     if(!legal.includes(pick))pick='rest';
     assert(resolveDuel(s,pick));
     for(const f of [s.ally,s.enemy])assert(f.stamina>=0&&f.stamina<=f.maxStamina&&f.injury>=0&&f.injury<=f.injuryLimit&&f.combo<=6&&Object.values(f.points).every(v=>v<=12));
-    assert.equal(s.enemy.combo,0);assert(Object.values(s.enemy.points).every(v=>v===0));
+    assert.equal(s.last!.enemyEvolution,null);assert.equal(s.enemy.combo,0);assert(Object.values(s.enemy.points).every(v=>v===0));
     assert(s.round<=DUEL_RULES.roundLimit);
   }
   return s;

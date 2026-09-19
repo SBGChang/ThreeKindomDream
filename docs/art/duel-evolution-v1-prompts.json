@@ -1,0 +1,10 @@
+{
+  "tool": "built-in imagegen",
+  "reference": "public/art/duel/action-kit-v1.png",
+  "common": "Use case: stylized-concept. Asset type: single transparent game UI evolution icon, square 1024x1024. Supporting style reference: action-kit-v1.png, existing cute Three Kingdoms hand-painted cel-shaded UI with bold dark brown outlines, round medallion, modest gold rim, matching colored tassel. Create a NEW upgraded icon, not a sheet, not a screenshot. Full emblem within central 78% of square, centered round medallion at (50%,50%), outer aura inside 94%, all corners truly transparent alpha. No text or numbers. Crisp recognizable silhouette at 130px. Preserve action color, do not turn everything gold. Soft luminous colored aura with a few sparks around outside, transparent background, no opaque backdrop.",
+  "variants": {
+    "attack": "Red attack evolution 'surprise assault': vivid vermilion red medallion and red tassel. Two crossed silver Chinese swords with gold hilts, one foremost with a bright sweeping scarlet energy slash. Distinct sharp double-blade silhouette, scarlet and warm orange halo. Match red original sword icon palette.",
+    "defend": "Blue defense evolution 'counter reversal': cobalt blue medallion and blue tassel. A sturdy blue steel round shield with silver and gold boss, two curved cyan energy arrows sweeping around the shield to signal reflecting an attack. Distinct shield/returning-wave silhouette, cyan blue halo. Match blue original shield palette.",
+    "rest": "Green rest evolution 'gathering strength': jade green medallion and green tassel. An ivory tea bowl decorated with bamboo on folded green cloth, curling luminous jade steam rising into three fresh bamboo leaves. Distinct bowl/steam/leaves silhouette, emerald green halo. Match green original tea icon palette."
+  }
+}

@@ -16,13 +16,13 @@ export const DEFAULT_DUEL_BUILD:DuelBuild={war:70,lead:65,trait:'none'};
 const clamp=(n:number,lo:number,hi:number)=>Math.max(lo,Math.min(hi,n));
 /** Remaining health; retain cumulative injury in saved duels for compatibility. */
 export const duelHealth=(f:DuelFighter):number=>clamp(f.injuryLimit-f.injury,0,f.injuryLimit);
-export function createFighter(build:DuelBuild,progression=true):DuelFighter {
+export function createFighter(build:DuelBuild,progression=true,canEvolve=true):DuelFighter {
   progression=build.comboEnabled??progression;
   const war=clamp(Number.isFinite(build.war)?Math.round(build.war):70,1,100);
   const lead=clamp(Number.isFinite(build.lead)?Math.round(build.lead):65,1,100);
   const maxStamina=80+Math.round(lead*.4);
   const power=build.power??1;
-  return {progression,build:{...build,war,lead,trait:build.trait in DUEL_TRAITS?build.trait:'none'},attack:(18+war*.32)*power,defense:(6+lead*.16)*power,maxStamina,stamina:maxStamina,injury:0,injuryLimit:100+Math.round(lead*.2),recovery:DUEL_RULES.attackCost*2,combo:0,points:{attack:0,defend:0,rest:0},previous:null,streak:0,taunted:false,fainted:false};
+  return {canEvolve,progression,build:{...build,war,lead,trait:build.trait in DUEL_TRAITS?build.trait:'none'},attack:(18+war*.32)*power,defense:(6+lead*.16)*power,maxStamina,stamina:maxStamina,injury:0,injuryLimit:100+Math.round(lead*.2),recovery:DUEL_RULES.attackCost*2,combo:0,points:{attack:0,defend:0,rest:0},previous:null,streak:0,taunted:false,fainted:false};
 }
 export const actionCost=(f:DuelFighter,a:DuelAction):number=>a==='attack'?DUEL_RULES.attackCost:a==='defend'?(f.build.trait==='steady'?9:DUEL_RULES.defendCost):0;
 export function actionBlock(f:DuelFighter,a:DuelAction):string {
@@ -34,6 +34,7 @@ export function actionBlock(f:DuelFighter,a:DuelAction):string {
 export const counters=(a:DuelAction|null,b:DuelAction|null):boolean=>a==='attack'&&b==='rest'||a==='rest'&&b==='defend'||a==='defend'&&b==='attack';
 const roll=(s:DuelState)=>{s.rng=(Math.imul(s.rng,1664525)+1013904223)>>>0;return s.rng/0x100000000;};
 export function evolutionChance(f:DuelFighter,a:DuelAction):number {
+  if(f.canEvolve===false)return 0;
   return Math.min(DUEL_RULES.evolutionCap,DUEL_RULES.baseEvolution+(f.progression===false?0:f.points[a])*DUEL_RULES.pointEvolution+(a==='defend'&&f.build.trait==='reversal'?.08:0));
 }
 export const attackPower=(f:DuelFighter):number=>f.attack*(1+(f.progression===false?0:f.combo)*.04)*(f.progression!==false&&f.build.trait==='momentum'&&f.combo>=4?1.12:1);
@@ -60,7 +61,7 @@ function commitEnemy(s:DuelState):void {
   for(const a of available){r-=weights[a];if(r<0){s.enemyAction=a;break;}}
 }
 export function createDuel(ally:DuelBuild=DEFAULT_DUEL_BUILD,enemy:DuelBuild=DEFAULT_DUEL_BUILD,seed=1):DuelState {
-  const s:DuelState={ally:createFighter(ally),enemy:createFighter(enemy,false),round:1,rng:seed>>>0,enemyAction:null,last:null,result:null,history:[]};
+  const s:DuelState={ally:createFighter(ally),enemy:createFighter(enemy,false,false),round:1,rng:seed>>>0,enemyAction:null,last:null,result:null,history:[]};
   commitEnemy(s);return s;
 }
 function progress(f:DuelFighter,a:DuelAction|null,b:DuelAction|null):void {
@@ -79,24 +80,24 @@ function progress(f:DuelFighter,a:DuelAction|null,b:DuelAction|null):void {
 /** Both sides use a start-of-round snapshot. Caller cannot submit an illegal action. */
 export function resolveDuel(s:DuelState,action:DuelAction|null):boolean {return resolveRound(s,action);}
 /** Forecasts choose both non-evolved/evolved branches, never inspect the live RNG outcome. */
-function resolveRound(s:DuelState,action:DuelAction|null,forceEvolution?:boolean,forceEnemyEvolution?:boolean):boolean {
+function resolveRound(s:DuelState,action:DuelAction|null,forceEvolution?:boolean,forceEnemyTrait?:boolean):boolean {
   if(s.result)return false;
   if(s.ally.fainted?action!==null:action===null||!!actionBlock(s.ally,action))return false;
   const a=s.ally,b=s.enemy,x=action,y=s.enemyAction;
   // Normalize old saved opponents before damage or evolution is computed.
+  a.canEvolve=true;b.canEvolve=false;
   b.progression??=false;
   for(const f of [a,b])if(f.progression===false){f.combo=0;f.points={attack:0,defend:0,rest:0};f.streak=0;}
   const before={ally:{stamina:a.stamina,injury:a.injury},enemy:{stamina:b.stamina,injury:b.injury}};
   const allyFainted=a.fainted,enemyFainted=b.fainted;
   const hitA=fullDamage(a,b),hitB=fullDamage(b,a);
   const pierceA=x==='attack'&&y==='defend'&&a.build.trait==='peerless'&&(a.build.traitChance??0)>0&&(forceEvolution??(roll(s)<a.build.traitChance!));
-  const pierceB=y==='attack'&&x==='defend'&&b.build.trait==='peerless'&&(b.build.traitChance??0)>0&&(forceEnemyEvolution??(roll(s)<b.build.traitChance!));
+  const pierceB=y==='attack'&&x==='defend'&&b.build.trait==='peerless'&&(b.build.traitChance??0)>0&&(forceEnemyTrait??(roll(s)<b.build.traitChance!));
   const evoA=!pierceB&&x!==null&&counters(x,y)&&(forceEvolution??(roll(s)<evolutionChance(a,x)));
-  const evoB=!pierceA&&y!==null&&counters(y,x)&&(forceEnemyEvolution??(roll(s)<evolutionChance(b,y)));
   const evolution=(act:DuelAction|null,evolved:boolean)=>!evolved?null:act==='attack'?'攻其不備':act==='rest'?'蓄勢待發':'借力打力';
-  const turn:DuelTurn={ally:x,enemy:y,damageToAlly:0,damageToEnemy:0,allyEvolution:evolution(x,evoA),enemyEvolution:evolution(y,evoB),allyCost:x?actionCost(a,x):0,enemyCost:y?actionCost(b,y):0,allyRecovery:0,enemyRecovery:0,notes:[]};
+  const turn:DuelTurn={ally:x,enemy:y,damageToAlly:0,damageToEnemy:0,allyEvolution:evolution(x,evoA),enemyEvolution:null,allyCost:x?actionCost(a,x):0,enemyCost:y?actionCost(b,y):0,allyRecovery:0,enemyRecovery:0,notes:[]};
   if(pierceA)turn.allyEvolution='無雙飛將';
-  if(pierceB)turn.enemyEvolution='無雙飛將';
+  if(pierceB)turn.enemyTrait='無雙飛將';
   // A previous taunt lasts exactly this decision; a new taunt applies to the next one.
   a.taunted=false;b.taunted=false;a.fainted=false;b.fainted=false;
   if(x==='attack'&&y==='attack'){
@@ -106,19 +107,19 @@ function resolveRound(s:DuelState,action:DuelAction|null,forceEvolution?:boolean
     if(x==='attack'){
       if(y==='defend'&&!pierceA){
         turn.allyCost*=2;
-        if(evoB){turn.damageToAlly=hitA;turn.enemyCost=0;}else turn.damageToEnemy=Math.round(hitA*.2);
+        turn.damageToEnemy=Math.round(hitA*.2);
       }else turn.damageToEnemy=Math.round(hitA*(evoA?1.2:1));
     }
     if(y==='attack'){
       if(x==='defend'&&!pierceB){
         turn.enemyCost*=2;
         if(evoA){turn.damageToEnemy=hitB;turn.allyCost=0;}else turn.damageToAlly=Math.round(hitB*.2);
-      }else turn.damageToAlly=Math.round(hitB*(evoB?1.2:1));
+      }else turn.damageToAlly=hitB;
     }
   }
   turn.damageToEnemy=Math.round(turn.damageToEnemy*(1+(a.equipmentDamage??0)));
   const recover=(f:DuelFighter,act:DuelAction|null,opponent:DuelAction|null,evolved:boolean,wasFainted:boolean)=>wasFainted?DUEL_RULES.attackCost:act==='rest'?Math.round(restAmount(f)*(opponent==='attack'?.5:evolved?1.5:1)):0;
-  const recoveryA=recover(a,x,y,evoA,allyFainted),recoveryB=recover(b,y,x,evoB,enemyFainted);
+  const recoveryA=recover(a,x,y,evoA,allyFainted),recoveryB=recover(b,y,x,false,enemyFainted);
   a.stamina=Math.max(0,a.stamina-turn.allyCost);b.stamina=Math.max(0,b.stamina-turn.enemyCost);
   turn.allyRecovery=Math.min(a.maxStamina-a.stamina,recoveryA);turn.enemyRecovery=Math.min(b.maxStamina-b.stamina,recoveryB);
   a.stamina+=turn.allyRecovery;b.stamina+=turn.enemyRecovery;
@@ -161,7 +162,7 @@ export interface DuelForecast {
 /** Hypothetical public information only; neither live state nor its committed enemy action changes. */
 export function forecastDuel(s:DuelState,action:DuelAction,enemy:DuelAction|null):DuelForecast|null {
  if(actionBlock(s.ally,action)||s.result|| (enemy!==null?!!actionBlock(s.enemy,enemy):!s.enemy.fainted))return null;
- const branches=[false,true].flatMap(evolved=>[false,true].map(enemyEvolved=>{const copy=structuredClone(s);copy.enemyAction=enemy;resolveRound(copy,action,evolved,enemyEvolved);return copy;}));
+ const branches=[false,true].flatMap(evolved=>[false,true].map(enemyTrait=>{const copy=structuredClone(s);copy.enemyAction=enemy;resolveRound(copy,action,evolved,enemyTrait);return copy;}));
  const side=(key:'ally'|'enemy')=>{const before=s[key],hp=branches.map(b=>duelHealth(b[key])-duelHealth(before)),sp=branches.map(b=>b[key].stamina-before.stamina);return {health:[Math.min(...hp),Math.max(...hp)] as [number,number],stamina:[Math.min(...sp),Math.max(...sp)] as [number,number]};};
  return {ally:side('ally'),enemy:side('enemy'),notes:branches[0]!.last!.notes};
 }

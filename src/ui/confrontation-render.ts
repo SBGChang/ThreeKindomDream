@@ -36,7 +36,10 @@ export function drawEncounterDemo(ctx:CanvasRenderingContext2D,images:BattleImag
   const followCamera=fleeing?{x:800+(Math.max(-770,Math.min(2280,fleeing.x))-800)*follow,y:450+(fleeing.y-30-450)*follow,zoom:1+.6*follow}:undefined;
   if(s.battle)drawBattle(ctx,images,s.battle,{armyOpacity,...(c.phase==='retreat'?{retreatSide,...(followCamera?{camera:followCamera}:{})}:{})});
   else if(images.background)ctx.drawImage(images.background,0,0,1600,900);
-  ctx.save();ctx.fillStyle=`rgba(8,15,23,${(1-armyOpacity)*.38})`;ctx.fillRect(0,0,1600,900);ctx.restore();
+  // The command wheel leaves the live duel field at its normal brightness.
+  if(!(c.kind==='duel'&&c.phase==='read')){
+   ctx.save();ctx.fillStyle=`rgba(8,15,23,${(1-armyOpacity)*.38})`;ctx.fillRect(0,0,1600,900);ctx.restore();
+  }
   if(c.phase==='clear'||c.phase==='retreat')return;
   const entry=c.phase==='approach'?ease(t/1.2):1;
   const alpha=c.phase==='restore'?1-ease(t/.8):entry;
@@ -85,13 +88,6 @@ export function drawEncounterDemo(ctx:CanvasRenderingContext2D,images:BattleImag
     const et=presentation.time,focus=ease(et/.25)*(1-ease((et-(DUEL_EVOLUTION_SECONDS-.3))/.3));
     // Darken the battlefield first, then paint the halo behind the lit ally.
     ctx.save();ctx.fillStyle=`rgba(3,9,18,${.78*focus})`;ctx.fillRect(0,0,1600,900);ctx.restore();
-    if(turn?.enemyEvolution){
-     duelist(ctx,images,c.allyId,left,feet,'idle',0,false,alpha*(1-.85*focus));
-     const evo=images['evolution-particles'];
-     if(evo)drawEvolutionParticles(ctx,evo,et,right,feet,turn.enemyEvolution,false);
-     duelist(ctx,images,c.enemyId,right,feet,'rest',clamp(et/.8),true,alpha);
-     if(evo)drawEvolutionParticles(ctx,evo,et,right,feet,turn.enemyEvolution,true);
-    }else{
     duelist(ctx,images,c.enemyId,right,feet,'idle',0,true,alpha*(1-.85*focus));
     ctx.save();
     const evo=images['evolution-particles'];if(evo)drawEvolutionParticles(ctx,evo,et,left,feet,turn?.allyEvolution??'',false);
@@ -102,7 +98,6 @@ export function drawEncounterDemo(ctx:CanvasRenderingContext2D,images:BattleImag
     }else duelist(ctx,images,c.allyId,left,feet,'rest',clamp(et/.8),false,alpha);
     if(evo)drawEvolutionParticles(ctx,evo,et,left,feet,turn?.allyEvolution??'',true);
     ctx.restore();
-    }
    }else{
     const hitBeat=acting&&c.phase==='clash'&&t>=.75&&t<.82;
     const drawAlly=()=>duelist(ctx,images,c.allyId,left,feet,a[0],a[1],false,alpha,hitBeat&&hurtA&&!guardA);
@@ -143,7 +138,7 @@ export function drawEncounterDemo(ctx:CanvasRenderingContext2D,images:BattleImag
     }
     ctx.font='900 54px "DFKai-SB",serif';ctx.textAlign='center';ctx.lineWidth=7;ctx.strokeStyle='#23170e';
     const card=c.cards?.last;
-    const word=card?(card.notes.some(n=>n.includes('舉證失勢'))?'論 據 被 拆':card.ally==='proof'?'據 理 力 爭':card.ally==='claim'?'立 論':card.ally==='rebut'?'反 駁':card.ally==='focus'?'凝 神 整 思':card.ally==='borrow'?'借 題 發 揮':'質 疑'):duel?(turn?.allyEvolution??turn?.enemyEvolution??(turn?.ally==='rest'&&turn.enemy==='rest'?'調 息':turn?.ally==='defend'&&turn.enemy==='defend'?'對 峙':c.success?'得 勢':'交 鋒')):c.success?'駁 倒':'失 言';
+    const word=card?(card.notes.some(n=>n.includes('舉證失勢'))?'論 據 被 拆':card.ally==='proof'?'據 理 力 爭':card.ally==='claim'?'立 論':card.ally==='rebut'?'反 駁':card.ally==='focus'?'凝 神 整 思':card.ally==='borrow'?'借 題 發 揮':'質 疑'):duel?(turn?.allyEvolution??turn?.enemyTrait??(turn?.ally==='rest'&&turn.enemy==='rest'?'調 息':turn?.ally==='defend'&&turn.enemy==='defend'?'對 峙':c.success?'得 勢':'交 鋒')):c.success?'駁 倒':'失 言';
     if(!c.cards){ctx.strokeText(word,800,340);ctx.fillStyle=c.success?'#ffe4a1':'#ffa49b';ctx.fillText(word,800,340);}ctx.restore();
   }
 }

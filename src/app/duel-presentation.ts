@@ -6,7 +6,7 @@ export const DUEL_RESET_SECONDS=.25;
 export const DUEL_EVOLUTION_SECONDS=2.8;
 export const DUEL_ACTION_SECONDS=1.8;
 export function duelActionStart(c:Contest):number {
- return DUEL_REVEAL_SECONDS+DUEL_RESET_SECONDS+(c.duel?.last?.allyEvolution||c.duel?.last?.enemyEvolution?DUEL_EVOLUTION_SECONDS:0);
+ return DUEL_REVEAL_SECONDS+DUEL_RESET_SECONDS+(c.duel?.last?.allyEvolution?DUEL_EVOLUTION_SECONDS:0);
 }
 export const duelClashDuration=(c:Contest):number=>duelActionStart(c)+DUEL_ACTION_SECONDS;
 /** One simulation clock drives icons, camera, character poses and pause/resume. */

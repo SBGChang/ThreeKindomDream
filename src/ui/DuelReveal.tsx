@@ -14,7 +14,10 @@ export function DuelReveal({contest:c}:{contest:Contest}):React.ReactElement|nul
  if(p.stage==='evolution'){
   const upgraded=p.time>=1.3,blink=p.time<.5?1:p.time<1.3?(Math.floor((p.time-.5)/.2)%2===0?.12:1):1;
   const fade=1-ease((p.time-2.5)/.3);
-  return <div className="du-evolution-reveal" aria-label={last.enemyEvolution?'敵方升變演出':'我方升變演出'} style={{opacity:fade}}><div className="du-evolution-emblem" style={{opacity:upgraded?1:blink,transform:`scale(${upgraded?1+.15*(1-ease((p.time-1.3)/.3)):1})`}}><DuelArt file="matchup-icons-v1" cell={upgraded?3:cell}/></div>{upgraded&&<strong className="du-reveal-title du-title-gold">{last.allyEvolution??last.enemyEvolution}</strong>}</div>;
+  const action=last.ally;
+  if(!action)return null;
+  const burst=1-ease((p.time-1.3)/.65);
+  return <div className={`du-evolution-reveal du-evolution-${action}`} aria-label="我方升變演出" style={{opacity:fade}}><div className={`du-evolution-emblem ${upgraded?'du-evolved':''}`} style={{opacity:upgraded?1:blink,transform:`translate(-50%,-50%) scale(${upgraded?1+.15*(1-ease((p.time-1.3)/.3)):1})`}}>{upgraded&&<i className="du-evolution-halo" style={{opacity:.18+.5*burst,transform:`scale(${1+.32*(1-burst)})`}}/>}<DuelArt file={upgraded?`evolution-${action}-v1`:'action-kit-v1'} {...(upgraded?{}:{cell:actionCell(action)})}/></div>{upgraded&&<strong className="du-reveal-title">{last.allyEvolution}</strong>}</div>;
  }
  const t=p.time,C=DUEL_COLLISION;
  // Accelerate through contact rather than easing to a stop; preserve the two-hit recoil cadence.

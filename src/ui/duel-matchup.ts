@@ -24,8 +24,8 @@ const evolutions:Record<DuelAction,ResultCopy>={
  defend:{title:'借力打力',effect:'完整反彈對手傷害，我方不消耗體力。'},
  rest:{title:'蓄勢待發',effect:'我方本次恢復量提升至 1.5 倍。'},
 };
-export function duelMatchup(action:DuelAction,enemy:DuelAction|null):{relation:DuelRelation;result:ResultCopy;evolution:ResultCopy|null;evolutionSide:'ally'|'enemy'|null} {
+export function duelMatchup(action:DuelAction,enemy:DuelAction|null):{relation:DuelRelation;result:ResultCopy;evolution:ResultCopy|null;evolutionSide:'ally'|null} {
  if(enemy===null)return {relation:'draw',result:{title:action==='attack'?'趁隙追擊':action==='defend'?'持盾觀望':'趁隙調息',effect:action==='attack'?'對手昏厥，承受我方完整攻擊；本合結束時恢復體力。':action==='defend'?'我方照常消耗體力防守；對手本合結束時恢復體力。':'我方正常恢復體力；對手本合結束時恢復體力。'},evolution:null,evolutionSide:null};
  const relation=counters(action,enemy)?'win':counters(enemy,action)?'lose':'draw';
- return {relation,result:outcomes[action][relation],evolution:relation==='win'?evolutions[action]:relation==='lose'?{title:evolutions[enemy].title,effect:evolutions[enemy].effect.replaceAll('我方','敵方').replaceAll('對手','我方')}:null,evolutionSide:relation==='win'?'ally':relation==='lose'?'enemy':null};
+ return {relation,result:outcomes[action][relation],evolution:relation==='win'?evolutions[action]:null,evolutionSide:relation==='win'?'ally':null};
 }

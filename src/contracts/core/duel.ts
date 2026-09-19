@@ -2,6 +2,8 @@ export type DuelAction='attack'|'defend'|'rest';
 export type DuelTrait='none'|'momentum'|'steady'|'breathing'|'reversal'|'peerless';
 export interface DuelBuild {war:number;lead:number;trait:DuelTrait;comboEnabled?:boolean;traitChance?:number;power?:number}
 export interface DuelFighter {
+ /** Separate from Combo: only the player can evolve, including builds with Combo disabled. */
+ canEvolve?:boolean;
  retreatSpeed?:number;
  equipmentDamage?:number;
  emergencyHeal?:{threshold:number;ratio:number;used:boolean};
@@ -11,6 +13,8 @@ export interface DuelFighter {
  points:Record<DuelAction,number>;previous:DuelAction|null;streak:number;taunted:boolean;fainted:boolean;
 }
 export interface DuelTurn {
+ /** Enemy trait activation is distinct from the player's evolution sequence. */
+ enemyTrait?:string;
  ally:DuelAction|null;enemy:DuelAction|null;damageToAlly:number;damageToEnemy:number;allyEvolution:string|null;enemyEvolution:string|null;
  allyCost:number;enemyCost:number;allyRecovery:number;enemyRecovery:number;notes:string[];
  /** Optional for old saved encounters; actual capped changes for the result HUD. */

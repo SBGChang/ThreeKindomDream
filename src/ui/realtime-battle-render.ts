@@ -139,11 +139,13 @@ export function drawBattle(ctx:CanvasRenderingContext2D,images:BattleImages,s:Ba
  const skillAtlas=images['skill-particles'],effect=local&&local.time>=1.5?{...local,time:skillEffectTime(local.time)}:null;
  if(effect&&skillAtlas)drawSkillParticles(ctx,skillAtlas,effect,'rear',s.units);
  layers.sort((a,b)=>a.y-b.y).forEach(layer=>layer.draw());
+ // Frozen projectiles leave and return with the army during a confrontation.
+ const projectileOpacity=clamp(presentation.armyOpacity??1);
  for(const a of s.arrows??[]){
-  if(a.elapsed<0||(c&&!a.owner)||!skillAtlas)continue;
+  if(projectileOpacity<=0||a.elapsed<0||(c&&!a.owner)||!skillAtlas)continue;
   const p=clamp(a.elapsed/a.duration),dx=a.toX-a.fromX,dy=a.toY-a.fromY-Math.cos(p*Math.PI)*Math.PI*70;
   const cell=skillAtlas.width/4,ch=skillAtlas.height/4;
-  ctx.save();ctx.translate(a.x,a.y);ctx.rotate(Math.atan2(dy,dx));
+  ctx.save();ctx.globalAlpha=projectileOpacity;ctx.translate(a.x,a.y);ctx.rotate(Math.atan2(dy,dx));
   // Authored feathered arrow, row two / cell four, with its original aspect ratio.
   ctx.drawImage(skillAtlas,0,ch,cell,ch,-34,-34,68,68);ctx.restore();
  }

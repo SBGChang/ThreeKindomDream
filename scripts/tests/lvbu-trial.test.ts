@@ -20,8 +20,9 @@ for(const side of ['ally','enemy'] as const){
  const target=side==='ally'?'enemy':'ally',damage=fullDamage(s[side],s[target]);
  s.enemyAction=side==='ally'?'defend':'attack';
  assert(resolveDuel(s,side==='ally'?'attack':'defend'));
- assert.equal(s.last![side==='ally'?'allyEvolution':'enemyEvolution'],'無雙飛將');
+ assert.equal(s.last![side==='ally'?'allyEvolution':'enemyTrait'],'無雙飛將');
  assert.equal(s.last![side==='ally'?'enemyEvolution':'allyEvolution'],null);
+ assert.equal(s.last!.enemyEvolution,null,'enemy trait activation is never an evolution');
  assert.equal(s.last![side==='ally'?'damageToEnemy':'damageToAlly'],damage);
  assert.equal(s.last![side==='ally'?'allyCost':'enemyCost'],24);
  assert(s[target].fainted);assert(s[target].stamina>5,'forced exhaustion is not artificial stamina loss');

@@ -2,6 +2,7 @@ import {useEffect,useRef,useState} from 'react';
 import type {ReactNode} from 'react';
 import type {RallyColor,RallySpecial} from '../contracts/core/debate-rally.js';
 import {RallyCard,RallyBack} from './RallyCard.js';
+import {GuideBackButton} from './GuideBackButton.js';
 import {DebateIcon} from './DebateVisuals.js';
 import './rally-guide.css';
 function Card({color='reason',value=4}:{color?:RallyColor;value?:number}){return <RallyCard interactive={false} card={{id:0,kind:'normal',color,value}}/>;}
@@ -21,7 +22,7 @@ export function RallyGuide({onClose}:{onClose:()=>void}){
  const [tab,setTab]=useState<'basic'|'special'>('basic'),panel=useRef<HTMLElement>(null);
  useEffect(()=>{const before=document.activeElement as HTMLElement|null;panel.current?.querySelector<HTMLButtonElement>('[role=tab]')?.focus();return()=>before?.focus();},[]);
  return <div className="ct-overlay rg-overlay"><section ref={panel} className="rg-book" role="dialog" aria-modal="true" aria-label="舌戰圖解" onKeyDown={e=>{if(e.key==='Escape'){e.stopPropagation();onClose();}if(e.key==='Tab'){const buttons=Array.from(panel.current?.querySelectorAll<HTMLButtonElement>('button')??[]),index=buttons.indexOf(document.activeElement as HTMLButtonElement);if(e.shiftKey&&index===0){e.preventDefault();buttons.at(-1)?.focus();}else if(!e.shiftKey&&index===buttons.length-1){e.preventDefault();buttons[0]?.focus();}}}}>
-  <header><h2>舌戰圖解</h2><div className="rg-tabs" role="tablist" aria-label="說明分頁">{(['basic','special'] as const).map((id,i)=><button key={id} id={`rg-tab-${id}`} role="tab" aria-selected={tab===id} aria-controls="rg-page" tabIndex={tab===id?0:-1} onClick={()=>setTab(id)} onKeyDown={e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const next=e.key==='Home'?'basic':e.key==='End'?'special':id==='basic'?'special':'basic';setTab(next);panel.current?.querySelector<HTMLButtonElement>(`#rg-tab-${next}`)?.focus();}}}><DebateIcon card={i?'borrow':'proof'}/>{i?'特殊卡':'基礎規則'}</button>)}</div><button className="rg-close" aria-label="關閉舌戰圖解" onClick={onClose}><Arrow/></button></header>
+  <header><h2>舌戰圖解</h2><div className="rg-tabs" role="tablist" aria-label="說明分頁">{(['basic','special'] as const).map((id,i)=><button key={id} id={`rg-tab-${id}`} role="tab" aria-selected={tab===id} aria-controls="rg-page" tabIndex={tab===id?0:-1} onClick={()=>setTab(id)} onKeyDown={e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const next=e.key==='Home'?'basic':e.key==='End'?'special':id==='basic'?'special':'basic';setTab(next);panel.current?.querySelector<HTMLButtonElement>(`#rg-tab-${next}`)?.focus();}}}><DebateIcon card={i?'borrow':'proof'}/>{i?'特殊卡':'基礎規則'}</button>)}</div><GuideBackButton label="關閉舌戰圖解" onClick={onClose}/></header>
   <div id="rg-page" role="tabpanel" aria-labelledby={`rg-tab-${tab}`}>
   {tab==='basic'?<div className="rg-basic">
    <Scene wide title="同色，要更大" note="藍 4 → 藍 7，可以接"><Card value={4}/><Arrow/><Card value={7}/></Scene>

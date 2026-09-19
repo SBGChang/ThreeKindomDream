@@ -67,3 +67,16 @@ const early=sample(1.43).filter(c=>c[0]==='drawImage'),late=sample(2.1).filter(c
 assert(late.length>early.length*2,'the ember front grows denser before ignition');
 assert(Math.max(...late.map(c=>Number(c[9])))>Math.max(...early.map(c=>Number(c[9])))*1.5,'travelling fire grows in size');
 console.log('Growing ember front passed: increasing textured density and size before the approved fire burst.');
+
+// An encounter freezes arrows in flight; their ink must disappear with the army.
+const frozenShots=createBattle();frozenShots.status='running';frozenShots.phase='combat';
+frozenShots.units=[];frozenShots.commanders=[];
+frozenShots.arrows=[{id:1,side:'ally',targetId:2,x:700,y:350,fromX:400,fromY:400,toX:1000,toY:400,elapsed:.5,duration:1,damage:10,hit:true,friendly:false,sourceId:3}];
+const shotSnapshot=JSON.stringify(frozenShots);
+for(const opacity of [1,.5,0,.5,1]){
+ const r=recorder();drawBattle(r.ctx,{'skill-particles':atlas},frozenShots,{armyOpacity:opacity});
+ assert.equal(r.calls.filter(c=>c[0]==='drawImage'&&c[1]===atlas).length,opacity===0?0:1,'arrows disappear during the duel, then return with the army');
+ if(opacity>0)assert(r.calls.some(c=>c[0]==='set'&&c[1]==='globalAlpha'&&c[2]===opacity),'arrows fade with the troops');
+ assert.equal(JSON.stringify(frozenShots),shotSnapshot,'hiding arrows preserves their pending damage and flight state');
+}
+console.log('Encounter projectiles passed: fade out, hidden duel, fade in and unchanged pending shots.');
