@@ -20,6 +20,7 @@
     "game:launch": "electron .",
     "verify:confrontation": "tsx scripts/tests/duel-model.test.ts && tsx scripts/tests/confrontation-demo.test.ts && tsx scripts/tests/duel-art.test.ts && tsx scripts/tests/card-debate.test.ts && tsx scripts/tests/debate-strategies.test.ts && tsx scripts/tests/debate-particles.test.ts && tsx scripts/tests/card-debate-forecast.test.ts && tsx scripts/tests/debate-art.test.ts && tsx scripts/tests/debate-rally.test.ts",
     "verify:portraits": "tsx scripts/tests/portrait-framing.test.ts",
+    "verify:spotlight": "node scripts/verify-spotlight.mjs",
     "verify:narrative": "tsx scripts/tests/battle-story.test.ts && tsx scripts/tests/battle-story-field.test.ts && tsx scripts/tests/narrative-release.test.ts",
     "verify:event-challenge": "tsx scripts/tests/event-challenge.test.ts && tsx scripts/tests/event-challenge-builds.test.ts && tsx scripts/tests/lvbu-trial.test.ts && tsx scripts/tests/nanhua.test.ts",
     "verify:character-art": "tsx scripts/tests/character-art-coverage.test.ts"
