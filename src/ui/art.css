@@ -3,7 +3,7 @@ body:has(.art-gallery){overflow:auto}.art-gallery-backgrounds{display:grid;grid-
 .enemy-meter>.officer-portrait{float:left;width:52px;height:52px;margin-right:12px;margin-top:0}.enemy-meter>div{margin-left:66px}.enemy-meter>span{margin-left:3px}
 .game-stage .game-sheet,.game-stage .settings-paper,.game-stage .journal-paper,.game-stage .dialogue-box{border:12px solid transparent;border-image:url('/art/ui/ui-paper.png') 100 fill / 12px / 0 stretch;background:#efe2c7;border-radius:0}
 .game-stage button.primary,.game-stage .title-menu button,.game-stage .game-bottom button{background:#532b23 url('/art/ui/ui-button.png') center/100% 100% no-repeat;color:#ffebbc;border:1px solid #bc9859;text-shadow:0 1px 2px #24150c}
-.game-stage button.primary:hover:not(:disabled),.game-stage .title-menu button:hover:not(:disabled),.game-stage .game-bottom button:hover:not(:disabled){background:#532b23 url('/art/ui/ui-button.png') center/100% 100% no-repeat;filter:brightness(1.2)}
+.game-stage button.primary:hover:not(:disabled),.game-stage .title-menu button:hover:not(:disabled),.game-stage .game-bottom button:hover:not(:disabled){filter:brightness(1.2)}
 .game-stage .game-bottom button[aria-pressed=true]{outline:2px solid #ebc975;outline-offset:2px}
 .art-gallery-ui{display:flex;gap:24px;align-items:center}.art-gallery-ui img{width:40%;height:auto}
 

@@ -1,5 +1,5 @@
 .event-challenge{position:absolute;inset:0;z-index:80;background:#302118 url('/art/ui/campaign/camp-v1.png') center/cover no-repeat;color:#543720;font-family:'DFKai-SB','KaiTi',serif}
-.event-challenge .ec-control,.event-challenge .ec-control:hover,.event-challenge .ec-control:active{border:0;border-radius:0;box-shadow:none;background:url('/art/ui/training/paper-control-v1.png') center/100% 100% no-repeat;color:#543720;font-family:inherit;font-size:22px;padding:12px 22px;min-height:54px;transition:filter .15s}
+.event-challenge .ec-control{border:0;border-radius:0;box-shadow:none;background:url('/art/ui/training/paper-control-v1.png') center/100% 100% no-repeat;color:#543720;font-family:inherit;font-size:22px;padding:12px 22px;min-height:54px;transition:filter .15s}
 .event-challenge .ec-control:hover{filter:brightness(1.08)}
 .event-challenge .ec-control:focus-visible{outline:3px solid #f4cd79;outline-offset:3px}
 .event-challenge .ec-control[aria-pressed=true],.event-challenge .ec-depart{background-image:url('/art/ui/training/jade-control-v1.png');color:#fff2c7}
@@ -13,8 +13,8 @@
 /* This scene fills the game stage instead of the shifted cultivation sidebar. */
 
 .game-stage:has(.event-challenge)>.game-top,.game-stage:has(.event-challenge)>.game-bottom{visibility:hidden;pointer-events:none}
-.game-stage .event-challenge .ec-control,.game-stage .event-challenge .ec-control:is(:hover,:focus-visible,:active,:disabled){border:0;border-image:none;border-radius:0;box-shadow:none;background:url('/art/ui/training/paper-control-v1.png') center/100% 100% no-repeat;color:#543720;font-family:'DFKai-SB','KaiTi',serif}
-.game-stage .event-challenge .ec-control[aria-pressed=true],.game-stage .event-challenge .ec-depart,.game-stage .event-challenge .ec-depart:hover{background-image:url('/art/ui/training/jade-control-v1.png');color:#fff2c7}
+.game-stage .event-challenge .ec-control{border:0;border-image:none;border-radius:0;box-shadow:none;background:url('/art/ui/training/paper-control-v1.png') center/100% 100% no-repeat;color:#543720;font-family:'DFKai-SB','KaiTi',serif}
+.game-stage .event-challenge .ec-control[aria-pressed=true],.game-stage .event-challenge .ec-depart{background-image:url('/art/ui/training/jade-control-v1.png');color:#fff2c7}
 .game-stage .ec-playing .rt-battle button{border:0;border-image:none;box-shadow:none;background:none}
 .game-stage .ec-playing .rt-battle .rt-skill-group{flex:0 1 500px}
 .game-stage .ec-playing .rt-battle .rt-skill-slot{flex:0 0 130px}

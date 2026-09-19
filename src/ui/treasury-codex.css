@@ -74,11 +74,11 @@
 .game-stage .realm.treasury-paged .treasury-layout{right:90px;grid-template-columns:minmax(0,1fr) 325px}.game-stage .realm.treasury-paged .relic-detail{padding-top:5px}.game-stage .treasury-paged .relic-description{margin:8px 0}.game-stage .realm.treasury-paged .treasury-shelves button.selected{outline:none!important}
 
 
-.game-stage .realm.treasury-paged .relic-tabs button[aria-selected=true],.game-stage .realm.treasury-paged .relic-tabs button[aria-selected=true]:hover{background:#665034!important;color:#fff2cb!important;filter:none}.game-stage .realm.treasury-paged .relic-tabs button[aria-selected=false]:hover{background:#b5905b55!important;color:#563d25!important}
+
 
 
 .game-stage .realm.treasury-paged .treasury-shelves .shelf-nameplate .painted-stars{min-height:12px;max-height:12px;flex:0 0 12px}.game-stage .realm.treasury-paged .treasury-shelves .shelf-nameplate b{flex:0 0 20px}
-.game-stage .realm.treasury-paged .relic-tabs button[aria-selected=true],.game-stage .realm.treasury-paged .relic-tabs button[aria-selected=true]:hover{background:url('/art/ui/training/jade-control-v1.png') center / 100% 140% no-repeat!important;color:#fff0c5!important;text-shadow:0 1px 2px #21492c}
+
 .game-stage .realm.treasury-paged .relic-detail .relic-effects li{min-height:36px;padding:3px 0;font-size:16px;line-height:1.4}
 .game-stage .realm.treasury-paged .relic-tier-icon{height:34px;width:30px}
 .game-stage .realm.treasury-paged .relic-detail .relic-description{font-size:17px;line-height:1.5}

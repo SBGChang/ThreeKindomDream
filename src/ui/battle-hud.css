@@ -5,7 +5,8 @@ body:has(.rt-shell) #root{width:100%;height:100dvh;max-width:none;padding:0;over
 .rt-battle{position:relative;width:min(100vw,177.7778dvh);aspect-ratio:16/9;overflow:hidden;container-type:inline-size;isolation:isolate;background:#30251b}
 .rt-battle>canvas{position:absolute;inset:0;width:100%;height:100%}
 .rt-battle button,.rt-battle a{font-family:inherit;-webkit-tap-highlight-color:transparent}
-.rt-battle button,.rt-battle button:is(:hover,:focus-visible,:active){color:#fff0cf;background:url('/art/ui/campaign/command-button-v6.png') center/100% 100% no-repeat;border:0;border-radius:0;box-shadow:none;cursor:pointer;transform:none;filter:none}
+/* Base furniture only: states must preserve each timer, stand and label override. */
+.rt-battle button{color:#fff0cf;background:url('/art/ui/campaign/command-button-v6.png') center/100% 100% no-repeat;border:0;border-radius:0;box-shadow:none;cursor:pointer;transform:none;filter:none}
 .rt-battle button:focus-visible,.rt-battle a:focus-visible{outline:2px solid #fff3b1;outline-offset:3px}
 .rt-battle button:disabled{cursor:default;opacity:.55}
 .rt-battle button:not(:disabled):hover{filter:brightness(1.12) drop-shadow(0 0 .35cqw #ffcf6570)}

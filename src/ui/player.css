@@ -3,11 +3,11 @@
 body { background:var(--bg); color:var(--ink); font-size:14px; }
 #root { max-width:none; padding:0; }
 button { border-radius:6px; padding:10px 15px; transition:background .18s,border-color .18s,transform .18s; background:var(--panel); }
-button:hover:not(:disabled) { background:#f0f0e5; border-color:#80957b; }
+/* Generic feedback must not replace painted backgrounds or reset atlas coordinates. */
+:where(button:hover:not(:disabled)) { filter:brightness(1.09); }
 button:focus-visible, a:focus-visible, summary:focus-visible { outline:3px solid #b39b59; outline-offset:3px; }
 button:disabled { opacity:.52; }
 button.primary { background:#345d46; color:#fffdf2; border-color:#345d46; box-shadow:0 3px 7px #304c3610; }
-button.primary:hover:not(:disabled) { background:#254833; }
 button.sel,.card.sel { background:#edf1e5; border-color:#537d53; color:#2c5339; }
 h1,h2,h3 { font-family:'Noto Serif TC','PMingLiU','Microsoft JhengHei',serif; }
 h1 { font-size:30px; font-weight:600; letter-spacing:.08em; line-height:1.45; }
