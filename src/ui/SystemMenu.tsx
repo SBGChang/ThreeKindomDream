@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import './desktop-api.js';
 import { applySystemPreferences, playMenuSound, readSystemPreferences, saveSystemPreferences, type SystemPreferences } from './system-preferences.js';
 
-type Page = 'menu' | 'settings' | 'home' | 'quit' | 'exited';
+type Page = 'menu' | 'settings' | 'home' | 'abandon' | 'quit' | 'exited';
 type IconKind = 'settings' | 'home' | 'quit' | 'resume' | 'back' | 'sound' | 'music' | 'screen' | 'text' | 'alert';
 function SystemIcon({ kind }: { kind: IconKind }): React.ReactElement {
   const paths: Record<IconKind, React.ReactNode> = {
@@ -19,9 +19,10 @@ function SystemIcon({ kind }: { kind: IconKind }): React.ReactElement {
   };
   return <svg viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">{paths[kind]}</svg>;
 }
-export function SystemMenu({ onClose, onHome, beforeExit }: {
+export function SystemMenu({ onClose, onHome, onAbandon, beforeExit }: {
   onClose: () => void;
   onHome: () => void;
+  onAbandon?: () => void;
   beforeExit?: () => void;
 }): React.ReactElement {
   const [page, setPage] = useState<Page>('menu');
@@ -76,6 +77,7 @@ export function SystemMenu({ onClose, onHome, beforeExit }: {
     if (busy) return;
     setBusy(true); setMessage('');
     try {
+      if (page === 'abandon') { onAbandon?.(); onClose(); return; }
       beforeExit?.();
       if (page === 'home') { onHome(); onClose(); }
       else {
@@ -83,11 +85,11 @@ export function SystemMenu({ onClose, onHome, beforeExit }: {
         if (window.gameDesktop) await window.gameDesktop.quit();
         else go('exited');
       }
-    } catch { setMessage('未能保存進度，請留在遊戲中並重試。'); }
+    } catch { setMessage(page === 'abandon' ? '未能完成放棄本輪，請留在此頁並重試。' : '未能保存進度，請留在遊戲中並重試。'); }
     finally { setBusy(false); }
   };
-  const title = page === 'settings' ? '系統設定' : page === 'home' ? '返回主選單？' : page === 'quit' ? '離開遊戲？' : page === 'exited' ? '已離開遊戲' : '遊戲選單';
-  const isConfirm = page === 'home' || page === 'quit';
+  const title = page === 'settings' ? '系統設定' : page === 'home' ? '返回主選單？' : page === 'abandon' ? '放棄本輪？' : page === 'quit' ? '離開遊戲？' : page === 'exited' ? '已離開遊戲' : '遊戲選單';
+  const isConfirm = page === 'home' || page === 'quit' || page === 'abandon';
   return <div className="game-modal system-overlay" onClickCapture={event => {
     if ((event.target as HTMLElement).closest('button')) playMenuSound(prefs.sfx);
   }} onKeyDown={event => {
@@ -103,10 +105,11 @@ export function SystemMenu({ onClose, onHome, beforeExit }: {
       {page === 'menu' ? <h1 id="system-title" className="system-accessible-title">{title}</h1> : !isConfirm && <header className="system-heading"><SystemIcon kind={page === 'settings' ? 'settings' : 'quit'}/><h1 id="system-title">{title}</h1></header>}
       {page === 'menu' && <>
         <div className="system-menu-list">
-          <button className="system-row tone-blue" data-initial-focus onClick={() => go('settings')}><span>系統設定</span></button>
-          <button className="system-row tone-gold" onClick={() => go('home')}><span>返回主選單</span></button>
-          <button className="system-row tone-red" onClick={() => go('quit')}><span>離開遊戲</span></button>
-          <button className="system-row tone-green" onClick={onClose}><span>繼續遊戲</span></button>
+          <button className="system-row tone-blue" data-initial-focus onClick={() => go('settings')}><span className="system-row-art" aria-hidden="true"/><span>系統設定</span></button>
+          <button className="system-row tone-gold" onClick={() => go('home')}><span className="system-row-art" aria-hidden="true"/><span>返回主選單</span></button>
+          {onAbandon && <button className="system-row tone-red" onClick={() => go('abandon')}><span className="system-row-art" aria-hidden="true"/><span>放棄本輪</span></button>}
+          <button className="system-row tone-red" onClick={() => go('quit')}><span className="system-row-art" aria-hidden="true"/><span>離開遊戲</span></button>
+          <button className="system-row tone-green" onClick={onClose}><span className="system-row-art" aria-hidden="true"/><span>繼續遊戲</span></button>
         </div>
       </>}
       {page === 'settings' && <>
@@ -125,12 +128,12 @@ export function SystemMenu({ onClose, onHome, beforeExit }: {
           <img className="system-confirm-art" src="./art/ui/system/return-gate-v1.png" alt="" aria-hidden="true"/>
           <div className="system-confirm-letter">
             <h1 id="system-title">{title}</h1>
-            <p id="system-confirm-copy" className="system-confirm-copy">{page === 'quit' ? '是否結束本次遊戲？' : '是否離開目前畫面？'}<small>目前進度會保留，<br/>下次可繼續此生行旅。</small></p>
+            <p id="system-confirm-copy" className="system-confirm-copy">{page === 'abandon' ? '清除本輪進度並返回主選單？' : page === 'quit' ? '是否結束本次遊戲？' : '是否離開目前畫面？'}<small>{page === 'abandon' ? <>本輪無法繼續，也不會獲得結算獎勵。<br/>永久解鎖與天命進度會保留。</> : <>目前進度會保留，<br/>下次可繼續此生行旅。</>}</small></p>
           </div>
         </div>
         <div className="system-confirm-actions">
           <button className="system-painted-button" disabled={busy} data-initial-focus onClick={() => go('menu')}><span className="system-button-art" aria-hidden="true"/><span>取消</span></button>
-          <button className={`system-painted-button ${page === 'quit' ? 'tone-red' : 'tone-gold'}`} disabled={busy} onClick={() => void leave()}><span className="system-button-art" aria-hidden="true"/><span>{busy ? '儲存中…' : page === 'quit' ? '確認離開' : '返回主選單'}</span></button>
+          <button className={`system-painted-button ${page === 'home' ? 'tone-gold' : 'tone-red'}`} disabled={busy} onClick={() => void leave()}><span className="system-button-art" aria-hidden="true"/><span>{busy ? '處理中…' : page === 'abandon' ? '確認放棄' : page === 'quit' ? '確認離開' : '返回主選單'}</span></button>
         </div>
       </>}
       {page === 'exited' && <><p className="system-exited-copy">進度已保留，可以關閉此分頁。</p><button className="system-button tone-green" data-initial-focus onClick={onClose}>繼續遊戲</button></>}

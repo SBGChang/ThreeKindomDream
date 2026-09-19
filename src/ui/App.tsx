@@ -54,6 +54,21 @@ export function App({ preview = false }: { preview?: boolean }): React.ReactElem
     // An unreadable save is kept intact until a new run is explicitly started.
     if (session !== null) {saveMeta(session.preserveUnlocks(loadMeta()));saveRun(session, log);}
   };
+  const abandonRun = (): void => {
+    if (!session || session.isOver) return;
+    const next = session.preserveUnlocks(preview ? meta : loadMeta());
+    // Persist unlocks before deleting the run; retain the live session if storage fails.
+    if (!preview) { saveMeta(next); saveRun(null, []); }
+    setMeta(next);
+    setSession(null);
+    setLog([]);
+    setReplay(false);
+    setRunView('run');
+    setMetaView('destiny');
+    setAtMainMenu(true);
+    setSaveNotice('');
+    bump();
+  };
   const screen = (): React.ReactElement => {
     if (session === null || atMainMenu) {
       if (metaView === 'entry') return <ScreenEntry meta={meta} onEnter={config => { setLog([]); setAtMainMenu(false); setRunView('run'); setMetaView('destiny'); setSession(startRun(meta, config)); }} onBack={home} />;
@@ -76,6 +91,7 @@ export function App({ preview = false }: { preview?: boolean }): React.ReactElem
   const sceneScreen = (phase === 'campaign' && runView === 'run' && !session?.needsChapterCamp) || atMainMenu || (session !== null && ['learn','market','vault'].includes(runView)) || replay || (session === null ? ['destiny','notables','shop','items','entry'].includes(metaView) : !replay && !session.isOver && !session.needsFactionChoice && !session.needsSuperiors && !session.needsCampaign && !session.needsChapterCamp && runView === 'run');
   return <GameFrame meta={meta} session={atMainMenu ? null : session} active={atMainMenu ? metaView : replay ? 'battle' : session === null ? metaView : session.needsChapterCamp&&runView==='run'?'camp':runView} saveNotice={preview ? '故事試玩・不寫入存檔' : saveNotice}
     beforeExit={preserveProgress} onReturnHome={() => { setMetaView('destiny'); setAtMainMenu(true); }}
+    {...(session && !session.isOver ? { onAbandonRun: abandonRun } : {})}
     onGo={view => {
       if (replay) return;
       if (session === null || atMainMenu) setMetaView(view as MetaView);

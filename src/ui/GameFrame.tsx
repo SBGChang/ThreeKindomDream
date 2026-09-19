@@ -18,10 +18,11 @@ export function Landscape(): React.ReactElement { return <img className="landsca
 export function OfficerPortrait({ name, context = 'default' }: { name: string; context?: PortraitContext }): React.ReactElement {
   return <span className="officer-portrait"><CharacterArt name={name} portrait context={context} /></span>;
 }
-export function GameFrame({ meta, session, active, onGo, saveNotice, children, onReturnHome, beforeExit }: {
+export function GameFrame({ meta, session, active, onGo, saveNotice, children, onReturnHome, onAbandonRun, beforeExit }: {
   readonly meta: MetaState; readonly session: Session | null; readonly active: string;
   readonly onGo: (view: string) => void; readonly saveNotice: string; readonly children: ReactNode;
   readonly onReturnHome?: () => void; readonly beforeExit?: () => void;
+  readonly onAbandonRun?: () => void;
 }): React.ReactElement {
   useDragScroll();
   const [scale, setScale] = useState(() => Math.min(innerWidth / 1280, innerHeight / 800));
@@ -71,6 +72,6 @@ export function GameFrame({ meta, session, active, onGo, saveNotice, children, o
     <main className={`stage-content view-${active} ${session?.needsCampaign ? 'campaign-view' : ''}`} id="main-content"><GameSettingsContext.Provider value={() => setSettings(true)}>{children}</GameSettingsContext.Provider></main>
     {saveNotice && <span className="campaign-save-notice" role="status">{saveNotice}</span>}
     {!['destiny','entry','notables','shop','items'].includes(active) && (runChrome && session ? <RunFooter active={active} s={session} chapter={chapter} onGo={onGo} onSettings={()=>setSettings(true)} notice={saveNotice} dialogue={dialogueHeader}/> : <footer className="game-bottom"><span className={saveNotice ? 'warn' : ''} role="status">{saveNotice || '◆ 進度已自動保存'}</span><nav aria-label="遊戲功能">{nav.map(([key,label]) => <button key={key} aria-pressed={active === key} disabled={locked} onClick={() => onGo(key!)}>{label}</button>)}</nav>{active==='run'&&<button className="bottom-settings" aria-label="遊戲設定" onClick={()=>setSettings(true)}>選單</button>}<span>Esc 選單</span></footer>)}
-    {settings && <SystemMenu onClose={() => setSettings(false)} onHome={onReturnHome ?? (() => onGo('destiny'))} {...(beforeExit ? { beforeExit } : {})}/>}
+    {settings && <SystemMenu onClose={() => setSettings(false)} onHome={onReturnHome ?? (() => onGo('destiny'))} {...(onAbandonRun ? { onAbandon: onAbandonRun } : {})} {...(beforeExit ? { beforeExit } : {})}/>}
   </div></div></DialogueHeaderContext.Provider>;
 }
