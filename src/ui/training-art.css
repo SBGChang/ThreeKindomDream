@@ -84,6 +84,23 @@
 .run-service.training-service .course-empty>.realm-icon{width:116px;height:116px}
 .run-service.training-service .course-empty h2{font-size:29px;color:#634322}
 .run-service.training-service .course-empty p{font-size:16px;line-height:1.8;color:#81633c}
-.run-service.training-service .service-pager{height:28px;margin-top:6px;font-size:13px}
-.run-service.training-service .service-pager button{background:url('/art/ui/training/paper-control-v1.png') center/100% 140% no-repeat!important;border:0!important;box-shadow:none!important;color:#59391e!important}
+.run-service.training-service .training-pager{height:44px;margin-top:4px;gap:5px}
+/* Arrow silhouettes are complete art, kept proportional; only the number plaque
+   uses nine-slice. Never squeeze the long plaque into an arrow button. */
+.game-stage .run-service.training-service .training-pager button.training-page-turn,
+.game-stage .run-service.training-service .training-pager button.training-page-turn:is(:hover,:focus-visible,:active,:disabled){display:grid;place-items:center;width:54px;height:44px;flex:none;margin:0;padding:0;border:0;border-radius:0;background:none;box-shadow:none;transform:none;filter:none;opacity:1}
+.training-page-turn>img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;filter:drop-shadow(0 1px 1px #56331555);transition:filter .15s}
+.training-page-prev>img{transform:scaleX(-1)}
+.training-page-turn:hover:not(:disabled)>img{filter:brightness(1.15) drop-shadow(0 0 3px #d29637)}
+.training-page-turn:active:not(:disabled)>img{filter:brightness(.85)}
+.training-page-turn:disabled>img{filter:grayscale(.7);opacity:.38}
+.game-stage .run-service.training-service .training-pager button.training-page-turn:focus-visible{outline:2px solid #8e4824;outline-offset:0;border-radius:8px}
+.run-service.training-service .training-page-count{position:relative;isolation:isolate;display:grid;place-items:center;width:108px;flex:none;height:44px;padding:0 20px;box-sizing:border-box}
+/* The source has transparent top/bottom margins. Give the painted paper enough
+   height for the digits; align their optical centres instead of their baselines. */
+.training-page-count::before{content:'';position:absolute;inset:-3px 0;z-index:-1;pointer-events:none;border:solid transparent;border-width:16px 20px;border-image:url('/art/ui/training/paper-control-v1.png') 240 300 fill / 16px 20px / 0 stretch}
+.training-page-numbers{display:flex;align-items:center;justify-content:center;gap:5px;white-space:nowrap;font:bold 18px/1 Cambria,Georgia,serif;font-variant-numeric:lining-nums tabular-nums;color:#67401f;text-shadow:0 1px #fff4ce;transform:translateY(-2px)}
+.run-service.training-service .training-page-numbers>b{font:900 25px/1 Cambria,Georgia,serif;font-variant-numeric:lining-nums tabular-nums;color:#9a3824;text-shadow:0 1px #fff0bd,0 -1px #6b2e1926}
+.training-page-numbers>i{font:normal 18px/1 Cambria,Georgia,serif;color:#a77a40}
+@media(prefers-reduced-motion:reduce){.training-page-turn>img{transition:none}}
 @media(prefers-reduced-motion:reduce){.training-control::before{transition:none}}

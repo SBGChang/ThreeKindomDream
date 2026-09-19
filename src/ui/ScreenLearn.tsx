@@ -50,7 +50,7 @@ export function ScreenLearn({ s, bump, onBack }: { s: Session; bump: () => void;
         <div className={'course-list course-list-' + tab}>{rows.map(o => <button className="course-entry" key={o.id} data-tier={o.tier} aria-label={`查看${o.name}，${o.level}/${o.maxLevel}級${o.active ? '，已啟用' : ''}`} aria-pressed={course?.id === o.id} onClick={() => {setSelected(o.id);setNotice('');}}>
           <CourseArt course={o}/><b>{o.name}</b><div className="course-entry-level" title={`目前 ${o.level} 級，上限 ${o.maxLevel} 級`}><RealmStars count={o.level} total={o.maxLevel}/>{o.active && <span className="course-active" aria-label="已啟用"> ✓</span>}</div>
         </button>)}</div>
-        {all.length > coursesPerPage && <ServicePager page={currentPage} total={Math.ceil(all.length / coursesPerPage)} onPage={p => {setPage(p);setNotice('');}} label="課程分頁" />}
+        {all.length > coursesPerPage && <ServicePager appearance="training" page={currentPage} total={Math.ceil(all.length / coursesPerPage)} onPage={p => {setPage(p);setNotice('');}} label="課程分頁" />}
       </div>
       {!course && <article className="course-detail course-empty"><RealmIcon name={tab === 'skill' ? 'book' : 'talent'}/><h2>尚待傳授</h2><p>隨人物事件習得{tab === 'skill' ? '技能' : '特性'}</p></article>}
       {course && <article className="course-detail" data-tier={course.tier} key={course.id}>
