@@ -11,6 +11,8 @@
 .system-panel .system-row{display:flex;align-items:center;justify-content:center;position:relative;width:406px;height:98px;margin:0;padding:0 70px 0 135px;border:0;border-radius:0;background:none;color:#fff3ce;box-shadow:none;font-family:'DFKai-SB','KaiTi','PMingLiU',serif;font-size:29px;font-weight:900;white-space:nowrap;text-align:center;text-shadow:2px 2px 0 #24140a,-1px -1px 0 #24140a,1px -1px 0 #24140a,-1px 1px 0 #24140a,0 3px 2px #000b}
 .system-row>span{position:relative}.system-row .system-row-art{position:absolute;inset:0;pointer-events:none;background:url('../../public/art/ui/system/menu-plaques-v1.png') -47px var(--row-y) / 500px 562.606px no-repeat}
 .system-row.tone-blue{--row-y:-66.4px}.system-row.tone-gold{--row-y:-174.4px}.system-row.tone-red{--row-y:-284.7px}.system-row.tone-green{--row-y:-397.2px}
+/* Fit the purple plaque's alpha bounds (57,159)-(1892,615), preserving its complete gold edge. */
+.system-row-abandon .system-row-art{background-image:url('../../public/art/ui/system/abandon-row-v2.png');background-size:106.104% 177.193%;background-position:50.893% 45.17%}
 .system-panel .system-row:after{content:'';position:absolute;inset:0;opacity:0;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 410 100' preserveAspectRatio='none'%3E%3Cpath d='M14 3H396L407 14V86L396 97H14L3 86V14Z' fill='none' stroke='%23fff1a0' stroke-width='3'/%3E%3C/svg%3E") center/100% 100%;filter:drop-shadow(0 0 3px #ffe16e);transition:opacity .15s}
 /* Keep illustrated menu rows above the generic game button hover rule. */
 .game-stage .system-panel .system-row:is(:hover,:focus-visible,:active){background:none;box-shadow:none;border:0;outline:none;transform:none;filter:none}

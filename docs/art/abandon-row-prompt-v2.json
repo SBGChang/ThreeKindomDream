@@ -1,0 +1,6 @@
+{
+  "tool": "built-in image_gen",
+  "reference": "public/art/ui/system/abandon-row-v1.png",
+  "asset": "public/art/ui/system/abandon-row-v2.png",
+  "prompt": "Use case: precise-object-edit. Edit the supplied standalone abandon-run game button. Change ONLY the red lacquer interior and red decorative curls to a rich muted royal violet-purple lacquer (base #61417d, shadows #392550, highlights #9672b5). The goal is a PURPLE button distinctly different from adjacent red quit, blue settings, gold home, and green resume buttons. Preserve the golden frame, golden chevron, golden flagpole, ivory WHITE drooping flag, bold brown outlines, texture, shading, icon size, placements, all geometry, original canvas aspect ratio and transparent padding EXACTLY. Do not recolor the gold or the white flag. No text. Genuine transparent alpha outside the button. This is a tightly constrained color edit, not a redesign. Output same composition and 1947x808 canvas as input."
+}

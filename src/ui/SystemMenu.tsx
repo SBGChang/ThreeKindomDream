@@ -107,7 +107,7 @@ export function SystemMenu({ onClose, onHome, onAbandon, beforeExit }: {
         <div className="system-menu-list">
           <button className="system-row tone-blue" data-initial-focus onClick={() => go('settings')}><span className="system-row-art" aria-hidden="true"/><span>系統設定</span></button>
           <button className="system-row tone-gold" onClick={() => go('home')}><span className="system-row-art" aria-hidden="true"/><span>返回主選單</span></button>
-          {onAbandon && <button className="system-row tone-red" onClick={() => go('abandon')}><span className="system-row-art" aria-hidden="true"/><span>放棄本輪</span></button>}
+          {onAbandon && <button className="system-row system-row-abandon" onClick={() => go('abandon')}><span className="system-row-art" aria-hidden="true"/><span>放棄本輪</span></button>}
           <button className="system-row tone-red" onClick={() => go('quit')}><span className="system-row-art" aria-hidden="true"/><span>離開遊戲</span></button>
           <button className="system-row tone-green" onClick={onClose}><span className="system-row-art" aria-hidden="true"/><span>繼續遊戲</span></button>
         </div>
