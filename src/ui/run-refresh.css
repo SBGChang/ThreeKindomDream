@@ -92,6 +92,23 @@
 .run-screen .stat-track-inner { position:relative; width:100%; height:100%; overflow:hidden; border-radius:3px; }
 .run-screen .stat-track-inner > i { display:block; height:100%; }
 .run-screen .stat-track .stat-ghost { top:0; bottom:0; }
+.run-screen .stat-gain {
+  position: absolute;
+  right: 4px;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: #c9c4ac;
+  font: 900 17px/1 Arial, sans-serif;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  text-shadow: -1px -1px #18211b, 1px -1px #18211b, -1px 1px #18211b, 1px 2px #18211b;
+  pointer-events: none;
+}
+.run-screen .stat-gain.has-gain,
+.run-screen .career-gain.has-gain { color: #a9efff; }
 .run-screen .stat-top strong {
   left: 203px;
   top: 10px;
@@ -127,11 +144,45 @@
   left: 46px;
   right: 28px;
   top: 9px;
+  height: 28px;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 35px;
+  align-items: center;
+  gap: 5px;
 }
+.run-screen .career-name { min-width: 0; margin: 0; }
 .run-screen .career-name,
 .run-screen .career-name b {
   color: #ffedc7;
   font-size: 22px;
+  text-shadow: 1px 2px #392312;
+}
+.run-screen .career-name b { white-space: normal; font-size: 20px; line-height: 19px; }
+.run-screen .career-name.long-rank b { font-size: 14px; line-height: 14px; }
+.run-screen .career-track {
+  display: block;
+  height: 22px;
+  min-width: 0;
+  padding: 2px;
+  border: 3px solid #26190f;
+  border-radius: 8px;
+  background: #171d17;
+  box-shadow: inset 0 3px 4px #000, 0 1px #b78b52;
+}
+.career-track-inner { position: relative; height: 100%; overflow: hidden; border-radius: 2px; }
+.career-ghost {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: linear-gradient(#efffffaa, #a7edff55 55%, #d7fbff88);
+  box-shadow: inset 0 1px #ffffffaa;
+}
+.run-screen .career-gain {
+  text-align: right;
+  color: #d8c6a3;
+  font: 900 17px/1 Arial, sans-serif;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
   text-shadow: 1px 2px #392312;
 }
 .run-screen .career-list-button::after {

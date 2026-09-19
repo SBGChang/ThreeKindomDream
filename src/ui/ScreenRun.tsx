@@ -270,6 +270,7 @@ export function ScreenRun({
         s={s}
         growth={growth}
         preview={trainingPreview ? { [trainingPreview.attr]: trainingPreview.expectedGain } : undefined}
+        meritPreview={trainingPreview ? { [trainingPreview.meritGain.line]: trainingPreview.meritGain.amount } : undefined}
       />
       {performance && <TaskPerformance {...performance} />}
       <div className="training-stage" aria-label="行動人物預覽">
